@@ -682,12 +682,21 @@
         function openLoginModal() {
             const modal = document.getElementById('loginModal');
             const devNotice = document.getElementById('devModeNotice');
+            const pwField = document.getElementById('customerPassword');
+            const cfg = getPortalConfigSafe();
 
             modal.classList.add('active');
             document.getElementById('customerName')?.focus();
 
-            // eWebmaster: no password gate.
-            if (devNotice) devNotice.style.display = 'block';
+            if (cfg.devMode) {
+                // eWebmaster local dev: no password gate.
+                if (devNotice) devNotice.style.display = 'block';
+                if (pwField) pwField.style.display = 'none';
+            } else {
+                // Production: require password.
+                if (devNotice) devNotice.style.display = 'none';
+                if (pwField) pwField.style.display = 'block';
+            }
         }
 
         function closeLoginModal() {
@@ -740,7 +749,19 @@
                 return;
             }
 
-            // eWebmaster: no password gate.
+            // Check password in production mode
+            const passwordEl = document.getElementById('customerPassword');
+            if (!cfg.devMode) {
+                const enteredPassword = passwordEl?.value || '';
+                if (enteredPassword !== cfg.password) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Incorrect password. Please try again.';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+            }
+
             window.location.href = customer.path;
         }
 
@@ -792,9 +813,10 @@
             </div>
             <div class="login-form">
                 <input type="text" id="customerName" name="ue_company" placeholder="Company Name" autocomplete="off" autocapitalize="off" spellcheck="false">
+                <input type="password" id="customerPassword" name="ue_password" placeholder="Portal Password" autocomplete="off" style="display:none;">
                 <div class="login-error" id="loginError"></div>
                 <button class="login-btn" onclick="attemptLogin()">Enter Portal →</button>
-                <div class="dev-mode-notice" id="devModeNotice">No password required</div>
+                <div class="dev-mode-notice" id="devModeNotice" style="display:none;">No password required</div>
             </div>
         </div>
     </div>

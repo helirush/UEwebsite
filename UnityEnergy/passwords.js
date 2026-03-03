@@ -17,7 +17,7 @@
 window.portalConfig = {
     
     // SET TO false BEFORE PUSHING TO GITHUB
-    devMode: true,
+    devMode: false,
     
     // Production password - all customers use this
     password: "oHeaviside",
