@@ -568,11 +568,13 @@
                 <button class="markdown-fullsize-btn" onclick="showMarkdownFullscreen()" title="View markdown full size">🔍 Full Size</button>
                 <div class="markdown-content">
                     <h1>BASELINE ELECTRICAL ENERGY USAGE AND COST</h1>
-<p><strong>Transformer Baseline :</strong>
-- <strong>Consumption Usage:</strong> 701,290.1 kWh (Usage per period)
-- <strong>Consumption Cost per unit:</strong> $0.177/kWh (Cost per kWh)
-- <strong>Consumption Total Cost:</strong> $123,917.96 (Cost per period)
-- <strong>Consumption Total Cost:</strong> $181.01 (Cost per hour)</p>
+<p><strong>Transformer Baseline :</strong></p>
+<ul class="baseline-metrics">
+<li><strong>Consumption Usage:</strong> 701,290.1 kWh (Usage per period)</li>
+<li><strong>Consumption Cost per unit:</strong> $0.177/kWh (Cost per kWh)</li>
+<li><strong>Consumption Total Cost (per period):</strong> $123,917.96 (Cost per period)</li>
+<li><strong>Consumption Total Cost (per hour):</strong> $181.01 (Cost per hour)</li>
+</ul>
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> Rendering-2<br />
@@ -823,14 +825,14 @@ Calculated values are shown above for verification and engineering transparency.
 <td>1,444.76</td>
 <td>57.8%</td>
 <td>989,085.43 kVA</td>
-<td>3,495,327.90 TOTAL-HEAT</td>
+<td>3,495,330.02 TOTAL-HEAT</td>
 </tr>
 <tr>
 <td>kW</td>
 <td>1,024.38</td>
 <td>41.0%</td>
 <td>701,290.12 kWh</td>
-<td>696,265,250.87 Load-Heat</td>
+<td>1,017,043.58 Load-Heat</td>
 </tr>
 <tr>
 <td>kVAR</td>
@@ -844,10 +846,19 @@ Calculated values are shown above for verification and engineering transparency.
 <td>420.38</td>
 <td>16.8%</td>
 <td>287,795.31 WASTE</td>
-<td>285,733,200.31 Field-Heat</td>
+<td>417,369.31 Field-Heat</td>
 </tr>
 </tbody>
 </table>
+<h3>Heat Unit Notes</h3>
+<ul>
+<li><strong>TOTAL-HEAT (BTU/hr):</strong> 3,495,330.02</li>
+<li><strong>Load-Heat (BTU/hr):</strong> 1,017,043.58</li>
+<li><strong>Field-Heat (BTU/hr):</strong> 417,369.31</li>
+<li><strong>Load-Heat (BTU, period total):</strong> 696,267,606.54</li>
+<li><strong>Field-Heat (BTU, period total):</strong> 285,730,858.12</li>
+</ul>
+
 <h2>Measured Monthly Averages</h2>
 <table>
 <thead>
