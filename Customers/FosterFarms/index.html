@@ -11,11 +11,17 @@
             box-sizing: border-box;
         }
 
+        .site-card:hover .site-header {
+            filter: brightness(1.08) saturate(1.08);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
+            line-height: 1.5;
             color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            background: linear-gradient(rgba(248, 249, 250, 0.92), rgba(248, 249, 250, 0.9)),
+                        url('foster-farms-cards-hero.png') center top / cover fixed no-repeat;
+            background-color: rgba(248, 249, 250, 1);
         }
 
         header {
@@ -67,10 +73,10 @@
         .hero {
             background: url('foster-farms-hero.png') center top / cover no-repeat;
             position: relative;
-            background-position: 0% 0%;
+            background-position: 0% 5%;
             color: white;
             padding: 0;
-            min-height: 400px;
+            min-height: 350px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -87,13 +93,29 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
         }
 
-        .hero-logo {
+        .hero-logo-block {
             position: absolute;
             top: 30px;
             left: 40px;
             z-index: 2;
-            max-width: 250px;
+            width: 250px;
+        }
+
+        .hero-logo {
+            display: block;
+            width: 100%;
             height: auto;
+        }
+
+        .hero-logo-caption {
+            margin-top: 8px;
+            max-width: 100%;
+            text-align: center;
+            font-size: 0.78em;
+            line-height: 1.35;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+            letter-spacing: 0.2px;
         }
 
         .hero-content {
@@ -102,7 +124,7 @@
             text-align: center;
             font-family: 'Times New Roman', Times, serif;
             max-width: 900px;
-            padding: 60px 40px;
+            padding: 0px 0px;
         }
         .hero-content1 {
             position: relative;
@@ -110,7 +132,7 @@
             text-align: center;
             font-family: 'Times New Roman', Times, serif;
             max-width: 900px;
-            padding: 60px 40px;
+            padding: 0px 0px;
         }
 
         .hero h1 {
@@ -123,7 +145,7 @@
         }
         .hero h2 {
             font-size: 4em;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
             font-weight: 900;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
             color: rgba(255, 215, 0, 1);
@@ -147,11 +169,11 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 0px;
         }
 
         section {
-            margin: 60px 0;
+            margin: 30px 0;
         }
 
         .section-title {
@@ -160,20 +182,61 @@
             margin-bottom: 0px;
             text-align: center;
             font-weight: 700;
+            line-height: 1.1;
         }
         .section-subtitle {
-            font-size: 1.7em;
+            font-size: 1.45em;
             color: rgba(204, 0, 0, 1);
             letter-spacing: 2px;
-            margin-bottom: 0px;
+            margin-top: 4px;
+            margin-bottom: 6px;
             text-align: center;
             font-weight: 500;
+            line-height: 1.05;
         }
+        .sites-section {
+            position: relative;
+            overflow: visible;
+            border-radius: 16px;
+            padding: 24px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            margin-bottom: 18px;
+        }
+
+        .sites-section + section {
+            margin-top: 14px;
+        }
+
+        .sites-section::before {
+            content: none;
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            z-index: 0;
+        }
+
+        .sites-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
         .sites-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin: 50px 0;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 28px;
+            margin: 12px 0 6px;
+            overflow: visible;
+        }
+
+        .cards-hero-panel {
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 16px;
+            padding: 8px 0 0;
+            border: none;
+            box-shadow: none;
         }
 
         .site-card {
@@ -187,11 +250,19 @@
             text-decoration: none;
             color: inherit;
             border-top: 5px solid rgba(255, 215, 0, 1);
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 1;
         }
 
         .site-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(204,0,0,0.2);
+            transform: translateY(-10px) scale(1.015);
+            box-shadow:
+                0 0 0 2px rgba(255, 215, 0, 0.95),
+                0 0 20px rgba(255, 230, 120, 0.75),
+                0 20px 55px rgba(120, 0, 0, 0.35);
+            border-color: rgba(255, 230, 120, 0.95);
+            z-index: 20;
         }
 
         .site-header {
@@ -199,37 +270,55 @@
             color: white;
             padding: 30px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .site-name {
             font-size: 1.9em;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .site-location {
             font-size: 1.4em;
             color: rgba(255, 215, 0, 1);
             opacity: 0.95;
+            margin-bottom: 2px;
         }
 
-        .site-pf {
-            margin-top: 10px;
-            font-size: 1.05em;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.92);
+        .site-efficiency-badge {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
 
-        .site-pf .pf-value {
-            color: rgba(255, 215, 0, 1);
+        .efficiency-circle {
+            width: 175px;
+            height: 75px;
+            border-radius: 999px;
+            background: rgba(255, 215, 0, 1);
+            border: 4px solid rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(139, 0, 0, 1);
+            font-size: 1.75em;
             font-weight: 900;
-            font-size: 1.35em;
+            line-height: 1;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
         }
 
-        .site-pf .pf-label {
+        .efficiency-label {
+            color: rgba(255, 255, 255, 0.96);
+            font-size: 1.02em;
             font-style: italic;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.92);
+            font-weight: 700;
+            letter-spacing: 0.2px;
         }
 
         .site-content {
@@ -274,7 +363,8 @@
         }
 
         .site-btn {
-            display: inline-block;
+            display: block;
+            width: 100%;
             padding: 14px 28px;
             background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
             color: white;
@@ -306,7 +396,7 @@
 
         /* Latest Report Section */
         .fields-measured {
-            padding: 14px 30px 0 30px; /* reduce top gap */
+            padding: 0px 30px 0 30px; /* reduce top gap */
             text-align: center;
             color: rgba(139, 0, 0, 1);
             letter-spacing: 0.5px;
@@ -328,8 +418,15 @@
         }
 
         .latest-report {
-            padding: 12px 30px 30px 30px;
+            width: 100%;
+            margin: 14px auto 22px;
+            padding: 18px 20px 16px;
             text-align: center;
+            background: rgba(255, 255, 255, 0.45);
+            border: 2px solid rgba(139, 0, 0, 0.75);
+            border-top: 4px solid rgba(255, 215, 0, 0.95);
+            border-radius: 12px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
         }
 
         
@@ -337,7 +434,7 @@
             font-size: 1.5em;
             color: rgba(204, 0, 0, 1);
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 0px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -352,7 +449,7 @@
         .latest-report .report-desc {
             font-size: 1em;
             color: rgba(102, 102, 102, 1);
-            margin-bottom: 20px;
+            margin-bottom: 0px;
         }
 
         .info-section {
@@ -367,7 +464,7 @@
         .info-section h3 {
             color: rgba(204, 0, 0, 1);
             font-size: 1.5em;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
         .info-section p {
@@ -411,6 +508,10 @@
             .sites-grid {
                 grid-template-columns: 1fr;
             }
+
+            .sites-section {
+                padding: 14px;
+            }
         }
     </style>
 </head>
@@ -423,19 +524,26 @@
     </header>
 
     <div class="hero">
-        <img src="foster-farms-logo.png" alt="Foster Farms Logo" class="hero-logo">
+        <div class="hero-logo-block">
+            <img src="foster-farms-logo.png" alt="Foster Farms Logo" class="hero-logo">
+            <div class="hero-logo-caption">
+                <div>Corporate Headquarters</div>
+                <div>Livingston, California</div>
+            </div>
+        </div>
         <div class="hero-content">
-            <p>Enterprise Processing Facilities</p>
-            <h1>Electrical Energy Field Behavior</h1>
-            <h2>SITE ENERGY DATA LIBRARIES</h2>
+            <p>Industrial 480v Electrical Behavior</p>
+            <h1>Unity Energy Field Intelligence</h1>
+            <h2>Facility Monitoring Portals</h2>
         </div>
     </div>
 
     <div class="container">
-        <section>
-            <h2 class="section-title">Understanding True Electrical Energy Ownership</h2>
-            <h2 class="section-subtitle">select the site to enter</h2>
+        <section class="sites-section">
+            <h2 class="section-title">Explore Measurured Energy Field Behavior by Site</h2>
+            <h2 class="section-subtitle">Select the Facility to Enter</select></h2>
 
+            <div class="cards-hero-panel">
             <div class="sites-grid">
 
                 <!-- Livingston Site -->
@@ -443,13 +551,16 @@
                     <div class="site-header">
                         <div class="site-name">Livingston HQ</div>
                         <div class="site-location">Livingston, California</div>
-                        <div class="site-pf"><span class="pf-value">82.4%</span> <span class="pf-label">Power Efficiency</span></div>
+                        <div class="site-efficiency-badge">
+                            <div class="efficiency-circle">82.4%</div>
+                            <div class="efficiency-label">Electrical Field Efficiency</div>
+                        </div>
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
                             <div class="count">Eight (8)</div>
                             <div class="label">Transformer Fields</div>
-                            <div class="status">streaming</div>
+                            <div class="status">Monitored</div>
                         </div>
                         <div class="latest-report">
                             <h3>Latest Reports</h3>
@@ -465,13 +576,16 @@
                     <div class="site-header">
                         <div class="site-name">Cherry Avenue</div>
                         <div class="site-location">Fresno, California</div>
-                        <div class="site-pf"><span class="pf-value" id="cherry-card-pf">86.3%</span> <span class="pf-label">Power Efficiency</span></div>
+                        <div class="site-efficiency-badge">
+                            <div class="efficiency-circle" id="cherry-card-pf">86.3%</div>
+                            <div class="efficiency-label">Electrical Field Efficiency</div>
+                        </div>
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
                             <div class="count">Four (4)</div>
                             <div class="label">Transformer Fields</div>
-                            <div class="status">streaming</div>
+                            <div class="status">Monitored</div>
                         </div>
                         <div class="latest-report">
                             <h3>Latest Reports</h3>
@@ -487,22 +601,26 @@
                     <div class="site-header">
                         <div class="site-name">Belgravia</div>
                         <div class="site-location">Fresno, California</div>
-                        <div class="site-pf"><span class="pf-value">N/A</span> <span class="pf-label">Power Efficiency</span></div>
+                        <div class="site-efficiency-badge">
+                            <div class="efficiency-circle">N/A</div>
+                            <div class="efficiency-label">Electrical Field Efficiency</div>
+                        </div>
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
                             <div class="count">Zero (0)</div>
                             <div class="label">Transformer Fields</div>
-                            <div class="status">un-measured</div>
+                            <div class="status">Studies Pending</div>
                         </div>
                         <div class="latest-report">
                             <h3>Latest Reports</h3>
-                            <div class="report-name">Un-Measured</div>
+                            <div class="report-name">Monitoring Coming Soon</div>
                             <div class="report-desc"></div>
                         </div>
                         <button class="site-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
                     </div>
                 </a>
+            </div>
             </div>
         </section>
 
@@ -510,10 +628,10 @@
             <div class="info-section">
                 <h3>About Foster Farms Energy Analysis</h3>
                 <p>
-                    Unity Energy provides comprehensive electrical field analysis across Foster Farms' operations. 
-                    Each site is monitored with dedicated study teams analyzing energy consumption, thermal patterns, 
-                    and voltage stability. Our multi-site approach enables facility managers to understand their electrical 
-                    systems and identify optimization opportunities across all locations.
+                This portal gives Foster Farms a site-by-site view of measured electrical field behavior. 
+                By monitoring transformer fields across each facility, Unity reveals how efficiently electrical energy 
+                is being delivered, where instability or burden may be developing, and which sites present the strongest 
+                opportunities for operational improvement.  
                 </p>
             </div>
         </section>
