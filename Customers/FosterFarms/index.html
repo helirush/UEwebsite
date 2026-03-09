@@ -324,10 +324,10 @@
         .efficiency-range {
             display: flex;
             justify-content: space-between;
-            gap: 18px;
-            width: 175px;
+            gap: 35px;
+            width: 270px;
             color: rgba(255, 255, 255, 0.80);
-            font-size: 0.88em;
+            font-size: 1.2em;
             font-style: italic;
             font-weight: 400;
             letter-spacing: 0.2px;
@@ -416,10 +416,11 @@
         }
 
         .fields-measured .count {
-            font-size: 1.55em;
+            font-size: 2.55em;
             font-weight: 700; /* not as bold */
             font-style: normal; /* count should NOT be italic */
             margin-bottom: 6px;
+            margin-top: -15px;
         }
 
         .fields-measured .label,
@@ -564,18 +565,18 @@
                         <div class="site-name">Livingston HQ</div>
                         <div class="site-location">Livingston, California</div>
                         <div class="site-efficiency-badge">
-                            <div class="efficiency-circle">83.1%</div>
+                            <div class="efficiency-circle" id="livingston-card-pf">83.1%</div>
                             <div class="efficiency-label">combined efficiency</div>
                             <div class="efficiency-range">
-                                <span>high = 90.3%</span>
-                                <span>low = 73.9%</span>
+                                <span id="livingston-card-high">high = 90.3%</span>
+                                <span id="livingston-card-low">low = 73.9%</span>
                             </div>
                         </div>
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
-                            <div class="count">Eight (8)</div>
-                            <div class="label">Transformer Fields</div>
+                            <div class="count">8</div>
+                            <div class="label">Transformer eFields</div>
                             <div class="status">Monitored</div>
                         </div>
                         <div class="latest-report">
@@ -593,7 +594,7 @@
                         <div class="site-name">Cherry Avenue</div>
                         <div class="site-location">Fresno, California</div>
                         <div class="site-efficiency-badge">
-                            <div class="efficiency-circle" id="cherry-card-pf">86.3%</div>
+                            <div class="efficiency-circle" id="cherry-card-pf">-</div>
                             <div class="efficiency-label">combined efficiency</div>
                             <div class="efficiency-range">
                                 <span id="cherry-card-high">high = —</span>
@@ -603,8 +604,8 @@
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
-                            <div class="count">Four (4)</div>
-                            <div class="label">Transformer Fields</div>
+                            <div class="count">4</div>
+                            <div class="label">Transformer eFields</div>
                             <div class="status">Monitored</div>
                         </div>
                         <div class="latest-report">
@@ -624,11 +625,15 @@
                         <div class="site-efficiency-badge">
                             <div class="efficiency-circle">N/A</div>
                             <div class="efficiency-label">combined efficiency</div>
+                            <div class="efficiency-range">
+                                <span id="belgravia-card-high">high = —</span>
+                                <span id="belgravia-card-low">low = —</span>
+                            </div>
                         </div>
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
-                            <div class="count">Zero (0)</div>
+                            <div class="count">0</div>
                             <div class="label">Transformer Fields</div>
                             <div class="status">Studies Pending</div>
                         </div>
@@ -673,6 +678,65 @@
             if (!grid) return null;
             const y = grid.getBoundingClientRect().top + (window.scrollY || 0) - FF_LOCK_OFFSET_PX;
             return Math.max(0, Math.round(y));
+        }
+
+        async function updateLivingstonCard() {
+            // Dynamically compute Livingston combined efficiency from each unit group's
+            // latest available Summaryboard. Only named transformer slots are counted
+            // (empty xfmr-name = unused template slot, excluded).
+            const pfEl   = document.getElementById('livingston-card-pf');
+            const highEl = document.getElementById('livingston-card-high');
+            const lowEl  = document.getElementById('livingston-card-low');
+            if (!pfEl) return;
+
+            try {
+                const cb = Date.now();
+                const indexRes = await fetch(`./Livingston_SIte/index.html?cb=${cb}`);
+                if (!indexRes.ok) return;
+
+                const indexDoc = new DOMParser().parseFromString(await indexRes.text(), 'text/html');
+
+                // Each <details> block = one unit group (Deli, Rendering, NCDC).
+                // Use the LAST active study link = most-recent available report for that unit.
+                const allPfs = [];
+
+                for (const block of Array.from(indexDoc.querySelectorAll('details'))) {
+                    const activeLinks = Array.from(block.querySelectorAll('a.study-btn[href]'));
+                    if (activeLinks.length === 0) continue;
+
+                    const href = activeLinks[activeLinks.length - 1]
+                        .getAttribute('href').replace(/^\.\//, '');
+                    if (!href) continue;
+
+                    const summaryRes = await fetch(`./Livingston_SIte/${href}?cb=${cb}`);
+                    if (!summaryRes.ok) continue;
+
+                    const summaryDoc = new DOMParser().parseFromString(await summaryRes.text(), 'text/html');
+
+                    for (let i = 1; i <= 4; i++) {
+                        // Skip unused template slots — real transformers always have a name
+                        const nameEl = summaryDoc.getElementById(`xfmr${i}-name`);
+                        if (!(nameEl?.textContent || '').trim()) continue;
+
+                        const pfValEl = summaryDoc.getElementById(`xfmr${i}-metric-pf`);
+                        const pf = parseFloat(String(pfValEl?.textContent || '').replace('%', '').trim());
+                        if (!Number.isFinite(pf) || pf <= 0) continue;
+
+                        allPfs.push(pf);
+                    }
+                }
+
+                if (allPfs.length > 0) {
+                    const avg  = allPfs.reduce((a, b) => a + b, 0) / allPfs.length;
+                    const high = Math.max(...allPfs);
+                    const low  = Math.min(...allPfs);
+                    pfEl.textContent  = `${avg.toFixed(1)}%`;
+                    if (highEl) highEl.textContent = `high = ${high.toFixed(1)}%`;
+                    if (lowEl)  lowEl.textContent  = `low = ${low.toFixed(1)}%`;
+                }
+            } catch (e) {
+                // Keep fallback values if fetch/parse fails
+            }
         }
 
         async function updateCherryAveCard() {
@@ -766,7 +830,8 @@
                 });
             }
 
-            // Keep Cherry Ave card fresh automatically
+            // Keep site cards fresh automatically
+            updateLivingstonCard();
             updateCherryAveCard();
         });
 
