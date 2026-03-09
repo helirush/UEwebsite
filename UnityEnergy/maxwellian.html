@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxwellian — Intelligence Brief Library — Unity Energy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: rgba(44, 62, 80, 1);
+            background: rgba(248, 249, 250, 1);
+        }
+
+        /* Banner */
+        .banner-wrapper {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            padding: 14px 20px;
+            text-align: center;
+        }
+        .banner-content {
+            color: rgba(250, 240, 160, 1);
+            font-size: 1.3em;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .banner-content .detail {
+            font-size: 0.85em;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+
+        /* Nav */
+        .nav-tabs-container {
+            background: rgba(240, 240, 240, 1);
+            padding: 20px 0 0px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 10;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 10px 20px;
+        }
+        .nav-tab-portal {
+            background: rgba(90, 110, 35, 1);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 600;
+            text-decoration: none;
+            border: 3px solid rgba(129, 163, 43, 1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-tab-portal:hover { background: rgba(49, 65, 0, 1); }
+        .nav-tab-portal.active {
+            background: rgba(49, 65, 0, 1);
+            border-color: rgba(250, 200, 0, 1);
+            color: rgba(250, 240, 160, 1);
+        }
+        .nav-tab-maxwellian {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 700;
+            text-decoration: none;
+            border: 3px solid rgba(255, 200, 50, 1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 16px rgba(255, 160, 0, 0.4);
+        }
+        .nav-tab-maxwellian:hover {
+            background: linear-gradient(135deg, rgba(200, 120, 0, 1) 0%, rgba(240, 160, 0, 1) 100%);
+            box-shadow: 0 0 28px rgba(255, 160, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        .nav-tab-maxwellian.active {
+            background: linear-gradient(135deg, rgba(140, 70, 0, 1) 0%, rgba(180, 100, 0, 1) 100%);
+            box-shadow: 0 0 12px rgba(255, 160, 0, 0.3);
+        }
+
+        /* Page hero */
+        .page-hero {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            padding: 60px 40px 50px;
+            text-align: center;
+            color: rgba(250, 240, 160, 1);
+        }
+        .page-hero h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .page-hero h1 span { color: rgba(255, 200, 50, 1); }
+        .page-hero .subtitle {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.3em;
+            font-style: italic;
+            opacity: 0.9;
+            max-width: 1200px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .page-hero .meta {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        /* Library container */
+        .library-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 30px;
+        }
+
+        .section-label {
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(129, 163, 43, 1);
+            margin-bottom: 25px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(129, 163, 43, 0.3);
+        }
+
+        /* Episode card */
+        .episode-card {
+            background: white;
+            border-radius: 16px;
+            border: 2px solid rgba(210, 220, 190, 1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        .episode-card:hover {
+            box-shadow: 0 8px 32px rgba(49, 65, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: stretch;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+        }
+
+        .episode-number {
+            background: rgba(255, 200, 50, 1);
+            color: rgba(49, 65, 0, 1);
+            font-size: 1.8em;
+            font-weight: 900;
+            width: 100px;
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+            letter-spacing: 1px;
+        }
+        .episode-number .ep-label {
+            font-size: 0.38em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .card-title-area {
+            padding: 20px 25px;
+            flex: 1;
+        }
+        .card-title-area h2 {
+            color: rgba(250, 240, 160, 1);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        .card-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .card-date {
+            color: rgba(180, 210, 100, 1);
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .type-badge {
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .type-standard  { background: rgba(129, 163, 43, 0.3); color: rgba(180, 220, 80, 1); border: 1px solid rgba(129, 163, 43, 0.5); }
+        .type-special   { background: rgba(200, 100, 0, 0.3); color: rgba(255, 180, 80, 1); border: 1px solid rgba(200, 100, 0, 0.5); }
+        .type-frontier  { background: rgba(80, 100, 200, 0.3); color: rgba(150, 170, 255, 1); border: 1px solid rgba(80, 100, 200, 0.5); }
+
+        .card-body {
+            padding: 25px 30px;
+        }
+        .card-description {
+            color: rgba(60, 80, 40, 1);
+            font-size: 0.97em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .card-tags {
+            margin-bottom: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: rgba(230, 240, 210, 1);
+            color: rgba(49, 65, 0, 1);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            font-weight: 600;
+        }
+
+        /* Action buttons */
+        .card-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn-read {
+            background: linear-gradient(135deg, rgba(129, 163, 43, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 12px rgba(129, 163, 43, 0.3);
+        }
+        .btn-read:hover {
+            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(129, 163, 43, 0.4);
+        }
+
+        .btn-audio {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 12px rgba(180, 100, 0, 0.35);
+        }
+        .btn-audio:hover {
+            background: linear-gradient(135deg, rgba(210, 120, 0, 1) 0%, rgba(250, 160, 0, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(180, 100, 0, 0.5);
+        }
+        .btn-audio.playing {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            box-shadow: 0 0 20px rgba(129, 163, 43, 0.5);
+        }
+
+        /* Audio panel */
+        .audio-panel {
+            display: none;
+            margin-top: 18px;
+            background: rgba(255, 248, 220, 1);
+            border: 2px solid rgba(220, 150, 0, 0.5);
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+        .audio-panel.open { display: block; }
+        .audio-panel-title {
+            font-size: 0.82em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(120, 70, 0, 1);
+            margin-bottom: 10px;
+        }
+        .audio-panel audio {
+            width: 100%;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+        .audio-summary-text {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.95em;
+            font-style: italic;
+            color: rgba(80, 50, 0, 1);
+            line-height: 1.7;
+            padding: 12px 16px;
+            background: rgba(255, 255, 240, 1);
+            border-left: 3px solid rgba(220, 150, 0, 1);
+            border-radius: 4px;
+        }
+        .audio-tts-note {
+            font-size: 0.8em;
+            color: rgba(140, 90, 0, 0.8);
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .audio-coming-soon {
+            font-size: 0.88em;
+            color: rgba(140, 90, 0, 0.9);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* Clerk footer */
+        .clerk-footer {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 30px 30px;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 16px;
+            border-left: 4px solid rgba(220, 150, 0, 0.7);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .clerk-footer p {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.05em;
+            font-style: italic;
+            color: rgba(49, 65, 0, 1);
+            line-height: 1.7;
+        }
+        .clerk-footer .sig {
+            margin-top: 12px;
+            text-align: right;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            color: rgba(250, 240, 160, 1);
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        /* ── Brief Viewer Modal ─────────────────────────────────────── */
+        .brief-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            animation: briefFadeIn 0.25s ease;
+        }
+        .brief-modal.active { display: flex; align-items: flex-start; justify-content: center; padding: 20px; }
+
+        @keyframes briefFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .brief-modal-content {
+            background: #fff;
+            border: 2px solid rgba(93, 112, 26, 1);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            animation: briefSlideDown 0.28s ease;
+            overflow: hidden;
+        }
+
+        @keyframes briefSlideDown {
+            from { transform: translateY(-40px); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
+
+        .brief-modal-header {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(93, 112, 26, 1) 100%);
+            padding: 16px 24px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            border-bottom: 3px solid rgba(129, 163, 43, 1);
+        }
+
+        .brief-modal-title {
+            color: rgba(250, 240, 160, 1);
+            font-size: 1.1em;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .brief-modal-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Unity Summary button */
+        .brief-unity-btn {
+            background: linear-gradient(135deg, rgba(160, 90, 0, 1) 0%, rgba(200, 130, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            border: 1px solid rgba(255, 200, 50, 0.6);
+            border-radius: 20px;
+            padding: 7px 16px;
+            font-size: 0.82em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+        .brief-unity-btn:hover {
+            background: linear-gradient(135deg, rgba(190, 110, 0, 1) 0%, rgba(230, 155, 0, 1) 100%);
+            box-shadow: 0 0 12px rgba(255, 160, 0, 0.5);
+        }
+        .brief-unity-btn.active {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            border-color: rgba(129, 163, 43, 0.8);
+            color: rgba(180, 220, 80, 1);
+        }
+
+        /* Zoom controls */
+        .brief-zoom-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 20px;
+            padding: 3px 8px;
+        }
+        .brief-zoom-btn {
+            color: rgba(255, 255, 255, 0.9);
+            background: none;
+            border: none;
+            font-size: 1.15em;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 1px 7px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .brief-zoom-btn:hover { color: rgba(255, 200, 50, 1); }
+        .brief-zoom-level {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.8em;
+            font-weight: 600;
+            min-width: 38px;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .brief-zoom-level:hover { color: rgba(255, 200, 50, 1); }
+
+        .brief-modal-close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0 4px;
+            line-height: 1;
+            opacity: 0.8;
+            transition: all 0.2s;
+            margin-left: 4px;
+        }
+        .brief-modal-close:hover { opacity: 1; transform: scale(1.15); }
+
+        /* Modal audio panel */
+        .brief-audio-panel {
+            display: none;
+            background: rgba(255, 248, 220, 1);
+            border-bottom: 2px solid rgba(220, 150, 0, 0.4);
+            padding: 16px 24px;
+            flex-shrink: 0;
+        }
+        .brief-audio-panel.open { display: block; }
+        .brief-audio-panel audio {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+        .brief-audio-text {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.93em;
+            font-style: italic;
+            color: rgba(80, 50, 0, 1);
+            line-height: 1.65;
+            padding: 10px 14px;
+            background: rgba(255, 255, 240, 1);
+            border-left: 3px solid rgba(220, 150, 0, 1);
+            border-radius: 4px;
+        }
+        .brief-audio-note {
+            font-size: 0.8em;
+            color: rgba(140, 90, 0, 0.85);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .brief-modal-iframe {
+            width: 100%;
+            flex: 1;
+            border: none;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner -->
+    <div class="banner-wrapper">
+        <div class="banner-content">
+            INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+        </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="nav-tabs-container">
+        <div class="nav-tabs">
+            <a href="about-unity.html"            class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html"            class="nav-tab-portal">Our Systems</a>
+            <a href="products-services.html"      class="nav-tab-portal">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Electrical Energy Field Story</a>
+            <a href="contact-us.html"             class="nav-tab-portal">Contact Us</a>
+            <a href="index.html#portals"          class="nav-tab-portal">Customer Portals</a>
+            <a href="maxwellian.html"             class="nav-tab-maxwellian active">Maxwellian</a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="page-hero">
+        <h1><span>Maxwellian</span> Intelligence Brief</h1>
+        <p class="subtitle">Strategic intelligence published by Agent Oliver — curated and edited by Clerk Maxwell for Unity Energy leadership.</p>
+        <p class="meta">Episode Archive · Click any episode to read the brief or hear Unity's summary</p>
+    </div>
+
+    <!-- Library -->
+    <div class="library-container" id="episodeLibrary">
+        <div class="section-label">Episode Archive — Loading...</div>
+    </div>
+
+    <!-- Clerk Maxwell closing note -->
+    <div class="library-container">
+        <div class="clerk-footer">
+            <p>"Each edition of this brief is an act of observation — a field measurement of the market landscape Unity is navigating. Intelligence is only useful if it sharpens the next decision. Read carefully. Act decisively."</p>
+            <p class="sig">— Clerk Maxwell, Editor · Maxwellian Intelligence Brief · Unity Energy</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
+    </footer>
+
+    <script>
+        // ── Load library from JSON and render episode cards ──────────────────
+        async function loadLibrary() {
+            const container = document.getElementById('episodeLibrary');
+            try {
+                const res = await fetch('maxwellian_library.json?v=' + Date.now());
+                const data = await res.json();
+                renderLibrary(data, container);
+            } catch (e) {
+                container.innerHTML = '<p style="color:red;">Error loading episode library: ' + e.message + '</p>';
+            }
+        }
+
+        function typeBadge(type) {
+            if (type === 'special')       return '<span class="type-badge type-special">Special Edition</span>';
+            if (type === 'frontier-test') return '<span class="type-badge type-frontier">Frontier Model Test</span>';
+            return '<span class="type-badge type-standard">Standard Edition</span>';
+        }
+
+        function renderLibrary(data, container) {
+            const episodes = [...data.episodes].reverse(); // newest first
+            const total = data.episodes.length;
+
+            let html = `<div class="section-label">${total} Episode${total !== 1 ? 's' : ''} Published — Newest First</div>`;
+
+            for (const ep of episodes) {
+                const tags = ep.tags.map(t => `<span class="tag">${t}</span>`).join('');
+                const hasAudio  = ep.audio_file !== null;
+                const audioPanel = buildAudioPanel(ep, hasAudio);
+                const audioBtn   = `<button class="btn-audio" onclick="toggleAudio(${ep.episode})" id="audioBtn${ep.episode}">
+                    🎧 Hear Unity's Summary
+                </button>`;
+
+                // Store audio data keyed by episode number for the modal
+                window.BRIEF_AUDIO = window.BRIEF_AUDIO || {};
+                window.BRIEF_AUDIO[ep.episode] = {
+                    summary: ep.audio_summary || '',
+                    file:    ep.audio_file    || ''
+                };
+
+                html += `
+                <div class="episode-card" id="card${ep.episode}">
+                    <div class="card-header">
+                        <div class="episode-number">
+                            <span class="ep-label">Episode</span>
+                            ${String(ep.episode).padStart(2, '0')}
+                        </div>
+                        <div class="card-title-area">
+                            <h2>${ep.title}</h2>
+                            <div class="card-meta">
+                                <span class="card-date">${formatDate(ep.date)}</span>
+                                ${typeBadge(ep.type)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">${ep.description}</p>
+                        <div class="card-tags">${tags}</div>
+                        <div class="card-actions">
+                            <button class="btn-read" onclick="openBriefModal('${ep.brief_file}', '${ep.title}', ${ep.episode})">📄 Read Brief</button>
+                            ${audioBtn}
+                        </div>
+                        ${audioPanel}
+                    </div>
+                </div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function buildAudioPanel(ep, hasAudio) {
+            const audioSrc = ep.audio_file ? ep.audio_file : '';
+            const audioEl  = hasAudio
+                ? `<audio id="audio${ep.episode}" src="${audioSrc}" preload="none"></audio>`
+                : '';
+            const ttsNote  = hasAudio
+                ? `<p class="audio-tts-note">🔊 Unity Faraday voice synthesis — Tap play to hear the episode summary.</p>`
+                : `<p class="audio-coming-soon">🔧 Unity Faraday audio summary being prepared for this episode. The text summary is available below.</p>`;
+
+            return `
+            <div class="audio-panel" id="audioPanel${ep.episode}">
+                <div class="audio-panel-title">🎧 Unity's Summary — Episode ${ep.episode}</div>
+                ${audioEl}
+                ${ttsNote}
+                <div class="audio-summary-text">${ep.audio_summary}</div>
+            </div>`;
+        }
+
+        function toggleAudio(epNum) {
+            const panel  = document.getElementById('audioPanel' + epNum);
+            const btn    = document.getElementById('audioBtn' + epNum);
+            const audio  = document.getElementById('audio' + epNum);
+            const isOpen = panel.classList.contains('open');
+
+            // Close all other panels
+            document.querySelectorAll('.audio-panel.open').forEach(p => {
+                p.classList.remove('open');
+                const id = p.id.replace('audioPanel', '');
+                const b  = document.getElementById('audioBtn' + id);
+                const a  = document.getElementById('audio' + id);
+                if (b) { b.textContent = '🎧 Hear Unity\'s Summary'; b.classList.remove('playing'); }
+                if (a) { a.pause(); a.currentTime = 0; }
+            });
+
+            if (!isOpen) {
+                panel.classList.add('open');
+                btn.innerHTML  = '✕ Close Summary';
+                btn.classList.add('playing');
+                if (audio) { audio.play(); }
+            }
+        }
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr + 'T12:00:00');
+            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Load on page ready
+        loadLibrary();
+
+        // ── Brief Viewer Modal ──────────────────────────────────────────
+        let briefZoom = 1.0;
+
+        function openBriefModal(url, title, epNum) {
+            const audio   = window.BRIEF_AUDIO && window.BRIEF_AUDIO[epNum] ? window.BRIEF_AUDIO[epNum] : {};
+            const summary = audio.summary || '';
+            const file    = audio.file    || '';
+
+            // Populate audio panel
+            const ac = document.getElementById('briefAudioContent');
+            const audioEl = file
+                ? `<audio id="briefAudio" src="${file}" preload="none" controls></audio>`
+                : `<p class="brief-audio-note">🔧 Audio synthesis being prepared — text summary below.</p>`;
+            ac.innerHTML = `${audioEl}<div class="brief-audio-text">${summary}</div>`;
+
+            document.getElementById('briefModalTitle').textContent = title;
+
+            // Reset state
+            briefZoom = 1.0;
+            document.getElementById('briefZoomLevel').textContent = '100%';
+            document.getElementById('briefAudioPanel').classList.remove('open');
+            document.getElementById('briefUnityBtn').classList.remove('active');
+
+            const iframe = document.getElementById('briefIframe');
+            iframe.src = url;
+            document.getElementById('briefModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBriefModal() {
+            const briefAudio = document.getElementById('briefAudio');
+            if (briefAudio) { briefAudio.pause(); briefAudio.currentTime = 0; }
+            document.getElementById('briefModal').classList.remove('active');
+            document.getElementById('briefAudioPanel').classList.remove('open');
+            document.getElementById('briefUnityBtn').classList.remove('active');
+            document.getElementById('briefIframe').src = '';
+            document.body.style.overflow = '';
+        }
+
+        function toggleBriefAudio() {
+            const panel = document.getElementById('briefAudioPanel');
+            const btn   = document.getElementById('briefUnityBtn');
+            const isOpen = panel.classList.contains('open');
+            panel.classList.toggle('open');
+            btn.classList.toggle('active');
+            const briefAudio = document.getElementById('briefAudio');
+            if (!isOpen && briefAudio) { briefAudio.play(); }
+            else if (isOpen && briefAudio) { briefAudio.pause(); }
+        }
+
+        function zoomBrief(delta) {
+            briefZoom = Math.min(3.0, Math.max(0.4, +(briefZoom + delta).toFixed(1)));
+            applyBriefZoom();
+        }
+
+        function resetBriefZoom() {
+            briefZoom = 1.0;
+            applyBriefZoom();
+        }
+
+        function applyBriefZoom() {
+            document.getElementById('briefZoomLevel').textContent = Math.round(briefZoom * 100) + '%';
+            const iframe = document.getElementById('briefIframe');
+            try {
+                // Same-origin: apply zoom directly to the document body
+                if (iframe.contentDocument && iframe.contentDocument.body) {
+                    iframe.contentDocument.body.style.zoom = briefZoom;
+                }
+            } catch(e) {
+                // Cross-origin fallback: scale the iframe element itself
+                iframe.style.transform = `scale(${briefZoom})`;
+                iframe.style.transformOrigin = 'top center';
+            }
+        }
+
+        // Re-apply zoom when iframe reloads (preserves zoom level across nav)
+        document.getElementById('briefIframe').addEventListener('load', function() {
+            if (briefZoom !== 1.0) applyBriefZoom();
+        });
+
+        // ESC key closes the modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeBriefModal();
+        });
+
+        // Click on backdrop closes the modal
+        document.getElementById('briefModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBriefModal();
+        });
+    </script>
+
+    <!-- Brief Viewer Modal -->
+    <div id="briefModal" class="brief-modal">
+        <div class="brief-modal-content">
+            <div class="brief-modal-header">
+                <h2 class="brief-modal-title" id="briefModalTitle">Intelligence Brief</h2>
+                <div class="brief-modal-actions">
+                    <button class="brief-unity-btn" id="briefUnityBtn" onclick="toggleBriefAudio()">🎧 Unity's Summary</button>
+                    <div class="brief-zoom-group">
+                        <button class="brief-zoom-btn" onclick="zoomBrief(-0.1)" title="Zoom out">&#8722;</button>
+                        <span class="brief-zoom-level" id="briefZoomLevel" onclick="resetBriefZoom()" title="Click to reset">100%</span>
+                        <button class="brief-zoom-btn" onclick="zoomBrief(0.1)" title="Zoom in">+</button>
+                    </div>
+                    <button class="brief-modal-close" onclick="closeBriefModal()">&times;</button>
+                </div>
+            </div>
+            <div class="brief-audio-panel" id="briefAudioPanel">
+                <div id="briefAudioContent"></div>
+            </div>
+            <iframe id="briefIframe" class="brief-modal-iframe" src="" title="Intelligence Brief"></iframe>
+        </div>
+    </div>
+</body>
+</html>
