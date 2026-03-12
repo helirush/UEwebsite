@@ -1,0 +1,62 @@
+{
+  "series": "e-Insights",
+  "tagline": "Unity Faraday in conversation with Clerk Maxwell, Chief Scientist",
+  "description": "A Unity Energy audio series. Unity Faraday asks the questions. Clerk Maxwell — physicist, mathematician, and Chief Scientist of the Maxwellian Network — reveals the story behind the field.",
+  "episodes": [
+    {
+      "episode": 1,
+      "title": "The Electrogram",
+      "date": "2025-10-17",
+      "type": "standard",
+      "voices": ["Unity Faraday", "Clerk Maxwell"],
+      "description": "The opening conversation. Unity asks Clerk what the industrial electrical field actually is — and why, after more than a century of generating and billing for electricity, we have never truly understood what happens inside the field. The answer goes further back than you might expect.",
+      "tags": ["field behavior", "reactive energy", "introduction", "electromagnetic field", "Unity Energy"],
+      "audio_file": "maxwellian/insights/EP01_eInsights_251017.mp3",
+      "coming_soon": false
+    },
+    {
+      "episode": 2,
+      "title": "Q&A — The Field Answers",
+      "date": "2025-10-24",
+      "type": "standard",
+      "voices": ["Unity Faraday", "Clerk Maxwell"],
+      "description": "A deeper session. Unity brings the questions engineers and facility managers actually ask: What is reactive energy, really? Why does the meter tell one story and the equipment tell another? Clerk answers from first principles — the physics that has been in place since 1865, finally applied to the 480-volt floor.",
+      "tags": ["reactive energy", "power factor", "Q&A", "facility managers", "engineering", "MPTS"],
+      "audio_file": "maxwellian/insights/EP02_eInsights_251024.mp3",
+      "coming_soon": false
+    },
+    {
+      "episode": 3,
+      "title": "The Harmonic Story",
+      "date": "2025-11-03",
+      "type": "standard",
+      "voices": ["Unity Faraday"],
+      "description": "Unity tells the harmonic story alone — what harmonics are, where they come from, and why they matter to every industrial facility that runs variable frequency drives, switching equipment, or non-linear loads. This is the invisible layer that every power bill hides.",
+      "tags": ["harmonics", "THD", "power quality", "variable frequency drives", "industrial loads"],
+      "audio_file": "maxwellian/insights/EP03_eInsights_251103.mp3",
+      "coming_soon": false
+    },
+    {
+      "episode": "3a",
+      "title": "Harmonic ROI — What the Cleanup Is Worth",
+      "date": "2025-11-03",
+      "type": "standard",
+      "voices": ["Unity Faraday", "Clerk Maxwell"],
+      "description": "The second part of the harmonic episode. Clerk and Unity work through the economics: what harmonic distortion actually costs a facility in heat, equipment stress, wasted capacity, and shortened transformer life — and what a harmonized field is worth in dollars per year.",
+      "tags": ["harmonics", "ROI", "economics", "transformer life", "thermal burden", "MPTS"],
+      "audio_file": "maxwellian/insights/EP03a_eInsights_251103.mp3",
+      "coming_soon": false
+    },
+    {
+      "episode": 4,
+      "title": "Nobody Ever Taught the Machines to Play Together",
+      "date": "2026-03-12",
+      "type": "special",
+      "voices": ["Unity Faraday", "Clerk Maxwell"],
+      "description": "Clerk traces the idea of harmony from Pythagoras — who discovered mathematical ratios in vibrating strings 2,500 years ago — to the industrial electrical field, where every device has its own music and nobody has ever entered as a conductor. Until now. This is the philosophical foundation of why Unity Energy exists.",
+      "tags": ["music and resonance", "field harmony", "Pythagoras", "industrial orchestration", "Unity philosophy", "founder language"],
+      "audio_file": "maxwellian/insights/EP04_eInsights_260312.mp3",
+      "coming_soon": false
+    }
+  ]
+}

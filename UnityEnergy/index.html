@@ -125,7 +125,9 @@
             font-size: 2.0em;
             padding: 0%;
             font-weight: 700;
-            margin-right: 30px;
+            margin-right: -60px;
+            width: 700px;
+            text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
             color: rgb(255, 255, 255);
         }
@@ -167,24 +169,52 @@
             filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
         }
 
-        .clerk-button {
-            background: rgb(255, 255, 255);
-            color: rgba(49, 65, 0, 1);
-            padding: 15px 35px;
-            border-radius: 50px;
-            font-size: 1em;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            margin-top: 30px;
+        .hero-button-stack {
+            width: 500px;
             margin-right: 50px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .clerk-button {
+            background: linear-gradient(160deg,
+                rgba(255, 252, 195, 1) 0%,
+                rgba(248, 220, 80, 1)  55%,
+                rgba(218, 175, 20, 1) 100%);
+            color: rgba(40, 55, 0, 1);
+            padding: 15px 35px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border: 2px solid rgba(190, 155, 20, 0.85);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.3),
+                        0 2px 10px rgba(210, 170, 0, 0.35);
+            width: 90%;
+            text-align: center;
         }
 
         .clerk-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            background: linear-gradient(160deg,
+                rgba(255, 255, 215, 1) 0%,
+                rgba(255, 230, 90, 1)  55%,
+                rgba(230, 185, 30, 1) 100%);
+            box-shadow: 0 0 22px rgba(255, 220, 40, 0.85),
+                        0 0 50px rgba(255, 200, 0, 0.45),
+                        0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(220, 185, 30, 1);
+        }
+
+        .clerk-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 0 32px rgba(255, 220, 40, 1),
+                        0 0 70px rgba(255, 200, 0, 0.6),
+                        0 4px 14px rgba(0,0,0,0.3);
         }
 
         .video-modal {
@@ -265,6 +295,153 @@
             margin-right: auto;
             text-align: center;
         }
+        .reference-panel-button {
+            background: linear-gradient(160deg,
+                rgba(255, 252, 195, 1) 0%,
+                rgba(248, 220, 80, 1)  55%,
+                rgba(218, 175, 20, 1) 100%);
+            color: rgba(40, 55, 0, 1);
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border: 2px solid rgba(190, 155, 20, 0.85);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.3),
+                        0 2px 10px rgba(210, 170, 0, 0.35);
+            margin-top: 0;
+            margin-right: 0;
+            width: 50%;
+            text-align: center;
+        }
+        .reference-panel-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(160deg,
+                rgba(255, 255, 215, 1) 0%,
+                rgba(255, 230, 90, 1)  55%,
+                rgba(230, 185, 30, 1) 100%);
+            box-shadow: 0 0 22px rgba(255, 220, 40, 0.85),
+                        0 0 50px rgba(255, 200, 0, 0.45),
+                        0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(220, 185, 30, 1);
+        }
+        .reference-panel-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 0 32px rgba(255, 220, 40, 1),
+                        0 0 70px rgba(255, 200, 0, 0.6),
+                        0 4px 14px rgba(0,0,0,0.3);
+        }
+        .reference-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .reference-modal.active {
+            display: flex;
+        }
+        .reference-modal-content {
+            width: min(980px, 96vw);
+            max-height: 90vh;
+            overflow: auto;
+            background: linear-gradient(135deg, rgba(244, 248, 236, 1) 0%, rgba(234, 242, 220, 1) 100%);
+            border: 2px solid rgba(129, 163, 43, 0.55);
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            padding: 24px 24px 20px 24px;
+            position: relative;
+        }
+        .reference-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(129, 163, 43, 1);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .reference-close:hover {
+            background: rgba(178, 210, 53, 1);
+            color: rgba(49, 65, 0, 1);
+        }
+        .reference-title {
+            font-size: 2em;
+            color: rgba(49, 65, 0, 1);
+            font-weight: 700;
+            text-align: center;
+            margin: 4px 0 6px 0;
+        }
+        .reference-subtitle {
+            text-align: center;
+            color: rgba(66, 84, 14, 0.95);
+            font-size: 1.02em;
+            margin-bottom: 20px;
+        }
+        .reference-links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .reference-link-featured {
+            display: block;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            border-radius: 10px;
+            border: 2px solid rgba(178, 210, 53, 0.95);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 14px 16px;
+            color: rgba(250, 240, 160, 1);
+            margin-bottom: 14px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .reference-link-featured:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+        }
+        .reference-link-featured .reference-link-name {
+            color: rgba(250, 240, 160, 1);
+        }
+        .reference-link-featured .reference-link-desc {
+            color: rgba(240, 248, 210, 0.95);
+        }
+        .reference-link-card {
+            display: block;
+            text-decoration: none;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(129, 163, 43, 0.35);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            padding: 14px 14px 12px 14px;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .reference-link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+        }
+        .reference-link-name {
+            font-size: 1.08em;
+            font-weight: 700;
+            color: rgba(49, 65, 0, 1);
+            margin-bottom: 5px;
+        }
+        .reference-link-desc {
+            font-size: 0.95em;
+            color: rgba(80, 80, 80, 1);
+            line-height: 1.45;
+        }
 
         .portal-container {
             position: relative;
@@ -307,7 +484,7 @@
             filter: brightness(1.08) saturate(1.05);
         }
         .portal-container:active .portal-image {
-            filter: brightness(0.7) saturate(0.9);
+            filter: brightness(0.5) saturate(0.9);
         }
 
         .portal-overlay {
@@ -650,8 +827,10 @@
 
             <h2>Industrialized Power - Harmonized</h2>
            
-
-            <button class="clerk-button" onclick="openVideoModal()">🎬 Intro from our Chief Scientist</button>
+            <div class="hero-button-stack">
+                <button class="clerk-button" onclick="openVideoModal()">A Message from Our Chief Scientist</button>
+                <button class="reference-panel-button" onclick="openReferenceModal()">Electrical Industrial Reference Panel</button>
+            </div>
         </div>
     </div>
     <div class="video-modal" id="videoModal" onclick="closeVideoModal()">
@@ -663,6 +842,43 @@
             </video>
         </div>
     </div>
+    <div class="reference-modal" id="referenceModal" onclick="closeReferenceModal()">
+        <div class="reference-modal-content" onclick="event.stopPropagation()">
+            <button class="reference-close" onclick="closeReferenceModal()">✕ Close</button>
+            <h3 class="reference-title">Industry Intelligence Sources</h3>
+            <p class="reference-subtitle">Reference websites for power markets, utility policy, grid reliability, and infrastructure signals relevant to Unity work.</p>
+            <a class="reference-link-featured" href="https://www.gridstatus.io/live" target="_blank" rel="noopener noreferrer">
+                <div class="reference-link-name">North American Electrical System</div>
+                <div class="reference-link-desc">Real-time grid conditions and system status across major North American markets.</div>
+            </a>
+            <div class="reference-links-grid">
+                <a class="reference-link-card" href="https://www.eia.gov/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">U.S. EIA</div>
+                    <div class="reference-link-desc">Official U.S. energy statistics, electricity data, and annual outlooks.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.ferc.gov/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">FERC</div>
+                    <div class="reference-link-desc">Federal orders, market rules, transmission policy, and filings.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.nerc.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">NERC</div>
+                    <div class="reference-link-desc">Reliability standards, assessments, and risk reports for bulk power systems.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.energy.gov/gdo/grid-deployment-office" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">DOE Grid Deployment Office</div>
+                    <div class="reference-link-desc">Grid modernization programs, transmission investments, and resilience initiatives.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.pjm.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">PJM</div>
+                    <div class="reference-link-desc">Market operations, planning updates, and interconnection signals in the PJM region.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.caiso.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">CAISO</div>
+                    <div class="reference-link-desc">California market conditions, planning documents, and reliability advisories.</div>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation Tabs -->
     <div class="nav-tabs-container">
@@ -671,9 +887,9 @@
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
             <a href="electrical-energy-story.html" class="nav-tab-portal">Electrical Energy Field Story</a>
-            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
             <a href="#portals" class="nav-tab-portal">Customer Portals</a>
             <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
         <div class="nav-slogan">
             After 135 years - Science is turning Reactive Losses into Usable Capacity
@@ -695,6 +911,16 @@
             modal.classList.remove('active');
             video.pause();
             video.currentTime = 0;
+        }
+        function openReferenceModal() {
+            const modal = document.getElementById('referenceModal');
+            if (!modal) return;
+            modal.classList.add('active');
+        }
+        function closeReferenceModal() {
+            const modal = document.getElementById('referenceModal');
+            if (!modal) return;
+            modal.classList.remove('active');
         }
         
         function getPortalConfigSafe() {
@@ -795,6 +1021,11 @@
 
         // Handle Enter key in login form
         document.addEventListener('keydown', function(e) {
+            const refModal = document.getElementById('referenceModal');
+            if (e.key === 'Escape' && refModal && refModal.classList.contains('active')) {
+                closeReferenceModal();
+                return;
+            }
             const modal = document.getElementById('loginModal');
             if (modal && modal.classList.contains('active')) {
                 if (e.key === 'Enter') {
@@ -829,6 +1060,7 @@
                 </div>
             </div>
         </section>
+
     </div>
 
     <!-- Customer Portal Login Modal -->

@@ -792,11 +792,17 @@
                 const periodTextRaw = selectedItem?.querySelector('.study-period')?.textContent?.trim();
                 const hrefRaw = selectedItem?.querySelector('a.study-btn[href]')?.getAttribute('href') || '';
 
-                if (monthText) reportNameEl.textContent = monthText;
+                if (monthText) {
+                    // Extract just "Month YYYY" — strip trailing text like "Site Summaryboard"
+                    const monthMatch = monthText.match(/^([A-Za-z]+ \d{4})/);
+                    reportNameEl.textContent = monthMatch ? monthMatch[1] : monthText;
+                }
 
                 if (periodTextRaw) {
-                    // Drop internal study name in parentheses, keep customer-facing description
-                    reportDescEl.textContent = periodTextRaw.replace(/\s*\(.*\)\s*$/, '');
+                    // Drop internal study name in parentheses and resolution suffix (e.g. " • 1minRES")
+                    reportDescEl.textContent = periodTextRaw
+                        .replace(/\s*\(.*\)\s*$/, '')
+                        .replace(/\s*[•·].*$/, '');
                 }
 
                 // Attempt to compute the card PF from the linked Summaryboard
