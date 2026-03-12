@@ -781,7 +781,7 @@
     <div class="page-hero">
         <h1><span>Maxwellian</span> Intelligence Hub</h1>
         <p class="subtitle">Daily intelligence and foundational education — published by Agent Oliver and Clerk Maxwell for the Unity Energy team.</p>
-        <p class="meta">Intelligence Briefs &nbsp;·&nbsp; e-Insights Audio Series &nbsp;·&nbsp; Click to read, listen, or explore</p>
+        <p class="meta">Intelligence Briefs &nbsp;·&nbsp; eInsights Audio Series &nbsp;·&nbsp; Click to read, listen, or explore</p>
     </div>
 
     <!-- Two-column hub -->
@@ -790,7 +790,7 @@
         <!-- LEFT: MIB Library -->
         <div id="mibColumn">
             <div class="column-label column-label-mib">
-                📰 Intelligence Brief Archive
+                📰 e.Intelligence Brief Series
                 <span class="col-sub">Published by Agent Oliver · Edited by Clerk Maxwell</span>
             </div>
             <div class="column-cards" id="episodeLibrary">
@@ -801,7 +801,7 @@
         <!-- RIGHT: e-Insights -->
         <div id="insightsColumn">
             <div class="column-label column-label-insights">
-                🎙️ e-Insights Series
+                🎙️ e.Insights Podcast Series
                 <span class="col-sub">Unity Faraday × Clerk Maxwell · Educational Audio</span>
             </div>
             <div class="column-cards column-cards-insights" id="insightsLibrary">
@@ -853,7 +853,7 @@
             const episodes = [...data.episodes].reverse(); // newest first
             const total = data.episodes.length;
 
-            let html = `<div class="section-label">${total} Episode${total !== 1 ? 's' : ''} Published — Newest First</div>`;
+            let html = `<div class="section-label">${total} Brief${total !== 1 ? 's' : ''} Published — Newest First</div>`;
 
             for (const ep of episodes) {
                 const tags = ep.tags.map(t => `<span class="tag">${t}</span>`).join('');
@@ -874,7 +874,7 @@
                 <div class="episode-card" id="card${ep.episode}">
                     <div class="card-header">
                         <div class="episode-number">
-                            <span class="ep-label">Episode</span>
+                            <span class="ep-label">Brief</span>
                             ${String(ep.episode).padStart(2, '0')}
                         </div>
                         <div class="card-title-area">
@@ -911,7 +911,7 @@
 
             return `
             <div class="audio-panel" id="audioPanel${ep.episode}">
-                <div class="audio-panel-title">🎧 Unity's Summary — Episode ${ep.episode}</div>
+                <div class="audio-panel-title">🎧 Unity's Summary — Brief ${ep.episode}</div>
                 ${audioEl}
                 ${ttsNote}
                 <div class="audio-summary-text">${ep.audio_summary}</div>
@@ -949,10 +949,13 @@
 
         // ── Render e-Insights series ────────────────────────────────────────
         function renderInsights(data, container) {
+            const total    = data.episodes.length;
             const episodes = [...data.episodes].reverse();
-            let html = `<div class="section-label section-label-insights">${episodes.length} Episode${episodes.length !== 1 ? 's' : ''} &nbsp;·&nbsp; ${data.tagline}</div>`;
+            let html = `<div class="section-label section-label-insights">${total} Podcast${total !== 1 ? 's' : ''} &nbsp;·&nbsp; ${data.tagline}</div>`;
 
-            for (const ep of episodes) {
+            for (let i = 0; i < episodes.length; i++) {
+                const ep         = episodes[i];
+                const podcastNum = total - i;
                 const epId    = 'ins' + String(ep.episode).replace('.', '_');
                 const tags    = ep.tags.map(t => `<span class="insight-tag">${t}</span>`).join('');
                 const voices  = ep.voices.join(' × ');
@@ -970,7 +973,7 @@
                         <button class="btn-listen" onclick="toggleInsightAudio('${epId}')" id="listenBtn${epId}">▶ Listen</button>
                         <div class="insight-audio-panel" id="insightPanel${epId}">
                             <audio id="insightAudio${epId}" src="${ep.audio_file}" preload="none" controls></audio>
-                            <p class="insight-audio-note">🎙️ ${voices} &nbsp;·&nbsp; Unity Energy e-Insights Series</p>
+                            <p class="insight-audio-note">🎙️ ${voices} &nbsp;·&nbsp; Unity Energy eInsights Series</p>
                         </div>`;
                 }
 
@@ -978,8 +981,8 @@
                 <div class="insight-card">
                     <div class="insight-card-header">
                         <div class="insight-ep-num">
-                            <span class="ep-label">e-Insights</span>
-                            ${ep.episode}
+                            <span class="ep-label">Podcast</span>
+                            ${podcastNum}
                         </div>
                         <div class="insight-title-area">
                             <h3>${ep.title}</h3>

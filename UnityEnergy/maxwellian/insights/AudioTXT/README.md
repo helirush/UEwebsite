@@ -30,10 +30,11 @@ Output: `../eWebmaster/UnityEnergy/maxwellian/insights/EP04_eInsights_260312.mp3
 
 | Script | Audio | Voices | Status |
 |--------|-------|--------|--------|
-| EP01 — script not preserved | EP01_eInsights_251017.mp3 | Unity × Clerk | Audio exists |
-| EP02 — script not preserved | EP02_eInsights_251024.mp3 | Unity × Clerk | Audio exists |
-| EP03a_eInsights_251103_HarmonicROI.txt | EP03a_eInsights_251103.mp3 | Unity | Audio exists |
-| EP04_eInsights_260312_NobodyTaughtMachines.txt | EP04_eInsights_260312.mp3 | Unity × Clerk | **Pending generation** |
+| EP01_eInsights_251017_TheElectrogram.txt | EP01_eInsights_251017.mp3 | Unity × Clerk | Script not preserved |
+| EP02_eInsights_251024_TheFieldAnswers.txt | EP02_eInsights_251024.mp3 | Unity × Clerk | Script not preserved |
+| EP03_eInsights_251103_TheHarmonicStory.txt | EP03_eInsights_251103.mp3 | Unity only | Script not preserved |
+| EP03a_eInsights_251103_HarmonicROI.txt | EP03a_eInsights_251103.mp3 | Unity only | Script archived |
+| EP04_eInsights_260312_NobodyTaughtMachines.txt | EP04_eInsights_260312.mp3 | Unity × Clerk | **Live** |
 
 ## This Pattern Applies System-Wide
 
