@@ -784,6 +784,19 @@
         <p class="meta">Intelligence Briefs &nbsp;·&nbsp; eInsights Audio Series &nbsp;·&nbsp; Click to read, listen, or explore</p>
     </div>
 
+    <!-- ── VIDEO BACKGROUND WRAPPER — covers all content below hero ── -->
+    <div id="contentBgWrapper" style="position:relative; overflow:hidden;">
+
+      <!-- Energy field — back layer -->
+      <video autoplay muted loop playsinline
+             style="position:absolute; top:0; left:0; width:100%; height:100%;
+                    object-fit:cover; z-index:0; opacity:0.12; pointer-events:none;">
+        <source src="video/Visualize_ElectricalEnergyField_Xsection.mp4" type="video/mp4">
+      </video>
+
+      <!-- Content layer -->
+      <div style="position:relative; z-index:1;">
+
     <!-- Two-column hub -->
     <div class="hub-container">
 
@@ -823,6 +836,9 @@
         <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
+
+      </div><!-- end content layer -->
+    </div><!-- end contentBgWrapper -->
 
     <script>
         // ── Load both libraries in parallel ──────────────────────────────────
