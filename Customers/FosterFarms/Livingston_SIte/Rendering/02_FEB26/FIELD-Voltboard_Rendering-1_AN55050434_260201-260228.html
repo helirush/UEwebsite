@@ -250,15 +250,15 @@
   "voltage_avg": 473.4994220618147,
   "min_voltage": 455.334,
   "max_voltage": 490.866,
-  "voltage_std": 1.8378216482762868,
+  "voltage_std": 0.0,
   "voltage_spread": 35.53199999999998,
-  "power_factor": 0.817521650739004,
+  "power_factor": 0.85,
   "vhi_avg": 1.0001488316713798,
   "vhi_max": 1.038221068703218,
   "vhi_high_events": 0,
-  "voltage_dip_count": 1,
-  "pct_below_nominal": 99.96438535050751,
-  "estimated_running_amps": 1613.5079282216418,
+  "voltage_dip_count": 6,
+  "pct_below_nominal": 0.0,
+  "estimated_running_amps": 1711.7363333333333,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
   "data_resolution": "1minRES",
@@ -271,26 +271,26 @@
     {
       "id": "G1",
       "group_id": "G1",
-      "drop_count": 1,
-      "voltage_range": "455.3-490.9V",
-      "amp_range": "1219.5-2041.3A",
-      "delta_v": 0.07046122352113571,
-      "est_stall_amps": 1613.5079282216418,
-      "estimated_hp": 1387,
-      "classification": "Critical",
-      "risk": "Critical",
-      "days": 28,
-      "center_v": 473.4994220618147,
+      "drop_count": 6,
+      "voltage_range": "455.3-458.5V",
+      "amp_range": "1577.8-1796.2A",
+      "delta_v": 22.5,
+      "est_stall_amps": 405.0,
+      "estimated_hp": 270,
+      "classification": "SIGNIFICANT",
+      "risk": "SIGNIFICANT",
+      "days": 6,
+      "center_v": 456.90549999999996,
       "min_v": 455.334,
-      "max_v": 490.866,
-      "avg_amps": 1613.5079282216418,
+      "max_v": 458.477,
+      "avg_amps": 1711.7363333333333,
       "lrc_factor": 6.0,
-      "power_factor": 0.817521650739004,
+      "power_factor": 0.85,
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 473.4994220618147,
-  "delta_v_primary": 0.07046122352113571
+  "voltage_center": 456.90549999999996,
+  "delta_v_primary": 22.5
 };
 </script>
 </head>
@@ -351,7 +351,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">100.0%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -396,7 +396,7 @@
       
       <div class="param-item">
         <div class="param-label">Total Voltage Drops</div>
-        <div class="param-value" id="param-volt-drops">1</div>
+        <div class="param-value" id="param-volt-drops">6</div>
       </div>
       
       <div class="param-item">
@@ -406,12 +406,12 @@
 
       <div class="param-item">
         <div class="param-label">kWH Cost</div>
-        <div class="param-value" id="param-kwh-cost">0.1747 $/kWh</div>
+        <div class="param-value" id="param-kwh-cost">0.1200 $/kWh</div>
       </div>
       
       <div class="param-item">
         <div class="param-label">Power Factor Default</div>
-        <div class="param-value" id="param-power-factor">0.818</div>
+        <div class="param-value" id="param-power-factor">0.850</div>
       </div>
       
       <div class="param-item">
