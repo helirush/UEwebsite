@@ -394,6 +394,12 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 14px;
         }
+        .reference-featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+        }
         .reference-link-featured {
             display: block;
             text-decoration: none;
@@ -403,8 +409,9 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             padding: 14px 16px;
             color: rgba(250, 240, 160, 1);
-            margin-bottom: 14px;
+            margin-bottom: 0;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-height: 100%;
         }
         .reference-link-featured:hover {
             transform: translateY(-2px);
@@ -441,6 +448,12 @@
             font-size: 0.95em;
             color: rgba(80, 80, 80, 1);
             line-height: 1.45;
+        }
+        @media (max-width: 860px) {
+            .reference-featured-grid,
+            .reference-links-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .portal-container {
@@ -829,7 +842,7 @@
            
             <div class="hero-button-stack">
                 <button class="clerk-button" onclick="openVideoModal()">A Message from Our Chief Scientist</button>
-                <button class="reference-panel-button" onclick="openReferenceModal()">Electrical Industrial Reference Panel</button>
+                <button class="reference-panel-button" onclick="openReferenceModal()">Industrial Electrical Intelligence Sources</button>
             </div>
         </div>
     </div>
@@ -847,10 +860,16 @@
             <button class="reference-close" onclick="closeReferenceModal()">✕ Close</button>
             <h3 class="reference-title">Industry Intelligence Sources</h3>
             <p class="reference-subtitle">Reference websites for power markets, utility policy, grid reliability, and infrastructure signals relevant to Unity work.</p>
-            <a class="reference-link-featured" href="https://www.gridstatus.io/live" target="_blank" rel="noopener noreferrer">
-                <div class="reference-link-name">North American Electrical System</div>
-                <div class="reference-link-desc">Real-time grid conditions and system status across major North American markets.</div>
-            </a>
+            <div class="reference-featured-grid">
+                <a class="reference-link-featured" href="https://www.windy.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">U.S. Weather</div>
+                    <div class="reference-link-desc">Real-time weather, wind patterns, and storm movement for operational field awareness.</div>
+                </a>
+                <a class="reference-link-featured" href="https://www.gridstatus.io/live" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">North American Electrical System</div>
+                    <div class="reference-link-desc">Real-time grid conditions and system status across major North American markets.</div>
+                </a>
+            </div>
             <div class="reference-links-grid">
                 <a class="reference-link-card" href="https://www.eia.gov/" target="_blank" rel="noopener noreferrer">
                     <div class="reference-link-name">U.S. EIA</div>
@@ -886,13 +905,13 @@
             <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal">Electrical Energy Field Story</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">The Energy Field Story</a>
             <a href="#portals" class="nav-tab-portal">Customer Portals</a>
             <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
             <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
         <div class="nav-slogan">
-            After 135 years - Science is turning Reactive Losses into Usable Capacity
+            After 135 years, science can finally reclaim reactive losses as usable capacity
         </div>
 
     </div>
@@ -1039,7 +1058,7 @@
 
     <div class="container" style="max-width: 100%; padding: 0;">
         <section id="portals">
-            <h2 class="section-title">Customer Portals</h2>
+            <h2 class="section-title">Customer Electrical-Energy Portals</h2>
             
             <p class="welcome-text">
                 At Unity Energy, we transform how facilities understand their electrical systems. 
@@ -1051,8 +1070,8 @@
                 <img src="UnityPortalButton.png" alt="Unity Energy Portal" class="portal-image">
                 <div class="portal-overlay">
                     <div class="portal-button">
-                        <div class="subtitle1">industrial</div>
-                        <div class="title">480 volt</div>
+                        <div class="subtitle1">INDUSTRIAL</div>
+                        <div class="title">480V-3ph</div>
                         <div class="title">ENERGY FIELD</div>
                         <div class="title">BEHAVIOR</div>
                         <div class="subtitle">select to enter</div>
@@ -1068,11 +1087,11 @@
         <div class="login-modal-content" onclick="event.stopPropagation()">
             <button class="close-login" onclick="closeLoginModal()">✕</button>
             <div class="login-header">
-                <h2>Customer Portal Access</h2>
-                <p>Enter your company name to continue</p>
+                <h2>Unity Energy Portal </h2>
+                <p>Enter your Portal Credentials to continue</p>
             </div>
             <div class="login-form">
-                <input type="text" id="customerName" name="ue_company" placeholder="Company Name" autocomplete="off" autocapitalize="off" spellcheck="false">
+                <input type="text" id="customerName" name="ue_company" placeholder="Account Name" autocomplete="off" autocapitalize="off" spellcheck="false">
                 <input type="password" id="customerPassword" name="ue_password" placeholder="Portal Password" autocomplete="off" style="display:none;">
                 <div class="login-error" id="loginError"></div>
                 <button class="login-btn" onclick="attemptLogin()">Enter Portal →</button>

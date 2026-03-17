@@ -442,10 +442,11 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             white-space: nowrap;
+            order: 1;
         }
 
         .group-summary-eff {
-            margin-left: 14px;
+            margin-left: 12px;
             min-width: 148px;
             text-align: center;
             padding: 4px 14px;
@@ -458,6 +459,7 @@
             font-size: 1.65em;
             line-height: 1.1;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            order: 3;
         }
 
         .group-summary-eff.state-critical {
@@ -497,13 +499,15 @@
         }
 
         .group-summary-meta {
-            margin-left: 5px;
+            margin-left: auto;
             color: rgba(0, 0, 0, 1);
-            font-style: italic;
+            font-style: normal;
             font-weight: 500;
-            font-size: 1.40em;
+            font-size: 1.0em;
             line-height: 1.1;
             white-space: nowrap;
+            order: 2;
+            text-align: right;
         }
 
         details summary::-webkit-details-marker {
@@ -772,14 +776,14 @@
 
             <div class="highlights">
                 <div class="highlight-card">
-                    <div class="number">34 - Total</div>
+                    <div class="number">31 - Total</div>
                     <h3>Electrical Energy Fields</h3>
-                    <div class="tech-detail">34x 480v3ph industrial transfomers</div>
+                    <div class="tech-detail">31x 480v-3ph Industrial Transfomers</div>
                 </div>
                 <div class="highlight-card">
-                    <div class="number">8 - Measured</div>
+                    <div class="number">19 - Measured</div>
                     <h3>High-Resolution Monitoring</h3>
-                    <div class="tech-detail">8 of 34 Energy Fields (24% of Site)</div>
+                    <div class="tech-detail">19 of 31 Energy Fields (85% of Site)</div>
                 </div>
             </div>
         </section>
@@ -803,15 +807,31 @@
                                     <div class="study-name">January 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
-<a class="study-btn" href="Deli/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260101-260131_31d.html">Study Ready</a>
+<a class="study-btn" href="Deli/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260101-260131_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
 
                             <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">February 2026</div>
-                                    <div class="study-period">Monthly Full Analysis • 1minRES</div>
+                                    <div class="study-period">28-day Full Analysis • 1minRES</div>
                                 </div>
-<a class="study-btn" href="Deli/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260201-260228_28d.html">Study Ready</a>
+<a class="study-btn" href="Deli/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260201-260228_28d.html">VIEW ENERGY FIELDS</a>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
                             </div>
                         </div>
                     </details>
@@ -829,7 +849,7 @@
                                     <div class="study-name">January 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
-<a class="study-btn" href="Rendering/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260101-260131_31d.html">Study Ready</a>
+<a class="study-btn" href="Rendering/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260101-260131_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
 
                             <div class="study-item">
@@ -837,7 +857,23 @@
                                     <div class="study-name">February 2026</div>
                                     <div class="study-period">28-day Full Analysis • 1minRES</div>
                                 </div>
-<a class="study-btn" href="Rendering/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260201-260228_28d.html">Study Ready</a>
+<a class="study-btn" href="Rendering/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260201-260228_28d.html">VIEW ENERGY FIELDS</a>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
                             </div>
                         </div>
                     </details>
@@ -855,15 +891,132 @@
                                     <div class="study-name">January 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
-<a class="study-btn" href="NCDC/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260101-260131_31d.html">Study Ready</a>
+<a class="study-btn" href="NCDC/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260101-260131_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
 
                             <div class="study-item placeholder">
                                 <div class="study-info">
                                     <div class="study-name">February 2026</div>
-                                    <div class="study-period">Monthly Full Analysis • 1minRES</div>
+                                    <div class="study-period">28-day Full Analysis • 1minRES</div>
                                 </div>
-<a class="study-btn" href="NCDC/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260201-260228_28d.html">Study Ready</a>
+<a class="study-btn" href="NCDC/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260201-260228_28d.html">VIEW ENERGY FIELDS</a>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- MARCH/APRIL PLACEHOLDERS: new groups pending study generation -->
+                    <details class="pending-group-section">
+                        <summary>
+                            <span class="group-summary-name">PLANT1 GROUP (3x 2500kVA)</span>
+                            <span class="group-summary-eff state-unavailable">pending</span>
+                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                        </summary>
+                        <div class="study-list">
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="pending-group-section">
+                        <summary>
+                            <span class="group-summary-name">PLANT2 GROUP (3x 2500kVA)</span>
+                            <span class="group-summary-eff state-unavailable">pending</span>
+                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                        </summary>
+                        <div class="study-list">
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="pending-group-section">
+                        <summary>
+                            <span class="group-summary-name">BNR GROUP (2x 2500kVA)</span>
+                            <span class="group-summary-eff state-unavailable">pending</span>
+                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                        </summary>
+                        <div class="study-list">
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="pending-group-section">
+                        <summary>
+                            <span class="group-summary-name">FSO GROUP (3x 2500kVA)</span>
+                            <span class="group-summary-eff state-unavailable">pending</span>
+                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                        </summary>
+                        <div class="study-list">
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
+
+                            <div class="study-item placeholder">
+                                <div class="study-info">
+                                    <div class="study-name">April 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
                             </div>
                         </div>
                     </details>
@@ -1091,28 +1244,29 @@
 
             const latestStudy = findLatestStudy(section);
             if (!latestStudy) {
-                if (effEl) effEl.textContent = '--.-%';
+                if (effEl) effEl.textContent = '--.-%PF';
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
-                if (metaEl) metaEl.textContent = 'Group Efficiency - unavailable';
+                if (metaEl) metaEl.textContent = 'Group Efficiency - PENDING';
                 return;
             }
 
-            if (metaEl) metaEl.textContent = `Group Efficiency - ${latestStudy.token}`;
+            const tokenLabel = String(latestStudy.token || '').toUpperCase();
+            if (metaEl) metaEl.textContent = `Group Efficiency - ${tokenLabel}`;
 
             try {
                 const efficiencyPct = await fetchGroupEfficiencyPercent(latestStudy.href);
                 const state = classifyGroupStateFromPfPercent(efficiencyPct);
                 if (effEl) {
-                    effEl.textContent = `${efficiencyPct.toFixed(1)}%`;
+                    effEl.textContent = `${efficiencyPct.toFixed(1)}%PF`;
                     setGroupEfficiencyStateClass(effEl, state.key);
                     effEl.title = state.activePct == null
                         ? state.label
                         : `${state.label} (${state.activePct.toFixed(1)}% active)`;
                 }
             } catch (e) {
-                if (effEl) effEl.textContent = '--.-%';
+                if (effEl) effEl.textContent = '--.-%PF';
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
-                if (metaEl) metaEl.textContent = `Group Efficiency - ${latestStudy.token}`;
+                if (metaEl) metaEl.textContent = `Group Efficiency - ${tokenLabel}`;
             }
         }
 

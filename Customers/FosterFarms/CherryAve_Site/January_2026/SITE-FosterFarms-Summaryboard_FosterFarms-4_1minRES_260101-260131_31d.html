@@ -1422,9 +1422,6 @@
   <button class="header-info-btn" onclick="showSiteSummaryMPTSModal()" title="View Unity/MPTS optimized site metrics">
     ⚡ SITE SUMMARY - UNITY SYSTEM
   </button>
-  <button class="header-info-btn" onclick="showContactDetailsModal()" title="View Unity Energy contact information">
-    📞 UNITY CONTACT DETAILS
-  </button>
 </div>
 <div class="dashboard-grid layout-4">
 <div class="xfmr-card" id="xfmr1-card">
@@ -1432,7 +1429,7 @@
 <span id="xfmr1-name">T10 Air Chiller</span>
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">3000</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1512,7 +1509,7 @@
 <span id="xfmr2-name">T12 Main</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1592,7 +1589,7 @@
 <span id="xfmr3-name">T15 Fillet</span>
 <span id="xfmr3-kva-wrap"> (<span id="xfmr3-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1672,7 +1669,7 @@
 <span id="xfmr4-name">T16 Compressor</span>
 <span id="xfmr4-kva-wrap"> (<span id="xfmr4-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1997,7 +1994,7 @@
       let prefix = 'b';
       let patternLabel = 'Baseline';
       if (type === 'mpts') { prefix = 's'; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefix = 'm'; patternLabel = 'MPTS Variables'; }
+      else if (type === 'mpts-vars') { prefix = 'bt'; patternLabel = 'Base Target'; }
       else if (type === 'voltage') { prefix = 'v'; patternLabel = 'Voltage'; }
 
       // Simple filename: tid + prefix + month (no PF needed)

@@ -589,10 +589,28 @@
             line-height: 1.1;
             white-space: nowrap;
         }
+        .study-month-card {
+            border-left-width: 8px;
+            padding: 26px 28px;
+            background: linear-gradient(90deg, rgba(255, 235, 170, 0.38) 0%, rgba(252, 252, 252, 1) 32%, rgba(252, 252, 252, 1) 100%);
+        }
 
-        .site-month {
-            margin: 12px 0;
-            border-color: rgba(200, 180, 100, 0.3);
+        .study-month-top {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .study-month-card .site-summary-eff {
+            margin-left: 0;
+        }
+
+        .study-month-meta {
+            font-size: 1.02em;
+            color: rgba(85, 85, 85, 1);
+            font-style: italic;
             background: rgba(255, 255, 255, 0.7);
         }
 
@@ -779,6 +797,14 @@
                 gap: 15px;
                 align-items: flex-start;
             }
+
+            .study-month-card {
+                padding: 22px 18px;
+            }
+
+            .study-month-top {
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -836,9 +862,9 @@
                     <div class="tech-detail">4x 480v : 2x 4160v : 2x 208v</div>
                 </div>
                 <div class="highlight-card">
-                    <div class="number">Four (4) Energy Fields</div>
-                    <h3> Streaming HighRes Data</h3>
-                    <div class="tech-detail">4x 480v approx.80% site</div>
+                    <div class="number">4 - Measured</div>
+                    <h3> High-Resolution Monitoring</h3>
+                    <div class="tech-detail">4 of 8 Energy Fields (~80% of site)</div>
                 </div>
             </div>
         </section>
@@ -850,80 +876,62 @@
                     <h2 class="library-title">📊 Cherry Avenue Site Studies</h2>
 
                     <details>
-                        <summary>Full Studies 2026</summary>
+                        <!-- MAINTENANCE RULE:
+                             Whenever a new monthly Cherry study is moved into eWebmaster,
+                             update this Full Studies section immediately:
+                             1) month status row (efficiency + label),
+                             2) summaryboard study link/button state,
+                             3) period/source text to match the published report. -->
+                        <summary>2026 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
                         <div class="study-list month-study-list">
-                            <details class="site-month">
-                                <summary>
-                                    <span class="site-summary-name">February 2026</span>
-                                    <span class="site-summary-eff state-unavailable">--.-%</span>
-                                    <span class="site-summary-meta">Site Efficiency - pending</span>
-                                </summary>
-                                <div class="study-list month-study-list">
-                                    <div class="study-item placeholder">
-                                        <div class="study-info">
-                                            <div class="study-name">February 2026 Site Summaryboard</div>
-                                            <div class="study-period">Monthly Full Site Analysis • pending release</div>
-                                        </div>
-                                        <a href="#" class="study-btn disabled">Pending</a>
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">FEBRUARY 2026</span>
+                                        <span class="site-summary-eff state-good">86.3% PF</span>
                                     </div>
+                                    <div class="study-month-meta">28-day Full Site Analysis • 1minRES • source: February Summaryboard</div>
                                 </div>
-                            </details>
+                                <a href="./February_2026/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
 
-                            <details class="site-month">
-                                <summary>
-                                    <span class="site-summary-name">January 2026</span>
-                                    <span class="site-summary-eff state-good">84.7%</span>
-                                    <span class="site-summary-meta">Site Efficiency</span>
-                                </summary>
-                                <div class="study-list month-study-list">
-                                    <div class="study-item">
-                                        <div class="study-info">
-                                            <div class="study-name">January 2026 Site Summaryboard</div>
-                                            <div class="study-period">31-day Full Site Analysis • 1minRES</div>
-                                        </div>
-                                        <a href="./January_2026/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260101-260131_31d.html" class="study-btn">Study Ready</a>
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">JANUARY 2026</span>
+                                        <span class="site-summary-eff state-good">84.7% PF</span>
                                     </div>
+                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: January Summaryboard</div>
                                 </div>
-                            </details>
+                                <a href="./January_2026/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260101-260131_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
                         </div>
                     </details>
 
                     <details>
-                        <summary>Full Studies 2025</summary>
+                        <summary>2025 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
                         <div class="study-list month-study-list">
-                            <details class="site-month">
-                                <summary>
-                                    <span class="site-summary-name">November 2025</span>
-                                    <span class="site-summary-eff state-good">85.9%</span>
-                                    <span class="site-summary-meta">Site Efficiency</span>
-                                </summary>
-                                <div class="study-list month-study-list">
-                                    <div class="study-item">
-                                        <div class="study-info">
-                                            <div class="study-name">November 2025 Site Summaryboard</div>
-                                            <div class="study-period">30-day Full Site Analysis • 1minRES</div>
-                                        </div>
-                                        <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">Study Ready</a>
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">NOVEMBER 2025</span>
+                                        <span class="site-summary-eff state-good">85.9% PF</span>
                                     </div>
+                                    <div class="study-month-meta">30-day Full Site Analysis • 1minRES • source: November Summaryboard</div>
                                 </div>
-                            </details>
+                                <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
 
-                            <details class="site-month">
-                                <summary>
-                                    <span class="site-summary-name">October 2025</span>
-                                    <span class="site-summary-eff state-good">86.9%</span>
-                                    <span class="site-summary-meta">Site Efficiency</span>
-                                </summary>
-                                <div class="study-list month-study-list">
-                                    <div class="study-item">
-                                        <div class="study-info">
-                                            <div class="study-name">October 2025 Site Summaryboard</div>
-                                            <div class="study-period">31-day Full Site Analysis • 1minRES</div>
-                                        </div>
-                                        <a href="./SITE-FosterFarms-Summaryboard_CherryAve-4_1minRES_251001-251031_31d.html" class="study-btn">Study Ready</a>
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">OCTOBER 2025</span>
+                                        <span class="site-summary-eff state-good">86.9% PF</span>
                                     </div>
+                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: October Summaryboard</div>
                                 </div>
-                            </details>
+                                <a href="./SITE-FosterFarms-Summaryboard_CherryAve-4_1minRES_251001-251031_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
                         </div>
                     </details>
 
