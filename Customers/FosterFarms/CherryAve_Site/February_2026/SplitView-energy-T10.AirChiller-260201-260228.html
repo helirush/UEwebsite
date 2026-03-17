@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T10.AirChiller - ENERGY Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1128 100%);
+            padding: 12px 20px;
+            border-bottom: 2px solid #64b5f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            color: #f9d70b;
+            font-weight: 500;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.5);
+            transform: translateY(-1px);
+        }
+        
+        .split-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 50px);
+            position: relative;
+        }
+        
+        .pattern-image-container {
+            text-align: center;
+            padding: 20px;
+            background: #0f1629;
+            border-bottom: 4px solid #64b5f6;
+            flex-shrink: 0;
+            width: 100%;
+            height: 350px;
+            overflow: auto;
+        }
+        
+        .pattern-image-container img {
+            width: 95%;
+            max-width: 95%;
+            height: auto;
+            border: 2px solid #5D701A;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+        
+        .pattern-image-container p {
+            color: #888;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        
+        .pattern-image-container img {
+            cursor: pointer;
+        }
+        
+        .pattern-image-container {
+            position: relative;
+        }
+        
+        .fullsize-btn {
+            position: absolute;   /* anchor within the pattern container */
+            top: 10px;
+            right: 20px;         /* move to top-right to avoid overlapping other buttons */
+            left: auto;
+            transform: none;
+            background: linear-gradient(135deg, #5D701A 0%, #4a5a15 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(93, 112, 26, 0.3);
+            z-index: 10;
+            margin: 0;            /* no negative margin */
+        }
+        
+        .fullsize-btn:hover {
+            background: linear-gradient(135deg, #6d8520 0%, #5D701A 100%);
+            box-shadow: 0 4px 12px rgba(93, 112, 26, 0.5);
+            transform: translateY(-1px);
+        }
+        
+        /* Fullscreen overlay */
+        .image-fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 14, 39, 0.98);
+            z-index: 9999;
+            overflow: auto;
+        }
+        
+        .image-fullscreen-overlay.active {
+            display: block;
+        }
+        
+        .fullscreen-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px 40px 40px;
+        }
+        
+        .fullscreen-content img {
+            max-width: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+            border: 2px solid #5D701A;
+            border-radius: 8px;
+        }
+        
+        .fullscreen-content p {
+            color: #888;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .close-fullscreen-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
+            z-index: 10000;
+        }
+        
+        .close-fullscreen-btn:hover {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.5);
+            transform: translateY(-1px);
+        }
+        
+        .bottom-section {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .markdown-pane {
+            width: 725px;
+            background: #0f1629;
+            overflow-y: auto;
+            border-right: 4px solid #64b5f6;
+            padding: 30px;
+            flex-shrink: 0;
+        }
+        
+        
+        .dashboard-pane {
+            flex: 1;
+            background: #0a0e27;
+            overflow-y: auto;
+            min-width: 400px;
+            position: relative;
+        }
+        
+        .dashboard-iframe-container {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .dashboard-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 800px;
+            border: none;
+            display: block;
+        }
+        
+        /* Markdown Styling - Voltage Blue Theme */
+        .markdown-content h1 {
+            color: rgb(249,215,11);
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a3f5f;
+        }
+        
+        .markdown-content h2 {
+            color: #64b5f6;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content h3 {
+            color: #90caf9;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .markdown-content p {
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #b0b0b0;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #b0b0b0;
+        }
+        
+        .markdown-content code {
+            background: #1a1f3a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #2fa4ff;
+        }
+        
+        .markdown-content pre {
+            background: #1a1f3a;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .markdown-content details {
+            margin-bottom: 20px;
+            border: 1px solid #2a3f5f;
+            border-radius: 6px;
+            background: #1a1f3a;
+        }
+        
+        .markdown-content summary {
+            padding: 12px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64b5f6;
+            user-select: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        
+        .markdown-content summary:hover {
+            background: #2a3f5f;
+        }
+        
+        .markdown-content details[open] summary {
+            border-bottom: 1px solid #2a3f5f;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content details > *:not(summary) {
+            padding: 0 15px 15px 15px;
+        }
+        
+        /* Table styling */
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 11px;
+            background: #1a1f3a;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .markdown-content details table {
+            font-size: 11px;
+            max-height: 400px;
+            display: block;
+            overflow: auto;
+        }
+        
+        .markdown-content th {
+            background: #2a3f5f;
+            color: #64b5f6;
+            padding: 6px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .markdown-content td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #2a3f5f;
+            color: #b0b0b0;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .markdown-content tr:hover {
+            background: #252d42;
+        }
+        
+        .markdown-content tbody tr:first-child td:first-child {
+            position: sticky;
+            left: 0;
+            background: #1a1f3a;
+            z-index: 5;
+        }
+        
+        .markdown-content strong {
+            color: #64b5f6;
+        }
+        
+        .markdown-content em {
+            color: #90caf9;
+        }
+        
+        /* Style for Group Annotation Points lists */
+        .markdown-content ul.group-annotations {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+        
+        .markdown-content ul.group-annotations li {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: #2d3748;
+            border-left: 3px solid #5D701A;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .markdown-content ul.group-annotations li strong {
+            color: #64b5f6;
+        }
+        
+        /* Scrollbar styling */
+        .markdown-pane::-webkit-scrollbar,
+        .dashboard-pane::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .markdown-pane::-webkit-scrollbar-track,
+        .dashboard-pane::-webkit-scrollbar-track {
+            background: #0a0e27;
+        }
+        
+        .markdown-pane::-webkit-scrollbar-thumb,
+        .dashboard-pane::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 5px;
+        }
+        
+        .markdown-pane::-webkit-scrollbar-thumb:hover,
+        .dashboard-pane::-webkit-scrollbar-thumb:hover {
+            background: #3a5f8f;
+        }
+
+        /* Markdown fullsize button */
+        .markdown-fullsize-btn {
+            position: sticky;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #5D701A 0%, #4a5a15 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(93, 112, 26, 0.3);
+            z-index: 10;
+            margin-bottom: 20px;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .markdown-fullsize-btn:hover {
+            background: linear-gradient(135deg, #6d8520 0%, #5D701A 100%);
+            box-shadow: 0 4px 12px rgba(93, 112, 26, 0.5);
+            transform: translateX(-50%) translateY(-1px);
+        }
+        
+        /* Dashboard fullsize button */
+        .dashboard-fullsize-btn {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #5D701A 0%, #4a5a15 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(93, 112, 26, 0.3);
+            z-index: 10;
+        }
+        
+        .dashboard-fullsize-btn:hover {
+            background: linear-gradient(135deg, #6d8520 0%, #5D701A 100%);
+            box-shadow: 0 4px 12px rgba(93, 112, 26, 0.5);
+            transform: translateX(-50%) translateY(-1px);
+        }
+        
+        /* Markdown fullscreen overlay */
+        .markdown-fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 14, 39, 0.98);
+            z-index: 9999;
+            overflow: auto;
+        }
+        
+        .markdown-fullscreen-overlay.active {
+            display: block;
+        }
+        
+        .markdown-fullscreen-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px 40px 40px;
+        }
+        
+        /* Dashboard fullscreen overlay */
+        .dashboard-fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 14, 39, 0.98);
+            z-index: 9999;
+            overflow: auto;
+        }
+        
+        .dashboard-fullscreen-overlay.active {
+            display: block;
+        }
+        
+        .dashboard-fullscreen-content {
+            width: 100%;
+            height: 100%;
+            padding: 60px 40px 40px 40px;
+        }
+        
+        .dashboard-fullscreen-content iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 90vh;
+            border: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>T10.AirChiller - ENERGY Analysis</h1>
+        <button class="back-btn" onclick="goBack()">← Back to Summary</button>
+    </div>
+    
+    <div class="split-container">
+        <div class="pattern-image-container">
+            <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
+            <img src="Patterns/t10b_feb26.png" alt="T10.AirChiller - ENERGY Pattern" onclick="showFullscreen()">
+            <p>T10.AirChiller - ENERGY Pattern</p>
+        </div>
+        <div class="bottom-section">
+            <div class="markdown-pane">
+                <button class="markdown-fullsize-btn" onclick="showMarkdownFullscreen()" title="View markdown full size">🔍 Full Size</button>
+                <div class="markdown-content">
+                    <h1>BASELINE ELECTRICAL ENERGY USAGE AND COST</h1>
+<p><strong>Transformer Baseline :</strong>
+- <strong>Consumption Usage:</strong> 440,370.7 kWh (Usage per period)
+- <strong>Consumption Cost per unit:</strong> $0.333/kWh (Cost per kWh)
+- <strong>Consumption Total Cost:</strong> $146,790.24 (Cost per period)
+- <strong>Consumption Total Cost:</strong> $218.44 (Cost per hour)</p>
+<hr />
+<h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
+<p><strong>Transformer Name:</strong> T10 Air Chiller<br />
+<strong>Generated:</strong> 2026-03-14 12:40:02<br />
+<strong>Data Source:</strong> AN53111387-V-1minRES_40320CLP_260201-260228c.csv  </p>
+<h2>Time Period</h2>
+<ul>
+<li><strong>Period:</strong> February 01, 2026 thru February 28, 2026</li>
+<li><strong>Number of Days:</strong> 28 Days</li>
+<li><strong>Data Resolution:</strong> 1-minute</li>
+<li>
+<p><strong>Total Data Points:</strong> 40,320</p>
+</li>
+<li>
+<p><strong>Dataset Coverage:</strong> Complete month (100.0% of 28-day month)</p>
+</li>
+<li><strong>Billing Scale Factor:</strong> 1.000x (no normalization needed)</li>
+</ul>
+<h2>Facility Information</h2>
+<ul>
+<li><strong>Facility:</strong> Foster Farms</li>
+<li><strong>Location:</strong> Cherry Ave Facility</li>
+<li><strong>Analysis Type:</strong> Energy Field Performance Assessment</li>
+<li><strong>Technology Focus:</strong> Unity Energy Management Solutions</li>
+</ul>
+<hr />
+<h2>Executive Summary</h2>
+<p><em>Brief overview of key transformer performance metrics and energy consumption.</em></p>
+<ul>
+<li><strong>Transformer:</strong> T10 Air Chiller</li>
+<li><strong>Power Factor:</strong> 0.888</li>
+<li><strong>Total Energy (Actual):</strong> 440,370.71 kWh (per period), 655.31 kW (per hour)</li>
+<li><strong>Total Waste (Actual):</strong> 62,500.57 kWh (per period), 93.01 kW (per hour)</li>
+</ul>
+<hr />
+<h2>Additional Analysis</h2>
+<p><em>Detailed thermal and voltage analysis available in dedicated reports:</em>
+- <strong>Heat Health Analysis:</strong> FIELDp3-HeatHealth_T10-Air-Chiller_AN53111387-1minRES_260201-260228.md
+- <strong>Voltage &amp; Current Health:</strong> FIELDp2-VoltAmpHealth_T10-Air-Chiller_AN53111387-1minRES_260201-260228.md</p>
+<h2>UNITY MANAGEMENT T10 Air Chiller SAVINGS SUMMARY</h2>
+<p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
+<h3>Element 1: Reactive Energy Offset Savings</h3>
+<ul>
+<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 93.01 kW/hr</li>
+<li><strong>Blended Electricity Rate:</strong> $0.3333/kWh (all-inclusive)</li>
+<li><strong>T10 Air Chiller Utility Cost Offset:</strong> $31.00/hour</li>
+<li><strong>Annual Offset Savings:</strong> $271580/year</li>
+</ul>
+<h3>Element 2: Cooling Elimination Savings</h3>
+<ul>
+<li><strong>Total Heat No Longer Generated:</strong> 380,486 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 33.36 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $11.12/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $97406/year</li>
+</ul>
+<h3>Element 3: CO2e Emissions Reduction Value</h3>
+<ul>
+<li><strong>Total kW Waste Eliminated:</strong> 126.37 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 413.24 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 34.44 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0472 metric tons/hour</li>
+<li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
+<li><strong>Annual CO2e Value:</strong> $15910/year</li>
+</ul>
+<h3>Total T10 Air Chiller Unity Savings</h3>
+<ul>
+<li><strong>Per Hour:</strong> $43.94</li>
+<li><strong>Per Day:</strong> $1054.51</li>
+<li><strong>Per Month:</strong> $31635.27</li>
+<li><strong>Per Year:</strong> $384896</li>
+</ul>
+<h3>T10 Air Chiller Savings Breakdown</h3>
+<h3>Unity System (MPTS) Installation Considerations</h3>
+<ul>
+<li><strong>Max Reactive Energy:</strong> 831.1 kVAR Max (Avg: 361.3 kVAR/hr ; 260,146 kVAR/mo)</li>
+<li><strong>Max Harmonic Distortion:</strong> 30.1% Max (range: 3.1% - 30.1%)</li>
+<li><strong>Max Amperage:</strong> 2,076A Max (range: 52A - 2076A)</li>
+</ul>
+<hr />
+<h1>T10 Air Chiller DETAILED PERFORMANCE ANALYSIS</h1>
+<h2>Unity Technology Status</h2>
+<ul>
+<li><strong>Unity Technology Configuration:</strong> 0.0% reactive energy target</li>
+<li><strong>Unity Applied:</strong> No (measuring current problem state)</li>
+<li><strong>Analysis Mode:</strong> Pre-Unity baseline analysis</li>
+</ul>
+<h2>Transformer Specifications</h2>
+<ul>
+<li><strong>Capacity:</strong> 2,500 kVA</li>
+<li><strong>Voltage:</strong> 480V, 3-Phase</li>
+</ul>
+<h2>Fundamental Energy Values</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Average</th>
+<th>MIN</th>
+<th>MAX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Line to Neutral Voltage (277v)</td>
+<td>265.47</td>
+<td>254.17</td>
+<td>280.18</td>
+</tr>
+<tr>
+<td>Line to Line Voltage (480v)</td>
+<td>459.80</td>
+<td>440.24</td>
+<td>485.28</td>
+</tr>
+<tr>
+<td>Current (AMPS)</td>
+<td>953.62</td>
+<td>52.00</td>
+<td>2075.86</td>
+</tr>
+<tr>
+<td>Phase Angle (degrees)</td>
+<td>27.16</td>
+<td>17.93</td>
+<td>36.88</td>
+</tr>
+<tr>
+<td>Total Harmonic Distortion (PCT)</td>
+<td>14.75</td>
+<td>3.09</td>
+<td>30.14</td>
+</tr>
+</tbody>
+</table>
+<h2>🔀 Total Harmonic Distortion — Unity Translation</h2>
+<p>In traditional electrical engineering, Total Harmonic Distortion (THD) is calculated per phase, based on the sum of non-fundamental frequency components divided by the fundamental:</p>
+<div class="codehilite"><pre><span></span><code>THD_A = √(V₂² + V₃² + ...) / V₁
+</code></pre></div>
+
+<p>This results in a percentage value for each phase (A, B, and C), and by standard IEEE practice, these percentages are not directly additive because they are non-linear and phase-relative.</p>
+<p>However, at Unity, we take a <strong>field-level view of harmonic behavior</strong> — aligning with Maxwell's electromagnetic theory rather than purely scalar wave math.</p>
+<p>We define:</p>
+<div class="codehilite"><pre><span></span><code>THD_Field_Composite = THD_A + THD_B + THD_C
+</code></pre></div>
+
+<p>This is not a textbook THD, but a <strong>Unity Composite Index</strong> — a metric designed to:
+• Reflect total harmonic stress on the energy field,
+• Enable fast field diagnostics,
+• Map distortion across the 3-phase envelope as a combined entity.</p>
+<p>Think of it as a <strong>harmonic heat index</strong>, not a scalar voltage quantity.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>THD Phase A (%)</td>
+<td>4.9%</td>
+<td>IEEE standard per-phase calculation</td>
+</tr>
+<tr>
+<td>THD Phase B (%)</td>
+<td>4.9%</td>
+<td>IEEE standard per-phase calculation</td>
+</tr>
+<tr>
+<td>THD Phase C (%)</td>
+<td>4.9%</td>
+<td>IEEE standard per-phase calculation</td>
+</tr>
+<tr>
+<td>Unity THD Composite (%)</td>
+<td>14.7%</td>
+<td>Field-level stress indicator</td>
+</tr>
+<tr>
+<td>Max Phase THD</td>
+<td>4.9%</td>
+<td>Highest THD among all three phases</td>
+</tr>
+<tr>
+<td>Min Phase THD</td>
+<td>4.9%</td>
+<td>Lowest THD among all three phases</td>
+</tr>
+</tbody>
+</table>
+<h3>Engineering Commentary</h3>
+<p>This composite score is useful when assessing transformer health, load imbalance, or predicting heating and harmonic clustering (G1–G8 groups). It's used in our eBehavior overlays and directly informs Unity's Voltage Health Index (VHI).</p>
+<p>If IEEE compliance is required, individual THD values remain visible and can be cross-checked per phase.</p>
+<p>⚠️ <strong>Note on THD Composite</strong>: Unity's THD Composite is not a scalar addition per IEEE. It is a field-behavior indicator that helps us track total harmonic impact across all three phases — a core component of transformer-level heat modeling.</p>
+<h2>Capacity Utilization</h2>
+<ul>
+<li><strong>Maximum UtilityDemand:</strong> 1,425.42 kW</li>
+<li><strong>Maximum Load:</strong> 1,611.77 kVA</li>
+<li><strong>Percentage of Capacity (MAX):</strong> 64.5%</li>
+<li><strong>Average Load:</strong> 748.32 kVA</li>
+<li><strong>Percentage of Capacity (Avg):</strong> 29.9%</li>
+</ul>
+<h2>kVA and Power Factor Analysis (Measured vs Calculated)</h2>
+<h3>Measured Values (PRIMARY - Used for All Analysis)</h3>
+<ul>
+<li><strong>Average kVA (Ssum_kVA):</strong> 748.32 kVA</li>
+<li><strong>Average Power Factor (PF):</strong> 0.888</li>
+</ul>
+<p><strong>Source:</strong> Direct meter measurements (instantaneous values averaged over time)</p>
+<h3>Calculated Values (VERIFICATION ONLY)</h3>
+<ul>
+<li><strong>Calculated kVA (V×I×√3/1000):</strong> 759.46 kVA</li>
+</ul>
+<p><strong>Calculation Inputs:</strong>
+- Average Voltage (VIavg_V): 459.80 V
+- Average Current (Iavg_A): 953.62 A
+- Average kW (Psum_kW): 655.31 kW</p>
+<h3>Differences (Measured vs Calculated)</h3>
+<ul>
+<li><strong>kVA Difference:</strong> 11.14 kVA (1.5%)</li>
+<li><strong>Calculated PF (kW/kVA from averages):</strong> 0.863</li>
+<li><strong>Power Factor Difference:</strong> 0.025 (2.9%)</li>
+</ul>
+<h3>Why Measured Values Are More Accurate</h3>
+<p>When voltage and current vary over time (which they always do in real systems):
+- <strong>Average(V × I) ≠ Average(V) × Average(I)</strong> due to the non-linear multiplication
+- <strong>Time-weighted PF ≠ kW/kVA from averages</strong> due to load variation effects</p>
+<p>The meter's instantaneous measurements capture these variations correctly, while
+calculations from averaged values systematically underestimate reactive effects.</p>
+<p><strong>Analysis Method:</strong> All heat calculations, thermal burden, and cost analysis use
+the measured kVA (748.32) and measured PF (0.888) values.
+Calculated values are shown above for verification and engineering transparency.</p>
+<h2>Overall Power Metrics (FPC)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Average</th>
+<th>% of Capacity</th>
+<th>Total Energy</th>
+<th>HEAT (BTU/hr)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kVA</td>
+<td>748.32</td>
+<td>29.9%</td>
+<td>502,871.28 kVA</td>
+<td>2,236,022.91 TOTAL-HEAT</td>
+</tr>
+<tr>
+<td>kW</td>
+<td>655.31</td>
+<td>26.2%</td>
+<td>440,370.71 kWh</td>
+<td>277,909.50 Load-Heat</td>
+</tr>
+<tr>
+<td>kVAR</td>
+<td>361.31</td>
+<td>14.5%</td>
+<td>242,802.72 kVARh</td>
+<td>-</td>
+</tr>
+<tr>
+<td>WASTE</td>
+<td>93.01</td>
+<td>3.7%</td>
+<td>62,500.57 WASTE</td>
+<td>39,442.91 Field-Heat</td>
+</tr>
+</tbody>
+</table>
+<h3>Heat Unit Notes</h3>
+<ul>
+<li><strong>TOTAL-HEAT (BTU/hr):</strong> 2,236,022.91</li>
+<li><strong>Load-Heat (BTU/hr):</strong> 277,909.50</li>
+<li><strong>Field-Heat (BTU/hr):</strong> 39,442.91</li>
+<li><strong>Load-Heat (BTU, period total):</strong> 186,755,181.83</li>
+<li><strong>Field-Heat (BTU, period total):</strong> 26,505,634.61</li>
+</ul>
+<h2>Measured Monthly Averages</h2>
+<table>
+<thead>
+<tr>
+<th>Month</th>
+<th>Avg kVA</th>
+<th>Avg kW</th>
+<th>Avg kVAR</th>
+<th>Avg PF</th>
+<th>% Capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>748.32</td>
+<td>655.31</td>
+<td>360.50</td>
+<td>0.88</td>
+<td>29.9%</td>
+</tr>
+</tbody>
+</table>
+<h2>Measured Hourly Averages</h2>
+<table>
+<thead>
+<tr>
+<th>Hour</th>
+<th>Avg kVA</th>
+<th>Avg kW</th>
+<th>Avg kVAR</th>
+<th>Avg PF</th>
+<th>% Capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>877.02</td>
+<td>767.07</td>
+<td>424.69</td>
+<td>0.87</td>
+<td>35.1%</td>
+</tr>
+<tr>
+<td>01</td>
+<td>872.45</td>
+<td>762.87</td>
+<td>422.83</td>
+<td>0.87</td>
+<td>34.9%</td>
+</tr>
+<tr>
+<td>02</td>
+<td>877.12</td>
+<td>767.81</td>
+<td>423.69</td>
+<td>0.88</td>
+<td>35.1%</td>
+</tr>
+<tr>
+<td>03</td>
+<td>875.75</td>
+<td>766.44</td>
+<td>423.32</td>
+<td>0.88</td>
+<td>35.0%</td>
+</tr>
+<tr>
+<td>04</td>
+<td>872.46</td>
+<td>763.67</td>
+<td>421.47</td>
+<td>0.88</td>
+<td>34.9%</td>
+</tr>
+<tr>
+<td>05</td>
+<td>889.64</td>
+<td>776.92</td>
+<td>432.76</td>
+<td>0.87</td>
+<td>35.6%</td>
+</tr>
+<tr>
+<td>06</td>
+<td>880.73</td>
+<td>768.90</td>
+<td>428.87</td>
+<td>0.87</td>
+<td>35.2%</td>
+</tr>
+<tr>
+<td>07</td>
+<td>877.39</td>
+<td>766.10</td>
+<td>427.23</td>
+<td>0.87</td>
+<td>35.1%</td>
+</tr>
+<tr>
+<td>08</td>
+<td>857.91</td>
+<td>750.78</td>
+<td>414.58</td>
+<td>0.88</td>
+<td>34.3%</td>
+</tr>
+<tr>
+<td>09</td>
+<td>863.41</td>
+<td>755.00</td>
+<td>418.37</td>
+<td>0.87</td>
+<td>34.5%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>871.45</td>
+<td>761.83</td>
+<td>422.67</td>
+<td>0.87</td>
+<td>34.9%</td>
+</tr>
+<tr>
+<td>11</td>
+<td>855.65</td>
+<td>749.37</td>
+<td>412.56</td>
+<td>0.88</td>
+<td>34.2%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>842.51</td>
+<td>737.82</td>
+<td>406.28</td>
+<td>0.88</td>
+<td>33.7%</td>
+</tr>
+<tr>
+<td>13</td>
+<td>841.95</td>
+<td>737.46</td>
+<td>405.74</td>
+<td>0.88</td>
+<td>33.7%</td>
+</tr>
+<tr>
+<td>14</td>
+<td>770.34</td>
+<td>674.37</td>
+<td>371.69</td>
+<td>0.88</td>
+<td>30.8%</td>
+</tr>
+<tr>
+<td>15</td>
+<td>616.65</td>
+<td>540.44</td>
+<td>295.93</td>
+<td>0.88</td>
+<td>24.7%</td>
+</tr>
+<tr>
+<td>16</td>
+<td>448.58</td>
+<td>391.96</td>
+<td>216.76</td>
+<td>0.87</td>
+<td>17.9%</td>
+</tr>
+<tr>
+<td>17</td>
+<td>280.58</td>
+<td>247.46</td>
+<td>130.45</td>
+<td>0.88</td>
+<td>11.2%</td>
+</tr>
+<tr>
+<td>18</td>
+<td>253.90</td>
+<td>224.44</td>
+<td>116.93</td>
+<td>0.88</td>
+<td>10.2%</td>
+</tr>
+<tr>
+<td>19</td>
+<td>310.75</td>
+<td>273.68</td>
+<td>145.45</td>
+<td>0.88</td>
+<td>12.4%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>506.80</td>
+<td>449.63</td>
+<td>231.63</td>
+<td>0.89</td>
+<td>20.3%</td>
+</tr>
+<tr>
+<td>21</td>
+<td>860.27</td>
+<td>756.61</td>
+<td>408.79</td>
+<td>0.88</td>
+<td>34.4%</td>
+</tr>
+<tr>
+<td>22</td>
+<td>890.33</td>
+<td>780.46</td>
+<td>428.07</td>
+<td>0.88</td>
+<td>35.6%</td>
+</tr>
+<tr>
+<td>23</td>
+<td>866.05</td>
+<td>756.44</td>
+<td>421.18</td>
+<td>0.87</td>
+<td>34.6%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1>END OF REPORT</h1>
+                </div>
+            </div>
+            <div class="dashboard-pane">
+                <button class="dashboard-fullsize-btn" onclick="showDashboardFullscreen()" title="View dashboard full size">🔍 Full Size</button>
+                <div class="dashboard-iframe-container">
+                    <iframe src="FIELD-Energyboard_T10 Air Chiller_AN53111387_260201-260228.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fullscreen Image Overlay -->
+    <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
+        <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
+        <div class="fullscreen-content">
+            <img src="Patterns/t10b_feb26.png" alt="T10.AirChiller - ENERGY Pattern">
+            <p>T10.AirChiller - ENERGY Pattern</p>
+        </div>
+    </div>    
+    <!-- Markdown Fullscreen Overlay -->
+    <div class="markdown-fullscreen-overlay" id="markdownFullscreenOverlay">
+        <button class="close-fullscreen-btn" onclick="closeMarkdownFullscreen()">✕ Return to Split View</button>
+        <div class="markdown-fullscreen-content">
+            <div class="markdown-content" id="markdownFullscreenContent">
+                <!-- Content will be cloned here -->
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Dashboard Fullscreen Overlay -->
+    <div class="dashboard-fullscreen-overlay" id="dashboardFullscreenOverlay">
+        <button class="close-fullscreen-btn" onclick="closeDashboardFullscreen()">✕ Return to Split View</button>
+        <div class="dashboard-fullscreen-content">
+            <iframe id="dashboardFullscreenIframe"></iframe>
+        </div>
+    </div>
+    
+    
+    <script>
+        // If the dashboard HTML isn't available (iframe src is "#"), hide the empty pane.
+        (function hideDashboardIfMissing() {
+            const iframe = document.querySelector('.dashboard-pane iframe');
+            if (!iframe) return;
+            const src = (iframe.getAttribute('src') || '').trim();
+            if (!src || src === '#') {
+                const dashPane = document.querySelector('.dashboard-pane');
+                if (dashPane) dashPane.style.display = 'none';
+
+                const markdownPane = document.querySelector('.markdown-pane');
+                if (markdownPane) {
+                    markdownPane.style.width = '100%';
+                    markdownPane.style.flex = '1';
+                }
+
+                const note = document.createElement('div');
+                note.style.cssText = 'margin: 0 0 16px 0; padding: 10px 12px; background: rgba(100, 181, 246, 0.12); border: 1px solid rgba(100, 181, 246, 0.35); border-radius: 8px; color: #90caf9; font-size: 13px;';
+                note.textContent = 'Dashboard HTML not present in this report build (showing narrative + pattern only).';
+
+                const content = document.querySelector('.markdown-pane .markdown-content');
+                if (content) content.prepend(note);
+            }
+        })();
+
+        function showFullscreen() {
+            document.getElementById('imageFullscreenOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFullscreen() {
+            document.getElementById('imageFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close fullscreen on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFullscreen();
+                closeMarkdownFullscreen();
+                closeDashboardFullscreen();
+            }
+        });
+        
+        function goBack() {
+            // Prefer explicit source summary passed by the Summaryboard button.
+            let summaryPath = '';
+            try {
+                const params = new URLSearchParams(window.location.search || '');
+                summaryPath = (params.get('summary') || '').trim();
+            } catch (e) {}
+
+            // Fallback to injected template value when query param is absent.
+            if (!summaryPath) {
+                summaryPath = ('SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html' || '').trim();
+            }
+
+            // Ignore stale placeholder/legacy values; use history as final fallback.
+            if (summaryPath && summaryPath !== '#' && summaryPath !== 'SITE-FosterFarms-Summaryboard.html') {
+                window.location.href = summaryPath;
+                return;
+            }
+            window.history.back();
+        }
+        
+
+        
+        function showMarkdownFullscreen() {
+            const markdownContent = document.querySelector('.markdown-pane .markdown-content');
+            const markdownFullscreen = document.getElementById('markdownFullscreenContent');
+            markdownFullscreen.innerHTML = markdownContent.innerHTML;
+            document.getElementById('markdownFullscreenOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMarkdownFullscreen() {
+            document.getElementById('markdownFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function showDashboardFullscreen() {
+            const dashboardIframe = document.querySelector('.dashboard-pane iframe');
+            const fullscreenIframe = document.getElementById('dashboardFullscreenIframe');
+            if (dashboardIframe) {
+                fullscreenIframe.src = dashboardIframe.src;
+            }
+            document.getElementById('dashboardFullscreenOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeDashboardFullscreen() {
+            document.getElementById('dashboardFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+</html>

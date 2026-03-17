@@ -1,0 +1,49 @@
+{
+  "_comment": "BT-chart verified production targets for Cherry Ave February 2026. Values sourced from eSTREAM BT dashed reference lines. Calibrated by MDH 2026-03-16.",
+  "site": "FosterFarms-CherryAve",
+  "period": "February 2026",
+  "calibrated_by": "MDH",
+  "calibrated_at": "2026-03-16",
+  "transformers": [
+    {
+      "transformer_code": "T10",
+      "transformer_name": "T10 Air Chiller",
+      "target_kva": 1082.1,
+      "ops_type": "CYCLING",
+      "threshold_kva": 500,
+      "avg_ops_hours_per_day": 20.3,
+      "notes": "Air chiller powers down to near-zero overnight. BT target = mean(kVA > 500 kVA) on weekdays.",
+      "calibrated_at": "2026-03-16"
+    },
+    {
+      "transformer_code": "T12",
+      "transformer_name": "T12 Main",
+      "target_kva": 1524.4,
+      "ops_type": "CONTINUOUS",
+      "threshold_kva": 1300,
+      "avg_ops_hours_per_day": 18.2,
+      "notes": "Main facility transformer — refrigeration never fully stops. BT target = mean(kVA > 1300 kVA) on weekdays.",
+      "calibrated_at": "2026-03-16"
+    },
+    {
+      "transformer_code": "T15",
+      "transformer_name": "T15 Fillet",
+      "target_kva": 1471.4,
+      "ops_type": "CYCLING",
+      "threshold_kva": 1300,
+      "avg_ops_hours_per_day": 13.2,
+      "notes": "Fillet processing transformer — cycles between off and full production. BT target = mean(kVA > 1300 kVA) on weekdays.",
+      "calibrated_at": "2026-03-16"
+    },
+    {
+      "transformer_code": "T16",
+      "transformer_name": "T16 Compressor",
+      "target_kva": 1378.4,
+      "ops_type": "PULSED",
+      "threshold_kva": 1250,
+      "avg_ops_hours_per_day": 15.8,
+      "notes": "Compressor bank — elevated base load with production cycling. BT target = mean(kVA > 1250 kVA) on weekdays.",
+      "calibrated_at": "2026-03-16"
+    }
+  ]
+}
