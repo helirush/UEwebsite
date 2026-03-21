@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electrical Energy Story - Unity Energy</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" href="favicon.ico">
+    <title>Electrical Energy Field Story - Unity Energy</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            color: rgba(38, 44, 28, 1);
+            background: rgba(241, 244, 233, 1);
         }
 
-        /* Static Centered Banner */
         .banner-wrapper {
             width: 100%;
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
             padding: 14px 20px;
             text-align: center;
         }
-
         .banner-content {
             color: rgba(250, 240, 160, 1);
             font-size: 1.3em;
             font-weight: 600;
             letter-spacing: 2px;
         }
-
         .banner-content .detail {
             font-size: 0.85em;
             font-weight: 400;
@@ -41,82 +41,585 @@
             margin-left: 8px;
         }
 
-        header {
+        .page-header {
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
             color: white;
-            padding: 20px 20px;
+            padding: 40px 20px 30px;
             text-align: center;
+            border-bottom: 5px solid rgba(129, 163, 43, 1);
         }
-
-        .logo {
-            font-size: 2em;
+        .page-title {
+            font-size: clamp(1.9rem, 4.2vw, 3rem);
             font-weight: 700;
             letter-spacing: 1px;
-            cursor: pointer;
+            margin-bottom: 10px;
         }
-
-        .logo span {
-            color: rgba(129, 163, 43, 1);
+        .page-subtitle {
+            max-width: 1000px;
+            margin: 0 auto;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(239, 246, 209, 1);
         }
-
-        .construction-container {
+        .top-actions {
             display: flex;
             justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .chip-link {
+            display: inline-flex;
             align-items: center;
-            min-height: 70vh;
-            padding: 60px 20px;
-        }
-
-        .construction-content {
-            text-align: center;
-            max-width: 800px;
-        }
-
-        .construction-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            margin-bottom: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-
-        .construction-title {
-            font-size: 2.5em;
-            color: rgba(211, 113, 0, 1);
-            margin-bottom: 20px;
+            justify-content: center;
+            padding: 11px 20px;
+            border-radius: 999px;
+            text-decoration: none;
             font-weight: 700;
+            font-size: 0.95rem;
+            color: rgba(244, 250, 216, 1);
+            background: rgba(76, 101, 27, 0.95);
+            border: 2px solid rgba(151, 189, 55, 1);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .chip-link:hover {
+            transform: translateY(-2px);
+            background: rgba(94, 123, 35, 1);
         }
 
-        .construction-message {
-            font-size: 1.3em;
-            color: rgba(85, 85, 85, 1);
-            margin-bottom: 40px;
-            line-height: 1.6;
+        .timeline-shell {
+            max-width: 1300px;
+            margin: 34px auto 0;
+            padding: 0 20px 20px;
+        }
+        .timeline-intro {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(181, 193, 150, 1);
+            border-radius: 16px;
+            padding: 20px 22px;
+            margin-bottom: 22px;
+            box-shadow: 0 7px 22px rgba(39, 52, 7, 0.08);
+        }
+        .timeline-intro h2 {
+            color: rgba(61, 84, 17, 1);
+            font-size: clamp(1.35rem, 3vw, 2rem);
+            margin-bottom: 6px;
+        }
+        .timeline-intro p {
+            color: rgba(79, 89, 56, 1);
+            font-size: 1.03rem;
+        }
+        .timeline-range {
+            color: rgba(149, 94, 12, 1);
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            margin-top: 10px;
+            font-size: 0.94rem;
+            text-transform: uppercase;
         }
 
-        .back-button {
-            background: linear-gradient(135deg, rgba(129, 163, 43, 1) 0%, rgba(178, 210, 53, 1) 100%);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.1em;
+        .timeline-zoom-shell {
+            display: grid;
+            gap: 14px;
+            margin: 14px 0 24px;
+        }
+        .timeline-overview,
+        .timeline-detail-panel {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(181, 193, 150, 1);
+            border-radius: 16px;
+            padding: 14px 14px 12px;
+            box-shadow: 0 7px 22px rgba(39, 52, 7, 0.08);
+        }
+        .timeline-overview {
+            position: relative;
+            overflow: hidden;
+        }
+        .timeline-overview-header,
+        .timeline-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .timeline-overview-header h3,
+        .timeline-detail-header h3 {
+            color: rgba(61, 84, 17, 1);
+            font-size: 1.02rem;
+            margin-bottom: 3px;
+        }
+        .timeline-overview-header p,
+        .timeline-detail-header p,
+        .focus-panel-caption {
+            color: rgba(79, 89, 56, 1);
+            font-size: 0.95rem;
+        }
+        .timeline-scale-shell {
+            position: relative;
+            margin: 4px 4px 12px;
+            height: 100px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(245, 250, 230, 0.95) 0%, rgba(235, 244, 214, 0.9) 100%);
+            border: 1px solid rgba(175, 193, 132, 0.8);
+            overflow: hidden;
+        }
+        .timeline-scale-line {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 36px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(129, 165, 41, 1) 0%, rgba(76, 104, 23, 1) 100%);
+            box-shadow: 0 0 0 4px rgba(154, 189, 71, 0.11);
+        }
+        .timeline-reactive-era {
+            position: absolute;
+            left: 31%;
+            width: 56%;
+            top: 65px;
+            height: 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(194, 105, 8, 0.7);
+            background: linear-gradient(90deg, rgba(255, 187, 96, 0.42) 0%, rgba(253, 140, 42, 0.3) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 224, 177, 0.5);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .timeline-reactive-era span {
+            font-size: 0.58rem;
+            letter-spacing: 0.2px;
+            font-weight: 700;
+            color: rgba(110, 58, 5, 1);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .timeline-scale-window {
+            position: absolute;
+            top: 10px;
+            height: 34px;
+            border-radius: 10px;
+            border: 2px solid rgba(188, 108, 17, 0.96);
+            background: linear-gradient(135deg, rgba(255, 202, 126, 0.34) 0%, rgba(255, 173, 52, 0.18) 100%);
+            box-shadow: 0 8px 18px rgba(155, 85, 12, 0.18), inset 0 0 0 1px rgba(255, 236, 197, 0.55);
+            transition: left 0.35s ease, width 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .timeline-scale-window::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(188, 108, 17, 0.92);
+            filter: drop-shadow(0 2px 1px rgba(87, 43, 3, 0.15));
+        }
+        .timeline-scale-label {
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.35px;
+            color: rgba(108, 59, 6, 1);
+            text-transform: uppercase;
+        }
+        .timeline-scale-tick {
+            position: absolute;
+            top: 44px;
+            transform: translateX(-50%);
+            font-size: 0.66rem;
+            font-weight: 700;
+            color: rgba(82, 96, 52, 1);
+            letter-spacing: 0.2px;
+        }
+        .timeline-scale-tick.start {
+            left: 14px;
+            transform: none;
+        }
+        .timeline-scale-tick.mid-left {
+            left: 31%;
+        }
+        .timeline-scale-tick.mid-right {
+            left: 87%;
+        }
+        .timeline-scale-tick.end {
+            right: 14px;
+            left: auto;
+            transform: none;
+        }
+        .timeline-overview[data-focus-panel="pre-ac"] .timeline-scale-window {
+            left: 2%;
+            width: 34%;
+        }
+        .timeline-overview[data-focus-panel="ac-accel"] .timeline-scale-window {
+            left: 34%;
+            width: 23%;
+        }
+        .timeline-overview[data-focus-panel="reactive-era"] .timeline-scale-window {
+            left: 31%;
+            width: 56%;
+        }
+        .timeline-overview[data-focus-panel="mpts-history"] .timeline-scale-window {
+            left: 73%;
+            width: 25%;
+        }
+        .timeline-overview .timeline-track-overview .timeline-node {
+            transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+        }
+        .timeline-overview[data-focus-panel="pre-ac"] .timeline-track-overview .timeline-node:not([data-focus-panel="pre-ac"]),
+        .timeline-overview[data-focus-panel="ac-accel"] .timeline-track-overview .timeline-node:not([data-focus-panel="ac-accel"]),
+        .timeline-overview[data-focus-panel="reactive-era"] .timeline-track-overview .timeline-node:not([data-focus-panel="reactive-era"]),
+        .timeline-overview[data-focus-panel="mpts-history"] .timeline-track-overview .timeline-node:not([data-focus-panel="mpts-history"]) {
+            opacity: 0.46;
+            transform: scale(0.96);
+            filter: saturate(0.78);
+        }
+        .timeline-overview[data-focus-panel="pre-ac"] .timeline-track-overview .timeline-node[data-focus-panel="pre-ac"],
+        .timeline-overview[data-focus-panel="ac-accel"] .timeline-track-overview .timeline-node[data-focus-panel="ac-accel"],
+        .timeline-overview[data-focus-panel="reactive-era"] .timeline-track-overview .timeline-node[data-focus-panel="reactive-era"],
+        .timeline-overview[data-focus-panel="mpts-history"] .timeline-track-overview .timeline-node[data-focus-panel="mpts-history"] {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .focus-chip-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .focus-chip {
+            border: 1px solid rgba(168, 190, 118, 1);
+            border-radius: 999px;
+            padding: 6px 11px;
+            background: rgba(244, 249, 230, 1);
+            color: rgba(71, 89, 34, 1);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .focus-chip:hover {
+            transform: translateY(-1px);
+        }
+        .focus-chip.active {
+            color: rgba(255, 244, 218, 1);
+            background: linear-gradient(135deg, rgba(154, 87, 13, 1) 0%, rgba(187, 105, 16, 1) 100%);
+            border-color: rgba(189, 102, 8, 1);
+            box-shadow: 0 5px 12px rgba(128, 73, 8, 0.25);
+        }
+        .timeline-focus-panel {
+            display: none;
+        }
+        .timeline-focus-panel.active {
+            display: block;
+        }
+        .focus-panel-caption {
+            margin-bottom: 4px;
+        }
+        .timeline-track {
+            position: relative;
+            padding: 17px 6px 6px;
+            display: grid;
+            gap: 10px;
+        }
+        .timeline-track::before {
+            content: "";
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            top: 46px;
+            height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(132, 170, 42, 1) 0%, rgba(80, 110, 24, 1) 100%);
+            box-shadow: 0 0 0 4px rgba(154, 189, 71, 0.13);
+        }
+        .timeline-track-overview {
+            grid-template-columns: repeat(17, minmax(60px, 1fr));
+            margin-top: 2px;
+        }
+        .timeline-track-overview .timeline-node .dot {
+            width: 32px;
+            height: 32px;
+            border-width: 2px;
+            margin-bottom: 5px;
+        }
+        .timeline-track-overview .timeline-node .dot-icon {
+            width: 17px;
+            height: 17px;
+        }
+        .timeline-track-overview .timeline-node .year {
+            font-size: 0.82rem;
+        }
+        .timeline-track-overview .timeline-node .label {
+            font-size: 0.67rem;
+        }
+        .timeline-track-focus {
+            grid-template-columns: repeat(5, minmax(102px, 1fr));
+        }
+        .timeline-node.paired-maxwell {
+            transform: translateY(-10px);
+        }
+        .timeline-node.paired-maxwell .pair-link {
+            position: absolute;
+            top: 16px;
+            left: -30px;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(171, 196, 111, 0.2) 0%, rgba(122, 153, 49, 0.95) 100%);
+            border-radius: 999px;
+            pointer-events: none;
+        }
+        .timeline-node.paired-maxwell .dot {
+            border-color: rgba(154, 84, 9, 1);
+            box-shadow: 0 0 0 4px rgba(222, 128, 20, 0.14);
+        }
+        .timeline-node {
+            position: relative;
+            z-index: 1;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            text-align: center;
+            color: rgba(52, 67, 20, 1);
+            font: inherit;
+        }
+        .timeline-node:focus-visible {
+            outline: 2px solid rgba(173, 96, 11, 1);
+            outline-offset: 6px;
+            border-radius: 10px;
+        }
+        .timeline-node .dot {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            margin: 0 auto 7px;
+            border: 3px solid rgba(118, 156, 34, 1);
+            background: rgba(245, 251, 220, 1);
+            box-shadow: 0 0 0 4px rgba(151, 186, 55, 0.18);
+            transition: transform 0.2s ease, background 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timeline-node .dot-icon {
+            width: 21px;
+            height: 21px;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+        .timeline-node .year {
+            display: block;
+            font-weight: 800;
+            font-size: 0.94rem;
+            line-height: 1.15;
+        }
+        .timeline-node .label {
+            display: block;
+            font-size: 0.74rem;
+            margin-top: 2px;
+            opacity: 0.9;
+        }
+        .timeline-node.active .dot,
+        .timeline-node:hover .dot {
+            transform: scale(1.1);
+            background: rgba(255, 173, 52, 1);
+            border-color: rgba(199, 102, 0, 1);
+            box-shadow: 0 0 0 5px rgba(222, 128, 20, 0.2);
+        }
+        .timeline-node.active .dot-icon,
+        .timeline-node:hover .dot-icon {
+            transform: scale(1.05);
+        }
+        .timeline-node.active .year {
+            color: rgba(122, 62, 0, 1);
+        }
+        .timeline-node::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            top: -38px;
+            transform: translate(-50%, 8px);
+            background: rgba(35, 47, 8, 0.95);
+            color: rgba(238, 246, 205, 1);
+            border: 1px solid rgba(145, 184, 53, 1);
+            border-radius: 8px;
+            padding: 6px 9px;
+            font-size: 0.72rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.22);
+        }
+        .timeline-node::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -8px;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid rgba(145, 184, 53, 1);
+            opacity: 0;
+            transition: opacity 0.18s ease;
+        }
+        .timeline-node:hover::after,
+        .timeline-node:hover::before,
+        .timeline-node:focus-visible::after,
+        .timeline-node:focus-visible::before {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .event-card {
+            display: none;
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(182, 198, 145, 1);
+            border-radius: 16px;
+            padding: 18px 18px 16px;
+            box-shadow: 0 8px 20px rgba(32, 43, 9, 0.08);
+        }
+        .event-card.active {
+            display: block;
+        }
+        .event-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(172, 201, 86, 1) 0%, rgba(116, 152, 37, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            box-shadow: 0 6px 14px rgba(52, 78, 8, 0.22);
+        }
+        .event-card h3 {
+            color: rgba(57, 79, 17, 1);
+            margin-bottom: 5px;
+            font-size: 1.28rem;
+        }
+        .event-meta {
+            color: rgba(148, 86, 8, 1);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 11px;
+            font-size: 0.93rem;
+        }
+        .event-story {
+            color: rgba(65, 76, 39, 1);
+            font-size: 1.01rem;
+        }
+        .event-story strong {
+            color: rgba(44, 63, 9, 1);
+        }
+
+        .story-actions {
+            margin-top: 14px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .story-button {
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 17px;
+            font-size: 0.91rem;
             font-weight: 600;
             text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(129, 163, 43, 0.3);
+            transition: transform 0.2s ease;
+            cursor: pointer;
         }
-
-        .back-button:hover {
-            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+        .story-button.primary {
+            color: rgba(246, 255, 216, 1);
+            background: linear-gradient(135deg, rgba(79, 111, 24, 1) 0%, rgba(119, 157, 39, 1) 100%);
+        }
+        .story-button.secondary {
+            color: rgba(117, 66, 6, 1);
+            background: rgba(255, 222, 181, 1);
+            border: 1px solid rgba(223, 167, 90, 1);
+        }
+        .story-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(129, 163, 43, 0.5);
         }
 
-        .back-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(129, 163, 43, 0.3);
+        .unity-context {
+            background: rgba(236, 244, 214, 0.9);
+            border: 1px solid rgba(171, 194, 114, 1);
+            border-radius: 14px;
+            padding: 16px;
+        }
+        .unity-context h4 {
+            color: rgba(64, 87, 20, 1);
+            margin-bottom: 10px;
+            font-size: 1.07rem;
+        }
+        .unity-context p {
+            color: rgba(70, 82, 42, 1);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .unity-context p:last-child {
+            margin-bottom: 0;
+        }
+
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 16, 2, 0.72);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 24px;
+        }
+        .video-modal.active {
+            display: flex;
+        }
+        .video-modal-content {
+            background: rgba(10, 19, 2, 0.96);
+            border: 2px solid rgba(143, 182, 43, 1);
+            border-radius: 16px;
+            width: min(960px, 100%);
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+        }
+        .video-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            color: rgba(235, 247, 192, 1);
+            border-bottom: 1px solid rgba(122, 160, 31, 0.6);
+            font-weight: 700;
+        }
+        .video-close {
+            border: 0;
+            background: rgba(173, 80, 10, 1);
+            color: white;
+            font-size: 0.9rem;
+            border-radius: 999px;
+            padding: 7px 12px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        #timelineVideo {
+            width: 100%;
+            max-height: 70vh;
+            background: black;
         }
 
         footer {
@@ -126,24 +629,812 @@
             padding: 30px;
             margin-top: 60px;
         }
+
+        @media (max-width: 980px) {
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 1080px) {
+            .timeline-track-overview {
+                grid-template-columns: repeat(5, minmax(86px, 1fr));
+                gap: 14px 10px;
+            }
+            .timeline-track-focus {
+                grid-template-columns: repeat(4, minmax(86px, 1fr));
+                gap: 14px 10px;
+            }
+            .timeline-node.paired-maxwell {
+                transform: translateY(0);
+            }
+            .timeline-node.paired-maxwell .pair-link {
+                display: none;
+            }
+        }
+        @media (max-width: 830px) {
+            .timeline-track-overview,
+            .timeline-track-focus {
+                grid-template-columns: repeat(3, minmax(92px, 1fr));
+                gap: 14px 8px;
+            }
+        }
+        @media (max-width: 580px) {
+            .banner-content {
+                font-size: 1.02em;
+                letter-spacing: 0.7px;
+                line-height: 1.35;
+            }
+            .banner-content .detail {
+                display: none;
+            }
+            .timeline-track-overview,
+            .timeline-track-focus {
+                grid-template-columns: repeat(2, minmax(96px, 1fr));
+            }
+            .timeline-scale-shell {
+                height: 58px;
+            }
+            .timeline-scale-line {
+                top: 31px;
+            }
+            .timeline-reactive-era {
+                top: 22px;
+                height: 16px;
+            }
+            .timeline-reactive-era span {
+                font-size: 0.52rem;
+            }
+            .timeline-scale-window {
+                top: 7px;
+                height: 29px;
+            }
+            .timeline-scale-label {
+                font-size: 0.62rem;
+            }
+            .timeline-scale-tick {
+                top: 39px;
+                font-size: 0.58rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Static Centered Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
             INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
         </div>
     </div>
 
-    <div class="construction-container">
-        <div class="construction-content">
-            <img src="underconstruction.png" alt="Under Construction" class="construction-image">
-            <h1 class="construction-title">Under Construction</h1>
-            <p class="construction-message">
-                We're working hard to bring you this content. Please check back soon to learn about the history of electricity and Unity Energy's role in its evolution.
+    <header class="page-header">
+        <h1 class="page-title">Electrical Energy Field Story</h1>
+        <p class="page-subtitle">
+            A causal history from induction to industrial reactive burden to measured field intelligence.
+        </p>
+        <div class="top-actions">
+            <a href="index.html" class="chip-link">← Unity Home</a>
+            <a href="maxwellian.html" class="chip-link">Maxwellian Library</a>
+        </div>
+    </header>
+
+    <main class="timeline-shell">
+        <section class="timeline-intro">
+            <h2>EM Induction to Field Intelligence</h2>
+            <p>This is a causal timeline: the field is discovered, industrialized under reactive burden, 
+                then finally measured and managed as a dynamic operating system.
             </p>
-            <a href="index.html" class="back-button">← Return to Home</a>
+            <p>Select any marker to open its role in that arc.
+            </p>
+            <div class="timeline-range">1831 → 2026 · Foundations → Reactive Burden → Measured Field Era</div>
+        </section>
+
+        <section class="timeline-zoom-shell" aria-label="Electrical history timeline selector">
+            <div class="timeline-overview" data-focus-panel="pre-ac">
+                <div class="timeline-overview-header">
+                    <div>
+                        <h3>Macro Timeline</h3>
+                        <p>Various Bands: Field Foundations (1831–1888), Industrial Reactive Era (1891–2001), 
+                            Reactive Energy Breakthrough and MPTS Development (2001–2019), UNITY Energy Behavior Systems with MPTS (2019-current),
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-scale-shell" aria-hidden="true">
+                    <div class="timeline-scale-line"></div>
+                    <div class="timeline-reactive-era"><span>Industrial Reactive Era · 1891 → 2001</span></div>
+                    <div class="timeline-scale-window" id="timelineScaleWindow">
+                        <span class="timeline-scale-label" id="timelineScaleLabel">1831–1888 Field Foundations</span>
+                    </div>
+                    <span class="timeline-scale-tick start">1831</span>
+                    <span class="timeline-scale-tick mid-left">1891</span>
+                    <span class="timeline-scale-tick mid-right">2001</span>
+                    <span class="timeline-scale-tick end">2026</span>
+                </div>
+                <div class="timeline-track timeline-track-overview">
+                    <button class="timeline-node active" data-target="event-1831" data-focus-panel="pre-ac" data-tooltip="Faraday demonstrates electromagnetic induction" title="Faraday demonstrates electromagnetic induction" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1831-faraday.svg" alt=""></span>
+                        <span class="year">1831</span>
+                        <span class="label">Faraday EMI</span>
+                    </button>
+                    <button class="timeline-node paired-maxwell" data-target="event-1831-maxwell-birth" data-focus-panel="pre-ac" data-tooltip="James Clerk Maxwell is born (77 days before EMI demonstration)" title="James Clerk Maxwell is born (77 days before EMI demonstration)" type="button">
+                        <span class="pair-link" aria-hidden="true"></span>
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                        <span class="year">1831</span>
+                        <span class="label">Maxwell Born</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1838" data-focus-panel="pre-ac" data-tooltip="Jacobi demonstrates electric motor power" title="Jacobi demonstrates electric motor power" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1831-faraday.svg" alt=""></span>
+                        <span class="year">1838</span>
+                        <span class="label">Jacobi</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1861" data-focus-panel="pre-ac" data-tooltip="Maxwell unifies the field" title="Maxwell unifies the field" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                        <span class="year">1861-1864</span>
+                        <span class="label">Field Equations</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1873" data-focus-panel="pre-ac" data-tooltip="Heaviside reads Maxwell's Treatise" title="Heaviside reads Maxwell's Treatise" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                        <span class="year">1873</span>
+                        <span class="label">Heaviside Reads</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1879-filing" data-focus-panel="ac-accel" data-tooltip="Edison lamp patent filed" title="Edison lamp patent filed" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                        <span class="year">1879</span>
+                        <span class="label">Lamp Filing</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1882" data-focus-panel="ac-accel" data-tooltip="Heaviside begins equation reform work" title="Heaviside begins equation reform work" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                        <span class="year">1882</span>
+                        <span class="label">Reform Begins</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1888" data-focus-panel="ac-accel" data-tooltip="Hertz validates Maxwell experimentally" title="Hertz validates Maxwell experimentally" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                        <span class="year">1888</span>
+                        <span class="label">Hertz Proof</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1889" data-focus-panel="ac-accel" data-tooltip="Practical three-phase motor architecture matures" title="Practical three-phase motor architecture matures" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                        <span class="year">1889</span>
+                        <span class="label">3-Phase Motor</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1891" data-focus-panel="reactive-era" data-tooltip="Ames / Gold King makes reactive burden industrially consequential" title="Ames / Gold King makes reactive burden industrially consequential" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                        <span class="year">1891</span>
+                        <span class="label">Industrial Burden Anchor</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1905" data-focus-panel="reactive-era" data-tooltip="Capacitors applied in industrial motor environments" title="Capacitors applied in industrial motor environments" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                        <span class="year">1905</span>
+                        <span class="label">Capacitor Era</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1910-rogowski" data-focus-panel="reactive-era" data-tooltip="Rogowski-coil current sensing emerges (1910s, published 1912)" title="Rogowski-coil current sensing emerges (1910s, published 1912)" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                        <span class="year">1910s</span>
+                        <span class="label">Rogowski Coil</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1950" data-focus-panel="reactive-era" data-tooltip="Reactive management becomes standard utility and plant practice" title="Reactive management becomes standard utility and plant practice" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                        <span class="year">Mid-20th</span>
+                        <span class="label">Utility Practice</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-1980" data-focus-panel="reactive-era" data-tooltip="Digital metering begins exposing dynamic field behavior" title="Digital metering begins exposing dynamic field behavior" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                        <span class="year">Late-20th</span>
+                        <span class="label">Digital Metering</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-2001" data-focus-panel="mpts-history" data-tooltip="Field harmonization discovery pathway emerges" title="Field harmonization discovery pathway emerges" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                        <span class="year">2001</span>
+                        <span class="label">MPTS Discovery</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-2012" data-focus-panel="mpts-history" data-tooltip="Patents awarded across 28 countries" title="Patents awarded across 28 countries" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                        <span class="year">2012</span>
+                        <span class="label">28-Country IP</span>
+                    </button>
+                    <button class="timeline-node" data-target="event-2026" data-focus-panel="mpts-history" data-tooltip="Unity field intelligence era" title="Unity field intelligence era" type="button">
+                        <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
+                        <span class="year">2026</span>
+                        <span class="label">Unity Field</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="timeline-detail-panel">
+                <div class="timeline-detail-header">
+                    <div>
+                        <h3 id="zoomBandTitle">Field Foundations · 1831 → 1888</h3>
+                        <p>Dense milestones with tighter spacing and direct card select.</p>
+                    </div>
+                    <div class="focus-chip-group" aria-label="Timeline zoom selectors">
+                        <button class="focus-chip active" type="button" data-focus-panel="pre-ac">Field Foundations</button>
+                        <button class="focus-chip" type="button" data-focus-panel="ac-accel">AC Industrialization</button>
+                        <button class="focus-chip" type="button" data-focus-panel="reactive-era">Reactive Burden Era</button>
+                        <button class="focus-chip" type="button" data-focus-panel="mpts-history">Measured Field Era</button>
+                    </div>
+                </div>
+
+                <div class="timeline-focus-panel active" data-focus-panel="pre-ac">
+                    <p class="focus-panel-caption">Field foundations: induction, equation language, and early translation into usable engineering logic.</p>
+                    <div class="timeline-track timeline-track-focus">
+                        <button class="timeline-node active" data-target="event-1831" data-focus-panel="pre-ac" data-tooltip="Faraday demonstrates electromagnetic induction" title="Faraday demonstrates electromagnetic induction" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1831-faraday.svg" alt=""></span>
+                            <span class="year">1831</span>
+                            <span class="label">Faraday EMI</span>
+                        </button>
+                        <button class="timeline-node paired-maxwell" data-target="event-1831-maxwell-birth" data-focus-panel="pre-ac" data-tooltip="James Clerk Maxwell is born (77 days before EMI demonstration)" title="James Clerk Maxwell is born (77 days before EMI demonstration)" type="button">
+                            <span class="pair-link" aria-hidden="true"></span>
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1831</span>
+                            <span class="label">Maxwell Born</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1838" data-focus-panel="pre-ac" data-tooltip="Jacobi demonstrates electric motor power" title="Jacobi demonstrates electric motor power" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1831-faraday.svg" alt=""></span>
+                            <span class="year">1838</span>
+                            <span class="label">Jacobi</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1861" data-focus-panel="pre-ac" data-tooltip="Maxwell unifies the field" title="Maxwell unifies the field" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1861-1864</span>
+                            <span class="label">Field Equations</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1873" data-focus-panel="pre-ac" data-tooltip="Heaviside reads Maxwell's Treatise" title="Heaviside reads Maxwell's Treatise" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1873</span>
+                            <span class="label">Heaviside Reads</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="timeline-focus-panel" data-focus-panel="ac-accel">
+                    <p class="focus-panel-caption">AC industrialization: patent acceleration, machine architecture, and the first large-scale motive-power deployments.</p>
+                    <div class="timeline-track timeline-track-focus">
+                        <button class="timeline-node" data-target="event-1879-filing" data-focus-panel="ac-accel" data-tooltip="Edison lamp patent filed (Nov 4, 1879)" title="Edison lamp patent filed (Nov 4, 1879)" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                            <span class="year">1879</span>
+                            <span class="label">Patent Filed</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1879-maxwell-death" data-focus-panel="ac-accel" data-tooltip="Maxwell dies (Nov 5, 1879)" title="Maxwell dies (Nov 5, 1879)" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1879</span>
+                            <span class="label">Maxwell Dies</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1880" data-focus-panel="ac-accel" data-tooltip="Edison lamp patent granted (Jan 27, 1880)" title="Edison lamp patent granted (Jan 27, 1880)" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                            <span class="year">1880</span>
+                            <span class="label">Patent Granted</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1882" data-focus-panel="ac-accel" data-tooltip="Heaviside begins equation reform work" title="Heaviside begins equation reform work" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1882</span>
+                            <span class="label">Reform Begins</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1884" data-focus-panel="ac-accel" data-tooltip="Heaviside reformulates Maxwell's equations" title="Heaviside reformulates Maxwell's equations" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1884</span>
+                            <span class="label">Heaviside</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1886" data-focus-panel="ac-accel" data-tooltip="Stanley powers Great Barrington" title="Stanley powers Great Barrington" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                            <span class="year">1886</span>
+                            <span class="label">Stanley Jr.</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1888" data-focus-panel="ac-accel" data-tooltip="Hertz validates Maxwell experimentally" title="Hertz validates Maxwell experimentally" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1861-maxwell.svg" alt=""></span>
+                            <span class="year">1888</span>
+                            <span class="label">Hertz</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1889" data-focus-panel="ac-accel" data-tooltip="Practical three-phase motor architecture matures" title="Practical three-phase motor architecture matures" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                            <span class="year">1889</span>
+                            <span class="label">3-Phase Motor</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1888-tesla" data-focus-panel="ac-accel" data-tooltip="Westinghouse secures Tesla polyphase patents" title="Westinghouse secures Tesla polyphase patents" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                            <span class="year">1888</span>
+                            <span class="label">Tesla Patents</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1892" data-focus-panel="ac-accel" data-tooltip="General Electric is formed" title="General Electric is formed" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                            <span class="year">1892</span>
+                            <span class="label">GE Formed</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1895" data-focus-panel="ac-accel" data-tooltip="Niagara Falls AC plant commissioned" title="Niagara Falls AC plant commissioned" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                            <span class="year">1895</span>
+                            <span class="label">Niagara</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-focus-panel" data-focus-panel="reactive-era">
+                    <p class="focus-panel-caption">Reactive burden era: a long operational century where symptoms were managed before field intelligence emerged.</p>
+                    <div class="timeline-track timeline-track-focus">
+                        <button class="timeline-node" data-target="event-1891" data-focus-panel="reactive-era" data-tooltip="Ames / Gold King makes reactive burden industrially consequential" title="Ames / Gold King makes reactive burden industrially consequential" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                            <span class="year">1891</span>
+                            <span class="label">Industrial Burden Anchor</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1905" data-focus-panel="reactive-era" data-tooltip="Capacitors applied in industrial motor environments" title="Capacitors applied in industrial motor environments" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                            <span class="year">1905</span>
+                            <span class="label">Capacitor Adoption</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1910-rogowski" data-focus-panel="reactive-era" data-tooltip="Rogowski-coil current sensing emerges (1910s, published 1912)" title="Rogowski-coil current sensing emerges (1910s, published 1912)" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">1910s</span>
+                            <span class="label">Rogowski Coil</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1950" data-focus-panel="reactive-era" data-tooltip="Reactive management becomes standard utility and plant practice" title="Reactive management becomes standard utility and plant practice" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
+                            <span class="year">Mid-20th</span>
+                            <span class="label">Utility Practice</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-1980" data-focus-panel="reactive-era" data-tooltip="Digital metering begins exposing dynamic field behavior" title="Digital metering begins exposing dynamic field behavior" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">Late-20th</span>
+                            <span class="label">Digital Metering</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2001" data-focus-panel="reactive-era" data-tooltip="Field harmonization discovery pathway emerges" title="Field harmonization discovery pathway emerges" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2001</span>
+                            <span class="label">Harmonization Discovery</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="timeline-focus-panel" data-focus-panel="mpts-history">
+                    <p class="focus-panel-caption">Measured field era: discovery, instrumentation, IP, compliance, and deployment into operational intelligence.</p>
+                    <div class="timeline-track timeline-track-focus">
+                        <button class="timeline-node" data-target="event-2001" data-focus-panel="mpts-history" data-tooltip="Field harmonization discovery pathway emerges" title="Field harmonization discovery pathway emerges" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2001</span>
+                            <span class="label">Discovery</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2006" data-focus-panel="mpts-history" data-tooltip="Field-tested and sold in fluorescent ballast applications by 2006" title="Field-tested and sold in fluorescent ballast applications by 2006" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2006</span>
+                            <span class="label">Ballast Deployments</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2008" data-focus-panel="mpts-history" data-tooltip="Redesigned for industrial facility applications" title="Redesigned for industrial facility applications" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2008</span>
+                            <span class="label">Industrial Redesign</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2009" data-focus-panel="mpts-history" data-tooltip="Patent filings submitted" title="Patent filings submitted" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2009</span>
+                            <span class="label">Patents Filed</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2012" data-focus-panel="mpts-history" data-tooltip="Patents awarded across 28 countries" title="Patents awarded across 28 countries" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2012</span>
+                            <span class="label">28-Country Awards</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2013" data-focus-panel="mpts-history" data-tooltip="UL and CSA approval milestone" title="UL and CSA approval milestone" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2013</span>
+                            <span class="label">UL / CSA</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2014" data-focus-panel="mpts-history" data-tooltip="First 65A production and early 100A production run" title="First 65A production and early 100A production run" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2014</span>
+                            <span class="label">65A + 100A Units</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2017" data-focus-panel="mpts-history" data-tooltip="H240 and H490 delivered, including NORAD deployments" title="H240 and H490 delivered, including NORAD deployments" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
+                            <span class="year">2017</span>
+                            <span class="label">H240 / H490</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2026" data-focus-panel="mpts-history" data-tooltip="Unity field intelligence era" title="Unity field intelligence era" type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
+                            <span class="year">2026</span>
+                            <span class="label">Unity Field</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="event-grid">
+            <article class="event-card active" id="event-1831">
+                <div class="event-icon" aria-hidden="true">🧲</div>
+                <h3>Faraday Discovers Induction</h3>
+                <div class="event-meta">1831 · Royal Institution, London</div>
+                <p class="event-story">
+                    Michael Faraday reveals electromagnetic induction — proving that motion in a magnetic field can create electrical current.
+                    <strong>This is the foundational doorway into the modern field age.</strong>
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Foundational Milestone</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1831-maxwell-birth">
+                <div class="event-icon" aria-hidden="true">👶</div>
+                <h3>James Clerk Maxwell Is Born</h3>
+                <div class="event-meta">June 13, 1831 · Edinburgh, Scotland</div>
+                <p class="event-story">
+                    Maxwell is born 77 days before Faraday's electromagnetic induction demonstration. In this timeline, these
+                    twin 1831 moments frame discovery and the future mathematics that would later describe the field.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Twin 1831 Anchor</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1838">
+                <div class="event-icon" aria-hidden="true">⚙️</div>
+                <h3>Jacobi Demonstrates Motorized Electric Work</h3>
+                <div class="event-meta">1834–1838 · St. Petersburg</div>
+                <p class="event-story">
+                    Moritz Hermann von Jacobi develops one of the first practical rotating electric motors and demonstrates
+                    electric propulsion on the Neva in 1838, proving field theory could produce useful mechanical output.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Electromechanical Proof</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1861">
+                <div class="event-icon" aria-hidden="true">📐</div>
+                <h3>Maxwell Unifies the Field</h3>
+                <div class="event-meta">1861 · Electromagnetic Theory Formalized</div>
+                <p class="event-story">
+                    James Clerk Maxwell provides the mathematical framework unifying electricity, magnetism, and light.
+                    The field becomes quantifiable, teachable, and engineerable.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Theory Established</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1873">
+                <div class="event-icon" aria-hidden="true">📘</div>
+                <h3>Heaviside Reads Maxwell's Treatise</h3>
+                <div class="event-meta">1873 · Treatise Era · Early Heaviside Exposure</div>
+                <p class="event-story">
+                    Maxwell's two-volume Treatise circulates broadly, and Oliver Heaviside studies it in this period.
+                    He later begins reform work in 1882, eventually translating the equations into engineer-ready vector form.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Treatise Read & Carried Forward</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1879-filing">
+                <div class="event-icon" aria-hidden="true">💡</div>
+                <h3>Edison Files Incandescent Lamp Patent</h3>
+                <div class="event-meta">November 4, 1879 · U.S. Patent Application Filed</div>
+                <p class="event-story">
+                    Edison files the patent application for an improved high-resistance incandescent lamp, accelerating
+                    commercial momentum around practical electric lighting systems.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Commercial Lighting Push</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1879-maxwell-death">
+                <div class="event-icon" aria-hidden="true">🕯️</div>
+                <h3>James Clerk Maxwell Dies</h3>
+                <div class="event-meta">November 5, 1879 · Cambridge, England</div>
+                <p class="event-story">
+                    One day after Edison's filing date, Maxwell dies at age 48. His field framework endures and quickly
+                    becomes the intellectual backbone of the industrial AC era that follows.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Legacy Continues</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1880">
+                <div class="event-icon" aria-hidden="true">🏛️</div>
+                <h3>Edison Lamp Patent Is Granted</h3>
+                <div class="event-meta">January 27, 1880 · U.S. Patent 223,898</div>
+                <p class="event-story">
+                    The Edison lamp patent is granted, creating a legal and commercial platform for rapid investment in
+                    generation, distribution, and electrical infrastructure buildout.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Patent Platform Activated</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1882">
+                <div class="event-icon" aria-hidden="true">🧩</div>
+                <h3>Heaviside Begins Reforming Maxwell's Equations</h3>
+                <div class="event-meta">1882 · Initial Reform Work Begins</div>
+                <p class="event-story">
+                    After years absorbing Maxwell's Treatise, Heaviside starts active reform work in 1882, setting up the
+                    equation streamlining that matures through the mid-1880s.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Reform Phase Begins</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1884">
+                <div class="event-icon" aria-hidden="true">🧮</div>
+                <h3>Oliver Heaviside Streamlines Maxwell's Equations</h3>
+                <div class="event-meta">1884–1885 · London, England</div>
+                <p class="event-story">
+                    Oliver Heaviside recasts Maxwell's original formulation into the compact vector form engineers can directly use.
+                    This translation makes field equations practical for industrial design, transmission analysis, and controls.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Equations Operationalized</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1886">
+                <div class="event-icon" aria-hidden="true">👨‍🔧</div>
+                <h3>William Stanley Jr. — First Practical AC Field</h3>
+                <div class="event-meta">1886 · Great Barrington, Massachusetts</div>
+                <p class="event-story">
+                    Great Barrington, Massachusetts marks a turning point: William Stanley Jr. demonstrates practical AC distribution,
+                    transforming field theory into live industrial reality.
+                    This milestone anchors the origin story for modern distributed electrical infrastructure.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button primary meet-william-btn" type="button" data-video="timeline/videos/WilliamStanleyJrFirstACTransformer.mp4" data-title="Meet William — Great Barrington Field Story">Meet William</button>
+                    <a class="story-button secondary" href="maxwellian/briefs/EP02_MIB_Issue2_260222.html">Read Historical Brief →</a>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1888">
+                <div class="event-icon" aria-hidden="true">📡</div>
+                <h3>Heinrich Hertz Validates Maxwell Experimentally</h3>
+                <div class="event-meta">1887–1888 · Karlsruhe, Germany</div>
+                <p class="event-story">
+                    Hertz produces and detects electromagnetic waves in the laboratory, providing direct experimental confirmation
+                    of Maxwell's predictions and locking theory to measurable field reality.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Theory Confirmed</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1889">
+                <div class="event-icon" aria-hidden="true">🛠️</div>
+                <h3>Practical Three-Phase Motor Architecture Matures</h3>
+                <div class="event-meta">1889 · Polyphase Motive Power Becomes Practical</div>
+                <p class="event-story">
+                    Three-phase rotating-field motor architecture reaches practical industrial form, helping move AC from
+                    demonstration to scalable motive-power infrastructure.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Polyphase Motive-Power Bridge</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1888-tesla">
+                <div class="event-icon" aria-hidden="true">⚙️</div>
+                <h3>Westinghouse Secures Tesla Polyphase Motor Patents</h3>
+                <div class="event-meta">1888 · Polyphase AC Patent Platform</div>
+                <p class="event-story">
+                    Tesla's AC motor and polyphase system patents are purchased and licensed by Westinghouse, accelerating
+                    practical industrial AC drives and transforming patent breakthroughs into deployable machinery.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Patent Platform Secured</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1891">
+                <div class="event-icon" aria-hidden="true">🏔️</div>
+                <h3>Ames Powers Gold King with Long-Distance AC</h3>
+                <div class="event-meta">July 19, 1891 · Telluride Region, Colorado · 3,000V over about 2.5 miles</div>
+                <p class="event-story">
+                    Ames transmits 3,000-volt AC about 2.5 miles to the Gold King operation, where a 100-hp motor on the
+                    Tesla-Westinghouse AC platform drives ore-processing work. This marks the timeline anchor for the
+                    industrial reactive-energy era, where field turbulence becomes a persistent operational concern.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Industrial Expansion</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1892">
+                <div class="event-icon" aria-hidden="true">🏢</div>
+                <h3>General Electric Is Formed</h3>
+                <div class="event-meta">1892 · Edison General Electric + Thomson-Houston Merger</div>
+                <p class="event-story">
+                    General Electric forms through merger, consolidating major electrical manufacturing, generation, and
+                    transmission capabilities into one industrial force shaping utility-scale deployment. Elihu Thomson's
+                    Thomson-Houston lineage also carried forward practical metering and watt-hour instrumentation work.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Industrial Consolidation</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-1895">
+                <div class="event-icon" aria-hidden="true">🌊</div>
+                <h3>Niagara Falls AC Station Commissioned</h3>
+                <div class="event-meta">1895 · Niagara Falls, New York</div>
+                <p class="event-story">
+                    The Niagara project enters service with utility-class AC generation and transmission architecture,
+                    setting the stage for 1896 long-distance delivery to Buffalo and proving large-scale AC viability.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Utility-Scale AC Confirmed</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1905">
+                <div class="event-icon" aria-hidden="true">🧯</div>
+                <h3>Capacitor Correction Enters Industrial Motor Practice</h3>
+                <div class="event-meta">1905 · Lansing, Michigan · Oldsmobile Plant Context</div>
+                <p class="event-story">
+                    Industrial operators begin applying capacitive correction in motor-heavy environments to calm unstable
+                    electrical behavior and improve apparent motor smoothness under reactive conditions.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Field Stabilization Devices</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1910-rogowski">
+                <div class="event-icon" aria-hidden="true">🌀</div>
+                <h3>Rogowski-Coil Current Sensing Enters the Field Era</h3>
+                <div class="event-meta">1910s (Definitive Publication in 1912) · Walter Rogowski / W. Steinhaus</div>
+                <p class="event-story">
+                    Flexible coil-based AC current sensing emerges in the 1910s and is definitively described in 1912.
+                    The Rogowski-coil principle becomes a long-lived instrumentation path still used in modern field measurements.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Modern Current Sensing Bridge</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1950">
+                <div class="event-icon" aria-hidden="true">🏙️</div>
+                <h3>Reactive Management Becomes Standard Utility Practice</h3>
+                <div class="event-meta">Mid-20th Century · Utility and Plant Correction Programs</div>
+                <p class="event-story">
+                    Utilities and industrial operators normalize reactive compensation programs using capacitor banks,
+                    synchronous solutions, and power-factor programs to manage system symptoms at larger scale.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>System-Wide Symptom Management</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-1980">
+                <div class="event-icon" aria-hidden="true">📟</div>
+                <h3>Digital Metering Begins Exposing Dynamic Behavior</h3>
+                <div class="event-meta">Late-20th Century · Power Quality Instrumentation Expands</div>
+                <p class="event-story">
+                    Digital monitoring and power-quality instrumentation improve visibility into waveform behavior, but field
+                    intelligence remains fragmented and mostly diagnostic rather than continuously orchestrated.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Visibility Expands, Intelligence Lags</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-2001">
+                <div class="event-icon" aria-hidden="true">🧪</div>
+                <h3>MPTS Field Harmonization Path Emerges</h3>
+                <div class="event-meta">2001 · Reactive-Field Harmonization Discovery</div>
+                <p class="event-story">
+                    A new path appears: rather than accepting reactive turbulence as unavoidable, field harmonization is
+                    pursued as an intentional engineering objective.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Harmonization Pathway Opens</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2006">
+                <div class="event-icon" aria-hidden="true">🏭</div>
+                <h3>Ballast-Scale Field Trials and Sales</h3>
+                <div class="event-meta">2001–2006 · Fluorescent Ballast Deployments</div>
+                <p class="event-story">
+                    Early commercial pathway: harmonization concepts are field-tested and sold in fluorescent lighting
+                    ballast applications through 2006.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Early Commercial Validation</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2008">
+                <div class="event-icon" aria-hidden="true">🏗️</div>
+                <h3>Industrial Facility Redesign</h3>
+                <div class="event-meta">2008 · Platform Reworked for Facility Loads</div>
+                <p class="event-story">
+                    The architecture is redesigned for heavier industrial environments, shifting from lighting-oriented use
+                    cases to broader facility-level electrical behavior control.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Industrial Platform Shift</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2009">
+                <div class="event-icon" aria-hidden="true">📄</div>
+                <h3>Patent Filings Submitted</h3>
+                <div class="event-meta">2009 · IP Protection Phase Begins</div>
+                <p class="event-story">
+                    Formal patent filings are submitted to protect harmonization methods and their industrial field-control
+                    implementations.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Patent Filing Milestone</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2012">
+                <div class="event-icon" aria-hidden="true">🌍</div>
+                <h3>Patents Awarded Across 28 Countries</h3>
+                <div class="event-meta">Through 2012 · International IP Awards</div>
+                <p class="event-story">
+                    Patent awards expand internationally, securing broad jurisdictional protection for the platform across
+                    28 countries.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Global IP Expansion</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2013">
+                <div class="event-icon" aria-hidden="true">✅</div>
+                <h3>UL / CSA Approval Milestone</h3>
+                <div class="event-meta">2013 · Safety and Compliance Qualification</div>
+                <p class="event-story">
+                    Regulatory approval milestones are reached with UL and CSA pathways, enabling broader deployment in
+                    commercial and industrial environments.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Compliance Cleared</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2014">
+                <div class="event-icon" aria-hidden="true">🏁</div>
+                <h3>First Production Units and Field Tests</h3>
+                <div class="event-meta">2014 · 65A Production + Initial 100A Units</div>
+                <p class="event-story">
+                    First 65-amp production units are manufactured and field tests begin, alongside initial 100-amp unit
+                    production for expanded operational validation.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Production Launch</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2017">
+                <div class="event-icon" aria-hidden="true">🚚</div>
+                <h3>H240 and H490 Delivered to Advanced Sites</h3>
+                <div class="event-meta">2017 · Customer Deployments + NORAD Delivery</div>
+                <p class="event-story">
+                    H240 and H490 units are delivered for continued field testing at customer sites, with H490 systems
+                    delivered to U.S. government operations at NORAD.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Advanced Deployment Phase</button>
+                </div>
+            </article>
+
+            <article class="event-card" id="event-2026">
+                <div class="event-icon" aria-hidden="true">⚡</div>
+                <h3>Unity Energy Field Intelligence</h3>
+                <div class="event-meta">2026 · Measure → Manage → Exchange</div>
+                <p class="event-story">
+                    Unity operationalizes the timeline: making reactive behavior visible, manageable, and economically actionable
+                    in industrial 480V environments.
+                </p>
+                <div class="story-actions">
+                    <a class="story-button primary" href="index.html#portals">Enter Customer Portal</a>
+                </div>
+            </article>
+
+            <aside class="unity-context">
+                <h4>How Unity Fits the Timeline</h4>
+                <p>Faraday revealed induction in 1831, and Maxwell gave the field its mathematical language.</p>
+                <p>By the 1890s, alternating current began powering industrial motors at scale, bringing reactive burden into mines, factories, and manufacturing systems.</p>
+                <p>For more than a century, operators could observe the symptoms of the reactive field — heat, loss, overload, distortion, and poor power factor — but not the field itself as a living, measurable system.</p>
+                <p>Capacitors and correction devices helped calm symptoms, but they did not reveal full field behavior in real time.</p>
+                <p>Beginning in 2001, Unity's MPTS lineage entered that historical gap.</p>
+                <p>What had long been hidden behind side effects could now be measured, interpreted, and managed as operational value.</p>
+                <p>Unity's role is not the invention of electricity, and not the invention of correction, but the transition from reactive side effects to reactive intelligence.</p>
+            </aside>
+        </section>
+    </main>
+
+    <div class="video-modal" id="timelineVideoModal" onclick="closeTimelineVideoModal()">
+        <div class="video-modal-content" onclick="event.stopPropagation()">
+            <div class="video-modal-header">
+                <span id="timelineVideoTitle">Meet William</span>
+                <button class="video-close" type="button" onclick="closeTimelineVideoModal()">✕ Close</button>
+            </div>
+            <video id="timelineVideo" controls>
+                <source id="timelineVideoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 
@@ -151,5 +1442,122 @@
         <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
+
+    <script>
+        const timelineNodes = document.querySelectorAll('.timeline-node');
+        const eventCards = document.querySelectorAll('.event-card');
+        const focusPanels = document.querySelectorAll('.timeline-focus-panel');
+        const focusChips = document.querySelectorAll('.focus-chip');
+        const zoomBandTitle = document.getElementById('zoomBandTitle');
+        const timelineOverview = document.querySelector('.timeline-overview');
+        const timelineScaleLabel = document.getElementById('timelineScaleLabel');
+
+        const focusPanelTitles = {
+            'pre-ac': 'Field Foundations · 1831 → 1888',
+            'ac-accel': 'AC Industrialization · 1879 → 1895',
+            'reactive-era': 'Reactive Burden Era · 1891 → 2000',
+            'mpts-history': 'Measured Field Era · 2001 → 2026'
+        };
+        const focusScaleLabels = {
+            'pre-ac': '1831–1888 Field Foundations',
+            'ac-accel': '1889–1895 AC Industrialization Bridge',
+            'reactive-era': '1891–2000 Industrial Reactive Era',
+            'mpts-history': '2001–2026 Measured Field Era'
+        };
+
+        function setActiveTimeline(targetId) {
+            timelineNodes.forEach(node => {
+                node.classList.toggle('active', node.dataset.target === targetId);
+            });
+            eventCards.forEach(card => {
+                card.classList.toggle('active', card.id === targetId);
+            });
+        }
+        function setActiveFocusPanel(panelKey) {
+            if (!panelKey) {
+                return;
+            }
+            focusPanels.forEach(panel => {
+                panel.classList.toggle('active', panel.dataset.focusPanel === panelKey);
+            });
+            focusChips.forEach(chip => {
+                chip.classList.toggle('active', chip.dataset.focusPanel === panelKey);
+            });
+            if (zoomBandTitle && focusPanelTitles[panelKey]) {
+                zoomBandTitle.textContent = focusPanelTitles[panelKey];
+            }
+            if (timelineOverview) {
+                timelineOverview.dataset.focusPanel = panelKey;
+            }
+            if (timelineScaleLabel && focusScaleLabels[panelKey]) {
+                timelineScaleLabel.textContent = focusScaleLabels[panelKey];
+            }
+        }
+
+        function activateTimelineNode(node) {
+            if (!node || !node.dataset.target) {
+                return;
+            }
+            setActiveFocusPanel(node.dataset.focusPanel);
+            setActiveTimeline(node.dataset.target);
+        }
+
+        timelineNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                activateTimelineNode(node);
+            });
+        });
+
+        focusChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const panelKey = chip.dataset.focusPanel;
+                setActiveFocusPanel(panelKey);
+                const firstNodeInPanel = document.querySelector(`.timeline-focus-panel[data-focus-panel="${panelKey}"] .timeline-node`);
+                if (firstNodeInPanel) {
+                    setActiveTimeline(firstNodeInPanel.dataset.target);
+                }
+            });
+        });
+
+        const initiallyActiveNode = document.querySelector('.timeline-node.active');
+        if (initiallyActiveNode) {
+            setActiveFocusPanel(initiallyActiveNode.dataset.focusPanel);
+        }
+
+        function openTimelineVideoModal(videoSrc, titleText) {
+            const modal = document.getElementById('timelineVideoModal');
+            const video = document.getElementById('timelineVideo');
+            const source = document.getElementById('timelineVideoSource');
+            const title = document.getElementById('timelineVideoTitle');
+
+            source.src = videoSrc;
+            title.textContent = titleText || 'Timeline Story';
+            video.load();
+            modal.classList.add('active');
+            video.play();
+        }
+
+        function closeTimelineVideoModal() {
+            const modal = document.getElementById('timelineVideoModal');
+            const video = document.getElementById('timelineVideo');
+            modal.classList.remove('active');
+            video.pause();
+            video.currentTime = 0;
+        }
+
+        document.querySelectorAll('.meet-william-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const src = button.dataset.video;
+                const title = button.dataset.title;
+                openTimelineVideoModal(src, title);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeTimelineVideoModal();
+            }
+        });
+    </script>
 </body>
 </html>
