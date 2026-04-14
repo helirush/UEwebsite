@@ -26,6 +26,158 @@
   let guardrailSessionToken = "";
   let lifecycleCleanupBound = false;
   let activeLaunchSignature = "";
+  const runtimeAuthStorageKey = "MAXWELLIAN_HUME_RUNTIME_AUTH";
+
+  function normalizeRuntimeAuthCandidate(candidate) {
+    if (!candidate) return null;
+    if (typeof candidate === "string") {
+      const tokenCandidate = candidate.trim();
+      return tokenCandidate ? { type: "accessToken", value: tokenCandidate } : null;
+    }
+    if (typeof candidate !== "object") return null;
+    const explicitType =
+      candidate.type === "apiKey" ? "apiKey" : candidate.type === "accessToken" ? "accessToken" : "";
+    const explicitValue = typeof candidate.value === "string" ? candidate.value.trim() : "";
+    const accessToken = typeof candidate.accessToken === "string" ? candidate.accessToken.trim() : "";
+    const apiKey = typeof candidate.apiKey === "string" ? candidate.apiKey.trim() : "";
+    let type = explicitType;
+    let value = explicitValue;
+    if (!type) {
+      if (accessToken) {
+        type = "accessToken";
+      } else if (apiKey) {
+        type = "apiKey";
+      }
+    }
+    if (!value) {
+      value = type === "accessToken" ? accessToken : type === "apiKey" ? apiKey : "";
+    }
+    if (!type || !value) return null;
+    return { type: type, value: value };
+  }
+
+  function readRuntimeAuthFromStorage() {
+    if (typeof window === "undefined" || !window.localStorage) return null;
+    try {
+      const raw = window.localStorage.getItem(runtimeAuthStorageKey);
+      if (!raw) return null;
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (_err) {
+        parsed = raw;
+      }
+      return normalizeRuntimeAuthCandidate(parsed);
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function writeRuntimeAuthToStorage(auth) {
+    if (typeof window === "undefined" || !window.localStorage) return false;
+    const normalized = normalizeRuntimeAuthCandidate(auth);
+    if (!normalized) return false;
+    try {
+      window.localStorage.setItem(runtimeAuthStorageKey, JSON.stringify(normalized));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function clearRuntimeAuthStorage() {
+    if (typeof window === "undefined" || !window.localStorage) return;
+    try {
+      window.localStorage.removeItem(runtimeAuthStorageKey);
+    } catch (_err) {}
+  }
+
+  function readRuntimeAuthFromWindow() {
+    if (typeof window === "undefined") return null;
+    const objectCandidate =
+      window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
+        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
+        : window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object"
+          ? window.MAXWELLIAN_HUME_AUTH
+          : null;
+    const objectAuth = normalizeRuntimeAuthCandidate(objectCandidate);
+    if (objectAuth) return objectAuth;
+    const accessToken =
+      typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
+        ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
+        : "";
+    if (accessToken) return { type: "accessToken", value: accessToken };
+    const apiKey =
+      typeof window.MAXWELLIAN_HUME_API_KEY === "string" ? window.MAXWELLIAN_HUME_API_KEY.trim() : "";
+    if (apiKey) return { type: "apiKey", value: apiKey };
+    return null;
+  }
+
+  function applyRuntimeAuthToWindow(auth) {
+    if (typeof window === "undefined") return;
+    const normalized = normalizeRuntimeAuthCandidate(auth);
+    if (!normalized) return;
+    window.MAXWELLIAN_HUME_RUNTIME_AUTH = {
+      type: normalized.type,
+      value: normalized.value,
+    };
+    if (normalized.type === "accessToken") {
+      window.MAXWELLIAN_HUME_ACCESS_TOKEN = normalized.value;
+    } else if (normalized.type === "apiKey") {
+      window.MAXWELLIAN_HUME_API_KEY = normalized.value;
+    }
+  }
+
+  function getRuntimeAuthCandidate() {
+    const fromWindow = readRuntimeAuthFromWindow();
+    if (fromWindow) return fromWindow;
+    const fromStorage = readRuntimeAuthFromStorage();
+    if (fromStorage) {
+      applyRuntimeAuthToWindow(fromStorage);
+      return fromStorage;
+    }
+    return null;
+  }
+
+  function exposeRuntimeAuthHelpers() {
+    if (typeof window === "undefined") return;
+    window.setMaxwellianHumeAuth = function (typeOrObject, value, options) {
+      let candidate = null;
+      if (typeOrObject && typeof typeOrObject === "object") {
+        candidate = normalizeRuntimeAuthCandidate(typeOrObject);
+      } else if (typeof typeOrObject === "string") {
+        candidate = normalizeRuntimeAuthCandidate({
+          type: typeOrObject,
+          value: typeof value === "string" ? value : "",
+        });
+      }
+      if (!candidate) return false;
+      applyRuntimeAuthToWindow(candidate);
+      const shouldPersist = !(options && typeof options === "object" && options.persist === false);
+      if (shouldPersist) writeRuntimeAuthToStorage(candidate);
+      return true;
+    };
+    window.clearMaxwellianHumeAuth = function () {
+      clearRuntimeAuthStorage();
+      if (window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object") {
+        window.MAXWELLIAN_HUME_RUNTIME_AUTH.type = "";
+        window.MAXWELLIAN_HUME_RUNTIME_AUTH.value = "";
+      }
+      if (typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string") {
+        window.MAXWELLIAN_HUME_ACCESS_TOKEN = "";
+      }
+      if (typeof window.MAXWELLIAN_HUME_API_KEY === "string") {
+        window.MAXWELLIAN_HUME_API_KEY = "";
+      }
+      return true;
+    };
+  }
+
+  exposeRuntimeAuthHelpers();
+  const bootstrapRuntimeAuth = getRuntimeAuthCandidate();
+  if (bootstrapRuntimeAuth) {
+    applyRuntimeAuthToWindow(bootstrapRuntimeAuth);
+  }
 
   function getVoiceConfig() {
     const defaults = {
@@ -219,42 +371,19 @@
   function normalizeAuthConfig(cfg) {
     if (!cfg || typeof cfg !== "object") return null;
     const auth = cfg.auth && typeof cfg.auth === "object" ? cfg.auth : {};
-    const runtimeAuth =
-      typeof window !== "undefined" &&
-      window.MAXWELLIAN_HUME_RUNTIME_AUTH &&
-      typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
-        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
-        : {};
-    const mergedAuth = Object.assign({}, runtimeAuth, auth);
-    const explicitType =
-      mergedAuth.type === "apiKey" ? "apiKey" : mergedAuth.type === "accessToken" ? "accessToken" : "";
-    const explicitValue = typeof mergedAuth.value === "string" ? mergedAuth.value.trim() : "";
-    const accessToken =
-      typeof mergedAuth.accessToken === "string"
-        ? mergedAuth.accessToken.trim()
-        : typeof window !== "undefined" && typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
-          ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
-          : "";
-    const apiKey =
-      typeof mergedAuth.apiKey === "string"
-        ? mergedAuth.apiKey.trim()
-        : typeof window !== "undefined" && typeof window.MAXWELLIAN_HUME_API_KEY === "string"
-          ? window.MAXWELLIAN_HUME_API_KEY.trim()
-          : "";
-    let type = explicitType;
-    let value = explicitValue;
-    if (!type) {
-      if (accessToken) {
-        type = "accessToken";
-      } else if (apiKey) {
-        type = "apiKey";
+    const runtimeAuth = getRuntimeAuthCandidate();
+    const mergedAuth = Object.assign({}, auth);
+    if (runtimeAuth) {
+      if (!mergedAuth.type) mergedAuth.type = runtimeAuth.type;
+      if (!mergedAuth.value) mergedAuth.value = runtimeAuth.value;
+      if (runtimeAuth.type === "accessToken" && !mergedAuth.accessToken) {
+        mergedAuth.accessToken = runtimeAuth.value;
+      }
+      if (runtimeAuth.type === "apiKey" && !mergedAuth.apiKey) {
+        mergedAuth.apiKey = runtimeAuth.value;
       }
     }
-    if (!value) {
-      value = type === "accessToken" ? accessToken : type === "apiKey" ? apiKey : "";
-    }
-    if (!type || !value) return null;
-    return { type: type, value: value };
+    return normalizeRuntimeAuthCandidate(mergedAuth);
   }
 
   function normalizeSessionVariables(cfg) {
@@ -3053,7 +3182,7 @@
         const configured = sendWidgetConfig(cfg, pendingLaunchSession);
         if (!configured) {
           setStatus(
-            "Voice auth is missing. Set MAXWELLIAN_HUME_RUNTIME_AUTH (accessToken/apiKey) or MAXWELLIAN_HUME.auth in hume_character_config.js.",
+            "Voice auth is missing. Set MAXWELLIAN_HUME_RUNTIME_AUTH/MAXWELLIAN_HUME.auth, or run setMaxwellianHumeAuth('apiKey'|'accessToken', '...') once in browser console.",
             true
           );
           setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
@@ -4104,7 +4233,7 @@
     if (!auth) {
       frame.removeAttribute("src");
       setStatus(
-        "Voice auth is not configured. Set MAXWELLIAN_HUME_RUNTIME_AUTH with accessToken/apiKey (or MAXWELLIAN_HUME.auth), then retry Speak with Clerk.",
+        "Voice auth is not configured. Set MAXWELLIAN_HUME_RUNTIME_AUTH/MAXWELLIAN_HUME.auth, or run setMaxwellianHumeAuth('apiKey'|'accessToken', '...') once in browser console.",
         true
       );
       return;
