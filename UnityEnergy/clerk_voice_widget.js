@@ -1279,10 +1279,21 @@
     };
   }
 
-  function openClerkFromFloatingLauncher() {
+  async function runAppleMobileMicPreflight() {
+    if (!isAppleMobileWebKitBrowser()) return false;
+    try {
+      await requestTopLevelMicAccess();
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  async function openClerkFromFloatingLauncher() {
     const cfg = getVoiceConfig();
     if (!isFloatingLauncherEnabled(cfg)) return false;
     const launchOptions = buildFloatingLauncherLaunchOptions(cfg);
+    await runAppleMobileMicPreflight();
     return openClerkWithPageContext(launchOptions);
   }
 
@@ -4452,7 +4463,7 @@
     document.querySelectorAll("[data-clerk-voice]").forEach(function (button) {
       if (button.dataset.clerkVoiceBound === "1") return;
       button.dataset.clerkVoiceBound = "1";
-      button.addEventListener("click", function (event) {
+      button.addEventListener("click", async function (event) {
         if (event && typeof event.preventDefault === "function") {
           event.preventDefault();
         }
@@ -4483,6 +4494,7 @@
         if (Number.isFinite(sourceMediaSeconds)) {
           fallbackLaunch.sourceMediaSeconds = Math.max(0, Math.floor(sourceMediaSeconds));
         }
+        await runAppleMobileMicPreflight();
         const launchInput = parseLaunchInput(button.getAttribute("data-clerk-voice") || "");
         openClerkFromLaunchInput(launchInput, fallbackLaunch);
       });
