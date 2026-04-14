@@ -3270,27 +3270,6 @@
         widgetReady = true;
         clearFrameLoadTimer();
         const cfg = getRuntimeVoiceConfig();
-        if (shouldUseUnityStartGate(cfg)) {
-          setStatus(
-            `Tap Start speaking with ${cfg.character_name} to allow microphone access on this device.`,
-            false,
-            true
-          );
-          setStartButtonVisible(true);
-          setLaunchEmblemVisible(false);
-          setWidgetFrameSize(72, 72);
-          setPanelMode("centered");
-          setSessionDiagnostics(
-            buildSessionDiagnostics(
-              pendingLaunchSession,
-              cfg,
-              document.getElementById("clerkVoiceFrame")?.src || "",
-              "awaiting-microphone"
-            ),
-            false
-          );
-          return;
-        }
         const configured = sendWidgetConfig(cfg, pendingLaunchSession);
         if (!configured) {
           setStatus(
@@ -3418,9 +3397,7 @@
             true,
             true
           );
-          if (shouldUseUnityStartGate(cfg)) {
-            setStartButtonVisible(true);
-          }
+          setStartButtonVisible(true);
           setLaunchEmblemVisible(false);
           setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
           setPanelMode("centered");
@@ -4079,7 +4056,6 @@
     });
     document.getElementById("clerkVoiceStartBtn").addEventListener("click", async function () {
       const cfg = getRuntimeVoiceConfig();
-      if (!shouldUseUnityStartGate(cfg)) return;
       setLaunchEmblemVisible(false);
       setStatus("Requesting microphone access…", false, true);
       try {
@@ -4087,17 +4063,29 @@
       } catch (err) {
         const reason =
           err && typeof err === "object" && "name" in err ? String(err.name) : "Microphone access denied.";
-        setStatus(`Microphone permission failed (${reason}). Allow microphone access in browser settings.`, true);
+        setStatus(`Microphone permission failed (${reason}). Allow microphone access in browser settings.`, true, true);
+        setStartButtonVisible(true);
         setLaunchEmblemVisible(false);
         return;
       }
 
-      sendWidgetConfig(cfg, pendingLaunchSession);
+      const configured = sendWidgetConfig(cfg, pendingLaunchSession);
+      if (!configured) {
+        setStatus(
+          "Voice auth is missing. Set MAXWELLIAN_HUME_RUNTIME_AUTH/MAXWELLIAN_HUME.auth, or run setMaxwellianHumeAuth('apiKey'|'accessToken', '...') once in browser console.",
+          true,
+          true
+        );
+        setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
+        setStartButtonVisible(true);
+        return;
+      }
       setWidgetFrameSize(72, 72);
       expandWidgetFromClient();
       setStatus(
         `${cfg.character_name}: “Nice to meet you. How can I help you learn about Unity Energy?”`,
-        false
+        false,
+        true
       );
       setStartButtonVisible(false);
       window.setTimeout(function () {
