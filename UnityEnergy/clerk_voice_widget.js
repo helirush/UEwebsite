@@ -27,6 +27,42 @@
   let lifecycleCleanupBound = false;
   let activeLaunchSignature = "";
   const runtimeAuthStorageKey = "MAXWELLIAN_HUME_RUNTIME_AUTH";
+  function normalizeRuntimeAuthType(value) {
+    if (typeof value !== "string") return "";
+    const normalized = value.trim().toLowerCase();
+    if (!normalized) return "";
+    if (
+      normalized === "accesstoken" ||
+      normalized === "access_token" ||
+      normalized === "access-token" ||
+      normalized === "token"
+    ) {
+      return "accessToken";
+    }
+    if (
+      normalized === "apikey" ||
+      normalized === "api_key" ||
+      normalized === "api-key" ||
+      normalized === "key"
+    ) {
+      return "apiKey";
+    }
+    return "";
+  }
+
+  function readTrimmedAuthString(source, keys) {
+    if (!source || typeof source !== "object" || !Array.isArray(keys)) return "";
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      if (!key) continue;
+      const value = source[key];
+      if (typeof value === "string") {
+        const trimmed = value.trim();
+        if (trimmed) return trimmed;
+      }
+    }
+    return "";
+  }
 
   function normalizeRuntimeAuthCandidate(candidate) {
     if (!candidate) return null;
@@ -35,11 +71,21 @@
       return tokenCandidate ? { type: "accessToken", value: tokenCandidate } : null;
     }
     if (typeof candidate !== "object") return null;
-    const explicitType =
-      candidate.type === "apiKey" ? "apiKey" : candidate.type === "accessToken" ? "accessToken" : "";
-    const explicitValue = typeof candidate.value === "string" ? candidate.value.trim() : "";
-    const accessToken = typeof candidate.accessToken === "string" ? candidate.accessToken.trim() : "";
-    const apiKey = typeof candidate.apiKey === "string" ? candidate.apiKey.trim() : "";
+    const explicitType = normalizeRuntimeAuthType(candidate.type);
+    const explicitValue = readTrimmedAuthString(candidate, ["value"]);
+    const accessToken = readTrimmedAuthString(candidate, [
+      "accessToken",
+      "access_token",
+      "access-token",
+      "token",
+    ]);
+    const apiKey = readTrimmedAuthString(candidate, [
+      "apiKey",
+      "apikey",
+      "api_key",
+      "api-key",
+      "key",
+    ]);
     let type = explicitType;
     let value = explicitValue;
     if (!type) {
@@ -189,7 +235,7 @@
       default_ui_mode: "modal",
       enable_character_switcher: false,
       use_unity_start_gate: false,
-      unity_launch_ring_image_url: "unity-icon-ring-white-2048.png",
+      unity_launch_ring_image_url: "assets/images/unity-icon-ring-white-2048.png",
       show_session_diagnostics: false,
       show_unity_footer_message: false,
       unity_footer_message: "",
@@ -1634,6 +1680,7 @@
   function scheduleGuardrailIdleTimer(settings, cfg) {
     clearGuardrailIdleTimer();
     if (!settings || !settings.enabled || shouldBypassGuardrails(settings)) return;
+    if (!hasConversationStarted) return;
     const timeoutMs = Math.max(15000, settings.idleSeconds * 1000);
     guardrailIdleTimer = window.setTimeout(function () {
       const modal = document.getElementById("clerkVoiceModal");
@@ -2942,8 +2989,11 @@
     const configured = coerceText(cfg && cfg.unity_launch_ring_image_url);
     const options = [
       configured,
+      "assets/images/unity-icon-ring-white-2048.png",
       "unity-icon-ring-white-2048.png",
+      "assets/images/unity-icon-ring-white-512.png",
       "unity-icon-ring-white-512.png",
+      "assets/images/unity-icon-ring-white-192.png",
       "unity-icon-ring-white-192.png",
     ].filter(Boolean);
     return Array.from(new Set(options));

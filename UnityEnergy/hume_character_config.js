@@ -470,7 +470,7 @@ window.MAXWELLIAN_HUME = {
   guardrails_max_questions_per_session: 8,
   guardrails_free_questions: 2,
   guardrails_max_session_minutes: 12,
-  guardrails_idle_timeout_seconds: 90,
+  guardrails_idle_timeout_seconds: 300,
   guardrails_low_relevance_limit: 2,
   guardrails_min_relevance_score: 2,
   guardrails_max_sessions_per_day: 6,
@@ -627,6 +627,41 @@ window.MAXWELLIAN_HUME = {
   // NOTE: For production, prefer short-lived access token flow.
   auth: (function () {
     if (typeof window === "undefined") return { type: "", value: "" };
+    const normalizeRuntimeAuthType = function (value) {
+      if (typeof value !== "string") return "";
+      const normalized = value.trim().toLowerCase();
+      if (!normalized) return "";
+      if (
+        normalized === "accesstoken" ||
+        normalized === "access_token" ||
+        normalized === "access-token" ||
+        normalized === "token"
+      ) {
+        return "accessToken";
+      }
+      if (
+        normalized === "apikey" ||
+        normalized === "api_key" ||
+        normalized === "api-key" ||
+        normalized === "key"
+      ) {
+        return "apiKey";
+      }
+      return "";
+    };
+    const readTrimmedAuthString = function (source, keys) {
+      if (!source || typeof source !== "object" || !Array.isArray(keys)) return "";
+      for (let i = 0; i < keys.length; i += 1) {
+        const key = keys[i];
+        if (!key) continue;
+        const value = source[key];
+        if (typeof value === "string") {
+          const trimmed = value.trim();
+          if (trimmed) return trimmed;
+        }
+      }
+      return "";
+    };
     const runtimeAuth =
       window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
         ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
@@ -635,24 +670,18 @@ window.MAXWELLIAN_HUME = {
           : window.MAXWELLIAN_HUME && window.MAXWELLIAN_HUME.auth && typeof window.MAXWELLIAN_HUME.auth === "object"
             ? window.MAXWELLIAN_HUME.auth
             : {};
-    const typedValue = typeof runtimeAuth.value === "string" ? runtimeAuth.value.trim() : "";
+    const typedValue = readTrimmedAuthString(runtimeAuth, ["value"]);
     const accessToken =
-      typeof runtimeAuth.accessToken === "string"
-        ? runtimeAuth.accessToken.trim()
-        : typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
-          ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
-          : "";
+      readTrimmedAuthString(runtimeAuth, ["accessToken", "access_token", "access-token", "token"]) ||
+      (typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
+        ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
+        : "");
     const apiKey =
-      typeof runtimeAuth.apiKey === "string"
-        ? runtimeAuth.apiKey.trim()
-        : typeof window.MAXWELLIAN_HUME_API_KEY === "string"
-          ? window.MAXWELLIAN_HUME_API_KEY.trim()
-          : "";
-    let type =
-      typeof runtimeAuth.type === "string" &&
-      (runtimeAuth.type.trim() === "accessToken" || runtimeAuth.type.trim() === "apiKey")
-        ? runtimeAuth.type.trim()
-        : "";
+      readTrimmedAuthString(runtimeAuth, ["apiKey", "apikey", "api_key", "api-key", "key"]) ||
+      (typeof window.MAXWELLIAN_HUME_API_KEY === "string"
+        ? window.MAXWELLIAN_HUME_API_KEY.trim()
+        : "");
+    let type = normalizeRuntimeAuthType(runtimeAuth.type);
     let value = typedValue;
     if (!type) {
       if (accessToken) {
