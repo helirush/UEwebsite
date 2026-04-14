@@ -621,17 +621,51 @@ window.MAXWELLIAN_HUME = {
 
   // Runtime auth injection point. Keep repository key-free.
   // Optional local injection (not committed):
+  // window.MAXWELLIAN_HUME_RUNTIME_AUTH = { accessToken: "..." };
   // window.MAXWELLIAN_HUME_RUNTIME_AUTH = { apiKey: "..." };
+  // window.MAXWELLIAN_HUME_RUNTIME_AUTH = { type: "accessToken", value: "..." };
   // NOTE: For production, prefer short-lived access token flow.
-  auth: {
-    type: "apiKey",
-    value:
-      typeof window !== "undefined" &&
-      window.MAXWELLIAN_HUME_RUNTIME_AUTH &&
-      typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH.apiKey === "string"
-        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH.apiKey.trim()
-        : "",
-  },
+  auth: (function () {
+    if (typeof window === "undefined") return { type: "", value: "" };
+    const runtimeAuth =
+      window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
+        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
+        : window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object"
+          ? window.MAXWELLIAN_HUME_AUTH
+          : window.MAXWELLIAN_HUME && window.MAXWELLIAN_HUME.auth && typeof window.MAXWELLIAN_HUME.auth === "object"
+            ? window.MAXWELLIAN_HUME.auth
+            : {};
+    const typedValue = typeof runtimeAuth.value === "string" ? runtimeAuth.value.trim() : "";
+    const accessToken =
+      typeof runtimeAuth.accessToken === "string"
+        ? runtimeAuth.accessToken.trim()
+        : typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
+          ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
+          : "";
+    const apiKey =
+      typeof runtimeAuth.apiKey === "string"
+        ? runtimeAuth.apiKey.trim()
+        : typeof window.MAXWELLIAN_HUME_API_KEY === "string"
+          ? window.MAXWELLIAN_HUME_API_KEY.trim()
+          : "";
+    let type =
+      typeof runtimeAuth.type === "string" &&
+      (runtimeAuth.type.trim() === "accessToken" || runtimeAuth.type.trim() === "apiKey")
+        ? runtimeAuth.type.trim()
+        : "";
+    let value = typedValue;
+    if (!type) {
+      if (accessToken) {
+        type = "accessToken";
+      } else if (apiKey) {
+        type = "apiKey";
+      }
+    }
+    if (!value) {
+      value = type === "accessToken" ? accessToken : type === "apiKey" ? apiKey : "";
+    }
+    return { type: type, value: value };
+  })(),
 
   // Optional session context appended to this launch's conversation context.
   session_context:

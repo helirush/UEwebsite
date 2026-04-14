@@ -218,10 +218,41 @@
 
   function normalizeAuthConfig(cfg) {
     if (!cfg || typeof cfg !== "object") return null;
-    const auth = cfg.auth;
-    if (!auth || typeof auth !== "object") return null;
-    const type = auth.type === "apiKey" ? "apiKey" : auth.type === "accessToken" ? "accessToken" : "";
-    const value = typeof auth.value === "string" ? auth.value.trim() : "";
+    const auth = cfg.auth && typeof cfg.auth === "object" ? cfg.auth : {};
+    const runtimeAuth =
+      typeof window !== "undefined" &&
+      window.MAXWELLIAN_HUME_RUNTIME_AUTH &&
+      typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
+        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
+        : {};
+    const mergedAuth = Object.assign({}, runtimeAuth, auth);
+    const explicitType =
+      mergedAuth.type === "apiKey" ? "apiKey" : mergedAuth.type === "accessToken" ? "accessToken" : "";
+    const explicitValue = typeof mergedAuth.value === "string" ? mergedAuth.value.trim() : "";
+    const accessToken =
+      typeof mergedAuth.accessToken === "string"
+        ? mergedAuth.accessToken.trim()
+        : typeof window !== "undefined" && typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
+          ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
+          : "";
+    const apiKey =
+      typeof mergedAuth.apiKey === "string"
+        ? mergedAuth.apiKey.trim()
+        : typeof window !== "undefined" && typeof window.MAXWELLIAN_HUME_API_KEY === "string"
+          ? window.MAXWELLIAN_HUME_API_KEY.trim()
+          : "";
+    let type = explicitType;
+    let value = explicitValue;
+    if (!type) {
+      if (accessToken) {
+        type = "accessToken";
+      } else if (apiKey) {
+        type = "apiKey";
+      }
+    }
+    if (!value) {
+      value = type === "accessToken" ? accessToken : type === "apiKey" ? apiKey : "";
+    }
     if (!type || !value) return null;
     return { type: type, value: value };
   }
@@ -3022,7 +3053,7 @@
         const configured = sendWidgetConfig(cfg, pendingLaunchSession);
         if (!configured) {
           setStatus(
-            "Voice auth is missing. Set MAXWELLIAN_HUME.auth (and optional config_id) in hume_character_config.js.",
+            "Voice auth is missing. Set MAXWELLIAN_HUME_RUNTIME_AUTH (accessToken/apiKey) or MAXWELLIAN_HUME.auth in hume_character_config.js.",
             true
           );
           setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
@@ -4073,7 +4104,7 @@
     if (!auth) {
       frame.removeAttribute("src");
       setStatus(
-        "Voice auth is not configured. Set MAXWELLIAN_HUME.auth with an access token, then retry Speak with Clerk.",
+        "Voice auth is not configured. Set MAXWELLIAN_HUME_RUNTIME_AUTH with accessToken/apiKey (or MAXWELLIAN_HUME.auth), then retry Speak with Clerk.",
         true
       );
       return;
