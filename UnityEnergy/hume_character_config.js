@@ -566,7 +566,7 @@ window.MAXWELLIAN_HUME = {
   use_unity_start_gate: true,
   // Self-hosted renderer for full UI control (rocket/demo links removed).
   // Falls back via relative-path resolution on the current site origin.
-  embed_url: "/UnityEnergy/hume_renderer/index.html?v=20260414n",
+  embed_url: "/UnityEnergy/hume_renderer/index.html?v=20260414o",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "ClerkMaxwell_251207.png",
   // Primary background visual for Speak-with-Clerk modal.

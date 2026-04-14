@@ -3847,6 +3847,42 @@
           height: 100%;
         }
       }
+      @media (max-width: 520px) {
+        .clerk-voice-modal {
+          left: 8px;
+          right: 8px;
+          bottom: 84px;
+        }
+        .clerk-voice-modal-content {
+          width: min(340px, calc(100vw - 16px));
+          max-width: calc(100vw - 16px);
+          height: min(520px, calc(100vh - 16px));
+          margin: 0 auto;
+        }
+        .clerk-voice-modal-header {
+          padding: 10px 12px;
+        }
+        .clerk-voice-modal-title {
+          font-size: 0.92em;
+        }
+        .clerk-voice-status {
+          padding: 8px 10px;
+          min-height: 34px;
+          font-size: 0.8em;
+        }
+        .clerk-voice-help {
+          padding: 8px 10px;
+          font-size: 0.78em;
+        }
+        .clerk-floating-launcher-wrap {
+          right: 10px;
+          bottom: 10px;
+        }
+        .clerk-floating-launcher-btn {
+          width: 74px;
+          height: 74px;
+        }
+      }
     `;
     document.head.appendChild(style);
   }
