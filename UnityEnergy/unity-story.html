@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="hume_character_config.js?v=20260411f"></script>
+    <script src="clerk_voice_widget.js?v=20260411f"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
+    <title>Unity’s Introduction</title>
+    <style>
+        :root {
+            --unity-ltylo: rgba(250, 240, 160, 1);
+            --unity-green: rgba(93, 112, 26, 1);
+            --unity-ltgreen: rgba(178, 210, 53, 1);
+            --unity-dkgreen: rgba(49, 65, 0, 1);
+            --unity-text: rgba(61, 71, 86, 1);
+            --unity-bg: rgba(245, 247, 241, 1);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, rgba(245, 247, 241, 1) 0%, rgba(236, 241, 227, 1) 100%);
+            color: var(--unity-text);
+        }
+
+        .banner-wrapper {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            color: var(--unity-ltylo);
+            text-align: center;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+
+        .banner-wrapper .detail {
+            color: rgba(220, 233, 175, 1);
+            font-weight: 500;
+        }
+
+        .container {
+            width: min(1820px, 98vw);
+            max-width: none;
+            margin: 0 auto;
+            padding: 22px 12px 40px;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-weight: 700;
+            color: rgba(66, 96, 19, 1);
+            border: 1px solid rgba(166, 190, 96, 1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            background: rgba(250, 252, 244, 1);
+        }
+
+        .nav-link:hover {
+            background: rgba(241, 248, 223, 1);
+        }
+
+        .hero {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(166, 191, 96, 0.38);
+            border-radius: 14px;
+            padding: 26px 24px 20px;
+            box-shadow: 0 6px 14px rgba(49, 65, 0, 0.06);
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            color: var(--unity-dkgreen);
+            font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .player-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(166, 191, 96, 0.34);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 12px rgba(49, 65, 0, 0.05);
+        }
+
+        .player-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .player-tab {
+            border: 1px solid rgba(146, 173, 57, 0.7);
+            background: linear-gradient(135deg, rgba(93, 112, 26, 0.95), rgba(74, 90, 21, 0.95));
+            color: var(--unity-ltylo);
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 10px 18px;
+            cursor: pointer;
+            font-size: 1rem;
+            min-width: 180px;
+            box-shadow: 0 3px 8px rgba(25, 36, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+        }
+
+        .player-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 18px rgba(255, 221, 90, 0.55), 0 7px 16px rgba(49, 65, 0, 0.32);
+            border-color: rgba(238, 209, 101, 0.88);
+        }
+
+        .player-tab:active {
+            transform: translateY(0);
+            box-shadow: 0 0 10px rgba(255, 220, 75, 0.35), 0 4px 9px rgba(45, 60, 8, 0.22);
+        }
+
+        .player-tab.unity-audio {
+            background: linear-gradient(135deg, rgba(93, 112, 26, 0.95), rgba(74, 90, 21, 0.95));
+            border-color: rgba(146, 173, 57, 0.7);
+            color: var(--unity-ltylo);
+        }
+
+        .player-tab.unity-video {
+            background: linear-gradient(135deg, rgba(25, 113, 217, 0.95), rgba(15, 75, 174, 0.95));
+            border-color: rgba(88, 181, 247, 0.82);
+            color: rgba(236, 249, 255, 1);
+        }
+
+        .player-tab.speak-clerk {
+            background: linear-gradient(135deg, rgba(243, 204, 56, 0.98), rgba(227, 176, 17, 0.98));
+            border-color: rgba(248, 220, 110, 0.92);
+            color: rgba(34, 47, 0, 1);
+        }
+
+        .player-tab.active {
+            transform: translateY(-1px);
+            border-color: rgba(250, 226, 128, 0.94);
+            box-shadow: 0 0 24px rgba(255, 224, 89, 0.62), 0 8px 16px rgba(41, 55, 7, 0.35);
+        }
+
+        .player-tab.unity-audio.active {
+            background: linear-gradient(135deg, rgba(121, 150, 28, 1), rgba(93, 119, 18, 1));
+            color: rgba(255, 246, 189, 1);
+        }
+
+        .player-tab.unity-video.active {
+            background: linear-gradient(135deg, rgba(37, 143, 240, 1), rgba(24, 97, 199, 1));
+            color: rgba(246, 252, 255, 1);
+        }
+
+        .player-tab.speak-clerk.active {
+            background: linear-gradient(135deg, rgba(255, 229, 99, 1), rgba(243, 190, 30, 1));
+            color: rgba(26, 36, 0, 1);
+        }
+
+        .player-note {
+            margin: 0 0 12px;
+            font-size: 0.92rem;
+            color: rgba(83, 94, 109, 1);
+            font-style: italic;
+        }
+
+        .player-block { display: none; }
+        .player-block.active { display: block; }
+
+        audio {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+
+        .audio-status {
+            margin: 2px 0 0;
+            font-size: 0.88rem;
+            color: rgba(80, 95, 53, 1);
+        }
+
+        .audio-status.missing {
+            color: rgba(150, 62, 45, 1);
+            font-weight: 600;
+        }
+
+        .transcript {
+            background: linear-gradient(160deg, rgba(251, 253, 247, 0.98) 0%, rgba(241, 248, 229, 0.97) 100%);
+            border: 1px solid rgba(166, 191, 96, 0.48);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(60, 80, 20, 0.08);
+            max-width: 100%;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transcript::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(180deg, rgba(110, 138, 35, 0.95) 0%, rgba(77, 102, 20, 0.95) 100%);
+        }
+
+        .transcript > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .transcript h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: var(--unity-dkgreen);
+            font-size: 1.4rem;
+        }
+
+        .transcript p {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin: 0 0 22px;
+            color: rgba(62, 72, 86, 1);
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 26px 16px 34px;
+            color: rgba(84, 96, 67, 1);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-wrapper">
+        <div class="banner-content">
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
+            <span class="banner-sep"></span>
+            <span class="banner-word">MEASURE (Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="banner-word">MANAGE (MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="banner-word">EXCHANGE (Dynamic Demand Control)</span>
+        </div>    
+    </div>
+
+    <main class="container">
+        <div class="top-actions">
+            <a class="nav-link" href="about-unity.html">← Back to About Unity</a>
+            <a class="nav-link" href="maxwellian.html">Open Maxwellian Hub</a>
+        </div>
+
+        <section class="hero">
+            <h1>Unity’s Introduction</h1>
+            <p>
+                A guided front-door introduction into Unity Energy by the Founder’s Executive Spokesperson, Unity Faraday.
+            </p>
+            <p>
+                Two paths are available: hear Unity, or read the transcript below. Both deliver the same message.
+            </p>
+            <p>
+                Should you have additional follow up questions after learning from Unity, Our Chief Scientist, Clerk Maxwell, is always available.
+            </p>
+        </section>
+
+        <section class="player-panel">
+            <p class="player-note" id="playerNote">
+                Listen to Unity audio, or read the transcript below.
+            </p>
+
+            <div id="player-unity" class="player-block active">
+                <audio id="audio-unity" controls preload="none">
+                    Your browser does not support audio playback.
+                </audio>
+                <p id="audio-status-unity" class="audio-status"></p>
+            </div>
+
+
+        </section>
+
+        <section class="transcript" id="unity-introduction-start">
+            <h2>Precision Industrial Electrical Energy where it Matters...</h2>
+
+            <p>
+                Welcome to Unity Energy.
+            </p>
+
+            <p>
+                If this is your first time hearing our name, the most important thing to know is this: Unity exists because industry has spent decades measuring electricity without fully seeing what the field is doing inside real operating environments.
+            </p>
+
+            <p>
+                Plants can see consumption. They can see demand. They can see utility charges. But those totals do not fully reveal field behavior at the point where electricity becomes production. Reactive burden, harmonic distortion, and thermal stress often build in the background until they are accepted as normal conditions of operation. Unity was built to challenge that assumption.
+            </p>
+            <p>
+                Traditional reporting is useful, but it is often downstream and aggregated. It tells teams what was billed, not always what the field was doing moment by moment while equipment was under stress. That is why burden can persist for years without being named clearly. If behavior is not visible in operational terms, it is hard to govern with precision.
+            </p>
+
+            <p>
+                In modern facilities, the 480-volt field is active, dynamic, and constantly changing. Motors start and stop. Drives introduce harmonics. Transformers absorb stress. Current and voltage drift in and out of alignment as the operating day unfolds. The result is not theoretical. It shows up as wasted capacity, avoidable heat, unstable power quality, and reduced conversion efficiency where useful work is supposed to happen.
+            </p>
+
+            <p>
+                That is the gap Unity addresses.
+            </p>
+
+            <p>
+                Our approach is straightforward. First, we measure the field under real operating conditions. Second, we interpret that behavior so burden, instability, and stress become visible in operational terms. Third, we harmonize the field at the load, so the environment can run cleaner, steadier, and with less internal conflict.
+            </p>
+
+            <p>
+                When we say harmonize, we do not mean guesswork. We mean engineering intervention guided by measured evidence. Unity separates apparent, active, and reactive behavior so the burden is explicit. We map voltage and current health over time so instability has a timeline, not just a symptom. We quantify thermal burden so electrical waste can be connected to cooling cost, equipment stress, and lost operating headroom.
+            </p>
+
+            <p>
+                We also model before-and-after behavior so teams can evaluate change against observed baseline conditions. The objective is not to produce abstract charts. The objective is to improve how the electrical environment performs in daily operation and to give operators, engineers, and leadership a shared factual view of what changed, where it changed, and why it matters.
+            </p>
+
+            <p>
+                What changes when the field becomes visible?
+            </p>
+
+            <p>
+                Operators gain a clearer picture of where burden is forming and when it intensifies. Engineers gain a system they can inspect, validate, and act on with confidence. Leadership gains the same environment translated into operational and economic terms: less avoidable waste, less stress exposure, more usable capacity, and better decision support across production, maintenance, and planning.
+            </p>
+
+            <p>
+                We call this framework Measure, Manage, Exchange.
+            </p>
+
+            <p>
+                Measure means observing what the field is actually doing, not what we assume it is doing.
+                Manage means intervening at the point of use through harmonization and disciplined field control.
+                Exchange means moving toward intelligent coordination, where demand, burden, and response can be treated as part of one governable operating environment.
+            </p>
+
+            <p>
+                This is not a software exercise. It is industrial stewardship.
+            </p>
+
+            <p>
+                Unity combines field engineering, harmonization technology, and intelligence-driven reporting to help facilities govern electrical behavior with the same seriousness they apply to production quality, throughput, and safety. Our work is practical, measurable, and built for teams that need real-world results.
+            </p>
+
+            <p>
+                Unity exists so industry can finally understand the field it has been living inside all along. We are here to make the invisible visible, and the visible governable.
+            </p>
+            <p>
+                We are Unity Energy. 
+            </p>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>Measure. Manage. Exchange.</p>
+    </footer>
+
+    <script>
+        async function probeAudio(candidates) {
+            for (const url of candidates) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+                    if (!response.ok) continue;
+                    const type = (response.headers.get('content-type') || '').toLowerCase();
+                    if (!type || type.includes('audio') || type.includes('octet-stream')) {
+                        return url;
+                    }
+                } catch (_) {
+                    // Continue probing candidates.
+                }
+            }
+            return null;
+        }
+
+        async function wireStoryAudio() {
+            const params = new URLSearchParams(window.location.search);
+            const shouldAutoStart = params.get('autostart') === '1' || window.location.hash === '#unity-introduction-start';
+            if (window.location.hash === '#unity-introduction-start') {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+                try {
+                    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+                } catch (_) {}
+            }
+            const audioConfig = [
+                {
+                    audioId: 'audio-unity',
+                    statusId: 'audio-status-unity',
+                    candidates: [
+                        'assets/audio/unity-story-unity.mp3',
+                        '../assets/audio/unity-story-unity.mp3',
+                        '/assets/audio/unity-story-unity.mp3'
+                    ]
+                }
+            ];
+
+            for (const item of audioConfig) {
+                const audioEl = document.getElementById(item.audioId);
+                const statusEl = document.getElementById(item.statusId);
+                const resolvedUrl = await probeAudio(item.candidates);
+
+                if (resolvedUrl) {
+                    audioEl.src = resolvedUrl;
+                    statusEl.textContent = '';
+                    statusEl.classList.remove('missing');
+                    if (shouldAutoStart && item.audioId === 'audio-unity') {
+                        showPlayer('unity', { autoplayUnity: true, scrollTranscript: false, smoothScroll: false });
+                    }
+                } else {
+                    audioEl.removeAttribute('src');
+                    audioEl.load();
+                    statusEl.textContent = 'Audio is temporarily unavailable. Please check back shortly.';
+                    statusEl.classList.add('missing');
+                }
+            }
+        }
+
+        function updatePlayerNote(kind, state) {
+            const playerNote = document.getElementById('playerNote');
+            if (!playerNote) return;
+            if (kind === 'unity' && state === 'paused') {
+                playerNote.textContent = 'Unity Audio paused. Select Hear Unity (Audio) again to resume.';
+                return;
+            }
+            if (kind === 'unity' && state === 'playing') {
+                playerNote.textContent = 'Unity Audio playing. Select Hear Unity (Audio) again to pause.';
+                return;
+            }
+            playerNote.textContent = 'Listen to Unity audio, or read the transcript below.';
+        }
+
+        function resetStoryPlayerState() {
+            const unity = document.getElementById('player-unity');
+            const unityAudio = document.getElementById('audio-unity');
+            const playerNote = document.getElementById('playerNote');
+
+            if (unityAudio) {
+                unityAudio.pause();
+                try { unityAudio.currentTime = 0; } catch (_) {}
+            }
+
+            if (unity) unity.classList.add('active');
+
+            if (playerNote) {
+                playerNote.textContent = 'Listen to Unity audio, or read the transcript below.';
+            }
+        }
+
+        function showPlayer(kind, options) {
+            if (kind !== 'unity') return;
+            const opts = options || {};
+            const unity = document.getElementById('player-unity');
+            const unityAudio = document.getElementById('audio-unity');
+            const playerPanel = document.querySelector('.player-panel');
+            const transcriptSection = document.getElementById('unity-introduction-start');
+            const unityIsActive = unity ? unity.classList.contains('active') : false;
+
+            if (kind === 'unity' && unityIsActive && unityAudio && unityAudio.src) {
+                if (!unityAudio.paused && !unityAudio.ended) {
+                    unityAudio.pause();
+                    updatePlayerNote('unity', 'paused');
+                } else {
+                    updatePlayerNote('unity', 'playing');
+                    const resumePromise = unityAudio.play();
+                    if (resumePromise && typeof resumePromise.catch === 'function') {
+                        resumePromise.catch(function () {
+                            updatePlayerNote('unity');
+                        });
+                    }
+                }
+                return;
+            }
+            updatePlayerNote('unity');
+            if (unity) unity.classList.add('active');
+            if (opts.scrollTranscript && playerPanel) {
+                const scrollTop = window.scrollY + playerPanel.getBoundingClientRect().top - 10;
+                window.scrollTo({
+                    top: Math.max(0, scrollTop),
+                    behavior: opts.smoothScroll === false ? 'auto' : 'smooth'
+                });
+            } else if (opts.scrollTranscript && transcriptSection) {
+                transcriptSection.scrollIntoView({ behavior: opts.smoothScroll === false ? 'auto' : 'smooth', block: 'start' });
+            }
+            if (opts.autoplayUnity && unityAudio && unityAudio.src) {
+                try {
+                    unityAudio.currentTime = 0;
+                } catch (_) {}
+                const playPromise = unityAudio.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(function () {
+                        // Some browser contexts still require direct user playback permission.
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', wireStoryAudio);
+        window.addEventListener('clerkVoiceModalClosed', resetStoryPlayerState);
+    </script>
+</body>
+</html>

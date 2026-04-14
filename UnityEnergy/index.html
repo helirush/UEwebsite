@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <script src="passwords.js?v=20260302"></script>
+    <script src="hume_character_config.js?v=20260411f"></script>
+    <script src="clerk_voice_widget.js?v=20260411f"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="favicon.ico">
     <title>UnityEnergy - Welcome to the Future of Electricity</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        .hero-quote-text + .hero-quote-text {
+            margin-top: 14px;
+        }
+        .hero-quote-text.unity-observation1 {
+            font-size: clamp(1.03rem, 1.55vw, 1.52rem);
+            font-weight: 700;
+        }
+        .hero-quote-text.unity-observation2 {
+            font-size: clamp(1.03rem, 1.55vw, 1.52rem);
+            font-weight: 700;
         }
 
         body {
@@ -30,14 +43,51 @@
             padding: 20px 40px;
             text-align: center;
         }
+        @media (max-width: 980px) {
+            .hero {
+                min-height: 640px;
+                padding: 24px 16px 44px 16px;
+            }
+            .hero-content {
+                min-height: 500px;
+            }
+            .unity-logo-hero {
+                width: min(78vw, 900px);
+            }
+            .hero-quote {
+                margin: 24px auto 12px;
+            }
+            .hero-quote-text {
+                font-size: clamp(1.50rem);
+            }
+            .hero-quote-author {
+                font-size: clamp(1.1rem, 3.2vw, 1.65rem);
+                text-align: center;
+                margin: 8px 0 0 0;
+            }
+            .hero-button-stack {
+                gap: 16px;
+                margin-top: 16px;
+                transform: translateY(34px);
+                flex-direction: column;
+                width: min(540px, 96vw);
+            }
+        }
 
         .banner-content {
             color: rgba(250, 240, 160, 1);
-            font-size: 1.3em;
+            line-height: 1.06;
+            font-size: 1.1em;
             font-weight: 600;
             letter-spacing: 2px;
         }
-
+        .banner-prefix {
+            letter-spacing: 2px;
+        }
+        .banner-sep {
+            margin: 0 16px;
+            opacity: 0.9;
+        }
         .banner-content .detail {
             font-size: 0.85em;
             font-weight: 400;
@@ -65,122 +115,126 @@
 
         .hero {
             position: relative;
-            background: linear-gradient(0deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
-            color: rgba(250, 240, 160, 1);
-            padding: 0px 40px 70px 40px;
+            background: rgba(255, 255, 255, 1);
+            color: rgba(49, 65, 0, 1);
+            padding: 28px 40px 28px 40px;
             text-align: center;
             overflow: hidden;
-            min-height: 970px;
+            min-height: 620px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 75%;
-            height: 100%;
-            background-image: url('cove-clerk-cover.png');
-            background-size: cover;
-            background-position: 120px -80px;
-            background-repeat: no-repeat;
-            opacity: 1.0;
-            z-index: 0;
-            transform: scale(1.2);
-            transform-origin: center center;
-        }
-
-        /* Gradient overlay to fade hero image on right side for text readability */
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to right,
-                transparent 0%,
-                transparent 60%,
-                rgba(49, 65, 0, 0.6) 70%,
-                rgba(49, 65, 0, 0.9) 90%,
-                rgba(49, 65, 0, 1) 100%
-            );
-            z-index: 0;
-            pointer-events: none;
-        }
         .hero-content {
-            position: absolute;
-            top: 0;
-            right: 0;
+            position: relative;
             width: 100%;
+            max-width: 1600px;
+            min-height: 500px;
             height: 100%;
+            margin: 0 auto;
             z-index: 1;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            justify-content: top;
-            text-align: right;
-        }
-        .hero-content h2 {
-            font-size: 2.0em;
-            padding: 0%;
-            font-weight: 700;
-            margin-right: -60px;
-            width: 700px;
+            align-items: center;
+            justify-content: flex-start;
             text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-            color: rgb(255, 255, 255);
-        }
-        .hero-content .subtitle-text {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        .hero-content .logo-description {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 1.4em;
-            font-weight: 400;
-            font-style: italic;
-            margin-bottom:10px;
-            line-height: 1.1;
-            text-align: left;
-            position: relative;
-            z-index: 10;
-            margin-top: 10px; 
-            margin-left: auto;
-            margin-right: 50px;
-            width: 500px;
-        }
-
-        .hero-content .logo-description:first-of-type {
-            margin-top: 130px;
         }
 
         .unity-logo-hero {
-            position: absolute;
-            top: 5px;
-            right: 50px;
-            width: 500px;
-            transform: scale(1.1);
+            position: relative;
+            width: min(74vw, 1200px);
+            max-width: 1200px;
             height: auto;
-            z-index: 2;
-            opacity: 1;
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+            margin: 10px auto 0;
+            transform: none;
+            z-index: 1;
+            filter: none;
         }
 
         .hero-button-stack {
-            width: 500px;
-            margin-right: 50px;
-            margin-top: 20px;
+            width: min(1120px, 96vw);
+            margin: auto auto 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 50px;
+            gap: 100px;
+            transform: translateY(-20px);
+        }
+        .hero-quote {
+            --clerk-scale: .7;
+            width: min(1300px, 110vw);
+            margin: 0px auto 8px;
+            color: rgba(49, 65, 0, 1);
+            font-family: 'Times New Roman', Times, serif;
+            position: relative;
+            isolation: isolate;
+            z-index: 3;
+            transform: translateX(-100px);
+        }
+        .hero-quote::after {
+            content: '';
+            position: absolute;
+            right: calc(clamp(-8px, 3vw, 34px) - 400px);
+            top: calc(50% + 30px);
+            transform: translateY(-50%);
+            width: clamp(
+                calc(348px * var(--clerk-scale)),
+                calc(39vw * var(--clerk-scale)),
+                calc(630px * var(--clerk-scale))
+            );
+            height: clamp(
+                calc(383px * var(--clerk-scale)),
+                calc(50vw * var(--clerk-scale)),
+                calc(732px * var(--clerk-scale))
+            );
+            background: url('assets/images/Clerk-LineART.png') no-repeat center / contain;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .hero-quote-text {
+            font-size: clamp(1.18rem, 1.9vw, 1.9rem);
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            letter-spacing: 0.2px;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-quote-text.unity-observation1 {
+            font-size: clamp(1.8rem, 2.8vw, 2.91rem);
+            font-weight: 600;
+            font-style: italic;
+        }
+        .hero-quote-text.unity-observation2 {
+            font-size: clamp(1.18rem, 1.82vw, 1.85rem);
+            font-weight: 400;
+            margin-top: 18px;
+        }
+        .hero-quote-text.maxwell-quote {
+            width: min(1100px, 100vw);
+            margin-left: 80px;
+            font-size: clamp(1.18rem, 2.05vw, 2.08rem);
+            color: rgba(49, 65, 0, .7);
+            margin-top: 60px;
+            padding-top: 15px;
+            font-style: italic;
+
+            width: min(1150px, 130vw);
+            border-top: 2px solid rgba(129, 163, 43, 0.40);
+        }
+        .hero-quote-author {
+            width: min(1500px, 150vw);
+            font-size: clamp(1.18rem, 1.62vw, 1.8rem);
+            color: rgba(49, 65, 0, .7);
+            font-weight: 500;
+            line-height: 1.15;
+            text-align: right;
+            margin: -0px -0px 0 0;
+            position: relative;
+            z-index: 2;
+            font-style: italic;
         }
 
         .clerk-button {
@@ -198,7 +252,10 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 18px rgba(0,0,0,0.3),
                         0 2px 10px rgba(210, 170, 0, 0.35);
-            width: 90%;
+            width: min(460px, 44vw);
+            min-height: 58px;
+            white-space: nowrap;
+
             text-align: center;
         }
 
@@ -248,6 +305,44 @@
             width: 100%;
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .video-modal-actions {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .video-action-button {
+            background: linear-gradient(160deg,
+                rgba(255, 252, 195, 1) 0%,
+                rgba(248, 220, 80, 1) 55%,
+                rgba(218, 175, 20, 1) 100%);
+            color: rgba(40, 55, 0, 1);
+            border: 2px solid rgba(190, 155, 20, 0.85);
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-size: 1.02em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 5px 16px rgba(0,0,0,0.28);
+            min-width: 220px;
+        }
+        .video-action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 220, 40, 0.75),
+                        0 7px 22px rgba(0,0,0,0.28);
+        }
+        .video-action-note {
+            color: rgba(250, 240, 160, 1);
+            font-size: 1.02em;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(18, 28, 0, 0.55);
+            border: 1px solid rgba(178, 210, 53, 0.45);
+            border-radius: 10px;
+            padding: 10px 16px;
         }
 
         .close-modal {
@@ -305,7 +400,7 @@
                 rgba(248, 220, 80, 1)  55%,
                 rgba(218, 175, 20, 1) 100%);
             color: rgba(40, 55, 0, 1);
-            padding: 12px 30px;
+            padding: 15px 35px;
             border-radius: 10px;
             font-size: 1.2em;
             font-weight: 700;
@@ -316,7 +411,9 @@
                         0 2px 10px rgba(210, 170, 0, 0.35);
             margin-top: 0;
             margin-right: 0;
-            width: 50%;
+            width: min(460px, 44vw);
+            min-height: 58px;
+            white-space: nowrap;
             text-align: center;
         }
         .reference-panel-button:hover {
@@ -459,6 +556,183 @@
                 grid-template-columns: 1fr;
             }
         }
+        .reference-viewer-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.93);
+            z-index: 11000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .reference-viewer-modal.active {
+            display: flex;
+        }
+        .reference-viewer-content {
+            width: min(1400px, 98vw);
+            height: min(92vh, 980px);
+            background: rgba(16, 23, 10, 1);
+            border: 2px solid rgba(178, 210, 53, 0.7);
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .reference-viewer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            border-bottom: 1px solid rgba(178, 210, 53, 0.45);
+        }
+        .reference-viewer-title {
+            color: rgba(250, 240, 160, 1);
+            font-weight: 700;
+            font-size: 0.98em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .reference-viewer-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .reference-viewer-open-tab {
+            text-decoration: none;
+            background: rgba(250, 240, 160, 0.16);
+            color: rgba(250, 240, 160, 1);
+            border: 1px solid rgba(250, 240, 160, 0.45);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .reference-viewer-open-tab:hover {
+            background: rgba(250, 240, 160, 0.26);
+        }
+        .reference-viewer-close {
+            background: rgba(129, 163, 43, 1);
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .reference-viewer-close:hover {
+            background: rgba(178, 210, 53, 1);
+            color: rgba(49, 65, 0, 1);
+        }
+        .reference-viewer-frame-wrap {
+            flex: 1;
+            min-height: 0;
+            background: rgba(0, 0, 0, 1);
+            position: relative;
+        }
+        .reference-viewer-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: white;
+        }
+        .reference-viewer-notice {
+            display: none;
+            position: absolute;
+            inset: 0;
+            padding: clamp(18px, 3.6vw, 52px);
+            background: linear-gradient(135deg, rgba(16, 23, 10, 0.98) 0%, rgba(24, 34, 14, 0.98) 100%);
+            color: rgba(234, 244, 206, 1);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        .reference-viewer-frame-wrap.external-only .reference-viewer-frame {
+            display: none;
+        }
+        .reference-viewer-frame-wrap.external-only .reference-viewer-notice {
+            display: flex;
+        }
+        .reference-viewer-notice-card {
+            width: min(940px, 100%);
+            border: 1px solid rgba(178, 210, 53, 0.35);
+            border-radius: 16px;
+            background: linear-gradient(160deg, rgba(38, 51, 20, 0.9) 0%, rgba(24, 34, 14, 0.92) 100%);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+            padding: clamp(20px, 3vw, 40px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+        .reference-viewer-notice-kicker {
+            margin: 0;
+            font-size: 0.78rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: rgba(196, 216, 128, 1);
+        }
+        .reference-viewer-notice h4 {
+            margin: 0;
+            font-size: clamp(1.8rem, 4.4vw, 3.05rem);
+            color: rgba(250, 240, 160, 1);
+            line-height: 1.06;
+        }
+        .reference-viewer-notice-fullname {
+            margin: 0;
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            font-weight: 650;
+            color: rgba(234, 244, 206, 1);
+        }
+        .reference-viewer-notice-text {
+            margin: 2px 0 0;
+            font-size: clamp(1rem, 1.6vw, 1.16rem);
+            max-width: 740px;
+            line-height: 1.55;
+            color: rgba(218, 230, 173, 1);
+        }
+        .reference-viewer-notice-link {
+            margin-top: 8px;
+            text-decoration: none;
+            background: rgba(250, 240, 160, 0.16);
+            color: rgba(250, 240, 160, 1);
+            border: 1px solid rgba(250, 240, 160, 0.45);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .reference-viewer-notice-link:hover {
+            background: rgba(250, 240, 160, 0.26);
+        }
+        @media (max-width: 860px) {
+            .reference-viewer-content {
+                width: 99vw;
+                height: 95vh;
+            }
+            .reference-viewer-title {
+                font-size: 0.9em;
+            }
+            .reference-viewer-open-tab,
+            .reference-viewer-close {
+                font-size: 0.84em;
+                padding: 6px 10px;
+            }
+            .reference-viewer-notice {
+                padding: 16px;
+            }
+            .reference-viewer-notice-card {
+                gap: 10px;
+                padding: 20px 16px;
+            }
+        }
 
         .portal-container {
             position: relative;
@@ -550,11 +824,27 @@
         /* Navigation Tabs */
         .nav-tabs-container {
             background: rgba(240, 240, 240, 1);
-            padding: 30px 0 0px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            margin-top: -65px;
+            padding: 60px 0px 30px;
+            margin-bottom: 30;
             position: relative;
             z-index: 10;
+            text-align: center;
+        }
+
+        .nav-tabs-shell {
+            width: fit-content;
+            max-width: min(1800px, calc(100% - 20px));
+            margin: 20px auto 0;
+            padding: 0 10px;
+        }
+
+        .nav-pills-top-line {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgb(118, 158, 58) 100%);
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.22);
+            margin: 0 0 18px 0;
         }
 
         .nav-tabs {
@@ -562,9 +852,9 @@
             justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
-            max-width: 1800px;
+            max-width: none;
             margin: 0 auto;
-            padding: 0 10px;
+            padding: 0;
         }
 
         .nav-tab {
@@ -656,6 +946,22 @@
             color: rgba(49, 65, 0, 1);
             padding: 35px 0px 70px;
             letter-spacing: 1px;
+        }
+
+        @media (max-width: 980px) {
+            .nav-tabs-shell {
+                max-width: calc(100% - 16px);
+                margin-top: 16px;
+                padding: 0 6px;
+            }
+            .nav-pills-top-line {
+                height: 10px;
+                margin-bottom: 15px;
+                border-radius: 5px;
+            }
+            .nav-tabs {
+                gap: 8px;
+            }
         }
 
         .portal-button .title {
@@ -808,45 +1114,35 @@
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
             color: rgba(250, 240, 160, 1);
             text-align: center;
-            padding: 30px;
-            margin-top: 60px;
+            padding: 20px;
+            margin-top: 0px;
         }
 
     </style>
 </head>
 <body>
-    <!-- Static Centered Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
-            INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY</span>
+            <span class="banner-sep">:</span>
+            <span class="banner-prefix">MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="banner-prefix">MANAGE <span class="detail">(MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="banner-prefix">EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
         </div>
     </div>
+
 
     <div class="hero">
         
         <div class="hero-content">
-            <img src="UnityWebLogo.png" alt="Unity Energy - Intelligent Sustainability" class="unity-logo-hero">
-            <p class="logo-description"
-            >Since the first AC reactive field emerged in 1891 at the King Gold Mine in Telluride, Colorado, 
-                industry has delivered power — but never fully controlled the reactive field it created.</p>
-            <p class="logo-description"
-            >In 2001, a different path was discovered. After decades of field study and verification, complete 
-                industrial energy field harmonization is now achievable — without auxiliary power and while actively 
-                removing destructive harmonics at the load.</p>
-            <p class="logo-description"
-            >For the first time, reactive energy becomes measurable, manageable, and recoverable. The same usable 
-                power is delivered with lower electrical input, reduced heat, extended equipment life, and 
-                reclaimed system capacity.</p>
-            <p class="logo-description"
-            >Reactive energy was once an unavoidable liability. It is now a controllable asset. </p>
-            <p class="logo-description"
-            ></p>
-
-            <h2>Industrialized Power - Harmonized</h2>
-           
-            <div class="hero-button-stack">
-                <button class="clerk-button" onclick="openVideoModal()">A Message from Our Chief Scientist</button>
-                <button class="reference-panel-button" onclick="openReferenceModal()">Industrial Electrical Intelligence Sources</button>
+            <img src="UnityWebLogo.png" alt="Unity Energy" class="unity-logo-hero">
+            <div class="hero-quote">
+                <p class="hero-quote-text unity-observation1">For over a century, Reactive Energy has strained electrical systems — now it can be corrected to extend equipment life and unlock capacity already within the system.</p>
+                <p class="hero-quote-text unity-observation2">When the electrical field is made visible, it can be measured, managed, and precisely TUNED in real time.</p>
+                <p class="hero-quote-text maxwell-quote">“The behavior of the electromagnetic field becomes intelligible only when it is properly observed and measured.”</p>
+                <p class="hero-quote-author">— inspired by J.C.Maxwell's Field Therory c.1855-1864</p>
             </div>
         </div>
     </div>
@@ -857,6 +1153,9 @@
                 <source src="Clerk2026.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <div class="video-modal-actions">
+                <span class="video-action-note">To speak with Clerk, and learn more, look for the round Clerk Icon.</span>
+            </div>
         </div>
     </div>
     <div class="reference-modal" id="referenceModal" onclick="closeReferenceModal()">
@@ -865,57 +1164,101 @@
             <h3 class="reference-title">Industry Intelligence Sources</h3>
             <p class="reference-subtitle">Reference websites for power markets, utility policy, grid reliability, and infrastructure signals relevant to Unity work.</p>
             <div class="reference-featured-grid">
-                <a class="reference-link-featured" href="https://www.windy.com/" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-featured" href="https://embed.windy.com/embed2.html?lat=39&lon=-98&zoom=4&level=surface&overlay=wind&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=39&detailLon=-98&metricWind=default&metricTemp=default&radarRange=-1" target="_blank" rel="noopener noreferrer">
                     <div class="reference-link-name">U.S. Weather</div>
-                    <div class="reference-link-desc">Real-time weather, wind patterns, and storm movement for operational field awareness.</div>
+                    <div class="reference-link-desc">Live embeddable weather map focused on U.S. wind patterns and storm movement for operational field awareness.</div>
                 </a>
-                <a class="reference-link-featured" href="https://www.gridstatus.io/live" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-featured" href="https://www.gridstatus.io/live" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="NAES" data-viewer-full-name="North American Electrical System (GridStatus Live)" data-viewer-note="North American Electrical System requires direct site access. Select below to open this source in a new tab." data-viewer-cta="Open North American Electrical System">
                     <div class="reference-link-name">North American Electrical System</div>
                     <div class="reference-link-desc">Real-time grid conditions and system status across major North American markets.</div>
                 </a>
             </div>
             <div class="reference-links-grid">
+                <a class="reference-link-card" href="https://www.visualcapitalist.com/category/energy/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">Visual Capitalist Energy Maps</div>
+                    <div class="reference-link-desc">Energy-focused maps, rankings, and visual briefs useful for customer and network reference context.</div>
+                </a>
+                <a class="reference-link-card" href="https://elements.visualcapitalist.com/category/energy-shift/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">Visual Capitalist — Energy Shift</div>
+                    <div class="reference-link-desc">Category feed focused on energy transition visuals, market movement, and strategic trend context.</div>
+                </a>
+                <a class="reference-link-card" href="https://elements.visualcapitalist.com/category/electrification/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">Visual Capitalist — Electrification</div>
+                    <div class="reference-link-desc">Category feed focused on electrification growth, infrastructure expansion, and technology adoption signals.</div>
+                </a>
                 <a class="reference-link-card" href="https://www.eia.gov/" target="_blank" rel="noopener noreferrer">
                     <div class="reference-link-name">U.S. EIA</div>
                     <div class="reference-link-desc">Official U.S. energy statistics, electricity data, and annual outlooks.</div>
                 </a>
-                <a class="reference-link-card" href="https://www.ferc.gov/" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-card" href="https://www.ferc.gov/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="FERC" data-viewer-full-name="Federal Energy Regulatory Commission" data-viewer-note="FERC publishes this content with direct-access restrictions. Select below to open FERC in a new tab." data-viewer-cta="Open FERC">
                     <div class="reference-link-name">FERC</div>
                     <div class="reference-link-desc">Federal orders, market rules, transmission policy, and filings.</div>
                 </a>
-                <a class="reference-link-card" href="https://www.nerc.com/" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-card" href="https://www.nerc.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="NERC" data-viewer-full-name="North American Electric Reliability Corporation" data-viewer-note="NERC requires direct site access for this content. Select below to open NERC in a new tab." data-viewer-cta="Open NERC">
                     <div class="reference-link-name">NERC</div>
                     <div class="reference-link-desc">Reliability standards, assessments, and risk reports for bulk power systems.</div>
                 </a>
-                <a class="reference-link-card" href="https://www.energy.gov/gdo/grid-deployment-office" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-card" href="https://www.energy.gov/oe/grid-deployment-office" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="DOE GDO" data-viewer-full-name="U.S. Department of Energy — Grid Deployment Office" data-viewer-note="DOE Grid Deployment Office content is available by direct tab access. Select below to open the source." data-viewer-cta="Open DOE Grid Deployment Office">
                     <div class="reference-link-name">DOE Grid Deployment Office</div>
                     <div class="reference-link-desc">Grid modernization programs, transmission investments, and resilience initiatives.</div>
                 </a>
-                <a class="reference-link-card" href="https://www.pjm.com/" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-card" href="https://www.pjm.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="PJM" data-viewer-full-name="PJM Interconnection" data-viewer-note="PJM market pages require direct tab access. Select below to open PJM in a new tab." data-viewer-cta="Open PJM">
                     <div class="reference-link-name">PJM</div>
                     <div class="reference-link-desc">Market operations, planning updates, and interconnection signals in the PJM region.</div>
                 </a>
-                <a class="reference-link-card" href="https://www.caiso.com/" target="_blank" rel="noopener noreferrer">
+                <a class="reference-link-card" href="https://www.caiso.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="CAISO" data-viewer-full-name="California Independent System Operator" data-viewer-note="CAISO pages require direct tab access. Select below to open CAISO in a new tab." data-viewer-cta="Open CAISO">
                     <div class="reference-link-name">CAISO</div>
                     <div class="reference-link-desc">California market conditions, planning documents, and reliability advisories.</div>
                 </a>
+                <a class="reference-link-card" href="https://www.ercot.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="ERCOT" data-viewer-full-name="Electric Reliability Council of Texas" data-viewer-note="ERCOT pages require direct tab access. Select below to open ERCOT in a new tab." data-viewer-cta="Open ERCOT">
+                    <div class="reference-link-name">ERCOT</div>
+                    <div class="reference-link-desc">Texas market operations, reliability conditions, planning updates, and grid notices.</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="reference-viewer-modal" id="referenceViewerModal" onclick="closeReferenceViewer()">
+        <div class="reference-viewer-content" onclick="event.stopPropagation()">
+            <div class="reference-viewer-header">
+                <div class="reference-viewer-title" id="referenceViewerTitle">Reference Viewer</div>
+                <div class="reference-viewer-actions">
+                    <a class="reference-viewer-open-tab" id="referenceViewerOpenTab" href="#" target="_blank" rel="noopener noreferrer">Open in New Tab</a>
+                    <button class="reference-viewer-close" onclick="closeReferenceViewer()">✕ Close</button>
+                </div>
+            </div>
+            <div class="reference-viewer-frame-wrap">
+                <iframe class="reference-viewer-frame" id="referenceViewerFrame" title="Reference website viewer" loading="lazy"></iframe>
+                <div class="reference-viewer-notice" id="referenceViewerNotice">
+                    <div class="reference-viewer-notice-card">
+                        <p class="reference-viewer-notice-kicker" id="referenceViewerNoticeKicker">Direct Access Source</p>
+                        <h4 id="referenceViewerNoticeTitle">Open Source in New Tab</h4>
+                        <p class="reference-viewer-notice-fullname" id="referenceViewerNoticeFullName">Source Name</p>
+                        <p class="reference-viewer-notice-text" id="referenceViewerNoticeText">This source is available through direct tab access. Select below to continue.</p>
+                        <a class="reference-viewer-notice-link" id="referenceViewerNoticeOpenTab" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="nav-tabs-container">
-        <div class="nav-tabs">
-            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
-            <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
-            <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal">The Energy Field Story</a>
-            <a href="#portals" class="nav-tab-portal">Customer Portals</a>
-            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
-            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
+        <div class="hero-button-stack">
+            <button class="clerk-button" onclick="openVideoModal()">Clerk Welcome Message</button>
+            <button class="reference-panel-button" onclick="openReferenceModal()">Unity Reference Library</button>
         </div>
-        <div class="nav-slogan">
-            After 135 years, science can finally reclaim reactive losses as usable capacity
+
+        <div class="nav-tabs-shell">
+            <div class="nav-pills-top-line" aria-hidden="true"></div>
+            <div class="nav-tabs">
+                <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+                <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
+                <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
+                <a href="electrical-energy-story.html" class="nav-tab-portal">The Energy Field Story</a>
+                <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
+                <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+                <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
+            </div>
         </div>
 
     </div>
@@ -935,15 +1278,134 @@
             video.pause();
             video.currentTime = 0;
         }
+        function openClerkVoiceFromVideo() {
+            if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
+                return;
+            }
+            const video = document.getElementById('clerkVideo');
+            const videoSeconds = video && Number.isFinite(video.currentTime)
+                ? Math.max(0, Math.floor(video.currentTime))
+                : 0;
+            const hasPlaybackContext = videoSeconds >= 5;
+            closeVideoModal();
+            window.setTimeout(function () {
+                const launchOptions = {
+                    contextSource: 'index',
+                    context: hasPlaybackContext ? 'home-video-follow-up' : 'technical-follow-up',
+                    mode: hasPlaybackContext ? 'home-video-follow-up' : 'technical-follow-up',
+                    conversationMode: 'followup',
+                    sourcePage: 'index',
+                    sourceMedia: 'home-video',
+                    sourceMediaSeconds: videoSeconds,
+                    entryPoint: 'home-video-speak-button',
+                    likelyUserIntent: hasPlaybackContext
+                        ? 'follow-up questions about the Unity home-page welcome video'
+                        : 'general Unity technical follow-up from home page',
+                    sessionContext: hasPlaybackContext
+                        ? 'Visitor just watched the Clerk welcome video on the Unity home page and opened Speak to Clerk for follow-up.'
+                        : 'Visitor opened Speak to Clerk from the Unity home page video modal.',
+                    requestedSkillPackIds: ['unity-introduction-followup', 'unity-core-doctrine'],
+                    uiMode: 'modal'
+                };
+                if (typeof window.openClerkWithPageContext === 'function') {
+                    window.openClerkWithPageContext(launchOptions);
+                    return;
+                }
+                if (typeof window.openClerkVoiceModal === 'function') {
+                    const launchPayload = typeof window.buildClerkPageLaunchPayload === 'function'
+                        ? window.buildClerkPageLaunchPayload(launchOptions)
+                        : {
+                            contextSource: 'index',
+                            contextPayload: {
+                                context: launchOptions.context,
+                                source_page: 'index',
+                                source_media: 'home-video',
+                                source_media_seconds: videoSeconds,
+                                entry_point: 'home-video-speak-button'
+                            },
+                            uiMode: 'modal'
+                        };
+                    window.openClerkVoiceModal(launchPayload);
+                }
+            }, 120);
+        }
         function openReferenceModal() {
             const modal = document.getElementById('referenceModal');
             if (!modal) return;
             modal.classList.add('active');
+            wireReferenceLinksToViewer();
         }
         function closeReferenceModal() {
             const modal = document.getElementById('referenceModal');
             if (!modal) return;
+            closeReferenceViewer();
             modal.classList.remove('active');
+        }
+        function openReferenceViewer(url, linkLabel, externalOnly, externalNote, externalCta, externalAcronym, externalFullName) {
+            const modal = document.getElementById('referenceViewerModal');
+            const frame = document.getElementById('referenceViewerFrame');
+            const title = document.getElementById('referenceViewerTitle');
+            const openTab = document.getElementById('referenceViewerOpenTab');
+            const frameWrap = document.querySelector('.reference-viewer-frame-wrap');
+            const noticeOpenTab = document.getElementById('referenceViewerNoticeOpenTab');
+            const noticeKicker = document.getElementById('referenceViewerNoticeKicker');
+            const noticeTitle = document.getElementById('referenceViewerNoticeTitle');
+            const noticeFullName = document.getElementById('referenceViewerNoticeFullName');
+            const noticeText = document.getElementById('referenceViewerNoticeText');
+            if (!modal || !frame || !openTab || !url || !frameWrap) return;
+            const sourceLabel = externalAcronym || linkLabel || 'Source';
+            if (title) title.textContent = linkLabel || 'Reference Viewer';
+            openTab.href = url;
+            if (noticeOpenTab) {
+                noticeOpenTab.href = url;
+                noticeOpenTab.textContent = externalCta || `Open ${sourceLabel}`;
+            }
+            if (noticeKicker) noticeKicker.textContent = externalOnly ? 'Direct Access Source' : 'Reference Source';
+            if (noticeTitle) noticeTitle.textContent = sourceLabel;
+            if (noticeFullName) {
+                const fullName = externalFullName || '';
+                noticeFullName.textContent = fullName;
+                noticeFullName.style.display = fullName ? 'block' : 'none';
+            }
+            if (noticeText) noticeText.textContent = externalNote || 'This source is available through direct tab access. Select below to continue.';
+            if (externalOnly) {
+                frameWrap.classList.add('external-only');
+                frame.src = 'about:blank';
+            } else {
+                frameWrap.classList.remove('external-only');
+                frame.src = url;
+            }
+            modal.classList.add('active');
+        }
+        function closeReferenceViewer() {
+            const modal = document.getElementById('referenceViewerModal');
+            const frame = document.getElementById('referenceViewerFrame');
+            const frameWrap = document.querySelector('.reference-viewer-frame-wrap');
+            if (!modal) return;
+            modal.classList.remove('active');
+            if (frame) frame.src = 'about:blank';
+            if (frameWrap) frameWrap.classList.remove('external-only');
+        }
+        function wireReferenceLinksToViewer() {
+            const links = document.querySelectorAll('#referenceModal .reference-link-featured, #referenceModal .reference-link-card');
+            links.forEach(function(link) {
+                if (!link || link.dataset.viewerBound === '1') return;
+                link.dataset.viewerBound = '1';
+                link.addEventListener('click', function(event) {
+                    if (event.defaultPrevented) return;
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button === 1) return;
+                    event.preventDefault();
+                    const href = link.getAttribute('href');
+                    const labelEl = link.querySelector('.reference-link-name');
+                    const label = labelEl ? labelEl.textContent.trim() : 'Reference Viewer';
+                    const externalOnly = link.dataset.openTabOnly === '1';
+                    const externalNote = link.dataset.viewerNote || '';
+                    const externalCta = link.dataset.viewerCta || '';
+                    const externalAcronym = link.dataset.viewerAcronym || '';
+                    const externalFullName = link.dataset.viewerFullName || '';
+                    openReferenceViewer(href, label, externalOnly, externalNote, externalCta, externalAcronym, externalFullName);
+                });
+            });
         }
         
         function getPortalConfigSafe() {
@@ -1044,6 +1506,11 @@
 
         // Handle Enter key in login form
         document.addEventListener('keydown', function(e) {
+            const refViewerModal = document.getElementById('referenceViewerModal');
+            if (e.key === 'Escape' && refViewerModal && refViewerModal.classList.contains('active')) {
+                closeReferenceViewer();
+                return;
+            }
             const refModal = document.getElementById('referenceModal');
             if (e.key === 'Escape' && refModal && refModal.classList.contains('active')) {
                 closeReferenceModal();
@@ -1060,52 +1527,9 @@
         });
     </script>
 
-    <div class="container" style="max-width: 100%; padding: 0;">
-        <section id="portals">
-            <h2 class="section-title">Customer Electrical-Energy Portals</h2>
-            
-            <p class="welcome-text">
-                At Unity Energy, we transform how facilities understand their electrical systems. 
-                This customer portal provides access to detailed energy field analysis, 
-                interactive dashboards, and actionable insights for optimization.
-            </p>
-
-            <div class="portal-container" onclick="openLoginModal()">
-                <img src="UnityPortalButton.png" alt="Unity Energy Portal" class="portal-image">
-                <div class="portal-overlay">
-                    <div class="portal-button">
-                        <div class="subtitle1">INDUSTRIAL</div>
-                        <div class="title">480V-3ph</div>
-                        <div class="title">ENERGY FIELD</div>
-                        <div class="title">BEHAVIOR</div>
-                        <div class="subtitle">select to enter</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- Customer Portal Login Modal -->
-    <div class="login-modal" id="loginModal" onclick="closeLoginModal()">
-        <div class="login-modal-content" onclick="event.stopPropagation()">
-            <button class="close-login" onclick="closeLoginModal()">✕</button>
-            <div class="login-header">
-                <h2>Unity Energy Portal </h2>
-                <p>Enter your Portal Credentials to continue</p>
-            </div>
-            <div class="login-form">
-                <input type="text" id="customerName" name="ue_company" placeholder="Account Name" autocomplete="off" autocapitalize="off" spellcheck="false">
-                <input type="password" id="customerPassword" name="ue_password" placeholder="Portal Password" autocomplete="off" style="display:none;">
-                <div class="login-error" id="loginError"></div>
-                <button class="login-btn" onclick="attemptLogin()">Enter Portal →</button>
-                <div class="dev-mode-notice" id="devModeNotice" style="display:none;">No password required</div>
-            </div>
-        </div>
-    </div>
 
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 </body>

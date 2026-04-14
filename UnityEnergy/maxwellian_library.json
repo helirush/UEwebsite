@@ -2,7 +2,7 @@
   "library": {
     "name": "Maxwellian Intelligence Brief Library",
     "description": "Strategic intelligence briefings published by Oliver.h1.mib and edited by Clerk Maxwell for Unity Energy leadership.",
-    "last_updated": "2026-03-14"
+    "last_updated": "2026-03-24"
   },
   "episodes": [
     {
@@ -94,6 +94,30 @@
       "brief_file": "maxwellian/briefs/EP05_MIB_Florida_Utilities_260308.html",
       "audio_file": "maxwellian/audio/EP05_Unity_Summary.mp3",
       "audio_summary": "Episode 5 is a complete Florida utility intelligence study covering all three utility types: investor-owned, municipal, and cooperative — published March 8th, 2026. Florida is a fully regulated state. The Florida Public Service Commission controls investor-owned utility rates, which means no retail competition but consistent, predictable rate structures that make Unity's ROI calculations clean and reliable. The study identifies the Florida cooperative territories as Priority 1 Unity targets — particularly those serving cold storage, citrus processing, and phosphate mining operations where motor loads run at high duty cycles year-round. Clerk Maxwell's editorial this week addresses why Florida's subtropical climate makes reactive energy a structural feature of the system, not a seasonal problem. When cooling runs ten months a year and motors never fully rest, the reactive energy demand is constant. Every month is a Unity opportunity. The brief also covers the municipal utilities — JEA, OUC, Lakeland Electric, and GRU — and maps industrial load concentrations by county across the state. The ranked candidate assessment at the close identifies the highest-value co-op and municipal territories for Unity's first Florida deployments."
+    }
+  ],
+  "knowledge_docs": [
+    {
+      "doc_id": "UNITY-KNOWLEDGE-260324",
+      "title": "Unity Energy Company Knowledge Reference",
+      "date": "2026-03-24",
+      "type": "reference",
+      "audience": [
+        "Clerk Maxwell",
+        "Unity Q&A",
+        "Public narrative consistency"
+      ],
+      "description": "Canonical company positioning and approved narrative guidance for About Unity and Hear Unity experiences, including operating law, CTA language, voice roles, and Q&A-ready facts.",
+      "doc_file": "maxwellian/briefs/UNITY_COMPANY_KNOWLEDGE_260324.md",
+      "source_pages": [
+        "about-unity.html",
+        "unity-story.html"
+      ],
+      "canonical_lines": [
+        "Measure • Manage • Exchange is Unity’s operating law.",
+        "This is not a software exercise. It is industrial stewardship.",
+        "For over a century, industry measured electricity. Unity was built to understand the field."
+      ]
     }
   ],
   "ops_handoffs": [

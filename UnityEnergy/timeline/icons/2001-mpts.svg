@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MPTS innovation icon">
+  <defs>
+    <linearGradient id="g5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#BADA71"/>
+      <stop offset="100%" stop-color="#5F8120"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#g5)"/>
+  <rect x="18" y="16" width="28" height="32" rx="5" fill="#F2F8D8"/>
+  <circle cx="26" cy="26" r="3.2" fill="#6D8E28"/>
+  <circle cx="38" cy="26" r="3.2" fill="#6D8E28"/>
+  <path d="M24 37h16" stroke="#6D8E28" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M32 8v8M10 32h8M46 32h8M32 48v8" stroke="#F2F8D8" stroke-width="3" stroke-linecap="round"/>
+</svg>

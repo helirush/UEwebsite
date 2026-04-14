@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="favicon.ico">
     <title>Products and Services - Unity Energy</title>
     <style>
         * {
@@ -21,8 +17,6 @@
             color: rgba(44, 62, 80, 1);
             background: rgba(248, 249, 250, 1);
         }
-
-        /* Static Centered Banner */
         .banner-wrapper {
             width: 100%;
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
@@ -32,124 +26,391 @@
 
         .banner-content {
             color: rgba(250, 240, 160, 1);
-            font-size: 1.3em;
+            font-size: 1.08em;
             font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .banner-prefix {
             letter-spacing: 2px;
         }
 
+        .banner-sep {
+            margin: 0 6px;
+            opacity: 0.9;
+        }
+
         .banner-content .detail {
-            font-size: 0.85em;
+            font-size: 0.84em;
             font-weight: 400;
             font-style: italic;
-            letter-spacing: 0.5px;
-            margin-left: 8px;
+            letter-spacing: 0.4px;
+            margin-left: 7px;
         }
-
-        header {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
-            color: white;
-            padding: 20px 20px;
-            text-align: center;
+        .nav-tabs-container {
+            background: rgba(240, 240, 240, 1);
+            padding: 22px 0 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
-
-        .logo {
-            font-size: 2em;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
-
-        .logo span {
-            color: rgba(129, 163, 43, 1);
-        }
-
-        .construction-container {
+        .nav-tabs {
+            max-width: 1800px;
+            margin: 0 auto;
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-            padding: 60px 20px;
+            gap: 10px;
+            padding: 0 10px;
+        }
+        .nav-tab-portal,
+        .nav-tab-maxwellian {
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            padding: 12px 26px;
         }
 
-        .construction-content {
-            text-align: center;
-            max-width: 800px;
+        .nav-tab-portal {
+            background: rgba(90, 110, 35, 1);
+            color: #fff;
+            border: 2px solid rgba(129, 163, 43, 1);
         }
 
-        .construction-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            margin-bottom: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        .nav-tab-portal:hover {
+            background: rgba(49, 65, 0, 1);
         }
 
-        .construction-title {
-            font-size: 2.5em;
-            color: rgba(211, 113, 0, 1);
-            margin-bottom: 20px;
+        .nav-tab-portal.active {
+            background: rgba(49, 65, 0, 1);
+            border-color: rgba(250, 200, 0, 1);
+            color: rgba(250, 240, 160, 1);
+        }
+
+        .nav-tab-maxwellian {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            border: 2px solid rgba(255, 200, 50, 1);
+            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+        }
+
+        .nav-tab-maxwellian:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
+        }
+        .hero {
+            background: linear-gradient(135deg, rgba(68, 88, 17, 1) 0%, rgba(112, 143, 42, 1) 100%);
+            color: white;
+            padding: 42px 20px 46px;
+        }
+        .hero-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        .hero-kicker {
+            display: inline-block;
+            font-size: 0.84rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 237, 198, 1);
+            background: rgba(103, 62, 10, 0.25);
+            border: 1px solid rgba(241, 186, 104, 0.45);
+            border-radius: 999px;
+            padding: 4px 11px;
+            margin-bottom: 14px;
+        }
+        .hero h1 {
+            font-size: clamp(1.95rem, 4vw, 2.9rem);
+            line-height: 1.15;
+            margin-bottom: 12px;
             font-weight: 700;
         }
-
-        .construction-message {
-            font-size: 1.3em;
-            color: rgba(85, 85, 85, 1);
-            margin-bottom: 40px;
-            line-height: 1.6;
+        .hero p {
+            max-width: 920px;
+            color: rgba(236, 246, 208, 1);
+            font-size: 1.06rem;
         }
-
-        .back-button {
-            background: linear-gradient(135deg, rgba(129, 163, 43, 1) 0%, rgba(178, 210, 53, 1) 100%);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: 600;
+        .page-shell {
+            max-width: 1160px;
+            margin: 28px auto 0;
+            padding: 0 20px 30px;
+        }
+        .year-one-banner {
+            border: 1px solid rgba(195, 146, 72, 0.55);
+            background: linear-gradient(135deg, rgba(255, 244, 224, 0.97) 0%, rgba(252, 233, 198, 0.97) 100%);
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            color: rgba(90, 56, 9, 1);
+            box-shadow: 0 7px 18px rgba(86, 57, 15, 0.1);
+        }
+        .year-one-banner strong {
+            color: rgba(107, 58, 0, 1);
+        }
+        .section-card {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(184, 198, 147, 1);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(39, 52, 7, 0.08);
+            padding: 20px 20px 18px;
+            margin-bottom: 16px;
+        }
+        .section-card h2 {
+            color: rgba(53, 74, 15, 1);
+            font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+            margin-bottom: 8px;
+        }
+        .section-card p {
+            color: rgba(64, 76, 39, 1);
+        }
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .track-card {
+            border-radius: 14px;
+            border: 1px solid rgba(181, 198, 147, 1);
+            background: rgba(250, 253, 240, 0.95);
+            padding: 16px 16px 14px;
+        }
+        .track-card h3 {
+            color: rgba(54, 75, 16, 1);
+            margin-bottom: 7px;
+            font-size: 1.12rem;
+        }
+        .track-card .track-tag {
+            display: inline-flex;
+            margin-bottom: 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(168, 189, 122, 1);
+            background: rgba(232, 242, 203, 1);
+            color: rgba(66, 87, 30, 1);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            padding: 3px 9px;
+        }
+        .track-card ul {
+            margin-top: 8px;
+            padding-left: 18px;
+            color: rgba(64, 76, 39, 1);
+            font-size: 0.95rem;
+        }
+        .track-card li {
+            margin-bottom: 6px;
+        }
+        .decision-points {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 10px;
+        }
+        .decision-item {
+            border: 1px solid rgba(186, 198, 158, 1);
+            border-radius: 12px;
+            background: rgba(246, 250, 235, 1);
+            padding: 14px;
+        }
+        .decision-item h4 {
+            color: rgba(54, 74, 16, 1);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        .next-step-list {
+            margin-top: 10px;
+            padding-left: 18px;
+            color: rgba(64, 76, 39, 1);
+            font-size: 0.95rem;
+        }
+        .actions-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(129, 163, 43, 0.3);
+            border-radius: 999px;
+            font-weight: 700;
+            padding: 10px 16px;
+            border: 2px solid rgba(143, 176, 58, 1);
+            color: rgba(241, 248, 219, 1);
+            background: rgba(73, 97, 24, 0.95);
+            transition: transform 0.2s ease, background 0.2s ease;
         }
-
-        .back-button:hover {
-            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(129, 163, 43, 0.5);
+        .action-button:hover {
+            transform: translateY(-1px);
+            background: rgba(89, 117, 31, 1);
         }
-
-        .back-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(129, 163, 43, 0.3);
+        .action-button.alt {
+            border-color: rgba(201, 116, 28, 1);
+            background: linear-gradient(135deg, rgba(167, 92, 13, 1) 0%, rgba(198, 113, 19, 1) 100%);
+            color: rgba(255, 241, 212, 1);
         }
-
+        .action-button.alt:hover {
+            background: linear-gradient(135deg, rgba(181, 101, 15, 1) 0%, rgba(211, 124, 24, 1) 100%);
+        }
         footer {
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
             color: rgba(250, 240, 160, 1);
             text-align: center;
             padding: 30px;
-            margin-top: 60px;
+            margin-top: 24px;
+        }
+        @media (max-width: 900px) {
+            .tracks-grid,
+            .decision-points {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                padding: 34px 16px 36px;
+            }
+            .page-shell {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Static Centered Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
-            INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
+            <span class="banner-sep"></span>
+            <span class="detail">MEASURE (Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">MANAGE (MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">EXCHANGE (Dynamic Demand Control)</span>
         </div>
     </div>
-
-    <div class="construction-container">
-        <div class="construction-content">
-            <img src="underconstruction.png" alt="Under Construction" class="construction-image">
-            <h1 class="construction-title">Under Construction</h1>
-            <p class="construction-message">
-                We're working hard to bring you this content. Please check back soon to learn more about Unity Energy's products, services, and solutions.
+    <div class="nav-tabs-container">
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab-portal">Unity Home</a>
+            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
+            <a href="products-services.html" class="nav-tab-portal active">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
+        </div>
+    </div>
+    <section class="hero">
+        <div class="hero-inner">
+            <p class="hero-kicker">Unity Service Model</p>
+            <h1>Products and Services: Two Operating Paths for the Same Field System</h1>
+            <p>
+                Every Unity deployment starts with the same installed stack: Measure, Manage (Harmonize), and Exchange.
+                What changes is your operating model after go-live: either your team learns to run the system internally,
+                or Unity continues to monitor and manage field health with you as an ongoing service partner.
             </p>
-            <a href="index.html" class="back-button">← Return to Home</a>
         </div>
-    </div>
+    </section>
+    <main class="page-shell">
+        <section class="year-one-banner">
+            <strong>Included with every new installed system:</strong> Year One service.
+            For the first year after commissioning, Unity provides monitoring support and customer education so your team
+            can either build internal capability or transition into a managed long-term service contract.
+        </section>
+        <section class="section-card">
+            <h2>Service Track A — Customer-Led Learning Path</h2>
+            <p>
+                Your team becomes field-capable and progressively takes over day-to-day interpretation and operating decisions.
+                Unity provides structured training, operating standards, and periodic technical reviews.
+            </p>
+            <div class="tracks-grid">
+                <article class="track-card">
+                    <span class="track-tag">What You Get</span>
+                    <h3>Training + Operating Enablement</h3>
+                    <ul>
+                        <li>Onboarding workshops for your engineering and operations team.</li>
+                        <li>How to read field behavior, burden patterns, and harmonization signals.</li>
+                        <li>Decision playbooks for normal operation, anomalies, and escalation.</li>
+                        <li>Scheduled Unity review sessions to validate consistency and performance.</li>
+                    </ul>
+                </article>
+                <article class="track-card">
+                    <span class="track-tag">Best Fit</span>
+                    <h3>Organizations Building Internal Energy Intelligence</h3>
+                    <ul>
+                        <li>Teams that want direct ownership of field operations.</li>
+                        <li>Sites with internal technical staff and time for training.</li>
+                        <li>Programs focused on long-term in-house capability development.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+        <section class="section-card">
+            <h2>Service Track B — Unity-Managed 24/7 Field Health Path</h2>
+            <p>
+                Unity remains your operating partner after installation. We monitor and interpret field behavior continuously,
+                provide reporting cadence, and coordinate ongoing optimization under service agreement.
+            </p>
+            <div class="tracks-grid">
+                <article class="track-card">
+                    <span class="track-tag">What You Get</span>
+                    <h3>Managed Monitoring + Response</h3>
+                    <ul>
+                        <li>Continuous field monitoring and health oversight.</li>
+                        <li>Regular performance reports and burden-risk summaries.</li>
+                        <li>Alert escalation workflow and guided corrective actions.</li>
+                        <li>Service continuity after Year One through contract options.</li>
+                    </ul>
+                </article>
+                <article class="track-card">
+                    <span class="track-tag">Best Fit</span>
+                    <h3>Teams That Prefer Managed Outcomes</h3>
+                    <ul>
+                        <li>Sites that want minimal internal operating load.</li>
+                        <li>Organizations prioritizing continuity and outsourced expertise.</li>
+                        <li>Operations that need round-the-clock field health confidence.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+        <section class="section-card">
+            <h2>How Customers Choose After Year One</h2>
+            <p>
+                During Year One, Unity and your team determine the right long-term model based on staffing, operational complexity, and risk tolerance.
+                At renewal, customers choose one of two contract paths.
+            </p>
+            <div class="decision-points">
+                <article class="decision-item">
+                    <h4>Path 1 — Self-Operate with Support</h4>
+                    <p>Your team leads daily operation, with Unity retained for scheduled expert support and periodic health reviews.</p>
+                </article>
+                <article class="decision-item">
+                    <h4>Path 2 — Full Managed Service Contract</h4>
+                    <p>Unity continues full monitoring and field-health management with defined service levels and reporting cadence.</p>
+                </article>
+            </div>
+            <ul class="next-step-list">
+                <li>Both paths keep the same installed Measure • Manage • Exchange platform.</li>
+                <li>The decision is operating model, not hardware replacement.</li>
+                <li>Contract scope is tailored per site portfolio and operational goals.</li>
+            </ul>
+            <div class="actions-row">
+                <a href="our-systems.html" class="action-button">Review System Stack</a>
+                <a href="contact-us.html" class="action-button alt">Discuss Service Path</a>
+                <a href="index.html" class="action-button">Return to Unity Home</a>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 Unity Energy. All rights reserved.</p>

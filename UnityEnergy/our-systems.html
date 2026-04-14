@@ -3,154 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="favicon.ico">
     <title>Our Systems - Unity Energy</title>
     <style>
+        :root {
+            --unity-forest: rgba(49, 65, 0, 1);
+            --unity-forest-soft: rgba(70, 95, 20, 1);
+            --unity-moss: rgba(129, 163, 43, 1);
+            --unity-lime: rgba(178, 210, 53, 1);
+            --unity-gold: rgba(250, 240, 160, 1);
+            --unity-slate: rgba(44, 62, 80, 1);
+            --unity-bg: rgba(248, 249, 250, 1);
+            --unity-card: rgba(255, 255, 255, 1);
+            --unity-border: rgba(129, 163, 43, 0.28);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            color: var(--unity-slate);
+            background: var(--unity-bg);
         }
 
-        /* Static Centered Banner */
         .banner-wrapper {
             width: 100%;
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            background: linear-gradient(135deg, var(--unity-forest) 0%, var(--unity-forest-soft) 100%);
             padding: 14px 20px;
             text-align: center;
         }
 
         .banner-content {
-            color: rgba(250, 240, 160, 1);
-            font-size: 1.3em;
+            color: var(--unity-gold);
+            font-size: 1.08em;
             font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .banner-prefix {
             letter-spacing: 2px;
         }
 
+        .banner-sep {
+            margin: 0 6px;
+            opacity: 0.9;
+        }
+
         .banner-content .detail {
-            font-size: 0.85em;
+            font-size: 0.84em;
             font-weight: 400;
             font-style: italic;
-            letter-spacing: 0.5px;
-            margin-left: 8px;
+            letter-spacing: 0.4px;
+            margin-left: 7px;
         }
 
-        header {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
-            color: white;
-            padding: 20px 20px;
-            text-align: center;
+        .nav-tabs-container {
+            background: rgba(240, 240, 240, 1);
+            padding: 22px 0 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .logo {
-            font-size: 2em;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
-
-        .logo span {
-            color: rgba(129, 163, 43, 1);
-        }
-
-        .construction-container {
+        .nav-tabs {
+            max-width: 1800px;
+            margin: 0 auto;
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-            padding: 60px 20px;
+            gap: 10px;
+            padding: 0 10px;
         }
 
-        .construction-content {
-            text-align: center;
-            max-width: 800px;
-        }
-
-        .construction-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            margin-bottom: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-
-        .construction-title {
-            font-size: 2.5em;
-            color: rgba(211, 113, 0, 1);
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .construction-message {
-            font-size: 1.3em;
-            color: rgba(85, 85, 85, 1);
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        .back-button {
-            background: linear-gradient(135deg, rgba(129, 163, 43, 1) 0%, rgba(178, 210, 53, 1) 100%);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: 600;
+        .nav-tab-portal,
+        .nav-tab-maxwellian {
             text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(129, 163, 43, 0.3);
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            padding: 12px 26px;
         }
 
-        .back-button:hover {
-            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+        .nav-tab-portal {
+            background: rgba(90, 110, 35, 1);
+            color: #fff;
+            border: 2px solid rgba(129, 163, 43, 1);
+        }
+
+        .nav-tab-portal:hover {
+            background: rgba(49, 65, 0, 1);
+        }
+
+        .nav-tab-portal.active {
+            background: rgba(49, 65, 0, 1);
+            border-color: rgba(250, 200, 0, 1);
+            color: rgba(250, 240, 160, 1);
+        }
+
+        .nav-tab-maxwellian {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            border: 2px solid rgba(255, 200, 50, 1);
+            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+        }
+
+        .nav-tab-maxwellian:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(129, 163, 43, 0.5);
+            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
         }
 
-        .back-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(129, 163, 43, 0.3);
+        .hero {
+            max-width: 1240px;
+            margin: 28px auto 0;
+            padding: 0 20px;
+        }
+
+        .hero-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 236, 0.94));
+            border: 1px solid var(--unity-border);
+            border-radius: 18px;
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+            padding: 28px 28px 24px;
+        }
+
+        .hero-kicker {
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            font-size: 0.76rem;
+            color: rgba(88, 112, 21, 1);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.68rem, 2.7vw, 2.5rem);
+            color: rgba(38, 53, 5, 1);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.02rem;
+            color: rgba(54, 67, 31, 0.95);
+            max-width: 980px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .jump-button {
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: rgba(33, 46, 4, 1);
+            background: linear-gradient(135deg, rgba(204, 226, 121, 1) 0%, rgba(178, 210, 53, 1) 100%);
+            border: 1px solid rgba(150, 182, 45, 1);
+            border-radius: 999px;
+            padding: 10px 16px;
+            transition: all 0.2s ease;
+        }
+
+        .jump-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(95, 122, 22, 0.24);
+        }
+
+        .systems-grid {
+            max-width: 1240px;
+            margin: 24px auto 0;
+            padding: 0 20px 14px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .system-card {
+            background: var(--unity-card);
+            border: 1px solid var(--unity-border);
+            border-radius: 16px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .system-card .kicker {
+            text-transform: uppercase;
+            letter-spacing: 1.1px;
+            font-size: 0.72rem;
+            color: rgba(86, 108, 33, 1);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .system-card h2 {
+            font-size: 1.34rem;
+            line-height: 1.25;
+            margin-bottom: 10px;
+            color: rgba(34, 45, 6, 1);
+        }
+
+        .visual-slot {
+            margin: 4px 0 14px;
+            border: 1.5px dashed rgba(129, 163, 43, 0.44);
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(237, 244, 218, 0.85), rgba(250, 251, 246, 0.95));
+            min-height: 138px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .visual-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(129, 163, 43, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.34rem;
+            flex-shrink: 0;
+        }
+
+        .visual-slot p {
+            font-size: 0.9rem;
+            color: rgba(66, 79, 40, 0.92);
+            line-height: 1.45;
+        }
+
+        .system-card ul {
+            margin-left: 18px;
+            margin-bottom: 14px;
+            color: rgba(54, 66, 33, 0.95);
+            font-size: 0.94rem;
+        }
+
+        .system-card li + li {
+            margin-top: 7px;
+        }
+
+        .card-button {
+            margin-top: auto;
+            align-self: flex-start;
+            text-decoration: none;
+            color: rgba(31, 42, 4, 1);
+            background: rgba(188, 213, 88, 0.86);
+            border: 1px solid rgba(140, 170, 37, 0.82);
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.4px;
+            padding: 9px 14px;
+            transition: all 0.2s ease;
+        }
+
+        .card-button:hover {
+            background: rgba(201, 223, 114, 0.95);
+            border-color: rgba(129, 163, 43, 1);
+        }
+
+        .detail-sections {
+            max-width: 1240px;
+            margin: 8px auto 0;
+            padding: 0 20px 32px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid var(--unity-border);
+            border-radius: 16px;
+            box-shadow: 0 9px 24px rgba(0, 0, 0, 0.07);
+            padding: 22px;
+        }
+
+        .detail-card h3 {
+            font-size: 1.26rem;
+            margin-bottom: 8px;
+            color: rgba(38, 53, 5, 1);
+        }
+
+        .detail-card p {
+            color: rgba(56, 70, 32, 0.96);
+            margin-bottom: 14px;
+        }
+
+        .detail-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .photo-slot {
+            border-radius: 12px;
+            border: 1px solid rgba(129, 163, 43, 0.38);
+            background: rgba(242, 247, 228, 0.82);
+            min-height: 112px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .photo-slot strong {
+            font-size: 0.9rem;
+            color: rgba(42, 56, 10, 1);
+            margin-bottom: 4px;
+        }
+
+        .photo-slot span {
+            font-size: 0.83rem;
+            color: rgba(71, 86, 41, 0.94);
+            line-height: 1.35;
+        }
+
+        .bottom-actions {
+            max-width: 1240px;
+            margin: 0 auto 24px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .bottom-button {
+            text-decoration: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(129, 163, 43, 0.56);
+            color: rgba(40, 53, 7, 1);
+            background: rgba(241, 247, 223, 0.95);
+        }
+
+        .bottom-button.primary {
+            background: linear-gradient(135deg, rgba(204, 226, 121, 1) 0%, rgba(178, 210, 53, 1) 100%);
+            border-color: rgba(142, 174, 38, 1);
         }
 
         footer {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
-            color: rgba(250, 240, 160, 1);
+            background: linear-gradient(135deg, var(--unity-forest) 0%, var(--unity-forest-soft) 100%);
+            color: var(--unity-gold);
             text-align: center;
-            padding: 30px;
-            margin-top: 60px;
+            padding: 24px 20px;
+            margin-top: 12px;
+            border-top: 1px solid rgba(250, 240, 160, 0.15);
+        }
+
+        @media (max-width: 1080px) {
+            .systems-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-card {
+                padding: 22px 18px 18px;
+            }
+
+            .hero-actions,
+            .bottom-actions {
+                gap: 9px;
+            }
+
+            .jump-button,
+            .bottom-button {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Static Centered Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
-            INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
+            <span class="banner-sep"></span>
+            <span class="detail">MEASURE (Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">MANAGE (MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">EXCHANGE (Dynamic Demand Control)</span>
+        </div>
+    </div>
+    <div class="nav-tabs-container">
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab-portal">Unity Home</a>
+            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html" class="nav-tab-portal active">Our Systems</a>
+            <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
 
-    <div class="construction-container">
-        <div class="construction-content">
-            <img src="underconstruction.png" alt="Under Construction" class="construction-image">
-            <h1 class="construction-title">Under Construction</h1>
-            <p class="construction-message">
-                We're working hard to bring you this content. Please check back soon to learn more about our MEASURE, MANAGE, and EXCHANGE systems.
+    <section class="hero">
+        <div class="hero-card">
+            <p class="hero-kicker">Unity Energy Platform Stack</p>
+            <h1>Three Integrated Systems: Measure • Manage (Harmonize) • Exchange</h1>
+            <p>
+                This page shows the full operating sequence: first we measure field behavior with installed instrumentation, then we manage and harmonize at the load with MPTS deployment, and finally we exchange resident-contained energy on-site to reduce utility demand and lower total cost.
             </p>
-            <a href="index.html" class="back-button">← Return to Home</a>
+            <div class="hero-actions">
+                <a href="#measure-system" class="jump-button">Go to Measure</a>
+                <a href="#manage-system" class="jump-button">Go to Manage (Harmonize)</a>
+                <a href="#exchange-system" class="jump-button">Go to Exchange</a>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <section class="systems-grid">
+        <article class="system-card" id="measure-system">
+            <p class="kicker">System 1</p>
+            <h2>Measure</h2>
+            <div class="visual-slot">
+                <div class="visual-icon" aria-hidden="true">📟</div>
+                <p>
+                    Visual zone for AccuEnergy metering hardware and field placement photos (service entry, panel integration, and monitored circuits).
+                </p>
+            </div>
+            <ul>
+                <li>Show what the meter hardware looks like at site level.</li>
+                <li>Show where and how it is physically installed.</li>
+                <li>Show the measurement outputs used for field interpretation.</li>
+            </ul>
+            <a href="#measure-detail" class="card-button">Open Measure Detail</a>
+        </article>
+
+        <article class="system-card" id="manage-system">
+            <p class="kicker">System 2</p>
+            <h2>Manage (Harmonize)</h2>
+            <div class="visual-slot">
+                <div class="visual-icon" aria-hidden="true">⚙️</div>
+                <p>
+                    Visual zone for installed MPTS hardware in active industrial locations, centered around harmonizing electrical field behavior at the load.
+                </p>
+            </div>
+            <ul>
+                <li>Frame this section as field harmonization, not generic control.</li>
+                <li>Show MPTS installation photos from in-plant environments.</li>
+                <li>Connect installation to reduced burden, heat, and distortion.</li>
+            </ul>
+            <a href="#manage-detail" class="card-button">Open Manage Detail</a>
+        </article>
+
+        <article class="system-card" id="exchange-system">
+            <p class="kicker">System 3</p>
+            <h2>Exchange</h2>
+            <div class="visual-slot">
+                <div class="visual-icon" aria-hidden="true">🔁</div>
+                <p>
+                    Visual zone for icons/diagrams showing resident-contained on-property energy exchange that substitutes utility draw and lowers demand.
+                </p>
+            </div>
+            <ul>
+                <li>Show on-site exchange pathways that reuse available capacity.</li>
+                <li>Show how exchange reduces utility demand and demand charges.</li>
+                <li>Show exchange as the third step after measurement and harmonization.</li>
+            </ul>
+            <a href="#exchange-detail" class="card-button">Open Exchange Detail</a>
+        </article>
+    </section>
+
+    <section class="detail-sections">
+        <article class="detail-card" id="measure-detail">
+            <h3>Measure Detail — AccuEnergy Instrumentation Story</h3>
+            <p>
+                Add field photos here that show both the equipment and the physical installation context so customers can see exactly how measurement is established in real facilities.
+            </p>
+            <div class="detail-grid">
+                <div class="photo-slot">
+                    <strong>Photo Slot A</strong>
+                    <span>AccuEnergy meter face and enclosure near service entry.</span>
+                </div>
+                <div class="photo-slot">
+                    <strong>Photo Slot B</strong>
+                    <span>CT/PT or panel-side placement demonstrating install location.</span>
+                </div>
+                <div class="photo-slot">
+                    <strong>Photo Slot C</strong>
+                    <span>Measurement output view used for operational reporting.</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="detail-card" id="manage-detail">
+            <h3>Manage (Harmonize) Detail — MPTS Installation Story</h3>
+            <p>
+                This section positions Manage as harmonization. Use installation photos from active sites to show MPTS placed at load-critical points where burden is reduced and field behavior is stabilized.
+            </p>
+            <div class="detail-grid">
+                <div class="photo-slot">
+                    <strong>Photo Slot A</strong>
+                    <span>MPTS cabinet/panel installation in operational plant space.</span>
+                </div>
+                <div class="photo-slot">
+                    <strong>Photo Slot B</strong>
+                    <span>Electrical integration detail showing center install work.</span>
+                </div>
+                <div class="photo-slot">
+                    <strong>Photo Slot C</strong>
+                    <span>Before/after harmonization visual or performance callout.</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="detail-card" id="exchange-detail">
+            <h3>Exchange Detail — Resident-Contained Energy Substitution</h3>
+            <p>
+                Show how on-property energy exchange offsets external utility demand. This section should visualize the path from harmonized field behavior into lower utility pull and lower overall cost.
+            </p>
+            <div class="detail-grid">
+                <div class="photo-slot">
+                    <strong>Icon/Diagram Slot A</strong>
+                    <span>On-site source and load relationship map.</span>
+                </div>
+                <div class="photo-slot">
+                    <strong>Icon/Diagram Slot B</strong>
+                    <span>Exchange flow showing utility substitution pathway.</span>
+                </div>
+                <div class="photo-slot">
+                    <strong>Icon/Diagram Slot C</strong>
+                    <span>Demand and cost reduction outcome visual.</span>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <div class="bottom-actions">
+        <a href="index.html" class="bottom-button">← Return to Home</a>
+        <a href="contact-us.html" class="bottom-button">Discuss a Site Walkthrough</a>
+        <a href="products-services.html" class="bottom-button primary">Continue to Products & Services</a>
+    </div>
     <footer>
         <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>

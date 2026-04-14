@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Our Team - Unity Energy</title>
+    <style>
+        * { box-sizing: border-box; }
+        :root {
+            --unity-green: #5D701A;
+            --unity-green-dark: #4a5a15;
+            --unity-green-deep: #314100;
+            --unity-light: #f8f9fa;
+            --unity-body: #2d3748;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: rgba(0, 0, 0, 0.88);
+            color: var(--unity-body);
+        }
+        .team-modal-shell {
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+        .team-modal-content {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+            border: 2px solid var(--unity-green);
+            border-radius: 12px;
+            width: min(96vw, 1380px);
+            max-height: calc(100vh - 24px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideDown 0.26s ease;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-32px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .team-modal-header {
+            background: linear-gradient(135deg, var(--unity-green) 0%, var(--unity-green-dark) 100%);
+            padding: 16px 20px;
+            border-bottom: 3px solid var(--unity-green-deep);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .team-modal-title {
+            margin: 0;
+            color: #fff;
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+        }
+        .team-modal-close {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0 6px;
+            opacity: 0.86;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .team-modal-close:hover {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+        .team-modal-body {
+            padding: 14px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+            overflow: auto;
+        }
+        .team-modal-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 2px solid var(--unity-green);
+            border-radius: 8px;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.2);
+        }
+        .team-modal-note {
+            margin: 10px 4px 2px;
+            text-align: center;
+            color: #5f6b7a;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        @media (max-width: 900px) {
+            .team-modal-header {
+                padding: 12px 14px;
+            }
+            .team-modal-close {
+                font-size: 30px;
+            }
+            .team-modal-body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="team-modal-shell">
+        <section class="team-modal-content" role="dialog" aria-modal="true" aria-label="Meet the Team">
+            <header class="team-modal-header">
+                <h1 class="team-modal-title">Meet the Team</h1>
+                <button type="button" class="team-modal-close" onclick="closeTeamWindow()" aria-label="Close window">&times;</button>
+            </header>
+            <div class="team-modal-body">
+                <img src="assets/images/cove-clerk-cover.png" alt="Unity team image featuring Cove, Clerk, and Unity" class="team-modal-image">
+                <p class="team-modal-note">Close this window to return to Unity Energy.</p>
+            </div>
+        </section>
+    </main>
+    <script>
+        function closeTeamWindow() {
+            window.close();
+            setTimeout(function() {
+                if (!window.closed) {
+                    if (document.referrer) {
+                        window.location.href = document.referrer;
+                        return;
+                    }
+                    window.location.href = 'about-unity.html';
+                }
+            }, 120);
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeTeamWindow();
+        });
+    </script>
+</body>
+</html>

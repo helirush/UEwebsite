@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="passwords.js?v=20260302"></script>
+    <script src="hume_character_config.js?v=20260324a"></script>
+    <script src="clerk_voice_widget.js?v=20260324a"></script>
+    <script src="public_release_flags.js?v=20260325a"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnityEnergy - Welcome to the Future of Electricity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: rgba(44, 62, 80, 1);
+            background: rgba(248, 249, 250, 1);
+        }
+
+        /* Static Centered Banner */
+        .banner-wrapper {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .banner-content {
+            color: rgba(250, 240, 160, 1);
+            line-height: 1.06;
+            font-size: 1.3em;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .banner-content .detail {
+            font-size: 0.85em;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: rgba(129, 163, 43, 1);
+        }
+
+        .hero {
+            position: relative;
+            background: linear-gradient(0deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            color: rgba(250, 240, 160, 1);
+            padding: 0px 40px 70px 40px;
+            text-align: center;
+            overflow: hidden;
+            min-height: 970px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 75%;
+            height: 100%;
+            background-image: url('cove-clerk-cover.png');
+            background-size: cover;
+            background-position: 120px -80px;
+            background-repeat: no-repeat;
+            opacity: 1.0;
+            z-index: 0;
+            transform: scale(1.2);
+            transform-origin: center center;
+        }
+
+        /* Gradient overlay to fade hero image on right side for text readability */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                transparent 0%,
+                transparent 60%,
+                rgba(49, 65, 0, 0.6) 70%,
+                rgba(49, 65, 0, 0.9) 90%,
+                rgba(49, 65, 0, 1) 100%
+            );
+            z-index: 0;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: top;
+            text-align: right;
+        }
+        .hero-content h2 {
+            font-size: 2.0em;
+            padding: 0%;
+            font-weight: 700;
+            margin-right: -60px;
+            width: 700px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            color: rgb(255, 255, 255);
+        }
+        .hero-content .subtitle-text {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .hero-content .logo-description {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.4em;
+            font-weight: 400;
+            font-style: italic;
+            margin-bottom:10px;
+            line-height: 1.1;
+            text-align: left;
+            position: relative;
+            z-index: 10;
+            margin-top: 10px; 
+            margin-left: auto;
+            margin-right: 50px;
+            width: 500px;
+        }
+
+        .hero-content .logo-description:first-of-type {
+            margin-top: 130px;
+        }
+
+        .unity-logo-hero {
+            position: absolute;
+            top: 5px;
+            right: 50px;
+            width: 500px;
+            transform: scale(1.1);
+            height: auto;
+            z-index: 2;
+            opacity: 1;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        }
+
+        .hero-button-stack {
+            width: 500px;
+            margin-right: 50px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .clerk-button {
+            background: linear-gradient(160deg,
+                rgba(255, 252, 195, 1) 0%,
+                rgba(248, 220, 80, 1)  55%,
+                rgba(218, 175, 20, 1) 100%);
+            color: rgba(40, 55, 0, 1);
+            padding: 15px 35px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border: 2px solid rgba(190, 155, 20, 0.85);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.3),
+                        0 2px 10px rgba(210, 170, 0, 0.35);
+            width: 90%;
+            text-align: center;
+        }
+
+        .clerk-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(160deg,
+                rgba(255, 255, 215, 1) 0%,
+                rgba(255, 230, 90, 1)  55%,
+                rgba(230, 185, 30, 1) 100%);
+            box-shadow: 0 0 22px rgba(255, 220, 40, 0.85),
+                        0 0 50px rgba(255, 200, 0, 0.45),
+                        0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(220, 185, 30, 1);
+        }
+
+        .clerk-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 0 32px rgba(255, 220, 40, 1),
+                        0 0 70px rgba(255, 200, 0, 0.6),
+                        0 4px 14px rgba(0,0,0,0.3);
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-modal-content {
+            width: 90%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .video-modal video {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .video-modal-actions {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .video-action-button {
+            background: linear-gradient(160deg,
+                rgba(255, 252, 195, 1) 0%,
+                rgba(248, 220, 80, 1) 55%,
+                rgba(218, 175, 20, 1) 100%);
+            color: rgba(40, 55, 0, 1);
+            border: 2px solid rgba(190, 155, 20, 0.85);
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-size: 1.02em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 5px 16px rgba(0,0,0,0.28);
+            min-width: 220px;
+        }
+        .video-action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 220, 40, 0.75),
+                        0 7px 22px rgba(0,0,0,0.28);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(129, 163, 43, 1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .close-modal:hover {
+            background: rgba(178, 210, 53, 1);
+            color: rgba(49, 65, 0, 1);
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            margin: 10px 0;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            color: rgba(49, 65, 0, 1);
+            margin-top: 50px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .welcome-text {
+            font-size: 1.4em;
+            color: rgba(85, 85, 85, 1);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .reference-panel-button {
+            background: linear-gradient(160deg,
+                rgba(255, 252, 195, 1) 0%,
+                rgba(248, 220, 80, 1)  55%,
+                rgba(218, 175, 20, 1) 100%);
+            color: rgba(40, 55, 0, 1);
+            padding: 15px 35px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border: 2px solid rgba(190, 155, 20, 0.85);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.3),
+                        0 2px 10px rgba(210, 170, 0, 0.35);
+            margin-top: 0;
+            margin-right: 0;
+            width: 90%;
+            text-align: center;
+        }
+        .reference-panel-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(160deg,
+                rgba(255, 255, 215, 1) 0%,
+                rgba(255, 230, 90, 1)  55%,
+                rgba(230, 185, 30, 1) 100%);
+            box-shadow: 0 0 22px rgba(255, 220, 40, 0.85),
+                        0 0 50px rgba(255, 200, 0, 0.45),
+                        0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(220, 185, 30, 1);
+        }
+        .reference-panel-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 0 32px rgba(255, 220, 40, 1),
+                        0 0 70px rgba(255, 200, 0, 0.6),
+                        0 4px 14px rgba(0,0,0,0.3);
+        }
+        .reference-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .reference-modal.active {
+            display: flex;
+        }
+        .reference-modal-content {
+            width: min(980px, 96vw);
+            max-height: 90vh;
+            overflow: auto;
+            background: linear-gradient(135deg, rgba(244, 248, 236, 1) 0%, rgba(234, 242, 220, 1) 100%);
+            border: 2px solid rgba(129, 163, 43, 0.55);
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            padding: 24px 24px 20px 24px;
+            position: relative;
+        }
+        .reference-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(129, 163, 43, 1);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .reference-close:hover {
+            background: rgba(178, 210, 53, 1);
+            color: rgba(49, 65, 0, 1);
+        }
+        .reference-title {
+            font-size: 2em;
+            color: rgba(49, 65, 0, 1);
+            font-weight: 700;
+            text-align: center;
+            margin: 4px 0 6px 0;
+        }
+        .reference-subtitle {
+            text-align: center;
+            color: rgba(66, 84, 14, 0.95);
+            font-size: 1.02em;
+            margin-bottom: 20px;
+        }
+        .reference-links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .reference-featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+        .reference-link-featured {
+            display: block;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            border-radius: 10px;
+            border: 2px solid rgba(178, 210, 53, 0.95);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 14px 16px;
+            color: rgba(250, 240, 160, 1);
+            margin-bottom: 0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-height: 100%;
+        }
+        .reference-link-featured:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+        }
+        .reference-link-featured .reference-link-name {
+            color: rgba(250, 240, 160, 1);
+        }
+        .reference-link-featured .reference-link-desc {
+            color: rgba(240, 248, 210, 0.95);
+        }
+        .reference-link-card {
+            display: block;
+            text-decoration: none;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(129, 163, 43, 0.35);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            padding: 14px 14px 12px 14px;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .reference-link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+        }
+        .reference-link-name {
+            font-size: 1.08em;
+            font-weight: 700;
+            color: rgba(49, 65, 0, 1);
+            margin-bottom: 5px;
+        }
+        .reference-link-desc {
+            font-size: 0.95em;
+            color: rgba(80, 80, 80, 1);
+            line-height: 1.45;
+        }
+        @media (max-width: 860px) {
+            .reference-featured-grid,
+            .reference-links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .reference-viewer-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.93);
+            z-index: 11000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .reference-viewer-modal.active {
+            display: flex;
+        }
+        .reference-viewer-content {
+            width: min(1400px, 98vw);
+            height: min(92vh, 980px);
+            background: rgba(16, 23, 10, 1);
+            border: 2px solid rgba(178, 210, 53, 0.7);
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .reference-viewer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            border-bottom: 1px solid rgba(178, 210, 53, 0.45);
+        }
+        .reference-viewer-title {
+            color: rgba(250, 240, 160, 1);
+            font-weight: 700;
+            font-size: 0.98em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .reference-viewer-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .reference-viewer-open-tab {
+            text-decoration: none;
+            background: rgba(250, 240, 160, 0.16);
+            color: rgba(250, 240, 160, 1);
+            border: 1px solid rgba(250, 240, 160, 0.45);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .reference-viewer-open-tab:hover {
+            background: rgba(250, 240, 160, 0.26);
+        }
+        .reference-viewer-close {
+            background: rgba(129, 163, 43, 1);
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .reference-viewer-close:hover {
+            background: rgba(178, 210, 53, 1);
+            color: rgba(49, 65, 0, 1);
+        }
+        .reference-viewer-frame-wrap {
+            flex: 1;
+            min-height: 0;
+            background: rgba(0, 0, 0, 1);
+            position: relative;
+        }
+        .reference-viewer-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: white;
+        }
+        .reference-viewer-notice {
+            display: none;
+            position: absolute;
+            inset: 0;
+            padding: clamp(18px, 3.6vw, 52px);
+            background: linear-gradient(135deg, rgba(16, 23, 10, 0.98) 0%, rgba(24, 34, 14, 0.98) 100%);
+            color: rgba(234, 244, 206, 1);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        .reference-viewer-frame-wrap.external-only .reference-viewer-frame {
+            display: none;
+        }
+        .reference-viewer-frame-wrap.external-only .reference-viewer-notice {
+            display: flex;
+        }
+        .reference-viewer-notice-card {
+            width: min(940px, 100%);
+            border: 1px solid rgba(178, 210, 53, 0.35);
+            border-radius: 16px;
+            background: linear-gradient(160deg, rgba(38, 51, 20, 0.9) 0%, rgba(24, 34, 14, 0.92) 100%);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+            padding: clamp(20px, 3vw, 40px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+        .reference-viewer-notice-kicker {
+            margin: 0;
+            font-size: 0.78rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: rgba(196, 216, 128, 1);
+        }
+        .reference-viewer-notice h4 {
+            margin: 0;
+            font-size: clamp(1.8rem, 4.4vw, 3.05rem);
+            color: rgba(250, 240, 160, 1);
+            line-height: 1.06;
+        }
+        .reference-viewer-notice-fullname {
+            margin: 0;
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            font-weight: 650;
+            color: rgba(234, 244, 206, 1);
+        }
+        .reference-viewer-notice-text {
+            margin: 2px 0 0;
+            font-size: clamp(1rem, 1.6vw, 1.16rem);
+            max-width: 740px;
+            line-height: 1.55;
+            color: rgba(218, 230, 173, 1);
+        }
+        .reference-viewer-notice-link {
+            margin-top: 8px;
+            text-decoration: none;
+            background: rgba(250, 240, 160, 0.16);
+            color: rgba(250, 240, 160, 1);
+            border: 1px solid rgba(250, 240, 160, 0.45);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .reference-viewer-notice-link:hover {
+            background: rgba(250, 240, 160, 0.26);
+        }
+        @media (max-width: 860px) {
+            .reference-viewer-content {
+                width: 99vw;
+                height: 95vh;
+            }
+            .reference-viewer-title {
+                font-size: 0.9em;
+            }
+            .reference-viewer-open-tab,
+            .reference-viewer-close {
+                font-size: 0.84em;
+                padding: 6px 10px;
+            }
+            .reference-viewer-notice {
+                padding: 16px;
+            }
+            .reference-viewer-notice-card {
+                gap: 10px;
+                padding: 20px 16px;
+            }
+        }
+
+        .portal-container {
+            position: relative;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-top: -120px; /* slide image up under nav tabs */
+            margin-bottom: -70px;
+            cursor: pointer;
+        }
+
+        /* top blend from tabs platform down into the hero */
+        .portal-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(
+                to bottom,
+                rgba(240, 240, 240, 1) 0%,
+                rgba(240, 240, 240, 0.9) 20%,
+                rgba(240, 240, 240, 0.6) 40%,
+                transparent 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .portal-image {
+            width: 100%;
+            height: 760px; /* fill the area; distortion acceptable */
+            object-fit: cover;
+            border-radius: 0;
+            box-shadow: none;
+            filter: brightness(1) saturate(1);
+        }
+
+        .portal-container:hover .portal-image {
+            filter: brightness(1.08) saturate(1.05);
+        }
+        .portal-container:active .portal-image {
+            filter: brightness(0.5) saturate(0.9);
+        }
+
+        .portal-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .portal-button {
+            background: radial-gradient(circle, rgba(178, 210, 53, 0.20) 0%, rgba(129, 163, 43, 0.35) 55%, rgba(49, 65, 0, 0.65) 95%);
+            color: rgba(250, 240, 160, 1);
+            padding: 0;
+            border-radius: 50%;
+            border: 3px solid rgba(178, 210, 53, 0.95);
+            box-shadow: 0 0 36px rgba(178, 210, 53, 0.55), inset 0 0 24px rgba(0,0,0,0.35);
+            font-size: 2.1em;
+            font-weight: 700;
+            line-height: 1.2;
+            width: 340px; /* 50% smaller */
+            height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .portal-container:hover .portal-button {
+            box-shadow: 0 0 60px rgba(178, 210, 53, 0.9), inset 0 0 20px rgba(178,210,53,0.35);
+            transform: scale(1.04);
+        }
+
+        .portal-container:active .portal-button {
+            box-shadow: 0 0 18px rgba(178, 210, 53, 0.4), inset 0 0 42px rgba(0,0,0,0.6);
+            transform: scale(0.98);
+        }
+
+        .portal-button .title { font-size: 0.75em; margin: 0; line-height: 0.9; }
+        .portal-button .subtitle { font-size: 0.55em; margin: 0; }
+        .portal-button .subtitle1 { font-size: 0.65em; margin: 0; }
+
+        /* Navigation Tabs */
+        .nav-tabs-container {
+            background: rgba(240, 240, 240, 1);
+            padding: 30px 0 0px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            margin-top: -65px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .nav-tab {
+            background: white;
+            color: rgba(44, 62, 80, 1);
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid rgba(200, 200, 200, 1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab:hover {
+            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+            color: white;
+            border-color: rgba(129, 163, 43, 1);
+            box-shadow: 0 4px 16px rgba(129, 163, 43, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab:active {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(35, 45, 0, 1) 100%);
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-tab-portal {
+            background: rgba(90, 110, 35, 1);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            border: 3px solid rgba(129, 163, 43, 1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-tab-portal:hover {
+            background: rgba(49, 65, 0, 1);
+            border-color: rgba(129, 163, 43, 1);
+        }
+
+        .nav-tab-portal:active {
+            background: rgba(35, 45, 0, 1);
+        }
+
+        .nav-tab-maxwellian {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 700;
+            text-decoration: none;
+            border: 3px solid rgba(255, 200, 50, 1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 16px rgba(255, 160, 0, 0.35);
+        }
+
+        .nav-tab-maxwellian:hover {
+            background: linear-gradient(135deg, rgba(210, 120, 0, 1) 0%, rgba(250, 160, 0, 1) 100%);
+            box-shadow: 0 0 32px rgba(255, 160, 0, 0.65);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab-maxwellian:active {
+            background: linear-gradient(135deg, rgba(140, 70, 0, 1) 0%, rgba(180, 100, 0, 1) 100%);
+        }
+
+        .nav-slogan {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2.2em;
+            font-weight: 600;
+            font-style: italic;
+            color: rgba(49, 65, 0, 1);
+            padding: 35px 0px 70px;
+            letter-spacing: 1px;
+        }
+
+        .portal-button .title {
+            font-size: 1.2em;
+            margin: 0;
+            line-height: 1.1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .portal-button .subtitle {
+            font-size: 0.75em;
+            opacity: 0.95;
+            font-weight: 500;
+            padding: 15px 35px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .coming-soon {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .coming-soon:hover {
+            transform: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Login Modal Styles */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-modal-content {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            border-radius: 16px;
+            padding: 50px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 60px rgba(129, 163, 43, 0.3);
+            border: 3px solid rgba(129, 163, 43, 0.6);
+        }
+
+        .close-login {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(250, 240, 160, 0.7);
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .close-login:hover {
+            color: rgba(250, 240, 160, 1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: rgba(250, 240, 160, 1);
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: rgba(250, 240, 160, 0.8);
+            font-size: 1em;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(129, 163, 43, 0.5);
+            border-radius: 8px;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.95);
+            color: rgba(49, 65, 0, 1);
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: rgba(178, 210, 53, 1);
+            box-shadow: 0 0 10px rgba(178, 210, 53, 0.3);
+        }
+
+        .login-form input::placeholder {
+            color: rgba(100, 100, 100, 0.7);
+        }
+
+        .login-error {
+            display: none;
+            background: rgba(180, 60, 60, 0.9);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+            color: rgba(49, 65, 0, 1);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, rgba(200, 230, 80, 1) 0%, rgba(178, 210, 53, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(129, 163, 43, 0.4);
+        }
+
+        .dev-mode-notice {
+            text-align: center;
+            color: rgba(178, 210, 53, 0.8);
+            font-size: 0.85em;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        footer {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            color: rgba(250, 240, 160, 1);
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Static Centered Banner -->
+    <div class="banner-wrapper">
+        <div class="banner-content">
+            RESTORING INDUSTRIAL ELECTRICITY : MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS — Maximum Power Transfer Solution (AC))</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+        </div>
+    </div>
+
+    <div class="hero">
+        
+        <div class="hero-content">
+            <img src="UnityWebLogo.png" alt="Unity Energy - Intelligent Sustainability" class="unity-logo-hero">
+            <p class="logo-description"
+            >Since the first AC reactive field emerged in 1891 at the King Gold Mine in Telluride, Colorado, 
+                industry has delivered power — but never fully controlled the reactive field it created.</p>
+            <p class="logo-description"
+            >In 2001, a different path was discovered: MPTS — Maximum Power Transfer Solution (AC). After decades of field study and verification, complete 
+                industrial energy field harmonization is now achievable — without auxiliary power and while actively 
+                removing destructive harmonics at the load.</p>
+            <p class="logo-description"
+            >For the first time, reactive energy becomes measurable, manageable, and recoverable. The same usable 
+                power is delivered with lower electrical input, reduced heat, extended equipment life, and 
+                reclaimed system capacity.</p>
+            <p class="logo-description"
+            >Reactive energy was once an unavoidable liability. It is now a controllable asset. </p>
+            <p class="logo-description"
+            ></p>
+
+            <h2>Industrialized Power - Harmonized</h2>
+           
+            <div class="hero-button-stack">
+                <button class="clerk-button" onclick="openVideoModal()">A Message from Our Chief Scientist</button>
+                <button class="reference-panel-button" onclick="openReferenceModal()">Sources - Unity Intelligence</button>
+            </div>
+        </div>
+    </div>
+    <div class="video-modal" id="videoModal" onclick="closeVideoModal()">
+        <div class="video-modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeVideoModal()">✕ Close</button>
+            <video id="clerkVideo" controls>
+                <source src="Clerk2026.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-modal-actions">
+                <button class="video-action-button" data-feature-gate="clerk_voice" onclick="openClerkVoiceFromVideo()">Speak to Clerk</button>
+            </div>
+        </div>
+    </div>
+    <div class="reference-modal" id="referenceModal" onclick="closeReferenceModal()">
+        <div class="reference-modal-content" onclick="event.stopPropagation()">
+            <button class="reference-close" onclick="closeReferenceModal()">✕ Close</button>
+            <h3 class="reference-title">Industry Intelligence Sources</h3>
+            <p class="reference-subtitle">Reference websites for power markets, utility policy, grid reliability, and infrastructure signals relevant to Unity work.</p>
+            <div class="reference-featured-grid">
+                <a class="reference-link-featured" href="https://embed.windy.com/embed2.html?lat=39&lon=-98&zoom=4&level=surface&overlay=wind&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=39&detailLon=-98&metricWind=default&metricTemp=default&radarRange=-1" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">U.S. Weather</div>
+                    <div class="reference-link-desc">Live embeddable weather map focused on U.S. wind patterns and storm movement for operational field awareness.</div>
+                </a>
+                <a class="reference-link-featured" href="https://www.gridstatus.io/live" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="NAES" data-viewer-full-name="North American Electrical System (GridStatus Live)" data-viewer-note="North American Electrical System requires direct site access. Select below to open this source in a new tab." data-viewer-cta="Open North American Electrical System">
+                    <div class="reference-link-name">North American Electrical System</div>
+                    <div class="reference-link-desc">Real-time grid conditions and system status across major North American markets.</div>
+                </a>
+            </div>
+            <div class="reference-links-grid">
+                <a class="reference-link-card" href="https://www.visualcapitalist.com/category/energy/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">Visual Capitalist Energy Maps</div>
+                    <div class="reference-link-desc">Energy-focused maps, rankings, and visual briefs useful for customer and network reference context.</div>
+                </a>
+                <a class="reference-link-card" href="https://elements.visualcapitalist.com/category/energy-shift/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">Visual Capitalist — Energy Shift</div>
+                    <div class="reference-link-desc">Category feed focused on energy transition visuals, market movement, and strategic trend context.</div>
+                </a>
+                <a class="reference-link-card" href="https://elements.visualcapitalist.com/category/electrification/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">Visual Capitalist — Electrification</div>
+                    <div class="reference-link-desc">Category feed focused on electrification growth, infrastructure expansion, and technology adoption signals.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.eia.gov/" target="_blank" rel="noopener noreferrer">
+                    <div class="reference-link-name">U.S. EIA</div>
+                    <div class="reference-link-desc">Official U.S. energy statistics, electricity data, and annual outlooks.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.ferc.gov/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="FERC" data-viewer-full-name="Federal Energy Regulatory Commission" data-viewer-note="FERC publishes this content with direct-access restrictions. Select below to open FERC in a new tab." data-viewer-cta="Open FERC">
+                    <div class="reference-link-name">FERC</div>
+                    <div class="reference-link-desc">Federal orders, market rules, transmission policy, and filings.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.nerc.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="NERC" data-viewer-full-name="North American Electric Reliability Corporation" data-viewer-note="NERC requires direct site access for this content. Select below to open NERC in a new tab." data-viewer-cta="Open NERC">
+                    <div class="reference-link-name">NERC</div>
+                    <div class="reference-link-desc">Reliability standards, assessments, and risk reports for bulk power systems.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.energy.gov/oe/grid-deployment-office" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="DOE GDO" data-viewer-full-name="U.S. Department of Energy — Grid Deployment Office" data-viewer-note="DOE Grid Deployment Office content is available by direct tab access. Select below to open the source." data-viewer-cta="Open DOE Grid Deployment Office">
+                    <div class="reference-link-name">DOE Grid Deployment Office</div>
+                    <div class="reference-link-desc">Grid modernization programs, transmission investments, and resilience initiatives.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.pjm.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="PJM" data-viewer-full-name="PJM Interconnection" data-viewer-note="PJM market pages require direct tab access. Select below to open PJM in a new tab." data-viewer-cta="Open PJM">
+                    <div class="reference-link-name">PJM</div>
+                    <div class="reference-link-desc">Market operations, planning updates, and interconnection signals in the PJM region.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.caiso.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="CAISO" data-viewer-full-name="California Independent System Operator" data-viewer-note="CAISO pages require direct tab access. Select below to open CAISO in a new tab." data-viewer-cta="Open CAISO">
+                    <div class="reference-link-name">CAISO</div>
+                    <div class="reference-link-desc">California market conditions, planning documents, and reliability advisories.</div>
+                </a>
+                <a class="reference-link-card" href="https://www.ercot.com/" target="_blank" rel="noopener noreferrer" data-open-tab-only="1" data-viewer-acronym="ERCOT" data-viewer-full-name="Electric Reliability Council of Texas" data-viewer-note="ERCOT pages require direct tab access. Select below to open ERCOT in a new tab." data-viewer-cta="Open ERCOT">
+                    <div class="reference-link-name">ERCOT</div>
+                    <div class="reference-link-desc">Texas market operations, reliability conditions, planning updates, and grid notices.</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="reference-viewer-modal" id="referenceViewerModal" onclick="closeReferenceViewer()">
+        <div class="reference-viewer-content" onclick="event.stopPropagation()">
+            <div class="reference-viewer-header">
+                <div class="reference-viewer-title" id="referenceViewerTitle">Reference Viewer</div>
+                <div class="reference-viewer-actions">
+                    <a class="reference-viewer-open-tab" id="referenceViewerOpenTab" href="#" target="_blank" rel="noopener noreferrer">Open in New Tab</a>
+                    <button class="reference-viewer-close" onclick="closeReferenceViewer()">✕ Close</button>
+                </div>
+            </div>
+            <div class="reference-viewer-frame-wrap">
+                <iframe class="reference-viewer-frame" id="referenceViewerFrame" title="Reference website viewer" loading="lazy"></iframe>
+                <div class="reference-viewer-notice" id="referenceViewerNotice">
+                    <div class="reference-viewer-notice-card">
+                        <p class="reference-viewer-notice-kicker" id="referenceViewerNoticeKicker">Direct Access Source</p>
+                        <h4 id="referenceViewerNoticeTitle">Open Source in New Tab</h4>
+                        <p class="reference-viewer-notice-fullname" id="referenceViewerNoticeFullName">Source Name</p>
+                        <p class="reference-viewer-notice-text" id="referenceViewerNoticeText">This source is available through direct tab access. Select below to continue.</p>
+                        <a class="reference-viewer-notice-link" id="referenceViewerNoticeOpenTab" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs-container">
+        <div class="nav-tabs">
+            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
+            <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">The Energy Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
+        </div>
+        <div class="nav-slogan">
+            After 135 years, science can finally reclaim reactive losses as usable capacity
+        </div>
+
+    </div>
+
+    <script>
+        function openVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('clerkVideo');
+            modal.classList.add('active');
+            video.play();
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('clerkVideo');
+            modal.classList.remove('active');
+            video.pause();
+            video.currentTime = 0;
+        }
+        function openClerkVoiceFromVideo() {
+            if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
+                return;
+            }
+            closeVideoModal();
+            window.setTimeout(function () {
+                if (typeof window.openClerkVoiceModal === 'function') {
+                    window.openClerkVoiceModal('home');
+                }
+            }, 120);
+        }
+        function openReferenceModal() {
+            const modal = document.getElementById('referenceModal');
+            if (!modal) return;
+            modal.classList.add('active');
+            wireReferenceLinksToViewer();
+        }
+        function closeReferenceModal() {
+            const modal = document.getElementById('referenceModal');
+            if (!modal) return;
+            closeReferenceViewer();
+            modal.classList.remove('active');
+        }
+        function openReferenceViewer(url, linkLabel, externalOnly, externalNote, externalCta, externalAcronym, externalFullName) {
+            const modal = document.getElementById('referenceViewerModal');
+            const frame = document.getElementById('referenceViewerFrame');
+            const title = document.getElementById('referenceViewerTitle');
+            const openTab = document.getElementById('referenceViewerOpenTab');
+            const frameWrap = document.querySelector('.reference-viewer-frame-wrap');
+            const noticeOpenTab = document.getElementById('referenceViewerNoticeOpenTab');
+            const noticeKicker = document.getElementById('referenceViewerNoticeKicker');
+            const noticeTitle = document.getElementById('referenceViewerNoticeTitle');
+            const noticeFullName = document.getElementById('referenceViewerNoticeFullName');
+            const noticeText = document.getElementById('referenceViewerNoticeText');
+            if (!modal || !frame || !openTab || !url || !frameWrap) return;
+            const sourceLabel = externalAcronym || linkLabel || 'Source';
+            if (title) title.textContent = linkLabel || 'Reference Viewer';
+            openTab.href = url;
+            if (noticeOpenTab) {
+                noticeOpenTab.href = url;
+                noticeOpenTab.textContent = externalCta || `Open ${sourceLabel}`;
+            }
+            if (noticeKicker) noticeKicker.textContent = externalOnly ? 'Direct Access Source' : 'Reference Source';
+            if (noticeTitle) noticeTitle.textContent = sourceLabel;
+            if (noticeFullName) {
+                const fullName = externalFullName || '';
+                noticeFullName.textContent = fullName;
+                noticeFullName.style.display = fullName ? 'block' : 'none';
+            }
+            if (noticeText) noticeText.textContent = externalNote || 'This source is available through direct tab access. Select below to continue.';
+            if (externalOnly) {
+                frameWrap.classList.add('external-only');
+                frame.src = 'about:blank';
+            } else {
+                frameWrap.classList.remove('external-only');
+                frame.src = url;
+            }
+            modal.classList.add('active');
+        }
+        function closeReferenceViewer() {
+            const modal = document.getElementById('referenceViewerModal');
+            const frame = document.getElementById('referenceViewerFrame');
+            const frameWrap = document.querySelector('.reference-viewer-frame-wrap');
+            if (!modal) return;
+            modal.classList.remove('active');
+            if (frame) frame.src = 'about:blank';
+            if (frameWrap) frameWrap.classList.remove('external-only');
+        }
+        function wireReferenceLinksToViewer() {
+            const links = document.querySelectorAll('#referenceModal .reference-link-featured, #referenceModal .reference-link-card');
+            links.forEach(function(link) {
+                if (!link || link.dataset.viewerBound === '1') return;
+                link.dataset.viewerBound = '1';
+                link.addEventListener('click', function(event) {
+                    if (event.defaultPrevented) return;
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button === 1) return;
+                    event.preventDefault();
+                    const href = link.getAttribute('href');
+                    const labelEl = link.querySelector('.reference-link-name');
+                    const label = labelEl ? labelEl.textContent.trim() : 'Reference Viewer';
+                    const externalOnly = link.dataset.openTabOnly === '1';
+                    const externalNote = link.dataset.viewerNote || '';
+                    const externalCta = link.dataset.viewerCta || '';
+                    const externalAcronym = link.dataset.viewerAcronym || '';
+                    const externalFullName = link.dataset.viewerFullName || '';
+                    openReferenceViewer(href, label, externalOnly, externalNote, externalCta, externalAcronym, externalFullName);
+                });
+            });
+        }
+        
+        function getPortalConfigSafe() {
+            // Prefer the global lexical binding from passwords.js, but fall back to window.portalConfig.
+            // If neither is present, default to dev behavior so eWebmaster is never blocked.
+            try {
+                if (typeof portalConfig !== 'undefined' && portalConfig) return portalConfig;
+            } catch (e) {}
+            if (window.portalConfig) return window.portalConfig;
+            return { customers: {} };
+        }
+
+        function openLoginModal() {
+            const modal = document.getElementById('loginModal');
+            const devNotice = document.getElementById('devModeNotice');
+            const pwField = document.getElementById('customerPassword');
+            const cfg = getPortalConfigSafe();
+
+            modal.classList.add('active');
+            document.getElementById('customerName')?.focus();
+
+            if (cfg.devMode) {
+                // eWebmaster local dev: no password gate.
+                if (devNotice) devNotice.style.display = 'block';
+                if (pwField) pwField.style.display = 'none';
+            } else {
+                // Production: require password.
+                if (devNotice) devNotice.style.display = 'none';
+                if (pwField) pwField.style.display = 'block';
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('active');
+            const nameEl = document.getElementById('customerName');
+            if (nameEl) nameEl.value = '';
+            const pwEl = document.getElementById('customerPassword');
+            if (pwEl) pwEl.value = '';
+            const errEl = document.getElementById('loginError');
+            if (errEl) errEl.style.display = 'none';
+        }
+
+        function attemptLogin() {
+            const cfg = getPortalConfigSafe();
+
+            // Normalize user input so entries like "Norfolk Iron & Metal" and "Foster Farms" work.
+            // Rule: lowercase + strip all non-alphanumeric characters.
+            const customerNameRaw = document.getElementById('customerName')?.value || '';
+            const customerName = customerNameRaw.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const errorEl = document.getElementById('loginError');
+
+            if (!cfg.customers) {
+                if (errorEl) {
+                    errorEl.textContent = 'Portal configuration not loaded. Please refresh the page.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+            
+            // Check if customer exists
+            let customer = cfg.customers[customerName];
+
+            // Fallback: allow matching by the human display name too (e.g. "Norfolk Iron & Metal").
+            if (!customer && cfg.customers) {
+                for (const [, c] of Object.entries(cfg.customers)) {
+                    const n = String(c?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (n === customerName) {
+                        customer = c;
+                        break;
+                    }
+                }
+            }
+            
+            if (!customer) {
+                if (errorEl) {
+                    errorEl.textContent = 'Company not found. Please check your company name.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+
+            // Check password in production mode
+            const passwordEl = document.getElementById('customerPassword');
+            if (!cfg.devMode) {
+                const enteredPassword = passwordEl?.value || '';
+                if (enteredPassword !== cfg.password) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Incorrect password. Please try again.';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+            }
+
+            window.location.href = customer.path;
+        }
+
+        // Handle Enter key in login form
+        document.addEventListener('keydown', function(e) {
+            const refViewerModal = document.getElementById('referenceViewerModal');
+            if (e.key === 'Escape' && refViewerModal && refViewerModal.classList.contains('active')) {
+                closeReferenceViewer();
+                return;
+            }
+            const refModal = document.getElementById('referenceModal');
+            if (e.key === 'Escape' && refModal && refModal.classList.contains('active')) {
+                closeReferenceModal();
+                return;
+            }
+            const modal = document.getElementById('loginModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                } else if (e.key === 'Escape') {
+                    closeLoginModal();
+                }
+            }
+        });
+    </script>
+
+
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
+    </footer>
+</body>
+</html>

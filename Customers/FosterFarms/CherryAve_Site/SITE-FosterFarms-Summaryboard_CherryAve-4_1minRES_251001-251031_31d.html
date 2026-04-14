@@ -10,6 +10,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<script src="../../../UnityEnergy/hume_character_config.js?v=20260324a"></script>
+<script src="../../../UnityEnergy/clerk_voice_widget.js?v=20260324a"></script>
 <title id="page-title">Unity Energy – Summaryboard</title>
 <style>
     :root {
@@ -1147,6 +1149,9 @@
   <button class="header-info-btn" onclick="showSiteSummaryMPTSModal()" title="View Unity/MPTS optimized site metrics">
     ⚡ SITE SUMMARY - UNITY/MPTS
   </button>
+  <button class="header-info-btn" onclick="openSummaryboardClerkPilot()" title="Open contextual Speak with Clerk pilot">
+    🗣️ SPEAK WITH CLERK (PILOT)
+  </button>
 </div>
 <div class="dashboard-grid layout-4">
 <div class="xfmr-card" id="xfmr1-card">
@@ -1863,6 +1868,177 @@
     }
   }
 };
+
+  function getSummaryboardText(elementId, fallback) {
+    const element = document.getElementById(elementId);
+    const text = element ? element.textContent.trim() : '';
+    return text || (fallback || '');
+  }
+
+  function getSummaryboardNumber(elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return null;
+    const parsed = parseFloat(element.textContent.replace(/[^0-9.-]/g, ''));
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function collectSummaryboardTransformers() {
+    const transformers = [];
+    for (let i = 1; i <= 4; i += 1) {
+      const name = getSummaryboardText(`xfmr${i}-name`, '');
+      if (!name) continue;
+      const transformerIdMatch = name.match(/^(T\d+)/i);
+      const transformerId = transformerIdMatch ? transformerIdMatch[1].toUpperCase() : `XFMR${i}`;
+      transformers.push({
+        index: i,
+        transformerId,
+        name,
+        powerFactorPct: getSummaryboardNumber(`xfmr${i}-metric-pf`),
+        activeKw: getSummaryboardNumber(`xfmr${i}-avg-kw`),
+        reactiveWasteKw: getSummaryboardNumber(`xfmr${i}-metric-energy-waste`),
+        wasteCostPerHourUsd: getSummaryboardNumber(`xfmr${i}-xfmr-waste-cost-hour`)
+      });
+    }
+    return transformers;
+  }
+
+  function collectWilliamBoardInsights(transformers) {
+    const source =
+      PATTERN_DATA &&
+      PATTERN_DATA.transformers &&
+      typeof PATTERN_DATA.transformers === 'object'
+        ? PATTERN_DATA.transformers
+        : {};
+    const williamSummaryLines = [];
+    const anomalies = [];
+    transformers.forEach(function (transformer) {
+      const williamEntry = source[transformer.transformerId];
+      if (!williamEntry) return;
+      const topSummaryLine =
+        Array.isArray(williamEntry.pattern_summary) && williamEntry.pattern_summary.length > 0
+          ? String(williamEntry.pattern_summary[0] || '').trim()
+          : '';
+      if (topSummaryLine) {
+        williamSummaryLines.push(`${transformer.transformerId}: ${topSummaryLine}`);
+      }
+      const interpretation =
+        typeof williamEntry.pattern_interpretation === 'string'
+          ? williamEntry.pattern_interpretation
+          : '';
+      if (!interpretation || !/(outage|spike|disturbance|transient|downtime)/i.test(interpretation)) {
+        return;
+      }
+      const anomalySentence = interpretation.match(
+        /[^.]*?(outage|spike|disturbance|transient|downtime)[^.]*\./i
+      );
+      anomalies.push(
+        `${transformer.transformerId}: ${
+          anomalySentence ? anomalySentence[0].trim() : 'Potential anomaly context found in William interpretation.'
+        }`
+      );
+    });
+    return {
+      williamSummary: williamSummaryLines.slice(0, 3).join(' | '),
+      anomalies: anomalies.slice(0, 4)
+    };
+  }
+
+  function buildSummaryboardContextPacket() {
+    const transformers = collectSummaryboardTransformers();
+    const william = collectWilliamBoardInsights(transformers);
+    const topWasteTransformer = transformers
+      .filter(function (item) { return Number.isFinite(item.reactiveWasteKw); })
+      .sort(function (a, b) { return (b.reactiveWasteKw || 0) - (a.reactiveWasteKw || 0); })[0] || null;
+    return {
+      customer: 'Foster Farms',
+      site: 'Cherry Avenue',
+      board: 'Summary Board',
+      timeframe: getSummaryboardText('month-year', 'current period'),
+      period: getSummaryboardText('param-period', ''),
+      transformerFocus: null,
+      transformerCount: transformers.length,
+      topWasteTransformer,
+      williamSummary: william.williamSummary,
+      anomalies: william.anomalies,
+      likelyUserIntent: 'Reviewing monthly performance and energy waste reduction opportunities'
+    };
+  }
+
+  function buildSummaryboardSessionContext(packet) {
+    const contextParts = [
+      `User is viewing ${packet.customer} ${packet.site} ${packet.board} for ${packet.timeframe}.`,
+      packet.period ? `Period code: ${packet.period}.` : '',
+      `Visible transformers: ${packet.transformerCount}.`,
+      packet.topWasteTransformer && Number.isFinite(packet.topWasteTransformer.reactiveWasteKw)
+        ? `Current highest reactive waste on board: ${packet.topWasteTransformer.transformerId} at ${packet.topWasteTransformer.reactiveWasteKw.toFixed(1)} kW.`
+        : '',
+      packet.williamSummary ? `William summary: ${packet.williamSummary}` : '',
+      packet.anomalies.length > 0 ? `Anomalies: ${packet.anomalies.join(' ')}` : '',
+      `Likely user intent: ${packet.likelyUserIntent}.`
+    ].filter(Boolean);
+    return contextParts.join(' ');
+  }
+
+  function buildSummaryboardSystemPrompt(packet) {
+    return [
+      'You are Clerk Maxwell, operating in contextual field-intelligence mode.',
+      `You already know the active board context for ${packet.customer} at ${packet.site}.`,
+      'Do not ask what the user is looking at.',
+      `Open by referencing the current ${packet.board} and timeframe (${packet.timeframe}).`,
+      'Provide situational awareness, highlight major signals or anomalies, and offer next-step navigation to transformer Energy, Heat, or Volt views.',
+      'After the contextual opening, ask for the visitor name politely and continue using their name once provided.'
+    ].join(' ');
+  }
+
+  function buildSummaryboardOpeningLine(packet) {
+    if (packet.topWasteTransformer && Number.isFinite(packet.topWasteTransformer.reactiveWasteKw)) {
+      return `You're looking at the ${packet.timeframe} summary for ${packet.site}. ${packet.topWasteTransformer.transformerId} is currently showing the highest reactive waste at ${packet.topWasteTransformer.reactiveWasteKw.toFixed(1)} kW.`;
+    }
+    return `You're looking at the ${packet.timeframe} summary for ${packet.site}.`;
+  }
+
+  function openSummaryboardClerkPilot() {
+    if (typeof window.openClerkVoiceModal !== 'function') {
+      window.alert('Speak with Clerk is unavailable on this board.');
+      return;
+    }
+    const packet = buildSummaryboardContextPacket();
+    const launchPayload = {
+      contextSource: 'summaryboard-contextual-pilot',
+      contextPayload: {
+        mode: 'contextual',
+        customer: packet.customer,
+        site: packet.site,
+        board: packet.board,
+        timeframe: packet.timeframe,
+        period: packet.period,
+        transformer_focus: packet.transformerFocus,
+        transformer_count: packet.transformerCount,
+        top_waste_transformer: packet.topWasteTransformer
+          ? {
+              id: packet.topWasteTransformer.transformerId,
+              reactive_waste_kw: packet.topWasteTransformer.reactiveWasteKw
+            }
+          : undefined,
+        william_summary: packet.williamSummary,
+        anomalies: packet.anomalies,
+        likely_user_intent: packet.likelyUserIntent,
+        session_context: buildSummaryboardSessionContext(packet),
+        system_prompt_text: buildSummaryboardSystemPrompt(packet),
+        opening_line: buildSummaryboardOpeningLine(packet),
+        name_request_line: 'May I ask your name, dear sir or madam?',
+        conversation_mode: 'contextual'
+      },
+      uiMode: 'modal'
+    };
+    window.openClerkVoiceModal(launchPayload);
+    window.setTimeout(function () {
+      const startBtn = document.getElementById('clerkVoiceStartBtn');
+      if (startBtn && !startBtn.hidden && !startBtn.disabled) {
+        startBtn.click();
+      }
+    }, 150);
+  }
   
   // Audio state management
   let currentSpeech = null;

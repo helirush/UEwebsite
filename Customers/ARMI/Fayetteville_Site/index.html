@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Energy - ARMI Fayetteville Site</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: rgba(44, 62, 80, 1);
+            background: rgba(248, 249, 250, 1);
+        }
+        header {
+            background: linear-gradient(135deg, rgba(7, 43, 111, 1) 0%, rgba(20, 95, 189, 1) 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid rgba(170, 201, 245, 1);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-logo {
+            height: 66px;
+            width: auto;
+            background: rgba(255, 255, 255, 0.93);
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+        }
+        .site-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: rgba(170, 201, 245, 1);
+            text-transform: uppercase;
+        }
+        .site-subtitle { font-size: 0.95em; color: white; opacity: 0.95; }
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(170, 201, 245, 1);
+            color: rgba(7, 43, 111, 1);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 6px;
+            border: 2px solid rgba(7, 43, 111, 1);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        .hero {
+            background: url('../images/ARMI-heroimage.png') center center / cover no-repeat;
+            position: relative;
+            color: white;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 8px solid rgba(170, 201, 245, 1);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 30, 80, 0.35) 24%, rgba(0, 25, 60, 0.82) 100%);
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1300px;
+            padding: 60px 40px;
+        }
+        .hero h1 {
+            font-size: 4.7em;
+            margin-bottom: 4px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0px rgba(7, 43, 111, 1), 5px 5px 10px rgba(0,0,0,0.8);
+        }
+        .capacity-subtitle {
+            font-size: 2.8em;
+            font-weight: 600;
+            color: rgba(170, 201, 245, 1);
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px rgba(7, 43, 111, 1), 3px 3px 6px rgba(0,0,0,0.75);
+        }
+        .capacity-subtitle2 {
+            font-size: 1.85em;
+            font-weight: 300;
+            margin-bottom: 54px;
+            font-style: italic;
+            color: white;
+            text-shadow: 2px 2px 0px rgba(7, 43, 111, 1), 3px 3px 6px rgba(0,0,0,0.75);
+        }
+        .capacity-subtitle1 {
+            font-size: 2.25em;
+            font-weight: 700;
+            color: rgba(205, 225, 252, 1);
+            margin: 8px 0 0 0;
+            text-shadow: 2px 2px 0px rgba(7, 43, 111, 1), 3px 3px 6px rgba(0,0,0,0.75);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        section { margin: 42px 0; }
+        .section-title {
+            font-size: 2.15em;
+            color: rgba(7, 43, 111, 1);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+        .welcome-text {
+            font-size: 1.07em;
+            color: rgba(90, 90, 90, 1);
+            line-height: 1.85;
+            margin-bottom: 18px;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: justify;
+        }
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 26px;
+            margin: 35px 0;
+        }
+        .highlight-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 16px solid rgba(170, 201, 245, 1);
+        }
+        .highlight-card .number {
+            color: rgba(7, 43, 111, 1);
+            font-size: 1.95em;
+            font-weight: 700;
+        }
+        .highlight-card h3 {
+            color: rgba(7, 43, 111, 1);
+            margin-top: 3px;
+            margin-bottom: 8px;
+            font-size: 1.45em;
+            font-weight: 700;
+        }
+        .highlight-card .tech-detail {
+            color: rgba(51, 51, 51, 1);
+            font-size: 1.25em;
+            font-weight: 600;
+            font-style: italic;
+        }
+        .libraries-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 35px 0;
+        }
+        .library-section {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 8px solid rgba(7, 43, 111, 1);
+        }
+        .library-title {
+            font-size: 1.7em;
+            color: rgba(7, 43, 111, 1);
+            margin-bottom: 24px;
+            font-weight: 700;
+            text-align: center;
+        }
+        details {
+            margin: 16px 0;
+            padding: 6px;
+            border: 2px solid rgba(140, 170, 220, 0.5);
+            border-radius: 12px;
+            background: rgba(245, 248, 252, 1);
+        }
+        details summary {
+            cursor: pointer;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border-left: 5px solid rgba(20, 95, 189, 1);
+            font-size: 1.08em;
+            font-weight: 800;
+            color: rgba(50, 50, 50, 1);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, rgba(205, 225, 252, 0.55) 0%, rgba(248, 249, 250, 1) 36%, rgba(248, 249, 250, 1) 100%);
+        }
+        details summary::-webkit-details-marker { display: none; }
+        details summary::before {
+            content: '▶';
+            font-size: 0.8em;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        details[open] summary::before { transform: rotate(90deg); }
+        .study-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 12px;
+            padding: 4px 8px 8px 10px;
+        }
+        .study-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 18px 22px;
+            background: rgba(252, 252, 252, 1);
+            border-radius: 10px;
+            border-left: 5px solid rgba(170, 201, 245, 1);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .study-name {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: rgba(7, 43, 111, 1);
+            margin-bottom: 4px;
+        }
+        .study-period {
+            font-size: 0.98em;
+            color: rgba(102, 102, 102, 1);
+            font-style: italic;
+        }
+        .study-btn {
+            display: inline-block;
+            padding: 11px 20px;
+            background: rgba(20, 95, 189, 1);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 6px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.84em;
+            min-width: 150px;
+            text-align: center;
+        }
+        .study-btn:hover { background: rgba(7, 43, 111, 1); }
+        .placeholder-text {
+            color: rgba(125, 125, 125, 1);
+            font-style: italic;
+            padding: 18px;
+            text-align: center;
+            background: rgba(248, 249, 250, 1);
+            border-radius: 8px;
+        }
+        footer {
+            background: rgba(7, 43, 111, 1);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 48px;
+            border-top: 3px solid rgba(170, 201, 245, 1);
+        }
+        @media (max-width: 900px) {
+            .libraries-container { grid-template-columns: 1fr; }
+            .study-item { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="../images/ARMI-Wolf-Logo-e1649542334864.webp" alt="ARMI Wolf Logo" class="header-logo">
+            <div>
+                <div class="site-subtitle">Arkansas Myriad Incorporated</div>
+                <div class="site-title">ARMI - Fayetteville Site</div>
+                <div class="site-subtitle">Fayetteville, Arkansas</div>
+            </div>
+        </div>
+        <a href="../index.html" class="back-btn">← Return to ARMI Home</a>
+    </header>
+    <div class="hero">
+        <div class="hero-content">
+            <p class="capacity-subtitle">480v Industrial Electricity Data</p>
+            <h1>ENERGY FIELD PERFORMANCE</h1>
+            <p class="capacity-subtitle2">Two-part study: utility meter behavior and H240 harmonization behavior</p>
+            <p class="capacity-subtitle1">SITE CONNECTED CAPACITY : 500 kVA</p>
+            <p class="capacity-subtitle1">MONITORED ENERGY FIELD : 1 transformer (480V-3ph)</p>
+        </div>
+    </div>
+    <div class="container">
+        <section id="welcome">
+            <h2 class="section-title">ARMI Fayetteville Facility Overview</h2>
+            <p class="welcome-text">
+                The ARMI Fayetteville site is configured as a single monitored 500 kVA transformer field.
+                This portal is structured to receive monthly study outputs produced by eBehavior and published
+                to eWebmaster, following the same customer journey style used in Cherry Avenue.
+            </p>
+            <p class="welcome-text">
+                Each monthly release will present a two-part Summaryboard perspective: (1) meter-side transformer
+                behavior and (2) H240 MPTS harmonization behavior, enabling direct comparison of electrical field
+                performance and harmonization impact.
+            </p>
+            <div class="highlights">
+                <div class="highlight-card">
+                    <div class="number">1 - Total</div>
+                    <h3>Electrical Energy Field</h3>
+                    <div class="tech-detail">1x 500 kVA @ 480V-3ph</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="number">2-Part</div>
+                    <h3>Summaryboard Structure</h3>
+                    <div class="tech-detail">Meter + H240 MPTS</div>
+                </div>
+            </div>
+        </section>
+        <section id="libraries">
+            <div class="libraries-container">
+                <div class="library-section">
+                    <h2 class="library-title">📊 ARMI 2026 Monthly Studies</h2>
+                    <details open>
+                        <summary>2026 Full Site Studies - Single 500 kVA Energy Field</summary>
+                        <div class="study-list">
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">March 2026</div>
+                                    <div class="study-period">31-day Study • Summaryboard Placeholder</div>
+                                </div>
+                                <a href="./March_2026/SITE-ARMI-Summaryboard_ARMI-1_1minRES_260301-260331_31d.html" class="study-btn">View Energy Fields</a>
+                            </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">February 2026</div>
+                                    <div class="study-period">28-day Study • Summaryboard Placeholder</div>
+                                </div>
+                                <a href="./February_2026/SITE-ARMI-Summaryboard_ARMI-1_1minRES_260201-260228_28d.html" class="study-btn">View Energy Fields</a>
+                            </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">January 2026</div>
+                                    <div class="study-period">31-day Study • Summaryboard Placeholder</div>
+                                </div>
+                                <a href="./January_2026/SITE-ARMI-Summaryboard_ARMI-1_1minRES_260101-260131_31d.html" class="study-btn">View Energy Fields</a>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+                <div class="library-section">
+                    <h2 class="library-title">📑 Reference Library</h2>
+                    <details open>
+                        <summary>Site Context</summary>
+                        <div class="placeholder-text">
+                            ARMI reference documents will be added here as the Fayetteville study library expands.
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Partial Studies (future)</summary>
+                        <div class="placeholder-text">
+                            Transformer split-views and additional partial studies will appear here after publication.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
+    </footer>
+</body>
+</html>

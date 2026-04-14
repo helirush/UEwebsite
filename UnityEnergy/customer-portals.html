@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="passwords.js?v=20260402b"></script>
+    <script src="hume_character_config.js?v=20260411f"></script>
+    <script src="clerk_voice_widget.js?v=20260411f"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnityEnergy - Customer Portals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: rgba(44, 62, 80, 1);
+            background: rgba(248, 249, 250, 1);
+        }
+        .banner-wrapper {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            padding: 14px 20px;
+            text-align: center;
+        }
+        .banner-content {
+            color: rgba(250, 240, 160, 1);
+            font-size: 1.08em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .banner-prefix {
+            letter-spacing: 2px;
+        }
+        .banner-sep {
+            margin: 0 6px;
+            opacity: 0.9;
+        }
+        .banner-content .detail {
+            font-size: 0.84em;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0.4px;
+            margin-left: 7px;
+        }
+        .nav-tabs-container {
+            background: rgba(240, 240, 240, 1);
+            padding: 22px 0 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+        .nav-tab-portal,
+        .nav-tab-maxwellian {
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            padding: 12px 26px;
+        }
+        .nav-tab-portal {
+            background: rgba(90, 110, 35, 1);
+            color: #fff;
+            border: 2px solid rgba(129, 163, 43, 1);
+        }
+        .nav-tab-portal:hover {
+            background: rgba(49, 65, 0, 1);
+        }
+        .nav-tab-portal.active {
+            background: rgba(49, 65, 0, 1);
+            border-color: rgba(250, 200, 0, 1);
+            color: rgba(250, 240, 160, 1);
+        }
+        .nav-tab-maxwellian {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            border: 2px solid rgba(255, 200, 50, 1);
+            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+        }
+        .nav-tab-maxwellian:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
+        }
+        .portal-shell {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 26px 24px 36px;
+        }
+        .portal-heading {
+            text-align: center;
+            color: rgba(49, 65, 0, 1);
+            font-size: 2.05em;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .welcome-text {
+            text-align: center;
+            color: rgba(64, 79, 34, 1);
+            max-width: 960px;
+            margin: 0 auto 22px;
+            font-size: 1.03em;
+        }
+        .portal-container {
+            position: relative;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            margin-top: 0;
+            margin-bottom: 0;
+            cursor: pointer;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+            border: none;
+        }
+        .portal-image {
+            width: 100%;
+            height: 670px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(1) saturate(1);
+            transition: filter 0.2s ease;
+        }
+        .portal-container:hover .portal-image {
+            filter: brightness(1.08) saturate(1.05);
+        }
+        .portal-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .portal-button {
+            background: radial-gradient(circle, rgba(178, 210, 53, 0.20) 0%, rgba(129, 163, 43, 0.35) 55%, rgba(49, 65, 0, 0.65) 95%);
+            color: rgba(250, 240, 160, 1);
+            border-radius: 50%;
+            border: 3px solid rgba(178, 210, 53, 0.95);
+            box-shadow: 0 0 36px rgba(178, 210, 53, 0.55), inset 0 0 24px rgba(0,0,0,0.35);
+            font-size: 2.1em;
+            font-weight: 700;
+            line-height: 1.2;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            padding: 0;
+        }
+        .portal-container:hover .portal-button {
+            box-shadow: 0 0 60px rgba(178, 210, 53, 0.9), inset 0 0 20px rgba(178,210,53,0.35);
+            transform: scale(1.04);
+        }
+        .portal-button .title {
+            font-size: 1.2em;
+            margin: 0;
+            line-height: 1.04;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .portal-button .subtitle {
+            font-size: 0.75em;
+            margin: 0;
+            padding: 12px 0 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        .portal-button .subtitle1 {
+            font-size: 0.72em;
+            margin: 0 0 4px;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 900px) {
+            .portal-image {
+                height: 620px;
+            }
+            .portal-button {
+                width: 320px;
+                height: 320px;
+                font-size: 1.75em;
+            }
+            .portal-button .title {
+                font-size: 1em;
+            }
+            .portal-button .subtitle {
+                font-size: 0.64em;
+            }
+            .portal-button .subtitle1 {
+                font-size: 0.62em;
+            }
+        }
+        @media (max-width: 640px) {
+            .portal-shell {
+                padding: 20px 14px 30px;
+            }
+            .portal-image {
+                height: 500px;
+            }
+            .portal-button {
+                width: 240px;
+                height: 240px;
+                font-size: 1.35em;
+            }
+        }
+        @media (max-width: 580px) {
+            .banner-content {
+                font-size: 1.02em;
+                letter-spacing: 0.7px;
+                line-height: 1.35;
+            }
+            .banner-content .detail {
+                display: none;
+            }
+        }
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-modal.active {
+            display: flex;
+        }
+        .login-modal-content {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            border-radius: 16px;
+            padding: 50px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 60px rgba(129, 163, 43, 0.3);
+            border: 3px solid rgba(129, 163, 43, 0.6);
+        }
+        .close-login {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(250, 240, 160, 0.7);
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        .close-login:hover {
+            color: rgba(250, 240, 160, 1);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: rgba(250, 240, 160, 1);
+        }
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(129, 163, 43, 0.4);
+            border-radius: 8px;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.95);
+            color: rgba(44,62,80,1);
+        }
+        .login-error {
+            display: none;
+            background: rgba(255, 100, 100, 0.2);
+            color: rgba(255, 180, 180, 1);
+            padding: 10px;
+            border: 1px solid rgba(255, 100, 100, 0.4);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+            color: rgba(49, 65, 0, 1);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .login-btn:hover {
+            background: linear-gradient(135deg, rgba(200, 230, 80, 1) 0%, rgba(178, 210, 53, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(129, 163, 43, 0.4);
+        }
+        .dev-mode-notice {
+            text-align: center;
+            color: rgba(178, 210, 53, 0.8);
+            font-size: 0.85em;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        footer {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            color: rgba(250, 240, 160, 1);
+            text-align: center;
+            padding: 30px;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-wrapper">
+        <div class="banner-content">
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
+            <span class="banner-sep"></span>
+            <span class="detail">MEASURE (Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">MANAGE (MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">EXCHANGE (Dynamic Demand Control)</span>
+        </div>
+    </div>
+    <div class="nav-tabs-container">
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab-portal">Unity Home</a>
+            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
+            <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal active">Customer Portal</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
+        </div>
+    </div>
+    <main class="portal-shell">
+        <h1 class="portal-heading">Customer Electrical-Energy Portals</h1>
+        <p class="welcome-text">
+            Enter the Unity Customer Portal environments for detailed information on the 480v Industrial Energy Field, 
+            Unity Energy Systems are used to reveal behavior truths and educate about next level harmonizing Energy Field tuning technology. 
+        </p>
+        <div class="portal-container" onclick="openLoginModal()">
+            <img src="UnityPortalButton.png" alt="Unity Energy Portal" class="portal-image">
+            <div class="portal-overlay">
+                <div class="portal-button">
+                    <div class="subtitle1">INDUSTRIAL</div>
+                    <div class="title">480V-3ph</div>
+                    <div class="title">ENERGY FIELD</div>
+                    <div class="title">BEHAVIOR</div>
+                    <div class="subtitle">select to enter</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="login-modal" id="loginModal" onclick="closeLoginModal()">
+        <div class="login-modal-content" onclick="event.stopPropagation()">
+            <button class="close-login" onclick="closeLoginModal()">✕</button>
+            <div class="login-header">
+                <h2>Unity Energy Portal</h2>
+                <p>Enter your Portal Credentials to continue</p>
+            </div>
+            <div class="login-form">
+                <input type="text" id="customerName" name="ue_company" placeholder="Account Name" autocomplete="off" autocapitalize="off" spellcheck="false">
+                <input type="password" id="customerPassword" name="ue_password" placeholder="Portal Password" autocomplete="off" style="display:none;">
+                <div class="login-error" id="loginError"></div>
+                <button class="login-btn" onclick="attemptLogin()">Enter Portal →</button>
+                <div class="dev-mode-notice" id="devModeNotice" style="display:none;">No password required</div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
+    </footer>
+    <script>
+        function getPortalConfigSafe() {
+            try {
+                if (typeof portalConfig !== 'undefined' && portalConfig) return portalConfig;
+            } catch (e) {}
+            if (window.portalConfig) return window.portalConfig;
+            return { customers: {} };
+        }
+        function openLoginModal() {
+            const modal = document.getElementById('loginModal');
+            const devNotice = document.getElementById('devModeNotice');
+            const pwField = document.getElementById('customerPassword');
+            const cfg = getPortalConfigSafe();
+            modal.classList.add('active');
+            document.getElementById('customerName')?.focus();
+            if (cfg.devMode) {
+                if (devNotice) devNotice.style.display = 'block';
+                if (pwField) pwField.style.display = 'none';
+            } else {
+                if (devNotice) devNotice.style.display = 'none';
+                if (pwField) pwField.style.display = 'block';
+            }
+        }
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('active');
+            const nameEl = document.getElementById('customerName');
+            if (nameEl) nameEl.value = '';
+            const pwEl = document.getElementById('customerPassword');
+            if (pwEl) pwEl.value = '';
+            const errEl = document.getElementById('loginError');
+            if (errEl) errEl.style.display = 'none';
+        }
+        function attemptLogin() {
+            const cfg = getPortalConfigSafe();
+            const customerNameRaw = document.getElementById('customerName')?.value || '';
+            const customerName = customerNameRaw.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const errorEl = document.getElementById('loginError');
+            if (!cfg.customers) {
+                if (errorEl) {
+                    errorEl.textContent = 'Portal configuration not loaded. Please refresh the page.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+            let customer = cfg.customers[customerName];
+            if (!customer && cfg.customers) {
+                for (const [, c] of Object.entries(cfg.customers)) {
+                    const n = String(c?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (n === customerName) {
+                        customer = c;
+                        break;
+                    }
+                }
+            }
+            if (!customer) {
+                if (errorEl) {
+                    errorEl.textContent = 'Company not found. Please check your company name.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+            const passwordEl = document.getElementById('customerPassword');
+            if (!cfg.devMode) {
+                const enteredPassword = passwordEl?.value || '';
+                if (enteredPassword !== cfg.password) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Incorrect password. Please try again.';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+            }
+            window.location.href = customer.path;
+        }
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('loginModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                } else if (e.key === 'Escape') {
+                    closeLoginModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

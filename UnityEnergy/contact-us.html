@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="favicon.ico">
+    <script src="hume_character_config.js?v=20260411f"></script>
+    <script src="clerk_voice_widget.js?v=20260411f"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
     <title>Contact Us - Unity Energy</title>
     <style>
         * {
@@ -32,17 +31,86 @@
 
         .banner-content {
             color: rgba(250, 240, 160, 1);
-            font-size: 1.3em;
+            font-size: 1.08em;
             font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .banner-prefix {
             letter-spacing: 2px;
         }
 
         .banner-content .detail {
-            font-size: 0.85em;
+            font-size: 0.84em;
             font-weight: 400;
             font-style: italic;
-            letter-spacing: 0.5px;
-            margin-left: 8px;
+            letter-spacing: 0.4px;
+            margin-left: 7px;
+        }
+        
+        .banner-sep {
+            margin: 0 6px;
+            opacity: 0.9;
+        }
+        .nav-tabs-container {
+            background: rgba(240, 240, 240, 1);
+            padding: 22px 0 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .nav-tab-portal,
+        .nav-tab-maxwellian {
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            padding: 12px 26px;
+        }
+
+        .nav-tab-portal {
+            background: rgba(90, 110, 35, 1);
+            color: #fff;
+            border: 2px solid rgba(129, 163, 43, 1);
+        }
+
+        .nav-tab-portal:hover {
+            background: rgba(49, 65, 0, 1);
+        }
+
+        .nav-tab-portal.active {
+            background: rgba(49, 65, 0, 1);
+            border-color: rgba(250, 200, 0, 1);
+            color: rgba(250, 240, 160, 1);
+        }
+
+        .nav-tab-maxwellian {
+            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
+            color: rgba(255, 248, 200, 1);
+            border: 2px solid rgba(255, 200, 50, 1);
+            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+        }
+
+        .nav-tab-maxwellian:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
         }
 
         /* Hero Section */
@@ -50,7 +118,7 @@
             position: relative;
             top: 0;
             left: 0;
-            min-height: 100vh;
+            min-height: calc(100vh - 126px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,76 +129,66 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -150px;
+            top: -100;
+            left: -0px;
             width: 100%;
             height: 100%;
-            background-image: url('AgenticTeam.png');
+            background-image: url('UnityPortalButton.png');
             background-size: cover;
-            background-position: 0% -90%;
+            background-position: 0% +40%;
             background-repeat: no-repeat;
-            opacity: 0.6;
+            opacity: 0.8;
             z-index: 0;
-            transform: scale(1.8);
+            transform: scale(1.3);
         }
-
-        /* Unity Logo */
-        .unity-logo {
+        .meet-team-hero-cta {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            width: 280px;
-            height: auto;
-            z-index: 10;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
-        }
-
-        /* Navigation Buttons */
-        .nav-buttons-top {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            z-index: 10;
-            display: flex;
-            gap: 12px;
-        }
-        
-        .back-btn {
-            background: rgba(255, 255, 255, 0.95);
-            color: rgba(49, 65, 0, 1);
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1em;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            cursor: pointer;
-            border: none;
-        }
-
-        .back-btn:hover {
-            background: rgba(178, 210, 53, 1);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .back-home {
-            background: rgba(49, 65, 0, 0.9);
+            left: clamp(22px, 4.5vw, 78px);
+            bottom: clamp(20px, 5vh, 62px);
+            z-index: 6;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 999px;
+            border: 2px solid rgba(250, 240, 160, 0.72);
+            background: linear-gradient(135deg, rgba(49, 65, 0, 0.92) 0%, rgba(80, 105, 25, 0.92) 100%);
             color: rgba(250, 240, 160, 1);
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1em;
-            font-weight: 600;
+            font-size: 0.98rem;
+            font-weight: 700;
+            letter-spacing: 0.35px;
             text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+            backdrop-filter: blur(2px);
+            animation: meetTeamFloat 3.4s ease-in-out infinite, meetTeamPulse 3.4s ease-in-out infinite;
         }
-
-        .back-home:hover {
-            background: rgba(70, 95, 20, 1);
-            color: white;
-            transform: translateY(-2px);
+        .meet-team-hero-cta:hover {
+            animation-play-state: paused;
+            transform: translateY(-4px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+            background: linear-gradient(135deg, rgba(64, 84, 8, 0.96) 0%, rgba(96, 127, 33, 0.96) 100%);
+        }
+        .meet-team-hero-cta:focus-visible {
+            outline: 3px solid rgba(250, 240, 160, 0.9);
+            outline-offset: 3px;
+        }
+        @keyframes meetTeamFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+        @keyframes meetTeamPulse {
+            0%, 100% {
+                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+            }
+            50% {
+                box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45), 0 0 16px rgba(178, 210, 53, 0.28);
+            }
         }
 
         /* Main Contact Panel */
@@ -140,8 +198,8 @@
             background: linear-gradient(135deg, rgba(40, 55, 10, 0.95) 0%, rgba(60, 80, 25, 0.95) 100%);
             border-radius: 24px;
             box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-            max-width: 800px;
-            width: 90%;
+            max-width: 960px;
+            width: min(94vw, 960px);
             padding: 0;
             text-align: center;
         }
@@ -154,13 +212,13 @@
         }
         
         .contact-panel-content {
-            padding: 40px 60px 60px 60px;
+            padding: 28px 44px 30px 44px;
         }
 
         .contact-panel h1 {
-            font-size: 2.8em;
+            font-size: 2.4em;
             color: rgba(250, 240, 160, 1);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 700;
         }
 
@@ -173,11 +231,11 @@
         }
 
         .contact-intro {
-            font-size: 1.15em;
+            font-size: 1.04em;
             color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
-            margin-bottom: 40px;
-            max-width: 600px;
+            line-height: 1.56;
+            margin-bottom: 22px;
+            max-width: 760px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -186,22 +244,22 @@
         .contact-cta {
             background: linear-gradient(135deg, rgba(70, 95, 20, 0.5) 0%, rgba(90, 122, 42, 0.5) 100%);
             border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 30px;
+            padding: 28px 26px;
+            margin-bottom: 18px;
             border: 2px solid rgba(178, 210, 53, 0.4);
         }
 
         .contact-cta h2 {
-            font-size: 1.5em;
+            font-size: 1.34em;
             color: rgba(250, 240, 160, 1);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
         .contact-cta p {
-            font-size: 1.1em;
+            font-size: 1.01em;
             color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 25px;
+            margin-bottom: 16px;
         }
 
         .email-link {
@@ -235,9 +293,9 @@
         .location-info {
             display: flex;
             justify-content: center;
-            gap: 50px;
-            margin-top: 30px;
-            padding-top: 30px;
+            gap: 40px;
+            margin-top: 16px;
+            padding-top: 16px;
             border-top: 1px solid rgba(200, 200, 200, 0.5);
         }
 
@@ -246,21 +304,21 @@
         }
 
         .location-item .icon {
-            font-size: 1.8em;
-            margin-bottom: 10px;
+            font-size: 1.5em;
+            margin-bottom: 6px;
         }
 
         .location-item h3 {
-            font-size: 1.1em;
+            font-size: 1em;
             color: rgba(250, 240, 160, 1);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             font-weight: 600;
         }
 
         .location-item p {
-            font-size: 0.95em;
+            font-size: 0.88em;
             color: rgba(255, 255, 255, 0.8);
-            line-height: 1.5;
+            line-height: 1.35;
         }
         
         .location-item p a {
@@ -276,8 +334,8 @@
             background: transparent;
             color: rgba(255, 255, 255, 0.8);
             text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
+            padding: 12px;
+            font-size: 0.82em;
         }
 
         footer a {
@@ -290,40 +348,46 @@
         }
 
         @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+            }
+            .meet-team-hero-cta {
+                left: 50%;
+                bottom: 14px;
+                transform: translateX(-50%);
+                padding: 12px 20px;
+                font-size: 0.92rem;
+                white-space: nowrap;
+                animation: meetTeamFloatMobile 3.4s ease-in-out infinite, meetTeamPulse 3.4s ease-in-out infinite;
+            }
+            .meet-team-hero-cta:hover {
+                animation-play-state: paused;
+                transform: translateX(-50%) translateY(-4px);
+            }
             .contact-panel-content {
-                padding: 30px 25px 40px 25px;
+                padding: 24px 20px 26px 20px;
             }
 
             .contact-panel h1 {
-                font-size: 2em;
-            }
-
-            .unity-logo {
-                width: 180px;
-                top: 15px;
-                right: 15px;
-            }
-
-            .nav-buttons-top {
-                top: 15px;
-                left: 15px;
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .back-btn, .back-home {
-                padding: 10px 18px;
-                font-size: 0.9em;
+                font-size: 1.9em;
             }
 
             .location-info {
                 flex-direction: column;
-                gap: 25px;
+                gap: 16px;
             }
 
             .email-link {
                 padding: 15px 35px;
                 font-size: 1.1em;
+            }
+        }
+        @keyframes meetTeamFloatMobile {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-7px);
             }
         }
     </style>
@@ -332,19 +396,32 @@
     <!-- Static Centered Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
-            INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
+            <span class="banner-sep"></span>
+            <span class="detail">MEASURE (Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">MANAGE (MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">EXCHANGE (Dynamic Demand Control)</span>
+        </div>
+    </div>
+    <div class="nav-tabs-container">
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab-portal">Unity Home</a>
+            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
+            <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal active">Contact Us</a>
         </div>
     </div>
 
     <div class="hero">
-        <!-- Unity Logo -->
-        <img src="UnityWebLogo.png" alt="Unity Energy" class="unity-logo">
-
-        <!-- Navigation Buttons -->
-        <div class="nav-buttons-top">
-            <button onclick="history.back()" class="back-btn">← Back</button>
-            <a href="index.html" class="back-home">Unity Home</a>
-        </div>
+        <a href="meet-our-team.html" class="meet-team-hero-cta" aria-label="Meet the Unity Agentic Team" onclick="return openTeamWindow(event)">
+            Meet Our Agentic Team
+        </a>
 
         <!-- Main Contact Panel -->
         <div class="contact-panel">
@@ -387,8 +464,24 @@
 
         <!-- Footer -->
         <footer>
-            <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+            <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
         </footer>
     </div>
+    <script>
+        function openTeamWindow(event) {
+            if (event) event.preventDefault();
+            const teamWindow = window.open(
+                'meet-our-team.html',
+                'unityTeamWindow',
+                'width=1320,height=920,resizable=yes,scrollbars=yes'
+            );
+            if (teamWindow) {
+                teamWindow.focus();
+                return false;
+            }
+            window.location.href = 'meet-our-team.html';
+            return false;
+        }
+    </script>
 </body>
 </html>

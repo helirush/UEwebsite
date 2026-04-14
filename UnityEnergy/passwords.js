@@ -11,7 +11,7 @@
 //
 // To prepare for GitHub deployment:
 //   1. Set devMode = false
-//   2. Ensure password is set (default: "oheaviside")
+//   2. Ensure password is set (default: "oHeaviside")
 //   3. Push to GitHub
 
 window.portalConfig = {
@@ -44,6 +44,14 @@ window.portalConfig = {
         'norfolkironmetal': {
             name: 'Norfolk Iron & Metal',
             path: '../Customers/NorfolkIron/index.html'
+        },
+        'armi': {
+            name: 'ARMI',
+            path: '../Customers/ARMI/index.html'
+        },
+        'arkansasmyriad': {
+            name: 'ARMI',
+            path: '../Customers/ARMI/index.html'
         }
     }
 };

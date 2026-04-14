@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="favicon.ico">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Maxwellian — Intelligence Hub — Unity Energy</title>
+    <script src="hume_character_config.js?v=20260411f"></script>
+    <script src="clerk_voice_widget.js?v=20260411f"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -24,28 +26,42 @@
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
             padding: 14px 20px;
             text-align: center;
+            position: relative;
         }
         .banner-content {
             color: rgba(250, 240, 160, 1);
-            font-size: 1.3em;
+            font-size: 1.08em;
             font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .banner-prefix {
             letter-spacing: 2px;
         }
+        .banner-word {
+            letter-spacing: 2.5px;
+        }
+        .banner-sep {
+            margin: 0 6px;
+            opacity: 0.9;
+        }
         .banner-content .detail {
-            font-size: 0.85em;
+            font-size: 0.84em;
             font-weight: 400;
             font-style: italic;
-            letter-spacing: 0.5px;
-            margin-left: 8px;
+            letter-spacing: 0.4px;
+            margin-left: 7px;
         }
 
         /* Nav */
         .nav-tabs-container {
             background: rgba(240, 240, 240, 1);
-            padding: 20px 0 0px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 10;
+            padding: 22px 0 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         .nav-tabs {
             display: flex;
@@ -54,23 +70,27 @@
             flex-wrap: wrap;
             max-width: 1800px;
             margin: 0 auto;
-            padding: 0 10px 20px;
+            padding: 0 10px;
+        }
+        .nav-tab-portal,
+        .nav-tab-maxwellian {
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            padding: 12px 26px;
         }
         .nav-tab-portal {
             background: rgba(90, 110, 35, 1);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-size: 0.95em;
-            font-weight: 600;
-            text-decoration: none;
-            border: 3px solid rgba(129, 163, 43, 1);
-            transition: all 0.3s;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #fff;
+            border: 2px solid rgba(129, 163, 43, 1);
         }
-        .nav-tab-portal:hover { background: rgba(49, 65, 0, 1); }
+        .nav-tab-portal:hover {
+            background: rgba(49, 65, 0, 1);
+        }
         .nav-tab-portal.active {
             background: rgba(49, 65, 0, 1);
             border-color: rgba(250, 200, 0, 1);
@@ -79,26 +99,12 @@
         .nav-tab-maxwellian {
             background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
             color: rgba(255, 248, 200, 1);
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-size: 0.95em;
-            font-weight: 700;
-            text-decoration: none;
-            border: 3px solid rgba(255, 200, 50, 1);
-            transition: all 0.3s;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 2px solid rgba(255, 200, 50, 1);
             box-shadow: 0 0 16px rgba(255, 160, 0, 0.4);
         }
         .nav-tab-maxwellian:hover {
-            background: linear-gradient(135deg, rgba(200, 120, 0, 1) 0%, rgba(240, 160, 0, 1) 100%);
-            box-shadow: 0 0 28px rgba(255, 160, 0, 0.6);
             transform: translateY(-2px);
-        }
-        .nav-tab-maxwellian.active {
-            background: linear-gradient(135deg, rgba(140, 70, 0, 1) 0%, rgba(180, 100, 0, 1) 100%);
-            box-shadow: 0 0 12px rgba(255, 160, 0, 0.3);
+            box-shadow: 0 0 28px rgba(255, 160, 0, 0.6);
         }
 
         /* Page hero */
@@ -770,15 +776,27 @@
     <!-- Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
-            INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS Field Harmonization)</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+            <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
+            <span class="banner-sep"></span>
+            <span class="detail">MEASURE (Advanced Monitoring and Reporting)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">MANAGE (MPTS Harmonizing Technology)</span>
+            <span class="banner-sep">•</span>
+            <span class="detail">EXCHANGE (Dynamic Demand Control)</span>
         </div>
     </div>
 
     <!-- Nav -->
     <div class="nav-tabs-container">
         <div class="nav-tabs">
-            <a href="index.html"         class="nav-tab-portal">&#8592; Unity Home</a>
-            <a href="index.html#portals" class="nav-tab-portal">Customer Portal</a>
+            <a href="index.html" class="nav-tab-portal">Unity Home</a>
+            <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
+            <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
+            <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian active">Maxwellian</a>
+            <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
 
@@ -826,11 +844,80 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 
     <script>
+        window.MAXWELLIAN_ACTIVE_CONTEXT = null;
+        window.MAXWELLIAN_BRIEF_META = {};
+        window.MAXWELLIAN_INSIGHT_META = {};
+
+        function setMaxwellianActiveContext(context) {
+            if (!context || typeof context !== 'object') return;
+            window.MAXWELLIAN_ACTIVE_CONTEXT = Object.assign({}, context, {
+                selected_at: new Date().toISOString()
+            });
+        }
+
+        function buildMaxwellianClerkLaunchOptions() {
+            const active = window.MAXWELLIAN_ACTIVE_CONTEXT && typeof window.MAXWELLIAN_ACTIVE_CONTEXT === 'object'
+                ? window.MAXWELLIAN_ACTIVE_CONTEXT
+                : null;
+            const storyTitle = active && typeof active.title === 'string' ? active.title.trim() : '';
+            const storyType = active && typeof active.story_type === 'string' ? active.story_type.trim() : '';
+            const hasStoryContext = Boolean(storyTitle);
+            const openingLine = hasStoryContext
+                ? `Welcome back. Would you like to go deeper on "${storyTitle}" from the Maxwellian library?`
+                : 'Welcome to Maxwellian. Which brief or eInsights story would you like to discuss?';
+            const intent = hasStoryContext
+                ? 'follow-up questions about selected Maxwellian story'
+                : 'general questions about Maxwellian briefs and eInsights stories';
+            return {
+                contextSource: 'maxwellian',
+                context: hasStoryContext ? 'maxwellian-story-followup' : 'maxwellian',
+                mode: hasStoryContext ? 'maxwellian-story-followup' : 'maxwellian',
+                conversationMode: 'followup',
+                sourcePage: 'maxwellian',
+                entryPoint: 'maxwellian-nav-clerk-button',
+                openingLine: openingLine,
+                likelyUserIntent: intent,
+                sessionContext: hasStoryContext
+                    ? 'Visitor is following up on a selected Maxwellian story. Start with that story first, then connect insights back to practical Unity field operations.'
+                    : 'Visitor launched from the Maxwellian library. Ask which brief or eInsights episode they want to explore, then provide practical field-grounded interpretation.',
+                selectedStoryType: storyType,
+                selectedStoryTitle: storyTitle,
+                selectedStoryId: active && typeof active.story_id === 'string' ? active.story_id : '',
+                selectedStorySummary: active && typeof active.summary === 'string' ? active.summary : '',
+                selectedStoryUrl: active && typeof active.story_url === 'string' ? active.story_url : '',
+                requestedSkillPackIds: ['maxwellian-library-awareness', 'unity-core-doctrine'],
+                uiMode: 'modal'
+            };
+        }
+
+        function openClerkFromMaxwellian() {
+            if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
+                return;
+            }
+            const launchOptions = buildMaxwellianClerkLaunchOptions();
+            if (typeof window.openClerkWithPageContext === 'function') {
+                window.openClerkWithPageContext(launchOptions);
+                return;
+            }
+            if (typeof window.openClerkVoiceModal !== 'function') return;
+            const launchPayload = typeof window.buildClerkPageLaunchPayload === 'function'
+                ? window.buildClerkPageLaunchPayload(launchOptions)
+                : {
+                    contextSource: 'maxwellian',
+                    contextPayload: {
+                        context: launchOptions.context,
+                        source_page: 'maxwellian',
+                        entry_point: 'maxwellian-nav-clerk-button'
+                    },
+                    uiMode: 'modal'
+                };
+            window.openClerkVoiceModal(launchPayload);
+        }
         // ── Load both libraries in parallel ──────────────────────────────────
         async function loadLibrary() {
             const mibContainer     = document.getElementById('episodeLibrary');
@@ -874,6 +961,13 @@
                 window.BRIEF_AUDIO[ep.episode] = {
                     summary: ep.audio_summary || '',
                     file:    ep.audio_file    || ''
+                };
+                window.MAXWELLIAN_BRIEF_META[ep.episode] = {
+                    story_id: `brief-${ep.episode}`,
+                    story_type: 'brief',
+                    title: ep.title || '',
+                    summary: ep.audio_summary || ep.description || '',
+                    story_url: ep.brief_file || ''
                 };
 
                 html += `
@@ -944,6 +1038,10 @@
                 panel.classList.add('open');
                 btn.innerHTML  = '✕ Close Summary';
                 btn.classList.add('playing');
+                const briefMeta = window.MAXWELLIAN_BRIEF_META && window.MAXWELLIAN_BRIEF_META[epNum]
+                    ? window.MAXWELLIAN_BRIEF_META[epNum]
+                    : null;
+                if (briefMeta) setMaxwellianActiveContext(briefMeta);
                 if (audio) { audio.play(); }
             }
         }
@@ -968,6 +1066,13 @@
                 const typeBdg = ep.type === 'special'
                     ? '<span class="type-badge type-special">Special Edition</span>'
                     : '<span class="type-badge type-standard">Standard</span>';
+                window.MAXWELLIAN_INSIGHT_META[epId] = {
+                    story_id: epId,
+                    story_type: 'einsights',
+                    title: ep.title || '',
+                    summary: ep.description || '',
+                    story_url: ep.audio_file || ''
+                };
 
                 let actionHtml;
                 if (ep.coming_soon) {
@@ -1030,6 +1135,10 @@
                 panel.classList.add('open');
                 btn.innerHTML = '✕ Close';
                 btn.classList.add('playing');
+                const insightMeta = window.MAXWELLIAN_INSIGHT_META && window.MAXWELLIAN_INSIGHT_META[epId]
+                    ? window.MAXWELLIAN_INSIGHT_META[epId]
+                    : null;
+                if (insightMeta) setMaxwellianActiveContext(insightMeta);
                 if (audio) { audio.play(); }
             }
         }
@@ -1045,6 +1154,10 @@
             const audio   = window.BRIEF_AUDIO && window.BRIEF_AUDIO[epNum] ? window.BRIEF_AUDIO[epNum] : {};
             const summary = audio.summary || '';
             const file    = audio.file    || '';
+            const briefMeta = window.MAXWELLIAN_BRIEF_META && window.MAXWELLIAN_BRIEF_META[epNum]
+                ? window.MAXWELLIAN_BRIEF_META[epNum]
+                : null;
+            if (briefMeta) setMaxwellianActiveContext(briefMeta);
 
             // Populate audio panel
             const ac = document.getElementById('briefAudioContent');

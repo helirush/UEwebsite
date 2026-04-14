@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="hume_character_config.js?v=20260411f"></script>
+    <script src="clerk_voice_widget.js?v=20260411f"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
+    <title>Founder’s Message | Unity Energy</title>
+    <style>
+        :root {
+            --unity-ltylo: rgba(250, 240, 160, 1);
+            --unity-green: rgba(93, 112, 26, 1);
+            --unity-ltgreen: rgba(178, 210, 53, 1);
+            --unity-dkgreen: rgba(49, 65, 0, 1);
+            --unity-text: rgba(61, 71, 86, 1);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, rgba(245, 247, 241, 1) 0%, rgba(236, 241, 227, 1) 100%);
+            color: var(--unity-text);
+        }
+        .banner-wrapper {
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            color: var(--unity-ltylo);
+            text-align: center;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+        .banner-wrapper .detail {
+            color: rgba(220, 233, 175, 1);
+            font-weight: 500;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 22px 18px 40px;
+        }
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .nav-link {
+            text-decoration: none;
+            font-weight: 700;
+            color: rgba(66, 96, 19, 1);
+            border: 1px solid rgba(166, 190, 96, 1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            background: rgba(250, 252, 244, 1);
+        }
+        .nav-link:hover {
+            background: rgba(241, 248, 223, 1);
+        }
+        .hero {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(166, 191, 96, 0.38);
+            border-radius: 14px;
+            padding: 26px 24px 20px;
+            box-shadow: 0 6px 14px rgba(49, 65, 0, 0.06);
+            margin-bottom: 18px;
+        }
+        .hero h1 {
+            margin: 0 0 8px;
+            color: var(--unity-dkgreen);
+            font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+        }
+        .hero p {
+            margin: 8px 0 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        .player-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(166, 191, 96, 0.34);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 12px rgba(49, 65, 0, 0.05);
+        }
+        .player-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .player-tab {
+            border: 1px solid rgba(146, 173, 57, 0.7);
+            background: linear-gradient(135deg, rgba(93, 112, 26, 0.95), rgba(74, 90, 21, 0.95));
+            color: var(--unity-ltylo);
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+        .player-tab.secondary {
+            background: linear-gradient(135deg, rgba(62, 72, 89, 1), rgba(45, 52, 66, 1));
+            border-color: rgba(108, 121, 146, 0.85);
+            color: rgba(238, 242, 251, 1);
+        }
+        .player-note {
+            margin: 0 0 12px;
+            font-size: 0.92rem;
+            color: rgba(83, 94, 109, 1);
+            font-style: italic;
+        }
+        .player-block { display: none; }
+        .player-block.active { display: block; }
+        audio {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        .audio-status {
+            margin: 2px 0 0;
+            font-size: 0.88rem;
+            color: rgba(80, 95, 53, 1);
+        }
+        .audio-status.missing {
+            color: rgba(150, 62, 45, 1);
+            font-weight: 600;
+        }
+        .video-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(166, 191, 96, 0.34);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 12px rgba(49, 65, 0, 0.05);
+        }
+        .video-panel h2 {
+            margin: 0 0 8px;
+            font-size: 1.15rem;
+            color: var(--unity-dkgreen);
+        }
+        .video-slot {
+            margin-top: 10px;
+            border: 1.5px dashed rgba(129, 163, 43, 0.65);
+            border-radius: 10px;
+            background: rgba(245, 249, 237, 1);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: rgba(83, 94, 109, 1);
+            font-size: 0.95rem;
+            padding: 14px;
+        }
+        .transcript {
+            background: linear-gradient(160deg, rgba(251, 253, 247, 0.98) 0%, rgba(241, 248, 229, 0.97) 100%);
+            border: 1px solid rgba(166, 191, 96, 0.48);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(60, 80, 20, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .transcript::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(180deg, rgba(110, 138, 35, 0.95) 0%, rgba(77, 102, 20, 0.95) 100%);
+        }
+        .transcript > * {
+            position: relative;
+            z-index: 1;
+        }
+        .transcript h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: var(--unity-dkgreen);
+            font-size: 1.4rem;
+        }
+        .transcript p {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin: 0 0 22px;
+            color: rgba(62, 72, 86, 1);
+        }
+        footer {
+            text-align: center;
+            padding: 26px 16px 34px;
+            color: rgba(84, 96, 67, 1);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-wrapper">
+        INDUSTRIAL 480V • MEASURE <span class="detail">(Advanced Monitoring and Reporting)</span> • MANAGE <span class="detail">(MPTS — Maximum Power Transfer Solution (AC))</span> • EXCHANGE <span class="detail">(Dynamic Demand Control)</span>
+    </div>
+    <main class="container">
+        <div class="top-actions">
+            <a class="nav-link" href="about-unity.html">← Back to About Unity</a>
+            <a class="nav-link" href="maxwellian.html">Open Maxwellian Hub</a>
+        </div>
+        <section class="hero">
+            <h1>Founder’s Message</h1>
+            <p>
+                A direct message from Unity’s founder. Listen here, read the full statement below, and continue with Clerk if you want deeper technical detail.
+            </p>
+        </section>
+        <section class="player-panel">
+            <div class="player-tabs">
+                <button class="player-tab" type="button" onclick="showPlayer('founder')">Founder Message</button>
+                <button class="player-tab secondary" type="button" data-feature-gate="clerk_voice" onclick="showPlayer('clerk')">Technical Follow-Up with Clerk</button>
+            </div>
+            <p class="player-note">
+                Start with the founder’s message, then continue with Clerk for engineering depth.
+            </p>
+            <div id="player-founder" class="player-block active">
+                <audio id="audio-founder" controls preload="none">
+                    Your browser does not support audio playback.
+                </audio>
+                <p id="audio-status-founder" class="audio-status"></p>
+            </div>
+            <div id="player-clerk" class="player-block">
+                <audio id="audio-clerk" controls preload="none">
+                    Your browser does not support audio playback.
+                </audio>
+                <p id="audio-status-clerk" class="audio-status"></p>
+            </div>
+        </section>
+        <section class="video-panel">
+            <h2>Founder Video (Optional)</h2>
+            <p>Video-ready slot for a future founder introduction recording.</p>
+            <div class="video-slot" id="founder-video-slot">
+                Video placeholder — you can drop an embedded player here when ready.
+            </div>
+        </section>
+        <section class="transcript">
+            <h2>Founder’s Message</h2>
+            <p>
+                I built Unity after years in real plants, real equipment rooms, and real operating constraints.
+                I kept seeing the same pattern: teams were paying for electrical burden they could not clearly see, isolate, or correct.
+            </p>
+            <p>
+                We have measured electricity for decades, but that is not the same as understanding field behavior at the point of use.
+                Reactive burden, harmonic distortion, thermal stress, and conversion loss were often treated as normal simply because they were not made visible in operational terms.
+            </p>
+            <p>
+                Unity exists because the field can be measured with enough precision to be governed with confidence.
+                We measure real behavior, interpret what it means, and harmonize at the load so teams can reduce avoidable loss and improve conversion quality.
+            </p>
+            <p>
+                Measure, Manage, Exchange is the framework behind that work.
+                It moves us from observation, to control, to coordinated energy response.
+            </p>
+            <p>
+                This is not a software exercise. It is industrial stewardship.
+            </p>
+            <p>
+                Thank you for taking time to understand what we are building.
+                Our purpose is straightforward: make the invisible visible, and the visible governable.
+            </p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>Measure. Manage. Exchange.</p>
+    </footer>
+    <script>
+        async function probeAudio(candidates) {
+            for (const url of candidates) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+                    if (!response.ok) continue;
+                    const type = (response.headers.get('content-type') || '').toLowerCase();
+                    if (!type || type.includes('audio') || type.includes('octet-stream')) {
+                        return url;
+                    }
+                } catch (_) {
+                    // Continue probing candidates.
+                }
+            }
+            return null;
+        }
+        async function wireFounderAudio() {
+            const audioConfig = [
+                {
+                    audioId: 'audio-founder',
+                    statusId: 'audio-status-founder',
+                    candidates: [
+                        'assets/audio/founder-message-cove.mp3',
+                        'assets/audio/founder-message-founder.mp3',
+                        'assets/audio/founder-message.mp3',
+                        '../assets/audio/founder-message-cove.mp3',
+                        '../assets/audio/founder-message-founder.mp3',
+                        '../assets/audio/founder-message.mp3',
+                        '/assets/audio/founder-message-cove.mp3',
+                        '/assets/audio/founder-message-founder.mp3',
+                        '/assets/audio/founder-message.mp3'
+                    ]
+                },
+                {
+                    audioId: 'audio-clerk',
+                    statusId: 'audio-status-clerk',
+                    candidates: [
+                        'assets/audio/founder-message-clerk.mp3',
+                        '../assets/audio/founder-message-clerk.mp3',
+                        '/assets/audio/founder-message-clerk.mp3'
+                    ]
+                }
+            ];
+            for (const item of audioConfig) {
+                const audioEl = document.getElementById(item.audioId);
+                const statusEl = document.getElementById(item.statusId);
+                const resolvedUrl = await probeAudio(item.candidates);
+                if (resolvedUrl) {
+                    audioEl.src = resolvedUrl;
+                    statusEl.textContent = '';
+                    statusEl.classList.remove('missing');
+                } else {
+                    audioEl.removeAttribute('src');
+                    audioEl.load();
+                    statusEl.textContent = 'Audio is temporarily unavailable. Please check back shortly.';
+                    statusEl.classList.add('missing');
+                }
+            }
+        }
+        function openClerkFromFounder() {
+            if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
+                return false;
+            }
+            const founderAudio = document.getElementById('audio-founder');
+            const founderAudioSeconds = founderAudio && Number.isFinite(founderAudio.currentTime)
+                ? Math.max(0, Math.floor(founderAudio.currentTime))
+                : 0;
+            const hasFounderPlaybackContext = founderAudioSeconds >= 5;
+            const launchOptions = {
+                contextSource: 'founder-message',
+                context: hasFounderPlaybackContext ? 'founder-message-followup' : 'technical-follow-up',
+                mode: hasFounderPlaybackContext ? 'founder-message-followup' : 'technical-follow-up',
+                conversationMode: 'followup',
+                sourcePage: 'founder-message',
+                sourceMedia: 'founder-audio',
+                sourceMediaSeconds: founderAudioSeconds,
+                entryPoint: 'founder-message-clerk-tab',
+                likelyUserIntent: hasFounderPlaybackContext
+                    ? 'follow-up questions about founder message content'
+                    : 'general founder message technical follow-up',
+                uiMode: 'modal'
+            };
+            let opened = false;
+            if (typeof window.openClerkWithPageContext === 'function') {
+                opened = window.openClerkWithPageContext(launchOptions);
+            } else if (typeof window.openClerkVoiceModal === 'function') {
+                const launchPayload = typeof window.buildClerkPageLaunchPayload === 'function'
+                    ? window.buildClerkPageLaunchPayload(launchOptions)
+                    : {
+                        contextSource: 'founder-message',
+                        contextPayload: {
+                            context: launchOptions.context,
+                            source_page: 'founder-message',
+                            entry_point: 'founder-message-clerk-tab'
+                        },
+                        uiMode: 'modal'
+                    };
+                window.openClerkVoiceModal(launchPayload);
+                const modal = document.getElementById('clerkVoiceModal');
+                opened = Boolean(modal && modal.classList.contains('active'));
+            }
+            if (opened) {
+                const startBtn = document.getElementById('clerkVoiceStartBtn');
+                if (startBtn && !startBtn.hidden) {
+                    startBtn.click();
+                }
+            }
+            return opened;
+        }
+
+        function showPlayer(kind) {
+            const founder = document.getElementById('player-founder');
+            const clerk = document.getElementById('player-clerk');
+            if (kind === 'clerk') {
+                if (openClerkFromFounder()) return;
+                founder.classList.remove('active');
+                clerk.classList.add('active');
+            } else {
+                clerk.classList.remove('active');
+                founder.classList.add('active');
+            }
+        }
+        window.addEventListener('DOMContentLoaded', wireFounderAudio);
+    </script>
+</body>
+</html>

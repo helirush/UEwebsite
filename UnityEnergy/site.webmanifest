@@ -1,0 +1,20 @@
+{
+  "name": "UnityEnergy",
+  "short_name": "UnityEnergy",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f6d1f",
+  "icons": [
+    {
+      "src": "unity-icon-ring-white-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "unity-icon-ring-white-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -229,128 +229,224 @@
       transform: translateX(-50px) translateY(45px);
 
     }
+
     /* Power Factor Gauge Container */
     .gauge-container {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 210px;
+      height: 210px;
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.1s ease, filter 0.1s ease;
+      transition: transform 0.14s ease, filter 0.14s ease;
     }
 
     .gauge-container:active {
-      transform: scale(0.95);
-      filter: brightness(0.7);
+      transform: scale(0.97);
+      filter: brightness(0.92);
     }
 
-    /* SVG Gauge Styling */
+    /* PF Dial SVG */
     .gauge-svg {
       width: 100%;
       height: 100%;
-      transform: rotate(-90deg);
-      transition: filter 0.1s ease;
+      transform: translateY(19px);
+      transition: filter 0.15s ease;
     }
 
-    .gauge-bg {
+    .pf-dial-body {
+      fill: url(#pfDialCoreGradient);
+      stroke: rgba(130, 145, 70, 0.7);
+      stroke-width: 2;
+    }
+
+    .pf-dial-core-shadow {
+      fill: rgba(0, 0, 0, 0.22);
+    }
+
+    .pf-dial-outer-arc {
       fill: none;
-      stroke: var(--unity-orange);
-      stroke-width: 8;
-      transition: stroke-width 0.1s ease;
-    }
-
-    .gauge-container:active .gauge-bg {
-      stroke-width: 6;
-    }
-
-    .gauge-background {
-      fill: url(#blueGradient);
-      transition: opacity 0.1s ease;
-    }
-
-    .gauge-container:active .gauge-background {
-      opacity: 0.8;
-    }
-
-    .gauge-progress {
-      fill: none;
-      stroke-width: 10;
+      stroke: rgba(216, 142, 56, 0.98);
+      stroke-width: 7;
       stroke-linecap: round;
-      transform-origin: center;
-      transition: stroke-dashoffset 1s ease-in-out;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
 
-    /* Tick marks */
-    .tick {
-      stroke: var(--unity-ltgreen);
-      stroke-width: 1.5;
-      opacity: 0.6;
-      transition: all 0.15s ease;
+    .pf-dial-band-track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 2;
+      stroke-linecap: round;
     }
 
-    .tick-major {
-      stroke-width: 2.5;
-      stroke: var(--unity-ltgreen);
-      opacity: 0.9;
-      transition: all 0.15s ease;
+    .pf-dial-band-live {
+      fill: none;
+      stroke: url(#pfDialTopBandGradient);
+      stroke-width: 36;
+      stroke-linecap: round;
+      stroke-dasharray: 0 100;
+      transition: stroke-dasharray 0.7s ease;
+      filter: drop-shadow(0 0 4px rgba(255, 188, 82, 0.35));
     }
 
-    /* On click: make some ticks disappear and brighten others */
-    .gauge-container:active .tick:nth-child(3n) {
-      opacity: 0;
+    .pf-dial-glass {
+      fill: url(#pfDialGlassGradient);
+      stroke: rgba(255, 255, 255, 0.25);
+      stroke-width: 1.1;
     }
 
-    .gauge-container:active .tick:not(:nth-child(3n)) {
-      opacity: 0.9;
-      filter: brightness(1.4) drop-shadow(0 0 3px var(--unity-ltgreen));
+    .pf-dial-sheen {
+      fill: url(#pfDialSheenGradient);
+      opacity: 0.55;
     }
 
-    .gauge-container:active .tick-major {
-      opacity: 1;
-      filter: brightness(1.5) drop-shadow(0 0 4px var(--unity-ltgreen));
-      stroke-width: 3;
+    .pf-marker-line {
+      stroke: rgba(95, 114, 36, 0.95);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .pf-needle-group {
+      transition: transform 0.75s cubic-bezier(0.2, 0.9, 0.18, 1.02);
+      transform-origin: 110px 110px;
+    }
+
+    .pf-needle-shadow {
+      stroke: rgba(0, 0, 0, 0.55);
+      stroke-width: 7;
+      stroke-linecap: round;
+      opacity: 0.35;
+    }
+
+    .pf-needle-stem {
+      stroke: linear-gradient(180deg, #3e5213 0%, #7d9330 100%);
+      stroke: rgba(71, 93, 19, 0.95);
+      stroke-width: 5.5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
+    }
+
+    .pf-needle-tip {
+      fill: rgba(65, 88, 18, 0.96);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    .pf-needle-hub-shadow {
+      fill: rgba(0,0,0,0.35);
+    }
+
+    .pf-needle-hub {
+      fill: url(#pfDialHubGradient);
+      stroke: rgba(190, 211, 112, 0.95);
+      stroke-width: 1;
+    }
+
+    .pf-needle-post {
+      fill: rgba(232, 240, 198, 0.96);
+      stroke: rgba(116, 133, 45, 0.9);
+      stroke-width: 0.8;
+    }
+
+    .pf-marker {
+      position: absolute;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      pointer-events: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .pf-marker-yellow {
+      color: #f5eb5f;
+      font-size: 18px;
+    }
+
+    .pf-marker-pill {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.95);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .pf-marker-80 {
+      top: 71px;
+      left: 26px;
+      transform: translate(-10px, -10px);
+    }
+
+    .pf-marker-90 {
+      top: 71px;
+      right: 26px;
+      transform: translate(10px, -10px);
+    }
+
+    .pf-marker-707 {
+      bottom: 23px;
+      left: 2px;
+    }
+
+    .pf-marker-100 {
+      bottom: 23px;
+      right: -2px;
     }
 
     /* Center display */
     .gauge-value {
       position: absolute;
-      top: 50%;
+      top: 25px;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 30px;
+      font-size: 24px;
       font-weight: bold;
-      color: rgba(255, 255, 255, 1);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      color: #111;
+      background: rgba(244, 247, 255, 0.96);
+      border: 1px solid rgba(101, 132, 213, 0.65);
+      border-radius: 24px;
+      padding: 6px 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
       pointer-events: none;
+      text-shadow: none;
+      min-width: 96px;
+      text-align: center;
+      transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.18s ease, filter 0.18s ease;
+      z-index: 6;
+    }
+
+    .gauge-container:hover .gauge-value {
+      transform: translate(-50%, -51%);
+      filter: brightness(1.07);
+      box-shadow:
+        0 3px 10px rgba(0,0,0,0.45),
+        0 0 10px rgba(140, 190, 255, 0.16);
     }
 
     .gauge-label {
       position: absolute;
-      top: 70px;
+      top: 159px;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 10pt;
-      color: rgba(255, 255, 255, 1);
+      font-size: 9.5pt;
+      color: rgba(255, 255, 255, 0.95);
       text-transform: lowercase;
       letter-spacing: 1px;
-      opacity: 0.9;
       pointer-events: none;
     }
 
     .gauge-unit {
       position: absolute;
-      bottom: 35%;
+      bottom: 31px;
       left: 50%;
       transform: translate(-50%, 50%);
-      font-size: 10pt;
-      color: rgba(255, 255, 255, 1);
+      font-size: 9pt;
+      color: rgba(255, 255, 255, 0.88);
       text-transform: lowercase;
       pointer-events: none;
     }
-
     .uptime {
       margin: 12px 0;
       text-align: center;
@@ -1345,27 +1441,24 @@
       top: -1px;
     }
     /* EFSI color classes applied via JavaScript */
-    .efsi-critical { color: #ff3b30 !important; }
-    .efsi-warning { color: #ff8c00 !important; }
-    .efsi-poor { color: #fde047 !important; }
-    .efsi-good { color: var(--unity-ltgreen) !important; }
-    .efsi-clean { color: #3db0f0 !important; }
+    .efsi-warning { color: #ef4444 !important; }
+    .efsi-low    { color: #f59e0b !important; }
+    .efsi-normal { color: var(--unity-ltgreen) !important; }
+    .efsi-good   { color: #3db0f0 !important; }
     .efsi-front-label {
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
-    .efsi-front-label.efsi-critical { color: #ff3b30 !important; }
-    .efsi-front-label.efsi-warning { color: #ff8c00 !important; }
-    .efsi-front-label.efsi-poor { color: #fde047 !important; }
-    .efsi-front-label.efsi-good { color: var(--unity-ltgreen) !important; }
-    .efsi-front-label.efsi-clean { color: #3db0f0 !important; }
+    .efsi-front-label.efsi-warning { color: #ef4444 !important; }
+    .efsi-front-label.efsi-low    { color: #f59e0b !important; }
+    .efsi-front-label.efsi-normal { color: var(--unity-ltgreen) !important; }
+    .efsi-front-label.efsi-good   { color: #3db0f0 !important; }
     /* EFSI status label colors for summary panel */
-    .efsi-status-clean { color: #3db0f0 !important; }
-    .efsi-status-good { color: #22c55e !important; }
-    .efsi-status-poor { color: #fde047 !important; }
-    .efsi-status-warning { color: #ff8c00 !important; }
-    .efsi-status-critical { color: #ff3b30 !important; }
+    .efsi-status-good    { color: #3db0f0 !important; }
+    .efsi-status-normal  { color: #22c55e !important; }
+    .efsi-status-low     { color: #f59e0b !important; }
+    .efsi-status-warning { color: #ef4444 !important; }
     /* Mode-based visibility: EFSI vs ElecOps */
     .efsi-section { display: none; }
     body[data-summary-mode="energy"] .efsi-section { display: block; }
@@ -1396,10 +1489,10 @@
 </head>
 <body data-summary-mode="energy">
 <div class="siteboard-container">
-  <!-- Back Navigation - Top -->
+<!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+<a class="header-info-btn" href="../../index.html#libraries" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+<a class="header-info-btn" href="../../../../../UnityEnergy/index.html" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, DELI GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
@@ -1412,32 +1505,33 @@
 <span class="siteboard-title-sub" id="site-meta-sep-2"> • </span>
 <span class="siteboard-title-sub" id="heat-resolution">1-minute Resolution</span>
 </div>
-
 <!-- Environmental Factors -->
 <div class="environmental-bar">
-  <div class="env-factor">
-    <span class="env-factor-label">📊 Environmental Conditions:</span>
-  </div>
-  <div class="env-factor">
-    <span class="env-factor-label">🌡️ Temperature:</span>
-    <span class="env-factor-value" id="env-temp">69.7</span>
-  </div>
-  <div class="env-factor">
-    <span class="env-factor-label">💧 Humidity:</span>
-    <span class="env-factor-value" id="env-humidity">50.6</span>
-  </div>
+<div class="env-factor">
+<span class="env-factor-label">📊 Environmental Conditions:</span>
 </div>
-
+<div class="env-factor">
+<span class="env-factor-label">🌡️ Temperature:</span>
+<span class="env-factor-value" id="env-temp">69.7</span>
+</div>
+<div class="env-factor">
+<span class="env-factor-label">💧 Humidity:</span>
+<span class="env-factor-value" id="env-humidity">50.6</span>
+</div>
+</div>
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
+<button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
     🔊 LISTEN: SITE OVERVIEW
   </button>
-  <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
+<button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
     📊 SITE SUMMARY - BASELINE
   </button>
-  <button class="header-info-btn" onclick="showSiteSummaryMPTSModal()" title="View Unity/MPTS optimized site metrics">
+<button class="header-info-btn" onclick="showSiteSummaryMPTSModal()" title="View Unity/MPTS optimized site metrics">
     ⚡ SITE SUMMARY - UNITY SYSTEM
+  </button>
+<button class="header-info-btn" onclick="showContactDetailsModal()" title="View Unity Energy contact information">
+    📞 UNITY CONTACT DETAILS
   </button>
 </div>
 <div class="dashboard-grid layout-2">
@@ -1446,51 +1540,80 @@
 <span id="xfmr1-name">Deli F</span>
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view MPTS Variables pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
-      <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
-        </radialGradient>
-      </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr1-ticks"></g>
-</svg>
-<div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">86.9%</div>
-<div class="gauge-unit">efficiency</div>
-</div>
+<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr1-pf-dial" viewbox="0 0 220 220">
+<defs>
+<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
+<stop offset="0%" stop-color="#d7dcc8"></stop>
+<stop offset="45%" stop-color="#c8ccb8"></stop>
+<stop offset="100%" stop-color="#808a5b"></stop>
+</radialgradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
+<stop offset="0%" stop-color="#e65744"></stop>
+<stop offset="14%" stop-color="#e98a4b"></stop>
+<stop offset="28%" stop-color="#7ca137"></stop>
+<stop offset="58%" stop-color="#8ec843"></stop>
+<stop offset="80%" stop-color="#93d355"></stop>
+<stop offset="100%" stop-color="#87d7ef"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
+<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
+</lineargradient>
+<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
+<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+</radialgradient>
+<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
+<stop offset="0%" stop-color="#f0f5d7"></stop>
+<stop offset="100%" stop-color="#7d8f3a"></stop>
+</radialgradient>
+</defs>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
+<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
+<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr1-pf-band-live" pathlength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr1-pf-needle">
+<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
+</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr1-metric-pf">86.9%</div><div class="gauge-unit">efficiency</div></div>
 <div class="uptime">
-  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">1660kVA STD DAILY PATTERN</div>
-  <div class="elecops-section">
-    <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">46.0%</span></div>
-    <!-- ElecOps Bar Gauge -->
-    <div class="elecops-bar-container">
-      <div class="elecops-bar-track">
-        <div class="elecops-bar-center"></div>
-        <div class="elecops-bar-fill" id="xfmr1-elecops-bar"></div>
-      </div>
-    </div>
-  </div>
-  <div class="efsi-section">
-    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-    <div class="uptime-value efsi-status-line"><span id="xfmr1-efsi-direction">→</span> <span id="xfmr1-efsi-pct">—% active</span> — <span id="xfmr1-efsi-label" class="efsi-front-label"></span></div>
-  </div>
+<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+<div class="uptime-target" id="xfmr1-target-pattern">1660kVA STD DAILY PATTERN</div>
+<div class="elecops-section">
+<div class="uptime-value">Electric Operations:</div>
+<div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">46.0%</span></div>
+<!-- ElecOps Bar Gauge -->
+<div class="elecops-bar-container">
+<div class="elecops-bar-track">
+<div class="elecops-bar-center"></div>
+<div class="elecops-bar-fill" id="xfmr1-elecops-bar"></div>
+</div>
+</div>
+</div>
+<div class="efsi-section">
+<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+<div class="uptime-value efsi-status-line"><span id="xfmr1-efsi-direction">→</span> <span id="xfmr1-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr1-efsi-label"></span></div>
+</div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.241 kWh</span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">5.3 cents</span></div>
-  <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr1-production-birds">850,655 birds</span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr1-site-percent">20% of site output</span></div>
+<div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.241 kWh</span></div>
+<div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">5.3 cents</span></div>
+<div class="bird-metric">Production Level</div>
+<div class="bird-metric"><span id="xfmr1-production-birds">850,655 birds</span></div>
+<div class="bird-metric site-output-pct"><span id="xfmr1-site-percent">20% of site output</span></div>
 </div>
 <div class="pattern-buttons">
-  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr1', 'summary')">
+<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr1', 'summary')">
     Summary
   </button>
 </div>
@@ -1502,28 +1625,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr1', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr1', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-  <div class="nav-row">
-    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr1', 'baseline')" title="View baseline power pattern">
+<div class="nav-row">
+<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr1', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr1', 'mpts')" title="View MPTS simulated optimization">
+<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr1', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-  </div>
-  <div class="nav-row">
-    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr1', 'energy')" title="View energy detail dashboard">
-      <span class="btn-icon">⚡</span> Energy
+</div>
+<div class="nav-row">
+<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr1', 'energy')" title="View energy detail dashboard">
+<span class="btn-icon">⚡</span> Energy
     </button>
-    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr1', 'heat')" title="View heat/waste detail dashboard">
-      <span class="btn-icon">🔥</span> Heat
+<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr1', 'heat')" title="View heat/waste detail dashboard">
+<span class="btn-icon">🔥</span> Heat
     </button>
-    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr1', 'volt')" title="View voltage detail dashboard">
-      <span class="btn-icon">⚡</span> Volt
+<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr1', 'volt')" title="View voltage detail dashboard">
+<span class="btn-icon">⚡</span> Volt
     </button>
-  </div>
+</div>
 </div>
 </div>
 <!-- Transformer Slot 2 -->
@@ -1532,51 +1655,80 @@
 <span id="xfmr2-name">Deli G</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view MPTS Variables pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
-      <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
-        </radialGradient>
-      </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr2-ticks"></g>
-</svg>
-<div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">86.6%</div>
-<div class="gauge-unit">efficiency</div>
-</div>
+<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr2-pf-dial" viewbox="0 0 220 220">
+<defs>
+<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
+<stop offset="0%" stop-color="#d7dcc8"></stop>
+<stop offset="45%" stop-color="#c8ccb8"></stop>
+<stop offset="100%" stop-color="#808a5b"></stop>
+</radialgradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
+<stop offset="0%" stop-color="#e65744"></stop>
+<stop offset="14%" stop-color="#e98a4b"></stop>
+<stop offset="28%" stop-color="#7ca137"></stop>
+<stop offset="58%" stop-color="#8ec843"></stop>
+<stop offset="80%" stop-color="#93d355"></stop>
+<stop offset="100%" stop-color="#87d7ef"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
+<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
+</lineargradient>
+<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
+<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+</radialgradient>
+<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
+<stop offset="0%" stop-color="#f0f5d7"></stop>
+<stop offset="100%" stop-color="#7d8f3a"></stop>
+</radialgradient>
+</defs>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
+<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
+<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr2-pf-band-live" pathlength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr2-pf-needle">
+<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
+</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr2-metric-pf">86.6%</div><div class="gauge-unit">efficiency</div></div>
 <div class="uptime">
-  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">1546kVA STD DAILY PATTERN</div>
-  <div class="elecops-section">
-    <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">56.6%</span></div>
-    <!-- ElecOps Bar Gauge -->
-    <div class="elecops-bar-container">
-      <div class="elecops-bar-track">
-        <div class="elecops-bar-center"></div>
-        <div class="elecops-bar-fill" id="xfmr2-elecops-bar"></div>
-      </div>
-    </div>
-  </div>
-  <div class="efsi-section">
-    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-    <div class="uptime-value efsi-status-line"><span id="xfmr2-efsi-direction">→</span> <span id="xfmr2-efsi-pct">—% active</span> — <span id="xfmr2-efsi-label" class="efsi-front-label"></span></div>
-  </div>
+<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+<div class="uptime-target" id="xfmr2-target-pattern">1546kVA STD DAILY PATTERN</div>
+<div class="elecops-section">
+<div class="uptime-value">Electric Operations:</div>
+<div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">56.6%</span></div>
+<!-- ElecOps Bar Gauge -->
+<div class="elecops-bar-container">
+<div class="elecops-bar-track">
+<div class="elecops-bar-center"></div>
+<div class="elecops-bar-fill" id="xfmr2-elecops-bar"></div>
+</div>
+</div>
+</div>
+<div class="efsi-section">
+<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+<div class="uptime-value efsi-status-line"><span id="xfmr2-efsi-direction">→</span> <span id="xfmr2-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr2-efsi-label"></span></div>
+</div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.241 kWh</span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">5.3 cents</span></div>
-  <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr2-production-birds">1,182,845 birds</span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr2-site-percent">27% of site output</span></div>
+<div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.241 kWh</span></div>
+<div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">5.3 cents</span></div>
+<div class="bird-metric">Production Level</div>
+<div class="bird-metric"><span id="xfmr2-production-birds">1,182,845 birds</span></div>
+<div class="bird-metric site-output-pct"><span id="xfmr2-site-percent">27% of site output</span></div>
 </div>
 <div class="pattern-buttons">
-  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr2', 'summary')">
+<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr2', 'summary')">
     Summary
   </button>
 </div>
@@ -1588,28 +1740,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr2', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr2', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-  <div class="nav-row">
-    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr2', 'baseline')" title="View baseline power pattern">
+<div class="nav-row">
+<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr2', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr2', 'mpts')" title="View MPTS simulated optimization">
+<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr2', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-  </div>
-  <div class="nav-row">
-    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr2', 'energy')" title="View energy detail dashboard">
-      <span class="btn-icon">⚡</span> Energy
+</div>
+<div class="nav-row">
+<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr2', 'energy')" title="View energy detail dashboard">
+<span class="btn-icon">⚡</span> Energy
     </button>
-    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr2', 'heat')" title="View heat/waste detail dashboard">
-      <span class="btn-icon">🔥</span> Heat
+<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr2', 'heat')" title="View heat/waste detail dashboard">
+<span class="btn-icon">🔥</span> Heat
     </button>
-    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr2', 'volt')" title="View voltage detail dashboard">
-      <span class="btn-icon">⚡</span> Volt
+<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr2', 'volt')" title="View voltage detail dashboard">
+<span class="btn-icon">⚡</span> Volt
     </button>
-  </div>
+</div>
 </div>
 </div>
 <!-- Transformer Slot 3 -->
@@ -1618,51 +1770,80 @@
 <span id="xfmr3-name"></span>
 <span id="xfmr3-kva-wrap"> (<span id="xfmr3-kva"></span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view MPTS Variables pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
-      <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
-        </radialGradient>
-      </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr3-ticks"></g>
-</svg>
-<div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf"></div>
-<div class="gauge-unit">efficiency</div>
-</div>
+<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr3-pf-dial" viewbox="0 0 220 220">
+<defs>
+<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
+<stop offset="0%" stop-color="#d7dcc8"></stop>
+<stop offset="45%" stop-color="#c8ccb8"></stop>
+<stop offset="100%" stop-color="#808a5b"></stop>
+</radialgradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
+<stop offset="0%" stop-color="#e65744"></stop>
+<stop offset="14%" stop-color="#e98a4b"></stop>
+<stop offset="28%" stop-color="#7ca137"></stop>
+<stop offset="58%" stop-color="#8ec843"></stop>
+<stop offset="80%" stop-color="#93d355"></stop>
+<stop offset="100%" stop-color="#87d7ef"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
+<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
+</lineargradient>
+<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
+<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+</radialgradient>
+<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
+<stop offset="0%" stop-color="#f0f5d7"></stop>
+<stop offset="100%" stop-color="#7d8f3a"></stop>
+</radialgradient>
+</defs>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
+<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
+<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr3-pf-band-live" pathlength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr3-pf-needle">
+<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
+</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr3-metric-pf"></div><div class="gauge-unit">efficiency</div></div>
 <div class="uptime">
-  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern"></div>
-  <div class="elecops-section">
-    <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr3-production-direction"></span> <span id="xfmr3-uptime-pct"></span></div>
-    <!-- ElecOps Bar Gauge -->
-    <div class="elecops-bar-container">
-      <div class="elecops-bar-track">
-        <div class="elecops-bar-center"></div>
-        <div class="elecops-bar-fill" id="xfmr3-elecops-bar"></div>
-      </div>
-    </div>
-  </div>
-  <div class="efsi-section">
-    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-    <div class="uptime-value efsi-status-line"><span id="xfmr3-efsi-direction">→</span> <span id="xfmr3-efsi-pct">—% active</span> — <span id="xfmr3-efsi-label" class="efsi-front-label"></span></div>
-  </div>
+<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+<div class="uptime-target" id="xfmr3-target-pattern"></div>
+<div class="elecops-section">
+<div class="uptime-value">Electric Operations:</div>
+<div class="uptime-value"><span id="xfmr3-production-direction"></span> <span id="xfmr3-uptime-pct"></span></div>
+<!-- ElecOps Bar Gauge -->
+<div class="elecops-bar-container">
+<div class="elecops-bar-track">
+<div class="elecops-bar-center"></div>
+<div class="elecops-bar-fill" id="xfmr3-elecops-bar"></div>
+</div>
+</div>
+</div>
+<div class="efsi-section">
+<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+<div class="uptime-value efsi-status-line"><span id="xfmr3-efsi-direction">→</span> <span id="xfmr3-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr3-efsi-label"></span></div>
+</div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird"></span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird"></span></div>
-  <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr3-production-birds"></span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr3-site-percent"></span></div>
+<div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird"></span></div>
+<div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird"></span></div>
+<div class="bird-metric">Production Level</div>
+<div class="bird-metric"><span id="xfmr3-production-birds"></span></div>
+<div class="bird-metric site-output-pct"><span id="xfmr3-site-percent"></span></div>
 </div>
 <div class="pattern-buttons">
-  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr3', 'summary')">
+<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr3', 'summary')">
     Summary
   </button>
 </div>
@@ -1674,28 +1855,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr3', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr3', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-  <div class="nav-row">
-    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr3', 'baseline')" title="View baseline power pattern">
+<div class="nav-row">
+<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr3', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr3', 'mpts')" title="View MPTS simulated optimization">
+<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr3', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-  </div>
-  <div class="nav-row">
-    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr3', 'energy')" title="View energy detail dashboard">
-      <span class="btn-icon">⚡</span> Energy
+</div>
+<div class="nav-row">
+<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr3', 'energy')" title="View energy detail dashboard">
+<span class="btn-icon">⚡</span> Energy
     </button>
-    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr3', 'heat')" title="View heat/waste detail dashboard">
-      <span class="btn-icon">🔥</span> Heat
+<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr3', 'heat')" title="View heat/waste detail dashboard">
+<span class="btn-icon">🔥</span> Heat
     </button>
-    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr3', 'volt')" title="View voltage detail dashboard">
-      <span class="btn-icon">⚡</span> Volt
+<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr3', 'volt')" title="View voltage detail dashboard">
+<span class="btn-icon">⚡</span> Volt
     </button>
-  </div>
+</div>
 </div>
 </div>
 <!-- Transformer Slot 4 -->
@@ -1704,51 +1885,80 @@
 <span id="xfmr4-name"></span>
 <span id="xfmr4-kva-wrap"> (<span id="xfmr4-kva"></span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view MPTS Variables pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
-      <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
-        </radialGradient>
-      </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr4-ticks"></g>
-</svg>
-<div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr4-metric-pf"></div>
-<div class="gauge-unit">efficiency</div>
-</div>
+<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr4-pf-dial" viewbox="0 0 220 220">
+<defs>
+<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
+<stop offset="0%" stop-color="#d7dcc8"></stop>
+<stop offset="45%" stop-color="#c8ccb8"></stop>
+<stop offset="100%" stop-color="#808a5b"></stop>
+</radialgradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
+<stop offset="0%" stop-color="#e65744"></stop>
+<stop offset="14%" stop-color="#e98a4b"></stop>
+<stop offset="28%" stop-color="#7ca137"></stop>
+<stop offset="58%" stop-color="#8ec843"></stop>
+<stop offset="80%" stop-color="#93d355"></stop>
+<stop offset="100%" stop-color="#87d7ef"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
+<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
+</lineargradient>
+<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
+<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+</radialgradient>
+<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
+<stop offset="0%" stop-color="#f0f5d7"></stop>
+<stop offset="100%" stop-color="#7d8f3a"></stop>
+</radialgradient>
+</defs>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
+<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
+<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr4-pf-band-live" pathlength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr4-pf-needle">
+<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
+</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr4-metric-pf"></div><div class="gauge-unit">efficiency</div></div>
 <div class="uptime">
-  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr4-target-pattern"></div>
-  <div class="elecops-section">
-    <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr4-production-direction"></span> <span id="xfmr4-uptime-pct"></span></div>
-    <!-- ElecOps Bar Gauge -->
-    <div class="elecops-bar-container">
-      <div class="elecops-bar-track">
-        <div class="elecops-bar-center"></div>
-        <div class="elecops-bar-fill" id="xfmr4-elecops-bar"></div>
-      </div>
-    </div>
-  </div>
-  <div class="efsi-section">
-    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-    <div class="uptime-value efsi-status-line"><span id="xfmr4-efsi-direction">→</span> <span id="xfmr4-efsi-pct">—% active</span> — <span id="xfmr4-efsi-label" class="efsi-front-label"></span></div>
-  </div>
+<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+<div class="uptime-target" id="xfmr4-target-pattern"></div>
+<div class="elecops-section">
+<div class="uptime-value">Electric Operations:</div>
+<div class="uptime-value"><span id="xfmr4-production-direction"></span> <span id="xfmr4-uptime-pct"></span></div>
+<!-- ElecOps Bar Gauge -->
+<div class="elecops-bar-container">
+<div class="elecops-bar-track">
+<div class="elecops-bar-center"></div>
+<div class="elecops-bar-fill" id="xfmr4-elecops-bar"></div>
+</div>
+</div>
+</div>
+<div class="efsi-section">
+<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+<div class="uptime-value efsi-status-line"><span id="xfmr4-efsi-direction">→</span> <span id="xfmr4-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr4-efsi-label"></span></div>
+</div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird"></span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr4-cost-per-bird"></span></div>
-  <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr4-production-birds"></span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr4-site-percent"></span></div>
+<div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird"></span></div>
+<div class="bird-metric">Cost per Bird: <span id="xfmr4-cost-per-bird"></span></div>
+<div class="bird-metric">Production Level</div>
+<div class="bird-metric"><span id="xfmr4-production-birds"></span></div>
+<div class="bird-metric site-output-pct"><span id="xfmr4-site-percent"></span></div>
 </div>
 <div class="pattern-buttons">
-  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr4', 'summary')">
+<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr4', 'summary')">
     Summary
   </button>
 </div>
@@ -1760,28 +1970,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr4', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr4', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-  <div class="nav-row">
-    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr4', 'baseline')" title="View baseline power pattern">
+<div class="nav-row">
+<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr4', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr4', 'mpts')" title="View MPTS simulated optimization">
+<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr4', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-  </div>
-  <div class="nav-row">
-    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr4', 'energy')" title="View energy detail dashboard">
-      <span class="btn-icon">⚡</span> Energy
+</div>
+<div class="nav-row">
+<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr4', 'energy')" title="View energy detail dashboard">
+<span class="btn-icon">⚡</span> Energy
     </button>
-    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr4', 'heat')" title="View heat/waste detail dashboard">
-      <span class="btn-icon">🔥</span> Heat
+<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr4', 'heat')" title="View heat/waste detail dashboard">
+<span class="btn-icon">🔥</span> Heat
     </button>
-    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr4', 'volt')" title="View voltage detail dashboard">
-      <span class="btn-icon">⚡</span> Volt
+<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr4', 'volt')" title="View voltage detail dashboard">
+<span class="btn-icon">⚡</span> Volt
     </button>
-  </div>
+</div>
 </div>
 </div>
 </div> <!-- Close dashboard-grid -->
@@ -1879,10 +2089,6 @@
     // Apply performance metrics
     transformerData.forEach(data => {
       // Bubbles now use fixed 3D blue gradient from template - no dynamic coloring
-
-      // Some facility templates do not include the target-performance helpers.
-      // If they're not present, skip this block so we don't abort the whole DOMContentLoaded init.
-      if (typeof calculateTargetPerformance !== 'function') return;
       
       // Calculate and display performance metrics using new Minimum Target formula
       const result = calculateTargetPerformance(data.targetKWh, data.actualKWh);
@@ -1934,6 +2140,11 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
+
+      // Initialize PF dial rendering from bound metric
+      if (pfEl) {
+        initializePowerFactorDial(i);
+      }
     }
     
     // Add click handler to power factor gauge circles to open MPTS variables (M) image
@@ -2003,46 +2214,142 @@
 
   });
 
-  // Draw tick marks around all gauge circles
-  function drawGaugeTicks() {
-    for (let i = 1; i <= 4; i++) {
-      const ticksContainer = document.getElementById(`xfmr${i}-ticks`);
-      if (!ticksContainer) continue;
-      
-      const centerX = 100;
-      const centerY = 100;
-      const radius = 92;
-      const tickLength = 8;
-      const tickWidth = 3;
-      const tickCount = 60; // 60 ticks for full circle
-      const tickColor = 'rgba(255, 255, 255, 0.5)';
-      
-      // Draw ticks in a full circle (360 degrees)
-      for (let j = 0; j < tickCount; j++) {
-        const angle = (j * 360 / tickCount); // 0 to 360 degrees
-        const angleRad = (angle * Math.PI) / 180;
-        
-        const x1 = centerX + radius * Math.cos(angleRad);
-        const y1 = centerY + radius * Math.sin(angleRad);
-        const x2 = centerX + (radius - tickLength) * Math.cos(angleRad);
-        const y2 = centerY + (radius - tickLength) * Math.sin(angleRad);
-        
-        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        tick.setAttribute('class', 'tick'); // Add class for CSS styling
-        tick.setAttribute('x1', x1);
-        tick.setAttribute('y1', y1);
-        tick.setAttribute('x2', x2);
-        tick.setAttribute('y2', y2);
-        tick.setAttribute('stroke', tickColor);
-        tick.setAttribute('stroke-width', tickWidth);
-        
-        ticksContainer.appendChild(tick);
-      }
+
+
+  // Initialize dynamic PF dial (70.7% -> 100%) for each transformer card
+  function initializePowerFactorDial(xfmrNum) {
+    const pfEl = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
+    const needleEl = document.getElementById(`xfmr${xfmrNum}-pf-needle`);
+    const bandLiveEl = document.getElementById(`xfmr${xfmrNum}-pf-band-live`);
+    const dialSvg = document.getElementById(`xfmr${xfmrNum}-pf-dial`);
+    if (!pfEl || !needleEl || !bandLiveEl || !dialSvg) return;
+
+    // Ensure the lower transition arc ends in light blue (red -> orange -> light blue)
+    const bandGradient = dialSvg.querySelector('#pfDialTopBandGradient');
+    if (bandGradient) {
+      bandGradient.innerHTML = `
+        <stop offset="0%" stop-color="#e65744"/>
+        <stop offset="14%" stop-color="#e98a4b"/>
+        <stop offset="28%" stop-color="#7ca137"/>
+        <stop offset="58%" stop-color="#8ec843"/>
+        <stop offset="80%" stop-color="#93d355"/>
+        <stop offset="92%" stop-color="#71c5d8"/>
+        <stop offset="100%" stop-color="#87d7ef"/>
+      `;
+    }
+
+    // Pull 80/90 guide lines radially away from the outer orange arc
+    const markerLines = dialSvg.querySelectorAll('.pf-marker-line');
+    if (markerLines.length >= 2) {
+      markerLines[0].setAttribute('x1', '46');
+      markerLines[0].setAttribute('y1', '83');
+      markerLines[0].setAttribute('x2', '78');
+      markerLines[0].setAttribute('y2', '122');
+
+      markerLines[1].setAttribute('x1', '174');
+      markerLines[1].setAttribute('y1', '83');
+      markerLines[1].setAttribute('x2', '142');
+      markerLines[1].setAttribute('y2', '122');
+    }
+
+    const pfRaw = (pfEl.textContent || '').match(/([\d.]+)/);
+    if (!pfRaw) return;
+    const pfValue = parseFloat(pfRaw[1]);
+    if (Number.isNaN(pfValue)) return;
+
+    const minPf = 70.7;
+    const maxPf = 100.0;
+    const clampedPf = Math.max(minPf, Math.min(maxPf, pfValue));
+    const ratio = (clampedPf - minPf) / (maxPf - minPf);
+
+    // Arc is mapped from left to right with tighter bounds to keep the needle inside the dial
+    const startAngle = 215;
+    const endAngle = 325;
+    const pointerAngle = startAngle + ((endAngle - startAngle) * ratio);
+
+    // Build needle geometry directly so the hub stays centered for all PF values
+    const cx = 110;
+    const cy = 110;
+    const rad = pointerAngle * (Math.PI / 180);
+    const tipLen = 66;
+    const shadowLen = 68;
+    const tipX = cx + (tipLen * Math.cos(rad));
+    const tipY = cy + (tipLen * Math.sin(rad));
+    const shadowX = cx + (shadowLen * Math.cos(rad));
+    const shadowY = cy + (shadowLen * Math.sin(rad));
+
+    const stemEl = needleEl.querySelector('.pf-needle-stem');
+    const stemShadowEl = needleEl.querySelector('.pf-needle-shadow');
+    const tipEl = needleEl.querySelector('.pf-needle-tip');
+    const hubShadowEl = needleEl.querySelector('.pf-needle-hub-shadow');
+    const hubEl = needleEl.querySelector('.pf-needle-hub');
+    const postEl = needleEl.querySelector('.pf-needle-post');
+    if (stemEl && stemShadowEl && tipEl && hubShadowEl && hubEl && postEl) {
+      stemEl.setAttribute('x1', `${cx}`);
+      stemEl.setAttribute('y1', `${cy}`);
+      stemEl.setAttribute('x2', `${tipX}`);
+      stemEl.setAttribute('y2', `${tipY}`);
+
+      stemShadowEl.setAttribute('x1', `${cx + 1.5}`);
+      stemShadowEl.setAttribute('y1', `${cy + 1.5}`);
+      stemShadowEl.setAttribute('x2', `${shadowX + 1.5}`);
+      stemShadowEl.setAttribute('y2', `${shadowY + 1.5}`);
+
+      const nx = -Math.sin(rad);
+      const ny = Math.cos(rad);
+      const tipWidth = 5.5;
+      const baseBack = 8;
+      const bx = tipX - (baseBack * Math.cos(rad));
+      const by = tipY - (baseBack * Math.sin(rad));
+      const leftX = bx + (tipWidth * nx);
+      const leftY = by + (tipWidth * ny);
+      const rightX = bx - (tipWidth * nx);
+      const rightY = by - (tipWidth * ny);
+      tipEl.setAttribute('points', `${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}`);
+
+      // Force hub/post to remain centered
+      hubShadowEl.setAttribute('cx', `${cx}`);
+      hubShadowEl.setAttribute('cy', `${cy}`);
+      hubEl.setAttribute('cx', `${cx}`);
+      hubEl.setAttribute('cy', `${cy}`);
+      postEl.setAttribute('cx', `${cx}`);
+      postEl.setAttribute('cy', `${cy}`);
+    }
+
+    // Animate top-band "sweep" amount
+    const livePct = 100;
+    bandLiveEl.style.strokeDasharray = `${livePct} 100`;
+
+    // Smooth tint shift on the value pill:
+    // lower PF -> warm/red tint, higher PF -> cool/blue tint
+    const rLow = 228, gLow = 90,  bLow = 80;
+    const rHigh = 218, gHigh = 235, bHigh = 255;
+    const rr = Math.round(rLow + ((rHigh - rLow) * ratio));
+    const gg = Math.round(gLow + ((gHigh - gLow) * ratio));
+    const bb = Math.round(bLow + ((bHigh - bLow) * ratio));
+
+    // Keep it subtle and dark for normal operating ranges (dark base + tinted gradient)
+    const alphaMid = 0.20 + (ratio * 0.10);
+    const alphaEdge = 0.13 + (ratio * 0.07);
+    pfEl.style.background = `linear-gradient(155deg, rgba(18, 22, 28, 0.92) 0%, rgba(${rr}, ${gg}, ${bb}, ${alphaMid.toFixed(3)}) 56%, rgba(10, 14, 20, 0.94) 100%)`;
+
+    // Border follows tint slightly
+    const br = Math.round(120 + (ratio * 40));
+    const bg = Math.round(128 + (ratio * 40));
+    const bborder = Math.round(160 + (ratio * 60));
+    pfEl.style.border = `1px solid rgba(${br}, ${bg}, ${bborder}, 0.58)`;
+    pfEl.style.boxShadow = `0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(${rr}, ${gg}, ${bb}, ${alphaEdge.toFixed(3)})`;
+
+    // Very low-end floor style: red pill with white text
+    if (clampedPf <= 71.0) {
+      pfEl.style.background = 'linear-gradient(160deg, rgba(54, 18, 17, 0.96) 0%, rgba(196, 66, 58, 0.88) 58%, rgba(45, 12, 12, 0.95) 100%)';
+      pfEl.style.color = 'rgba(255,255,255,0.98)';
+      pfEl.style.border = '1px solid rgba(255, 205, 205, 0.75)';
+      pfEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255, 190, 190, 0.22)';
+    } else {
+      pfEl.style.color = 'rgba(245, 248, 255, 0.96)';
     }
   }
-  
-  // Call tick drawing after DOM loads
-  document.addEventListener('DOMContentLoaded', drawGaugeTicks);
 
   // Apply EFSI status classes based on PF-derived active share
   function applyEfsiColors() {
@@ -2067,20 +2374,19 @@
       const efsiPct = pfMatch ? computeEfsiFromPfPercent(pfMatch[1]) : null;
       if (efsiPct === null) continue;
 
-      pctEl.textContent = `${efsiPct}% active`;
-      let label = 'CRITICAL', arrow = '↓', cls = 'efsi-critical';
-      if (efsiPct > 72)      { label = 'CLEAN';   arrow = '↑'; cls = 'efsi-clean'; }
-      else if (efsiPct >= 62) { label = 'GOOD';    arrow = '→'; cls = 'efsi-good'; }
-      else if (efsiPct >= 57) { label = 'POOR';    arrow = '↓'; cls = 'efsi-poor'; }
-      else if (efsiPct > 52) { label = 'WARNING'; arrow = '↓'; cls = 'efsi-warning'; }
+      pctEl.textContent = `${efsiPct}% stable`;
+      let label = 'WARNING', arrow = '↓', cls = 'efsi-warning';
+      if (efsiPct >= 70)      { label = 'GOOD';    arrow = '↑'; cls = 'efsi-good'; }
+      else if (efsiPct >= 65) { label = 'NORMAL';  arrow = '→'; cls = 'efsi-normal'; }
+      else if (efsiPct >= 60) { label = 'LOW';     arrow = '↓'; cls = 'efsi-low'; }
 
       labelEl.textContent = label;
-      labelEl.classList.remove('efsi-critical', 'efsi-warning', 'efsi-poor', 'efsi-good', 'efsi-clean');
+      labelEl.classList.remove('efsi-warning', 'efsi-low', 'efsi-normal', 'efsi-good');
       labelEl.classList.add(cls);
 
       // Arrow and percentage stay green by .efsi-status-line CSS.
-      pctEl.classList.remove('efsi-critical', 'efsi-warning', 'efsi-poor', 'efsi-good', 'efsi-clean');
-      dirEl.classList.remove('efsi-critical', 'efsi-warning', 'efsi-poor', 'efsi-good', 'efsi-clean');
+      pctEl.classList.remove('efsi-warning', 'efsi-low', 'efsi-normal', 'efsi-good');
+      dirEl.classList.remove('efsi-warning', 'efsi-low', 'efsi-normal', 'efsi-good');
       dirEl.textContent = arrow;
     }
   }
@@ -2198,12 +2504,7 @@
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
       if (unityHowToBtn) {
-        const showHowTo = (type === 'baseline' || type === 'mpts');
-        const isSavingsMode = type === 'mpts';
-        unityHowToBtn.style.display = showHowTo ? 'inline-block' : 'none';
-        unityHowToBtn.dataset.chartMode = showHowTo ? (isSavingsMode ? 'savings' : 'waste') : '';
-        unityHowToBtn.textContent = isSavingsMode ? '🎧 How to Read the Savings Chart' : '🎧 How to Read the Waste Chart';
-        unityHowToBtn.title = unityHowToBtn.textContent;
+        unityHowToBtn.style.display = (type === 'baseline' || type === 'mpts') ? 'inline-block' : 'none';
       }
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
@@ -2568,14 +2869,9 @@
       company = (company || '').replace(/_/g, ' ').trim() || company;
     } catch (e) {}
 
-    const unityHowToBtn = document.getElementById('unityHowToBtn');
-    const howToMode = (unityHowToBtn && unityHowToBtn.dataset && unityHowToBtn.dataset.chartMode === 'savings') ? 'savings' : 'waste';
-    const isSavingsMode = howToMode === 'savings';
-    const mp3File = isSavingsMode ? 'Audio/how-to-read-savings-chart.mp3' : 'Audio/how-to-read-waste-chart.mp3';
+    const mp3File = 'Audio/how-to-read-the-chart.mp3';
     const startHowToTTS = () => {
-      const text = isSavingsMode
-        ? `Welcome. I'm Unity. This quick guide for ${company} explains how to read the MPTS savings chart. The chart shows the harmonized state after Unity optimization. Read left to right across the full period. Height indicates load magnitude. Dark blue is supplied kVA, light blue is consumed kW, and green is reactive kVAR. The orange line is power factor. Compare this chart to baseline to understand recovered waste and projected monthly and annual savings.`
-        : `Welcome. I'm Unity. This quick guide for ${company} explains how to read the baseline waste chart. The chart shows current operation before optimization. Read left to right across the full period. Height indicates load magnitude. Dark blue is supplied kVA, light blue is consumed kW, and green is reactive kVAR. The orange line is power factor. Areas with elevated reactive energy indicate waste that Unity can reduce.`;
+      const text = `Welcome. I'm Unity. This is a quick overview for ${company} on how to read the energy field chart. The rectangle represents the full time period from left to right. Height means load magnitude. Dark blue is supplied kVA, light blue is consumed kW, and green is reactive kVAR. The orange line is power factor. Baseline shows current behavior; MPTS shows the harmonized state after Unity optimization.`;
       currentSpeech = new SpeechSynthesisUtterance(text);
       const voices = window.speechSynthesis.getVoices();
       let preferredVoice = voices.find(v => v.name.toLowerCase().includes('unity faraday'));
@@ -2692,21 +2988,18 @@
       const efsiNum = efsiNumMatch ? Math.max(0, Math.min(100, parseInt(efsiNumMatch[1], 10))) : null;
       const efsiWidth = efsiNum === null ? 0 : efsiNum;
 
-      let efsiStatusLabel = 'CRITICAL';
-      let efsiStatusClass = 'efsi-status-critical';
+      let efsiStatusLabel = 'WARNING';
+      let efsiStatusClass = 'efsi-status-warning';
       if (efsiNum !== null) {
-        if (efsiNum > 72) {
-          efsiStatusLabel = 'CLEAN';
-          efsiStatusClass = 'efsi-status-clean';
-        } else if (efsiNum >= 62) {
+        if (efsiNum >= 70) {
           efsiStatusLabel = 'GOOD';
           efsiStatusClass = 'efsi-status-good';
-        } else if (efsiNum >= 57) {
-          efsiStatusLabel = 'POOR';
-          efsiStatusClass = 'efsi-status-poor';
-        } else if (efsiNum > 52) {
-          efsiStatusLabel = 'WARNING';
-          efsiStatusClass = 'efsi-status-warning';
+        } else if (efsiNum >= 65) {
+          efsiStatusLabel = 'NORMAL';
+          efsiStatusClass = 'efsi-status-normal';
+        } else if (efsiNum >= 60) {
+          efsiStatusLabel = 'LOW';
+          efsiStatusClass = 'efsi-status-low';
         }
       }
 
@@ -3303,10 +3596,10 @@
     document.getElementById('siteSummaryMPTSModal').style.display = 'none';
   }
 
-  // Show Contact Details
+  // Show Contact Details Modal
   function showContactDetailsModal() {
-    // Use shared eWebmaster contact page (consistent across Livingston groups).
-    window.location.href = '../../../../../contact-us.html';
+    const modal = document.getElementById('contactDetailsModal');
+    modal.style.display = 'block';
   }
 
   // Close Contact Details Modal
@@ -3332,131 +3625,115 @@
     }
   }
 </script>
-
 <!-- Pattern Analysis Modal -->
-<div id="patternModal" class="pattern-modal">
-  <div class="pattern-modal-content">
-    <div class="pattern-modal-header">
-      <h2 class="pattern-modal-title" id="patternModalTitle">Pattern Analysis</h2>
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <button id="unityBriefBtn" onclick="playUnityBrief();" 
-                style="display: none; padding: 12px 24px; min-width: 160px; white-space: nowrap;
+<div class="pattern-modal" id="patternModal">
+<div class="pattern-modal-content">
+<div class="pattern-modal-header">
+<h2 class="pattern-modal-title" id="patternModalTitle">Pattern Analysis</h2>
+<div style="display: flex; gap: 10px; align-items: center;">
+<button id="unityBriefBtn" onclick="playUnityBrief();" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'" style="display: none; padding: 12px 24px; min-width: 160px; white-space: nowrap;
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
-                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
-                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
+                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
           🎙️ Unity Brief
         </button>
-        <button id="unityExplainsBtn" onclick="speakNarrative(); scrollToNarrative();" 
-                style="display: none; padding: 12px 24px; min-width: 280px; white-space: nowrap; margin-right: 0px; 
+<button id="unityExplainsBtn" onclick="speakNarrative(); scrollToNarrative();" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'" style="display: none; padding: 12px 24px; min-width: 280px; white-space: nowrap; margin-right: 0px; 
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
-                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
-                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
+                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
           🔊 Unity Faraday Explains...
         </button>
-        <button id="unityHowToBtn" onclick="playUnityHowToChart();" 
-                style="display: none; padding: 12px 24px; min-width: 220px; white-space: nowrap;
+<button id="unityHowToBtn" onclick="playUnityHowToChart();" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'" style="display: none; padding: 12px 24px; min-width: 220px; white-space: nowrap;
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
-                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
-                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
-          🎧 How to Read the Waste Chart
+                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+          🎧 How to Read Chart
         </button>
-        <button class="pattern-modal-close" onclick="closePatternModal()">&times;</button>
-      </div>
-    </div>
-    <div class="pattern-modal-body" id="patternModalBody">
+<button class="pattern-modal-close" onclick="closePatternModal()">×</button>
+</div>
+</div>
+<div class="pattern-modal-body" id="patternModalBody">
       Loading...
     </div>
-  </div>
 </div>
-
+</div>
 <!-- Site Summary Modal -->
-<div id="siteSummaryModal" class="info-modal">
-  <div class="info-modal-content" style="max-width: 900px;">
-    <div class="info-modal-header">
-      <h2 class="info-modal-title">Site Summary - Baseline</h2>
-      <button class="info-modal-close" onclick="closeSiteSummaryModal()">&times;</button>
-    </div>
-    <div class="info-modal-body" id="siteSummaryBody">
+<div class="info-modal" id="siteSummaryModal">
+<div class="info-modal-content" style="max-width: 900px;">
+<div class="info-modal-header">
+<h2 class="info-modal-title">Site Summary - Baseline</h2>
+<button class="info-modal-close" onclick="closeSiteSummaryModal()">×</button>
+</div>
+<div class="info-modal-body" id="siteSummaryBody">
       Loading...
     </div>
-  </div>
 </div>
-
+</div>
 <!-- MPTS Site Summary Modal -->
-<div id="siteSummaryMPTSModal" class="info-modal">
-  <div class="info-modal-content" style="max-width: 900px;">
-    <div class="info-modal-header">
-      <h2 class="info-modal-title">Site Summary - Unity/MPTS Optimization</h2>
-      <button class="info-modal-close" onclick="closeSiteSummaryMPTSModal()">&times;</button>
-    </div>
-    <div class="info-modal-body" id="siteSummaryMPTSBody">
+<div class="info-modal" id="siteSummaryMPTSModal">
+<div class="info-modal-content" style="max-width: 900px;">
+<div class="info-modal-header">
+<h2 class="info-modal-title">Site Summary - Unity/MPTS Optimization</h2>
+<button class="info-modal-close" onclick="closeSiteSummaryMPTSModal()">×</button>
+</div>
+<div class="info-modal-body" id="siteSummaryMPTSBody">
       Loading...
     </div>
-  </div>
 </div>
-
+</div>
 <!-- Unity Contact Details Modal -->
-<div id="contactDetailsModal" class="info-modal">
-  <div class="info-modal-content" style="max-width: 600px; overflow: hidden;">
-    <div class="info-modal-header">
-      <h2 class="info-modal-title">Unity Contact Details</h2>
-      <button class="info-modal-close" onclick="closeContactDetailsModal()">&times;</button>
-    </div>
-    <div class="info-modal-body" id="contactDetailsBody" style="padding: 0; position: relative; min-height: 400px;">
-      <!-- Cove & Clerk background -->
-      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+<div class="info-modal" id="contactDetailsModal">
+<div class="info-modal-content" style="max-width: 600px; overflow: hidden;">
+<div class="info-modal-header">
+<h2 class="info-modal-title">Unity Contact Details</h2>
+<button class="info-modal-close" onclick="closeContactDetailsModal()">×</button>
+</div>
+<div class="info-modal-body" id="contactDetailsBody" style="padding: 0; position: relative; min-height: 400px;">
+<!-- Cove & Clerk background -->
+<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
                   background-image: url('Patterns/AgenticTeam.png'); 
                   background-size: cover; background-position: center top; opacity: 0.40; z-index: 0;"></div>
-      <!-- Content overlay -->
-      <div style="position: relative; z-index: 1; padding: 40px 30px; text-align: center;
+<!-- Content overlay -->
+<div style="position: relative; z-index: 1; padding: 40px 30px; text-align: center;
                   background: linear-gradient(135deg, rgba(40, 55, 10, 0.70) 0%, rgba(60, 80, 25, 0.70) 100%);">
-        <img src="Patterns/UE_logo.png" alt="Unity Energy" style="width: 280px; margin-bottom: 20px;">
-        <h3 style="color: #FAF0A0; font-size: 1.8em; margin-bottom: 10px;">Contact Us</h3>
-        <p style="color: #B2D235; font-style: italic; font-size: 1.1em; margin-bottom: 25px;">"Welcome to the Future of Electricity"</p>
-        <p style="color: rgba(255,255,255,0.9); font-size: 1em; line-height: 1.6; margin-bottom: 30px; max-width: 450px; margin-left: auto; margin-right: auto;">
+<img alt="Unity Energy" src="Patterns/UE_logo.png" style="width: 280px; margin-bottom: 20px;"/>
+<h3 style="color: #FAF0A0; font-size: 1.8em; margin-bottom: 10px;">Contact Us</h3>
+<p style="color: #B2D235; font-style: italic; font-size: 1.1em; margin-bottom: 25px;">"Welcome to the Future of Electricity"</p>
+<p style="color: rgba(255,255,255,0.9); font-size: 1em; line-height: 1.6; margin-bottom: 30px; max-width: 450px; margin-left: auto; margin-right: auto;">
           Curious about how Unity Energy can transform your facility's electrical system? 
           Reach out to our Team and let's start the conversation.
         </p>
-        <div style="background: rgba(70, 95, 20, 0.5); border-radius: 12px; padding: 25px; border: 2px solid rgba(178, 210, 53, 0.4); margin-bottom: 25px;">
-          <p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Harmonized Energy?</p>
-          <a href="mailto:info@UnityEnergy.com" 
-             style="display: inline-block; background: #fff; color: #314100; padding: 12px 30px; 
+<div style="background: rgba(70, 95, 20, 0.5); border-radius: 12px; padding: 25px; border: 2px solid rgba(178, 210, 53, 0.4); margin-bottom: 25px;">
+<p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Harmonized Energy?</p>
+<a href="mailto:info@UnityEnergy.com" style="display: inline-block; background: #fff; color: #314100; padding: 12px 30px; 
                     border-radius: 50px; font-weight: 600; text-decoration: none; 
                     box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
             info@UnityEnergy.com
           </a>
-        </div>
-        <div style="display: flex; justify-content: center; gap: 40px; padding-top: 20px; border-top: 1px solid rgba(200,200,200,0.3);">
-          <div style="text-align: center;">
-            <div style="font-size: 1.5em;">📍</div>
-            <p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Location</p>
-            <p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Jupiter, Florida</p>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 1.5em;">🌐</div>
-            <p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Website</p>
-            <p style="color: #B2D235; font-size: 0.85em;">UnityEnergy.com</p>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 1.5em;">⚡</div>
-            <p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Focus</p>
-            <p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Industrial 480V</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
-
-
+<div style="display: flex; justify-content: center; gap: 40px; padding-top: 20px; border-top: 1px solid rgba(200,200,200,0.3);">
+<div style="text-align: center;">
+<div style="font-size: 1.5em;">📍</div>
+<p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Location</p>
+<p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Jupiter, Florida</p>
+</div>
+<div style="text-align: center;">
+<div style="font-size: 1.5em;">🌐</div>
+<p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Website</p>
+<p style="color: #B2D235; font-size: 0.85em;">UnityEnergy.com</p>
+</div>
+<div style="text-align: center;">
+<div style="font-size: 1.5em;">⚡</div>
+<p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Focus</p>
+<p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Industrial 480V</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Energy - Greeley Site - Norfolk Iron & Metal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: rgba(44, 62, 80, 1);
+            background: rgba(248, 249, 250, 1);
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 82, 147, 1) 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid rgba(200, 200, 200, 1);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .header-logo {
+            height: 60px;
+            width: auto;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .site-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: rgba(200, 200, 200, 1);
+            text-transform: uppercase;
+        }
+
+        .site-subtitle {
+            font-size: 0.9em;
+            color: white;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(200, 200, 200, 1);
+            color: rgba(0, 51, 102, 1);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 51, 102, 1);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 82, 147, 0.4);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 82, 147, 1) 100%);
+            position: relative;
+            color: white;
+            padding: 0;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 8px solid rgba(200, 200, 200, 1);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 30, 60, 0.3) 40%, rgba(0, 40, 80, 0.8) 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1200px;
+            padding: 60px 40px;
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            margin-bottom: 0px;
+            font-weight: 900;
+            color: rgb(255, 255, 255);
+            text-shadow: 
+                3px 3px 0px rgba(0, 51, 102, 1),
+                -1px -1px 0px rgba(0, 51, 102, 1),
+                1px -1px 0px rgba(0, 51, 102, 1),
+                -1px 1px 0px rgba(0, 51, 102, 1),
+                1px 1px 0px rgba(0, 51, 102, 1),
+                4px 4px 8px rgba(0,0,0,0.9);
+            letter-spacing: 2px;
+        }
+
+        .hero .capacity-subtitle {
+            font-size: 3.2em;
+            font-weight: 600;
+            color: rgba(200, 200, 200, 1);
+            margin: 15px 0 0 0;
+            letter-spacing: 1px;
+            text-shadow: 
+                2px 2px 0px rgba(0, 51, 102, 1),
+                -1px -1px 0px rgba(0, 51, 102, 1),
+                1px -1px 0px rgba(0, 51, 102, 1),
+                -1px 1px 0px rgba(0, 51, 102, 1),
+                1px 1px 0px rgba(0, 51, 102, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero .capacity-subtitle1 {
+            font-size: 2.9em;
+            font-weight: 700;
+            color: rgba(180, 200, 220, 1);
+            margin: 15px 0 0 0;
+            letter-spacing: 1px;
+            text-shadow: 
+                2px 2px 0px rgba(0, 51, 102, 1),
+                -1px -1px 0px rgba(0, 51, 102, 1),
+                1px -1px 0px rgba(0, 51, 102, 1),
+                -1px 1px 0px rgba(0, 51, 102, 1),
+                1px 1px 0px rgba(0, 51, 102, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero .capacity-subtitle2 {
+            font-size: 2.1em;
+            font-weight: 300;
+            margin-bottom: 75px;
+            font-style: italic;
+            color: rgb(255, 255, 255);
+            letter-spacing: 1px;
+            text-shadow: 
+                2px 2px 0px rgba(0, 51, 102, 1),
+                -1px -1px 0px rgba(0, 51, 102, 1),
+                1px -1px 0px rgba(0, 51, 102, 1),
+                -1px 1px 0px rgba(0, 51, 102, 1),
+                1px 1px 0px rgba(0, 51, 102, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: rgba(200, 200, 200, 1);
+            color: rgba(0, 51, 102, 1);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.3em;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 3px solid rgba(0, 51, 102, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 82, 147, 0.5);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            color: rgba(0, 51, 102, 1);
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .welcome-text {
+            font-size: 1.4em;
+            color: rgba(85, 85, 85, 1);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            text-align: justify;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .highlight-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 20px solid rgba(200, 200, 200, 1);
+        }
+        
+        .highlight-card h3 {
+            color: rgba(0, 51, 102, 1);
+            margin-bottom: 8px;
+            font-size: 2.0em;
+            font-weight: 700;
+        }
+        
+        .highlight-card .number {
+            color: rgba(0, 51, 102, 1);
+            font-size: 2.0em;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+        
+        .highlight-card .tech-detail {
+            color: rgba(51, 51, 51, 1);
+            font-size: 1.8em;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .highlight-card p {
+            color: rgba(102, 102, 102, 1);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 82, 147, 1) 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 12px;
+            margin: 50px 0;
+            border: 5px solid rgba(200, 200, 200, 1);
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: rgba(200, 200, 200, 1);
+            color: rgba(0, 51, 102, 1);
+            border: 2px solid white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 51, 102, 1);
+            color: rgba(200, 200, 200, 1);
+            margin-top: 15px;
+            border: 2px solid rgba(200, 200, 200, 1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 82, 147, 1);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: rgba(0, 51, 102, 1);
+            color: white;
+            padding: 40px;
+            margin-top: 60px;
+            border-top: 3px solid rgba(200, 200, 200, 1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .footer-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .libraries-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .library-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 8px solid rgba(0, 51, 102, 1);
+        }
+
+        .library-title {
+            font-size: 2em;
+            color: rgba(0, 51, 102, 1);
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .library-category {
+            margin: 20px 0;
+        }
+
+        .category-title {
+            font-size: 1.3em;
+            color: rgba(0, 51, 102, 1);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Collapsible dropdown styling */
+        details {
+            margin: 15px 0;
+        }
+
+        details summary {
+            cursor: pointer;
+            padding: 15px 20px;
+            background: rgba(248, 249, 250, 1);
+            border-radius: 8px;
+            border-left: 5px solid rgba(0, 82, 147, 1);
+            font-size: 1.2em;
+            font-weight: 600;
+            color: rgba(0, 51, 102, 1);
+            transition: all 0.3s;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details summary::before {
+            content: '▶';
+            font-size: 0.8em;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        details summary:hover {
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        details[open] .study-list {
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+
+        .study-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .study-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 25px;
+            background: rgba(248, 249, 250, 1);
+            border-radius: 8px;
+            border-left: 5px solid rgba(0, 82, 147, 1);
+            transition: all 0.3s;
+        }
+
+        .study-item:hover {
+            background: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .study-info {
+            flex: 1;
+        }
+
+        .study-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: rgba(0, 51, 102, 1);
+            margin-bottom: 5px;
+        }
+
+        .study-period {
+            font-size: 1em;
+            color: rgba(102, 102, 102, 1);
+            font-style: italic;
+        }
+
+        .study-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: rgba(0, 51, 102, 1);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        .study-btn:hover {
+            background: rgba(0, 82, 147, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 82, 147, 0.3);
+        }
+
+        .placeholder-text {
+            color: rgba(153, 153, 153, 1);
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+            background: rgba(248, 249, 250, 1);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.3em;
+            }
+
+            .hero p {
+                font-size: 1.05em;
+            }
+
+            section {
+                margin: 40px 0;
+            }
+
+            .libraries-container {
+                grid-template-columns: 1fr;
+            }
+
+            .library-section {
+                padding: 30px 20px;
+            }
+
+            .study-item {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="../norfolk-iron-logo.png" alt="Norfolk Iron & Metal" class="header-logo">
+            <div>
+                <div class="site-subtitle">Norfolk Iron & Metal Facility</div>
+                <div class="site-title">Greeley Site</div>
+                <div class="site-subtitle">Greeley, Colorado</div>
+            </div>
+        </div>
+        <nav>
+            <a href="../index.html" class="back-btn">← Return to Norfolk Iron Home</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <p class="capacity-subtitle">480v Industrial Electricity Data</p>
+            <h1>ENERGY BEHAVIOR WASTE</h1>
+            <p class="capacity-subtitle2">System losses caused from the Poor Transfer of Electricity into Power</p>
+            <p class="capacity-subtitle1">SITE TOTAL CAPACITY : ----kVA (per hour)</p>
+            <p class="capacity-subtitle1">CONSUMED POWER : ----kW (per hour)</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="welcome">
+            <h2 class="section-title">Your Energy Field Journey Begins</h2>
+            
+            <p class="welcome-text">
+                At Unity Energy, we specialize in analyzing the electrical systems that power your operations. 
+                We've begun studying your Norfolk Iron & Metal site at Greeley, Colorado, and we're excited to share what 
+                we've discovered about your industrial electricity patterns and the value of harmonizing each 
+                of your 480v Electrical Energy Fields.
+            </p>
+
+            <p class="welcome-text">
+                This interactive analysis platform gives you unprecedented insight into how your transformers, 
+                plasma cutters, overhead cranes, and other heavy equipment are operating. You'll see energy consumption patterns, 
+                thermal behavior, and electrical characteristics in real-time, with actionable insights for optimization.
+            </p>
+
+
+            <div class="highlights">
+                <div class="highlight-card">
+                    <div class="number">Three (3) Total</div>
+                    <h3>Electrical Energy Fields</h3>
+                    <div class="tech-detail">3x 480v Primary</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="number">Three (3) Analyzed</div>
+                    <h3>Energy Fields Analyzed</h3>
+                    <div class="tech-detail">3x 480v approx.95% site</div>
+                </div>
+            </div>
+
+        <!-- Two-Column Libraries Layout -->
+        <section id="libraries">
+            <div class="libraries-container">
+                <!-- Left Column: Presentations Library -->
+                <div class="library-section">
+                    <h2 class="library-title">📑 Reference Library</h2>
+                    
+                    <!-- Collapsible Reference Documents -->
+                    <details>
+                        <summary>Reference Documents</summary>
+                        <div class="placeholder-text">
+                            Reference documents coming soon...
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Right Column: Studies Library -->
+                <div class="library-section">
+                    <h2 class="library-title">📊 Energy Behavior Library</h2>
+                    
+                    <!-- Collapsible Full Site Studies -->
+                    <details>
+                        <summary>Full Site Studies (All Transformers)</summary>
+                        <div class="placeholder-text">
+                            Full site studies coming soon...
+                        </div>
+                    </details>
+
+                    <!-- Collapsible Partial Studies -->
+                    <details>
+                        <summary>Partial Studies (Individual Transformers)</summary>
+                        <div class="placeholder-text">
+                            Partial transformer studies coming soon...
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        </section>
+
+        <section id="analysis">
+            <h2 class="section-title">What You'll Discover</h2>
+            <div class="highlights">
+                <div class="highlight-card">
+                    <h3>⚡ Energy Consumption</h3>
+                    <p>Detailed patterns showing when and where your facility uses power</p>
+                </div>
+                <div class="highlight-card">
+                    <h3>🔥 Thermal Analysis</h3>
+                    <p>Heat burden across transformers and heavy equipment systems</p>
+                </div>
+                <div class="highlight-card">
+                    <h3>⚙️ Voltage Stability</h3>
+                    <p>Power quality metrics and electrical stability indicators</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logos">
+                <img src="../norfolk-iron-logo.png" alt="Norfolk Iron & Metal" class="footer-logo" style="background: white; padding: 8px; border-radius: 6px;">
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+                <p>Transforming how facilities understand their electrical systems.</p>
+            </div>
+            <div class="footer-logos">
+                <img src="../../../UnityEnergy/UnityWebLogo.png" alt="Unity Energy" class="footer-logo">
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

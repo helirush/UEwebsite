@@ -33,7 +33,7 @@
     }
 
     body {
-      background: rgba(0, 0, 0, 1); /* Dark green outer background */
+      background: linear-gradient(180deg, rgba(14, 20, 7, 1) 0%, rgba(27, 39, 11, 1) 52%, rgba(44, 60, 18, 1) 100%); /* Foster Farms-inspired outer gradient */
       font-family: 'Arial', sans-serif;
       color: rgba(255, 255, 255, 1);
       padding: 20px;
@@ -45,7 +45,7 @@
       position: relative;     /* anchor for absolute children like unity-branding */
       max-width: 1340px;
       margin: auto;
-      background: rgba(26, 26, 26, 1); /* Dark background for heat board */
+      background: linear-gradient(155deg, rgba(20, 28, 10, 0.98) 0%, rgba(34, 47, 15, 0.97) 58%, rgba(50, 66, 20, 0.95) 100%); /* Foster Farms-themed board background */
       border: 30px solid rgb(214,214,194);
       border-radius: 10px;
       padding: 20px;
@@ -172,6 +172,14 @@
       max-width: 520px;
     }
 
+    .dashboard-grid.layout-4 {
+      background: linear-gradient(160deg, rgba(22, 30, 10, 0.94) 0%, rgba(36, 50, 15, 0.92) 55%, rgba(54, 72, 21, 0.90) 100%);
+      border: 1px solid rgba(178, 210, 53, 0.28);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: inset 0 0 0 1px rgba(250, 240, 160, 0.08);
+    }
+
     .xfmr-card {
       background: linear-gradient(145deg, rgb(60, 68, 45), rgb(70, 78, 46));
       border-radius: 15px;
@@ -232,121 +240,217 @@
     /* Power Factor Gauge Container */
     .gauge-container {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 210px;
+      height: 210px;
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.1s ease, filter 0.1s ease;
+      transition: transform 0.14s ease, filter 0.14s ease;
     }
 
     .gauge-container:active {
-      transform: scale(0.95);
-      filter: brightness(0.7);
+      transform: scale(0.97);
+      filter: brightness(0.92);
     }
 
-    /* SVG Gauge Styling */
+    /* PF Dial SVG */
     .gauge-svg {
       width: 100%;
       height: 100%;
-      transform: rotate(-90deg);
-      transition: filter 0.1s ease;
+      transform: translateY(19px);
+      transition: filter 0.15s ease;
     }
 
-    .gauge-bg {
+    .pf-dial-body {
+      fill: url(#pfDialCoreGradient);
+      stroke: rgba(130, 145, 70, 0.7);
+      stroke-width: 2;
+    }
+
+    .pf-dial-core-shadow {
+      fill: rgba(0, 0, 0, 0.22);
+    }
+
+    .pf-dial-outer-arc {
       fill: none;
-      stroke: var(--unity-orange);
-      stroke-width: 8;
-      transition: stroke-width 0.1s ease;
-    }
-
-    .gauge-container:active .gauge-bg {
-      stroke-width: 6;
-    }
-
-    .gauge-background {
-      fill: url(#blueGradient);
-      transition: opacity 0.1s ease;
-    }
-
-    .gauge-container:active .gauge-background {
-      opacity: 0.8;
-    }
-
-    .gauge-progress {
-      fill: none;
-      stroke-width: 10;
+      stroke: rgba(216, 142, 56, 0.98);
+      stroke-width: 7;
       stroke-linecap: round;
-      transform-origin: center;
-      transition: stroke-dashoffset 1s ease-in-out;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
 
-    /* Tick marks */
-    .tick {
-      stroke: var(--unity-ltgreen);
-      stroke-width: 1.5;
-      opacity: 0.6;
-      transition: all 0.15s ease;
+    .pf-dial-band-track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 2;
+      stroke-linecap: round;
     }
 
-    .tick-major {
-      stroke-width: 2.5;
-      stroke: var(--unity-ltgreen);
-      opacity: 0.9;
-      transition: all 0.15s ease;
+    .pf-dial-band-live {
+      fill: none;
+      stroke: url(#pfDialTopBandGradient);
+      stroke-width: 36;
+      stroke-linecap: round;
+      stroke-dasharray: 0 100;
+      transition: stroke-dasharray 0.7s ease;
+      filter: drop-shadow(0 0 4px rgba(255, 188, 82, 0.35));
     }
 
-    /* On click: make some ticks disappear and brighten others */
-    .gauge-container:active .tick:nth-child(3n) {
-      opacity: 0;
+    .pf-dial-glass {
+      fill: url(#pfDialGlassGradient);
+      stroke: rgba(255, 255, 255, 0.25);
+      stroke-width: 1.1;
     }
 
-    .gauge-container:active .tick:not(:nth-child(3n)) {
-      opacity: 0.9;
-      filter: brightness(1.4) drop-shadow(0 0 3px var(--unity-ltgreen));
+    .pf-dial-sheen {
+      fill: url(#pfDialSheenGradient);
+      opacity: 0.55;
     }
 
-    .gauge-container:active .tick-major {
-      opacity: 1;
-      filter: brightness(1.5) drop-shadow(0 0 4px var(--unity-ltgreen));
-      stroke-width: 3;
+    .pf-marker-line {
+      stroke: rgba(95, 114, 36, 0.95);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .pf-needle-group {
+      transition: transform 0.75s cubic-bezier(0.2, 0.9, 0.18, 1.02);
+      transform-origin: 110px 110px;
+    }
+
+    .pf-needle-shadow {
+      stroke: rgba(0, 0, 0, 0.55);
+      stroke-width: 7;
+      stroke-linecap: round;
+      opacity: 0.35;
+    }
+
+    .pf-needle-stem {
+      stroke: linear-gradient(180deg, #3e5213 0%, #7d9330 100%);
+      stroke: rgba(71, 93, 19, 0.95);
+      stroke-width: 5.5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
+    }
+
+    .pf-needle-tip {
+      fill: rgba(65, 88, 18, 0.96);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    .pf-needle-hub-shadow {
+      fill: rgba(0,0,0,0.35);
+    }
+
+    .pf-needle-hub {
+      fill: url(#pfDialHubGradient);
+      stroke: rgba(190, 211, 112, 0.95);
+      stroke-width: 1;
+    }
+
+    .pf-needle-post {
+      fill: rgba(232, 240, 198, 0.96);
+      stroke: rgba(116, 133, 45, 0.9);
+      stroke-width: 0.8;
+    }
+
+    .pf-marker {
+      position: absolute;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      pointer-events: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .pf-marker-yellow {
+      color: #f5eb5f;
+      font-size: 18px;
+    }
+
+    .pf-marker-pill {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.95);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .pf-marker-80 {
+      top: 71px;
+      left: 26px;
+      transform: translate(-10px, -10px);
+    }
+
+    .pf-marker-90 {
+      top: 71px;
+      right: 26px;
+      transform: translate(10px, -10px);
+    }
+
+    .pf-marker-707 {
+      bottom: 23px;
+      left: 2px;
+    }
+
+    .pf-marker-100 {
+      bottom: 23px;
+      right: -2px;
     }
 
     /* Center display */
     .gauge-value {
       position: absolute;
-      top: 50%;
+      top: 25px;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 30px;
+      font-size: 24px;
       font-weight: bold;
-      color: rgba(255, 255, 255, 1);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      color: #111;
+      background: rgba(244, 247, 255, 0.96);
+      border: 1px solid rgba(101, 132, 213, 0.65);
+      border-radius: 24px;
+      padding: 6px 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
       pointer-events: none;
+      text-shadow: none;
+      min-width: 96px;
+      text-align: center;
+      transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.18s ease, filter 0.18s ease;
+      z-index: 6;
+    }
+
+    .gauge-container:hover .gauge-value {
+      transform: translate(-50%, -51%);
+      filter: brightness(1.07);
+      box-shadow:
+        0 3px 10px rgba(0,0,0,0.45),
+        0 0 10px rgba(140, 190, 255, 0.16);
     }
 
     .gauge-label {
       position: absolute;
-      top: 70px;
+      top: 159px;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 10pt;
-      color: rgba(255, 255, 255, 1);
+      font-size: 9.5pt;
+      color: rgba(255, 255, 255, 0.95);
       text-transform: lowercase;
       letter-spacing: 1px;
-      opacity: 0.9;
       pointer-events: none;
     }
 
     .gauge-unit {
       position: absolute;
-      bottom: 35%;
+      bottom: 31px;
       left: 50%;
       transform: translate(-50%, 50%);
-      font-size: 10pt;
-      color: rgba(255, 255, 255, 1);
+      font-size: 9pt;
+      color: rgba(255, 255, 255, 0.88);
       text-transform: lowercase;
       pointer-events: none;
     }
@@ -522,7 +626,6 @@
       letter-spacing: 1px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
     .pattern-buttons .pattern-btn.summary-btn-full:hover {
       background: linear-gradient(135deg, #6d8020, #5a6a1a);
       transform: translateY(-2px);
@@ -1024,7 +1127,6 @@
     .baseline-btn {
       background: linear-gradient(135deg, #5D701A, #4a5a15);
       border: .5px solid rgb(161, 188, 26);
-      border-left: .5px solid rgb(161, 188, 26);
       color: var(--unity-ltylo);
       font-weight: 600;
       text-transform: uppercase;
@@ -1074,7 +1176,6 @@
     .mpts-btn {
       background: linear-gradient(135deg, #5D701A, #4a5a15);
       border: .5px solid rgb(161, 188, 26);
-      border-left: .5px solid rgb(161, 188, 26);
       color: var(--unity-ltylo);
       font-weight: 600;
       text-transform: uppercase;
@@ -1135,7 +1236,6 @@
     .comparison-btn {
       background: linear-gradient(135deg, #5D701A, #4a5a15);
       border: .5px solid rgb(161, 188, 26);
-      border-left: .5px solid rgb(161, 188, 26);
       color: var(--unity-ltylo);
       width: 100%;
       max-width: none;
@@ -1407,7 +1507,7 @@
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
   <a href="../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO CherryAve</a>
-  <a href="../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a href="../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">FOSTER FARMS, CHERRY AVE FACILITY - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
@@ -1456,18 +1556,54 @@
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view Base Target pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
+<svg class="gauge-svg" id="xfmr1-pf-dial" viewBox="0 0 220 220">
       <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        <radialGradient id="pfDialCoreGradient" cx="42%" cy="42%" r="78%">
+          <stop offset="0%" stop-color="#d7dcc8"/>
+          <stop offset="45%" stop-color="#c8ccb8"/>
+          <stop offset="100%" stop-color="#808a5b"/>
+        </radialGradient>
+        <linearGradient id="pfDialTopBandGradient" x1="44" y1="136" x2="176" y2="136" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#ff2f1f"/>
+          <stop offset="38%" stop-color="#ef9432"/>
+          <stop offset="66%" stop-color="#8cab2f"/>
+          <stop offset="100%" stop-color="#7fd2ff"/>
+        </linearGradient>
+        <linearGradient id="pfDialGlassGradient" x1="0" y1="68" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.34)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+        </linearGradient>
+        <radialGradient id="pfDialSheenGradient" cx="40%" cy="25%" r="70%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.42)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <radialGradient id="pfDialHubGradient" cx="34%" cy="34%" r="70%">
+          <stop offset="0%" stop-color="#f0f5d7"/>
+          <stop offset="100%" stop-color="#7d8f3a"/>
         </radialGradient>
       </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr1-ticks"></g>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" y1="97" x2="82" y2="121"></line>
+<line class="pf-marker-line" x1="162" y1="97" x2="138" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-band-live" id="xfmr1-pf-band-live" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr1-pf-needle">
+<line class="pf-needle-shadow" x1="112" y1="112" x2="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" y1="110" x2="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
 </svg>
+<span class="pf-marker pf-marker-yellow pf-marker-80">80%</span>
+<span class="pf-marker pf-marker-yellow pf-marker-90">90%</span>
+<span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
+<span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
 <div class="gauge-value" id="xfmr1-metric-pf">88.8%</div>
 <div class="gauge-unit">efficiency</div>
@@ -1543,18 +1679,54 @@
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
+<svg class="gauge-svg" id="xfmr2-pf-dial" viewBox="0 0 220 220">
       <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        <radialGradient id="pfDialCoreGradient" cx="42%" cy="42%" r="78%">
+          <stop offset="0%" stop-color="#d7dcc8"/>
+          <stop offset="45%" stop-color="#c8ccb8"/>
+          <stop offset="100%" stop-color="#808a5b"/>
+        </radialGradient>
+        <linearGradient id="pfDialTopBandGradient" x1="44" y1="136" x2="176" y2="136" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#ff2f1f"/>
+          <stop offset="38%" stop-color="#ef9432"/>
+          <stop offset="66%" stop-color="#8cab2f"/>
+          <stop offset="100%" stop-color="#7fd2ff"/>
+        </linearGradient>
+        <linearGradient id="pfDialGlassGradient" x1="0" y1="68" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.34)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+        </linearGradient>
+        <radialGradient id="pfDialSheenGradient" cx="40%" cy="25%" r="70%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.42)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <radialGradient id="pfDialHubGradient" cx="34%" cy="34%" r="70%">
+          <stop offset="0%" stop-color="#f0f5d7"/>
+          <stop offset="100%" stop-color="#7d8f3a"/>
         </radialGradient>
       </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr2-ticks"></g>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" y1="97" x2="82" y2="121"></line>
+<line class="pf-marker-line" x1="162" y1="97" x2="138" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-band-live" id="xfmr2-pf-band-live" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr2-pf-needle">
+<line class="pf-needle-shadow" x1="112" y1="112" x2="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" y1="110" x2="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
 </svg>
+<span class="pf-marker pf-marker-yellow pf-marker-80">80%</span>
+<span class="pf-marker pf-marker-yellow pf-marker-90">90%</span>
+<span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
+<span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
 <div class="gauge-value" id="xfmr2-metric-pf">83.9%</div>
 <div class="gauge-unit">efficiency</div>
@@ -1630,18 +1802,54 @@
 <span id="xfmr3-kva-wrap"> (<span id="xfmr3-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view Base Target pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
+<svg class="gauge-svg" id="xfmr3-pf-dial" viewBox="0 0 220 220">
       <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        <radialGradient id="pfDialCoreGradient" cx="42%" cy="42%" r="78%">
+          <stop offset="0%" stop-color="#d7dcc8"/>
+          <stop offset="45%" stop-color="#c8ccb8"/>
+          <stop offset="100%" stop-color="#808a5b"/>
+        </radialGradient>
+        <linearGradient id="pfDialTopBandGradient" x1="44" y1="136" x2="176" y2="136" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#ff2f1f"/>
+          <stop offset="38%" stop-color="#ef9432"/>
+          <stop offset="66%" stop-color="#8cab2f"/>
+          <stop offset="100%" stop-color="#7fd2ff"/>
+        </linearGradient>
+        <linearGradient id="pfDialGlassGradient" x1="0" y1="68" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.34)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+        </linearGradient>
+        <radialGradient id="pfDialSheenGradient" cx="40%" cy="25%" r="70%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.42)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <radialGradient id="pfDialHubGradient" cx="34%" cy="34%" r="70%">
+          <stop offset="0%" stop-color="#f0f5d7"/>
+          <stop offset="100%" stop-color="#7d8f3a"/>
         </radialGradient>
       </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr3-ticks"></g>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" y1="97" x2="82" y2="121"></line>
+<line class="pf-marker-line" x1="162" y1="97" x2="138" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-band-live" id="xfmr3-pf-band-live" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr3-pf-needle">
+<line class="pf-needle-shadow" x1="112" y1="112" x2="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" y1="110" x2="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
 </svg>
+<span class="pf-marker pf-marker-yellow pf-marker-80">80%</span>
+<span class="pf-marker pf-marker-yellow pf-marker-90">90%</span>
+<span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
+<span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
 <div class="gauge-value" id="xfmr3-metric-pf">84.2%</div>
 <div class="gauge-unit">efficiency</div>
@@ -1717,18 +1925,54 @@
 <span id="xfmr4-kva-wrap"> (<span id="xfmr4-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view Base Target pattern">
-<svg class="gauge-svg" viewBox="0 0 200 200">
+<svg class="gauge-svg" id="xfmr4-pf-dial" viewBox="0 0 220 220">
       <defs>
-        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
-          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
-          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        <radialGradient id="pfDialCoreGradient" cx="42%" cy="42%" r="78%">
+          <stop offset="0%" stop-color="#d7dcc8"/>
+          <stop offset="45%" stop-color="#c8ccb8"/>
+          <stop offset="100%" stop-color="#808a5b"/>
+        </radialGradient>
+        <linearGradient id="pfDialTopBandGradient" x1="44" y1="136" x2="176" y2="136" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#ff2f1f"/>
+          <stop offset="38%" stop-color="#ef9432"/>
+          <stop offset="66%" stop-color="#8cab2f"/>
+          <stop offset="100%" stop-color="#7fd2ff"/>
+        </linearGradient>
+        <linearGradient id="pfDialGlassGradient" x1="0" y1="68" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.34)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+        </linearGradient>
+        <radialGradient id="pfDialSheenGradient" cx="40%" cy="25%" r="70%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.42)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <radialGradient id="pfDialHubGradient" cx="34%" cy="34%" r="70%">
+          <stop offset="0%" stop-color="#f0f5d7"/>
+          <stop offset="100%" stop-color="#7d8f3a"/>
         </radialGradient>
       </defs>
-<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
-<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
-<g class="tick-marks" id="xfmr4-ticks"></g>
+<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
+<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
+<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
+<line class="pf-marker-line" x1="58" y1="97" x2="82" y2="121"></line>
+<line class="pf-marker-line" x1="162" y1="97" x2="138" y2="121"></line>
+<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-band-live" id="xfmr4-pf-band-live" d="M 56 141 A 70 70 0 0 1 164 141" pathLength="100"></path>
+<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
+<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
+<g class="pf-needle-group" id="xfmr4-pf-needle">
+<line class="pf-needle-shadow" x1="112" y1="112" x2="112" y2="58"></line>
+<line class="pf-needle-stem" x1="110" y1="110" x2="110" y2="58"></line>
+<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
+<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
+<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
+<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
+</g>
 </svg>
+<span class="pf-marker pf-marker-yellow pf-marker-80">80%</span>
+<span class="pf-marker pf-marker-yellow pf-marker-90">90%</span>
+<span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
+<span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
 <div class="gauge-value" id="xfmr4-metric-pf">88.3%</div>
 <div class="gauge-unit">efficiency</div>
@@ -1908,6 +2152,11 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
+
+      // Initialize PF dial rendering from bound metric
+      if (pfEl) {
+        initializePowerFactorDial(i);
+      }
     }
     
     // Add click handler to power factor gauge circles to open MPTS variables (M) image
@@ -1980,46 +2229,140 @@
 
   });
 
-  // Draw tick marks around all gauge circles
-  function drawGaugeTicks() {
-    for (let i = 1; i <= 4; i++) {
-      const ticksContainer = document.getElementById(`xfmr${i}-ticks`);
-      if (!ticksContainer) continue;
-      
-      const centerX = 100;
-      const centerY = 100;
-      const radius = 92;
-      const tickLength = 8;
-      const tickWidth = 3;
-      const tickCount = 60; // 60 ticks for full circle
-      const tickColor = 'rgba(255, 255, 255, 0.5)';
-      
-      // Draw ticks in a full circle (360 degrees)
-      for (let j = 0; j < tickCount; j++) {
-        const angle = (j * 360 / tickCount); // 0 to 360 degrees
-        const angleRad = (angle * Math.PI) / 180;
-        
-        const x1 = centerX + radius * Math.cos(angleRad);
-        const y1 = centerY + radius * Math.sin(angleRad);
-        const x2 = centerX + (radius - tickLength) * Math.cos(angleRad);
-        const y2 = centerY + (radius - tickLength) * Math.sin(angleRad);
-        
-        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        tick.setAttribute('class', 'tick'); // Add class for CSS styling
-        tick.setAttribute('x1', x1);
-        tick.setAttribute('y1', y1);
-        tick.setAttribute('x2', x2);
-        tick.setAttribute('y2', y2);
-        tick.setAttribute('stroke', tickColor);
-        tick.setAttribute('stroke-width', tickWidth);
-        
-        ticksContainer.appendChild(tick);
-      }
+  // Initialize dynamic PF dial (70.7% -> 100%) for each transformer card
+  function initializePowerFactorDial(xfmrNum) {
+    const pfEl = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
+    const needleEl = document.getElementById(`xfmr${xfmrNum}-pf-needle`);
+    const bandLiveEl = document.getElementById(`xfmr${xfmrNum}-pf-band-live`);
+    const dialSvg = document.getElementById(`xfmr${xfmrNum}-pf-dial`);
+    if (!pfEl || !needleEl || !bandLiveEl || !dialSvg) return;
+
+    // Ensure the lower transition arc ends in light blue (red -> orange -> light blue)
+    const bandGradient = dialSvg.querySelector('#pfDialTopBandGradient');
+    if (bandGradient) {
+      bandGradient.innerHTML = `
+        <stop offset="0%" stop-color="#e65744"/>
+        <stop offset="14%" stop-color="#e98a4b"/>
+        <stop offset="28%" stop-color="#7ca137"/>
+        <stop offset="58%" stop-color="#8ec843"/>
+        <stop offset="80%" stop-color="#93d355"/>
+        <stop offset="92%" stop-color="#71c5d8"/>
+        <stop offset="100%" stop-color="#87d7ef"/>
+      `;
+    }
+
+    // Pull 80/90 guide lines radially away from the outer orange arc
+    const markerLines = dialSvg.querySelectorAll('.pf-marker-line');
+    if (markerLines.length >= 2) {
+      markerLines[0].setAttribute('x1', '46');
+      markerLines[0].setAttribute('y1', '83');
+      markerLines[0].setAttribute('x2', '78');
+      markerLines[0].setAttribute('y2', '122');
+
+      markerLines[1].setAttribute('x1', '174');
+      markerLines[1].setAttribute('y1', '83');
+      markerLines[1].setAttribute('x2', '142');
+      markerLines[1].setAttribute('y2', '122');
+    }
+
+    const pfRaw = (pfEl.textContent || '').match(/([\d.]+)/);
+    if (!pfRaw) return;
+    const pfValue = parseFloat(pfRaw[1]);
+    if (Number.isNaN(pfValue)) return;
+
+    const minPf = 70.7;
+    const maxPf = 100.0;
+    const clampedPf = Math.max(minPf, Math.min(maxPf, pfValue));
+    const ratio = (clampedPf - minPf) / (maxPf - minPf);
+
+    // Arc is mapped from left to right with tighter bounds to keep the needle inside the dial
+    const startAngle = 215;
+    const endAngle = 325;
+    const pointerAngle = startAngle + ((endAngle - startAngle) * ratio);
+
+    // Build needle geometry directly so the hub stays centered for all PF values
+    const cx = 110;
+    const cy = 110;
+    const rad = pointerAngle * (Math.PI / 180);
+    const tipLen = 66;
+    const shadowLen = 68;
+    const tipX = cx + (tipLen * Math.cos(rad));
+    const tipY = cy + (tipLen * Math.sin(rad));
+    const shadowX = cx + (shadowLen * Math.cos(rad));
+    const shadowY = cy + (shadowLen * Math.sin(rad));
+
+    const stemEl = needleEl.querySelector('.pf-needle-stem');
+    const stemShadowEl = needleEl.querySelector('.pf-needle-shadow');
+    const tipEl = needleEl.querySelector('.pf-needle-tip');
+    const hubShadowEl = needleEl.querySelector('.pf-needle-hub-shadow');
+    const hubEl = needleEl.querySelector('.pf-needle-hub');
+    const postEl = needleEl.querySelector('.pf-needle-post');
+    if (stemEl && stemShadowEl && tipEl && hubShadowEl && hubEl && postEl) {
+      stemEl.setAttribute('x1', `${cx}`);
+      stemEl.setAttribute('y1', `${cy}`);
+      stemEl.setAttribute('x2', `${tipX}`);
+      stemEl.setAttribute('y2', `${tipY}`);
+
+      stemShadowEl.setAttribute('x1', `${cx + 1.5}`);
+      stemShadowEl.setAttribute('y1', `${cy + 1.5}`);
+      stemShadowEl.setAttribute('x2', `${shadowX + 1.5}`);
+      stemShadowEl.setAttribute('y2', `${shadowY + 1.5}`);
+
+      const nx = -Math.sin(rad);
+      const ny = Math.cos(rad);
+      const tipWidth = 5.5;
+      const baseBack = 8;
+      const bx = tipX - (baseBack * Math.cos(rad));
+      const by = tipY - (baseBack * Math.sin(rad));
+      const leftX = bx + (tipWidth * nx);
+      const leftY = by + (tipWidth * ny);
+      const rightX = bx - (tipWidth * nx);
+      const rightY = by - (tipWidth * ny);
+      tipEl.setAttribute('points', `${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}`);
+
+      // Force hub/post to remain centered
+      hubShadowEl.setAttribute('cx', `${cx}`);
+      hubShadowEl.setAttribute('cy', `${cy}`);
+      hubEl.setAttribute('cx', `${cx}`);
+      hubEl.setAttribute('cy', `${cy}`);
+      postEl.setAttribute('cx', `${cx}`);
+      postEl.setAttribute('cy', `${cy}`);
+    }
+
+    // Animate top-band "sweep" amount
+    const livePct = 100;
+    bandLiveEl.style.strokeDasharray = `${livePct} 100`;
+
+    // Smooth tint shift on the value pill:
+    // lower PF -> warm/red tint, higher PF -> cool/blue tint
+    const rLow = 228, gLow = 90,  bLow = 80;
+    const rHigh = 218, gHigh = 235, bHigh = 255;
+    const rr = Math.round(rLow + ((rHigh - rLow) * ratio));
+    const gg = Math.round(gLow + ((gHigh - gLow) * ratio));
+    const bb = Math.round(bLow + ((bHigh - bLow) * ratio));
+
+    // Keep it subtle and dark for normal operating ranges (dark base + tinted gradient)
+    const alphaMid = 0.20 + (ratio * 0.10);
+    const alphaEdge = 0.13 + (ratio * 0.07);
+    pfEl.style.background = `linear-gradient(155deg, rgba(18, 22, 28, 0.92) 0%, rgba(${rr}, ${gg}, ${bb}, ${alphaMid.toFixed(3)}) 56%, rgba(10, 14, 20, 0.94) 100%)`;
+
+    // Border follows tint slightly
+    const br = Math.round(120 + (ratio * 40));
+    const bg = Math.round(128 + (ratio * 40));
+    const bborder = Math.round(160 + (ratio * 60));
+    pfEl.style.border = `1px solid rgba(${br}, ${bg}, ${bborder}, 0.58)`;
+    pfEl.style.boxShadow = `0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(${rr}, ${gg}, ${bb}, ${alphaEdge.toFixed(3)})`;
+
+    // Very low-end floor style: red pill with white text
+    if (clampedPf <= 71.0) {
+      pfEl.style.background = 'linear-gradient(160deg, rgba(54, 18, 17, 0.96) 0%, rgba(196, 66, 58, 0.88) 58%, rgba(45, 12, 12, 0.95) 100%)';
+      pfEl.style.color = 'rgba(255,255,255,0.98)';
+      pfEl.style.border = '1px solid rgba(255, 205, 205, 0.75)';
+      pfEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255, 190, 190, 0.22)';
+    } else {
+      pfEl.style.color = 'rgba(245, 248, 255, 0.96)';
     }
   }
-  
-  // Call tick drawing after DOM loads
-  document.addEventListener('DOMContentLoaded', drawGaugeTicks);
 
   // Apply EFSI color classes based on percentage values
   function applyEfsiColors() {
@@ -2673,7 +3016,6 @@
     let content = '';
     let title = '';
     let showAudioBtn = false;
-    currentBriefText = '';
     const getElText = (id) => {
       const el = document.getElementById(id);
       return el ? (el.textContent || '').trim() : '';
@@ -2826,6 +3168,7 @@
           </div>
         </div>`;
     }
+    currentBriefText = '';
     
     if (type === 'summary') {
       title = `${transformerName} - Energy Field Summary`;
@@ -2979,12 +3322,12 @@
     }
     currentNarrativeText = '';
     currentBriefText = '';
-    currentTransformerId = '';
     try {
       const modalBody = document.getElementById('patternModalBody');
       modalBody.classList.remove('unity-summary-mode');
       modalBody.style.removeProperty('--unity-field-backdrop');
     } catch (e) {}
+    currentTransformerId = '';
     currentHowToPath = '';
     const howToBtn = document.getElementById('unityHowToBtn');
     if (howToBtn) howToBtn.style.display = 'none';
@@ -3389,6 +3732,7 @@
       logo.src = getContactAssetPath('UE_logo.png');
     }
   }
+
   function showContactDetailsModal() {
     const modal = document.getElementById('contactDetailsModal');
     if (!modal) {
