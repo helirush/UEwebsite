@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="hume_character_config.js?v=20260414k"></script>
+    <script src="clerk_voice_widget.js?v=20260414k"></script>
+    <script src="public_release_flags.js?v=20260411c"></script>
     <title>Our Systems - Unity Energy</title>
     <style>
         :root {
@@ -128,7 +131,7 @@
 
         .hero {
             max-width: 1240px;
-            margin: 28px auto 0;
+            margin: 0 auto 0;
             padding: 0 20px;
         }
 
@@ -154,6 +157,29 @@
             color: rgba(38, 53, 5, 1);
             margin-bottom: 12px;
             line-height: 1.2;
+        }
+
+        .hero-title-line {
+            display: block;
+        }
+
+        .hero-title-line.indent {
+            margin-top: 4px;
+            padding-left: clamp(16px, 2.2vw, 40px);
+        }
+
+        .systems-dev-note-wrap {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 96px 20px 46px;
+            text-align: center;
+        }
+
+        .systems-dev-note {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(74, 95, 20, 0.9);
+            letter-spacing: 0.3px;
         }
 
         .hero p {
@@ -384,6 +410,13 @@
         }
 
         @media (max-width: 640px) {
+            .systems-dev-note-wrap {
+                padding: 56px 16px 26px;
+            }
+
+            .systems-dev-note {
+                font-size: 0.94rem;
+            }
             .hero-card {
                 padding: 22px 18px 18px;
             }
@@ -426,10 +459,17 @@
         </div>
     </div>
 
+    <div class="systems-dev-note-wrap">
+        <p class="systems-dev-note">This page is still being developed.</p>
+    </div>
+
     <section class="hero">
         <div class="hero-card">
             <p class="hero-kicker">Unity Energy Platform Stack</p>
-            <h1>Three Integrated Systems: Measure • Manage (Harmonize) • Exchange</h1>
+            <h1>
+                <span class="hero-title-line">Three Integrated Systems:</span>
+                <span class="hero-title-line indent">Measure, Manage (Harmonize), and Exchange</span>
+            </h1>
             <p>
                 This page shows the full operating sequence: first we measure field behavior with installed instrumentation, then we manage and harmonize at the load with MPTS deployment, and finally we exchange resident-contained energy on-site to reduce utility demand and lower total cost.
             </p>
@@ -565,7 +605,7 @@
         <a href="products-services.html" class="bottom-button primary">Continue to Products & Services</a>
     </div>
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 </body>
