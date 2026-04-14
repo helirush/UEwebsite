@@ -3393,15 +3393,13 @@
     const characterName = coerceText(cfg && cfg.character_name);
     if (characterName) params.set("character_name", characterName);
     if (launchSession && typeof launchSession === "object") {
-      if (launchSession.legacyContext) params.set("context", launchSession.legacyContext);
+      const legacyContext = cleanReinterpretationText(launchSession.legacyContext, 240);
+      if (legacyContext) params.set("context", legacyContext);
       if (launchSession.characterId) params.set("character_id", launchSession.characterId);
       if (launchSession.contextSource) params.set("context_source", launchSession.contextSource);
       if (launchSession.uiMode) params.set("ui_mode", launchSession.uiMode);
       if (launchSession.intelligenceProfile && launchSession.intelligenceProfile.id) {
         params.set("intelligence_profile_id", launchSession.intelligenceProfile.id);
-      }
-      if (launchSession.contextPayload && Object.keys(launchSession.contextPayload).length > 0) {
-        params.set("context_payload", JSON.stringify(launchSession.contextPayload));
       }
     } else if (typeof launchSession === "string" && launchSession.trim()) {
       params.set("context", launchSession.trim());
