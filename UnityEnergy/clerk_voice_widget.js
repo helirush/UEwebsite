@@ -2844,9 +2844,27 @@
   function shouldLockCharacterSelection(cfg) {
     return !cfg || cfg.lock_character_to_default !== false;
   }
+  function isAppleMobileWebKitBrowser() {
+    const ua = typeof navigator !== "undefined" && typeof navigator.userAgent === "string" ? navigator.userAgent : "";
+    const platform =
+      typeof navigator !== "undefined" && typeof navigator.platform === "string" ? navigator.platform : "";
+    const maxTouchPoints =
+      typeof navigator !== "undefined" && Number.isFinite(navigator.maxTouchPoints)
+        ? Number(navigator.maxTouchPoints)
+        : 0;
+    const isIOSDevice = /iPhone|iPad|iPod/i.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1);
+    if (!isIOSDevice) return false;
+    const isAppleWebKit = /AppleWebKit/i.test(ua);
+    const isCriOS = /CriOS/i.test(ua);
+    const isFxiOS = /FxiOS/i.test(ua);
+    return isAppleWebKit && !isCriOS && !isFxiOS;
+  }
 
   function shouldUseUnityStartGate(cfg) {
-    return false;
+    if (cfg && typeof cfg.force_unity_start_gate === "boolean") {
+      return cfg.force_unity_start_gate;
+    }
+    return isAppleMobileWebKitBrowser();
   }
 
   function isClerkVoiceFeatureEnabled() {
@@ -3215,6 +3233,29 @@
       } catch (_err) {}
     });
   }
+  function isLikelyMicrophoneError(payloadOrMessage) {
+    if (!payloadOrMessage) return false;
+    if (typeof payloadOrMessage === "string") {
+      const normalizedMessage = payloadOrMessage.toLowerCase();
+      return /(mic|microphone|notallowederror|permission denied|audio input|unable to connect)/.test(
+        normalizedMessage
+      );
+    }
+    if (typeof payloadOrMessage !== "object") return false;
+    const errorType = coerceText(
+      payloadOrMessage.type ||
+        payloadOrMessage.error_type ||
+        payloadOrMessage.errorType ||
+        payloadOrMessage.code
+    ).toLowerCase();
+    const errorMessage = coerceText(
+      payloadOrMessage.message || payloadOrMessage.detail || payloadOrMessage.reason
+    ).toLowerCase();
+    if (/mic|microphone/.test(errorType)) return true;
+    return /(mic|microphone|notallowederror|permission denied|audio input|unable to connect)/.test(
+      `${errorType} ${errorMessage}`
+    );
+  }
 
   function bindFrameMessaging() {
     if (frameMessagingBound) return;
@@ -3229,6 +3270,27 @@
         widgetReady = true;
         clearFrameLoadTimer();
         const cfg = getRuntimeVoiceConfig();
+        if (shouldUseUnityStartGate(cfg)) {
+          setStatus(
+            `Tap Start speaking with ${cfg.character_name} to allow microphone access on this device.`,
+            false,
+            true
+          );
+          setStartButtonVisible(true);
+          setLaunchEmblemVisible(false);
+          setWidgetFrameSize(72, 72);
+          setPanelMode("centered");
+          setSessionDiagnostics(
+            buildSessionDiagnostics(
+              pendingLaunchSession,
+              cfg,
+              document.getElementById("clerkVoiceFrame")?.src || "",
+              "awaiting-microphone"
+            ),
+            false
+          );
+          return;
+        }
         const configured = sendWidgetConfig(cfg, pendingLaunchSession);
         if (!configured) {
           setStatus(
@@ -3347,11 +3409,24 @@
         return;
       }
       if (data.type === "error") {
-        const detail =
-          data && data.payload && typeof data.payload.message === "string"
-            ? data.payload.message
-            : "Unknown voice session error.";
-        setStatus(`Voice session error: ${detail}`, true);
+        const payload = data && data.payload && typeof data.payload === "object" ? data.payload : {};
+        const detail = typeof payload.message === "string" ? payload.message : "Unknown voice session error.";
+        const cfg = getRuntimeVoiceConfig();
+        if (isLikelyMicrophoneError(payload) || isLikelyMicrophoneError(detail)) {
+          setStatus(
+            `Microphone access is blocked. Tap Start speaking with ${cfg.character_name} and allow microphone access for this site, then try again.`,
+            true,
+            true
+          );
+          if (shouldUseUnityStartGate(cfg)) {
+            setStartButtonVisible(true);
+          }
+          setLaunchEmblemVisible(false);
+          setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
+          setPanelMode("centered");
+          return;
+        }
+        setStatus(`Voice session error: ${detail}`, true, true);
         setStartButtonVisible(false);
         setLaunchEmblemVisible(false);
       }
@@ -4006,7 +4081,7 @@
       const cfg = getRuntimeVoiceConfig();
       if (!shouldUseUnityStartGate(cfg)) return;
       setLaunchEmblemVisible(false);
-      setStatus("Requesting microphone access…", false);
+      setStatus("Requesting microphone access…", false, true);
       try {
         await requestTopLevelMicAccess();
       } catch (err) {
