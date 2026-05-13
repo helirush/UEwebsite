@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <title>Our Systems - Unity Energy</title>
     <style>
@@ -35,7 +35,10 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
             color: var(--unity-slate);
-            background: var(--unity-bg);
+            background: linear-gradient(180deg, rgba(245, 242, 233, 1) 0%, rgba(242, 239, 229, 1) 100%);
+        }
+        body.modal-open {
+            overflow: hidden;
         }
 
         .banner-wrapper {
@@ -75,89 +78,276 @@
         }
 
         .nav-tabs-container {
-            background: rgba(240, 240, 240, 1);
-            padding: 22px 0 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(246, 246, 241, 0.96);
+            padding: 14px 0 24px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
         }
 
         .nav-tabs {
-            max-width: 1800px;
-            margin: 0 auto;
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            padding: 0 10px;
+            gap: 12px 14px;
+            flex-wrap: wrap;
+            max-width: none;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .nav-tabs > a {
+            position: relative;
+        }
+        .nav-tabs > a:first-child::before,
+        .nav-tabs > a + a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2px;
+            height: 18px;
+            transform: translateY(-50%);
+            background: rgba(60, 79, 46, 0.84);
+            pointer-events: none;
+        }
+        @media (min-width: 1101px) {
+            .nav-tabs {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+                width: min(95%, 1760px);
+                max-width: calc(100% - 24px);
+            }
+            .nav-tabs > a {
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .nav-tabs > a:first-child,
+            .nav-tabs > a + a {
+                border-left: 2px solid rgba(60, 79, 46, 0.84);
+                padding-left: clamp(14px, 1vw, 20px);
+                margin-left: 0;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
+            .nav-tab-portal,
+            .nav-tab-maxwellian {
+                justify-content: center;
+                width: auto;
+                min-width: 0;
+                padding: 7px 10px 7px 12px;
+                font-size: clamp(0.73rem, 0.88vw, 0.95rem);
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
         }
 
         .nav-tab-portal,
         .nav-tab-maxwellian {
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 0.95em;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 0;
+            padding: 8px 10px 8px 18px;
+            border-radius: 16px;
+            font-size: clamp(0.75rem, 0.95vw, 0.95rem);
             font-weight: 700;
-            letter-spacing: 0.8px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
-            transition: all 0.25s ease;
-            padding: 12px 26px;
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
+            cursor: pointer;
+            color: rgba(46, 74, 31, 0.94);
+            background-color: transparent;
+            background-image: none;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+            box-shadow: none;
+            white-space: nowrap;
         }
-
-        .nav-tab-portal {
-            background: rgba(90, 110, 35, 1);
-            color: #fff;
-            border: 2px solid rgba(129, 163, 43, 1);
+        .nav-tab-portal::after,
+        .nav-tab-maxwellian::after {
+            content: none;
         }
-
-        .nav-tab-portal:hover {
-            background: rgba(49, 65, 0, 1);
-        }
-
-        .nav-tab-portal.active {
-            background: rgba(49, 65, 0, 1);
-            border-color: rgba(250, 200, 0, 1);
-            color: rgba(250, 240, 160, 1);
-        }
-
         .nav-tab-maxwellian {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border: 2px solid rgba(255, 200, 50, 1);
-            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+            color: rgba(118, 88, 24, 0.98);
+            font-weight: 800;
+            border-color: rgba(201, 166, 72, 0.52);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.78) 0%, rgba(236, 219, 176, 0.78) 100%);
         }
-
+        .nav-tab-portal:hover,
         .nav-tab-maxwellian:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal.active,
+        .nav-tab-maxwellian.active {
+            border-color: rgba(63, 94, 39, 0.98);
+            background-color: rgba(37, 63, 25, 0.99);
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%);
+            color: rgba(250, 240, 160, 0.98);
+            box-shadow: 0 10px 18px rgba(34, 49, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(18, 33, 12, 0.42);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal:active,
+        .nav-tab-maxwellian:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 1100px) {
+            .nav-tabs {
+                gap: 8px 10px;
+                padding: 0 10px;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
         }
 
         .hero {
-            max-width: 1240px;
-            margin: 0 auto 0;
-            padding: 0 20px;
+            background: linear-gradient(180deg, rgba(237, 229, 211, 1) 0%, rgba(214, 223, 192, 1) 100%);
+            color: rgba(58, 66, 48, 1);
+            padding: 40px 20px 44px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
+        }
+
+        .hero-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-wave-images {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 100vw;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-wave {
+            position: absolute;
+            top: 50%;
+            right: -156px;
+            width: clamp(780px, 60vw, 1280px);
+            height: auto;
+            max-width: none;
+            transform: translate(-100px, -50%);
+            mix-blend-mode: multiply;
+            user-select: none;
+            z-index: 1;
+            will-change: transform, filter, opacity;
+        }
+
+        .hero-wave--right-dark {
+            opacity: 0.57;
+            filter: sepia(1) saturate(3.9) hue-rotate(56deg) brightness(0.14) contrast(1.34);
+            transform: translate(-62px, -50.7%);
+            -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.84) 22%, rgba(0, 0, 0, 0.46) 36%, rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0.01) 56%);
+            mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.84) 22%, rgba(0, 0, 0, 0.46) 36%, rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0.01) 56%);
+        }
+
+        .hero-wave--right-green {
+            opacity: 0.38;
+            filter: sepia(1) saturate(4.6) hue-rotate(73deg) brightness(0.28) contrast(1.23);
+            transform: translate(-84px, -49.2%);
+            -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.8) 21%, rgba(0, 0, 0, 0.42) 34%, rgba(0, 0, 0, 0.1) 46%, rgba(0, 0, 0, 0.01) 54%);
+            mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.8) 21%, rgba(0, 0, 0, 0.42) 34%, rgba(0, 0, 0, 0.1) 46%, rgba(0, 0, 0, 0.01) 54%);
+        }
+
+        .hero-wave--right-detail {
+            z-index: 0;
+            top: 59%;
+            right: -6px;
+            width: clamp(500px, 40vw, 760px);
+            opacity: 0.32;
+            mix-blend-mode: normal;
+            filter: sepia(1) saturate(2.8) hue-rotate(60deg) brightness(0.5) contrast(1.12);
+            transform: translate(-34px, -50%);
+            -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.9) 28%, rgba(0, 0, 0, 0.52) 56%, rgba(0, 0, 0, 0.08) 86%, rgba(0, 0, 0, 0.01) 100%);
+            mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.9) 28%, rgba(0, 0, 0, 0.52) 56%, rgba(0, 0, 0, 0.08) 86%, rgba(0, 0, 0, 0.01) 100%);
+        }
+
+        .hero-wave--right-small {
+            z-index: 0;
+            top: 64%;
+            right: 14px;
+            width: clamp(280px, 26vw, 420px);
+            opacity: 0.42;
+            mix-blend-mode: normal;
+            filter: sepia(1) saturate(3.1) hue-rotate(38deg) brightness(0.82) contrast(1.08);
+            transform: translate(-18px, -50%);
+            -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.88) 36%, rgba(0, 0, 0, 0.42) 68%, rgba(0, 0, 0, 0.02) 100%);
+            mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.88) 36%, rgba(0, 0, 0, 0.42) 68%, rgba(0, 0, 0, 0.02) 100%);
+        }
+
+        .hero-wave-label {
+            position: absolute;
+            right: clamp(118px, 14vw, 238px);
+            bottom: clamp(30px, 6vw, 78px);
+            font-family: "Times New Roman", Georgia, serif;
+            font-size: clamp(0.5rem, 0.875vw, 0.95rem);
+            font-style: italic;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: rgba(161, 174, 74, 0.78);
+            text-shadow: 0 0 12px rgba(229, 221, 155, 0.24);
+            opacity: 0.74;
+            mix-blend-mode: multiply;
+            transform: translate(50px, 50px);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .hero-inner > :not(.hero-wave-images) {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 236, 0.94));
-            border: 1px solid var(--unity-border);
-            border-radius: 18px;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
-            padding: 28px 28px 24px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
         }
 
         .hero-kicker {
+            display: inline-block;
             text-transform: uppercase;
-            letter-spacing: 1.4px;
-            font-size: 0.76rem;
-            color: rgba(88, 112, 21, 1);
-            font-weight: 700;
-            margin-bottom: 8px;
+            letter-spacing: 1px;
+            font-size: 0.84rem;
+            color: rgba(124, 88, 35, 0.98);
+            font-weight: 800;
+            background: rgba(223, 201, 153, 0.64);
+            border: 1px solid rgba(189, 145, 48, 0.58);
+            border-radius: 999px;
+            padding: 4px 11px;
+            margin-bottom: 14px;
         }
 
         .hero h1 {
-            font-size: clamp(1.68rem, 2.7vw, 2.5rem);
-            color: rgba(38, 53, 5, 1);
+            font-size: clamp(1.95rem, 4vw, 2.9rem);
+            color: rgba(58, 66, 48, 1);
             margin-bottom: 12px;
-            line-height: 1.2;
+            line-height: 1.15;
+            font-weight: 700;
         }
 
         .hero-title-line {
@@ -165,52 +355,53 @@
         }
 
         .hero-title-line.indent {
-            margin-top: 4px;
-            padding-left: clamp(16px, 2.2vw, 40px);
+            margin-top: 2px;
+            padding-left: clamp(10px, 1.6vw, 26px);
         }
 
         .systems-dev-note-wrap {
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 96px 20px 46px;
-            text-align: center;
+            max-width: 1080px;
+            margin: 16px auto 0;
+            padding: 0 20px 10px;
+            text-align: left;
         }
 
         .systems-dev-note {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: rgba(74, 95, 20, 0.9);
+            color: rgba(106, 123, 50, 0.92);
             letter-spacing: 0.3px;
         }
 
         .hero p {
-            font-size: 1.02rem;
-            color: rgba(54, 67, 31, 0.95);
-            max-width: 980px;
+            font-size: 1.06rem;
+            color: rgba(71, 82, 57, 0.98);
+            max-width: 920px;
         }
 
         .hero-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 20px;
+            margin-top: 22px;
         }
 
         .jump-button {
             text-decoration: none;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            color: rgba(33, 46, 4, 1);
-            background: linear-gradient(135deg, rgba(204, 226, 121, 1) 0%, rgba(178, 210, 53, 1) 100%);
-            border: 1px solid rgba(150, 182, 45, 1);
-            border-radius: 999px;
+            color: rgba(63, 70, 56, 1);
+            background: linear-gradient(180deg, rgba(240, 221, 179, 1) 0%, rgba(227, 194, 121, 1) 100%);
+            border: 1px solid rgba(199, 154, 53, 0.82);
+            border-radius: 10px;
             padding: 10px 16px;
             transition: all 0.2s ease;
+            box-shadow: 0 6px 14px rgba(93, 74, 35, 0.18);
         }
 
         .jump-button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 8px 18px rgba(95, 122, 22, 0.24);
+            box-shadow: 0 8px 16px rgba(93, 74, 35, 0.2);
         }
 
         .systems-grid {
@@ -278,36 +469,70 @@
             color: rgba(66, 79, 40, 0.92);
             line-height: 1.45;
         }
+        .measure-photo-slot,
+        .manage-photo-slot {
+            display: block;
+            padding: 0;
+            min-height: 0;
+            border-style: solid;
+            border-color: rgba(129, 163, 43, 0.54);
+            background: rgba(248, 250, 242, 0.96);
+            overflow: hidden;
+        }
+        .measure-photo-slot img,
+        .manage-photo-slot img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+        }
+        .measure-photo-slot .visual-caption,
+        .manage-photo-slot .visual-caption {
+            margin: 0;
+            padding: 10px 12px 11px;
+            font-size: 0.84rem;
+            color: rgba(55, 69, 30, 0.95);
+            background: rgba(240, 246, 224, 0.9);
+            border-top: 1px solid rgba(129, 163, 43, 0.34);
+            line-height: 1.4;
+        }
 
         .system-card ul {
             margin-left: 18px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             color: rgba(54, 66, 33, 0.95);
-            font-size: 0.94rem;
+            font-size: 0.91rem;
+            line-height: 1.45;
         }
 
         .system-card li + li {
-            margin-top: 7px;
+            margin-top: 6px;
         }
 
         .card-button {
             margin-top: auto;
             align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 38px;
             text-decoration: none;
-            color: rgba(31, 42, 4, 1);
-            background: rgba(188, 213, 88, 0.86);
-            border: 1px solid rgba(140, 170, 37, 0.82);
+            color: rgba(29, 42, 4, 1);
+            background: linear-gradient(135deg, rgba(204, 226, 121, 0.98) 0%, rgba(178, 210, 53, 0.98) 100%);
+            border: 1px solid rgba(129, 163, 43, 0.9);
             border-radius: 999px;
             font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.4px;
-            padding: 9px 14px;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 16px;
             transition: all 0.2s ease;
         }
 
         .card-button:hover {
-            background: rgba(201, 223, 114, 0.95);
+            background: linear-gradient(135deg, rgba(214, 233, 141, 0.98) 0%, rgba(189, 218, 71, 0.98) 100%);
             border-color: rgba(129, 163, 43, 1);
+            transform: translateY(-1px);
         }
 
         .detail-sections {
@@ -334,13 +559,67 @@
 
         .detail-card p {
             color: rgba(56, 70, 32, 0.96);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
 
         .detail-grid {
             display: grid;
-            gap: 10px;
+            gap: 12px;
             grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .measure-subsections,
+        .manage-subsections {
+            display: grid;
+            gap: 14px;
+        }
+        .measure-subsection,
+        .manage-subsection {
+            border-radius: 12px;
+            border: 1px solid rgba(129, 163, 43, 0.34);
+            background: rgba(244, 249, 230, 0.72);
+            overflow: hidden;
+        }
+        .measure-subsection summary,
+        .manage-subsection summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            font-size: 0.92rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(59, 75, 24, 0.98);
+            background: rgba(227, 238, 196, 0.8);
+            border-bottom: 1px solid rgba(129, 163, 43, 0.34);
+        }
+        .measure-subsection summary::-webkit-details-marker,
+        .manage-subsection summary::-webkit-details-marker {
+            display: none;
+        }
+        .measure-subsection summary::after,
+        .manage-subsection summary::after {
+            content: '▸';
+            font-size: 0.9rem;
+            line-height: 1;
+            transition: transform 0.18s ease;
+        }
+        .measure-subsection[open] summary::after,
+        .manage-subsection[open] summary::after {
+            transform: rotate(90deg);
+        }
+        .measure-subsection-content,
+        .manage-subsection-content {
+            padding: 12px;
+        }
+        .detail-grid--hardware {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .detail-grid--reporting {
+            grid-template-columns: 1fr;
         }
 
         .photo-slot {
@@ -355,15 +634,225 @@
         }
 
         .photo-slot strong {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: rgba(42, 56, 10, 1);
             margin-bottom: 4px;
         }
 
         .photo-slot span {
-            font-size: 0.83rem;
+            font-size: 0.82rem;
             color: rgba(71, 86, 41, 0.94);
+            line-height: 1.32;
+        }
+        .photo-slot img {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(129, 163, 43, 0.42);
+            background: rgba(255, 255, 255, 0.96);
+        }
+        .photo-slot video {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(129, 163, 43, 0.42);
+            background: rgba(255, 255, 255, 0.96);
+        }
+        .photo-slot .pdf-slot-meta {
+            margin-top: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: rgba(70, 94, 29, 0.95);
+            letter-spacing: 0.03em;
+        }
+        .photo-slot.measure-combo-slot {
+            justify-content: flex-start;
+        }
+        .photo-slot.measure-combo-slot img {
+            max-height: 170px;
+            object-fit: cover;
+        }
+        .photo-slot .pdf-slot-link {
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 34px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(129, 163, 43, 0.88);
+            background: linear-gradient(135deg, rgba(204, 226, 121, 0.95) 0%, rgba(178, 210, 53, 0.95) 100%);
+            color: rgba(30, 44, 6, 1);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .photo-slot.measure-combo-slot .pdf-slot-link {
+            min-height: 30px;
+            padding: 7px 10px;
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+        }
+        .photo-slot .pdf-slot-link:hover {
+            border-color: rgba(121, 155, 38, 0.95);
+            filter: brightness(1.03);
+            transform: translateY(-1px);
+        }
+        .photo-slot .pdf-thumb-link {
+            margin-top: 8px;
+            display: block;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(129, 163, 43, 0.58);
+            background: rgba(255, 255, 255, 0.98);
+            text-decoration: none;
+            box-shadow: 0 6px 14px rgba(41, 56, 10, 0.16);
+        }
+        .photo-slot .pdf-thumb-frame {
+            display: block;
+            width: 100%;
+            height: 156px;
+            border: 0;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 1);
+        }
+        .photo-slot .pdf-thumb-label {
+            display: block;
+            padding: 7px 10px 8px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(32, 45, 7, 1);
+            background: linear-gradient(135deg, rgba(204, 226, 121, 0.95) 0%, rgba(178, 210, 53, 0.95) 100%);
+            border-top: 1px solid rgba(129, 163, 43, 0.52);
+            text-align: center;
+        }
+        .photo-slot .pdf-thumb-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 9px 18px rgba(41, 56, 10, 0.2);
+            filter: brightness(1.02);
+        }
+        .expandable-thumb {
+            cursor: zoom-in;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+        .expandable-thumb:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 16px rgba(29, 43, 4, 0.16);
+            filter: saturate(1.03);
+        }
+        .expandable-thumb:focus-visible {
+            outline: 3px solid rgba(178, 210, 53, 0.86);
+            outline-offset: 2px;
+        }
+        .image-lightbox-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 12, 2, 0.82);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 1000;
+        }
+        .image-lightbox-modal.active {
+            display: flex;
+        }
+        .image-lightbox-content {
+            width: min(1180px, 100%);
+            background: rgba(245, 250, 234, 0.98);
+            border: 2px solid rgba(129, 163, 43, 0.75);
+            border-radius: 14px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .image-lightbox-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 0.96) 0%, rgba(70, 95, 20, 0.94) 100%);
+            color: rgba(250, 240, 160, 1);
+            font-weight: 700;
+            font-size: 0.94rem;
+        }
+        .image-lightbox-close {
+            border: 1px solid rgba(250, 240, 160, 0.65);
+            background: rgba(173, 80, 10, 0.96);
+            color: white;
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .image-lightbox-close:hover {
+            filter: brightness(1.04);
+        }
+        .image-lightbox-figure {
+            margin: 0;
+            background: rgba(232, 241, 206, 0.72);
+        }
+        .image-lightbox-figure img {
+            width: 100%;
+            max-height: 78vh;
+            object-fit: contain;
+            display: block;
+            background: rgba(17, 24, 4, 0.96);
+        }
+        .image-lightbox-media-frame {
+            width: 100%;
+            height: min(78vh, 900px);
+            border: 0;
+            display: none;
+            background: rgba(255, 255, 255, 1);
+        }
+        .image-lightbox-caption {
+            margin: 0;
+            padding: 10px 14px 12px;
+            font-size: 0.92rem;
+            color: rgba(47, 60, 18, 0.98);
+            border-top: 1px solid rgba(129, 163, 43, 0.45);
+            background: rgba(241, 247, 223, 0.94);
+            line-height: 1.4;
+        }
+        .manage-gallery-caption {
+            grid-column: 1 / -1;
+            border-radius: 12px;
+            border: 1px solid rgba(129, 163, 43, 0.44);
+            background: rgba(234, 244, 205, 0.78);
+            padding: 12px 14px;
+            text-align: center;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: rgba(42, 56, 10, 0.98);
             line-height: 1.35;
+        }
+        .exchange-blur-target {
+            position: relative;
+            overflow: hidden;
+        }
+        .exchange-blur-target > * {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+        .exchange-blur-target::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(236, 242, 220, 0.38);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            pointer-events: none;
         }
 
         .bottom-actions {
@@ -378,9 +867,14 @@
         .bottom-button {
             text-decoration: none;
             border-radius: 999px;
-            padding: 10px 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 10px 17px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.84rem;
+            letter-spacing: 0.04em;
             border: 1px solid rgba(129, 163, 43, 0.56);
             color: rgba(40, 53, 7, 1);
             background: rgba(241, 247, 223, 0.95);
@@ -401,6 +895,41 @@
         }
 
         @media (max-width: 1080px) {
+            .hero-wave {
+                right: -78px;
+                width: clamp(660px, 90vw, 1020px);
+            }
+
+            .hero-wave--right-dark {
+                opacity: 0.5;
+            }
+
+            .hero-wave--right-green {
+                opacity: 0.33;
+            }
+
+            .hero-wave--right-detail {
+                right: -12px;
+                top: 60%;
+                width: clamp(420px, 48vw, 620px);
+                opacity: 0.29;
+                transform: translate(-26px, -50%);
+            }
+
+            .hero-wave--right-small {
+                right: 6px;
+                top: 66%;
+                width: clamp(220px, 34vw, 330px);
+                opacity: 0.34;
+                transform: translate(-12px, -50%);
+            }
+
+            .hero-wave-label {
+                right: clamp(76px, 13vw, 168px);
+                bottom: clamp(18px, 4.8vw, 48px);
+                font-size: clamp(0.43rem, 1vw, 0.63rem);
+                opacity: 0.68;
+            }
             .systems-grid {
                 grid-template-columns: 1fr;
             }
@@ -411,15 +940,15 @@
         }
 
         @media (max-width: 640px) {
+            .hero-wave-images {
+                display: none;
+            }
             .systems-dev-note-wrap {
-                padding: 56px 16px 26px;
+                padding: 0 16px 8px;
             }
 
             .systems-dev-note {
-                font-size: 0.94rem;
-            }
-            .hero-card {
-                padding: 22px 18px 18px;
+                font-size: 0.86rem;
             }
 
             .hero-actions,
@@ -453,161 +982,400 @@
             <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
             <a href="our-systems.html" class="nav-tab-portal active">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
-            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
-            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Energy Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian Library</a>
             <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
 
-    <div class="systems-dev-note-wrap">
-        <p class="systems-dev-note">This page is still being developed.</p>
-    </div>
 
     <section class="hero">
-        <div class="hero-card">
-            <p class="hero-kicker">Unity Energy Platform Stack</p>
-            <h1>
-                <span class="hero-title-line">Three Integrated Systems:</span>
-                <span class="hero-title-line indent">Measure, Manage (Harmonize), and Exchange</span>
-            </h1>
-            <p>
-                This page shows the full operating sequence: first we measure field behavior with installed instrumentation, then we manage and harmonize at the load with MPTS deployment, and finally we exchange resident-contained energy on-site to reduce utility demand and lower total cost.
-            </p>
-            <div class="hero-actions">
-                <a href="#measure-system" class="jump-button">Go to Measure</a>
-                <a href="#manage-system" class="jump-button">Go to Manage (Harmonize)</a>
-                <a href="#exchange-system" class="jump-button">Go to Exchange</a>
+        <div class="hero-inner">
+            <div class="hero-wave-images" aria-hidden="true">
+                <img src="assets/images/musicWaves.png" alt="" class="hero-wave hero-wave--right-dark">
+                <img src="assets/images/musicWaves03.png" alt="" class="hero-wave hero-wave--right-green">
+                <img src="assets/images/musicWaves02.png" alt="" class="hero-wave hero-wave--right-detail">
+                <img src="assets/images/musicWaves01.png" alt="" class="hero-wave hero-wave--right-small">
+                <span class="hero-wave-label">Energy Coherence</span>
+            </div>
+            <div class="hero-card">
+                <p class="hero-kicker">Unity Energy Platform Stack</p>
+                <h1>
+                    <span class="hero-title-line">Three Integrated Systems:</span>
+                    <span class="hero-title-line indent">Measure, Manage (Harmonize), and Exchange</span>
+                </h1>
+                <p>
+                    Unity’s operating stack begins with field measurement, advances through harmonization at the load, and extends into on-site exchange. This release fully presents Measure and Manage, with Exchange held in controlled preview.
+                </p>
+                <div class="hero-actions">
+                    <a href="#measure-system" class="jump-button">Go to Measure</a>
+                    <a href="#manage-system" class="jump-button">Go to Manage (Harmonize)</a>
+                    <a href="#exchange-system" class="jump-button">Go to Exchange</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="systems-grid">
-        <article class="system-card" id="measure-system">
-            <p class="kicker">System 1</p>
-            <h2>Measure</h2>
-            <div class="visual-slot">
-                <div class="visual-icon" aria-hidden="true">📟</div>
+    <div>
+        <div class="systems-dev-note-wrap">
+            <p class="systems-dev-note">Current release scope: Measure and Manage are active; Exchange remains intentionally limited in preview.</p>
+        </div>
+
+        <section class="systems-grid">
+            <article class="system-card" id="measure-system">
+                <p class="kicker">System 1</p>
+                <h2>Measure</h2>
+                <div class="visual-slot measure-photo-slot">
+                    <img src="assets/images/measure/ACCUhardware/AcuVIMwCasePic.jpeg" alt="AccuVIM meter inside protective case">
+                    <p class="visual-caption">AccuVIM metering hardware in protective field-ready enclosure.</p>
+                </div>
+                <ul>
+                    <li>Real-time electrical field observation across load-critical circuits.</li>
+                    <li>Continuous visibility into voltage, current, reactive burden, and harmonics.</li>
+                    <li>Measurement foundation for harmonization and exchange operations.</li>
+                </ul>
+                <a href="#measure-detail" class="card-button">Open Measurement Detail</a>
+            </article>
+
+            <article class="system-card" id="manage-system">
+                <p class="kicker">System 2</p>
+                <h2>Manage (Harmonize)</h2>
+                <div class="visual-slot manage-photo-slot">
+                    <img src="assets/images/manage/environment/InstallPic.png" alt="Integrated installation showing Measure and Manage systems together.">
+                    <p class="visual-caption">Integrated field installation showing instrumentation and MPTS harmonization in one deployment.</p>
+                </div>
+                <ul>
+                    <li>MPTS-driven field stabilization at active industrial loads.</li>
+                    <li>Reactive burden reduction and harmonic governance at deployment points.</li>
+                    <li>Supports low-impedance field behavior and improved transfer conditions.</li>
+                </ul>
+                <a href="#manage-detail" class="card-button">Open Harmonization Detail</a>
+            </article>
+
+            <article class="system-card exchange-blur-target" id="exchange-system">
+                <p class="kicker">System 3</p>
+                <h2>Exchange</h2>
+                <div class="visual-slot">
+                    <div class="visual-icon" aria-hidden="true">🔁</div>
+                    <p>
+                        Future layer for resident-contained on-site exchange and dynamic demand substitution.
+                    </p>
+                </div>
+                <ul>
+                    <li>Planned capability for on-property energy pathway balancing.</li>
+                    <li>Designed to reduce external utility draw during peak windows.</li>
+                    <li>Third stack layer following Measure and Manage harmonization.</li>
+                </ul>
+                <a href="#exchange-detail" class="card-button">Exchange Preview</a>
+            </article>
+        </section>
+
+        <section class="detail-sections">
+            <article class="detail-card" id="measure-detail">
+                <h3>Measure Detail — Unity Measuring Electrical Behavior Story</h3>
                 <p>
-                    Visual zone for AccuEnergy metering hardware and field placement photos (service entry, panel integration, and monitored circuits).
+                    Unity’s Measure system reveals electrical behavior across the industrial energy field, including voltage stability, current behavior, reactive burden, harmonics, and thermal transfer conditions. The hardware and reporting shown here are representative tools in that larger measurement story.
                 </p>
-            </div>
-            <ul>
-                <li>Show what the meter hardware looks like at site level.</li>
-                <li>Show where and how it is physically installed.</li>
-                <li>Show the measurement outputs used for field interpretation.</li>
-            </ul>
-            <a href="#measure-detail" class="card-button">Open Measure Detail</a>
-        </article>
+                <div class="measure-subsections">
+                    <details class="measure-subsection">
+                        <summary>Hardware</summary>
+                        <div class="measure-subsection-content">
+                        <div class="detail-grid detail-grid--hardware">
+                            <div class="photo-slot">
+                                <strong>Measurement Hardware Tools</strong>
+                                <span>AccuVIM metering hardware configured for continuous field observation.</span>
+                                <img src="assets/images/measure/ACCUhardware/AcuVIMwCasePic.jpeg" alt="AccuVIM instrumentation hardware in protective enclosure.">
+                            </div>
+                            <div class="photo-slot">
+                                <strong>Integrator Kit + Rope CTs Manual</strong>
+                                <span>Reference manual for the Accuenergy integrator kit used with RCT rope current transformers.</span>
+                                <p class="pdf-slot-meta">PDF Reference</p>
+                                <a class="pdf-slot-link pdf-thumb-link" href="assets/images/measure/ACCUhardware/Accuenergy%20Manual%20for%20Integrator%20Kit%20for%20use%20with%20RCT%20from%20Accuenergy%20Rope%20CTs.pdf">
+                                    <iframe class="pdf-thumb-frame" src="assets/images/measure/ACCUhardware/Accuenergy%20Manual%20for%20Integrator%20Kit%20for%20use%20with%20RCT%20from%20Accuenergy%20Rope%20CTs.pdf#page=1&view=FitH" title="Integrator kit and rope CTs manual preview"></iframe>
+                                    <span class="pdf-thumb-label">Open Integrator Kit + Rope CTs Manual</span>
+                                </a>
+                            </div>
+                            <div class="photo-slot">
+                                <strong>AcuCT Flex Rogowski Coil CT</strong>
+                                <span>Hardware datasheet for AcuCT Flex Series Rogowski coil current transformer components.</span>
+                                <p class="pdf-slot-meta">PDF Datasheet</p>
+                                <a class="pdf-slot-link pdf-thumb-link" href="assets/images/measure/ACCUhardware/AcuCT-Flex-Series-Rogowski-Coil-CT-Datasheet.pdf">
+                                    <iframe class="pdf-thumb-frame" src="assets/images/measure/ACCUhardware/AcuCT-Flex-Series-Rogowski-Coil-CT-Datasheet.pdf#page=1&view=FitH" title="AcuCT Flex Rogowski coil CT datasheet preview"></iframe>
+                                    <span class="pdf-thumb-label">Open AcuCT Flex CT Datasheet</span>
+                                </a>
+                            </div>
+                            <div class="photo-slot">
+                                <strong>AcuPanel 9104 / 9104x</strong>
+                                <span>Panel hardware datasheet for AcuPanel 9104 and 9104x metering interface components.</span>
+                                <p class="pdf-slot-meta">PDF Datasheet</p>
+                                <a class="pdf-slot-link pdf-thumb-link" href="assets/images/measure/ACCUhardware/AcuPanel-9104-9104x-Datasheet.pdf">
+                                    <iframe class="pdf-thumb-frame" src="assets/images/measure/ACCUhardware/AcuPanel-9104-9104x-Datasheet.pdf#page=1&view=FitH" title="AcuPanel 9104 and 9104x datasheet preview"></iframe>
+                                    <span class="pdf-thumb-label">Open AcuPanel 9104 / 9104x Datasheet</span>
+                                </a>
+                            </div>
+                            <div class="photo-slot">
+                                <strong>Acuvim II Power Meter Manual</strong>
+                                <span>User manual for Acuvim II power meter hardware used in the Measure instrumentation stack.</span>
+                                <p class="pdf-slot-meta">PDF Manual</p>
+                                <a class="pdf-slot-link pdf-thumb-link" href="assets/images/measure/ACCUhardware/Acuvim-II-Power-Meter-User-Manual-1040E1303.pdf">
+                                    <iframe class="pdf-thumb-frame" src="assets/images/measure/ACCUhardware/Acuvim-II-Power-Meter-User-Manual-1040E1303.pdf#page=1&view=FitH" title="Acuvim II power meter manual preview"></iframe>
+                                    <span class="pdf-thumb-label">Open Acuvim II Power Meter Manual</span>
+                                </a>
+                            </div>
+                        </div>
+                        </div>
+                    </details>
+                    <details class="measure-subsection">
+                        <summary>eStream Reporting</summary>
+                        <div class="measure-subsection-content">
+                        <div class="detail-grid detail-grid--reporting">
+                            <div class="photo-slot">
+                                <strong>Coherence Transition</strong>
+                                <span>Energy field transition toward a coherent state during MPTS harmonization.</span>
+                                <img src="assets/images/measure/eSTREAMreports/Measure-Transformation.png" alt="Coherence transition showing the energy field being tuned toward a coherent state.">
+                            </div>
+                            <div class="photo-slot">
+                                <strong>Voltage Behavior Mapping</strong>
+                                <span>Voltage behavior analysis showing field voltage drops detected and mapped through measurement.</span>
+                                <img src="assets/images/measure/eSTREAMreports/Measure-VoltageBehavior.png" alt="Voltage behavior analysis showing field voltage drops mapped in the measure process.">
+                            </div>
+                        </div>
+                        </div>
+                    </details>
+                </div>
+            </article>
 
-        <article class="system-card" id="manage-system">
-            <p class="kicker">System 2</p>
-            <h2>Manage (Harmonize)</h2>
-            <div class="visual-slot">
-                <div class="visual-icon" aria-hidden="true">⚙️</div>
+            <article class="detail-card" id="manage-detail">
+                <h3>Manage (Harmonize) Detail — MPTS Installation Story</h3>
                 <p>
-                    Visual zone for installed MPTS hardware in active industrial locations, centered around harmonizing electrical field behavior at the load.
+                    H490 and H240 MPTS systems are deployed at active industrial sites to reduce harmonic disturbance, thermal burden, and reactive instability while improving transfer conditions at the load.
                 </p>
-            </div>
-            <ul>
-                <li>Frame this section as field harmonization, not generic control.</li>
-                <li>Show MPTS installation photos from in-plant environments.</li>
-                <li>Connect installation to reduced burden, heat, and distortion.</li>
-            </ul>
-            <a href="#manage-detail" class="card-button">Open Manage Detail</a>
-        </article>
+                <div class="manage-subsections">
+                    <details class="manage-subsection">
+                        <summary>Hardware</summary>
+                        <div class="manage-subsection-content">
+                            <div class="detail-grid detail-grid--hardware">
+                                <div class="photo-slot">
+                                    <strong>H490 MPTS Units</strong>
+                                    <span>Installed H490 harmonization units in live industrial service.</span>
+                                    <img src="assets/images/manage/MPTShardware/3xH490.png" alt="Installed H490 MPTS units in the Manage harmonization system.">
+                                </div>
+                                <div class="photo-slot">
+                                    <strong>H240 MPTS Units</strong>
+                                    <span>Installed H240 harmonization units supporting field stabilization.</span>
+                                    <img src="assets/images/manage/MPTShardware/2xH240.png" alt="Installed H240 MPTS units in the Manage harmonization system.">
+                                </div>
+                                <div class="photo-slot">
+                                    <strong>Industrial Application</strong>
+                                    <span>1500kVA energy field deployment example for the Manage (Harmonize) system.</span>
+                                    <img src="assets/images/manage/MPTShardware/MPTS-Example.png" alt="Industrial application example showing MPTS system footprint and model dimensions for a 1500kVA energy field.">
+                                </div>
+                                <div class="photo-slot">
+                                    <strong>5-Unit Showcase</strong>
+                                    <span>Short field clip showing a multi-unit Manage hardware deployment in operation.</span>
+                                    <video src="assets/images/manage/MPTShardware/5UnitShowcase.mov" controls preload="metadata" playsinline muted loop></video>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="manage-subsection">
+                        <summary>Environment</summary>
+                        <div class="manage-subsection-content">
+                            <div class="detail-grid detail-grid--hardware">
+                                <div class="photo-slot">
+                                    <strong>Live Installation Environment</strong>
+                                    <span>Integrated site environment where Measure and Manage systems operate together.</span>
+                                    <img src="assets/images/manage/environment/InstallPic.png" alt="Integrated installation environment showing Measure and Manage systems working together.">
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </article>
 
-        <article class="system-card" id="exchange-system">
-            <p class="kicker">System 3</p>
-            <h2>Exchange</h2>
-            <div class="visual-slot">
-                <div class="visual-icon" aria-hidden="true">🔁</div>
+            <article class="detail-card exchange-blur-target" id="exchange-detail">
+                <h3>Exchange Detail — Controlled Preview Layer</h3>
                 <p>
-                    Visual zone for icons/diagrams showing resident-contained on-property energy exchange that substitutes utility draw and lowers demand.
+                    Exchange capabilities are intentionally held in preview for this release while Measure and Manage layers move into active deployment.
                 </p>
+                <div class="detail-grid">
+                    <div class="photo-slot">
+                        <strong>Exchange Topology Preview</strong>
+                        <span>Future on-site source/load pathway mapping.</span>
+                    </div>
+                    <div class="photo-slot">
+                        <strong>Demand Substitution Preview</strong>
+                        <span>Future exchange flow for reduced utility draw periods.</span>
+                    </div>
+                    <div class="photo-slot">
+                        <strong>Future Outcome Preview</strong>
+                        <span>Planned visibility into demand and cost response outcomes.</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <div class="image-lightbox-modal" id="systemsImageModal" aria-hidden="true">
+            <div class="image-lightbox-content" role="dialog" aria-modal="true" aria-labelledby="systemsImageModalTitle">
+                <div class="image-lightbox-header">
+                    <span id="systemsImageModalTitle">Expanded Image</span>
+                    <button class="image-lightbox-close" id="systemsImageModalClose" type="button">✕ Close</button>
+                </div>
+                <figure class="image-lightbox-figure">
+                    <iframe id="systemsImageModalFrame" class="image-lightbox-media-frame" src="" title="Expanded document view"></iframe>
+                    <img id="systemsImageModalImage" src="" alt="">
+                    <figcaption class="image-lightbox-caption" id="systemsImageModalCaption"></figcaption>
+                </figure>
             </div>
-            <ul>
-                <li>Show on-site exchange pathways that reuse available capacity.</li>
-                <li>Show how exchange reduces utility demand and demand charges.</li>
-                <li>Show exchange as the third step after measurement and harmonization.</li>
-            </ul>
-            <a href="#exchange-detail" class="card-button">Open Exchange Detail</a>
-        </article>
-    </section>
+        </div>
 
-    <section class="detail-sections">
-        <article class="detail-card" id="measure-detail">
-            <h3>Measure Detail — AccuEnergy Instrumentation Story</h3>
-            <p>
-                Add field photos here that show both the equipment and the physical installation context so customers can see exactly how measurement is established in real facilities.
-            </p>
-            <div class="detail-grid">
-                <div class="photo-slot">
-                    <strong>Photo Slot A</strong>
-                    <span>AccuEnergy meter face and enclosure near service entry.</span>
-                </div>
-                <div class="photo-slot">
-                    <strong>Photo Slot B</strong>
-                    <span>CT/PT or panel-side placement demonstrating install location.</span>
-                </div>
-                <div class="photo-slot">
-                    <strong>Photo Slot C</strong>
-                    <span>Measurement output view used for operational reporting.</span>
-                </div>
-            </div>
-        </article>
-
-        <article class="detail-card" id="manage-detail">
-            <h3>Manage (Harmonize) Detail — MPTS Installation Story</h3>
-            <p>
-                This section positions Manage as harmonization. Use installation photos from active sites to show MPTS placed at load-critical points where burden is reduced and field behavior is stabilized.
-            </p>
-            <div class="detail-grid">
-                <div class="photo-slot">
-                    <strong>Photo Slot A</strong>
-                    <span>MPTS cabinet/panel installation in operational plant space.</span>
-                </div>
-                <div class="photo-slot">
-                    <strong>Photo Slot B</strong>
-                    <span>Electrical integration detail showing center install work.</span>
-                </div>
-                <div class="photo-slot">
-                    <strong>Photo Slot C</strong>
-                    <span>Before/after harmonization visual or performance callout.</span>
-                </div>
-            </div>
-        </article>
-
-        <article class="detail-card" id="exchange-detail">
-            <h3>Exchange Detail — Resident-Contained Energy Substitution</h3>
-            <p>
-                Show how on-property energy exchange offsets external utility demand. This section should visualize the path from harmonized field behavior into lower utility pull and lower overall cost.
-            </p>
-            <div class="detail-grid">
-                <div class="photo-slot">
-                    <strong>Icon/Diagram Slot A</strong>
-                    <span>On-site source and load relationship map.</span>
-                </div>
-                <div class="photo-slot">
-                    <strong>Icon/Diagram Slot B</strong>
-                    <span>Exchange flow showing utility substitution pathway.</span>
-                </div>
-                <div class="photo-slot">
-                    <strong>Icon/Diagram Slot C</strong>
-                    <span>Demand and cost reduction outcome visual.</span>
-                </div>
-            </div>
-        </article>
-    </section>
-
-    <div class="bottom-actions">
-        <a href="index.html" class="bottom-button">← Return to Home</a>
-        <a href="contact-us.html" class="bottom-button">Discuss a Site Walkthrough</a>
-        <a href="products-services.html" class="bottom-button primary">Continue to Products & Services</a>
+        <div class="bottom-actions">
+            <a href="index.html" class="bottom-button">← Return to Home</a>
+            <a href="contact-us.html" class="bottom-button">Discuss a Site Walkthrough</a>
+            <a href="products-services.html" class="bottom-button primary">Continue to Products & Services</a>
+        </div>
+        <footer>
+            <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+            <p>Transforming how facilities understand their electrical systems.</p>
+        </footer>
     </div>
-    <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
-        <p>Transforming how facilities understand their electrical systems.</p>
-    </footer>
+    <script>
+        const systemsImageModal = document.getElementById('systemsImageModal');
+        const systemsImageModalContent = document.querySelector('#systemsImageModal .image-lightbox-content');
+        const systemsImageModalFrame = document.getElementById('systemsImageModalFrame');
+        const systemsImageModalImage = document.getElementById('systemsImageModalImage');
+        const systemsImageModalCaption = document.getElementById('systemsImageModalCaption');
+        const systemsImageModalTitle = document.getElementById('systemsImageModalTitle');
+        const systemsImageModalClose = document.getElementById('systemsImageModalClose');
+        const systemsExpandableImages = document.querySelectorAll('.measure-photo-slot img, .manage-photo-slot img, .photo-slot img');
+        const systemsPdfLinks = document.querySelectorAll('.pdf-slot-link');
+
+        function getSystemsSlotSummary(slotEl) {
+            if (!slotEl) {
+                return '';
+            }
+            const slotTitle = slotEl.querySelector('strong')?.textContent?.trim() || '';
+            const slotText = slotEl.querySelector('span')?.textContent?.trim() || '';
+            return [slotTitle, slotText].filter(Boolean).join(' — ');
+        }
+
+        function getSystemsImageCaption(imageEl) {
+            const dataCaption = imageEl.dataset.modalCaption || '';
+            if (dataCaption) {
+                return dataCaption;
+            }
+            const systemVisualCaption = imageEl.closest('.measure-photo-slot, .manage-photo-slot')?.querySelector('.visual-caption')?.textContent?.trim() || '';
+            if (systemVisualCaption) {
+                return systemVisualCaption;
+            }
+            const photoSlot = imageEl.closest('.photo-slot');
+            if (photoSlot) {
+                return getSystemsSlotSummary(photoSlot);
+            }
+            return imageEl.alt || 'Expanded image.';
+        }
+
+        function openSystemsMediaModal({ type = 'image', src = '', title = 'Expanded Media', caption = '' }) {
+            if (!systemsImageModal || !systemsImageModalImage || !systemsImageModalFrame || !src) {
+                return;
+            }
+            if (type === 'pdf') {
+                systemsImageModalImage.style.display = 'none';
+                systemsImageModalImage.src = '';
+                systemsImageModalImage.alt = '';
+                systemsImageModalFrame.style.display = 'block';
+                systemsImageModalFrame.src = src;
+            } else {
+                systemsImageModalFrame.style.display = 'none';
+                systemsImageModalFrame.src = '';
+                systemsImageModalImage.style.display = 'block';
+                systemsImageModalImage.src = src;
+            }
+            systemsImageModalImage.alt = title;
+            systemsImageModalTitle.textContent = title;
+            systemsImageModalCaption.textContent = caption;
+            systemsImageModal.classList.add('active');
+            systemsImageModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+        }
+
+        function openSystemsImageModal(imageEl) {
+            if (!imageEl?.src) {
+                return;
+            }
+            const title = imageEl.alt || 'Expanded Image';
+            const caption = getSystemsImageCaption(imageEl);
+            openSystemsMediaModal({
+                type: 'image',
+                src: imageEl.src,
+                title,
+                caption
+            });
+        }
+
+        function openSystemsPdfModal(linkEl) {
+            const pdfSrc = linkEl?.getAttribute('href') || '';
+            if (!pdfSrc) {
+                return;
+            }
+            const slotTitle = linkEl.closest('.photo-slot')?.querySelector('strong')?.textContent?.trim() || 'Expanded PDF';
+            const caption = getSystemsSlotSummary(linkEl.closest('.photo-slot')) || linkEl.textContent?.trim() || '';
+            openSystemsMediaModal({
+                type: 'pdf',
+                src: pdfSrc,
+                title: slotTitle,
+                caption
+            });
+        }
+
+        function closeSystemsImageModal() {
+            if (!systemsImageModal || !systemsImageModalImage || !systemsImageModalCaption || !systemsImageModalFrame) {
+                return;
+            }
+            systemsImageModal.classList.remove('active');
+            systemsImageModal.setAttribute('aria-hidden', 'true');
+            systemsImageModalFrame.style.display = 'none';
+            systemsImageModalFrame.src = '';
+            systemsImageModalImage.style.display = 'block';
+            systemsImageModalImage.src = '';
+            systemsImageModalImage.alt = '';
+            systemsImageModalCaption.textContent = '';
+            document.body.classList.remove('modal-open');
+        }
+
+        systemsExpandableImages.forEach((imageEl) => {
+            imageEl.classList.add('expandable-thumb');
+            imageEl.setAttribute('tabindex', '0');
+            imageEl.setAttribute('role', 'button');
+            imageEl.setAttribute('aria-label', `${imageEl.alt || 'Image'} — click to expand`);
+            imageEl.addEventListener('click', () => {
+                openSystemsImageModal(imageEl);
+            });
+            imageEl.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openSystemsImageModal(imageEl);
+                }
+            });
+        });
+        systemsPdfLinks.forEach((linkEl) => {
+            linkEl.addEventListener('click', (event) => {
+                event.preventDefault();
+                openSystemsPdfModal(linkEl);
+            });
+        });
+
+        systemsImageModal?.addEventListener('click', closeSystemsImageModal);
+        systemsImageModalContent?.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+        systemsImageModalClose?.addEventListener('click', closeSystemsImageModal);
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && systemsImageModal?.classList.contains('active')) {
+                closeSystemsImageModal();
+            }
+        });
+    </script>
 </body>
 </html>
