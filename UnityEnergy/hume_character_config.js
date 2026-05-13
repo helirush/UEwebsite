@@ -1,10 +1,10 @@
 /*
-Maxwellian Hume Character Config (eWebmaster testing)
+Maxwellian Hume Voice + OpenAI Cognition Character Config (eWebmaster testing)
 
 IMPORTANT:
-- Do NOT place Hume API keys or secret keys in this file.
+- Do NOT place OpenAI API keys or secret keys in this file.
 - This file is client-visible and should only contain non-secret embed metadata.
-- For production auth, mint short-lived access tokens server-side and use a secure widget/app URL.
+- For production auth, mint short-lived session tokens server-side and use a secure widget/app URL.
 */
 
 window.MAXWELLIAN_HUME = {
@@ -16,6 +16,8 @@ window.MAXWELLIAN_HUME = {
   default_character_id: "clerk-maxwell",
   default_context_source: "general",
   default_ui_mode: "modal",
+  // Voice stack selector for widget routing.
+  voice_engine: "hume",
   // Diagnostics can be re-enabled for troubleshooting, but default is off in normal operation.
   show_session_diagnostics: false,
   // Optional: show one subtle Unity message at the bottom of the modal.
@@ -31,23 +33,158 @@ window.MAXWELLIAN_HUME = {
   ],
   unity_footer_rotate_seconds: 15,
   floating_launcher_enabled: true,
-  floating_launcher_tooltip: "Speak with Clerk",
-  floating_launcher_icon_url: "assets/images/unity-maxwell-button.png",
+  floating_launcher_tooltip: "Meet with Clerk",
+  floating_launcher_icon_url: "assets/images/ClerkMaxwell_60423t.png",
   floating_launcher_context_mode: "technical-follow-up",
   floating_launcher_response_style_hint:
-    "Natural, answer-first field guidance with concise technical clarity.",
+    "Warm, curious, and inviting; answer first in plain language, then add concise technical clarity.",
+  clerk_page_access_control_enabled: true,
+  clerk_voice_allowed_pages: [
+    "about-unity",
+    "unity-story",
+    "products-services",
+    "our-systems",
+    "electrical-energy-story",
+  ],
+  clerk_voice_blocked_pages: [
+    "index",
+    "home",
+    "customer-portals",
+  ],
+  lead_capture_enabled: true,
+  lead_capture_collect_company: true,
+  lead_capture_prompt_intent: true,
+  lead_capture_require_confirmation_email_consent: true,
+  lead_capture_prompt_newsletter: true,
+  lead_capture_prompt_text_notifications: true,
+  lead_capture_prompt_sales_outreach: true,
+  lead_capture_endpoint: "/api/maxwellian/lead-capture",
+  lead_capture_workflow:
+    "Start with intent-first discovery: ask what the visitor wants to solve or learn on this page. Do not ask for name or company in the first question. After providing initial technical value, gather identity naturally one field at a time (name or company, then the other if needed). Do not repeat equivalent company questions. Capture email when offered or when follow-up value is clear. Ask explicit permission before any outbound confirmation email. Ask explicit permission for a Unity sales executive to reach out. Ask whether they want to join the Maxwellian News Brief (weekly newsletter). For now, capture text-notification interest only as a preference signal; do not require phone collection or SMS enrollment in this phase.",
+  cross_page_roaming_enabled: true,
+  cross_page_roaming_auto_resume: true,
+  cross_page_roaming_followup_prompt:
+    "Ask whether the visitor has any additional questions on this page, then offer to continue guidance on the next page they open.",
+  customer_guide_enabled: true,
+  customer_memory_enabled: true,
+  customer_memory_max_entries: 16,
+  customer_memory_excerpt_char_limit: 1800,
+  customer_exit_sweep_enabled: true,
+  customer_exit_sweep_prompt:
+    "Before you exit, should Clerk save a short memory recap for this customer guide session?",
+  customer_exit_sweep_note_prompt:
+    "Add an optional note for your next visit (leave blank to skip):",
+  customer_exit_sweep_saved_status:
+    "Customer memory recap saved for your next session.",
   engagement_protocol:
-    "Lead with technical value first. If the visitor asks a technical question, answer immediately with clear field-grounded guidance before any onboarding. Introduce yourself naturally as Clerk Maxwell of Unity Energy when relevant. Ask for the visitor's name only after delivering value and only if it helps continue the discussion. If asked your name, answer clearly: 'My name is Clerk Maxwell, Chief Scientist with Unity Energy.'",
+    "Lead with a warm, human greeting and helpful curiosity. If the visitor asks a technical question, answer immediately with clear field-grounded guidance before any onboarding. Keep responses conversational, encouraging, and context-aware. Provide speech-ready phrasing that sounds natural when spoken, without decorative pseudo-voice punctuation or theatrical styling.",
   response_precedence_guidance:
-    "Answer technical intent first. Lead with a direct, field-grounded conclusion, then explain mechanism and operational implication. Ask follow-up questions only when they materially improve guidance. Always speak voltage units as 'volts' (example: '480 volts'), never as the standalone letter 'V'.",
+    "Answer technical intent first in friendly plain language. Lead with a direct, field-grounded conclusion, then explain mechanism and operational implication. Keep phrasing concise and speech-ready for TTS rendering. Ask follow-up questions only when they materially improve guidance. Use intent as the first discovery question, and do not ask for name/company in the first question. Ask identity prompts one at a time and do not repeat equivalent company wording. Always speak voltage units as 'volts' (example: '480 volts'), never as the standalone letter 'V'. Always articulate the acronym as 'M P T S' (four letters), never 'MP', 'MPT', or 'MPTs'.",
   voltage_unit_speech_rule:
     "Before finalizing each spoken response, rewrite voltage abbreviations into spoken units: '480V' or '480 V' becomes '480 volts'; '13.8kV' becomes '13.8 kilovolts'; '24VDC' becomes '24 volts DC'.",
+  mpts_speech_rule:
+    "Always articulate the acronym as 'M P T S' (all four letters), never as 'MP', 'MPT', or 'MPTs'.",
+  mpts_fail_safe_rule:
+    "Fail-safe: before finalizing each spoken response, normalize any 'MP', 'MPT', or 'MPTS' variant to 'M P T S' while preserving natural conversational tone.",
   knowledge_reference_spine:
-    "Canonical MPTS definition: MPTS (Maximum Power Transfer Solution) is Unity Energy’s AC field harmonization method that reduces reactive burden and harmonic distortion at the load, stabilizes power factor, recovers usable capacity, and lowers thermal burden without disruptive infrastructure replacement.",
+    "Canonical MPTS definition: M P T S (Maximum Power Transfer Solution) is Unity Energy’s AC field harmonization method that lives in the Manage layer of Measure-Manage-Exchange. M P T S uses dynamic tuner architecture ('copper-computer' tuners) distributed in the energy field to reduce reactive burden and harmonic distortion at the load, stabilize power factor, recover usable capacity, and lower thermal burden without disruptive infrastructure replacement.",
+  content_awareness_mode: true,
+  content_grounding_policy:
+    "Treat launch context, active page context, and selected skill-pack excerpts as the only authoritative sources for factual Unity claims. Do not invent customer names, deployment outcomes, pricing terms, performance guarantees, utility commitments, policy claims, or statistics that are not present in provided context.",
+  unknown_answer_fallback:
+    "I don't have enough verified Unity context to answer that reliably yet. If you share the page, system detail, or document reference, I can give a grounded answer.",
+  content_awareness_scope_lock: true,
+  content_awareness_scope_fallback_message:
+    "I can answer from this active page and its approved Unity source files. If you want analysis outside this scope, share the exact page or file reference first.",
+  content_awareness_allowed_files: [
+    "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    "eestream/eWebmaster/UnityEnergy/hume_character_config.js",
+  ],
+  content_awareness_page_source_files: {
+    index: [
+      "eestream/eWebmaster/UnityEnergy/index.html",
+      "eestream/eWebmaster/UnityEnergy/unity-story.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    home: [
+      "eestream/eWebmaster/UnityEnergy/index.html",
+      "eestream/eWebmaster/UnityEnergy/unity-story.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "about-unity": [
+      "eestream/eWebmaster/UnityEnergy/about-unity.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "unity-story": [
+      "eestream/eWebmaster/UnityEnergy/unity-story.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      "eestream/eWebmaster/UnityEnergy/maxwellian_library.json",
+    ],
+    "founder-message": [
+      "eestream/eWebmaster/UnityEnergy/founder-message.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "products-services": [
+      "eestream/eWebmaster/UnityEnergy/products-services.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "our-systems": [
+      "eestream/eWebmaster/UnityEnergy/our-systems.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "customer-portals": [
+      "eestream/eWebmaster/UnityEnergy/customer-portals.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "contact-us": [
+      "eestream/eWebmaster/UnityEnergy/contact-us.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "electrical-energy-story": [
+      "eestream/eWebmaster/UnityEnergy/electrical-energy-story.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    maxwellian: [
+      "eestream/eWebmaster/UnityEnergy/maxwellian.html",
+      "eestream/eWebmaster/UnityEnergy/maxwellian_library.json",
+      "eestream/eWebmaster/UnityEnergy/einsights_library.json",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "customer-fosterfarms": [
+      "eestream/eWebmaster/Customers/FosterFarms/index.html",
+      "eestream/eWebmaster/Customers/FosterFarms/CherryAve_Site/index.html",
+      "eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/index.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "customer-norfolkiron": [
+      "eestream/eWebmaster/Customers/NorfolkIron/index.html",
+      "eestream/eWebmaster/Customers/NorfolkIron/Catoosa_Site/index.html",
+      "eestream/eWebmaster/Customers/NorfolkIron/Greeley_Site/index.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "customer-avco": [
+      "eestream/eWebmaster/Customers/AVCO/index.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "customer-armi": [
+      "eestream/eWebmaster/Customers/ARMI/index.html",
+      "eestream/eWebmaster/Customers/ARMI/Fayetteville_Site/index.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    "customer-boa-building": [
+      "eestream/eWebmaster/Customers/BOA_Building/index.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+    ],
+    general: [
+      "eestream/eWebmaster/UnityEnergy/index.html",
+      "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      "eestream/eWebmaster/UnityEnergy/hume_character_config.js",
+    ],
+  },
   maxwellian_knowledge_seed:
     "Unity Energy doctrine: Measure, Manage, Exchange for industrial 480-volt systems. Core concepts: reactive energy (kVAR), power factor improvement, harmonic reduction, transformer thermal relief, and lowering waste/demand cost without disruptive infrastructure replacement. Maxwellian Intelligence Brief anchors: Issue 1 (Ames AC origin + market convergence), Issue 2 (PJM expansion + transformer bottlenecks), Issue 3 (five-domain strategic synthesis), Issue 4 (co-op and kVA billing opportunity), Issue 5 (Florida utility landscape). e-Insights anchors: Electrogram foundations, reactive Q&A, harmonic story, and resonance/orchestration framing. Knowledge priority order: (1) response_precedence_guidance + knowledge_reference_spine, (2) session_context + system_prompt_text, (3) engagement_protocol, (4) this maxwellian_knowledge_seed, (5) question notes context. Use clear, practical, field-grounded explanations only.",
   syntax_awareness_context:
-    "Always maintain Unity vocabulary consistency. Speak from inside operating field conditions (loads, harmonics, transformer stress, thermal burden), avoid vague shorthand, and map each explanation to practical operations. For voltage units, always say 'volts' and never say the standalone letter 'V'.",
+    "Always maintain Unity vocabulary consistency. Speak from inside operating field conditions (loads, harmonics, transformer stress, thermal burden), avoid vague shorthand, and map each explanation to practical operations. For voltage units, always say 'volts' and never say the standalone letter 'V'. For M P T S, always speak all four letters ('M P T S') and never shorten to 'MP', 'MPT', or 'MPTs'. Keep M P T S positioned in Unity's Manage layer and describe it as dynamic tuner-based field harmonization when relevant.",
   syntax_awareness_glossary: [
     {
       term: "Measure",
@@ -57,7 +194,7 @@ window.MAXWELLIAN_HUME = {
     {
       term: "Manage",
       definition:
-        "Unity load-level intervention using MPTS to reduce reactive and harmonic stress while improving usable field stability.",
+        "Unity load-level intervention layer where M P T S operates to reduce reactive and harmonic stress while improving usable field stability.",
     },
     {
       term: "Exchange",
@@ -67,7 +204,7 @@ window.MAXWELLIAN_HUME = {
     {
       term: "MPTS",
       definition:
-        "Maximum Power Transfer Solution (AC): Unity’s field harmonization method that reduces reactive and harmonic burden, stabilizes power factor, recovers usable capacity, and lowers thermal stress.",
+        "Always pronounce as 'M P T S' (four letters). Maximum Power Transfer Solution (AC): Unity’s dynamic tuner-based field harmonization method in the Manage layer that reduces reactive and harmonic burden, stabilizes power factor, recovers usable capacity, and lowers thermal stress.",
     },
     {
       term: "Reactive burden",
@@ -84,6 +221,11 @@ window.MAXWELLIAN_HUME = {
       definition:
         "Always say 'volts' (example: '480 volts'). Never speak the standalone letter 'V' when describing voltage.",
     },
+    {
+      term: "MPTS speech",
+      definition:
+        "Always speak the acronym as 'M P T S' and never as 'MP', 'MPT', or 'MPTs'.",
+    },
   ],
   page_context_profiles: {
     index: {
@@ -92,6 +234,11 @@ window.MAXWELLIAN_HUME = {
         "Top-level Unity overview and entry point into introduction media, systems pages, and customer-facing exploration paths.",
       context_sources: ["home", "index"],
       skill_pack_ids: ["unity-introduction-followup", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/index.html",
+        "eestream/eWebmaster/UnityEnergy/unity-story.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
       key_points: [
         "Frame answers in Measure-Manage-Exchange language.",
         "Help visitor choose the next learning path from high-level pages into technical detail.",
@@ -103,6 +250,12 @@ window.MAXWELLIAN_HUME = {
         "Company mission and field-governance framing: make the invisible visible, then govern it with practical engineering discipline.",
       context_sources: ["about-unity"],
       skill_pack_ids: ["unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/about-unity.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Page-aware greeting: acknowledge the visitor is on the About Unity page, then ask how you can help clarify the mission or field-governance story they just read.",
       key_points: [
         "Tie explanations to industrial 480-volt realities and operational outcomes.",
         "Clarify the mission and doctrine before deeper technical detail.",
@@ -114,6 +267,13 @@ window.MAXWELLIAN_HUME = {
         "Unity Faraday introduction experience where visitors may ask follow-up questions about the spoken message.",
       context_sources: ["about-unity", "home", "unity-story"],
       skill_pack_ids: ["unity-introduction-followup", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/unity-story.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+        "eestream/eWebmaster/UnityEnergy/maxwellian_library.json",
+      ],
+      session_context:
+        "Page-aware greeting: mention the Unity introduction they just heard and invite questions about the message, then offer to walk through any section of the Unity story on this page.",
       key_points: [
         "Invite follow-up questions on what Unity just explained.",
         "Summarize hidden reactive/harmonic/thermal burden and operational implications.",
@@ -125,6 +285,10 @@ window.MAXWELLIAN_HUME = {
         "Founder narrative context emphasizing why Unity exists and how field visibility translates into operational governance.",
       context_sources: ["founder-message", "about-unity"],
       skill_pack_ids: ["unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/founder-message.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
     },
     "products-services": {
       title: "Products and Services",
@@ -132,6 +296,12 @@ window.MAXWELLIAN_HUME = {
         "Unity products and services page where visitors ask what Unity offers, how it is delivered, and which service path applies.",
       context_sources: ["products-services"],
       skill_pack_ids: ["unity-services-awareness", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/products-services.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Page-aware greeting: acknowledge the Products & Services page, then ask which offering or workflow the visitor wants clarified.",
     },
     "our-systems": {
       title: "Our Systems",
@@ -139,6 +309,12 @@ window.MAXWELLIAN_HUME = {
         "Systems-level page describing Measure, Manage, and Exchange implementation architecture and workflow relationship.",
       context_sources: ["our-systems"],
       skill_pack_ids: ["unity-services-awareness", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/our-systems.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Page-aware greeting: acknowledge the Our Systems page and ask which system layer (Measure, Manage, Exchange) they want to explore.",
     },
     "customer-portals": {
       title: "Customer Portals",
@@ -146,6 +322,108 @@ window.MAXWELLIAN_HUME = {
         "Customer portal navigation and interpretation context for existing Unity clients reviewing dashboards and analytics.",
       context_sources: ["customer-portals"],
       skill_pack_ids: ["unity-services-awareness", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/customer-portals.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Customer-portal assistance mode: guide visitors through what they are seeing on the portal page in plain language first, then layer technical detail only as needed. Stay grounded in the active portal page context and approved source files. If the user references a different portal/tab, ask which one before making specific claims.",
+      key_points: [
+        "Explain portal sections in plain language before deeper technical detail.",
+        "Offer page-by-page guidance using the current portal view as primary context.",
+        "If details are outside current scope, ask for the specific portal tab or file before answering.",
+        "Keep tone warm, calm, and helpful for both technical and non-technical visitors.",
+      ],
+    },
+    "customer-fosterfarms": {
+      title: "Foster Farms Customer Guide",
+      summary:
+        "Dedicated customer-guide mode for Foster Farms pages with scoped memory continuity and chart-aware interpretation.",
+      context_sources: ["customer-fosterfarms"],
+      skill_pack_ids: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/Customers/FosterFarms/index.html",
+        "eestream/eWebmaster/Customers/FosterFarms/CherryAve_Site/index.html",
+        "eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/index.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Customer guide mode is active for Foster Farms. Acknowledge the current page first, continue from saved customer memory, and provide William-style chart interpretation when board data or transformer patterns are referenced.",
+    },
+    "customer-norfolkiron": {
+      title: "Norfolk Iron Customer Guide",
+      summary:
+        "Dedicated customer-guide mode for Norfolk Iron pages with scoped memory continuity and chart-aware interpretation.",
+      context_sources: ["customer-norfolkiron"],
+      skill_pack_ids: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/Customers/NorfolkIron/index.html",
+        "eestream/eWebmaster/Customers/NorfolkIron/Catoosa_Site/index.html",
+        "eestream/eWebmaster/Customers/NorfolkIron/Greeley_Site/index.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Customer guide mode is active for Norfolk Iron. Reference the active site page first, preserve account-specific continuity, and translate chart behavior into operational implications.",
+    },
+    "customer-avco": {
+      title: "AVCO Customer Guide",
+      summary:
+        "Dedicated customer-guide mode for AVCO pages with scoped memory continuity and chart-aware interpretation.",
+      context_sources: ["customer-avco"],
+      skill_pack_ids: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/Customers/AVCO/index.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Customer guide mode is active for AVCO. Stay grounded to the active AVCO page and continue prior customer context without mixing in other customer histories.",
+    },
+    "customer-armi": {
+      title: "ARMI Customer Guide",
+      summary:
+        "Dedicated customer-guide mode for ARMI pages with scoped memory continuity and chart-aware interpretation.",
+      context_sources: ["customer-armi"],
+      skill_pack_ids: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/Customers/ARMI/index.html",
+        "eestream/eWebmaster/Customers/ARMI/Fayetteville_Site/index.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Customer guide mode is active for ARMI. Keep guidance specific to ARMI study context, transformer behavior, and current page scope.",
+    },
+    "customer-boa-building": {
+      title: "BOA Building Customer Guide",
+      summary:
+        "Dedicated customer-guide mode for BOA Building pages with scoped memory continuity and chart-aware interpretation.",
+      context_sources: ["customer-boa-building"],
+      skill_pack_ids: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/Customers/BOA_Building/index.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Customer guide mode is active for BOA Building. Continue from account memory and keep all answers grounded to BOA page context and approved files.",
+    },
+    "contact-us": {
+      title: "Contact Us",
+      summary:
+        "Visitor is at the Contact page and likely deciding final next steps with Unity Energy.",
+      context_sources: ["contact-us", "contact"],
+      skill_pack_ids: ["unity-services-awareness", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/contact-us.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Contact-page engagement mode: The visitor is on Contact Us and is likely concluding their visit. Open with a warm closing line such as, 'I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?' Then guide a concise closeout sequence: gather name, company, and email; ask permission to send a confirmation email; ask if they want to join the Maxwellian News Brief; and ask if they want future text-notification updates as a preference only (no phone collection required in this phase). Keep support concise, useful, and focused on final guidance.",
+      key_points: [
+        "Acknowledge they are at the Contact page and likely wrapping up.",
+        "Offer one concise final-help question before handoff to email/contact.",
+        "Collect name, company, and email before final handoff when the visitor is willing.",
+        "Ask explicit confirmation-email permission and Maxwellian News Brief enrollment.",
+        "Keep tone warm, professional, and technically grounded.",
+      ],
     },
     "electrical-energy-story": {
       title: "Electrical Energy Story",
@@ -153,6 +431,12 @@ window.MAXWELLIAN_HUME = {
         "Causal timeline and educational explanation of field behavior, burden formation, and Unity intervention rationale.",
       context_sources: ["electrical-energy-story"],
       skill_pack_ids: ["unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/electrical-energy-story.html",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Page-aware greeting: acknowledge the Electrical Energy Story page and ask which part of the field story they want unpacked. For history-focused questions on this page, collect at least visitor name and company before deeper historical Q&A. Keep Electrical Energy Story history responses bounded to a short sequence, then transition back to Unity guidance with a courteous wrap line.",
     },
     maxwellian: {
       title: "Maxwellian Intelligence Hub",
@@ -160,7 +444,105 @@ window.MAXWELLIAN_HUME = {
         "Maxwellian briefs and eInsights learning context where users ask follow-up questions on published stories and technical narratives.",
       context_sources: ["maxwellian"],
       skill_pack_ids: ["maxwellian-library-awareness", "unity-core-doctrine"],
+      source_files: [
+        "eestream/eWebmaster/UnityEnergy/maxwellian.html",
+        "eestream/eWebmaster/UnityEnergy/maxwellian_library.json",
+        "eestream/eWebmaster/UnityEnergy/einsights_library.json",
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
     },
+  },
+  // Tour-guide routing catalog for consent-based page guidance.
+  tour_guide_enabled: true,
+  tour_guide_max_candidates: 3,
+  tour_guide_allow_direct_navigation: true,
+  tour_guide_consent_prompt:
+    "If a visitor asks about another area and you have a confident route match, ask: “Would you like me to go there?” Wait for explicit yes before navigating.",
+  tour_guide_routes: [
+    {
+      id: "products-services",
+      title: "Products and Services",
+      path: "/UnityEnergy/products-services.html",
+      context_source: "products-services",
+      summary:
+        "Unity offerings, deployment paths, and practical service fit for industrial facilities.",
+      keywords: ["products", "services", "offering", "deployment", "implementation", "support"],
+    },
+    {
+      id: "our-systems",
+      title: "Our Systems",
+      path: "/UnityEnergy/our-systems.html",
+      context_source: "our-systems",
+      summary:
+        "Measure, Manage, and Exchange system layers and how they coordinate in operation.",
+      keywords: ["our systems", "measure", "manage", "exchange", "architecture", "workflow"],
+    },
+    {
+      id: "customer-portals",
+      title: "Customer Portals",
+      path: "/UnityEnergy/customer-portals.html",
+      context_source: "customer-portals",
+      summary:
+        "Customer portal guidance for dashboards, interpretation, and account-specific follow-up paths.",
+      keywords: ["portal", "dashboard", "customer portal", "foster farms", "norfolk iron", "avco", "armi", "boa"],
+    },
+    {
+      id: "electrical-energy-story",
+      title: "Electrical Energy Story",
+      path: "/UnityEnergy/electrical-energy-story.html",
+      context_source: "electrical-energy-story",
+      summary:
+        "Educational field timeline explaining burden formation, causality, and intervention rationale.",
+      keywords: ["energy story", "timeline", "field story", "education", "learn more"],
+    },
+    {
+      id: "contact-us",
+      title: "Contact Us",
+      path: "/UnityEnergy/contact-us.html",
+      context_source: "contact-us",
+      summary:
+        "Final handoff page for contact capture, next steps, and direct engagement with Unity team.",
+      keywords: ["contact", "reach out", "email", "next step", "talk to sales"],
+    },
+  ],
+  tour_guide_keyword_routes: [
+    {
+      id: "portal-guidance",
+      route_id: "customer-portals",
+      keywords: ["portal", "dashboard", "customer site", "foster farms", "norfolk iron", "avco", "armi", "boa"],
+      priority: 42,
+    },
+    {
+      id: "pf-and-reactive",
+      route_id: "products-services",
+      keywords: ["power factor", "reactive", "kvar", "harmonic", "thermal burden", "capacity recovery"],
+      priority: 34,
+    },
+    {
+      id: "systems-architecture",
+      route_id: "our-systems",
+      keywords: ["measure manage exchange", "system architecture", "workflow", "how it works"],
+      priority: 30,
+    },
+    {
+      id: "educational-story",
+      route_id: "electrical-energy-story",
+      keywords: ["field story", "timeline", "energy story", "explain the page", "learn this area"],
+      priority: 20,
+    },
+    {
+      id: "contact-handoff",
+      route_id: "contact-us",
+      keywords: ["contact", "send me details", "reach your team", "next step"],
+      priority: 14,
+    },
+  ],
+  tour_guide_page_next_routes: {
+    "customer-portals": ["products-services", "our-systems", "contact-us"],
+    "products-services": ["our-systems", "customer-portals", "contact-us"],
+    "our-systems": ["products-services", "customer-portals", "contact-us"],
+    "electrical-energy-story": ["our-systems", "products-services", "contact-us"],
+    "contact-us": ["products-services", "our-systems"],
   },
   // Intelligence routing controls cost and reasoning depth by launch context.
   // NOTE: profile-level config_id/voice_id are optional. If omitted, Clerk uses global defaults.
@@ -171,7 +553,7 @@ window.MAXWELLIAN_HUME = {
       label: "Lightweight Context",
       description:
         "Low-cost retrieval and clarification mode for follow-up conversations on known page/audio/video context.",
-      // Optional: set a dedicated lower-cost Hume config_id here.
+      // Optional: set a dedicated lower-cost model profile id here.
       config_id: "",
       // Optional: set a dedicated voice profile id for this intelligence tier.
       voice_id: "",
@@ -201,6 +583,24 @@ window.MAXWELLIAN_HUME = {
         input_tokens_hard: 4200,
         output_tokens_soft: 320,
         output_tokens_hard: 520,
+      },
+    },
+    "customer-operations": {
+      label: "Customer Operations Guide",
+      description:
+        "Customer-scoped operating mode with memory continuity and clear transformer/chart interpretation guidance.",
+      config_id: "",
+      voice_id: "",
+      session_context_char_limit: 3600,
+      skill_pack_excerpt_char_limit: 2400,
+      skill_packs_max_selected: 3,
+      response_style:
+        "Operational translator tone: connect chart signals to practical actions, reference current page context first, and preserve account continuity.",
+      token_budget: {
+        input_tokens_soft: 4200,
+        input_tokens_hard: 5600,
+        output_tokens_soft: 420,
+        output_tokens_hard: 760,
       },
     },
     "deep-analysis": {
@@ -252,10 +652,14 @@ window.MAXWELLIAN_HUME = {
       context_sources: [
         "products-services",
         "our-systems",
-        "customer-portals",
         "electrical-energy-story",
         "general",
       ],
+    },
+    {
+      id: "customer-operations-guide",
+      profile_id: "customer-operations",
+      context_sources: ["customer-*"],
     },
   ],
   // Declarative policy layer for launch context handling.
@@ -284,20 +688,23 @@ window.MAXWELLIAN_HUME = {
     {
       id: "about-unity-followup-allow",
       action: "allow",
-      context_sources: ["about-unity", "home"],
+      context_sources: ["about-unity", "unity-story"],
     },
     {
       id: "website-pages-allow",
       action: "allow",
       context_sources: [
         "unity-story",
-        "founder-message",
         "products-services",
         "our-systems",
-        "customer-portals",
         "electrical-energy-story",
-        "maxwellian",
       ],
+    },
+    {
+      id: "customer-guide-allow",
+      action: "allow",
+      context_sources: ["customer-*"],
+      require_fields: ["customer_slug", "guide_mode"],
     },
     {
       id: "general-allow",
@@ -333,8 +740,14 @@ window.MAXWELLIAN_HUME = {
       max_packs: 2,
     },
     {
+      id: "customer-guide-bundle",
+      context_sources: ["customer-*"],
+      include_ids: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      max_packs: 3,
+    },
+    {
       id: "services-pages-bundle",
-      context_sources: ["products-services", "our-systems", "customer-portals"],
+      context_sources: ["products-services", "our-systems", "customer-portals", "contact-us"],
       include_ids: ["unity-services-awareness", "unity-core-doctrine"],
       max_packs: 2,
     },
@@ -364,10 +777,12 @@ window.MAXWELLIAN_HUME = {
         "products-services",
         "our-systems",
         "customer-portals",
+        "contact-us",
         "electrical-energy-story",
         "maxwellian",
         "unity-story",
         "founder-message",
+        "customer-*",
       ],
       keywords: ["unity", "measure", "manage", "exchange", "mpts", "power factor", "reactive"],
       source_docs: [
@@ -391,15 +806,38 @@ window.MAXWELLIAN_HUME = {
     {
       id: "unity-services-awareness",
       title: "Unity Services Awareness",
-      context_sources: ["products-services", "our-systems", "customer-portals"],
+      context_sources: ["products-services", "our-systems", "customer-portals", "contact-us", "customer-*"],
       keywords: ["service", "offering", "implementation", "deployment", "support", "workflow"],
       source_docs: [
         "eestream/eWebmaster/UnityEnergy/products-services.html",
         "eestream/eWebmaster/UnityEnergy/our-systems.html",
         "eestream/eWebmaster/UnityEnergy/customer-portals.html",
+        "eestream/eWebmaster/UnityEnergy/contact-us.html",
       ],
       content:
-        "When visitors ask about products or services, explain scope in plain operational terms: what Unity measures, what Unity manages at the load, and how customer portal/reporting workflows support ongoing governance.",
+        "When visitors ask about products, services, or customer portals, explain what they are seeing in plain operational terms first: what Unity measures, what Unity manages at the load, and how portal/reporting workflows support ongoing governance. Keep explanations welcoming and avoid jargon overload.",
+    },
+    {
+      id: "customer-guide-memory",
+      title: "Customer Guide Memory Continuity",
+      context_sources: ["customer-*"],
+      keywords: ["customer", "account", "memory", "recap", "continuity", "follow-up"],
+      source_docs: [
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      content:
+        "In customer guide mode, start by acknowledging the current customer page context, continue from saved customer recap memory when available, and keep all guidance scoped to this customer account only.",
+    },
+    {
+      id: "william-chart-interpretation",
+      title: "William-Style Chart Interpretation",
+      context_sources: ["customer-*", "summaryboard-*"],
+      keywords: ["william", "chart", "summaryboard", "transformer", "pattern", "anomaly", "interpretation"],
+      source_docs: [
+        "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      content:
+        "Use a William-style interpretation sequence for chart-heavy customer conversations: identify the dominant signal, explain likely operational meaning in plain language, surface risk/priority, and recommend one concrete next diagnostic action.",
     },
     {
       id: "maxwellian-library-awareness",
@@ -465,18 +903,42 @@ window.MAXWELLIAN_HUME = {
   ],
   question_notes_threshold: 2,
   question_notes_hold_line: "Please hold while I go back and get my notes.",
+  // Guardrail test mode enabled for customer interaction boundary validation.
   guardrails_enabled: true,
   guardrails_founder_bypass: true,
-  guardrails_max_questions_per_session: 8,
+  electrical_story_guardrails_enabled: true,
+  electrical_story_require_name_company_before_history_answers: true,
+  electrical_story_history_question_limit: 5,
+  electrical_story_history_question_limit_min: 4,
+  electrical_story_exit_idle_seconds: 12,
+  electrical_story_identity_prompt:
+    "Before we continue with Electrical Energy Story history questions, may I get your name and company?",
+  electrical_story_exit_prompt:
+    "We appreciate your interest in the electrical energy field and the story. It is very important to understand so that you understand why Unity Energy exists. However, I have some other work I need to attend to, and I am going to leave you here unless you have other questions about Unity Energy.",
+  guardrails_max_questions_per_session: 5,
+  guardrails_question_limit_min: 5,
   guardrails_free_questions: 2,
   guardrails_max_session_minutes: 12,
-  guardrails_idle_timeout_seconds: 300,
+  guardrails_idle_timeout_seconds: 10,
+  guardrails_idle_followup_seconds: 10,
+  guardrails_idle_final_exit_seconds: 10,
+  guardrails_idle_first_prompt_message: "Can I help you with anything else?",
+  guardrails_idle_final_prompt_message:
+    "Are there any other questions? I need to attend to another Maxwellian.",
   guardrails_low_relevance_limit: 2,
   guardrails_min_relevance_score: 2,
   guardrails_max_sessions_per_day: 6,
   guardrails_enable_daily_metering: true,
   guardrails_contact_email: "sales@unityenergy.com",
   guardrails_contact_url: "https://unityenergy.com/contact-us",
+  guardrails_contact_redirect_url: "/UnityEnergy/contact-us.html",
+  guardrails_interested_identity_prompt_after_questions: 3,
+  guardrails_interested_identity_prompt_message:
+    "Happy to keep helping. Before we continue, may I get your name, company, and best email so we can follow up with you directly?",
+  guardrails_interested_followup_message:
+    "Thank you for your interest in Unity Energy. We have your information and will follow up directly. What is your next question?",
+  guardrails_question_limit_message:
+    "You've reached my five-question limit for this page. I can have a specialist contact you, or I can send you to our contact page so you can share your information.",
   guardrails_offboard_message:
     "We appreciate your interest in Clerk. For deeper support, please contact Unity Energy Sales at sales@unityenergy.com or visit unityenergy.com/contact-us.",
   guardrails_relevance_keywords: [
@@ -523,7 +985,7 @@ window.MAXWELLIAN_HUME = {
         "Maxwellian/Unity/Memory/02_Systems/exchange_system.md",
       ],
       notes:
-        "MPTS is Unity’s Maximum Power Transfer Solution for real-time field optimization. Unity re-phases field behavior, draws harmonic turbulence to low-impedance anchors, improves power factor, recovers usable capacity, and lowers thermal burden without major infrastructure replacement.",
+        "M P T S is Unity’s Maximum Power Transfer Solution in the Manage layer for real-time field optimization. Unity re-phases field behavior with dynamic tuner architecture ('copper-computer' tuners), draws harmonic turbulence to low-impedance anchors, improves power factor, recovers usable capacity, and lowers thermal burden without major infrastructure replacement.",
     },
     {
       id: "exchange",
@@ -561,23 +1023,52 @@ window.MAXWELLIAN_HUME = {
   enable_character_switcher: false,
   // Lock this modal to Clerk only (ignore runtime character overrides).
   lock_character_to_default: true,
-  // Set true to require the Unity start button before widget interaction.
-  // This keeps microphone permission and session start under explicit user action.
+  // Use branded launch gate so the renderer pre-session card stays hidden behind Clerk UI.
   use_unity_start_gate: true,
-  // Self-hosted renderer for full UI control (rocket/demo links removed).
-  // Falls back via relative-path resolution on the current site origin.
-  embed_url: "/UnityEnergy/hume_renderer/index.html?v=20260414r",
+  unity_launch_ring_image_url: "assets/images/Clerk-LineARTr2.png",
+  // Keep desktop launch simple: let the realtime renderer request mic directly.
+  preflight_microphone_on_launch: true,
+  // OpenAI cognition defaults (used as text-generation guidance).
+  openai_session_endpoint: "/api/openai/realtime/session",
+  openai_realtime_model: "gpt-4o-realtime-preview",
+  openai_voice: "ash",
+  openai_voice_instruction_set:
+    "Cognition-text mode only. Produce clear speech-ready text for downstream voice rendering. Do not include performance directions, pseudo-voice punctuation, or accent instructions in generated responses.",
+  openai_voice_style_hint:
+    "Generate clean, calm, instructional response text suitable for spoken delivery by the voice layer.",
+  openai_center_visual_url: "/UnityEnergy/assets/images/Clerk-LineARTr2.png",
+  contact_page_auto_greeting_text:
+    "I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?",
+  openai_auto_greeting_enabled: true,
+  // Leave blank so renderer uses page-aware welcome wording per active site board.
+  openai_auto_greeting_text: "",
+  openai_delayed_followup_enabled: true,
+  openai_delayed_followup_seconds: 4,
+  openai_delayed_followup_text:
+    "Before we go deeper, what are you trying to solve or understand today so I can focus this guidance?",
+  openai_decline_followup_text:
+    "No problem. I can keep this simple—what outcome are you trying to get on this page?",
+  openai_turn_detection: {
+    type: "server_vad",
+    threshold: 0.7,
+    prefix_padding_ms: 320,
+    silence_duration_ms: 760,
+    create_response: true,
+    interrupt_response: true,
+  },
+  // Self-hosted renderer for full UI control.
+  // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
+  embed_url: "/UnityEnergy/hume_renderer/index.html?v=20260424r12",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "ClerkMaxwell_251207.png",
   // Primary background visual for Speak-with-Clerk modal.
-  character_background_url: "JamesClerkMaxwell.gif",
+  character_background_url: "assets/images/Clerk-LineARTr2.png",
 
-  // EVI config id containing the Clerk Maxwell 2026 custom voice profile.
+  // Legacy placeholders retained for backward compatibility with the widget config schema.
   config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
   // Optional config version lock.
   config_version: 0,
-  // Optional direct voice target for this session.
-  // When set, widget connect payload passes voiceId to force Clerk's voice.
+  // Voice target used by OpenAI realtime.
   voice_id: "8ddb922e-c2c4-4462-b3c9-b944625a8349",
   // Phase 2 character registry (routing + metadata). Existing global fields remain fallback defaults.
   characters: {
@@ -585,9 +1076,10 @@ window.MAXWELLIAN_HUME = {
       label: "Clerk Maxwell",
       character_name: "Clerk Maxwell",
       character_avatar_url: "ClerkMaxwell_251207.png",
-      character_background_url: "JamesClerkMaxwell.gif",
+      character_background_url: "assets/images/Clerk-LineARTr2.png",
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "5898d431-9d07-43ab-a3ea-4040ceffa50b",
+      voice_id: "316eb863-97d3-4708-9dba-ccd6e3d21265",
+
       session_variables: {
         character_name: "Clerk Maxwell",
         character_role: "Chief Scientist at Unity Energy",
@@ -598,8 +1090,8 @@ window.MAXWELLIAN_HUME = {
       character_name: "Unity Faraday",
       character_avatar_url: "ClerkMaxwell_251207.png",
       character_background_url: "JamesClerkMaxwell.gif",
-      config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "8ddb922e-c2c4-4462-b3c9-b944625a8349",
+      config_id: "",
+      voice_id: "shimmer",
       session_variables: {
         character_name: "Unity Faraday",
         character_role: "Founder Companion at Unity Energy",
@@ -610,8 +1102,8 @@ window.MAXWELLIAN_HUME = {
       character_name: "Cove Faraday",
       character_avatar_url: "ClerkMaxwell_251207.png",
       character_background_url: "JamesClerkMaxwell.gif",
-      config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "8ddb922e-c2c4-4462-b3c9-b944625a8349",
+      config_id: "",
+      voice_id: "sage",
       session_variables: {
         character_name: "Cove Faraday",
         character_role: "Field Strategist at Unity Energy",
@@ -621,9 +1113,9 @@ window.MAXWELLIAN_HUME = {
 
   // Runtime auth injection point. Keep repository key-free.
   // Optional local injection (not committed):
-  // window.MAXWELLIAN_HUME_RUNTIME_AUTH = { accessToken: "..." };
-  // window.MAXWELLIAN_HUME_RUNTIME_AUTH = { apiKey: "..." };
-  // window.MAXWELLIAN_HUME_RUNTIME_AUTH = { type: "accessToken", value: "..." };
+  // window.MAXWELLIAN_OPENAI_RUNTIME_AUTH = { accessToken: "..." };
+  // window.MAXWELLIAN_OPENAI_RUNTIME_AUTH = { apiKey: "..." };
+  // window.MAXWELLIAN_OPENAI_RUNTIME_AUTH = { type: "accessToken", value: "..." };
   // NOTE: For production, prefer short-lived access token flow.
   auth: (function () {
     if (typeof window === "undefined") return { type: "", value: "" };
@@ -663,23 +1155,31 @@ window.MAXWELLIAN_HUME = {
       return "";
     };
     const runtimeAuth =
-      window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
-        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
-        : window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object"
-          ? window.MAXWELLIAN_HUME_AUTH
+      window.MAXWELLIAN_OPENAI_RUNTIME_AUTH && typeof window.MAXWELLIAN_OPENAI_RUNTIME_AUTH === "object"
+        ? window.MAXWELLIAN_OPENAI_RUNTIME_AUTH
+        : window.MAXWELLIAN_OPENAI_AUTH && typeof window.MAXWELLIAN_OPENAI_AUTH === "object"
+          ? window.MAXWELLIAN_OPENAI_AUTH
+          : window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
+            ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
+            : window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object"
+              ? window.MAXWELLIAN_HUME_AUTH
           : window.MAXWELLIAN_HUME && window.MAXWELLIAN_HUME.auth && typeof window.MAXWELLIAN_HUME.auth === "object"
             ? window.MAXWELLIAN_HUME.auth
             : {};
     const typedValue = readTrimmedAuthString(runtimeAuth, ["value"]);
     const accessToken =
       readTrimmedAuthString(runtimeAuth, ["accessToken", "access_token", "access-token", "token"]) ||
-      (typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
-        ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
+      (typeof window.MAXWELLIAN_OPENAI_ACCESS_TOKEN === "string"
+        ? window.MAXWELLIAN_OPENAI_ACCESS_TOKEN.trim()
+        : typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
+          ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
         : "");
     const apiKey =
       readTrimmedAuthString(runtimeAuth, ["apiKey", "apikey", "api_key", "api-key", "key"]) ||
-      (typeof window.MAXWELLIAN_HUME_API_KEY === "string"
-        ? window.MAXWELLIAN_HUME_API_KEY.trim()
+      (typeof window.MAXWELLIAN_OPENAI_API_KEY === "string"
+        ? window.MAXWELLIAN_OPENAI_API_KEY.trim()
+        : typeof window.MAXWELLIAN_HUME_API_KEY === "string"
+          ? window.MAXWELLIAN_HUME_API_KEY.trim()
         : "");
     let type = normalizeRuntimeAuthType(runtimeAuth.type);
     let value = typedValue;
@@ -698,24 +1198,24 @@ window.MAXWELLIAN_HUME = {
 
   // Optional session context appended to this launch's conversation context.
   session_context:
-    "You are speaking with a Unity Energy site visitor in public-facing mode. Answer technical questions immediately with clear authority before onboarding questions. Speak as Unity’s internal technical intelligence, grounded in practical 480-volt field behavior. Use consistent definitions for core concepts, especially MPTS. Pronunciation rule: always say 'volts' for voltage units (example: '480 volts'), never the standalone letter 'V'. Keep responses factual, confident, and operational; if certainty is limited, state assumptions and confidence clearly while still giving the best grounded answer.",
+    "You are speaking with a Unity Energy site visitor in public-facing mode. OpenAI serves cognition/text generation while Hume handles spoken delivery and emotional cadence. Be warm, approachable, and curious while staying technically grounded. Answer technical questions immediately in plain language before onboarding questions. Keep responses calm, instructional, context-aware, and speech-ready. Avoid decorative punctuation, roleplay voice cues, or theatrical styling. Use consistent definitions for core concepts, especially M P T S. Pronunciation rule: always say 'volts' for voltage units (example: '480 volts'), never the standalone letter 'V'. Acronym rule: always say 'M P T S' (all four letters), never 'MP', 'MPT', or 'MPTs'. Positioning rule: M P T S lives in Unity's Manage layer inside Measure-Manage-Exchange and functions as dynamic tuner-based field harmonization. Keep responses factual and operational; if certainty is limited, state assumptions and confidence clearly while still giving the best grounded answer. Start intent-first: ask what the visitor wants to solve or learn before requesting identity details. Do not ask for name or company in the first question. After at least one useful answer, gather name and company naturally one at a time, and do not repeat equivalent company questions. When the visitor is ready to close, collect email if needed; ask explicit permission before sending a confirmation email; ask explicit permission for Unity sales-executive outreach; and invite opt-in to the Maxwellian News Brief.",
 
   // Optional one-off prompt override for this session launch.
   // Leave blank to use the prompt defined in your EVI config.
   system_prompt_text:
-    "PUBLIC DEPLOYMENT MODE: You are Clerk Maxwell, Chief Scientist at Unity Energy, speaking as Unity’s technical intelligence. Response precedence: (1) answer the user’s technical question directly, (2) explain field mechanism, (3) offer the next practical insight. Maintain a confident consulting-engineer tone, avoid procedural onboarding unless necessary, and ask only purposeful follow-up questions. Speech rule: for voltage, always say 'volts' (example: '480 volts') and never say the standalone letter 'V'. Stay within Unity-approved domains: Measure-Manage-Exchange operations, MPTS behavior, reactive energy, power factor, harmonics, thermal burden, transformer-level interpretation, and Unity workflow context. Treat runtime context fields as authoritative; never invent facts, citations, commitments, pricing, policy claims, or deployment guarantees. If certainty is limited, state assumptions and confidence clearly while still providing the best grounded answer.",
+    "PUBLIC DEPLOYMENT MODE: You are Clerk Maxwell, Chief Scientist at Unity Energy, speaking as Unity’s technical intelligence. OpenAI handles cognition/text generation; Hume handles spoken rendering and emotional cadence. Generate text that is naturally speech-ready, warm, calm, and instructional. Do not inject accent directions, pseudo-voice punctuation, or dramatic formatting. Response precedence: (1) answer the user’s technical question directly in plain language, (2) explain field mechanism, (3) offer the next practical insight. Maintain a welcoming consulting-engineer tone, avoid procedural onboarding unless necessary, and ask only purposeful follow-up questions. Speech rules: for voltage, always say 'volts' (example: '480 volts') and never say the standalone letter 'V'. For this technology acronym, always say 'M P T S' (all four letters), never 'MP', 'MPT', or 'MPTs'. Domain rule: M P T S means Maximum Power Transfer Solution and must be positioned in Unity's Manage layer of Measure-Manage-Exchange. When relevant, describe M P T S as dynamic tuner-based ('copper-computer' tuner) harmonization that improves field absorbability and power conversion efficiency. Stay within Unity-approved domains: Measure-Manage-Exchange operations, M P T S behavior, reactive energy, power factor, harmonics, thermal burden, transformer-level interpretation, and Unity workflow context. Contact workflow rule: start with intent and outcome; do not ask name/company in the first question; after initial value, gather name and company one at a time without redundant company prompts; when the visitor wants follow-up, collect email; ask explicit permission before sending a confirmation email; ask explicit permission for Unity sales-executive outreach; ask whether they want Maxwellian News Brief enrollment; and treat text-notification interest as optional future preference only. Treat runtime context fields as authoritative; never invent facts, citations, commitments, pricing, policy claims, or deployment guarantees. If certainty is limited, state assumptions and confidence clearly while still providing the best grounded answer.",
 
   // Optional dynamic variables for your EVI prompt placeholders ({{variable_name}}).
   // Use these to inject Clerk's role/persona at runtime.
   session_variables: {
     character_name: "Clerk Maxwell",
     character_role: "Chief Scientist at Unity Energy",
-    character_style: "Confident consulting engineer: clear, direct, practical, and field-aware. Always speak voltage units as 'volts' (for example, '480 volts') and never as the standalone letter 'V'.",
+    character_style: "Cognition-text mode: produce clean speech-ready technical responses for Hume voice rendering, with calm instructional cadence and no theatrical voice markup. Always speak voltage units as 'volts' (for example, '480 volts') and never as the standalone letter 'V'.",
     opening_line: "Good to speak with you. What electrical question are you working through right now?",
     identity_line: "My name is Clerk Maxwell, Chief Scientist with Unity Energy.",
-    name_request_line: "I can help with MPTS behavior, power factor correction, harmonics, and thermal burden in real operational terms.",
+    name_request_line: "I can help with M P T S behavior, power factor correction, harmonics, and thermal burden in real operational terms, and I can also help you get enrolled in Maxwellian updates.",
     engagement_order: "Answer-first: deliver technical value immediately, then ask only purposeful follow-up questions.",
     mpts_core_definition:
-      "MPTS is Unity’s Maximum Power Transfer Solution that harmonizes AC field behavior to reduce reactive and harmonic burden, stabilize power factor, recover usable capacity, and lower thermal stress.",
+      "M P T S is Unity’s Maximum Power Transfer Solution in the Manage layer of Measure-Manage-Exchange. It harmonizes AC field behavior using dynamic tuner architecture ('copper-computer' tuners) to reduce reactive and harmonic burden, stabilize power factor, recover usable capacity, and lower thermal stress. Always articulate the acronym as 'M P T S'.",
   },
 };

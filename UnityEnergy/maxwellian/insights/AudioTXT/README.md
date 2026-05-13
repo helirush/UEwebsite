@@ -2,6 +2,14 @@
 
 This directory holds the **source text scripts** for every e-Insights audio file.
 
+## Canonical Agent Runbook
+
+Use this file as the authoritative generation procedure for Unity voice:
+
+- `/Users/mdhowell/eestream/eAudio/CREATING_UNITYS_VOICE.md`
+
+That runbook defines the canonical Unity TTS settings (`tts-1-hd` + `shimmer`) and the non-interactive command flow agents should use.
+
 ## Convention
 
 - One `.txt` file per MP3 — named to match its companion audio file

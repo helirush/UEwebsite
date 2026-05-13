@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Energy Behavior</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --ue-forest: #2f4a1f;
+            --ue-forest-soft: #49652f;
+            --ue-gold: #c49a3d;
+            --ue-parchment: #f5f2e9;
+            --ue-parchment-soft: #f0ebde;
+            --ue-text: #394235;
+            --ue-ink: #090909;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+            background: linear-gradient(180deg, var(--ue-parchment) 0%, var(--ue-parchment-soft) 100%);
+            color: var(--ue-text);
+            padding: 0;
+            overflow: hidden;
+        }
+        .behavior-shell {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) auto;
+            gap: 0;
+        }
+        .behavior-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(73, 101, 47, 0.26);
+            padding: 12px clamp(14px, 1.8vw, 26px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(241, 236, 221, 0.9) 100%);
+            box-shadow: 0 8px 20px rgba(46, 64, 31, 0.12);
+            position: relative;
+            z-index: 2;
+        }
+        .behavior-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--ue-forest);
+            font-size: clamp(1.65rem, 2.3vw, 2.4rem);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.04;
+        }
+        .behavior-title-logo {
+            width: clamp(28px, 1.9vw, 38px);
+            height: clamp(28px, 1.9vw, 38px);
+            display: inline-block;
+            flex: 0 0 auto;
+            color: rgba(47, 74, 31, 0.98);
+        }
+        .behavior-title-logo .ue-ring,
+        .behavior-title-logo .ue-u,
+        .behavior-title-logo .ue-e {
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .behavior-title-logo .ue-ring {
+            stroke-width: 3.5;
+            opacity: 0.98;
+        }
+        .behavior-title-logo .ue-u,
+        .behavior-title-logo .ue-e {
+            stroke-width: 3.5;
+        }
+        .behavior-subtitle {
+            margin-top: 6px;
+            color: rgba(67, 80, 58, 0.95);
+            font-size: clamp(0.86rem, 1vw, 1.02rem);
+            letter-spacing: 0.03em;
+        }
+        .behavior-close {
+            border: 1px solid rgba(81, 107, 57, 0.44);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(236, 232, 221, 0.9) 100%);
+            color: var(--ue-forest);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .behavior-close:hover {
+            border-color: rgba(99, 134, 68, 0.65);
+            background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(226, 236, 202, 0.9) 100%);
+        }
+        .behavior-stage {
+            border: none;
+            background: linear-gradient(180deg, rgba(247, 243, 233, 0.95) 0%, rgba(226, 221, 203, 0.92) 100%);
+            border-radius: 0;
+            padding: clamp(10px, 1.2vw, 16px) clamp(12px, 1.4vw, 22px);
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 0;
+        }
+        .behavior-image-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
+            border: 1px solid rgba(20, 20, 20, 0.9);
+            background: var(--ue-ink);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+            padding: 7px;
+            min-height: 0;
+        }
+        .behavior-image-viewport {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid rgba(30, 30, 30, 0.92);
+            background: var(--ue-ink);
+            cursor: grab;
+            touch-action: none;
+            position: relative;
+            min-height: 0;
+        }
+        .behavior-image-viewport.is-dragging {
+            cursor: grabbing;
+        }
+        .behavior-image {
+            width: 100%;
+            height: 100%;
+            max-height: none;
+            object-fit: contain;
+            border-radius: 0;
+            transform-origin: 0 0;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+        .behavior-controls {
+            border-top: 1px solid rgba(73, 101, 47, 0.24);
+            padding: 10px clamp(12px, 1.3vw, 22px) 12px;
+            display: grid;
+            gap: 10px;
+            background: linear-gradient(180deg, rgba(16, 16, 16, 0.98) 0%, rgba(9, 9, 9, 0.99) 100%);
+            position: relative;
+            z-index: 2;
+        }
+        .behavior-view-tools {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .behavior-zoom-help {
+            color: rgba(228, 236, 218, 0.94);
+            font-size: clamp(0.96rem, 1.05vw, 1.14rem);
+            font-weight: 650;
+            letter-spacing: 0.01em;
+        }
+        .behavior-view-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .behavior-reset-view {
+            border: 1px solid rgba(178, 193, 147, 0.45);
+            border-radius: 10px;
+            padding: 9px 14px;
+            background: linear-gradient(180deg, rgba(251, 249, 241, 0.96) 0%, rgba(231, 225, 207, 0.96) 100%);
+            color: rgba(46, 68, 33, 0.98);
+            font-size: clamp(0.92rem, 0.96vw, 1.02rem);
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+        }
+        .behavior-reset-view:hover {
+            border-color: rgba(102, 136, 74, 0.76);
+            background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+        }
+        .behavior-zoom-indicator {
+            border-radius: 10px;
+            border: 1px solid rgba(176, 194, 142, 0.34);
+            background: rgba(247, 243, 228, 0.9);
+            color: rgba(48, 67, 35, 0.98);
+            padding: 8px 12px;
+            font-size: clamp(0.9rem, 0.94vw, 0.98rem);
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        .behavior-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        .behavior-button {
+            border: 1px solid rgba(74, 104, 54, 0.36);
+            border-radius: 12px;
+            padding: 12px 14px;
+            min-height: 66px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(236, 230, 212, 0.95) 100%);
+            color: var(--ue-forest);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+            font-size: clamp(1.02rem, 1.2vw, 1.28rem);
+        }
+        .behavior-button-main {
+            font-weight: 700;
+        }
+        .behavior-button-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .behavior-button-state {
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 4px 8px;
+            border: 1px solid rgba(74, 104, 54, 0.45);
+            background: rgba(255, 255, 255, 0.82);
+            color: rgba(58, 78, 41, 0.98);
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .behavior-button-state.is-stop {
+            background: linear-gradient(180deg, rgba(245, 232, 160, 0.98) 0%, rgba(230, 201, 96, 0.98) 100%);
+            border-color: rgba(189, 155, 58, 0.75);
+            color: rgba(84, 55, 8, 0.98);
+        }
+        .behavior-button-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(196, 220, 174, 0.66);
+            background: rgba(48, 86, 56, 0.42);
+            color: rgba(238, 248, 226, 0.99);
+            font-size: 0.68em;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 3px rgba(17, 31, 11, 0.25);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .behavior-button-reset:hover {
+            filter: brightness(1.04);
+        }
+        .behavior-button:hover {
+            transform: translateY(-1px);
+            border-color: rgba(111, 146, 78, 0.7);
+            box-shadow: 0 8px 20px rgba(51, 70, 34, 0.14);
+        }
+        .behavior-button:active {
+            transform: translateY(0);
+        }
+        .behavior-button.is-active {
+            border-color: rgba(111, 146, 78, 0.78);
+            box-shadow: 0 8px 20px rgba(51, 70, 34, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+        }
+        .behavior-button-primary {
+            background: linear-gradient(145deg, rgba(82, 123, 79, 0.98) 0%, rgba(58, 97, 57, 0.98) 100%);
+            color: rgba(241, 250, 229, 0.99);
+            border-color: rgba(157, 197, 146, 0.7);
+        }
+        .behavior-button-primary .behavior-button-state {
+            border-color: rgba(204, 226, 181, 0.72);
+            background: rgba(52, 87, 55, 0.42);
+            color: rgba(239, 249, 227, 0.99);
+        }
+        .behavior-button-warm {
+            background: linear-gradient(152deg, rgba(231, 200, 118, 0.97) 0%, rgba(206, 166, 82, 0.97) 100%);
+            color: rgba(72, 54, 24, 0.98);
+            border-color: rgba(182, 139, 57, 0.7);
+        }
+        .behavior-button-warm .behavior-button-state {
+            border-color: rgba(141, 101, 36, 0.62);
+            background: rgba(255, 246, 220, 0.72);
+            color: rgba(89, 64, 21, 0.95);
+        }
+        .behavior-button-warm .behavior-button-reset {
+            border-color: rgba(141, 101, 36, 0.62);
+            background: rgba(255, 246, 220, 0.72);
+            color: rgba(89, 64, 21, 0.95);
+        }
+        @media (max-width: 900px) {
+            .behavior-buttons {
+                grid-template-columns: 1fr;
+            }
+            .behavior-close {
+                align-self: flex-start;
+            }
+            .behavior-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .behavior-view-tools {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="behavior-shell">
+        <header class="behavior-header">
+            <div>
+                <h1 class="behavior-title">
+                    <svg class="behavior-title-logo" viewBox="0 0 72 72" focusable="false" aria-hidden="true">
+                        <circle class="ue-ring" cx="36" cy="36" r="30"></circle>
+                        <path class="ue-u" d="M16.8 27.8v9.4c0 4.2 3.4 7.6 7.6 7.6h2c4.2 0 7.6-3.4 7.6-7.6v-9.4"></path>
+                        <path class="ue-e" d="M41.2 27.8h13.8"></path>
+                        <path class="ue-e" d="M41.2 36.3h13.8"></path>
+                        <path class="ue-e" d="M41.2 44.8h13.8"></path>
+                    </svg>
+                    <span>Unity Energy Behavior</span>
+                </h1>
+                <p class="behavior-subtitle">Independent behavior screen — visual stack + Unity Brief and Unity Deep Dive guidance.</p>
+            </div>
+            <button class="behavior-close" onclick="closeBehaviorWindow()">Close Window</button>
+        </header>
+
+        <section class="behavior-stage" aria-label="Energy behavior visual">
+            <div class="behavior-image-frame">
+                <div class="behavior-image-viewport" id="behaviorImageViewport" aria-label="Zoomable Unity Energy field compare visualization">
+                    <img class="behavior-image" id="behaviorImage" src="assets/images/uefieldcompare.png" alt="Unity Energy field compare visualization" draggable="false">
+                </div>
+            </div>
+        </section>
+
+        <section class="behavior-controls" aria-label="Unity voice controls">
+            <div class="behavior-view-tools">
+                <p class="behavior-zoom-help">For Easier Reading : Use mouse wheel to zoom, then click-drag to pan across the field.</p>
+                <div class="behavior-view-actions">
+                    <button class="behavior-reset-view" type="button" onclick="resetBehaviorImageView()">Reset View</button>
+                    <span class="behavior-zoom-indicator" id="behaviorZoomIndicator">Zoom 100%</span>
+                </div>
+            </div>
+            <div class="behavior-buttons">
+                <button class="behavior-button behavior-button-primary" id="behaviorBriefButton" onclick="playUnityNarration('brief')">
+                    <span class="behavior-button-main">30-Second Unity Brief</span>
+                    <span class="behavior-button-controls">
+                        <span class="behavior-button-state" id="behaviorBriefStateChip">Start</span>
+                        <span class="behavior-button-reset" role="button" tabindex="0" aria-label="Reset 30-Second Unity Brief" onclick="resetBehaviorNarration('brief', event)" onkeydown="handleBehaviorResetKey('brief', event)">Reset</span>
+                    </span>
+                </button>
+                <button class="behavior-button behavior-button-warm" id="behaviorDeepDiveButton" onclick="playUnityNarration('deep')">
+                    <span class="behavior-button-main">Deep Dive with Unity</span>
+                    <span class="behavior-button-controls">
+                        <span class="behavior-button-state" id="behaviorDeepStateChip">Start</span>
+                        <span class="behavior-button-reset" role="button" tabindex="0" aria-label="Reset Deep Dive with Unity" onclick="resetBehaviorNarration('deep', event)" onkeydown="handleBehaviorResetKey('deep', event)">Reset</span>
+                    </span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const BEHAVIOR_MIN_SCALE = 1;
+        const BEHAVIOR_MAX_SCALE = 5;
+        let behaviorViewport = null;
+        let behaviorImage = null;
+        let behaviorZoomIndicator = null;
+        let behaviorScale = 1;
+        let behaviorTranslateX = 0;
+        let behaviorTranslateY = 0;
+        let behaviorIsDragging = false;
+        let behaviorDragOffsetX = 0;
+        let behaviorDragOffsetY = 0;
+        let behaviorNarrationMode = null;
+        let behaviorNarrationIsPlaying = false;
+        let behaviorActiveAudio = null;
+        const behaviorQuery = new URLSearchParams(window.location.search);
+        const behaviorAutoMode = behaviorQuery.get('autoplay');
+        const UNITY_BRIEF_AUDIO = 'assets/audio/unity-brief.mp3';
+        const UNITY_DEEP_AUDIO = 'assets/audio/unity-deep-dive.mp3';
+        const UNITY_BRIEF_LABEL = '30-Second Unity Brief';
+        const UNITY_DEEP_LABEL = 'Deep Dive with Unity';
+        let behaviorAutoStartMode = null;
+        let behaviorAutoStartAttempts = 0;
+        const BEHAVIOR_AUTO_START_MAX_ATTEMPTS = 4;
+        const BEHAVIOR_AUTO_START_RETRY_MS = 380;
+        const BEHAVIOR_PLAYBACK_PROGRESS_MIN_SECONDS = 0.08;
+        let behaviorManualNarrationControl = false;
+        function closeBehaviorWindow() {
+            stopBehaviorNarration({ clearSelection: true });
+            if (window.opener && !window.opener.closed) {
+                window.close();
+                return;
+            }
+            window.location.href = 'index.html';
+        }
+        function clampBehaviorImagePosition() {
+            if (!behaviorViewport) return;
+            if (behaviorScale <= BEHAVIOR_MIN_SCALE) {
+                behaviorTranslateX = 0;
+                behaviorTranslateY = 0;
+                return;
+            }
+            const viewportWidth = behaviorViewport.clientWidth;
+            const viewportHeight = behaviorViewport.clientHeight;
+            const scaledWidth = viewportWidth * behaviorScale;
+            const scaledHeight = viewportHeight * behaviorScale;
+            const minX = Math.min(0, viewportWidth - scaledWidth);
+            const minY = Math.min(0, viewportHeight - scaledHeight);
+            behaviorTranslateX = Math.max(minX, Math.min(0, behaviorTranslateX));
+            behaviorTranslateY = Math.max(minY, Math.min(0, behaviorTranslateY));
+        }
+        function applyBehaviorImageTransform() {
+            if (!behaviorImage) return;
+            behaviorImage.style.transform = `translate(${behaviorTranslateX}px, ${behaviorTranslateY}px) scale(${behaviorScale})`;
+            if (behaviorZoomIndicator) {
+                behaviorZoomIndicator.textContent = `Zoom ${Math.round(behaviorScale * 100)}%`;
+            }
+        }
+        function resetBehaviorImageView() {
+            behaviorScale = BEHAVIOR_MIN_SCALE;
+            behaviorTranslateX = 0;
+            behaviorTranslateY = 0;
+            applyBehaviorImageTransform();
+        }
+        function handleBehaviorImageWheel(event) {
+            if (!behaviorViewport || !behaviorImage) return;
+            event.preventDefault();
+            const rect = behaviorViewport.getBoundingClientRect();
+            const pointerX = event.clientX - rect.left;
+            const pointerY = event.clientY - rect.top;
+            const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+            const nextScale = Math.max(BEHAVIOR_MIN_SCALE, Math.min(BEHAVIOR_MAX_SCALE, behaviorScale * zoomFactor));
+            if (nextScale === behaviorScale) return;
+            const scaleRatio = nextScale / behaviorScale;
+            behaviorTranslateX = pointerX - ((pointerX - behaviorTranslateX) * scaleRatio);
+            behaviorTranslateY = pointerY - ((pointerY - behaviorTranslateY) * scaleRatio);
+            behaviorScale = nextScale;
+            clampBehaviorImagePosition();
+            applyBehaviorImageTransform();
+        }
+        function startBehaviorImageDrag(event) {
+            if (!behaviorViewport || behaviorScale <= BEHAVIOR_MIN_SCALE) return;
+            behaviorIsDragging = true;
+            behaviorDragOffsetX = event.clientX - behaviorTranslateX;
+            behaviorDragOffsetY = event.clientY - behaviorTranslateY;
+            behaviorViewport.classList.add('is-dragging');
+            if (typeof behaviorViewport.setPointerCapture === 'function') {
+                behaviorViewport.setPointerCapture(event.pointerId);
+            }
+        }
+        function moveBehaviorImageDrag(event) {
+            if (!behaviorIsDragging) return;
+            behaviorTranslateX = event.clientX - behaviorDragOffsetX;
+            behaviorTranslateY = event.clientY - behaviorDragOffsetY;
+            clampBehaviorImagePosition();
+            applyBehaviorImageTransform();
+        }
+        function stopBehaviorImageDrag(event) {
+            if (!behaviorIsDragging || !behaviorViewport) return;
+            behaviorIsDragging = false;
+            behaviorViewport.classList.remove('is-dragging');
+            if (event && typeof behaviorViewport.releasePointerCapture === 'function') {
+                try {
+                    behaviorViewport.releasePointerCapture(event.pointerId);
+                } catch (_) {}
+            }
+        }
+        function initializeBehaviorImageView() {
+            behaviorViewport = document.getElementById('behaviorImageViewport');
+            behaviorImage = document.getElementById('behaviorImage');
+            behaviorZoomIndicator = document.getElementById('behaviorZoomIndicator');
+            if (!behaviorViewport || !behaviorImage) return;
+            behaviorViewport.addEventListener('wheel', handleBehaviorImageWheel, { passive: false });
+            behaviorViewport.addEventListener('pointerdown', startBehaviorImageDrag);
+            behaviorViewport.addEventListener('pointermove', moveBehaviorImageDrag);
+            behaviorViewport.addEventListener('pointerup', stopBehaviorImageDrag);
+            behaviorViewport.addEventListener('pointercancel', stopBehaviorImageDrag);
+            behaviorViewport.addEventListener('pointerleave', stopBehaviorImageDrag);
+            behaviorViewport.addEventListener('dblclick', resetBehaviorImageView);
+            window.addEventListener('resize', function () {
+                clampBehaviorImagePosition();
+                applyBehaviorImageTransform();
+            });
+            resetBehaviorImageView();
+        }
+        function setBehaviorStatus(message) {
+            const status = document.getElementById('behaviorStatus');
+            if (!status) return;
+            status.innerHTML = `<strong>Status:</strong> ${message}`;
+        }
+        function isBehaviorNarrationActivelyPlaying(mode) {
+            return behaviorNarrationMode === mode && behaviorNarrationIsPlaying && behaviorActiveAudio;
+        }
+        function tryAutoStartNarration(mode, options = {}) {
+            const forceRestart = options.forceRestart === true;
+            if (!mode || behaviorManualNarrationControl || isBehaviorNarrationActivelyPlaying(mode)) return;
+            if (forceRestart || !behaviorActiveAudio || behaviorNarrationMode !== mode) {
+                playUnityNarration(mode, { autoStart: true, forceRestart: true });
+            } else {
+                const retryPromise = behaviorActiveAudio.play();
+                if (retryPromise && typeof retryPromise.catch === 'function') {
+                    retryPromise.catch(function () {});
+                }
+            }
+            if (isBehaviorNarrationActivelyPlaying(mode)) return;
+            if (behaviorAutoStartAttempts >= BEHAVIOR_AUTO_START_MAX_ATTEMPTS) return;
+            behaviorAutoStartAttempts += 1;
+            window.setTimeout(function () {
+                if (behaviorManualNarrationControl || isBehaviorNarrationActivelyPlaying(mode)) return;
+                if (document.visibilityState !== 'visible') return;
+                tryAutoStartNarration(mode);
+            }, BEHAVIOR_AUTO_START_RETRY_MS);
+        }
+        function setBehaviorNarrationButtonState(mode) {
+            const briefButton = document.getElementById('behaviorBriefButton');
+            const deepDiveButton = document.getElementById('behaviorDeepDiveButton');
+            const briefStateChip = document.getElementById('behaviorBriefStateChip');
+            const deepStateChip = document.getElementById('behaviorDeepStateChip');
+            if (!briefButton || !deepDiveButton || !briefStateChip || !deepStateChip) return;
+            briefButton.classList.toggle('is-active', mode === 'brief');
+            deepDiveButton.classList.toggle('is-active', mode === 'deep');
+            briefStateChip.textContent = mode === 'brief' && behaviorNarrationIsPlaying ? 'Stop' : 'Start';
+            deepStateChip.textContent = mode === 'deep' && behaviorNarrationIsPlaying ? 'Stop' : 'Start';
+            briefStateChip.classList.toggle('is-stop', mode === 'brief' && behaviorNarrationIsPlaying);
+            deepStateChip.classList.toggle('is-stop', mode === 'deep' && behaviorNarrationIsPlaying);
+            briefButton.setAttribute('aria-label', mode === 'brief' && behaviorNarrationIsPlaying ? 'Stop 30-Second Unity Brief' : 'Start 30-Second Unity Brief');
+            deepDiveButton.setAttribute('aria-label', mode === 'deep' && behaviorNarrationIsPlaying ? 'Stop Deep Dive with Unity' : 'Start Deep Dive with Unity');
+        }
+        function resetBehaviorNarration(mode, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            behaviorManualNarrationControl = true;
+            playUnityNarration(mode, { forceRestart: true });
+        }
+        function handleBehaviorResetKey(mode, event) {
+            if (!event) return;
+            if (event.key === 'Enter' || event.key === ' ') {
+                resetBehaviorNarration(mode, event);
+            }
+        }
+        function stopBehaviorNarration(options = {}) {
+            const clearSelection = options.clearSelection === true;
+            if (behaviorActiveAudio) {
+                behaviorActiveAudio.pause();
+                behaviorActiveAudio.currentTime = 0;
+                behaviorActiveAudio = null;
+            }
+            behaviorNarrationIsPlaying = false;
+            if (clearSelection) {
+                behaviorNarrationMode = null;
+            }
+            setBehaviorNarrationButtonState(behaviorNarrationMode);
+        }
+        function playUnityNarration(mode, options = {}) {
+            const autoStart = options.autoStart === true;
+            const forceRestart = options.forceRestart === true;
+            const isBrief = mode === 'brief';
+            const label = isBrief ? UNITY_BRIEF_LABEL : UNITY_DEEP_LABEL;
+            const src = isBrief ? UNITY_BRIEF_AUDIO : UNITY_DEEP_AUDIO;
+            if (!autoStart) {
+                behaviorManualNarrationControl = true;
+            }
+            const isPlayingThisMode =
+                behaviorNarrationMode === mode &&
+                behaviorNarrationIsPlaying &&
+                behaviorActiveAudio &&
+                !behaviorActiveAudio.paused &&
+                !behaviorActiveAudio.ended;
+            if (isPlayingThisMode && !forceRestart) {
+                stopBehaviorNarration({ clearSelection: true });
+                setBehaviorStatus(`${label} stopped. Click again to restart.`);
+                return;
+            }
+            if (!forceRestart && behaviorNarrationMode === mode && behaviorActiveAudio) {
+                const resumePromise = behaviorActiveAudio.play();
+                if (resumePromise && typeof resumePromise.catch === 'function') {
+                    resumePromise.catch(function () {
+                        behaviorNarrationIsPlaying = false;
+                        setBehaviorNarrationButtonState(mode);
+                    });
+                }
+                return;
+            }
+            stopBehaviorNarration();
+            behaviorNarrationMode = mode;
+            behaviorNarrationIsPlaying = false;
+            setBehaviorNarrationButtonState(mode);
+            setBehaviorStatus(`${label} loading...`);
+            const audio = new Audio(src);
+            behaviorActiveAudio = audio;
+            audio.preload = 'auto';
+            audio.muted = false;
+            audio.volume = 1;
+            audio.addEventListener('playing', function () {
+                if (behaviorActiveAudio !== audio || behaviorNarrationMode !== mode) return;
+                behaviorNarrationIsPlaying = true;
+                setBehaviorNarrationButtonState(mode);
+                setBehaviorStatus(`${label} is now playing.`);
+                window.setTimeout(function () {
+                    if (behaviorActiveAudio !== audio || behaviorNarrationMode !== mode) return;
+                    if (!behaviorManualNarrationControl && !audio.paused && audio.currentTime < BEHAVIOR_PLAYBACK_PROGRESS_MIN_SECONDS) {
+                        tryAutoStartNarration(mode, { forceRestart: true });
+                    }
+                }, 700);
+            });
+            audio.addEventListener('pause', function () {
+                if (behaviorActiveAudio !== audio || behaviorNarrationMode !== mode || audio.ended) return;
+                behaviorNarrationIsPlaying = false;
+                setBehaviorNarrationButtonState(mode);
+                if (!behaviorManualNarrationControl) {
+                    tryAutoStartNarration(mode);
+                }
+            });
+            audio.addEventListener('ended', function () {
+                if (behaviorActiveAudio !== audio || behaviorNarrationMode !== mode) return;
+                behaviorActiveAudio = null;
+                behaviorNarrationMode = null;
+                behaviorNarrationIsPlaying = false;
+                setBehaviorNarrationButtonState(null);
+                setBehaviorStatus(`${label} completed. Select another mode any time.`);
+            });
+            audio.addEventListener('error', function () {
+                if (behaviorActiveAudio !== audio || behaviorNarrationMode !== mode) return;
+                behaviorActiveAudio = null;
+                behaviorNarrationMode = null;
+                behaviorNarrationIsPlaying = false;
+                setBehaviorNarrationButtonState(null);
+                setBehaviorStatus(`${label} could not be played. Check audio file path and try again.`);
+            });
+            const playPromise = audio.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(function () {
+                    if (behaviorActiveAudio !== audio || behaviorNarrationMode !== mode) return;
+                    behaviorNarrationIsPlaying = false;
+                    setBehaviorNarrationButtonState(mode);
+                    setBehaviorStatus(`${label} is ready. Click the button to start playback.`);
+                    if (!behaviorManualNarrationControl) {
+                        tryAutoStartNarration(mode);
+                    }
+                });
+            }
+        }
+        window.addEventListener('DOMContentLoaded', function () {
+            initializeBehaviorImageView();
+            behaviorManualNarrationControl = false;
+            stopBehaviorNarration({ clearSelection: true });
+            setBehaviorNarrationButtonState(null);
+            if (behaviorAutoMode === 'deep') {
+                behaviorAutoStartMode = 'deep';
+                behaviorAutoStartAttempts = 0;
+                tryAutoStartNarration('deep', { forceRestart: true });
+                return;
+            }
+            if (behaviorAutoMode === 'brief' || behaviorAutoMode === null) {
+                behaviorAutoStartMode = 'brief';
+                behaviorAutoStartAttempts = 0;
+                tryAutoStartNarration('brief', { forceRestart: true });
+            }
+        });
+        window.addEventListener('focus', function () {
+            if (!behaviorAutoStartMode || behaviorNarrationIsPlaying || behaviorManualNarrationControl) return;
+            tryAutoStartNarration(behaviorAutoStartMode);
+        });
+        document.addEventListener('visibilitychange', function () {
+            if (!behaviorAutoStartMode || behaviorNarrationIsPlaying || behaviorManualNarrationControl) return;
+            if (document.visibilityState !== 'visible') return;
+            tryAutoStartNarration(behaviorAutoStartMode);
+        });
+        window.addEventListener('message', function (event) {
+            const origin = event.origin || '';
+            if (origin && origin !== 'null' && origin !== window.location.origin) return;
+            const payload = event.data || {};
+            if (payload.type !== 'unity-behavior-autoplay') return;
+            const mode = payload.mode === 'deep' ? 'deep' : 'brief';
+            behaviorAutoStartMode = mode;
+            behaviorAutoStartAttempts = 0;
+            behaviorManualNarrationControl = false;
+            tryAutoStartNarration(mode, { forceRestart: true });
+        });
+    </script>
+</body>
+</html>

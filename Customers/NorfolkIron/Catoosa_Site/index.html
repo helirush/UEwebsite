@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Energy - Catoosa Site - Norfolk Iron & Metal</title>
+    <script src="../../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../../UnityEnergy/clerk_voice_widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -697,5 +700,22 @@
             </div>
         </div>
     </footer>
+    <script>
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "norfolkiron",
+                    customer_name: "Norfolk Iron & Metal",
+                    site_slug: "catoosa-site",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {
+                // ignore storage failures
+            }
+        })();
+    </script>
 </body>
 </html>

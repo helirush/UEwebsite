@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <title>Contact Us - Unity Energy</title>
     <style>
@@ -18,18 +18,15 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            color: rgba(57, 74, 35, 1);
+            background: rgba(246, 244, 236, 1);
         }
-
-        /* Static Centered Banner */
         .banner-wrapper {
             width: 100%;
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
             padding: 14px 20px;
             text-align: center;
         }
-
         .banner-content {
             color: rgba(250, 240, 160, 1);
             font-size: 1.08em;
@@ -41,11 +38,13 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-
         .banner-prefix {
             letter-spacing: 2px;
         }
-
+        .banner-sep {
+            margin: 0 6px;
+            opacity: 0.9;
+        }
         .banner-content .detail {
             font-size: 0.84em;
             font-weight: 400;
@@ -53,65 +52,140 @@
             letter-spacing: 0.4px;
             margin-left: 7px;
         }
-        
-        .banner-sep {
-            margin: 0 6px;
-            opacity: 0.9;
-        }
         .nav-tabs-container {
-            background: rgba(240, 240, 240, 1);
-            padding: 22px 0 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(246, 246, 241, 0.96);
+            padding: 14px 0 24px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
         }
 
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px 14px;
             flex-wrap: wrap;
             max-width: 1800px;
             margin: 0 auto;
             padding: 0 10px;
         }
+        .nav-tabs > a {
+            position: relative;
+        }
+        .nav-tabs > a:first-child::before,
+        .nav-tabs > a + a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2px;
+            height: 18px;
+            transform: translateY(-50%);
+            background: rgba(60, 79, 46, 0.84);
+            pointer-events: none;
+        }
+        @media (min-width: 1101px) {
+            .nav-tabs {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+                width: min(95%, 1760px);
+                max-width: calc(100% - 24px);
+                padding: 0;
+            }
+            .nav-tabs > a {
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .nav-tabs > a:first-child,
+            .nav-tabs > a + a {
+                border-left: 2px solid rgba(60, 79, 46, 0.84);
+                padding-left: clamp(14px, 1vw, 20px);
+                margin-left: 0;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
+            .nav-tab-portal,
+            .nav-tab-maxwellian {
+                justify-content: center;
+                width: auto;
+                min-width: 0;
+                padding: 7px 10px 7px 12px;
+                font-size: clamp(0.73rem, 0.88vw, 0.95rem);
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
+        }
 
         .nav-tab-portal,
         .nav-tab-maxwellian {
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 0.95em;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 0;
+            padding: 8px 10px 8px 18px;
+            border-radius: 16px;
+            font-size: clamp(0.75rem, 0.95vw, 0.95rem);
             font-weight: 700;
-            letter-spacing: 0.8px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
-            transition: all 0.25s ease;
-            padding: 12px 26px;
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
+            cursor: pointer;
+            color: rgba(46, 74, 31, 0.94);
+            background-color: transparent;
+            background-image: none;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+            box-shadow: none;
+            white-space: nowrap;
         }
-
-        .nav-tab-portal {
-            background: rgba(90, 110, 35, 1);
-            color: #fff;
-            border: 2px solid rgba(129, 163, 43, 1);
+        .nav-tab-portal::after,
+        .nav-tab-maxwellian::after {
+            content: none;
         }
-
-        .nav-tab-portal:hover {
-            background: rgba(49, 65, 0, 1);
-        }
-
-        .nav-tab-portal.active {
-            background: rgba(49, 65, 0, 1);
-            border-color: rgba(250, 200, 0, 1);
-            color: rgba(250, 240, 160, 1);
-        }
-
         .nav-tab-maxwellian {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border: 2px solid rgba(255, 200, 50, 1);
-            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+            color: rgba(118, 88, 24, 0.98);
+            font-weight: 800;
+            border-color: rgba(201, 166, 72, 0.52);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.78) 0%, rgba(236, 219, 176, 0.78) 100%);
         }
-
+        .nav-tab-portal:hover,
         .nav-tab-maxwellian:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal.active,
+        .nav-tab-maxwellian.active {
+            border-color: rgba(63, 94, 39, 0.98);
+            background-color: rgba(37, 63, 25, 0.99);
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%);
+            color: rgba(250, 240, 160, 0.98);
+            box-shadow: 0 10px 18px rgba(34, 49, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(18, 33, 12, 0.42);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal:active,
+        .nav-tab-maxwellian:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 1100px) {
+            .nav-tabs {
+                gap: 8px 10px;
+                padding: 0 10px;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
         }
 
         /* Hero Section */
@@ -119,28 +193,60 @@
             position: relative;
             top: 0;
             left: 0;
-            min-height: calc(100vh - 126px);
+            min-height: calc(100vh - 92px);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, rgba(90, 122, 42, .1) 0%, rgba(129, 163, 43, .3) 100%);
+            background: linear-gradient(180deg, rgba(246, 250, 236, 0.96) 0%, rgba(224, 236, 194, 0.96) 58%, rgba(191, 210, 142, 0.96) 100%);
             overflow: hidden;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: -100;
-            left: -0px;
+            top: -38px;
+            left: 0;
             width: 100%;
             height: 100%;
             background-image: url('UnityPortalButton.png');
             background-size: cover;
-            background-position: 0% +40%;
+            background-position: center 46%;
             background-repeat: no-repeat;
-            opacity: 0.8;
+            opacity: 0.5;
             z-index: 0;
-            transform: scale(1.3);
+            transform: scale(1.16);
+            filter: saturate(1.08) contrast(1.02) brightness(1.03);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 42%, rgba(255, 245, 190, 0.16) 0%, rgba(132, 158, 72, 0.14) 64%, rgba(73, 95, 32, 0.2) 100%);
+            z-index: 1;
+        }
+        .contact-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            border: 1px solid rgba(201, 166, 72, 0.58);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.96) 0%, rgba(236, 219, 176, 0.96) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
+        }
+        .contact-pill:hover {
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+        .contact-pill:active {
+            transform: translateY(0);
         }
         .meet-team-hero-cta {
             position: absolute;
@@ -152,88 +258,103 @@
             justify-content: center;
             gap: 8px;
             padding: 14px 24px;
-            border-radius: 999px;
-            border: 2px solid rgba(250, 240, 160, 0.72);
-            background: linear-gradient(135deg, rgba(49, 65, 0, 0.92) 0%, rgba(80, 105, 25, 0.92) 100%);
-            color: rgba(250, 240, 160, 1);
+            border-radius: 16px;
+            border: 1px solid rgba(201, 166, 72, 0.58);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.96) 0%, rgba(236, 219, 176, 0.96) 100%);
+            color: rgba(48, 71, 35, 0.98);
             font-size: 0.98rem;
             font-weight: 700;
             letter-spacing: 0.35px;
             text-decoration: none;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
             backdrop-filter: blur(2px);
-            animation: meetTeamFloat 3.4s ease-in-out infinite, meetTeamPulse 3.4s ease-in-out infinite;
         }
         .meet-team-hero-cta:hover {
-            animation-play-state: paused;
-            transform: translateY(-4px);
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
-            background: linear-gradient(135deg, rgba(64, 84, 8, 0.96) 0%, rgba(96, 127, 33, 0.96) 100%);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
         }
         .meet-team-hero-cta:focus-visible {
-            outline: 3px solid rgba(250, 240, 160, 0.9);
+            outline: 3px solid rgba(130, 156, 80, 0.7);
             outline-offset: 3px;
-        }
-        @keyframes meetTeamFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-7px);
-            }
-        }
-        @keyframes meetTeamPulse {
-            0%, 100% {
-                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-            }
-            50% {
-                box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45), 0 0 16px rgba(178, 210, 53, 0.28);
-            }
         }
 
         /* Main Contact Panel */
         .contact-panel {
             position: relative;
             z-index: 5;
-            background: linear-gradient(135deg, rgba(40, 55, 10, 0.95) 0%, rgba(60, 80, 25, 0.95) 100%);
-            border-radius: 24px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            background: linear-gradient(160deg, rgba(252, 253, 245, 0.97) 0%, rgba(236, 245, 218, 0.95) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(96, 126, 40, 0.42);
+            box-shadow: 0 22px 50px rgba(26, 38, 12, 0.26), inset 0 0 0 1px rgba(250, 240, 160, 0.24);
             max-width: 960px;
             width: min(94vw, 960px);
             padding: 0;
             text-align: center;
         }
-        
-        .ue-logo-top {
-            width: 100%;
-            height: auto;
-            border-radius: 24px 24px 0 0;
-            display: block;
-        }
-        
         .contact-panel-content {
-            padding: 28px 44px 30px 44px;
+            padding: 36px 44px 34px 44px;
         }
 
         .contact-panel h1 {
-            font-size: 2.4em;
-            color: rgba(250, 240, 160, 1);
-            margin-bottom: 10px;
+            font-size: clamp(2rem, 3vw, 2.45rem);
+            color: rgba(49, 65, 0, 1);
+            margin-bottom: 8px;
             font-weight: 700;
+        }
+        .contact-brand-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            color: rgba(49, 72, 48, 0.98);
+        }
+        .contact-brand-logo {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            flex: 0 0 auto;
+        }
+        .contact-brand-logo .ue-ring,
+        .contact-brand-logo .ue-u,
+        .contact-brand-logo .ue-e {
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .contact-brand-logo .ue-ring {
+            stroke-width: 3.5;
+            opacity: 0.98;
+        }
+        .contact-brand-logo .ue-u,
+        .contact-brand-logo .ue-e {
+            stroke-width: 3.5;
+        }
+        .contact-brand-kicker {
+            font-size: 1.02rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(118, 88, 24, 0.98);
         }
 
         .contact-panel .tagline {
             font-family: 'Times New Roman', Times, serif;
             font-size: 1.3em;
             font-style: italic;
-            color: rgba(178, 210, 53, 1);
+            color: rgba(199, 154, 53, 1);
             margin-bottom: 40px;
         }
 
         .contact-intro {
             font-size: 1.04em;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(54, 72, 30, 0.96);
             line-height: 1.56;
             margin-bottom: 22px;
             max-width: 760px;
@@ -243,44 +364,49 @@
 
         /* Contact CTA */
         .contact-cta {
-            background: linear-gradient(135deg, rgba(70, 95, 20, 0.5) 0%, rgba(90, 122, 42, 0.5) 100%);
+            background: linear-gradient(145deg, rgba(227, 238, 199, 0.9) 0%, rgba(204, 223, 166, 0.92) 100%);
             border-radius: 16px;
             padding: 28px 26px;
             margin-bottom: 18px;
-            border: 2px solid rgba(178, 210, 53, 0.4);
+            border: 1px solid rgba(96, 126, 40, 0.46);
+            box-shadow: inset 0 1px 0 rgba(250, 240, 160, 0.24);
         }
 
         .contact-cta h2 {
             font-size: 1.34em;
-            color: rgba(250, 240, 160, 1);
+            color: rgba(49, 65, 0, 1);
             margin-bottom: 12px;
             font-weight: 600;
         }
 
         .contact-cta p {
             font-size: 1.01em;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(53, 74, 27, 0.95);
             margin-bottom: 16px;
         }
 
         .email-link {
             display: inline-block;
-            background: rgb(255, 255, 255);
-            color: rgba(49, 65, 0, 1);
             padding: 15px 35px;
-            border-radius: 50px;
+            border-radius: 16px;
             font-size: 1em;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
-            border: none;
+            border: 1px solid rgba(201, 166, 72, 0.58);
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.96) 0%, rgba(236, 219, 176, 0.96) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
         }
 
         .email-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
         }
 
         .email-subtext {
@@ -290,6 +416,52 @@
             font-style: italic;
         }
 
+        .newsletter-cta {
+            margin-top: 14px;
+            background: linear-gradient(145deg, rgba(225, 236, 196, 0.9) 0%, rgba(204, 222, 165, 0.92) 100%);
+            border: 1px solid rgba(96, 126, 40, 0.4);
+            border-radius: 12px;
+            padding: 18px 18px 16px 18px;
+            text-align: left;
+        }
+
+        .newsletter-cta h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: rgba(53, 73, 35, 1);
+            font-weight: 600;
+        }
+
+        .newsletter-cta p {
+            margin: 0 0 12px 0;
+            font-size: 0.95em;
+            color: rgba(68, 83, 46, 0.9);
+            line-height: 1.5;
+        }
+
+        .newsletter-link {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(201, 166, 72, 0.58);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.96) 0%, rgba(236, 219, 176, 0.96) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+        }
+
+        .newsletter-link:hover {
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+
         /* Location Info */
         .location-info {
             display: flex;
@@ -297,7 +469,7 @@
             gap: 40px;
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid rgba(200, 200, 200, 0.5);
+            border-top: 1px solid rgba(96, 126, 40, 0.34);
         }
 
         .location-item {
@@ -311,19 +483,19 @@
 
         .location-item h3 {
             font-size: 1em;
-            color: rgba(250, 240, 160, 1);
+            color: rgba(53, 73, 35, 1);
             margin-bottom: 3px;
             font-weight: 600;
         }
 
         .location-item p {
             font-size: 0.88em;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(74, 89, 52, 0.9);
             line-height: 1.35;
         }
         
         .location-item p a {
-            color: rgba(178, 210, 53, 1) !important;
+            color: rgba(96, 126, 40, 1) !important;
         }
 
         /* Footer */
@@ -333,7 +505,7 @@
             left: 0;
             right: 0;
             background: transparent;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(45, 63, 26, 0.86);
             text-align: center;
             padding: 12px;
             font-size: 0.82em;
@@ -349,6 +521,14 @@
         }
 
         @media (max-width: 768px) {
+            .banner-content {
+                font-size: 1.02em;
+                letter-spacing: 0.7px;
+                line-height: 1.35;
+            }
+            .banner-content .detail {
+                display: none;
+            }
             .hero {
                 min-height: auto;
             }
@@ -359,11 +539,9 @@
                 padding: 12px 20px;
                 font-size: 0.92rem;
                 white-space: nowrap;
-                animation: meetTeamFloatMobile 3.4s ease-in-out infinite, meetTeamPulse 3.4s ease-in-out infinite;
             }
             .meet-team-hero-cta:hover {
-                animation-play-state: paused;
-                transform: translateX(-50%) translateY(-4px);
+                transform: translateX(-50%) translateY(-1px);
             }
             .contact-panel-content {
                 padding: 24px 20px 26px 20px;
@@ -383,18 +561,9 @@
                 font-size: 1.1em;
             }
         }
-        @keyframes meetTeamFloatMobile {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-7px);
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Static Centered Banner -->
     <div class="banner-wrapper">
         <div class="banner-content">
             <span class="banner-prefix">RESTORING INDUSTRIAL ELECTRICITY :</span>
@@ -412,23 +581,32 @@
             <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
-            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
-            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Energy Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian Library</a>
             <a href="contact-us.html" class="nav-tab-portal active">Contact Us</a>
         </div>
     </div>
 
     <div class="hero">
-        <a href="meet-our-team.html" class="meet-team-hero-cta" aria-label="Meet the Unity Agentic Team" onclick="return openTeamWindow(event)">
+        <a href="meet-our-team.html" class="meet-team-hero-cta contact-pill" aria-label="Meet the Unity Agentic Team" onclick="return openTeamWindow(event)">
             Meet Our Agentic Team
         </a>
 
         <!-- Main Contact Panel -->
         <div class="contact-panel">
-            <img src="UE_logo.png" alt="Unity Energy" class="ue-logo-top">
             <div class="contact-panel-content">
-            <h1>Contact Us</h1>
+            <div class="contact-brand-row">
+                <svg class="contact-brand-logo" viewBox="0 0 72 72" focusable="false" aria-hidden="true">
+                    <circle class="ue-ring" cx="36" cy="36" r="30"></circle>
+                    <path class="ue-u" d="M16.8 27.8v9.4c0 4.2 3.4 7.6 7.6 7.6h2c4.2 0 7.6-3.4 7.6-7.6v-9.4"></path>
+                    <path class="ue-e" d="M41.2 27.8h13.8"></path>
+                    <path class="ue-e" d="M41.2 36.3h13.8"></path>
+                    <path class="ue-e" d="M41.2 44.8h13.8"></path>
+                </svg>
+                <span class="contact-brand-kicker">Unity Energy</span>
+            </div>
+            <h1>Contact Details</h1>
 
             <p class="contact-intro">
                 Curious about how Unity Energy can transform your facility's electrical system? 
@@ -440,7 +618,19 @@
             <div class="contact-cta">
                 <h2>Ready to Solve your Electrical Energy Problems? Permanently.</h2>
                 <p>Learn about the Significance of Harmonized Energy. This is Next Level.</p>
-                <a href="mailto:info@UnityEnergy.com" class="email-link">info@UnityEnergy.com</a>
+                <a href="mailto:info@UnityEnergy.com" class="email-link contact-pill">info@UnityEnergy.com</a>
+            </div>
+
+            <div class="newsletter-cta">
+                <h3>Join the Maxwellian News Brief</h3>
+                <p>
+                    Ask Clerk to add you during your conversation, or sign up by email to receive weekly
+                    Maxwellian intelligence updates.
+                </p>
+                <a
+                    href="mailto:info@UnityEnergy.com?subject=Maxwellian%20News%20Brief%20Signup&body=Please%20add%20me%20to%20the%20Maxwellian%20News%20Brief.%0A%0AName:%0ACompany:%0AEmail:%0A"
+                    class="newsletter-link contact-pill"
+                >Subscribe to Maxwellian Updates</a>
             </div>
 
             <div class="location-info">
@@ -452,7 +642,7 @@
                 <div class="location-item">
                     <div class="icon">🌐</div>
                     <h3>Website</h3>
-                    <p><a href="index.html" style="color: rgba(129, 163, 43, 1); text-decoration: none;">UnityEnergy.com</a></p>
+                    <p><a href="index.html" style="color: rgba(96, 126, 40, 1); text-decoration: none;">UnityEnergy.com</a></p>
                 </div>
                 <div class="location-item">
                     <div class="icon">⚡</div>
@@ -465,7 +655,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+            <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         </footer>
     </div>
     <script>

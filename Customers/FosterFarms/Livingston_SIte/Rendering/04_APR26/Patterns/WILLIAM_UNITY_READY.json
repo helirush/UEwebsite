@@ -1,0 +1,92 @@
+{
+  "generated_at_utc": "2026-05-10T20:54:30.575954+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eReports/Livingston_Rendering_APR26/Patterns",
+  "mode": "full",
+  "inventory": {
+    "image_count": 15,
+    "all_images": [
+      "Rend1b_apr26.png",
+      "Rend1bt_apr26.png",
+      "Rend1m_apr26.png",
+      "Rend1s_apr26.png",
+      "Rend1v_apr26.png",
+      "Rend2b_apr26.png",
+      "Rend2bmapr26.png",
+      "Rend2bt_apr26.png",
+      "Rend2s_apr26.png",
+      "Rend2v_apr26.png",
+      "Rend3b_apr26.png",
+      "Rend3bt_apr26.png",
+      "Rend3m_apr26.png",
+      "Rend3s_apr26.png",
+      "Rend3v_apr26.png"
+    ],
+    "transformer_count": 3,
+    "coverage_by_transformer": {
+      "REND1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "REND2": [
+        "b",
+        "bt",
+        "s",
+        "v"
+      ],
+      "REND3": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "REND1": [
+        "Rend1b_apr26.png",
+        "Rend1bt_apr26.png",
+        "Rend1m_apr26.png",
+        "Rend1s_apr26.png",
+        "Rend1v_apr26.png"
+      ],
+      "REND2": [
+        "Rend2b_apr26.png",
+        "Rend2bt_apr26.png",
+        "Rend2s_apr26.png",
+        "Rend2v_apr26.png"
+      ],
+      "REND3": [
+        "Rend3b_apr26.png",
+        "Rend3bt_apr26.png",
+        "Rend3m_apr26.png",
+        "Rend3s_apr26.png",
+        "Rend3v_apr26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "REND1",
+      "REND2",
+      "REND3"
+    ],
+    "unmatched_files": [
+      "Rend2bmapr26.png"
+    ]
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eestream/eReports/Livingston_Rendering_APR26/Patterns",
+    "--force",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-10T21:04:16.364900+00:00"
+}

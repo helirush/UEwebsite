@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Energy - Livingston Site - Foster Farms</title>
+    <script src="../../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../../UnityEnergy/clerk_voice_widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -84,7 +87,7 @@
             position: relative;
             color: white;
             padding: 0;
-            min-height: 500px;
+            min-height: 540px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -93,12 +96,12 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 50;
+            top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background-image: url('Livingston.PNG');
-            background-size: 100%;
+            background-size: cover;
             background-position: center 20%;
             background-repeat: no-repeat;
             opacity: 0.8;
@@ -122,6 +125,25 @@
             text-align: center;
             max-width: 1500px;
             padding: 20px 40px;
+        }
+        .hero-status-chip {
+            position: absolute;
+            top: 28px;
+            right: 36px;
+            z-index: 2;
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 215, 0, 0.95);
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.92) 0%, rgba(114, 0, 0, 0.92) 100%);
+            color: rgba(255, 247, 214, 1);
+            font-size: 0.96em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+            max-width: min(74vw, 520px);
+            text-align: right;
         }
 
         .hero h1 {
@@ -181,6 +203,37 @@
                 -1px 1px 0px rgba(139, 0, 0, 1),
                 1px 1px 0px rgba(139, 0, 0, 1),
                 3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero .capacity-subtitle3 {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: rgb(255, 215, 0);
+            margin: 10px 0 0 0;
+            letter-spacing: 1px;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero .capacity-subtitle4 {
+            font-size: 1.75em;
+            font-weight: 700;
+            color: rgb(255, 232, 128);
+            margin: 8px 0 0 0;
+            letter-spacing: 0.6px;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero .capacity-subtitle3 span {
+            color: rgb(255, 255, 255);
         }
         .hero p {
             font-size: 1.5em;
@@ -347,61 +400,179 @@
         }
 
         footer {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
-            color: rgba(250, 240, 160, 1);
-            padding: 40px;
+            background: rgba(139, 0, 0, 1);
+            color: white;
+            text-align: center;
+            padding: 30px;
             margin-top: 60px;
             border-top: 3px solid rgba(255, 215, 0, 1);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .footer-text {
-            flex: 1;
-            text-align: center;
-        }
-
-        .footer-logos {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .footer-logo {
-            height: 60px;
-            width: auto;
         }
 
         /* Single-Column Library Layout */
         .libraries-container {
             display: grid;
             grid-template-columns: 1fr;
+            justify-items: center;
             gap: 30px;
-            margin: 40px 0;
+            margin: 40px auto;
+            width: calc(100% + 80px);
+            margin-left: -40px;
+            margin-right: -40px;
         }
 
         .library-section {
             background: white;
+            width: 100%;
+            max-width: 1233px;
+            margin: 0 auto;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             border-top: 8px solid rgba(204, 0, 0, 1);
         }
 
+        .library-title-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 26px;
+            margin-bottom: 30px;
+        }
+
         .library-title {
+            flex: 1;
+            min-width: 0;
             font-size: 2em;
             color: rgba(139, 0, 0, 1);
-            margin-bottom: 30px;
+            margin: 0;
             font-weight: 700;
+            line-height: 1.12;
+            text-align: left;
+        }
+
+        .library-composite-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .library-composite-label {
+            font-size: 0.66em;
+            font-weight: 900;
+            letter-spacing: 0.85px;
+            color: rgba(129, 32, 20, 0.9);
+            text-transform: uppercase;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .library-composite {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .library-composite-pill-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .library-composite-month {
+            font-size: 0.68em;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: rgba(139, 0, 0, 0.9);
+            text-transform: uppercase;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .library-composite-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            font-weight: 800;
+            line-height: 1;
+            white-space: nowrap;
+            border: 1px solid rgba(130, 90, 0, 0.45);
+        }
+
+        .library-composite-pill-small {
+            min-width: 132px;
+            padding: 6px 12px;
+            font-size: 1.02em;
+            color: rgba(122, 0, 0, 0.95);
+            background: linear-gradient(135deg, rgba(255, 220, 110, 1) 0%, rgba(235, 185, 36, 1) 100%);
+            border-color: rgba(168, 109, 0, 0.75);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .library-composite-pill-large {
+            min-width: 186px;
+            padding: 8px 15px;
+            font-size: 1.38em;
+            font-style: italic;
+            color: rgba(255, 227, 102, 1);
+            background: linear-gradient(135deg, rgba(180, 0, 0, 1) 0%, rgba(133, 0, 0, 1) 100%);
+            border-color: rgba(107, 0, 0, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+        }
+
+        .april-update-callout {
+            margin: 0 auto 18px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(165, 121, 0, 0.55);
+            background: linear-gradient(180deg, rgba(255, 251, 238, 0.96) 0%, rgba(248, 242, 216, 0.96) 100%);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            max-width: 860px;
+        }
+
+        .april-update-kicker {
+            display: block;
             text-align: center;
+            font-size: 0.88em;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: rgba(112, 40, 20, 0.9);
+            margin-bottom: 8px;
+        }
+
+        .april-update-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .april-update-pill {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(110, 110, 110, 0.35);
+            font-size: 0.84em;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .april-update-pill.primary {
+            background: linear-gradient(135deg, rgba(186, 64, 44, 1) 0%, rgba(147, 43, 30, 1) 100%);
+            border-color: rgba(121, 35, 25, 0.95);
+            color: rgba(255, 246, 238, 1);
+        }
+
+        .april-update-pill.secondary {
+            background: linear-gradient(135deg, rgba(214, 133, 45, 1) 0%, rgba(188, 108, 33, 1) 100%);
+            border-color: rgba(154, 88, 28, 0.95);
+            color: rgba(255, 248, 238, 1);
         }
 
         /* Collapsible dropdown styling */
@@ -447,9 +618,9 @@
 
         .group-summary-eff {
             margin-left: 12px;
-            min-width: 148px;
+            min-width: 94px;
             text-align: center;
-            padding: 4px 14px;
+            padding: 4px 11px;
             border-radius: 16px;
             border: 1px solid rgba(170, 120, 0, 0.8);
             background: linear-gradient(135deg, rgba(204, 146, 0, 1) 0%, rgba(192, 132, 0, 1) 100%);
@@ -462,33 +633,33 @@
             order: 3;
         }
 
-        .group-summary-eff.state-critical {
-            border-color: rgba(137, 0, 0, 0.95);
-            background: linear-gradient(135deg, rgba(216, 48, 48, 1) 0%, rgba(167, 34, 34, 1) 100%);
+        .group-summary-eff.state-reactive {
+            border-color: rgba(168, 139, 34, 0.95);
+            background: linear-gradient(135deg, rgba(224, 197, 78, 1) 0%, rgba(194, 162, 48, 1) 100%);
+            color: rgba(92, 66, 12, 1);
+        }
+
+        .group-summary-eff.state-recovering {
+            border-color: rgba(204, 121, 34, 0.95);
+            background: linear-gradient(135deg, rgba(242, 158, 52, 1) 0%, rgba(217, 127, 33, 1) 100%);
+            color: rgba(255, 249, 241, 1);
+        }
+
+        .group-summary-eff.state-steady {
+            border-color: rgba(77, 150, 70, 0.95);
+            background: linear-gradient(135deg, rgba(113, 186, 94, 1) 0%, rgba(79, 152, 67, 1) 100%);
+            color: rgba(247, 252, 244, 1);
+        }
+
+        .group-summary-eff.state-strong {
+            border-color: rgba(64, 151, 188, 0.95);
+            background: linear-gradient(135deg, rgba(95, 186, 218, 1) 0%, rgba(64, 152, 192, 1) 100%);
             color: rgba(255, 255, 255, 1);
         }
 
-        .group-summary-eff.state-warning {
-            border-color: rgba(160, 97, 0, 0.95);
-            background: linear-gradient(135deg, rgba(245, 158, 11, 1) 0%, rgba(217, 119, 6, 1) 100%);
-            color: rgba(20, 20, 20, 1);
-        }
-
-        .group-summary-eff.state-poor {
-            border-color: rgba(165, 121, 0, 0.95);
-            background: linear-gradient(135deg, rgb(255, 250, 200) 0%, rgb(255, 230, 0) 100%);
-            color: rgba(25, 25, 25, 1);
-        }
-
-        .group-summary-eff.state-good {
-            border-color: rgba(20, 116, 70, 0.95);
-            background: linear-gradient(135deg, rgb(170, 221, 139) 0%, rgb(57, 136, 5) 100%);
-            color: rgba(255, 255, 255, 1);
-        }
-
-        .group-summary-eff.state-clean {
-            border-color: rgba(30, 64, 175, 0.95);
-            background: linear-gradient(135deg, rgba(59, 130, 246, 1) 0%, rgba(37, 99, 235, 1) 100%);
+        .group-summary-eff.state-unity {
+            border-color: rgba(74, 173, 214, 0.95);
+            background: linear-gradient(135deg, rgba(124, 220, 244, 1) 0%, rgba(83, 189, 228, 1) 100%);
             color: rgba(255, 255, 255, 1);
         }
 
@@ -509,6 +680,68 @@
             order: 2;
             text-align: right;
         }
+        .group-summary-metrics {
+            margin-left: auto;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            order: 2;
+        }
+        .group-pill-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .group-pill-month {
+            font-size: 0.64em;
+            line-height: 1;
+            letter-spacing: 0.45px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: rgba(47, 121, 70, 0.82);
+            white-space: nowrap;
+        }
+        .group-pill {
+            width: 98px;
+            min-width: 98px;
+            max-width: 98px;
+            text-align: center;
+            padding: 4px 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(120, 133, 126, 0.48);
+            background: rgba(255, 255, 255, 0.92);
+            color: rgba(47, 60, 53, 0.95);
+            font-weight: 700;
+            font-size: 0.83em;
+            line-height: 1.1;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            white-space: nowrap;
+        }
+        .group-pill-mini {
+            min-width: 62px;
+            font-size: 0.74em;
+            padding: 3px 8px;
+            border-color: rgba(168, 176, 172, 0.72);
+            background: rgba(245, 247, 246, 0.96);
+            color: rgba(80, 86, 83, 0.92);
+            box-shadow: none;
+        }
+        .group-pill-stack .group-summary-eff {
+            margin-left: 0;
+            order: initial;
+            width: 139px;
+            min-width: 139px;
+            max-width: 139px;
+            font-size: 1.15em;
+            padding: 5px 10px;
+        }
+        .group-pill-stack .group-summary-eff.group-summary-eff-cost {
+            font-style: normal;
+        }
+        .group-section .group-summary-meta {
+            display: none;
+        }
 
         details summary::-webkit-details-marker {
             display: none;
@@ -528,6 +761,66 @@
         details summary:hover {
             background: white;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .pending-group-section {
+            border-color: rgba(180, 180, 180, 0.45);
+            background: linear-gradient(180deg, rgba(242, 242, 242, 0.75) 0%, rgba(233, 233, 233, 0.65) 100%);
+        }
+
+        .pending-group-section summary {
+            background: linear-gradient(90deg, rgba(221, 221, 221, 0.62) 0%, rgba(241, 241, 241, 0.95) 100%);
+            border-left: 5px solid rgba(150, 150, 150, 0.85);
+            border-top-color: rgba(166, 166, 166, 0.35);
+            border-right-color: rgba(166, 166, 166, 0.35);
+            border-bottom-color: rgba(166, 166, 166, 0.35);
+            color: rgba(88, 88, 88, 0.95);
+            box-shadow: none;
+            opacity: 0.76;
+        }
+
+        .pending-group-section summary::before,
+        .pending-group-section .group-summary-name,
+        .pending-group-section .group-pill-month {
+            color: rgba(96, 96, 96, 0.95);
+        }
+
+        .pending-group-section .group-summary-metrics {
+            margin-left: auto;
+        }
+
+        .pending-group-section .group-pill,
+        .pending-group-section .group-summary-eff {
+            border-color: rgba(146, 146, 146, 0.7);
+            background: linear-gradient(135deg, rgba(219, 219, 219, 0.95) 0%, rgba(183, 183, 183, 0.95) 100%);
+            color: rgba(96, 96, 96, 0.96);
+            box-shadow: none;
+        }
+
+        .pending-group-section .group-pill-mini {
+            background: rgba(235, 235, 235, 0.96);
+            color: rgba(98, 98, 98, 0.94);
+            border-color: rgba(162, 162, 162, 0.65);
+        }
+
+        .pending-group-section summary:hover {
+            background: linear-gradient(90deg, rgba(221, 221, 221, 0.62) 0%, rgba(241, 241, 241, 0.95) 100%);
+            box-shadow: none;
+        }
+
+        .pending-group-section .study-list {
+            opacity: 0.72;
+        }
+
+        .pending-group-section .study-item.placeholder {
+            background: rgba(242, 243, 245, 0.95);
+            border-left-color: rgba(140, 140, 140, 0.55);
+        }
+
+        .pending-group-section .study-btn.disabled {
+            background: rgba(176, 176, 176, 0.75);
+            border-color: rgba(140, 140, 140, 0.72);
+            color: rgba(96, 96, 96, 0.96);
         }
 
         details[open] .study-list {
@@ -688,9 +981,32 @@
         @media (max-width: 768px) {
             .libraries-container {
                 grid-template-columns: 1fr;
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
             }
             .library-section {
+                max-width: 100%;
                 padding: 30px 20px;
+            }
+            .library-title-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            .library-title {
+                text-align: center;
+            }
+            .library-composite-wrap {
+                align-items: center;
+            }
+            .library-composite-pill-small {
+                min-width: 110px;
+                font-size: 0.9em;
+            }
+            .library-composite-pill-large {
+                min-width: 148px;
+                font-size: 1.1em;
             }
             .group-summary-name,
             .group-summary-meta {
@@ -699,6 +1015,26 @@
             .group-summary-eff {
                 min-width: 110px;
                 font-size: 1.3em;
+            }
+            .group-summary-metrics {
+                width: 100%;
+                margin-left: 0;
+                order: 3;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                padding-left: 6px;
+            }
+            .group-pill-stack {
+                align-items: flex-start;
+            }
+            .group-pill,
+            .group-pill-stack .group-summary-eff {
+                width: 59px;
+                min-width: 59px;
+                max-width: 59px;
+            }
+            .group-pill-month {
+                font-size: 0.61em;
             }
             .study-list {
                 grid-template-columns: 1fr;
@@ -722,6 +1058,18 @@
             .hero h1 {
                 font-size: 2.5em;
             }
+            .hero-status-chip {
+                top: 14px;
+                right: 14px;
+                left: 14px;
+                max-width: none;
+                text-align: center;
+                font-size: 0.82em;
+                padding: 8px 12px;
+            }
+            .hero .capacity-subtitle4 {
+                font-size: 1.35em;
+            }
 
             .areas-grid {
                 grid-template-columns: 1fr;
@@ -740,19 +1088,21 @@
             </div>
         </div>
         <nav>
-            <a href="../index.html" class="back-btn">← Return to Foster Farm Home</a>
+            <a href="../index.html" class="back-btn">← Return to Foster Farms Home</a>
             <a href="../../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
         </nav>
     </header>
 
     <div class="hero">
+        <div class="hero-status-chip" id="livingston-hero-latest-chip">Latest Livingston report: pending</div>
         <div class="hero-content">
             <p class="capacity-subtitle">480v Industrial Electricity Data</p>
-            <h1>ELECTRICAL FIELD PERFOMANCE</h1>
-            <p class="capacity-subtitle2">Observed inefficiencies across Livingston’s 480V industrial field</p>
-            <p class="capacity-subtitle1">SITE CONNECTED CAPACITY : 56,975 kVA</p>
-            <p class="capacity-subtitle1">AVERAGE SITE CONSUMPTION
-                 : 8,000 kW</p>
+            <h1>ELECTRICAL FIELD PERFORMANCE</h1>
+            <p class="capacity-subtitle2" id="livingston-hero-latest-period">Latest reporting window: pending</p>
+            <p class="capacity-subtitle1">SITE CONNECTED CAPACITY: 56,975 kVA</p>
+            <p class="capacity-subtitle1">AVERAGE SITE CONSUMPTION: 8,000 kW</p>
+            <p class="capacity-subtitle4">ACTIVE GROUP STUDIES ONLINE: <span id="livingston-hero-active-groups">0</span></p>
+            <p class="capacity-subtitle3">ONGOING SITE AVERAGE EFFICIENCY: <span id="livingston-hero-site-avg-pf">--.-%PF</span></p>
         </div>
         <video class="hero-chicken-video hero-chicken-left" id="chickenLeft" muted loop autoplay playsinline>
             <source src="../ChickenFootball.mp4" type="video/mp4">
@@ -778,12 +1128,12 @@
                 <div class="highlight-card">
                     <div class="number">31 - Total</div>
                     <h3>Electrical Energy Fields</h3>
-                    <div class="tech-detail">31x 480v-3ph Industrial Transfomers</div>
+                    <div class="tech-detail">31x 480v-3ph Industrial Transformers</div>
                 </div>
                 <div class="highlight-card">
-                    <div class="number">19 - Measured</div>
+                    <div class="number">15 - Measured</div>
                     <h3>High-Resolution Monitoring</h3>
-                    <div class="tech-detail">19 of 31 Energy Fields (85% of Site)</div>
+                    <div class="tech-detail">15 of 31 Energy Fields (current active monitoring set)</div>
                 </div>
             </div>
         </section>
@@ -792,14 +1142,54 @@
         <section id="libraries">
             <div class="libraries-container">
                 <div class="library-section">
-                    <h2 class="library-title">📊 Livingston Site Transformer Groups</h2>
+                    <div class="library-title-row">
+                        <h2 class="library-title">📊 Livingston Site Transformer Groups</h2>
+                        <div class="library-composite-wrap">
+                            <span class="library-composite-label">Site Composite Cost • Utility Bill Baseline ($/kWh)</span>
+                            <div class="library-composite">
+                                <span class="library-composite-pill-stack">
+                                    <span class="library-composite-month" id="livingston-composite-past-month">MAR 2026</span>
+                                    <span class="library-composite-pill library-composite-pill-small" id="livingston-composite-past-value">$0.195/kWh</span>
+                                </span>
+                                <span class="library-composite-pill-stack">
+                                    <span class="library-composite-month" id="livingston-composite-current-month">APR 2026</span>
+                                    <span class="library-composite-pill library-composite-pill-large" id="livingston-composite-current-value">$0.195/kWh</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MAINTENANCE RULE:
+                         Keep each group’s latest active study link current (Deli, Rendering, NCDC, Plant1, Plant2, BNR, etc.).
+                         Foster Farms front portal card (../index.html) reads this page as the source of truth via updateLivingstonCard():
+                         1) card PF/high/low are recomputed from latest active studies across groups,
+                         2) card latest report month/description is inferred from those links,
+                         3) card monitored count uses this page's "Measured" overview stat.
+                         This page also computes the hero "ONGOING SITE AVERAGE EFFICIENCY" directly from the refreshed group PF pills.
+                         After any monthly study update here, verify ../index.html Livingston card reflects the change. -->
                     
                     <!-- DELI Plant Area -->
                     <details class="group-section" data-group-code="deli">
                         <summary data-group-name="DELI GROUP" data-transformer-spec="2x 2500kVA">
                             <span class="group-summary-name">DELI GROUP (2x 2500kVA)</span>
-                            <span class="group-summary-eff">--.-%</span>
-                            <span class="group-summary-meta">Group Efficiency - loading...</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                </span>
+                            </span>
+                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -809,7 +1199,6 @@
                                 </div>
 <a class="study-btn" href="Deli/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260101-260131_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
                             <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">February 2026</div>
@@ -817,21 +1206,19 @@
                                 </div>
 <a class="study-btn" href="Deli/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260201-260228_28d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Deli/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260301-260331_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">Secondary BNC • 30-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Deli/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
                             </div>
                         </div>
                     </details>
@@ -840,8 +1227,25 @@
                     <details class="group-section" data-group-code="rendering">
                         <summary data-group-name="RENDERING GROUP" data-transformer-spec="3x 2500kVA">
                             <span class="group-summary-name">RENDERING GROUP (3x 2500kVA)</span>
-                            <span class="group-summary-eff">--.-%</span>
-                            <span class="group-summary-meta">Group Efficiency - loading...</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                </span>
+                            </span>
+                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -851,7 +1255,6 @@
                                 </div>
 <a class="study-btn" href="Rendering/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260101-260131_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
                             <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">February 2026</div>
@@ -859,21 +1262,19 @@
                                 </div>
 <a class="study-btn" href="Rendering/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260201-260228_28d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
-                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">23-day Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Rendering/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260301-260323_23d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
                                     <div class="study-period">30-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Rendering/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
                             </div>
                         </div>
                     </details>
@@ -882,8 +1283,25 @@
                     <details class="group-section" data-group-code="ncdc">
                         <summary data-group-name="NCDC GROUP" data-transformer-spec="1x 2500kVA + 2x 3000kVA">
                             <span class="group-summary-name">NCDC GROUP (1x 2500kVA + 2x 3000kVA)</span>
-                            <span class="group-summary-eff">--.-%</span>
-                            <span class="group-summary-meta">Group Efficiency - loading...</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                </span>
+                            </span>
+                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -893,105 +1311,150 @@
                                 </div>
 <a class="study-btn" href="NCDC/01_JAN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260101-260131_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">February 2026</div>
                                     <div class="study-period">28-day Full Analysis • 1minRES</div>
                                 </div>
 <a class="study-btn" href="NCDC/02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260201-260228_28d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="NCDC/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260301-260331_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
                                     <div class="study-period">30-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="NCDC/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
                             </div>
                         </div>
                     </details>
 
-                    <!-- MARCH/APRIL PLACEHOLDERS: new groups pending study generation -->
-                    <details class="pending-group-section">
-                        <summary>
+                    <!-- Additional Livingston groups -->
+                    <details class="group-section" data-group-code="plant1">
+                        <summary data-group-name="PLANT1 GROUP" data-transformer-spec="3x 2500kVA">
                             <span class="group-summary-name">PLANT1 GROUP (3x 2500kVA)</span>
-                            <span class="group-summary-eff state-unavailable">pending</span>
-                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                </span>
+                            </span>
+                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
                         </summary>
                         <div class="study-list">
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
-                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">19-day Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Plant1/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260313-260331_19d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
                                     <div class="study-period">30-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Plant1/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
                             </div>
                         </div>
                     </details>
 
-                    <details class="pending-group-section">
-                        <summary>
+                    <details class="group-section" data-group-code="plant2">
+                        <summary data-group-name="PLANT2 GROUP" data-transformer-spec="3x 2500kVA">
                             <span class="group-summary-name">PLANT2 GROUP (3x 2500kVA)</span>
-                            <span class="group-summary-eff state-unavailable">pending</span>
-                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                </span>
+                            </span>
+                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
                         </summary>
                         <div class="study-list">
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
-                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">19-day Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Plant2/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260313-260331_19d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
                                     <div class="study-period">30-day Full Analysis • 1minRES</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="Plant2/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
                             </div>
                         </div>
                     </details>
 
-                    <details class="pending-group-section">
-                        <summary>
-                            <span class="group-summary-name">BNR GROUP (2x 2500kVA)</span>
-                            <span class="group-summary-eff state-unavailable">pending</span>
-                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                    <details class="group-section" data-group-code="bnr">
+                        <summary data-group-name="BNR GROUP" data-transformer-spec="2x 2500kVA • 1 active">
+                            <span class="group-summary-name">BNR GROUP (2x 2500kVA • 1 active)</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                </span>
+                            </span>
+                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
                         </summary>
                         <div class="study-list">
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
-                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">18-day Analysis • 1minRES • BNR-1 only (single loaded transformer)</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="BNR/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260314-260331_18d.html">VIEW ENERGY FIELDS</a>
                             </div>
-
-                            <div class="study-item placeholder">
+                            <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">Primary BNC • 30-day Full Analysis • 1minRES • BNR-1 only (single loaded transformer)</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+<a class="study-btn" href="BNR/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
                             </div>
                         </div>
                     </details>
@@ -999,24 +1462,40 @@
                     <details class="pending-group-section">
                         <summary>
                             <span class="group-summary-name">FSO GROUP (3x 2500kVA)</span>
-                            <span class="group-summary-eff state-unavailable">pending</span>
-                            <span class="group-summary-meta">Group Efficiency - MAR2026</span>
+                            <span class="group-summary-metrics">
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month">MAR 2026</span>
+                                    <span class="group-pill group-pill-mini">$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month">APR 2026</span>
+                                    <span class="group-summary-eff group-summary-eff-cost">$--.--/hr</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month">MAR 2026</span>
+                                    <span class="group-pill group-pill-mini">--.-%PF</span>
+                                </span>
+                                <span class="group-pill-stack">
+                                    <span class="group-pill-month">APR 2026</span>
+                                    <span class="group-summary-eff">--.-%PF</span>
+                                </span>
+                            </span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item placeholder">
                                 <div class="study-info">
                                     <div class="study-name">March 2026</div>
-                                    <div class="study-period">31-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">---</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+                                <span class="study-btn disabled">---</span>
                             </div>
 
                             <div class="study-item placeholder">
                                 <div class="study-info">
                                     <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                    <div class="study-period">---</div>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
+                                <span class="study-btn disabled">---</span>
                             </div>
                         </div>
                     </details>
@@ -1045,18 +1524,8 @@
     </div>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-logos">
-                <img src="../foster-farms-logo.png" alt="Foster Farms" class="footer-logo">
-            </div>
-            <div class="footer-text">
-                <p>&copy; 2026 Unity Energy. All rights reserved.</p>
-                <p>Transforming how facilities understand their electrical systems.</p>
-            </div>
-            <div class="footer-logos">
-                <img src="../unity-logo.png" alt="Unity Energy" class="footer-logo">
-            </div>
-        </div>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 
     <script>
@@ -1076,11 +1545,11 @@
         };
 
         const GROUP_EFF_STATE_CLASSES = [
-            'state-critical',
-            'state-warning',
-            'state-poor',
-            'state-good',
-            'state-clean',
+            'state-reactive',
+            'state-recovering',
+            'state-steady',
+            'state-strong',
+            'state-unity',
             'state-unavailable'
         ];
 
@@ -1100,20 +1569,13 @@
         function classifyGroupStateFromPfPercent(pfPercent) {
             const normalizedPfPct = normalizePfPercent(pfPercent);
             if (normalizedPfPct === null) {
-                return { key: 'unavailable', label: 'UNAVAILABLE', activePct: null };
+                return { key: 'unavailable', label: 'UNAVAILABLE', pfPct: null };
             }
-
-            const pf = normalizedPfPct / 100;
-            const reactiveComponent = Math.sqrt(Math.max(0, 1 - (pf * pf)));
-            const sum = pf + reactiveComponent;
-            const activePct = sum > 0 ? (pf / sum) * 100 : null;
-
-            if (activePct === null) return { key: 'unavailable', label: 'UNAVAILABLE', activePct: null };
-            if (activePct < 52) return { key: 'critical', label: 'CRITICAL', activePct };
-            if (activePct < 57) return { key: 'warning', label: 'WARNING', activePct };
-            if (activePct < 62) return { key: 'poor', label: 'POOR', activePct };
-            if (activePct <= 72) return { key: 'good', label: 'GOOD', activePct };
-            return { key: 'clean', label: 'CLEAN', activePct };
+            if (normalizedPfPct >= 95) return { key: 'unity', label: 'UNITY', pfPct: normalizedPfPct };
+            if (normalizedPfPct >= 90) return { key: 'strong', label: 'STRONG', pfPct: normalizedPfPct };
+            if (normalizedPfPct >= 80) return { key: 'steady', label: 'STEADY', pfPct: normalizedPfPct };
+            if (normalizedPfPct >= 72) return { key: 'recovering', label: 'RECOVERING', pfPct: normalizedPfPct };
+            return { key: 'reactive', label: 'REACTIVE', pfPct: normalizedPfPct };
         }
 
         function parseStudyDate(studyName, href) {
@@ -1125,7 +1587,8 @@
                 if (MONTH_INDEX[monthKey] != null && Number.isFinite(yearNum)) {
                     return {
                         sortValue: new Date(yearNum, MONTH_INDEX[monthKey], 1).getTime(),
-                        token: `${monthKey}${yearNum}`
+                        token: `${monthKey}${yearNum}`,
+                        monthLabel: `${monthKey.toUpperCase()} ${yearNum}`
                     };
                 }
             }
@@ -1138,21 +1601,41 @@
                     const monthKey = Object.keys(MONTH_INDEX).find((key) => MONTH_INDEX[key] === (monthNum - 1)) || 'unk';
                     return {
                         sortValue: new Date(yearNum, monthNum - 1, 1).getTime(),
-                        token: `${monthKey}${yearNum}`
+                        token: `${monthKey}${yearNum}`,
+                        monthLabel: `${monthKey.toUpperCase()} ${yearNum}`
                     };
                 }
             }
 
             return {
                 sortValue: Number.NEGATIVE_INFINITY,
-                token: 'unknown'
+                token: 'unknown',
+                monthLabel: '---'
             };
         }
 
-        function findLatestStudy(groupSection) {
-            if (!groupSection) return null;
+        function parseStudyMonthLabel(studyName, token) {
+            const parsedFromName = parseStudyDate(studyName, '').monthLabel;
+            if (parsedFromName && parsedFromName !== '---') return parsedFromName;
 
-            let latest = null;
+            const tokenMatch = String(token || '').match(/^([a-z]{3})(\d{4})$/i);
+            if (tokenMatch) return `${tokenMatch[1].toUpperCase()} ${tokenMatch[2]}`;
+            return '---';
+        }
+        function compactStudyPeriodLabel(studyPeriodRaw) {
+            const parts = String(studyPeriodRaw || '')
+                .split(/[•·]/)
+                .map((part) => part.trim())
+                .filter(Boolean);
+            if (!parts.length) return '';
+            const dayPart = parts.find((part) => /\bday\b/i.test(part));
+            return dayPart || parts[0];
+        }
+
+        function findGroupStudies(groupSection) {
+            if (!groupSection) return [];
+
+            const studies = [];
             const links = groupSection.querySelectorAll('.study-item .study-btn[href]');
             links.forEach((link) => {
                 const href = link.getAttribute('href') || '';
@@ -1160,18 +1643,24 @@
 
                 const studyItem = link.closest('.study-item');
                 const studyName = studyItem?.querySelector('.study-name')?.textContent || '';
+                const studyPeriodRaw = studyItem?.querySelector('.study-period')?.textContent || '';
                 const parsed = parseStudyDate(studyName, href);
-
-                if (!latest || parsed.sortValue > latest.sortValue) {
-                    latest = {
-                        href,
-                        sortValue: parsed.sortValue,
-                        token: parsed.token
-                    };
-                }
+                studies.push({
+                    href,
+                    sortValue: parsed.sortValue,
+                    token: parsed.token,
+                    studyName: String(studyName || '').trim(),
+                    monthLabel: parseStudyMonthLabel(studyName, parsed.token),
+                    periodLabel: compactStudyPeriodLabel(studyPeriodRaw)
+                });
             });
 
-            return latest;
+            studies.sort((a, b) => b.sortValue - a.sortValue);
+            return studies;
+        }
+
+        function findLatestStudy(groupSection) {
+            return findGroupStudies(groupSection)[0] || null;
         }
 
         function parsePfValuesFromHtml(htmlText) {
@@ -1208,6 +1697,183 @@
 
             return pfValues;
         }
+        function parseNumericValue(text) {
+            const match = String(text || '').match(/-?[0-9]+(?:,[0-9]{3})*(?:\.[0-9]+)?/);
+            if (!match) return null;
+            const numeric = Number(match[0].replace(/,/g, ''));
+            return Number.isFinite(numeric) ? numeric : null;
+        }
+        function parseCostPerHourValuesFromHtml(htmlText) {
+            const costValues = [];
+
+            try {
+                const doc = new DOMParser().parseFromString(String(htmlText || ''), 'text/html');
+                const costNodes = doc.querySelectorAll('[id$="-xfmr-cost-hour"]');
+                costNodes.forEach((node) => {
+                    const numeric = parseNumericValue(node.textContent);
+                    if (numeric !== null) costValues.push(numeric);
+                });
+
+                if (costValues.length > 0) return costValues;
+            } catch (e) {}
+
+            const costIdRegex = /id\s*=\s*["'][^"']*-xfmr-cost-hour["'][^>]*>\s*\$?\s*([0-9,]+(?:\.[0-9]+)?)/ig;
+            let costMatch;
+            while ((costMatch = costIdRegex.exec(String(htmlText || ''))) !== null) {
+                const numeric = Number(String(costMatch[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(numeric)) costValues.push(numeric);
+            }
+
+            return costValues;
+        }
+        function formatCostPerHour(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return '$--.--/hr';
+            return `$${numeric.toFixed(2)}/hr`;
+        }
+        function formatPf(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return '--.-%PF';
+            return `${numeric.toFixed(1)}%PF`;
+        }
+        const LIVINGSTON_SITE_COMPOSITE_BASELINE = Object.freeze({
+            previous: { monthLabel: 'MAR 2026', costPerKwh: 0.195 },
+            current: { monthLabel: 'APR 2026', costPerKwh: 0.195 }
+        });
+        function formatCompositeCostPerKwh(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return '$--.--/kWh';
+            if (numeric < 1) {
+                const compact = numeric.toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
+                return `$${compact}/kWh`;
+            }
+            return `$${numeric.toFixed(2)}/kWh`;
+        }
+        function updateLivingstonCompositeTitlePills() {
+            const pastMonthEl = document.getElementById('livingston-composite-past-month');
+            const pastValueEl = document.getElementById('livingston-composite-past-value');
+            const currentMonthEl = document.getElementById('livingston-composite-current-month');
+            const currentValueEl = document.getElementById('livingston-composite-current-value');
+            if (!pastMonthEl || !pastValueEl || !currentMonthEl || !currentValueEl) return;
+            pastMonthEl.textContent = LIVINGSTON_SITE_COMPOSITE_BASELINE.previous.monthLabel;
+            currentMonthEl.textContent = LIVINGSTON_SITE_COMPOSITE_BASELINE.current.monthLabel;
+            pastValueEl.textContent = formatCompositeCostPerKwh(LIVINGSTON_SITE_COMPOSITE_BASELINE.previous.costPerKwh);
+            currentValueEl.textContent = formatCompositeCostPerKwh(LIVINGSTON_SITE_COMPOSITE_BASELINE.current.costPerKwh);
+        }
+        function updateLivingstonHeroSiteAverage() {
+            const heroAvgEl = document.getElementById('livingston-hero-site-avg-pf');
+            if (!heroAvgEl) return;
+
+            const pfValues = Array.from(document.querySelectorAll('.group-section [data-group-pf-current]'))
+                .map((el) => parseFloat(String(el.textContent || '').replace(/[^0-9.]/g, '')))
+                .filter((value) => Number.isFinite(value) && value > 0);
+
+            if (!pfValues.length) {
+                heroAvgEl.textContent = '--.-%PF';
+                return;
+            }
+
+            const avg = pfValues.reduce((sum, value) => sum + value, 0) / pfValues.length;
+            heroAvgEl.textContent = `${avg.toFixed(1)}%PF`;
+        }
+        function updateLivingstonHeroTopline(groupSnapshots) {
+            const latestChipEl = document.getElementById('livingston-hero-latest-chip');
+            const latestPeriodEl = document.getElementById('livingston-hero-latest-period');
+            const activeGroupsEl = document.getElementById('livingston-hero-active-groups');
+            const tieBreakerPriority = {
+                RENDERING: 0,
+                DELI: 1,
+                NCDC: 2,
+                PLANT1: 3,
+                PLANT2: 4,
+                BNR: 5
+            };
+            const snapshots = Array.isArray(groupSnapshots)
+                ? groupSnapshots.filter((snapshot) => snapshot && snapshot.latestStudy)
+                : [];
+
+            if (activeGroupsEl) activeGroupsEl.textContent = String(snapshots.length);
+            if (!snapshots.length) {
+                if (latestChipEl) latestChipEl.textContent = 'Latest Livingston report: pending';
+                if (latestPeriodEl) latestPeriodEl.textContent = 'Latest reporting window: pending';
+                return;
+            }
+
+            const latestSnapshot = snapshots.reduce((best, current) => {
+                const currentSort = current.latestStudy.sortValue || Number.NEGATIVE_INFINITY;
+                const bestSort = best.latestStudy.sortValue || Number.NEGATIVE_INFINITY;
+                if (currentSort > bestSort) return current;
+                if (currentSort < bestSort) return best;
+
+                const currentPriority = tieBreakerPriority[String(current.groupCode || '').toUpperCase()] ?? Number.POSITIVE_INFINITY;
+                const bestPriority = tieBreakerPriority[String(best.groupCode || '').toUpperCase()] ?? Number.POSITIVE_INFINITY;
+                return currentPriority < bestPriority ? current : best;
+            });
+
+            const monthLabel = latestSnapshot.latestStudy.monthLabel || '---';
+            const groupLabel = latestSnapshot.groupName || latestSnapshot.groupCode || 'GROUP';
+            const periodLabel = latestSnapshot.latestStudy.periodLabel || '';
+            if (latestChipEl) latestChipEl.textContent = `Latest Livingston report: ${monthLabel} • ${groupLabel}`;
+            if (latestPeriodEl) {
+                latestPeriodEl.textContent = periodLabel
+                    ? `Latest reporting window: ${periodLabel}`
+                    : 'Latest reporting window: pending';
+            }
+        }
+        function updateDeliMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics) {
+            if (!summary) return;
+
+            const costCurrentMonthEl = summary.querySelector('[data-group-cost-current-month]');
+            const costCurrentEl = summary.querySelector('[data-group-cost-current]');
+            const costPrevWrap = summary.querySelector('[data-group-cost-prev-wrap]');
+            const costPrevMonthEl = summary.querySelector('[data-group-cost-prev-month]');
+            const costPrevEl = summary.querySelector('[data-group-cost-prev]');
+            const pfCurrentMonthEl = summary.querySelector('[data-group-pf-current-month]');
+            const pfPrevWrap = summary.querySelector('[data-group-pf-prev-wrap]');
+            const pfPrevMonthEl = summary.querySelector('[data-group-pf-prev-month]');
+            const pfPrevEl = summary.querySelector('[data-group-pf-prev]');
+
+            const latestMonthLabel = latestStudy?.monthLabel || '---';
+            const previousMonthLabel = previousStudy?.monthLabel || '---';
+            if (costCurrentMonthEl) costCurrentMonthEl.textContent = latestMonthLabel;
+            if (pfCurrentMonthEl) pfCurrentMonthEl.textContent = latestMonthLabel;
+            if (costCurrentEl) costCurrentEl.textContent = formatCostPerHour(latestMetrics?.totalCostPerHour);
+
+            const hasPreviousStudy = Boolean(previousStudy);
+            if (costPrevWrap) costPrevWrap.hidden = !hasPreviousStudy;
+            if (pfPrevWrap) pfPrevWrap.hidden = !hasPreviousStudy;
+
+            if (hasPreviousStudy) {
+                if (costPrevMonthEl) costPrevMonthEl.textContent = previousMonthLabel;
+                if (pfPrevMonthEl) pfPrevMonthEl.textContent = previousMonthLabel;
+                if (costPrevEl) costPrevEl.textContent = formatCostPerHour(previousMetrics?.totalCostPerHour);
+                if (pfPrevEl) pfPrevEl.textContent = formatPf(previousMetrics?.pfPercent);
+            }
+        }
+        async function fetchGroupStudyMetrics(studyHref) {
+            const resolvedUrl = new URL(studyHref, window.location.href).toString();
+            const response = await fetch(resolvedUrl, { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error(`Failed to read study (${response.status})`);
+            }
+
+            const htmlText = await response.text();
+            const pfValues = parsePfValuesFromHtml(htmlText);
+            if (!pfValues.length) {
+                throw new Error('No PF values found in study');
+            }
+
+            const avgPf = pfValues.reduce((sum, n) => sum + n, 0) / pfValues.length;
+            const costValues = parseCostPerHourValuesFromHtml(htmlText);
+            const totalCostPerHour = costValues.length
+                ? costValues.reduce((sum, n) => sum + n, 0)
+                : null;
+
+            return {
+                pfPercent: avgPf,
+                totalCostPerHour
+            };
+        }
 
         async function fetchGroupEfficiencyPercent(studyHref) {
             const resolvedUrl = new URL(studyHref, window.location.href).toString();
@@ -1231,48 +1897,82 @@
             if (!summary) return;
 
             const nameEl = summary.querySelector('.group-summary-name');
-            const effEl = summary.querySelector('.group-summary-eff');
+            const effEl = summary.querySelector('[data-group-pf-current]') || summary.querySelector('.group-summary-eff');
+            const costCurrentEl = summary.querySelector('[data-group-cost-current]');
             const metaEl = summary.querySelector('.group-summary-meta');
+            const groupCode = String(section.dataset.groupCode || '').trim().toUpperCase();
 
             const groupName = String(summary.dataset.groupName || '').trim();
             const transformerSpec = String(summary.dataset.transformerSpec || '').trim();
+            const groupDisplayName = groupName || groupCode || 'GROUP';
             if (nameEl && groupName) {
                 nameEl.textContent = transformerSpec ? `${groupName} (${transformerSpec})` : groupName;
             }
 
             setGroupEfficiencyStateClass(effEl, null);
-
-            const latestStudy = findLatestStudy(section);
+            setGroupEfficiencyStateClass(costCurrentEl, null);
+            const studies = findGroupStudies(section);
+            const latestStudy = studies[0] || null;
+            const previousStudy = studies[1] || null;
             if (!latestStudy) {
                 if (effEl) effEl.textContent = '--.-%PF';
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
-                if (metaEl) metaEl.textContent = 'Group Efficiency - PENDING';
-                return;
+                setGroupEfficiencyStateClass(costCurrentEl, 'unavailable');
+                updateDeliMonthPills(summary, null, null, null, null);
+                if (metaEl) metaEl.textContent = '';
+                return {
+                    groupCode,
+                    groupName: groupDisplayName,
+                    latestStudy: null
+                };
             }
 
-            const tokenLabel = String(latestStudy.token || '').toUpperCase();
-            if (metaEl) metaEl.textContent = `Group Efficiency - ${tokenLabel}`;
-
             try {
-                const efficiencyPct = await fetchGroupEfficiencyPercent(latestStudy.href);
+                const latestMetrics = await fetchGroupStudyMetrics(latestStudy.href);
+                const efficiencyPct = latestMetrics.pfPercent;
                 const state = classifyGroupStateFromPfPercent(efficiencyPct);
                 if (effEl) {
                     effEl.textContent = `${efficiencyPct.toFixed(1)}%PF`;
                     setGroupEfficiencyStateClass(effEl, state.key);
-                    effEl.title = state.activePct == null
+                    effEl.title = state.pfPct == null
                         ? state.label
-                        : `${state.label} (${state.activePct.toFixed(1)}% active)`;
+                        : `${state.label} (PF ${state.pfPct.toFixed(1)}%)`;
                 }
+                setGroupEfficiencyStateClass(costCurrentEl, state.key);
+                let previousMetrics = null;
+                if (previousStudy) {
+                    try {
+                        previousMetrics = await fetchGroupStudyMetrics(previousStudy.href);
+                    } catch (e) {}
+                }
+                updateDeliMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics);
+                if (metaEl) metaEl.textContent = '';
+                return {
+                    groupCode,
+                    groupName: groupDisplayName,
+                    latestStudy,
+                    latestMetrics
+                };
             } catch (e) {
                 if (effEl) effEl.textContent = '--.-%PF';
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
-                if (metaEl) metaEl.textContent = `Group Efficiency - ${tokenLabel}`;
+                setGroupEfficiencyStateClass(costCurrentEl, 'unavailable');
+                updateDeliMonthPills(summary, latestStudy, previousStudy, null, null);
+                if (metaEl) metaEl.textContent = '';
+                return {
+                    groupCode,
+                    groupName: groupDisplayName,
+                    latestStudy
+                };
             }
         }
 
         async function updateAllGroupSummaries() {
             const groupSections = document.querySelectorAll('.group-section');
-            await Promise.all(Array.from(groupSections).map(updateGroupSummary));
+            const groupSnapshots = await Promise.all(Array.from(groupSections).map(updateGroupSummary));
+            updateLivingstonHeroSiteAverage();
+            updateLivingstonHeroTopline(groupSnapshots);
+            updateLivingstonCompositeTitlePills();
         }
         // Offset the right chicken video so they're not synchronized
         document.addEventListener('DOMContentLoaded', function() {
@@ -1280,8 +1980,11 @@
             if (chickenRight) {
                 chickenRight.currentTime = 5; // offset by 5 seconds
             }
-
-            updateAllGroupSummaries().catch(() => {});
+            updateAllGroupSummaries().catch(() => {
+                updateLivingstonHeroSiteAverage();
+                updateLivingstonHeroTopline([]);
+                updateLivingstonCompositeTitlePills();
+            });
 
             // Persist scroll position when launching a study, so "Return" lands back at the same frame.
             // (This avoids having to scroll back down to the Energy Behavior Library each time.)
@@ -1328,6 +2031,23 @@
             setTimeout(doRestore, 50);
             setTimeout(doRestore, 250);
         });
+    </script>
+    <script>
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "fosterfarms",
+                    customer_name: "Foster Farms",
+                    site_slug: "livingston-site",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {
+                // ignore storage failures
+            }
+        })();
     </script>
 </body>
 </html>

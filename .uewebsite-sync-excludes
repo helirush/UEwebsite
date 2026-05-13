@@ -1,7 +1,26 @@
 # Keep Unity top-nav sections private to eWebmaster until approved for publish
 .git/
 **/.git/
+.DS_Store
 **/.DS_Store
+zARCHIVE/
+**/zARCHIVE/
+**/__pycache__/
+**/*.pyc
+**/*.log
+**/*.tmp
+**/*.swp
+.env
+*.env
+UnityEnergy/hume_runtime_auth.local.js
+**/*_BU*.html
+**/*backup*.html
+**/*.bak_*
+UnityEnergy/maxwellian_leads.csv
+UnityEnergy/maxwellian_leads.jsonl
+UnityEnergy/nonpublic_runtime/
+UnityEnergy/openai_realtime_server.py
+UnityEnergy/openai_renderer/
 UnityEnergy/vendor/
 UnityEnergy/index.html.bak_*
 UnityEnergy/about-unity.html

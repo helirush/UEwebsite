@@ -1,0 +1,32 @@
+{
+  "transformers": {
+    "PL1-PROC1": {
+      "pattern_text": "PART 1: CURRENT STATE\nPL1-Proc1 baseline in April shows a stable production profile with average active load near 170.5 kW and average power factor of 86.3%. Reactive waste remains elevated at roughly 27.9 kW, creating recurring avoidable energy and thermal burden.\n\nPART 2: MPTS SOLUTION\nUnity MPTS deployment is expected to collapse most reactive demand and move this field toward harmonized operation. With peak reactive demand around 196.2 kVAR, this field is a viable correction candidate for targeted compensation sizing and staged installation.\n\nPART 3: EXPECTED RESULTS\nProjected recovery for PL1-Proc1 is approximately $67,483 per year, with lower cooling load and improved field stability. Expected outcome is reduced waste intensity while maintaining current production throughput.",
+      "pattern_part1": "PL1-Proc1 baseline in April shows a stable production profile with average active load near 170.5 kW and average power factor of 86.3%. Reactive waste remains elevated at roughly 27.9 kW, creating recurring avoidable energy and thermal burden.",
+      "pattern_part2": "Unity MPTS deployment is expected to collapse most reactive demand and move this field toward harmonized operation. With peak reactive demand around 196.2 kVAR, this field is a viable correction candidate for targeted compensation sizing and staged installation.",
+      "pattern_part3": "Projected recovery for PL1-Proc1 is approximately $67,483 per year, with lower cooling load and improved field stability. Expected outcome is reduced waste intensity while maintaining current production throughput.",
+      "pattern_summary": [
+        "Power Factor (avg): 86.3",
+        "Peak Reactive Demand: 196.2 kVAR",
+        "Annual Savings Potential: $67,483"
+      ],
+      "transformer_name": "PL1-Proc1",
+      "power_factor": 0.8628913951061116,
+      "tmax_supply": 309.89
+    },
+    "PL1-MSHOP": {
+      "pattern_text": "PART 1: CURRENT STATE\nPL1-MShop baseline in April carries higher field loading, averaging about 277.4 kW active demand at 86.8% power factor. Reactive waste averages 44.5 kW and contributes to significant avoidable thermal and cooling burden.\n\nPART 2: MPTS SOLUTION\nUnity MPTS correction is designed to neutralize the lagging reactive component and stabilize this field near target operation. With peak reactive demand near 437.2 kVAR, compensation planning can be sized directly against this observed burden.\n\nPART 3: EXPECTED RESULTS\nProjected recovery for PL1-MShop is approximately $107,222 per year, with meaningful cooling-load reduction and cleaner electrical behavior under production load. Net result is improved efficiency and reclaimed electrical capacity margin.",
+      "pattern_part1": "PL1-MShop baseline in April carries higher field loading, averaging about 277.4 kW active demand at 86.8% power factor. Reactive waste averages 44.5 kW and contributes to significant avoidable thermal and cooling burden.",
+      "pattern_part2": "Unity MPTS correction is designed to neutralize the lagging reactive component and stabilize this field near target operation. With peak reactive demand near 437.2 kVAR, compensation planning can be sized directly against this observed burden.",
+      "pattern_part3": "Projected recovery for PL1-MShop is approximately $107,222 per year, with meaningful cooling-load reduction and cleaner electrical behavior under production load. Net result is improved efficiency and reclaimed electrical capacity margin.",
+      "pattern_summary": [
+        "Power Factor (avg): 86.8",
+        "Peak Reactive Demand: 437.2 kVAR",
+        "Annual Savings Potential: $107,222"
+      ],
+      "transformer_name": "PL1-MShop",
+      "power_factor": 0.8680193158394516,
+      "tmax_supply": 898.39
+    }
+  }
+}

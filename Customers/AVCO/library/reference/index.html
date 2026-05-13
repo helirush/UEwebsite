@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVCO Reference Library</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: rgba(247, 243, 241, 1);
+            color: rgba(52, 39, 37, 1);
+            line-height: 1.6;
+        }
+        .wrap { max-width: 980px; margin: 0 auto; padding: 24px 18px 34px; }
+        .nav { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav a {
+            text-decoration: none;
+            background: rgba(224, 207, 198, 1);
+            color: rgba(74, 45, 41, 1);
+            border: 1px solid rgba(204, 181, 170, 1);
+            border-radius: 7px;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.35px;
+            transition: all 0.2s ease;
+        }
+        .nav a:hover {
+            background: rgba(97, 58, 53, 1);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(76, 44, 40, 1);
+            transform: translateY(-1px);
+        }
+        .panel {
+            background: #fff;
+            border: 1px solid rgba(224, 209, 202, 1);
+            border-left: 6px solid rgba(108, 66, 60, 1);
+            border-radius: 10px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 14px rgba(56, 35, 32, 0.08);
+        }
+        .reference-grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 14px;
+        }
+        .reference-card {
+            border: 1px solid rgba(218, 199, 189, 1);
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(250, 244, 240, 1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .reference-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(56, 35, 32, 0.14);
+        }
+        .reference-thumb {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            background: rgba(238, 224, 216, 1);
+            border-bottom: 1px solid rgba(221, 205, 196, 1);
+        }
+        .reference-body {
+            padding: 12px;
+        }
+        .reference-title {
+            color: rgba(85, 51, 47, 1);
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 4px;
+        }
+        .reference-meta {
+            color: rgba(82, 62, 56, 1);
+            font-size: 0.84rem;
+            margin-bottom: 10px;
+        }
+        .reference-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .reference-actions a {
+            text-decoration: none;
+            padding: 8px 10px;
+            border-radius: 7px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.35px;
+            color: rgba(255, 255, 255, 1);
+            background: rgba(97, 58, 53, 1);
+            transition: all 0.2s ease;
+        }
+        .reference-actions a:hover {
+            background: rgba(108, 66, 60, 1);
+            transform: translateY(-1px);
+        }
+        h1 { color: rgba(85, 51, 47, 1); margin-bottom: 8px; }
+        p { color: rgba(82, 62, 56, 1); margin-bottom: 10px; }
+        ul { padding-left: 18px; }
+        li { margin: 8px 0; }
+        code {
+            background: rgba(234, 219, 211, 1);
+            padding: 1px 5px;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 16px;
+            background: rgba(74, 44, 40, 1);
+            color: rgba(250, 244, 240, 1);
+            text-align: center;
+            padding: 12px 10px;
+            border-top: 3px solid rgba(212, 193, 183, 1);
+            font-size: 0.84rem;
+        }
+        @media (max-width: 700px) {
+            .wrap {
+                padding: 18px 12px 24px;
+            }
+            .reference-thumb {
+                height: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <nav class="nav">
+            <a href="../index.html">Library Hub</a>
+            <a href="../../index.html">AVCO Page</a>
+            <a href="../data/index.html">Data Library</a>
+            <a href="../installation/index.html">Installation Library</a>
+        </nav>
+        <section class="panel">
+            <h1>Reference Library</h1>
+            <p>This library holds support references (spec sheets, studies, narratives, and technical notes) for AVCO Center.</p>
+            <p>Drop incoming files in:</p>
+            <p><code>Customers/AVCO/library/reference/files/</code></p>
+            <ul>
+                <li>Reference documents are listed below with preview thumbnails.</li>
+            </ul>
+            <div class="reference-grid">
+                <article class="reference-card">
+                    <img class="reference-thumb" src="thumbnails/1UE_Technical-TowerCaseStudy_210325s_thumb.png" alt="Preview thumbnail for AVCO technical tower case study PDF">
+                    <div class="reference-body">
+                        <div class="reference-title">1UE Technical Tower Case Study</div>
+                        <div class="reference-meta">File: 1UE_Technical-TowerCaseStudy_210325s.pdf</div>
+                        <div class="reference-actions">
+                            <a href="files/1UE_Technical-TowerCaseStudy_210325s.pdf" target="_blank" rel="noopener">Open PDF</a>
+                            <a href="files/1UE_Technical-TowerCaseStudy_210325s.pdf" download>Download</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer>
+        AVCO reference library
+    </footer>
+</body>
+</html>

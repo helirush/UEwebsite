@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BOA Building | Unity Energy</title>
+  <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
+  <script src="../../UnityEnergy/hume_character_config.js"></script>
+  <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
+  <style>
+    :root {
+      --bg: #05070c;
+      --panel: #0b1324;
+      --line: #1e2f52;
+      --text: #e8eeff;
+      --muted: #99abcf;
+      --unity-gold: #ffc54d;
+      --unity-cyan: #63d8ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(1100px 700px at 20% -10%, #102142 0%, var(--bg) 50%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .wrap { width: min(1100px, 92%); margin: 0 auto; }
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(5, 7, 12, 0.82);
+      backdrop-filter: blur(6px);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--unity-cyan);
+      text-decoration: none;
+    }
+    .nav {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .hero {
+      padding: 72px 0 52px;
+    }
+    .kicker {
+      display: inline-block;
+      color: #101826;
+      background: var(--unity-gold);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    h1 {
+      margin: 16px 0 8px;
+      font-size: clamp(2rem, 4.4vw, 3.2rem);
+      line-height: 1.12;
+    }
+    .lead {
+      color: var(--muted);
+      max-width: 760px;
+      font-size: clamp(1rem, 1.5vw, 1.16rem);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 30px 0 0;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(17, 31, 62, 0.74) 0%, var(--panel) 100%);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: #d7e7ff;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .section {
+      padding: 20px 0 56px;
+    }
+    .section h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+    li + li { margin-top: 8px; }
+    .cta {
+      margin-top: 24px;
+      display: inline-block;
+      color: #0d1423;
+      background: var(--unity-gold);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 10px;
+    }
+    .study-link {
+      margin-top: 18px;
+      display: inline-block;
+      color: #061022;
+      background: var(--unity-cyan);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 10px;
+    }
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 20px 0 32px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <a class="brand" href="/UnityEnergy/index.html">Unity Energy</a>
+      <a class="nav" href="/UnityEnergy/customer-portals.html">Customer Portals</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <span class="kicker">Customer Profile</span>
+      <h1>BOA Building</h1>
+      <p class="lead">
+        This page is the new BOA Building customer workspace. It is ready for your content, visual assets,
+        and performance story narrative.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Project Goal</h3>
+          <p>Define the electrical field baseline and identify recoverable energy opportunities.</p>
+        </article>
+        <article class="card">
+          <h3>Operational Focus</h3>
+          <p>Reduce burden from reactive energy, thermal stress, and unnecessary demand cost.</p>
+        </article>
+        <article class="card">
+          <h3>Deliverables</h3>
+          <p>Customer-facing insights, dashboard links, and recommended optimization actions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Initial Build Checklist</h2>
+      <ul>
+        <li>Add customer branding and BOA Building facility imagery to `Customers/BOA_Building/images`.</li>
+        <li>Insert site profile metrics (transformer, interval span, demand context).</li>
+        <li>Attach dashboard/report links once analysis artifacts are ready.</li>
+        <li>Add contact/next-step call to action for stakeholder review.</li>
+      </ul>
+      <a class="cta" href="/UnityEnergy/customer-portals.html">Return to Customer Portals</a>
+    </section>
+    <section class="section">
+      <h2>Published Energy Fields</h2>
+      <ul>
+        <li>March 2026 study for BOA Building (MSB-1 and MSB-2) is now available.</li>
+      </ul>
+      <a class="study-link" href="./03_MAR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260301-260331_31d.html">Open March 2026 Energy Fields</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      BOA Building page scaffold created in eWebmaster for customer-specific content development.
+    </div>
+  </footer>
+  <script>
+    (function () {
+      try {
+        const context = {
+          customer_slug: "boa-building",
+          customer_name: "BOA Building",
+          source_path: window.location.pathname,
+          selected_at: new Date().toISOString()
+        };
+        window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+        window.maxwellianClerkCustomerContext = context;
+      } catch (_err) {
+        // ignore storage failures
+      }
+    })();
+  </script>
+</body>
+</html>

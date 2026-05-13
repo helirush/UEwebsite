@@ -1,0 +1,216 @@
+{
+  "customer_name": "Foster Farms",
+  "customer": "Foster Farms",
+  "customer_folder": "FosterFarms",
+  "facility_name": "Livingston HQ Facility",
+  "facility": "Livingston HQ Facility",
+  "site_name": "Livingston HQ Facility",
+  "site_folder": "Livingston_SIte",
+  "street_address": "843 Davis Street",
+  "city": "Livingston",
+  "state": "CA",
+  "zipcode": "95334",
+  "utility_provider": "Merced Irrigation District - Water & Power",
+  "utility_website": "https://mercedid.org",
+  "utility": "Merced Irrigation District - Water & Power",
+  "distributor_provider": "Merced Irrigation District - Water & Power",
+  "distributor": "Merced Irrigation District - Water & Power",
+  "generator_provider": "Merced Irrigation District - Water & Power",
+  "generator": "Merced Irrigation District - Water & Power",
+  "ppa_provider": "None",
+  "composite_kwh_rate": 0.195,
+  "co2e_cost_per_mt": 38.5,
+  "transformer": "BNR-1",
+  "transformer_group": "BNR",
+  "energy_field_group": "BNR",
+  "transformer_defaults": {
+    "BNR-1": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050325",
+      "group": "BNR"
+    },
+    "BNR-2": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050299",
+      "group": "BNR"
+    },
+    "Deli F": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050323",
+      "group": "Deli"
+    },
+    "Deli G": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050305",
+      "group": "Deli"
+    },
+    "NCDC1 West11c": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55031702",
+      "group": "NCDC"
+    },
+    "NCDC2 South D": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050318",
+      "group": "NCDC"
+    },
+    "NCDC3 North E": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050395",
+      "group": "NCDC"
+    },
+    "PL1-MShop": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 10000.0,
+      "meter_sn": "AN55050287",
+      "group": "PL1"
+    },
+    "PL1-Proc1": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 10000.0,
+      "meter_sn": "AN55050333",
+      "group": "PL1"
+    },
+    "PL1-Proc2": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 10000.0,
+      "meter_sn": "AN55050338",
+      "group": "PL1"
+    },
+    "PL2-1South": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 10000.0,
+      "meter_sn": "AN55050400",
+      "group": "PL2"
+    },
+    "PL2-2Center": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 10000.0,
+      "meter_sn": "AN55050368",
+      "group": "PL2"
+    },
+    "PL2-3North": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 10000.0,
+      "meter_sn": "AN55050286",
+      "group": "PL2"
+    },
+    "Rendering-1": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050434",
+      "group": "Rendering"
+    },
+    "Rendering-2": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050284",
+      "group": "Rendering"
+    },
+    "Rendering-3": {
+      "size_kva": 2500,
+      "voltage": 480,
+      "ac_space_pct": 50.0,
+      "equipment_cost_annual": 45000.0,
+      "meter_sn": "AN55050429",
+      "group": "Rendering"
+    }
+  },
+  "transformer_order": [
+    "BNR-1",
+    "BNR-2",
+    "Deli F",
+    "Deli G",
+    "NCDC1 West11c",
+    "NCDC2 South D",
+    "NCDC3 North E",
+    "PL1-MShop",
+    "PL1-Proc1",
+    "PL1-Proc2",
+    "PL2-1South",
+    "PL2-2Center",
+    "PL2-3North",
+    "Rendering-1",
+    "Rendering-2",
+    "Rendering-3"
+  ],
+  "transformer_groups": {
+    "BNR": [
+      "BNR-1",
+      "BNR-2"
+    ],
+    "Deli": [
+      "Deli F",
+      "Deli G"
+    ],
+    "NCDC": [
+      "NCDC1 West11c",
+      "NCDC2 South D",
+      "NCDC3 North E"
+    ],
+    "PL1": [
+      "PL1-MShop",
+      "PL1-Proc1",
+      "PL1-Proc2"
+    ],
+    "PL2": [
+      "PL2-1South",
+      "PL2-2Center",
+      "PL2-3North"
+    ],
+    "Rendering": [
+      "Rendering-1",
+      "Rendering-2",
+      "Rendering-3"
+    ]
+  },
+  "transformer_group_order": [
+    "BNR",
+    "Deli",
+    "NCDC",
+    "PL1",
+    "PL2",
+    "Rendering"
+  ],
+  "equipment_cost_annual": 45000.0,
+  "ac_space_pct": 50.0,
+  "size_kva": 2500,
+  "voltage": 480
+}

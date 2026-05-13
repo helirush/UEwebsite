@@ -1,0 +1,51 @@
+{
+  "generated_at_utc": "2026-05-08T00:10:14.877419+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/Deli/patterns",
+  "mode": "render-only",
+  "inventory": {
+    "image_count": 5,
+    "all_images": [
+      "DeliGb_apr26.png",
+      "DeliGbt_apr26.png",
+      "DeliGm_apr26.png",
+      "DeliGs_apr26.png",
+      "DeliGv_apr26.png"
+    ],
+    "transformer_count": 1,
+    "coverage_by_transformer": {
+      "DELIG": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "DELIG": [
+        "DeliGb_apr26.png",
+        "DeliGbt_apr26.png",
+        "DeliGm_apr26.png",
+        "DeliGs_apr26.png",
+        "DeliGv_apr26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "DELIG"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/Deli/patterns",
+    "--render-only"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-08T00:12:07.542806+00:00"
+}

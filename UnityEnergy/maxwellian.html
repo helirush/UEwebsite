@@ -7,18 +7,20 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Maxwellian — Intelligence Hub — Unity Energy</title>
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
+    <script src="maxwellian_library_data.js?v=20260511r1"></script>
+    <script src="einsights_library_data.js?v=20260511r1"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            color: rgba(58, 66, 48, 1);
+            background: linear-gradient(180deg, rgba(245, 242, 233, 1) 0%, rgba(242, 239, 229, 1) 100%);
         }
 
         /* Banner */
@@ -60,60 +62,187 @@
 
         /* Nav */
         .nav-tabs-container {
-            background: rgba(240, 240, 240, 1);
-            padding: 22px 0 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(246, 246, 241, 0.96);
+            padding: 14px 0 24px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
         }
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px 14px;
             flex-wrap: wrap;
-            max-width: 1800px;
+            max-width: none;
             margin: 0 auto;
-            padding: 0 10px;
+            padding: 0;
+        }
+        .nav-tabs > a {
+            position: relative;
+        }
+        .nav-tabs > a:first-child::before,
+        .nav-tabs > a + a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2px;
+            height: 18px;
+            transform: translateY(-50%);
+            background: rgba(60, 79, 46, 0.84);
+            pointer-events: none;
+        }
+        @media (min-width: 1101px) {
+            .nav-tabs {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+                width: min(95%, 1760px);
+                max-width: calc(100% - 24px);
+            }
+            .nav-tabs > a {
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .nav-tabs > a:first-child,
+            .nav-tabs > a + a {
+                border-left: 2px solid rgba(60, 79, 46, 0.84);
+                padding-left: clamp(14px, 1vw, 20px);
+                margin-left: 0;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
+            .nav-tab-portal,
+            .nav-tab-maxwellian {
+                justify-content: center;
+                width: auto;
+                min-width: 0;
+                padding: 7px 10px 7px 12px;
+                font-size: clamp(0.73rem, 0.88vw, 0.95rem);
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
         }
         .nav-tab-portal,
         .nav-tab-maxwellian {
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 0.95em;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 0;
+            padding: 8px 10px 8px 18px;
+            border-radius: 16px;
+            font-size: clamp(0.75rem, 0.95vw, 0.95rem);
             font-weight: 700;
-            letter-spacing: 0.8px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
-            transition: all 0.25s ease;
-            padding: 12px 26px;
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
+            cursor: pointer;
+            color: rgba(46, 74, 31, 0.94);
+            background-color: transparent;
+            background-image: none;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+            box-shadow: none;
+            white-space: nowrap;
         }
-        .nav-tab-portal {
-            background: rgba(90, 110, 35, 1);
-            color: #fff;
-            border: 2px solid rgba(129, 163, 43, 1);
-        }
-        .nav-tab-portal:hover {
-            background: rgba(49, 65, 0, 1);
-        }
-        .nav-tab-portal.active {
-            background: rgba(49, 65, 0, 1);
-            border-color: rgba(250, 200, 0, 1);
-            color: rgba(250, 240, 160, 1);
+        .nav-tab-portal::after,
+        .nav-tab-maxwellian::after {
+            content: none;
         }
         .nav-tab-maxwellian {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border: 2px solid rgba(255, 200, 50, 1);
-            box-shadow: 0 0 16px rgba(255, 160, 0, 0.4);
+            color: rgba(118, 88, 24, 0.98);
+            font-weight: 800;
+            border-color: rgba(201, 166, 72, 0.52);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.78) 0%, rgba(236, 219, 176, 0.78) 100%);
         }
+        .nav-tab-portal:hover,
         .nav-tab-maxwellian:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 28px rgba(255, 160, 0, 0.6);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal.active,
+        .nav-tab-maxwellian.active {
+            border-color: rgba(63, 94, 39, 0.98);
+            background-color: rgba(37, 63, 25, 0.99);
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%);
+            color: rgba(250, 240, 160, 0.98);
+            box-shadow: 0 10px 18px rgba(34, 49, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(18, 33, 12, 0.42);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal:active,
+        .nav-tab-maxwellian:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 1100px) {
+            .nav-tabs {
+                gap: 8px 10px;
+                padding: 0 10px;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
         }
 
         /* Page hero */
         .page-hero {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
+            background: linear-gradient(135deg, rgba(63, 86, 18, 0.97) 0%, rgba(95, 124, 39, 0.95) 58%, rgba(132, 156, 69, 0.92) 100%);
             padding: 60px 40px 50px;
             text-align: center;
-            color: rgba(250, 240, 160, 1);
+            color: rgba(244, 238, 212, 0.98);
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            right: 206px;
+            top: -92px;
+            width: 520px;
+            height: 620px;
+            background-image: url('assets/images/Clerk-LineART-accent-composite-3layer.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: right top;
+            opacity: 0.22;
+            filter: grayscale(50%) brightness(1.48) contrast(1.05) saturate(0.34);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .page-hero::after {
+            content: "";
+            position: absolute;
+            right: 214px;
+            top: -78px;
+            width: 526px;
+            height: 624px;
+            background-image: url('assets/images/Clerk-LineART-accent-composite-3layer.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: right top;
+            opacity: 0.44;
+            filter: grayscale(30%) brightness(2.00) contrast(1.16) saturate(0.82);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .page-hero h1,
+        .page-hero .subtitle,
+        .page-hero .meta {
+            position: relative;
+            z-index: 3;
         }
         .page-hero h1 {
             font-size: 2.8em;
@@ -121,21 +250,61 @@
             letter-spacing: 2px;
             margin-bottom: 10px;
         }
-        .page-hero h1 span { color: rgba(255, 200, 50, 1); }
+        .page-hero h1 span { color: rgba(236, 206, 129, 1); }
         .page-hero .subtitle {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 1.3em;
+            font-size: 1.38em;
             font-style: italic;
-            opacity: 0.9;
-            max-width: 1200px;
+            color: rgba(243, 240, 223, 0.92);
+            max-width: 1440px;
             margin: 0 auto;
             line-height: 1.5;
         }
         .page-hero .meta {
             margin-top: 15px;
-            font-size: 0.9em;
-            opacity: 0.7;
+            font-size: 1em;
+            color: rgba(234, 230, 207, 0.82);
             letter-spacing: 1px;
+        }
+        @media (max-width: 1320px) {
+            .page-hero::before {
+                right: 162px;
+                top: -66px;
+                width: 438px;
+                height: 532px;
+                opacity: 0.18;
+            }
+            .page-hero::after {
+                right: 164px;
+                top: -52px;
+                width: 449px;
+                height: 546px;
+                opacity: 0.38;
+            }
+        }
+        @media (max-width: 1024px) {
+            .page-hero::before {
+                right: 202px;
+                top: -24px;
+                width: 338px;
+                height: 412px;
+                opacity: 0.12;
+            }
+            .page-hero::after {
+                right: 204px;
+                top: -8px;
+                width: 351px;
+                height: 429px;
+                opacity: 0.32;
+            }
+        }
+        @media (max-width: 820px) {
+            .page-hero::before {
+                display: none;
+            }
+            .page-hero::after {
+                display: none;
+            }
         }
 
         /* Main hub layout */
@@ -173,9 +342,9 @@
             border-bottom: 3px solid rgba(129, 163, 43, 1);
         }
         .column-label-insights {
-            background: linear-gradient(135deg, rgba(140, 70, 0, 1) 0%, rgba(200, 120, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border-bottom: 3px solid rgba(255, 200, 50, 1);
+            background: linear-gradient(135deg, rgba(123, 87, 28, 0.98) 0%, rgba(171, 128, 48, 0.97) 100%);
+            color: rgba(251, 242, 210, 1);
+            border-bottom: 3px solid rgba(212, 169, 79, 0.98);
         }
         .column-label .col-sub {
             display: block;
@@ -187,14 +356,14 @@
             margin-top: 2px;
         }
         .column-cards {
-            background: rgba(248, 249, 250, 1);
-            border: 2px solid rgba(210, 220, 190, 1);
+            background: rgba(250, 248, 241, 1);
+            border: 2px solid rgba(198, 210, 170, 0.95);
             border-top: none;
             border-radius: 0 0 12px 12px;
             padding: 20px 16px;
         }
         .column-cards-insights {
-            border-color: rgba(220, 160, 80, 0.4);
+            border-color: rgba(188, 150, 84, 0.5);
         }
 
         .section-label {
@@ -208,18 +377,18 @@
             border-bottom: 2px solid rgba(129, 163, 43, 0.3);
         }
         .section-label-insights {
-            color: rgba(180, 100, 0, 1);
-            border-bottom-color: rgba(180, 100, 0, 0.3);
+            color: rgba(142, 96, 28, 0.98);
+            border-bottom-color: rgba(160, 113, 40, 0.34);
         }
 
         /* Episode card */
         .episode-card {
-            background: white;
+            background: rgba(255, 254, 250, 1);
             border-radius: 16px;
-            border: 2px solid rgba(210, 220, 190, 1);
+            border: 2px solid rgba(203, 214, 176, 0.95);
             margin-bottom: 30px;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 16px rgba(39, 55, 18, 0.09);
             transition: all 0.3s;
         }
         .episode-card:hover {
@@ -230,12 +399,12 @@
         .card-header {
             display: flex;
             align-items: stretch;
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            background: linear-gradient(135deg, rgba(52, 73, 8, 0.98) 0%, rgba(80, 109, 28, 0.98) 100%);
         }
 
         .episode-number {
-            background: rgba(255, 200, 50, 1);
-            color: rgba(49, 65, 0, 1);
+            background: rgba(235, 203, 130, 1);
+            color: rgba(56, 69, 28, 1);
             font-size: 1.8em;
             font-weight: 900;
             width: 100px;
@@ -273,7 +442,7 @@
             align-items: center;
         }
         .card-date {
-            color: rgba(180, 210, 100, 1);
+            color: rgba(201, 224, 144, 1);
             font-size: 0.85em;
             font-weight: 600;
         }
@@ -285,15 +454,15 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .type-standard  { background: rgba(129, 163, 43, 0.3); color: rgba(180, 220, 80, 1); border: 1px solid rgba(129, 163, 43, 0.5); }
-        .type-special   { background: rgba(200, 100, 0, 0.3); color: rgba(255, 180, 80, 1); border: 1px solid rgba(200, 100, 0, 0.5); }
-        .type-frontier  { background: rgba(80, 100, 200, 0.3); color: rgba(150, 170, 255, 1); border: 1px solid rgba(80, 100, 200, 0.5); }
+        .type-standard  { background: rgba(129, 163, 43, 0.22); color: rgba(211, 234, 162, 1); border: 1px solid rgba(137, 170, 60, 0.54); }
+        .type-special   { background: rgba(186, 128, 42, 0.24); color: rgba(247, 218, 157, 1); border: 1px solid rgba(190, 136, 55, 0.52); }
+        .type-frontier  { background: rgba(100, 118, 185, 0.24); color: rgba(192, 205, 255, 1); border: 1px solid rgba(110, 130, 192, 0.5); }
 
         .card-body {
             padding: 25px 30px;
         }
         .card-description {
-            color: rgba(60, 80, 40, 1);
+            color: rgba(61, 75, 44, 1);
             font-size: 0.97em;
             line-height: 1.7;
             margin-bottom: 20px;
@@ -305,8 +474,8 @@
             gap: 8px;
         }
         .tag {
-            background: rgba(230, 240, 210, 1);
-            color: rgba(49, 65, 0, 1);
+            background: rgba(231, 239, 211, 0.92);
+            color: rgba(57, 72, 20, 1);
             padding: 3px 12px;
             border-radius: 20px;
             font-size: 0.78em;
@@ -321,8 +490,8 @@
             align-items: center;
         }
         .btn-read {
-            background: linear-gradient(135deg, rgba(129, 163, 43, 1) 0%, rgba(90, 122, 42, 1) 100%);
-            color: white;
+            background: linear-gradient(135deg, rgba(116, 150, 44, 0.98) 0%, rgba(83, 113, 35, 0.98) 100%);
+            color: rgba(248, 251, 238, 1);
             padding: 12px 28px;
             border-radius: 50px;
             font-size: 0.9em;
@@ -334,17 +503,17 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 12px rgba(129, 163, 43, 0.3);
+            box-shadow: 0 3px 12px rgba(102, 135, 37, 0.3);
         }
         .btn-read:hover {
-            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
+            background: linear-gradient(135deg, rgba(136, 173, 55, 1) 0%, rgba(104, 138, 43, 1) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(129, 163, 43, 0.4);
+            box-shadow: 0 6px 20px rgba(102, 135, 37, 0.42);
         }
 
         .btn-audio {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
+            background: linear-gradient(135deg, rgba(166, 118, 39, 1) 0%, rgba(200, 151, 63, 1) 100%);
+            color: rgba(252, 243, 217, 1);
             padding: 12px 28px;
             border-radius: 50px;
             font-size: 0.9em;
@@ -355,12 +524,12 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 12px rgba(180, 100, 0, 0.35);
+            box-shadow: 0 3px 12px rgba(147, 102, 27, 0.35);
         }
         .btn-audio:hover {
-            background: linear-gradient(135deg, rgba(210, 120, 0, 1) 0%, rgba(250, 160, 0, 1) 100%);
+            background: linear-gradient(135deg, rgba(185, 134, 49, 1) 0%, rgba(215, 165, 73, 1) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(180, 100, 0, 0.5);
+            box-shadow: 0 6px 20px rgba(147, 102, 27, 0.46);
         }
         .btn-audio.playing {
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
@@ -371,8 +540,8 @@
         .audio-panel {
             display: none;
             margin-top: 18px;
-            background: rgba(255, 248, 220, 1);
-            border: 2px solid rgba(220, 150, 0, 0.5);
+            background: rgba(250, 243, 224, 1);
+            border: 2px solid rgba(196, 145, 68, 0.48);
             border-radius: 12px;
             padding: 20px 24px;
         }
@@ -382,7 +551,7 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: rgba(120, 70, 0, 1);
+            color: rgba(116, 79, 24, 1);
             margin-bottom: 10px;
         }
         .audio-panel audio {
@@ -394,31 +563,31 @@
             font-family: 'Times New Roman', Times, serif;
             font-size: 0.95em;
             font-style: italic;
-            color: rgba(80, 50, 0, 1);
+            color: rgba(93, 69, 27, 1);
             line-height: 1.7;
             padding: 12px 16px;
-            background: rgba(255, 255, 240, 1);
-            border-left: 3px solid rgba(220, 150, 0, 1);
+            background: rgba(255, 252, 243, 1);
+            border-left: 3px solid rgba(188, 140, 64, 1);
             border-radius: 4px;
         }
         .audio-tts-note {
             font-size: 0.8em;
-            color: rgba(140, 90, 0, 0.8);
+            color: rgba(133, 94, 35, 0.85);
             margin-top: 10px;
             font-style: italic;
         }
         .audio-coming-soon {
             font-size: 0.88em;
-            color: rgba(140, 90, 0, 0.9);
+            color: rgba(133, 94, 35, 0.9);
             font-style: italic;
             margin-top: 8px;
         }
 
         /* ── e-Insights cards ─────────────────────────────────────── */
         .insight-card {
-            background: white;
+            background: rgba(255, 253, 248, 1);
             border-radius: 12px;
-            border: 2px solid rgba(220, 160, 80, 0.35);
+            border: 2px solid rgba(198, 156, 89, 0.4);
             margin-bottom: 18px;
             overflow: hidden;
             box-shadow: 0 3px 12px rgba(0,0,0,0.06);
@@ -431,11 +600,11 @@
         .insight-card-header {
             display: flex;
             align-items: stretch;
-            background: linear-gradient(135deg, rgba(140, 70, 0, 1) 0%, rgba(180, 100, 0, 1) 100%);
+            background: linear-gradient(135deg, rgba(123, 87, 28, 0.98) 0%, rgba(171, 128, 48, 0.97) 100%);
         }
         .insight-ep-num {
-            background: rgba(255, 200, 50, 1);
-            color: rgba(100, 45, 0, 1);
+            background: rgba(235, 203, 130, 1);
+            color: rgba(95, 61, 10, 1);
             font-size: 1.5em;
             font-weight: 900;
             width: 72px;
@@ -459,7 +628,7 @@
             flex: 1;
         }
         .insight-title-area h3 {
-            color: rgba(255, 248, 200, 1);
+            color: rgba(251, 244, 219, 1);
             font-size: 1.05em;
             font-weight: 700;
             margin-bottom: 5px;
@@ -472,20 +641,20 @@
             align-items: center;
         }
         .insight-date {
-            color: rgba(255, 210, 120, 1);
+            color: rgba(243, 214, 158, 1);
             font-size: 0.78em;
             font-weight: 600;
         }
         .insight-voices {
             font-size: 0.72em;
-            color: rgba(255, 230, 160, 0.9);
+            color: rgba(247, 229, 191, 0.92);
             font-style: italic;
         }
         .insight-body {
             padding: 16px 20px;
         }
         .insight-description {
-            color: rgba(80, 50, 10, 1);
+            color: rgba(93, 67, 25, 1);
             font-size: 0.92em;
             line-height: 1.65;
             margin-bottom: 14px;
@@ -497,8 +666,8 @@
             gap: 6px;
         }
         .insight-tag {
-            background: rgba(255, 235, 190, 1);
-            color: rgba(120, 60, 0, 1);
+            background: rgba(247, 233, 199, 0.95);
+            color: rgba(120, 75, 16, 1);
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 0.74em;
@@ -506,8 +675,8 @@
         }
         .insight-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
         .btn-listen {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
+            background: linear-gradient(135deg, rgba(166, 118, 39, 1) 0%, rgba(200, 151, 63, 1) 100%);
+            color: rgba(252, 243, 217, 1);
             padding: 10px 22px;
             border-radius: 50px;
             font-size: 0.88em;
@@ -521,9 +690,9 @@
             box-shadow: 0 3px 12px rgba(180, 100, 0, 0.35);
         }
         .btn-listen:hover {
-            background: linear-gradient(135deg, rgba(210, 120, 0, 1) 0%, rgba(250, 160, 0, 1) 100%);
+            background: linear-gradient(135deg, rgba(185, 134, 49, 1) 0%, rgba(215, 165, 73, 1) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(180, 100, 0, 0.5);
+            box-shadow: 0 6px 20px rgba(147, 102, 27, 0.46);
         }
         .btn-listen.playing {
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
@@ -534,25 +703,25 @@
             align-items: center;
             gap: 8px;
             padding: 10px 18px;
-            background: rgba(240, 235, 220, 1);
-            border: 2px dashed rgba(180, 140, 80, 0.5);
+            background: rgba(242, 236, 223, 1);
+            border: 2px dashed rgba(168, 130, 73, 0.5);
             border-radius: 50px;
             font-size: 0.84em;
             font-weight: 700;
-            color: rgba(140, 100, 30, 1);
+            color: rgba(132, 97, 40, 1);
             letter-spacing: 0.5px;
         }
         .insight-cs-note {
             font-size: 0.8em;
-            color: rgba(140, 100, 40, 0.9);
+            color: rgba(132, 97, 40, 0.9);
             font-style: italic;
             margin-top: 6px;
         }
         .insight-audio-panel {
             display: none;
             margin-top: 14px;
-            background: rgba(255, 248, 220, 1);
-            border: 2px solid rgba(220, 150, 0, 0.4);
+            background: rgba(250, 243, 224, 1);
+            border: 2px solid rgba(196, 145, 68, 0.4);
             border-radius: 10px;
             padding: 16px 18px;
         }
@@ -563,7 +732,7 @@
         }
         .insight-audio-note {
             font-size: 0.78em;
-            color: rgba(140, 90, 0, 0.8);
+            color: rgba(133, 94, 35, 0.84);
             font-style: italic;
             margin-top: 8px;
         }
@@ -574,9 +743,9 @@
             max-width: 1100px;
             margin: 0 auto 60px;
             padding: 30px 30px;
-            background: rgba(255, 255, 255, 1);
+            background: rgba(252, 249, 241, 1);
             border-radius: 16px;
-            border-left: 4px solid rgba(220, 150, 0, 0.7);
+            border-left: 4px solid rgba(188, 140, 64, 0.76);
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
         }
         .clerk-footer p {
@@ -637,14 +806,14 @@
         }
 
         .brief-modal-header {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(93, 112, 26, 1) 100%);
+            background: linear-gradient(135deg, rgba(52, 73, 8, 1) 0%, rgba(90, 118, 36, 1) 100%);
             padding: 16px 24px;
             border-radius: 10px 10px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
-            border-bottom: 3px solid rgba(129, 163, 43, 1);
+            border-bottom: 3px solid rgba(151, 181, 83, 1);
         }
 
         .brief-modal-title {
@@ -663,9 +832,9 @@
 
         /* Unity Summary button */
         .brief-unity-btn {
-            background: linear-gradient(135deg, rgba(160, 90, 0, 1) 0%, rgba(200, 130, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border: 1px solid rgba(255, 200, 50, 0.6);
+            background: linear-gradient(135deg, rgba(166, 118, 39, 1) 0%, rgba(200, 151, 63, 1) 100%);
+            color: rgba(252, 243, 217, 1);
+            border: 1px solid rgba(218, 175, 92, 0.62);
             border-radius: 20px;
             padding: 7px 16px;
             font-size: 0.82em;
@@ -675,13 +844,13 @@
             white-space: nowrap;
         }
         .brief-unity-btn:hover {
-            background: linear-gradient(135deg, rgba(190, 110, 0, 1) 0%, rgba(230, 155, 0, 1) 100%);
-            box-shadow: 0 0 12px rgba(255, 160, 0, 0.5);
+            background: linear-gradient(135deg, rgba(185, 134, 49, 1) 0%, rgba(215, 165, 73, 1) 100%);
+            box-shadow: 0 0 12px rgba(192, 148, 67, 0.48);
         }
         .brief-unity-btn.active {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
-            border-color: rgba(129, 163, 43, 0.8);
-            color: rgba(180, 220, 80, 1);
+            background: linear-gradient(135deg, rgba(52, 73, 8, 1) 0%, rgba(84, 111, 30, 1) 100%);
+            border-color: rgba(151, 181, 83, 0.86);
+            color: rgba(219, 238, 172, 1);
         }
 
         /* Zoom controls */
@@ -794,9 +963,9 @@
             <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
-            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
-            <a href="maxwellian.html" class="nav-tab-maxwellian active">Maxwellian</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Energy Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian active">Maxwellian Library</a>
             <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
@@ -804,8 +973,8 @@
     <!-- Hero -->
     <div class="page-hero">
         <h1><span>Maxwellian</span> Intelligence Hub</h1>
-        <p class="subtitle">Daily intelligence and foundational education — published by Agent Oliver and Clerk Maxwell for the Unity Energy team.</p>
-        <p class="meta">eIntelligence Briefs &nbsp;·&nbsp; eInsights Audio Series &nbsp;·&nbsp; Click to read, listen, or explore</p>
+        <p class="subtitle">Daily intelligence and foundational education — published by Agent Oliver and Clerk Maxwell for the Maxwellian community newsletter.</p>
+        <p class="meta">eIntelligence Briefs &nbsp;·&nbsp; eInsights Audio Series &nbsp;·&nbsp; Community briefings for the Maxwellian newsletter</p>
     </div>
 
     <!-- Two-column hub -->
@@ -845,7 +1014,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 
@@ -920,20 +1089,58 @@
             window.openClerkVoiceModal(launchPayload);
         }
         // ── Load both libraries in parallel ──────────────────────────────────
+        async function fetchJsonWithStatus(url) {
+            const res = await fetch(url);
+            if (!res.ok) {
+                throw new Error(`${url} responded with ${res.status}`);
+            }
+            return res.json();
+        }
         async function loadLibrary() {
             const mibContainer     = document.getElementById('episodeLibrary');
             const insightsContainer = document.getElementById('insightsLibrary');
-            try {
-                const [mibRes, insRes] = await Promise.all([
-                    fetch('maxwellian_library.json?v=' + Date.now()),
-                    fetch('einsights_library.json?v=' + Date.now())
-                ]);
-                const mibData = await mibRes.json();
-                const insData = await insRes.json();
+            const fallbackMibData = window.MAXWELLIAN_LIBRARY_DATA && typeof window.MAXWELLIAN_LIBRARY_DATA === 'object'
+                ? window.MAXWELLIAN_LIBRARY_DATA
+                : null;
+            const fallbackInsightsData = window.EINSIGHTS_LIBRARY_DATA && typeof window.EINSIGHTS_LIBRARY_DATA === 'object'
+                ? window.EINSIGHTS_LIBRARY_DATA
+                : null;
+
+            if (window.location.protocol === 'file:') {
+                if (fallbackMibData) {
+                    renderLibrary(fallbackMibData, mibContainer);
+                } else if (mibContainer) {
+                    mibContainer.innerHTML = '<div class=\"section-label\">Unable to load e.Intelligence Brief Series</div><p style=\"color: rgba(143, 40, 18, 1); font-weight: 600;\">Missing local fallback library data.</p>';
+                }
+                if (fallbackInsightsData) {
+                    renderInsights(fallbackInsightsData, insightsContainer);
+                } else if (insightsContainer) {
+                    insightsContainer.innerHTML = '<div class=\"section-label section-label-insights\">Unable to load e.Insights Podcast Series</div><p style=\"color: rgba(143, 40, 18, 1); font-weight: 600;\">Missing local fallback insights data.</p>';
+                }
+                return;
+            }
+            const cacheBuster = Date.now();
+            const [mibResult, insResult] = await Promise.allSettled([
+                fetchJsonWithStatus('maxwellian_library.json?v=' + cacheBuster),
+                fetchJsonWithStatus('einsights_library.json?v=' + cacheBuster)
+            ]);
+
+            if (mibResult.status === 'fulfilled') {
+                const mibData = mibResult.value;
                 renderLibrary(mibData, mibContainer);
+            } else if (fallbackMibData) {
+                renderLibrary(fallbackMibData, mibContainer);
+            } else if (mibContainer) {
+                mibContainer.innerHTML = `<div class="section-label">Unable to load e.Intelligence Brief Series</div><p style="color: rgba(143, 40, 18, 1); font-weight: 600;">${mibResult.reason && mibResult.reason.message ? mibResult.reason.message : 'Unknown error.'}</p>`;
+            }
+
+            if (insResult.status === 'fulfilled') {
+                const insData = insResult.value;
                 renderInsights(insData, insightsContainer);
-            } catch (e) {
-                mibContainer.innerHTML = '<p style="color:red;">Error: ' + e.message + '</p>';
+            } else if (fallbackInsightsData) {
+                renderInsights(fallbackInsightsData, insightsContainer);
+            } else if (insightsContainer) {
+                insightsContainer.innerHTML = `<div class="section-label section-label-insights">Unable to load e.Insights Podcast Series</div><p style="color: rgba(143, 40, 18, 1); font-weight: 600;">${insResult.reason && insResult.reason.message ? insResult.reason.message : 'Unknown error.'}</p>`;
             }
         }
 
@@ -1144,9 +1351,15 @@
             }
         }
 
-
-        // Load on page ready
-        loadLibrary();
+        function initializeMaxwellianPage() {
+            loadLibrary();
+            const briefModal = document.getElementById('briefModal');
+            if (briefModal) {
+                briefModal.addEventListener('click', function(e) {
+                    if (e.target === this) closeBriefModal();
+                });
+            }
+        }
 
         // ── Brief Viewer Modal ──────────────────────────────────────────
         let briefZoom = 1.0;
@@ -1228,19 +1441,22 @@
         }
 
         // Re-apply zoom when iframe reloads (preserves zoom level across nav)
-        document.getElementById('briefIframe').addEventListener('load', function() {
-            if (briefZoom !== 1.0) applyBriefZoom();
-        });
+        const briefIframeEl = document.getElementById('briefIframe');
+        if (briefIframeEl) {
+            briefIframeEl.addEventListener('load', function() {
+                if (briefZoom !== 1.0) applyBriefZoom();
+            });
+        }
 
         // ESC key closes the modal
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeBriefModal();
         });
-
-        // Click on backdrop closes the modal
-        document.getElementById('briefModal').addEventListener('click', function(e) {
-            if (e.target === this) closeBriefModal();
-        });
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeMaxwellianPage);
+        } else {
+            initializeMaxwellianPage();
+        }
     </script>
 
     <!-- Brief Viewer Modal -->

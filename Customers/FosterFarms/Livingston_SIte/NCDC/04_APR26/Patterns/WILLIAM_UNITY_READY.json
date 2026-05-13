@@ -1,0 +1,91 @@
+{
+  "generated_at_utc": "2026-05-08T15:21:05.884896+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/NCND/patterns",
+  "mode": "full",
+  "inventory": {
+    "image_count": 15,
+    "all_images": [
+      "NCND1b_apr26.png",
+      "NCND1bt_apr26.png",
+      "NCND1m_apr26.png",
+      "NCND1s_apr26.png",
+      "NCND1v_apr26.png",
+      "NCND2b_apr26.png",
+      "NCND2bt_apr26.png",
+      "NCND2m_apr26.png",
+      "NCND2s_apr26.png",
+      "NCND2v_apr26.png",
+      "NCND3b_apr26.png",
+      "NCND3bt_apr26.png",
+      "NCND3m_apr26.png",
+      "NCND3s_apr26.png",
+      "NCND3v_apr26.png"
+    ],
+    "transformer_count": 3,
+    "coverage_by_transformer": {
+      "NCND1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "NCND2": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "NCND3": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "NCND1": [
+        "NCND1b_apr26.png",
+        "NCND1bt_apr26.png",
+        "NCND1m_apr26.png",
+        "NCND1s_apr26.png",
+        "NCND1v_apr26.png"
+      ],
+      "NCND2": [
+        "NCND2b_apr26.png",
+        "NCND2bt_apr26.png",
+        "NCND2m_apr26.png",
+        "NCND2s_apr26.png",
+        "NCND2v_apr26.png"
+      ],
+      "NCND3": [
+        "NCND3b_apr26.png",
+        "NCND3bt_apr26.png",
+        "NCND3m_apr26.png",
+        "NCND3s_apr26.png",
+        "NCND3v_apr26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "NCND1",
+      "NCND2",
+      "NCND3"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/NCND/patterns",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-08T15:28:35.381941+00:00"
+}

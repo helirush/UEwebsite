@@ -2686,5 +2686,106 @@ summary.map(point => `<div style="background: #f8f9fa; border-left: 4px solid #5
 </div>
 
 
+<script id="audio-retention-guard">
+(function(){
+  var msg = "Audio is no longer available for this report period (retention policy: only March and April 2026 remain active).";
+  function isMp3(v){ return typeof v === 'string' && /\.mp3([?#].*)?$/i.test(v.trim()); }
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
+      var href = el.getAttribute('href');
+      var src = el.getAttribute('src');
+      var onclick = el.getAttribute('onclick');
+      if (href && isMp3(href)) {
+        el.setAttribute('href', '#');
+        el.addEventListener('click', function(e){ e.preventDefault(); alert(msg); });
+      }
+      if (src && isMp3(src)) {
+        el.removeAttribute('src');
+      }
+      if (onclick && /\.mp3/i.test(onclick)) {
+        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
+      }
+    });
+    document.querySelectorAll('audio').forEach(function(a){
+      a.removeAttribute('src');
+      try { a.load(); } catch(e) {}
+      a.addEventListener('play', function(e){
+        e.preventDefault();
+        try { a.pause(); } catch(err) {}
+        alert(msg);
+      });
+    });
+  });
+})();
+</script>
+<script id="pattern-retention-guard">
+(function(){
+  var audioMsg = "Audio is no longer available for this report period (retention policy).";
+  var textMsg = "Pattern text is archived for this report period (retention policy).";
+  var archivedText = "Pattern text is archived for this report period (retention policy).";
+
+  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
+  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
+  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
+  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
+
+  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
+  if (nativeFetch) {
+    window.fetch = function(input, init){
+      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
+      if (isTxt(url)) {
+        return Promise.resolve(new Response(archivedText, {
+          status: 200,
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+        }));
+      }
+      if (isMp3(url)) {
+        try { alert(audioMsg); } catch (e) {}
+        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
+      }
+      return nativeFetch(input, init);
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
+      var href = el.getAttribute('href');
+      var src = el.getAttribute('src');
+      var onclick = el.getAttribute('onclick');
+
+      if (href && isPatternAsset(href)) {
+        el.setAttribute('href', '#');
+        el.addEventListener('click', function(e){
+          e.preventDefault();
+          alert(isMp3(href) ? audioMsg : textMsg);
+        });
+      }
+
+      if (src && isPatternAsset(src)) {
+        el.removeAttribute('src');
+      }
+
+      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
+        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
+        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
+      }
+    });
+
+    document.querySelectorAll('audio').forEach(function(a){
+      var s = a.getAttribute('src') || '';
+      if (isMp3(s)) {
+        a.removeAttribute('src');
+      }
+      a.addEventListener('play', function(e){
+        if (!a.getAttribute('src')) {
+          e.preventDefault();
+          try { a.pause(); } catch (err) {}
+          alert(audioMsg);
+        }
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

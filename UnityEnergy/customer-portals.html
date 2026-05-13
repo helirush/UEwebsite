@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <script src="passwords.js?v=20260402b"></script>
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -21,8 +21,8 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            color: rgba(58, 66, 48, 1);
+            background: linear-gradient(180deg, rgba(245, 242, 233, 1) 0%, rgba(242, 239, 229, 1) 100%);
         }
         .banner-wrapper {
             width: 100%;
@@ -56,52 +56,136 @@
             margin-left: 7px;
         }
         .nav-tabs-container {
-            background: rgba(240, 240, 240, 1);
-            padding: 22px 0 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(246, 246, 241, 0.96);
+            padding: 14px 0 24px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
         }
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px 14px;
             flex-wrap: wrap;
-            max-width: 1800px;
+            max-width: none;
             margin: 0 auto;
-            padding: 0 10px;
+            padding: 0;
+        }
+        .nav-tabs > a {
+            position: relative;
+        }
+        .nav-tabs > a:first-child::before,
+        .nav-tabs > a + a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2px;
+            height: 18px;
+            transform: translateY(-50%);
+            background: rgba(60, 79, 46, 0.84);
+            pointer-events: none;
+        }
+        @media (min-width: 1101px) {
+            .nav-tabs {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+                width: min(95%, 1760px);
+                max-width: calc(100% - 24px);
+            }
+            .nav-tabs > a {
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .nav-tabs > a:first-child,
+            .nav-tabs > a + a {
+                border-left: 2px solid rgba(60, 79, 46, 0.84);
+                padding-left: clamp(14px, 1vw, 20px);
+                margin-left: 0;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
+            .nav-tab-portal,
+            .nav-tab-maxwellian {
+                justify-content: center;
+                width: auto;
+                min-width: 0;
+                padding: 7px 10px 7px 12px;
+                font-size: clamp(0.73rem, 0.88vw, 0.95rem);
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
         }
         .nav-tab-portal,
         .nav-tab-maxwellian {
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 0.95em;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 0;
+            padding: 8px 10px 8px 18px;
+            border-radius: 16px;
+            font-size: clamp(0.75rem, 0.95vw, 0.95rem);
             font-weight: 700;
-            letter-spacing: 0.8px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
-            transition: all 0.25s ease;
-            padding: 12px 26px;
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
+            cursor: pointer;
+            color: rgba(46, 74, 31, 0.94);
+            background-color: transparent;
+            background-image: none;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+            box-shadow: none;
+            white-space: nowrap;
         }
-        .nav-tab-portal {
-            background: rgba(90, 110, 35, 1);
-            color: #fff;
-            border: 2px solid rgba(129, 163, 43, 1);
-        }
-        .nav-tab-portal:hover {
-            background: rgba(49, 65, 0, 1);
-        }
-        .nav-tab-portal.active {
-            background: rgba(49, 65, 0, 1);
-            border-color: rgba(250, 200, 0, 1);
-            color: rgba(250, 240, 160, 1);
+        .nav-tab-portal::after,
+        .nav-tab-maxwellian::after {
+            content: none;
         }
         .nav-tab-maxwellian {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border: 2px solid rgba(255, 200, 50, 1);
-            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+            color: rgba(118, 88, 24, 0.98);
+            font-weight: 800;
+            border-color: rgba(201, 166, 72, 0.52);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.78) 0%, rgba(236, 219, 176, 0.78) 100%);
         }
+        .nav-tab-portal:hover,
         .nav-tab-maxwellian:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal.active,
+        .nav-tab-maxwellian.active {
+            border-color: rgba(63, 94, 39, 0.98);
+            background-color: rgba(37, 63, 25, 0.99);
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%);
+            color: rgba(250, 240, 160, 0.98);
+            box-shadow: 0 10px 18px rgba(34, 49, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(18, 33, 12, 0.42);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal:active,
+        .nav-tab-maxwellian:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 1100px) {
+            .nav-tabs {
+                gap: 8px 10px;
+                padding: 0 10px;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
         }
         .portal-shell {
             max-width: 1320px;
@@ -156,11 +240,11 @@
             z-index: 2;
         }
         .portal-button {
-            background: radial-gradient(circle, rgba(178, 210, 53, 0.20) 0%, rgba(129, 163, 43, 0.35) 55%, rgba(49, 65, 0, 0.65) 95%);
-            color: rgba(250, 240, 160, 1);
+            background: radial-gradient(circle at 50% 46%, rgba(149, 188, 49, 0.24) 0%, rgba(97, 132, 28, 0.62) 54%, rgba(40, 56, 8, 0.86) 100%);
+            color: rgba(236, 245, 214, 0.98);
             border-radius: 50%;
-            border: 3px solid rgba(178, 210, 53, 0.95);
-            box-shadow: 0 0 36px rgba(178, 210, 53, 0.55), inset 0 0 24px rgba(0,0,0,0.35);
+            border: 3px solid rgba(170, 208, 74, 0.92);
+            box-shadow: 0 0 36px rgba(155, 196, 54, 0.48), inset 0 0 28px rgba(0,0,0,0.42);
             font-size: 2.1em;
             font-weight: 700;
             line-height: 1.2;
@@ -181,19 +265,22 @@
             font-size: 1.2em;
             margin: 0;
             line-height: 1.04;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 6px rgba(0,0,0,0.62);
         }
         .portal-button .subtitle {
             font-size: 0.75em;
             margin: 0;
-            padding: 12px 0 0;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            padding: 12px 12px 0;
+            color: rgba(247, 251, 237, 0.99);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.68);
+            letter-spacing: 0.4px;
         }
         .portal-button .subtitle1 {
             font-size: 0.72em;
             margin: 0 0 4px;
             letter-spacing: 0.5px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            color: rgba(227, 241, 190, 0.98);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.62);
         }
         @media (max-width: 900px) {
             .portal-image {
@@ -244,88 +331,276 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: radial-gradient(circle at 15% 10%, rgba(129, 168, 62, 0.32) 0%, rgba(14, 20, 10, 0.9) 40%, rgba(7, 10, 6, 0.95) 100%);
             z-index: 9999;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(5px);
+            padding: 20px;
         }
         .login-modal.active {
             display: flex;
         }
         .login-modal-content {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
-            border-radius: 16px;
-            padding: 50px;
-            width: 90%;
-            max-width: 450px;
+            background: linear-gradient(150deg, rgba(250, 247, 239, 0.99) 0%, rgba(236, 229, 209, 0.99) 38%, rgba(218, 207, 178, 0.99) 100%);
+            border-radius: 24px;
+            padding: 34px 36px 28px;
+            width: min(96vw, 760px);
+            max-height: min(94vh, 900px);
+            overflow-y: auto;
             position: relative;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 60px rgba(129, 163, 43, 0.3);
-            border: 3px solid rgba(129, 163, 43, 0.6);
+            box-shadow: 0 30px 80px rgba(8, 12, 6, 0.68), 0 14px 32px rgba(50, 72, 33, 0.24);
+            border: 2px solid rgba(90, 122, 50, 0.52);
+        }
+        .login-modal-content::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border-radius: 18px;
+            border: 1px solid rgba(98, 132, 55, 0.32);
+            pointer-events: none;
         }
         .close-login {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: rgba(250, 240, 160, 0.7);
-            font-size: 1.5em;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid rgba(94, 120, 62, 0.4);
+            background: rgba(245, 239, 222, 0.94);
+            color: rgba(57, 79, 38, 0.9);
+            font-size: 1.45em;
             cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
         }
         .close-login:hover {
-            color: rgba(250, 240, 160, 1);
+            border-color: rgba(112, 142, 75, 0.66);
+            background: rgba(236, 244, 219, 0.98);
+            color: rgba(44, 66, 30, 1);
         }
         .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: rgba(250, 240, 160, 1);
+            margin-bottom: 20px;
+            padding-right: 42px;
         }
-        .login-form input {
+        .login-brand-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: rgba(49, 72, 48, 0.98);
+        }
+        .login-brand-logo {
+            width: 34px;
+            height: 34px;
+            display: inline-block;
+            flex: 0 0 auto;
+        }
+        .login-brand-logo .ue-ring,
+        .login-brand-logo .ue-u,
+        .login-brand-logo .ue-e {
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .login-brand-logo .ue-ring {
+            stroke-width: 3.5;
+            opacity: 0.98;
+        }
+        .login-brand-logo .ue-u,
+        .login-brand-logo .ue-e {
+            stroke-width: 3.5;
+        }
+        .login-brand-kicker {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(118, 88, 24, 0.98);
+        }
+        .login-header h2 {
+            color: rgba(48, 70, 32, 0.98);
+            font-size: clamp(1.75rem, 3.2vw, 2.45rem);
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.06;
+        }
+        .login-header p {
+            color: rgba(76, 95, 57, 0.98);
+            font-size: clamp(0.96rem, 1.4vw, 1.12rem);
+            font-weight: 600;
+            line-height: 1.45;
+        }
+        .login-section-title {
+            margin: 18px 0 10px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(58, 84, 36, 0.95);
+        }
+        .required-asterisk {
+            color: rgba(146, 40, 35, 0.95);
+            margin-left: 2px;
+            font-weight: 800;
+        }
+        .required-fields-note {
+            margin: -4px 0 10px;
+            font-size: 0.78rem;
+            color: rgba(92, 108, 72, 0.92);
+            font-style: italic;
+        }
+        .visitor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        .login-helper-text {
+            margin-top: -4px;
+            margin-bottom: 10px;
+            font-size: 0.82rem;
+            color: rgba(82, 100, 60, 0.9);
+            font-style: italic;
+        }
+        .login-field-label {
+            display: block;
+            margin: 2px 0 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(67, 92, 45, 0.95);
+        }
+        .login-divider {
+            margin: 14px 0 4px;
+            height: 1px;
+            border: none;
+            background: linear-gradient(90deg, rgba(101, 129, 67, 0.08) 0%, rgba(101, 129, 67, 0.52) 50%, rgba(101, 129, 67, 0.08) 100%);
+        }
+        .visitor-optin {
+            margin: 4px 0 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+            color: rgba(59, 76, 43, 0.96);
+            font-size: 0.95rem;
+            line-height: 1.35;
+            font-weight: 500;
+        }
+        .visitor-optin input[type="checkbox"] {
+            width: 18px !important;
+            min-width: 18px;
+            max-width: 18px;
+            height: 18px !important;
+            padding: 0 !important;
+            margin: 2px 0 0 0;
+            border-radius: 4px;
+            border: 1px solid rgba(121, 146, 85, 0.85);
+            background: rgba(255, 255, 255, 0.96);
+            flex: 0 0 18px;
+            margin-top: 2px;
+            accent-color: rgba(79, 116, 43, 0.95);
+        }
+        .visitor-optin-copy {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .login-form input,
+        .login-form select {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 2px solid rgba(129, 163, 43, 0.4);
-            border-radius: 8px;
-            font-size: 1.1em;
-            background: rgba(255,255,255,0.95);
-            color: rgba(44,62,80,1);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            border: 1.5px solid rgba(140, 157, 112, 0.84);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.94);
+            color: rgba(50, 62, 45, 0.98);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .login-form select {
+            appearance: none;
+            background-image:
+                linear-gradient(45deg, transparent 50%, rgba(75, 99, 48, 0.9) 50%),
+                linear-gradient(135deg, rgba(75, 99, 48, 0.9) 50%, transparent 50%);
+            background-position:
+                calc(100% - 18px) calc(50% - 2px),
+                calc(100% - 12px) calc(50% - 2px);
+            background-size: 6px 6px, 6px 6px;
+            background-repeat: no-repeat;
+            padding-right: 34px;
+        }
+        .login-form input::placeholder {
+            color: rgba(115, 127, 101, 0.9);
+        }
+        .login-form input:focus,
+        .login-form select:focus {
+            outline: none;
+            border-color: rgba(99, 129, 63, 0.86);
+            box-shadow: 0 0 0 3px rgba(160, 190, 118, 0.26);
+            background: rgba(252, 255, 247, 0.98);
+            color: rgba(50, 62, 45, 0.98);
         }
         .login-error {
             display: none;
-            background: rgba(255, 100, 100, 0.2);
-            color: rgba(255, 180, 180, 1);
-            padding: 10px;
-            border: 1px solid rgba(255, 100, 100, 0.4);
-            border-radius: 6px;
+            background: rgba(170, 70, 62, 0.12);
+            color: rgba(126, 37, 31, 0.98);
+            padding: 10px 12px;
+            border: 1px solid rgba(170, 70, 62, 0.34);
+            border-radius: 10px;
             margin-bottom: 15px;
             text-align: center;
-            font-size: 0.95em;
+            font-size: 1rem;
+            font-weight: 600;
         }
         .login-btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
-            color: rgba(49, 65, 0, 1);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            font-weight: 700;
+            padding: 16px 16px;
+            background: linear-gradient(180deg, rgba(60, 95, 41, 0.98) 0%, rgba(28, 49, 17, 0.99) 52%, rgba(60, 95, 41, 0.98) 100%);
+            color: rgba(241, 247, 227, 0.98);
+            border: 1px solid rgba(123, 156, 83, 0.72);
+            border-radius: 12px;
+            font-size: clamp(1.05rem, 1.5vw, 1.32rem);
+            font-weight: 800;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.11em;
         }
         .login-btn:hover {
-            background: linear-gradient(135deg, rgba(200, 230, 80, 1) 0%, rgba(178, 210, 53, 1) 100%);
+            border-color: rgba(154, 186, 108, 0.88);
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(129, 163, 43, 0.4);
+            box-shadow: 0 12px 24px rgba(32, 49, 21, 0.3);
         }
         .dev-mode-notice {
             text-align: center;
-            color: rgba(178, 210, 53, 0.8);
-            font-size: 0.85em;
-            margin-top: 15px;
+            color: rgba(96, 112, 70, 0.88);
+            font-size: 0.95rem;
+            margin-top: 12px;
             font-style: italic;
+        }
+        @media (max-width: 780px) {
+            .login-modal-content {
+                padding: 28px 20px 22px;
+                border-radius: 18px;
+            }
+            .login-modal-content::before {
+                inset: 8px;
+            }
+            .visitor-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .login-header {
+                padding-right: 34px;
+            }
         }
         footer {
             background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
@@ -354,9 +629,9 @@
             <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal">Field Story</a>
-            <a href="customer-portals.html" class="nav-tab-portal active">Customer Portal</a>
-            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal">Energy Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal active">Customer Portals</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian Library</a>
             <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
@@ -366,7 +641,7 @@
             Enter the Unity Customer Portal environments for detailed information on the 480v Industrial Energy Field, 
             Unity Energy Systems are used to reveal behavior truths and educate about next level harmonizing Energy Field tuning technology. 
         </p>
-        <div class="portal-container" onclick="openLoginModal()">
+        <div class="portal-container" onclick="openLoginModal(event)">
             <img src="UnityPortalButton.png" alt="Unity Energy Portal" class="portal-image">
             <div class="portal-overlay">
                 <div class="portal-button">
@@ -383,23 +658,188 @@
         <div class="login-modal-content" onclick="event.stopPropagation()">
             <button class="close-login" onclick="closeLoginModal()">✕</button>
             <div class="login-header">
-                <h2>Unity Energy Portal</h2>
-                <p>Enter your Portal Credentials to continue</p>
+                <div class="login-brand-row">
+                    <svg class="login-brand-logo" viewBox="0 0 72 72" focusable="false" aria-hidden="true">
+                        <circle class="ue-ring" cx="36" cy="36" r="30"></circle>
+                        <path class="ue-u" d="M16.8 27.8v9.4c0 4.2 3.4 7.6 7.6 7.6h2c4.2 0 7.6-3.4 7.6-7.6v-9.4"></path>
+                        <path class="ue-e" d="M41.2 27.8h13.8"></path>
+                        <path class="ue-e" d="M41.2 36.3h13.8"></path>
+                        <path class="ue-e" d="M41.2 44.8h13.8"></path>
+                    </svg>
+                    <span class="login-brand-kicker">Unity Energy</span>
+                </div>
+                <h2>Customer Access Portal</h2>
+                <p>Welcome to Unity’s customer access portal. Please fill out all required fields to gain entrance. We hope you enjoy the visit.</p>
             </div>
             <div class="login-form">
-                <input type="text" id="customerName" name="ue_company" placeholder="Account Name" autocomplete="off" autocapitalize="off" spellcheck="false">
+                <div class="login-section-title">Visitor Profile</div>
+                <div class="required-fields-note"><span class="required-asterisk">*</span> Required fields</div>
+                <div class="visitor-grid">
+                    <input type="text" id="visitorFirstName" name="visitor_first_name" placeholder="First Name *" autocomplete="given-name">
+                    <input type="text" id="visitorLastName" name="visitor_last_name" placeholder="Last Name *" autocomplete="family-name">
+                </div>
+                <label class="login-field-label" for="visitorEmail">Email Address<span class="required-asterisk">*</span></label>
+                <input type="email" id="visitorEmail" name="visitor_email" placeholder="Business Email Address" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
+                <div class="visitor-grid">
+                    <select id="visitorRole" name="visitor_role" autocomplete="off">
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="facility-executive">Facility Executive</option>
+                        <option value="plant-manager">Plant Manager</option>
+                        <option value="maintenance-manager">Maintenance Manager</option>
+                        <option value="electrical-engineer">Electrical Engineer</option>
+                        <option value="energy-manager">Energy Manager</option>
+                        <option value="operations-lead">Operations Lead</option>
+                        <option value="procurement-finance">Procurement / Finance</option>
+                    </select>
+                    <select id="visitorObjective" name="visitor_objective" autocomplete="off">
+                        <option value="" disabled selected>Primary Objective</option>
+                        <option value="energy-cost-reduction">Reduce Energy Cost</option>
+                        <option value="power-quality-reliability">Improve Power Quality</option>
+                        <option value="co2e-emissions-visibility">Track CO2e & Emissions</option>
+                        <option value="thermal-cooling-optimization">Optimize Thermal/Cooling Burden</option>
+                        <option value="transformer-health-risk">Monitor Transformer Health & Risk</option>
+                        <option value="executive-briefing">Executive Performance Review</option>
+                    </select>
+                </div>
+                <label class="visitor-optin">
+                    <input type="checkbox" id="visitorUpdates" name="visitor_updates">
+                    <span class="visitor-optin-copy">Yes, send Unity Energy updates and relevant technical portal enhancements.</span>
+                </label>
+                <div class="login-divider"></div>
+                <div class="login-section-title">Portal Credentials</div>
+                <div class="login-helper-text">Select your company (or choose Guest) and continue to portal access.</div>
+                <select id="customerName" name="ue_company" autocomplete="off">
+                    <option value="" disabled selected>Select Company or Guest</option>
+                </select>
                 <input type="password" id="customerPassword" name="ue_password" placeholder="Portal Password" autocomplete="off" style="display:none;">
                 <div class="login-error" id="loginError"></div>
-                <button class="login-btn" onclick="attemptLogin()">Enter Portal →</button>
+                <button class="login-btn" onclick="attemptLogin()">Access Unity Portal →</button>
                 <div class="dev-mode-notice" id="devModeNotice" style="display:none;">No password required</div>
             </div>
         </div>
     </div>
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
     <script>
+        const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
+        const UNITY_PORTAL_SESSION_KEY = 'unity_portal_session_v1';
+        const PORTAL_SWITCH_QUERY_PARAM = 'portalSwitch';
+        const INVALID_NAME_TOKENS = new Set([
+            'x', 'xx', 'xxx', 'xxxx', 'xxxxx', 'xxxxxx', 'test', 'testing', 'asdf', 'qwerty',
+            'abc', 'name', 'firstname', 'lastname', 'unknown', 'none', 'null', 'na', 'n/a',
+            'guest', 'visitor', 'sample', 'temp'
+        ]);
+        const INVALID_EMAIL_LOCAL_TOKENS = new Set([
+            'x', 'xx', 'xxx', 'test', 'testing', 'email', 'name', 'firstname', 'lastname',
+            'guest', 'visitor', 'user', 'username', 'none', 'na', 'noreply', 'no-reply'
+        ]);
+        const INVALID_EMAIL_DOMAINS = new Set([
+            'x.com', 'xx.com', 'example.com', 'example.org', 'example.net', 'test.com', 'email.com',
+            'domain.com', 'invalid.com', 'none.com'
+        ]);
+        let visitorEmailManuallyEdited = false;
+        function normalizeAlphaToken(value) {
+            return String(value || '').toLowerCase().replace(/[^a-z]/g, '');
+        }
+        function hasMeaningfulNameDiversity(nameToken) {
+            return new Set(nameToken.split('')).size >= 2;
+        }
+        function isLikelyValidName(value) {
+            const trimmed = String(value || '').trim();
+            if (!trimmed || trimmed.length < 2 || trimmed.length > 40) return false;
+            if (!/^[a-zA-Z][a-zA-Z' -]*$/.test(trimmed)) return false;
+            const alphaToken = normalizeAlphaToken(trimmed);
+            if (alphaToken.length < 2) return false;
+            if (INVALID_NAME_TOKENS.has(alphaToken)) return false;
+            if (!hasMeaningfulNameDiversity(alphaToken)) return false;
+            if (/^(x+|test+|asdf+|qwerty+)$/.test(alphaToken)) return false;
+            return true;
+        }
+        function isLikelyValidEmail(value) {
+            const email = String(value || '').trim().toLowerCase();
+            if (!email) return false;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) return false;
+            const parts = email.split('@');
+            if (parts.length !== 2) return false;
+            const localRaw = parts[0];
+            const domain = parts[1];
+            if (!localRaw || !domain || domain.indexOf('.') < 1) return false;
+            if (INVALID_EMAIL_DOMAINS.has(domain)) return false;
+            const local = localRaw.replace(/[._+-]/g, '');
+            const domainRoot = String(domain.split('.')[0] || '');
+            if (local.length < 2 || domainRoot.length < 2) return false;
+            if (INVALID_EMAIL_LOCAL_TOKENS.has(local)) return false;
+            if (/^([a-z0-9])\1+$/.test(local) || /^([a-z0-9])\1+$/.test(domainRoot)) return false;
+            if (email === 'x@x.com' || email === 'xx@xx.com') return false;
+            return true;
+        }
+        function setUnitySiteAccessUnlocked(params) {
+            try {
+                const payload = {
+                    unlocked: true,
+                    unlocked_at: new Date().toISOString(),
+                    visitor_type: String(params?.visitorType || 'visitor'),
+                    customer_name: String(params?.customerName || ''),
+                    customer_slug: String(params?.customerSlug || ''),
+                    source_path: window.location.pathname,
+                };
+                window.localStorage.setItem(UNITY_SITE_ACCESS_STATE_KEY, JSON.stringify(payload));
+            } catch (_err) {}
+        }
+        function readPortalSessionState() {
+            try {
+                const raw = window.sessionStorage.getItem(UNITY_PORTAL_SESSION_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (!parsed || typeof parsed !== 'object') return null;
+                const destinationPath = String(parsed.destination_path || '').trim();
+                if (!destinationPath) return null;
+                return {
+                    destinationPath,
+                    customerSlug: String(parsed.customer_slug || '').trim(),
+                    customerName: String(parsed.customer_name || '').trim(),
+                    selectedAt: String(parsed.selected_at || '').trim(),
+                };
+            } catch (_err) {
+                return null;
+            }
+        }
+        function writePortalSessionState(params) {
+            try {
+                const destinationPath = String(params?.destinationPath || '').trim();
+                if (!destinationPath) return;
+                const payload = {
+                    destination_path: destinationPath,
+                    customer_slug: String(params?.customerSlug || ''),
+                    customer_name: String(params?.customerName || ''),
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString(),
+                };
+                window.sessionStorage.setItem(UNITY_PORTAL_SESSION_KEY, JSON.stringify(payload));
+            } catch (_err) {}
+        }
+        function clearPortalSessionState() {
+            try {
+                window.sessionStorage.removeItem(UNITY_PORTAL_SESSION_KEY);
+            } catch (_err) {}
+        }
+        function isPortalSwitchModeEnabled() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                return params.get(PORTAL_SWITCH_QUERY_PARAM) === '1';
+            } catch (_err) {
+                return false;
+            }
+        }
+        function routeToPortalSessionDestination() {
+            const portalSession = readPortalSessionState();
+            if (!portalSession || !portalSession.destinationPath) return false;
+            window.location.href = portalSession.destinationPath;
+            return true;
+        }
         function getPortalConfigSafe() {
             try {
                 if (typeof portalConfig !== 'undefined' && portalConfig) return portalConfig;
@@ -407,71 +847,272 @@
             if (window.portalConfig) return window.portalConfig;
             return { customers: {} };
         }
-        function openLoginModal() {
+        function clearAutoFilledVisitorEmailIfNeeded() {
+            if (visitorEmailManuallyEdited) return;
+            const emailEl = document.getElementById('visitorEmail');
+            if (!emailEl) return;
+            const value = String(emailEl.value || '').trim();
+            if (!value) return;
+            if (!value.includes('@')) {
+                emailEl.value = '';
+            }
+        }
+        function openLoginModal(event) {
+            const ownerSwitchRequested = !!(event && (event.shiftKey || event.altKey || event.metaKey));
+            if (ownerSwitchRequested) {
+                clearPortalSessionState();
+            } else if (!isPortalSwitchModeEnabled() && routeToPortalSessionDestination()) {
+                return;
+            }
             const modal = document.getElementById('loginModal');
-            const devNotice = document.getElementById('devModeNotice');
-            const pwField = document.getElementById('customerPassword');
             const cfg = getPortalConfigSafe();
             modal.classList.add('active');
-            document.getElementById('customerName')?.focus();
+            resetPortalFormState();
+            populateCustomerDropdown(cfg, false);
+            document.getElementById('visitorFirstName')?.focus();
+            updatePortalAuthVisibility();
+            window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 50);
+            window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 220);
+        }
+        function showLoginError(message) {
+            const errorEl = document.getElementById('loginError');
+            if (!errorEl) return;
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+        function clearLoginError() {
+            const errorEl = document.getElementById('loginError');
+            if (!errorEl) return;
+            errorEl.textContent = '';
+            errorEl.style.display = 'none';
+        }
+        function populateCustomerDropdown(cfg, preserveSelection) {
+            const selectEl = document.getElementById('customerName');
+            if (!selectEl) return;
+            const customers = cfg?.customers || {};
+            const seen = new Set();
+            const options = [];
+            for (const [key, customer] of Object.entries(customers)) {
+                const name = String(customer?.name || '').trim();
+                const path = String(customer?.path || '').trim();
+                if (!name || !path) continue;
+                const dedupeKey = `${name}::${path}`;
+                if (seen.has(dedupeKey)) continue;
+                seen.add(dedupeKey);
+                options.push({ key, name });
+            }
+            options.sort((a, b) => a.name.localeCompare(b.name));
+            const previousValue = preserveSelection ? selectEl.value : '';
+            selectEl.innerHTML = '';
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = 'Select Company or Guest';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            selectEl.appendChild(placeholder);
+            const guestOpt = document.createElement('option');
+            guestOpt.value = '__guest__';
+            guestOpt.textContent = 'Guest';
+            if (previousValue && previousValue === '__guest__') {
+                guestOpt.selected = true;
+                placeholder.selected = false;
+            }
+            selectEl.appendChild(guestOpt);
+            for (const option of options) {
+                const opt = document.createElement('option');
+                opt.value = option.key;
+                opt.textContent = option.name;
+                if (previousValue && previousValue === option.key) {
+                    opt.selected = true;
+                    placeholder.selected = false;
+                }
+                selectEl.appendChild(opt);
+            }
+            updatePortalAuthVisibility();
+        }
+        function resetPortalFormState() {
+            const nameEl = document.getElementById('customerName');
+            if (nameEl) nameEl.selectedIndex = 0;
+            const firstNameEl = document.getElementById('visitorFirstName');
+            if (firstNameEl) firstNameEl.value = '';
+            const lastNameEl = document.getElementById('visitorLastName');
+            if (lastNameEl) lastNameEl.value = '';
+            const emailEl = document.getElementById('visitorEmail');
+            if (emailEl) emailEl.value = '';
+            visitorEmailManuallyEdited = false;
+            const roleEl = document.getElementById('visitorRole');
+            if (roleEl) roleEl.selectedIndex = 0;
+            const objectiveEl = document.getElementById('visitorObjective');
+            if (objectiveEl) objectiveEl.selectedIndex = 0;
+            const updatesEl = document.getElementById('visitorUpdates');
+            if (updatesEl) updatesEl.checked = false;
+            const pwEl = document.getElementById('customerPassword');
+            if (pwEl) pwEl.value = '';
+            const devNotice = document.getElementById('devModeNotice');
+            if (devNotice) devNotice.textContent = 'No password required';
+            clearLoginError();
+        }
+        function updatePortalAuthVisibility() {
+            const cfg = getPortalConfigSafe();
+            const selectedCustomerKey = document.getElementById('customerName')?.value || '';
+            const isGuestSelection = selectedCustomerKey === '__guest__';
+            const devNotice = document.getElementById('devModeNotice');
+            const pwField = document.getElementById('customerPassword');
+            if (isGuestSelection) {
+                if (pwField) {
+                    pwField.style.display = 'none';
+                    pwField.value = '';
+                }
+                if (devNotice) {
+                    devNotice.textContent = 'Guest access selected — no password required. You will be routed to Unity Home.';
+                    devNotice.style.display = 'block';
+                }
+                return;
+            }
             if (cfg.devMode) {
-                if (devNotice) devNotice.style.display = 'block';
-                if (pwField) pwField.style.display = 'none';
+                if (devNotice) {
+                    devNotice.textContent = 'No password required';
+                    devNotice.style.display = 'block';
+                }
+                if (pwField) {
+                    pwField.style.display = 'none';
+                    pwField.value = '';
+                }
             } else {
                 if (devNotice) devNotice.style.display = 'none';
                 if (pwField) pwField.style.display = 'block';
             }
+            window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 50);
+            window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 220);
         }
         function closeLoginModal() {
             const modal = document.getElementById('loginModal');
             modal.classList.remove('active');
-            const nameEl = document.getElementById('customerName');
-            if (nameEl) nameEl.value = '';
-            const pwEl = document.getElementById('customerPassword');
-            if (pwEl) pwEl.value = '';
-            const errEl = document.getElementById('loginError');
-            if (errEl) errEl.style.display = 'none';
+            resetPortalFormState();
         }
         function attemptLogin() {
             const cfg = getPortalConfigSafe();
-            const customerNameRaw = document.getElementById('customerName')?.value || '';
-            const customerName = customerNameRaw.toLowerCase().replace(/[^a-z0-9]/g, '');
-            const errorEl = document.getElementById('loginError');
-            if (!cfg.customers) {
-                if (errorEl) {
-                    errorEl.textContent = 'Portal configuration not loaded. Please refresh the page.';
-                    errorEl.style.display = 'block';
-                }
+            const selectedCustomerKey = document.getElementById('customerName')?.value || '';
+            const isGuestSelection = selectedCustomerKey === '__guest__';
+            const firstName = String(document.getElementById('visitorFirstName')?.value || '').trim();
+            const lastName = String(document.getElementById('visitorLastName')?.value || '').trim();
+            const email = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const role = String(document.getElementById('visitorRole')?.value || '').trim();
+            const objective = String(document.getElementById('visitorObjective')?.value || '').trim();
+            const wantsUpdates = !!document.getElementById('visitorUpdates')?.checked;
+            clearLoginError();
+            if (!firstName || !lastName || !email) {
+                showLoginError('Please enter your first name, last name, and a valid email address.');
                 return;
             }
-            let customer = cfg.customers[customerName];
-            if (!customer && cfg.customers) {
-                for (const [, c] of Object.entries(cfg.customers)) {
-                    const n = String(c?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-                    if (n === customerName) {
-                        customer = c;
-                        break;
-                    }
-                }
+            if (!isLikelyValidName(firstName) || !isLikelyValidName(lastName)) {
+                showLoginError('Please enter your real first and last name (no placeholder names).');
+                return;
             }
-            if (!customer) {
-                if (errorEl) {
-                    errorEl.textContent = 'Company not found. Please check your company name.';
-                    errorEl.style.display = 'block';
-                }
+            if (!isLikelyValidEmail(email)) {
+                showLoginError('Please enter a valid business email address (placeholder emails are not allowed).');
+                return;
+            }
+            if (!selectedCustomerKey) {
+                showLoginError('Please select your company or Guest.');
+                return;
+            }
+            if (!isGuestSelection && !cfg.customers) {
+                showLoginError('Portal configuration not loaded. Please refresh the page.');
+                return;
+            }
+            const customer = !isGuestSelection ? cfg.customers[selectedCustomerKey] : null;
+            if (!isGuestSelection && !customer) {
+                showLoginError('Selected company is unavailable. Please refresh and try again.');
                 return;
             }
             const passwordEl = document.getElementById('customerPassword');
-            if (!cfg.devMode) {
+            if (!isGuestSelection && !cfg.devMode) {
                 const enteredPassword = passwordEl?.value || '';
                 if (enteredPassword !== cfg.password) {
-                    if (errorEl) {
-                        errorEl.textContent = 'Incorrect password. Please try again.';
-                        errorEl.style.display = 'block';
-                    }
+                    showLoginError('Incorrect password. Please try again.');
                     return;
                 }
             }
+            try {
+                const selectedAt = new Date().toISOString();
+                if (isGuestSelection) {
+                    const guestDestinationPath = 'index.html?siteUnlocked=1';
+                    const payload = {
+                        customer_slug: 'guest',
+                        customer_name: 'Guest',
+                        source_path: window.location.pathname,
+                        selected_at: selectedAt,
+                    };
+                    window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify(payload));
+                    const visitorProfile = {
+                        first_name: firstName,
+                        last_name: lastName,
+                        email,
+                        role,
+                        objective,
+                        wants_updates: wantsUpdates,
+                        selected_company: 'Guest',
+                        selected_company_slug: 'guest',
+                        source_path: window.location.pathname,
+                        submitted_at: selectedAt,
+                    };
+                    window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
+                    setUnitySiteAccessUnlocked({
+                        visitorType: 'guest',
+                        customerName: 'Guest',
+                        customerSlug: 'guest',
+                    });
+                    writePortalSessionState({
+                        destinationPath: guestDestinationPath,
+                        customerSlug: 'guest',
+                        customerName: 'Guest',
+                    });
+                    window.location.href = guestDestinationPath;
+                    return;
+                }
+                const pathMatch = String(customer.path || '').match(/\/Customers\/([^/]+)/i);
+                const rawCustomerSegment = pathMatch && pathMatch[1] ? pathMatch[1] : selectedCustomerKey;
+                const customerSlug = String(rawCustomerSegment || '')
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+                if (customerSlug) {
+                    const customerName = String(customer.name || rawCustomerSegment || customerSlug)
+                        .replace(/[_-]+/g, ' ')
+                        .replace(/\b\w/g, function (m) { return m.toUpperCase(); });
+                    const payload = {
+                        customer_slug: customerSlug,
+                        customer_name: customerName,
+                        source_path: window.location.pathname,
+                        selected_at: selectedAt,
+                    };
+                    window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify(payload));
+                    const visitorProfile = {
+                        first_name: firstName,
+                        last_name: lastName,
+                        email,
+                        role,
+                        objective,
+                        wants_updates: wantsUpdates,
+                        selected_company: customerName,
+                        selected_company_slug: customerSlug,
+                        source_path: window.location.pathname,
+                        submitted_at: selectedAt,
+                    };
+                    window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
+                    setUnitySiteAccessUnlocked({
+                        visitorType: 'customer',
+                        customerName,
+                        customerSlug,
+                    });
+                    writePortalSessionState({
+                        destinationPath: String(customer.path || ''),
+                        customerSlug,
+                        customerName,
+                    });
+                }
+            } catch (_err) {}
             window.location.href = customer.path;
         }
         document.addEventListener('keydown', function(e) {
@@ -483,6 +1124,31 @@
                     closeLoginModal();
                 }
             }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isPortalSwitchModeEnabled()) {
+                clearPortalSessionState();
+            } else if (routeToPortalSessionDestination()) {
+                return;
+            }
+            populateCustomerDropdown(getPortalConfigSafe(), false);
+            ['visitorFirstName', 'visitorLastName', 'visitorEmail', 'visitorRole', 'visitorObjective', 'customerName', 'customerPassword'].forEach(function (id) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('input', clearLoginError);
+                el.addEventListener('change', clearLoginError);
+            });
+            const emailEl = document.getElementById('visitorEmail');
+            if (emailEl) {
+                emailEl.addEventListener('input', function () {
+                    visitorEmailManuallyEdited = true;
+                });
+                emailEl.addEventListener('change', function () {
+                    visitorEmailManuallyEdited = true;
+                });
+            }
+            document.getElementById('customerName')?.addEventListener('change', updatePortalAuthVisibility);
+            updatePortalAuthVisibility();
         });
     </script>
 </body>

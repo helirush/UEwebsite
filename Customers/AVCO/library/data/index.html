@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVCO Data Library</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: rgba(247, 243, 241, 1);
+            color: rgba(52, 39, 37, 1);
+            line-height: 1.6;
+        }
+        .wrap { max-width: 980px; margin: 0 auto; padding: 24px 18px 34px; }
+        .nav { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav a {
+            text-decoration: none;
+            background: rgba(224, 207, 198, 1);
+            color: rgba(74, 45, 41, 1);
+            border: 1px solid rgba(204, 181, 170, 1);
+            border-radius: 7px;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.35px;
+            transition: all 0.2s ease;
+        }
+        .nav a:hover {
+            background: rgba(97, 58, 53, 1);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(76, 44, 40, 1);
+            transform: translateY(-1px);
+        }
+        .panel {
+            background: #fff;
+            border: 1px solid rgba(224, 209, 202, 1);
+            border-left: 6px solid rgba(108, 66, 60, 1);
+            border-radius: 10px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 14px rgba(56, 35, 32, 0.08);
+        }
+        h1 { color: rgba(85, 51, 47, 1); margin-bottom: 8px; }
+        p { color: rgba(82, 62, 56, 1); margin-bottom: 10px; }
+        ul { padding-left: 18px; }
+        li { margin: 8px 0; }
+        code {
+            background: rgba(234, 219, 211, 1);
+            padding: 1px 5px;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 16px;
+            background: rgba(74, 44, 40, 1);
+            color: rgba(250, 244, 240, 1);
+            text-align: center;
+            padding: 12px 10px;
+            border-top: 3px solid rgba(212, 193, 183, 1);
+            font-size: 0.84rem;
+        }
+        @media (max-width: 700px) {
+            .wrap {
+                padding: 18px 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <nav class="nav">
+            <a href="../index.html">Library Hub</a>
+            <a href="../../index.html">AVCO Page</a>
+            <a href="../reference/index.html">Reference Library</a>
+            <a href="../installation/index.html">Installation Library</a>
+        </nav>
+        <section class="panel">
+            <h1>Data Library</h1>
+            <p>This library is for measured and processed AVCO data artifacts (CSV, exports, dashboards, study outputs).</p>
+            <p>Drop incoming files in:</p>
+            <p><code>Customers/AVCO/library/data/files/</code></p>
+            <ul>
+                <li>Data asset list will be mapped here as you provide files.</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        AVCO data library
+    </footer>
+</body>
+</html>

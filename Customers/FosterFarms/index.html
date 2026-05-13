@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foster Farms - Energy Field Analysis Portal</title>
+    <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -19,9 +22,8 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.5;
             color: rgba(44, 62, 80, 1);
-            background: linear-gradient(rgba(248, 249, 250, 0.92), rgba(248, 249, 250, 0.9)),
-                        url('foster-farms-cards-hero.png') center top / cover fixed no-repeat;
-            background-color: rgba(248, 249, 250, 1);
+            background: linear-gradient(180deg, rgba(245, 246, 248, 1) 0%, rgba(236, 239, 242, 1) 100%);
+            background-color: rgba(236, 239, 242, 1);
         }
 
         header {
@@ -199,9 +201,9 @@
             overflow: visible;
             border-radius: 16px;
             padding: 24px;
-            background: transparent;
-            border: none;
-            box-shadow: none;
+            background: linear-gradient(180deg, rgba(246, 247, 249, 0.96) 0%, rgba(237, 240, 243, 0.96) 100%);
+            border: 1px solid rgba(205, 212, 218, 0.9);
+            box-shadow: 0 8px 24px rgba(44, 62, 80, 0.08);
             margin-bottom: 18px;
         }
 
@@ -554,40 +556,44 @@
 
     <div class="container">
         <section class="sites-section">
-            <h2 class="section-title">Explore Measurured Energy Field Behavior by Site</h2>
-            <h2 class="section-subtitle">Select the Facility to Enter</select></h2>
+            <h2 class="section-title">Explore Measured Energy Field Behavior by Site</h2>
+            <h2 class="section-subtitle">Select the Facility to Enter</h2>
 
             <div class="cards-hero-panel">
             <div class="sites-grid">
 
                 <!-- Livingston Site -->
                 <!-- MAINTENANCE RULE (Livingston):
-                     Whenever any Livingston group study links are updated (Deli/Rendering/NCDC),
-                     verify this front card’s combined/high/low efficiency is refreshed from the latest
-                     group Summaryboards via updateLivingstonCard(). -->
+                     Whenever Livingston studies are updated, keep Livingston_SIte/index.html group links current.
+                     This front card is auto-synced by updateLivingstonCard():
+                     - PF = arithmetic average of all parsed xfmr*-metric-pf values from each active group’s latest study.
+                     - high/low = min/max over that same PF set.
+                     - count = Livingston site "Measured" stat from Livingston_SIte/index.html overview.
+                     - latest report = newest month found across latest active group studies.
+                     If study structure/IDs change, update updateLivingstonCard() in this file immediately. -->
                 <a href="./Livingston_SIte/index.html" class="site-card">
                     <div class="site-header">
                         <div class="site-name">Livingston HQ</div>
                         <div class="site-location">Livingston, California</div>
                         <div class="site-efficiency-badge">
-                            <div class="efficiency-circle" id="livingston-card-pf">83.1%</div>
+                            <div class="efficiency-circle" id="livingston-card-pf">83.9%</div>
                             <div class="efficiency-label">combined efficiency</div>
                             <div class="efficiency-range">
-                                <span id="livingston-card-high">high = 90.3%</span>
-                                <span id="livingston-card-low">low = 73.9%</span>
+                                <span id="livingston-card-high">high = 96.4%</span>
+                                <span id="livingston-card-low">low = 60.7%</span>
                             </div>
                         </div>
                     </div>
                     <div class="site-content">
                         <div class="fields-measured">
-                            <div class="count">8</div>
+                            <div class="count" id="livingston-card-count">15</div>
                             <div class="label">Transformer eFields</div>
                             <div class="status">Monitored</div>
                         </div>
                         <div class="latest-report">
                             <h3>Latest Reports</h3>
-                            <div class="report-name">February 2026</div>
-                            <div class="report-desc">28-day Full Site Analysis</div>
+                            <div class="report-name" id="livingston-card-report-name">April 2026</div>
+                            <div class="report-desc" id="livingston-card-report-desc">30-day Full Analysis</div>
                         </div>
                         <div class="site-btn">Explore →</div>
                     </div>
@@ -597,17 +603,18 @@
                 <!-- MAINTENANCE RULE (Cherry Ave):
                      Every time a new Cherry study is moved/published to eWebmaster,
                      update CherryAve_Site/index.html first (month, status, and summary link),
-                     then verify this front card reflects the new latest month and efficiency. -->
+                     then verify this front card reflects the new latest month and efficiency.
+                     Front card PF is computed from xfmr1..xfmr4 metric PF values in Cherry's latest active full-site study. -->
                 <a href="./CherryAve_Site/index.html" class="site-card">
                     <div class="site-header">
                         <div class="site-name">Cherry Avenue</div>
                         <div class="site-location">Fresno, California</div>
                         <div class="site-efficiency-badge">
-                            <div class="efficiency-circle" id="cherry-card-pf">86.3%</div>
+                            <div class="efficiency-circle" id="cherry-card-pf">85.8%</div>
                             <div class="efficiency-label">combined efficiency</div>
                             <div class="efficiency-range">
-                                <span id="cherry-card-high">high = 88.8%</span>
-                                <span id="cherry-card-low">low = 83.9%</span>
+                                <span id="cherry-card-high">high = 89.3%</span>
+                                <span id="cherry-card-low">low = 82.0%</span>
                             </div>
                         </div>
                     </div>
@@ -619,8 +626,8 @@
                         </div>
                         <div class="latest-report">
                             <h3>Latest Reports</h3>
-                            <div class="report-name" id="cherry-card-report-name">February 2026</div>
-                            <div class="report-desc" id="cherry-card-report-desc">28-day Full Site Analysis</div>
+                            <div class="report-name" id="cherry-card-report-name">March 2026</div>
+                            <div class="report-desc" id="cherry-card-report-desc">31-day Full Site Analysis</div>
                         </div>
                         <div class="site-btn">Explore →</div>
                     </div>
@@ -677,16 +684,14 @@
     </footer>
 
     <script>
-        // When returning back to Foster Farms from a site page, lock the view to the cards frame.
-        // First entry shows the top of the page; subsequent returns land here until the user scrolls up.
+        // Always enter Foster Farms at the top of the page.
         const FF_LOCK_KEY = 'fosterfarms_lock_cards_view';
-        const FF_LOCK_OFFSET_PX = 90;
 
-        function getCardsLockTargetY() {
-            const grid = document.querySelector('.sites-grid');
-            if (!grid) return null;
-            const y = grid.getBoundingClientRect().top + (window.scrollY || 0) - FF_LOCK_OFFSET_PX;
-            return Math.max(0, Math.round(y));
+        function scrollToTopPosition() {
+            const goTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            requestAnimationFrame(goTop);
+            setTimeout(goTop, 0);
+            setTimeout(goTop, 50);
         }
 
         async function updateLivingstonCard() {
@@ -695,10 +700,13 @@
             // (empty xfmr-name = unused template slot, excluded).
             // PROCESS NOTE: when Livingston group studies are advanced to a new month,
             // keep Livingston_SIte/index.html study links current so this front-door card
-            // recalculates combined/high/low from the newest active studies.
+            // recalculates combined/high/low and refreshes card metadata from newest studies.
             const pfEl   = document.getElementById('livingston-card-pf');
             const highEl = document.getElementById('livingston-card-high');
             const lowEl  = document.getElementById('livingston-card-low');
+            const countEl = document.getElementById('livingston-card-count');
+            const reportNameEl = document.getElementById('livingston-card-report-name');
+            const reportDescEl = document.getElementById('livingston-card-report-desc');
             if (!pfEl) return;
 
             try {
@@ -707,33 +715,90 @@
                 if (!indexRes.ok) return;
 
                 const indexDoc = new DOMParser().parseFromString(await indexRes.text(), 'text/html');
+                const monthIndex = {
+                    jan: 0,
+                    feb: 1,
+                    mar: 2,
+                    apr: 3,
+                    may: 4,
+                    jun: 5,
+                    jul: 6,
+                    aug: 7,
+                    sep: 8,
+                    oct: 9,
+                    nov: 10,
+                    dec: 11
+                };
+
+                const parseMonthYear = (rawText) => {
+                    const text = String(rawText || '').trim();
+                    const m = text.match(/([A-Za-z]{3,9})\s+(\d{4})/);
+                    if (!m) return null;
+                    const key = m[1].slice(0, 3).toLowerCase();
+                    const year = parseInt(m[2], 10);
+                    if (monthIndex[key] == null || !Number.isFinite(year)) return null;
+                    return {
+                        label: `${m[1]} ${year}`,
+                        sortValue: new Date(year, monthIndex[key], 1).getTime()
+                    };
+                };
+                const normalizePfPercent = (rawValue) => {
+                    const numeric = Number(rawValue);
+                    if (!Number.isFinite(numeric) || numeric <= 0) return null;
+                    const pct = numeric <= 1 ? numeric * 100 : numeric;
+                    return Math.max(0, Math.min(100, pct));
+                };
+
+                // Sync measured field count from Livingston index overview metric.
+                if (countEl) {
+                    const measuredStat = Array.from(indexDoc.querySelectorAll('.highlight-card .number'))
+                        .map((el) => String(el.textContent || '').trim())
+                        .find((text) => /measured/i.test(text));
+                    const measuredMatch = measuredStat ? measuredStat.match(/(\d+)/) : null;
+                    if (measuredMatch) countEl.textContent = measuredMatch[1];
+                }
 
                 // Each <details> block = one unit group (Deli, Rendering, NCDC).
                 // Use the LAST active study link = most-recent available report for that unit.
                 const allPfs = [];
+                let latestReport = null;
 
-                for (const block of Array.from(indexDoc.querySelectorAll('details'))) {
+                for (const block of Array.from(indexDoc.querySelectorAll('details.group-section, details[data-group-code]'))) {
                     const activeLinks = Array.from(block.querySelectorAll('a.study-btn[href]'));
                     if (activeLinks.length === 0) continue;
-
-                    const href = activeLinks[activeLinks.length - 1]
-                        .getAttribute('href').replace(/^\.\//, '');
+                    const latestLink = activeLinks[activeLinks.length - 1];
+                    const href = (latestLink.getAttribute('href') || '').replace(/^\.\//, '');
                     if (!href) continue;
+
+                    const studyItem = latestLink.closest('.study-item');
+                    const studyName = studyItem?.querySelector('.study-name')?.textContent || '';
+                    const studyPeriodRaw = studyItem?.querySelector('.study-period')?.textContent || '';
+                    const studyPeriodParts = String(studyPeriodRaw)
+                        .split(/[•·]/)
+                        .map((part) => part.trim())
+                        .filter(Boolean);
+                    const studyPeriod = studyPeriodParts.find((part) => /\bday\b/i.test(part)) || studyPeriodParts[0] || '';
+                    const parsedDate = parseMonthYear(studyName);
+                    if (parsedDate) {
+                        if (!latestReport || parsedDate.sortValue > latestReport.sortValue) {
+                            latestReport = {
+                                sortValue: parsedDate.sortValue,
+                                label: parsedDate.label,
+                                desc: studyPeriod
+                            };
+                        }
+                    }
 
                     const summaryRes = await fetch(`./Livingston_SIte/${href}?cb=${cb}`);
                     if (!summaryRes.ok) continue;
 
                     const summaryDoc = new DOMParser().parseFromString(await summaryRes.text(), 'text/html');
+                    const pfNodes = summaryDoc.querySelectorAll('[id^="xfmr"][id$="-metric-pf"]');
 
-                    for (let i = 1; i <= 4; i++) {
-                        // Skip unused template slots — real transformers always have a name
-                        const nameEl = summaryDoc.getElementById(`xfmr${i}-name`);
-                        if (!(nameEl?.textContent || '').trim()) continue;
-
-                        const pfValEl = summaryDoc.getElementById(`xfmr${i}-metric-pf`);
-                        const pf = parseFloat(String(pfValEl?.textContent || '').replace('%', '').trim());
-                        if (!Number.isFinite(pf) || pf <= 0) continue;
-
+                    for (const pfNode of Array.from(pfNodes)) {
+                        const pfRaw = parseFloat(String(pfNode.textContent || '').replace('%', '').trim());
+                        const pf = normalizePfPercent(pfRaw);
+                        if (pf === null) continue;
                         allPfs.push(pf);
                     }
                 }
@@ -745,6 +810,11 @@
                     pfEl.textContent  = `${avg.toFixed(1)}%`;
                     if (highEl) highEl.textContent = `high = ${high.toFixed(1)}%`;
                     if (lowEl)  lowEl.textContent  = `low = ${low.toFixed(1)}%`;
+                }
+
+                if (latestReport) {
+                    if (reportNameEl) reportNameEl.textContent = latestReport.label;
+                    if (reportDescEl && latestReport.desc) reportDescEl.textContent = latestReport.desc;
                 }
             } catch (e) {
                 // Keep fallback values if fetch/parse fails
@@ -772,7 +842,10 @@
                 // Collect full-study containers from both legacy and current structures.
                 const fullStudyBlocks = Array.from(indexDoc.querySelectorAll('details')).filter((d) => {
                     const s = (d.querySelector('summary')?.textContent || '').toLowerCase();
-                    return s.includes('full site studies') || s.includes('full studies');
+                    return (
+                        (s.includes('full') && s.includes('site') && (s.includes('studies') || s.includes('study'))) ||
+                        s.includes('full studies')
+                    );
                 });
 
                 // Select first active item in display order; skip pending placeholders.
@@ -792,8 +865,8 @@
 
                 // Fallback allows name/description updates even if all studies are pending.
                 const selectedItem = activeItem || fullStudyBlocks[0]?.querySelector('.study-item');
-                const monthText = selectedItem?.querySelector('.study-name')?.textContent?.trim();
-                const periodTextRaw = selectedItem?.querySelector('.study-period')?.textContent?.trim();
+                const monthText = selectedItem?.querySelector('.study-name, .site-summary-name')?.textContent?.trim();
+                const periodTextRaw = selectedItem?.querySelector('.study-period, .study-month-meta')?.textContent?.trim();
                 const hrefRaw = selectedItem?.querySelector('a.study-btn[href]')?.getAttribute('href') || '';
 
                 if (monthText) {
@@ -849,45 +922,34 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // If the user leaves via a facility card, lock the return view.
-            document.querySelectorAll('a.site-card[href]').forEach((link) => {
-                link.addEventListener('click', () => {
-                    try { sessionStorage.setItem(FF_LOCK_KEY, '1'); } catch (e) {}
-                });
-            });
-
-            // If the user exits back to Unity Home, treat next entry as a "first" view.
-            const backBtn = document.querySelector('a.back-btn[href]');
-            if (backBtn) {
-                backBtn.addEventListener('click', () => {
-                    try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
-                });
-            }
+            try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
+            scrollToTopPosition();
 
             // Keep site cards fresh automatically
             updateLivingstonCard();
             updateCherryAveCard();
         });
-
-        // Restore on pageshow so it works even when the browser uses bfcache.
+        // Keep top position even when browser restores from bfcache.
         window.addEventListener('pageshow', () => {
-            let locked = false;
-            try { locked = sessionStorage.getItem(FF_LOCK_KEY) === '1'; } catch (e) {}
-            if (!locked) return;
-
-            const targetY = getCardsLockTargetY();
-            if (targetY == null) return;
-
-            const doRestore = () => {
-                window.scrollTo({ top: targetY, left: 0, behavior: 'auto' });
-            };
-
-            // Retry a few times in case the browser applies scroll/anchor adjustments after pageshow.
-            requestAnimationFrame(doRestore);
-            setTimeout(doRestore, 0);
-            setTimeout(doRestore, 50);
-            setTimeout(doRestore, 250);
+            try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
+            scrollToTopPosition();
         });
+    </script>
+    <script>
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "fosterfarms",
+                    customer_name: "Foster Farms",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {
+                // ignore storage failures
+            }
+        })();
     </script>
 </body>
 </html>

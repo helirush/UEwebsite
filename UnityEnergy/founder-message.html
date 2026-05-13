@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <title>Founder’s Message | Unity Energy</title>
     <style>
@@ -210,16 +210,16 @@
         <section class="hero">
             <h1>Founder’s Message</h1>
             <p>
-                A direct message from Unity’s founder. Listen here, read the full statement below, and continue with Clerk if you want deeper technical detail.
+                A personal note on why Unity Energy exists, and why industrial electricity must now be seen as a behavior field we can understand and steward — not just consume.
             </p>
         </section>
         <section class="player-panel">
             <div class="player-tabs">
-                <button class="player-tab" type="button" onclick="showPlayer('founder')">Founder Message</button>
-                <button class="player-tab secondary" type="button" data-feature-gate="clerk_voice" onclick="showPlayer('clerk')">Technical Follow-Up with Clerk</button>
+                <button class="player-tab" type="button" onclick="showPlayer('founder')">Founder Voice (Preferred)</button>
+                <button class="player-tab secondary" type="button" onclick="showPlayer('assist')">Voice-Assisted Narration</button>
             </div>
             <p class="player-note">
-                Start with the founder’s message, then continue with Clerk for engineering depth.
+                Authentic founder voice is recommended first for context and intent. A voice-assisted narration version can be used for pacing support.
             </p>
             <div id="player-founder" class="player-block active">
                 <audio id="audio-founder" controls preload="none">
@@ -227,11 +227,11 @@
                 </audio>
                 <p id="audio-status-founder" class="audio-status"></p>
             </div>
-            <div id="player-clerk" class="player-block">
-                <audio id="audio-clerk" controls preload="none">
+            <div id="player-assist" class="player-block">
+                <audio id="audio-assist" controls preload="none">
                     Your browser does not support audio playback.
                 </audio>
-                <p id="audio-status-clerk" class="audio-status"></p>
+                <p id="audio-status-assist" class="audio-status"></p>
             </div>
         </section>
         <section class="video-panel">
@@ -242,34 +242,54 @@
             </div>
         </section>
         <section class="transcript">
-            <h2>Founder’s Message</h2>
+            <h2>Founder’s Message (Text Version)</h2>
             <p>
-                I built Unity after years in real plants, real equipment rooms, and real operating constraints.
-                I kept seeing the same pattern: teams were paying for electrical burden they could not clearly see, isolate, or correct.
+                I did not arrive at Unity Energy through a single industry or a single role.
+                I arrived here through a long path of building, fabricating, engineering, moving commodities, supporting infrastructure, working in aerospace contexts, and eventually working deeply with intelligence systems and visual language.
+                Across those environments, one pattern kept repeating: people were operating around electrical consequences they could feel, but could not fully see.
             </p>
             <p>
-                We have measured electricity for decades, but that is not the same as understanding field behavior at the point of use.
-                Reactive burden, harmonic distortion, thermal stress, and conversion loss were often treated as normal simply because they were not made visible in operational terms.
+                Humanity learned how to generate and distribute electricity long before it learned how to observe industrial field behavior itself.
+                We became excellent at producing power, transmitting power, and billing power.
+                But at the point of industrial use, the field’s internal behavior — harmonic interaction, reactive burden, conversion inefficiency, and thermal stress — was often treated as background noise.
             </p>
             <p>
-                Unity exists because the field can be measured with enough precision to be governed with confidence.
-                We measure real behavior, interpret what it means, and harmonize at the load so teams can reduce avoidable loss and improve conversion quality.
+                Unity exists to change that.
+                Our work is to make the invisible industrial energy field visible, measurable, understandable, and governable.
+                Not in theory alone, and not as abstract diagnostics, but as an operational language teams can actually use.
             </p>
             <p>
-                Measure, Manage, Exchange is the framework behind that work.
-                It moves us from observation, to control, to coordinated energy response.
+                For me, this has always been a perception problem before it is a hardware problem.
+                As a visual autodidact, I needed to see the field clearly enough to trust what I was learning.
+                That requirement shaped the long development cycle behind Unity.
+                The timeline was not delay for its own sake.
+                It was necessary to reconcile measurement, field behavior, harmonic interaction, and visualization into something coherent and repeatable.
             </p>
             <p>
-                This is not a software exercise. It is industrial stewardship.
+                Unity is not simply selling electrical devices.
+                Unity is building a visual language for industrial energy behavior.
+                MPTS systems, in that context, are best understood as intelligent copper-based field tuners and harmonic governance instruments.
+                They help stabilize how the field behaves under real load, so performance can be improved through understanding instead of guesswork.
             </p>
             <p>
-                Thank you for taking time to understand what we are building.
-                Our purpose is straightforward: make the invisible visible, and the visible governable.
+                The field must be visually understood before it can be intelligently stewarded.
+                Visualization is central to trust, learning, and adoption.
+                When people can see what the field is doing, they can reason about it, govern it, and improve it with intention.
+            </p>
+            <p>
+                This is the transition Unity represents:
+                from consuming electricity blindly, to stewarding industrial energy systems intelligently.
+                That transition is technical, but it is also cultural.
+                It asks us to move from reaction to comprehension.
+            </p>
+            <p>
+                Thank you for taking time to read this.
+                If this message resonates, the next step is simple: look at the field directly, learn its behavior, and govern it with clarity.
             </p>
         </section>
     </main>
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Measure. Manage. Exchange.</p>
     </footer>
     <script>
@@ -306,12 +326,15 @@
                     ]
                 },
                 {
-                    audioId: 'audio-clerk',
-                    statusId: 'audio-status-clerk',
+                    audioId: 'audio-assist',
+                    statusId: 'audio-status-assist',
                     candidates: [
-                        'assets/audio/founder-message-clerk.mp3',
-                        '../assets/audio/founder-message-clerk.mp3',
-                        '/assets/audio/founder-message-clerk.mp3'
+                        'assets/audio/founder-message-assist.mp3',
+                        'assets/audio/founder-message-assisted.mp3',
+                        '../assets/audio/founder-message-assist.mp3',
+                        '../assets/audio/founder-message-assisted.mp3',
+                        '/assets/audio/founder-message-assist.mp3',
+                        '/assets/audio/founder-message-assisted.mp3'
                     ]
                 }
             ];
@@ -331,66 +354,15 @@
                 }
             }
         }
-        function openClerkFromFounder() {
-            if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
-                return false;
-            }
-            const founderAudio = document.getElementById('audio-founder');
-            const founderAudioSeconds = founderAudio && Number.isFinite(founderAudio.currentTime)
-                ? Math.max(0, Math.floor(founderAudio.currentTime))
-                : 0;
-            const hasFounderPlaybackContext = founderAudioSeconds >= 5;
-            const launchOptions = {
-                contextSource: 'founder-message',
-                context: hasFounderPlaybackContext ? 'founder-message-followup' : 'technical-follow-up',
-                mode: hasFounderPlaybackContext ? 'founder-message-followup' : 'technical-follow-up',
-                conversationMode: 'followup',
-                sourcePage: 'founder-message',
-                sourceMedia: 'founder-audio',
-                sourceMediaSeconds: founderAudioSeconds,
-                entryPoint: 'founder-message-clerk-tab',
-                likelyUserIntent: hasFounderPlaybackContext
-                    ? 'follow-up questions about founder message content'
-                    : 'general founder message technical follow-up',
-                uiMode: 'modal'
-            };
-            let opened = false;
-            if (typeof window.openClerkWithPageContext === 'function') {
-                opened = window.openClerkWithPageContext(launchOptions);
-            } else if (typeof window.openClerkVoiceModal === 'function') {
-                const launchPayload = typeof window.buildClerkPageLaunchPayload === 'function'
-                    ? window.buildClerkPageLaunchPayload(launchOptions)
-                    : {
-                        contextSource: 'founder-message',
-                        contextPayload: {
-                            context: launchOptions.context,
-                            source_page: 'founder-message',
-                            entry_point: 'founder-message-clerk-tab'
-                        },
-                        uiMode: 'modal'
-                    };
-                window.openClerkVoiceModal(launchPayload);
-                const modal = document.getElementById('clerkVoiceModal');
-                opened = Boolean(modal && modal.classList.contains('active'));
-            }
-            if (opened) {
-                const startBtn = document.getElementById('clerkVoiceStartBtn');
-                if (startBtn && !startBtn.hidden) {
-                    startBtn.click();
-                }
-            }
-            return opened;
-        }
 
         function showPlayer(kind) {
             const founder = document.getElementById('player-founder');
-            const clerk = document.getElementById('player-clerk');
-            if (kind === 'clerk') {
-                if (openClerkFromFounder()) return;
+            const assist = document.getElementById('player-assist');
+            if (kind === 'assist') {
                 founder.classList.remove('active');
-                clerk.classList.add('active');
+                assist.classList.add('active');
             } else {
-                clerk.classList.remove('active');
+                assist.classList.remove('active');
                 founder.classList.add('active');
             }
         }

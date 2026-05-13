@@ -10,6 +10,9 @@
   let widgetReady = false;
   let hasConversationStarted = false;
   let currentVisitorName = "";
+  let leadCaptureState = null;
+  let leadCaptureSubmitInFlight = false;
+  let leadCaptureStatusTimer = null;
   let visitorQuestionCount = 0;
   let questionNotesActivated = false;
   let visitorQuestionLog = [];
@@ -17,16 +20,63 @@
   let questionNotesStatusTimer = null;
   let founderModeActive = false;
   let founderModeIdentity = "";
+  let mptsDriftEventCount = 0;
+  let lastMptsDriftFingerprint = "";
   let guardrailSessionStartedAt = 0;
   let guardrailLastActivityAt = 0;
   let guardrailQuestionCount = 0;
+  let guardrailQuestionCap = 0;
   let guardrailLowRelevanceStreak = 0;
   let guardrailOffboarded = false;
   let guardrailIdleTimer = null;
+  let guardrailIdlePromptStage = 0;
+  let guardrailOffboardCloseTimer = null;
   let guardrailSessionToken = "";
+  let guardrailLeadCapturePromptCount = 0;
   let lifecycleCleanupBound = false;
   let activeLaunchSignature = "";
-  const runtimeAuthStorageKey = "MAXWELLIAN_HUME_RUNTIME_AUTH";
+  let unityStartGatePending = false;
+  let unityStartGatePreflightReady = false;
+  let unityStartGatePreflightAttempted = false;
+  let unityStartGatePreflightFailed = false;
+  let unityStartGatePreflightStatusMessage = "";
+  let unityStartGatePendingRequiresRecovery = false;
+  let navigationRoamingBound = false;
+  let pageTransitionInProgress = false;
+  let customerExitSweepCaptured = false;
+  let voiceSignalMode = "idle";
+  let signalSpeakingDecayTimer = null;
+  let signalFormationTimer = null;
+  let preConversationSignalVisible = false;
+  let tourGuideNavigationState = null;
+  let activePagePatternContextCache = null;
+  let activePagePatternContextCacheKey = "";
+  let activePagePatternContextFetchedAtMs = 0;
+  let activePagePatternContextPromise = null;
+  let electricalStoryQuestionCount = 0;
+  let electricalStoryQuestionCap = 0;
+  let electricalStoryExitPromptActive = false;
+  let electricalStoryExitPromptSent = false;
+  let electricalStoryExitTimer = null;
+  const COMPACT_SQUARE_FRAME_SIZE = 236;
+  const SIGNAL_MODE_IDLE = "idle";
+  const SIGNAL_MODE_LISTENING = "listening";
+  const SIGNAL_MODE_SPEAKING = "speaking";
+  const SIGNAL_SPEAKING_DECAY_MS = 780;
+  const SIGNAL_FORMATION_DURATION_MS = 2300;
+  const START_BUTTON_WAITING_LABEL = "Waiting on Clerk";
+  const CROSS_PAGE_ROAMING_STORAGE_KEY_PREFIX = "maxwellian_clerk_roaming_state_v2";
+  const CUSTOMER_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_customer_memory_v1";
+  const PAGE_CONTEXT_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_page_context_memory_v1";
+  const PATTERN_CONTEXT_PREFETCH_TTL_MS = 1000 * 60 * 10;
+  const CROSS_PAGE_ROAMING_MAX_TRANSCRIPT_ENTRIES = 10;
+  const CROSS_PAGE_ROAMING_STATE_TTL_MS = 1000 * 60 * 45;
+  const CROSS_PAGE_ROAMING_RESUME_DELAY_MS = 180;
+  const TOUR_GUIDE_PENDING_TTL_MS = 1000 * 60 * 5;
+  const runtimeAuthStorageKeys = [
+    "MAXWELLIAN_OPENAI_RUNTIME_AUTH",
+    "MAXWELLIAN_HUME_RUNTIME_AUTH",
+  ];
   function normalizeRuntimeAuthType(value) {
     if (typeof value !== "string") return "";
     const normalized = value.trim().toLowerCase();
@@ -48,6 +98,503 @@
       return "apiKey";
     }
     return "";
+  }
+  function parseVisitorIntentFromText(text) {
+    const sample = coerceText(text).replace(/\s+/g, " ").trim();
+    if (!sample) return "";
+    const patterns = [
+      /\b(?:i(?:'m| am)? (?:looking for|interested in|trying to|hoping to|here to)|we(?:'re| are)? (?:looking for|interested in|trying to|hoping to|here to)|i need help with|we need help with|can you help (?:me|us) (?:with)?|help (?:me|us) (?:understand|with)|i want to|we want to)\s+(.{6,240})/i,
+      /\b(?:my question(?: is)?|the question(?: is)?|my goal(?: is)?|our goal(?: is)?|i(?:'m| am) curious about|we(?:'re| are) curious about)\s*[:,-]?\s*(.{6,240})/i,
+    ];
+    for (let i = 0; i < patterns.length; i += 1) {
+      const match = sample.match(patterns[i]);
+      if (!match || !match[1]) continue;
+      const cropped = match[1].split(/\b(?:and my (?:name|email)|my (?:name|email) is|you can reach me|contact me|thanks|thank you)\b/i)[0];
+      const normalized = coerceText(cropped)
+        .replace(/^[,;:\-\s]+/, "")
+        .replace(/[,;:\-\s]+$/, "");
+      if (!normalized || normalized.length < 8) continue;
+      if (/@/.test(normalized)) continue;
+      return normalized.length > 220 ? `${normalized.slice(0, 220).trim()}…` : normalized;
+    }
+    if (/\?/.test(sample) && /\b(help|understand|explain|show|difference|service|portal|manage|managed|mpts|power factor|reactive|harmonic|thermal)\b/i.test(sample)) {
+      return sample.length > 220 ? `${sample.slice(0, 220).trim()}…` : sample;
+    }
+    return "";
+  }
+
+  function parseVisitorEmailFromText(text) {
+    const sample = coerceText(text);
+    if (!sample) return "";
+    const match = sample.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/);
+    if (!match || !match[0]) return "";
+    return normalizeVisitorEmail(match[0]);
+  }
+
+  function parseVisitorCompanyFromText(text) {
+    const sample = coerceText(text);
+    if (!sample) return "";
+    const patterns = [
+      /\b(?:i(?:'m| am)?\s+with|we(?:'re| are)?\s+with|i work(?:ing)?\s+(?:at|for)|i(?:'m| am)?\s+from|we(?:'re| are)?\s+from|my company is|our company is|company is)\s+([A-Za-z0-9&'.,\- ]{2,90})/i,
+      /\b(?:this is)\s+[A-Za-z][A-Za-z' -]{1,40}\s+(?:from|with)\s+([A-Za-z0-9&'.,\- ]{2,90})/i,
+    ];
+    for (let i = 0; i < patterns.length; i += 1) {
+      const match = sample.match(patterns[i]);
+      if (!match || !match[1]) continue;
+      const cropped = match[1].split(/\b(?:and|but|my email|email is|you can|reach me|contact me|phone)\b/i)[0];
+      const normalized = normalizeVisitorCompany(cropped);
+      if (!normalized) continue;
+      if (/@/.test(normalized)) continue;
+      return normalized;
+    }
+    return "";
+  }
+
+  function parseConfirmationEmailConsentFromText(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return null;
+    if (
+      /\b(just send (?:me )?(?:the )?(?:confirmation )?email|send (?:me )?(?:the )?(?:confirmation )?email|please send (?:me )?(?:a )?confirmation email|go ahead and send (?:the )?email)\b/.test(
+        sample
+      )
+    ) {
+      return true;
+    }
+    if (/\b(do not send|don't send|no email|not now)\b/.test(sample)) {
+      return false;
+    }
+    if (!/\b(email|confirmation)\b/.test(sample)) return null;
+    if (/\b(yes|yeah|yep|sure|ok|okay|absolutely|sounds good|please do|go ahead)\b/.test(sample)) {
+      return true;
+    }
+    if (/\b(no|nope)\b/.test(sample)) {
+      return false;
+    }
+    return null;
+  }
+
+  function parseSalesOutreachConsentFromText(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return null;
+    const outreachContextDetected =
+      /\b(sales|sales executive|account executive|reach out|reach back|contact me|follow up|follow-up|have someone call|someone call)\b/.test(
+        sample
+      );
+    if (!outreachContextDetected) return null;
+    if (
+      /\b(do not contact|don't contact|no contact|no calls|do not call|don't call|not now|no thanks|no thank you)\b/.test(
+        sample
+      )
+    ) {
+      return false;
+    }
+    if (
+      /\b(yes|yeah|yep|sure|ok|okay|absolutely|sounds good|go ahead|please do)\b/.test(
+        sample
+      ) ||
+      /\b(please have.*reach out|have.*reach out|someone can contact me|feel free to contact me)\b/.test(
+        sample
+      )
+    ) {
+      return true;
+    }
+    return null;
+  }
+
+  function parseNewsletterOptInFromText(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return null;
+    if (!/\b(newsletter|news brief|maxwellian club|maxwellian news)\b/.test(sample)) return null;
+    if (/\b(do not|don't|no|not now|skip|maybe later)\b/.test(sample)) {
+      return false;
+    }
+    if (
+      /\b(join|sign me up|subscribe|add me|include me|yes|yeah|yep|sure|absolutely|interested)\b/.test(
+        sample
+      )
+    ) {
+      return true;
+    }
+    return null;
+  }
+
+  function parseTextNotificationInterestFromText(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return null;
+    if (!/\b(text|sms|telegraph|notification|alert)\b/.test(sample)) return null;
+    if (/\b(no|not now|skip|later|don't need (?:my )?phone|no phone)\b/.test(sample)) {
+      return false;
+    }
+    if (
+      /\b(yes|yeah|yep|sure|absolutely|interested|sign me up|join|enable|set up)\b/.test(sample)
+    ) {
+      return true;
+    }
+    return null;
+  }
+
+  function getLeadCaptureSettings(cfg) {
+    return {
+      enabled: Boolean(cfg && cfg.lead_capture_enabled !== false),
+      collectCompany: !cfg || cfg.lead_capture_collect_company !== false,
+      promptIntent: !cfg || cfg.lead_capture_prompt_intent !== false,
+      requireConfirmationEmailConsent:
+        !cfg || cfg.lead_capture_require_confirmation_email_consent !== false,
+      promptNewsletter: !cfg || cfg.lead_capture_prompt_newsletter !== false,
+      promptTextNotifications: !cfg || cfg.lead_capture_prompt_text_notifications !== false,
+      promptSalesOutreach: !cfg || cfg.lead_capture_prompt_sales_outreach !== false,
+      endpoint:
+        coerceText(cfg && cfg.lead_capture_endpoint) || "/api/maxwellian/lead-capture",
+      statusDisplaySeconds: Number.isFinite(Number(cfg && cfg.lead_capture_status_display_seconds))
+        ? Math.max(2, Math.min(24, Math.floor(Number(cfg && cfg.lead_capture_status_display_seconds))))
+        : 7,
+    };
+  }
+
+  function createLeadCaptureState(seedName) {
+    const name = normalizeVisitorName(seedName);
+    return {
+      name: name,
+      company: "",
+      email: "",
+      visitorIntent: "",
+      confirmationEmailConsent: null,
+      newsletterOptIn: null,
+      textNotificationsInterest: null,
+      salesOutreachConsent: null,
+      confirmationEmailSent: false,
+      confirmationEmailSentAt: "",
+      confirmationEmailError: "",
+      lastSubmissionStatus: "",
+      lastSubmissionAt: "",
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  function clearLeadCaptureStatusTimer() {
+    if (!leadCaptureStatusTimer) return;
+    window.clearTimeout(leadCaptureStatusTimer);
+    leadCaptureStatusTimer = null;
+  }
+
+  function scheduleLeadCaptureStatusClear(cfg) {
+    clearLeadCaptureStatusTimer();
+    const settings = getLeadCaptureSettings(cfg);
+    leadCaptureStatusTimer = window.setTimeout(function () {
+      setStatus("", false);
+    }, settings.statusDisplaySeconds * 1000);
+  }
+
+  function resetLeadCaptureState(seedName) {
+    leadCaptureState = createLeadCaptureState(seedName || "");
+    leadCaptureSubmitInFlight = false;
+    clearLeadCaptureStatusTimer();
+  }
+
+  function ensureLeadCaptureState(seedName) {
+    if (!leadCaptureState || typeof leadCaptureState !== "object") {
+      resetLeadCaptureState(seedName || "");
+    }
+    const normalizedSeed = normalizeVisitorName(seedName);
+    if (normalizedSeed && !leadCaptureState.name) {
+      leadCaptureState.name = normalizedSeed;
+      leadCaptureState.updatedAt = new Date().toISOString();
+    }
+    return leadCaptureState;
+  }
+
+  function getLeadCaptureMissingFields(state, settings) {
+    const missing = [];
+    if (!state || typeof state !== "object") return ["name", "email"];
+    if (!coerceText(state.name)) missing.push("name");
+    if (settings && settings.collectCompany && !coerceText(state.company)) missing.push("company");
+    if (settings && settings.promptIntent && !coerceText(state.visitorIntent)) missing.push("intent");
+    if (settings && settings.promptSalesOutreach && state.salesOutreachConsent === null) {
+      missing.push("sales_outreach_consent");
+    }
+    if (!coerceText(state.email)) missing.push("email");
+    return missing;
+  }
+
+  function syncLeadCaptureStateToSession(cfg, reason) {
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return;
+    if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+      pendingLaunchSession.contextPayload = {};
+    }
+    const settings = getLeadCaptureSettings(cfg);
+    const state = ensureLeadCaptureState(currentVisitorName);
+    const missingFields = getLeadCaptureMissingFields(state, settings);
+    const payload = pendingLaunchSession.contextPayload;
+    Object.assign(payload, {
+      lead_capture_enabled: settings.enabled,
+      lead_capture_collect_company: settings.collectCompany,
+      lead_capture_prompt_intent: settings.promptIntent,
+      lead_capture_require_confirmation_email_consent:
+        settings.requireConfirmationEmailConsent,
+      lead_capture_prompt_newsletter: settings.promptNewsletter,
+      lead_capture_prompt_text_notifications: settings.promptTextNotifications,
+      lead_capture_prompt_sales_outreach: settings.promptSalesOutreach,
+      lead_capture_name: coerceText(state.name),
+      lead_capture_company: coerceText(state.company),
+      lead_capture_email: coerceText(state.email),
+      lead_capture_intent: coerceText(state.visitorIntent),
+      lead_capture_intent_known: Boolean(coerceText(state.visitorIntent)),
+      lead_capture_confirmation_email_consent: state.confirmationEmailConsent,
+      lead_capture_newsletter_opt_in: state.newsletterOptIn,
+      lead_capture_text_notifications_interest: state.textNotificationsInterest,
+      lead_capture_sales_outreach_consent: state.salesOutreachConsent,
+      lead_capture_missing_fields: missingFields,
+      lead_capture_ready_for_confirmation_email:
+        Boolean(state.email) &&
+        (settings.requireConfirmationEmailConsent
+          ? state.confirmationEmailConsent === true
+          : true),
+      lead_capture_ready_for_sales_outreach_contact:
+        state.salesOutreachConsent === true &&
+        Boolean(coerceText(state.email) || coerceText(state.company) || coerceText(state.name)),
+      lead_capture_confirmation_email_sent: Boolean(state.confirmationEmailSent),
+      lead_capture_confirmation_email_sent_at: coerceText(state.confirmationEmailSentAt),
+      lead_capture_confirmation_email_error: coerceText(state.confirmationEmailError),
+      lead_capture_last_submission_status: coerceText(state.lastSubmissionStatus),
+      lead_capture_last_submission_at: coerceText(state.lastSubmissionAt),
+      lead_capture_updated_at: state.updatedAt || new Date().toISOString(),
+    });
+    if (state.name) {
+      payload.visitor_name = state.name;
+      payload.visitor_name_known = true;
+    }
+    if (state.company) {
+      payload.visitor_company = state.company;
+      payload.visitor_company_known = true;
+    }
+    if (state.email) {
+      payload.visitor_email = state.email;
+      payload.visitor_email_known = true;
+    }
+    if (state.visitorIntent) {
+      payload.visitor_intent = state.visitorIntent;
+      payload.visitor_intent_known = true;
+      if (!coerceText(payload.likely_user_intent)) {
+        payload.likely_user_intent = state.visitorIntent;
+      }
+    }
+    if (state.salesOutreachConsent !== null) {
+      payload.visitor_sales_outreach_consent = state.salesOutreachConsent;
+    }
+    appendSessionDecision(pendingLaunchSession, reason || "lead-capture-synced", {
+      visitor_name: coerceText(state.name),
+      visitor_company: coerceText(state.company),
+      visitor_email: coerceText(state.email),
+      visitor_intent: coerceText(state.visitorIntent),
+      confirmation_email_consent: state.confirmationEmailConsent,
+      newsletter_opt_in: state.newsletterOptIn,
+      sales_outreach_consent: state.salesOutreachConsent,
+      missing_fields: missingFields,
+      confirmation_email_sent: Boolean(state.confirmationEmailSent),
+    });
+    postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
+  }
+
+  async function submitLeadCaptureToBackend(cfg, reason) {
+    const settings = getLeadCaptureSettings(cfg);
+    if (!settings.enabled) return null;
+    if (typeof window.fetch !== "function") return null;
+    const state = ensureLeadCaptureState(currentVisitorName);
+    const hasAnyLeadIdentity = Boolean(
+      coerceText(state.name) || coerceText(state.company) || coerceText(state.email)
+    );
+    if (!hasAnyLeadIdentity || leadCaptureSubmitInFlight) return null;
+    const endpoint = coerceText(settings.endpoint);
+    if (!endpoint) return null;
+
+    const payload = pendingLaunchSession && pendingLaunchSession.contextPayload && typeof pendingLaunchSession.contextPayload === "object"
+      ? pendingLaunchSession.contextPayload
+      : {};
+    const requestBody = {
+      visitor_name: coerceText(state.name),
+      visitor_company: coerceText(state.company),
+      visitor_email: coerceText(state.email),
+      visitor_intent: coerceText(state.visitorIntent),
+      confirmation_email_consent: state.confirmationEmailConsent === true,
+      newsletter_opt_in: state.newsletterOptIn === true,
+      text_notifications_interest: state.textNotificationsInterest === true,
+      sales_outreach_consent: state.salesOutreachConsent === true,
+      source_page: coerceText(payload.source_page || getCurrentPageSlug()),
+      context_source: coerceText(
+        (pendingLaunchSession && pendingLaunchSession.contextSource) || payload.context_source
+      ),
+      likely_user_intent: coerceText(payload.likely_user_intent || state.visitorIntent),
+      entry_point: coerceText(payload.entry_point),
+      lead_capture_reason: coerceText(reason),
+      guardrail_session_token: coerceText(
+        guardrailSessionToken || payload.guardrail_session_token
+      ),
+      submitted_at: new Date().toISOString(),
+    };
+
+    leadCaptureSubmitInFlight = true;
+    state.confirmationEmailError = "";
+    state.lastSubmissionStatus = "submitting";
+    state.updatedAt = new Date().toISOString();
+    syncLeadCaptureStateToSession(cfg, "lead-capture-submit-started");
+
+    try {
+      const response = await window.fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      let result = {};
+      try {
+        result = await response.json();
+      } catch (_err) {
+        result = {};
+      }
+      if (!response.ok) {
+        const message =
+          coerceText(result && result.error && result.error.message) ||
+          `Lead capture request failed with status ${response.status}.`;
+        throw new Error(message);
+      }
+      const emailSent = Boolean(
+        result &&
+          (result.confirmation_email_sent === true || result.confirmationEmailSent === true)
+      );
+      state.lastSubmissionAt = new Date().toISOString();
+      state.lastSubmissionStatus =
+        coerceText(result && (result.confirmation_email_status || result.confirmationEmailStatus)) ||
+        (emailSent ? "sent" : "accepted");
+      if (emailSent) {
+        state.confirmationEmailSent = true;
+        state.confirmationEmailSentAt = state.lastSubmissionAt;
+        state.confirmationEmailError = "";
+        setStatus(`Confirmation email sent to ${state.email}.`, false, true);
+        scheduleLeadCaptureStatusClear(cfg);
+      } else {
+        const emailError = coerceText(
+          result && (result.confirmation_email_error || result.confirmationEmailError)
+        );
+        if (emailError) {
+          state.confirmationEmailError = emailError;
+          setStatus(
+            `Lead captured. Confirmation email pending: ${emailError}`,
+            true,
+            true
+          );
+          scheduleLeadCaptureStatusClear(cfg);
+        }
+      }
+      state.updatedAt = new Date().toISOString();
+      syncLeadCaptureStateToSession(cfg, "lead-capture-submitted");
+      return result;
+    } catch (err) {
+      state.lastSubmissionAt = new Date().toISOString();
+      state.lastSubmissionStatus = "error";
+      state.confirmationEmailError =
+        coerceText(err && err.message) || "Lead capture submission failed.";
+      state.updatedAt = new Date().toISOString();
+      setStatus(`Lead capture error: ${state.confirmationEmailError}`, true, true);
+      scheduleLeadCaptureStatusClear(cfg);
+      syncLeadCaptureStateToSession(cfg, "lead-capture-submit-error");
+      return null;
+    } finally {
+      leadCaptureSubmitInFlight = false;
+    }
+  }
+
+  function maybeSubmitLeadCaptureToBackend(cfg, reason) {
+    submitLeadCaptureToBackend(cfg, reason).catch(function (_err) {});
+  }
+
+  function updateLeadCaptureFromTranscript(text, cfg) {
+    const settings = getLeadCaptureSettings(cfg);
+    if (!settings.enabled) return false;
+    const sample = coerceText(text);
+    if (!sample) return false;
+    const state = ensureLeadCaptureState(currentVisitorName);
+    let changed = false;
+
+    const knownName = normalizeVisitorName(currentVisitorName);
+    if (knownName && knownName !== state.name) {
+      state.name = knownName;
+      changed = true;
+    }
+
+    const parsedEmail = parseVisitorEmailFromText(sample);
+    if (parsedEmail && parsedEmail !== state.email) {
+      state.email = parsedEmail;
+      state.confirmationEmailSent = false;
+      state.confirmationEmailSentAt = "";
+      state.confirmationEmailError = "";
+      state.lastSubmissionStatus = "";
+      changed = true;
+    }
+
+    const parsedCompany = parseVisitorCompanyFromText(sample);
+    if (parsedCompany && parsedCompany !== state.company) {
+      state.company = parsedCompany;
+      changed = true;
+    }
+    if (settings.promptIntent) {
+      const parsedIntent = parseVisitorIntentFromText(sample);
+      if (parsedIntent) {
+        const shouldReplaceIntent =
+          !state.visitorIntent || parsedIntent.length >= state.visitorIntent.length;
+        if (shouldReplaceIntent && parsedIntent !== state.visitorIntent) {
+          state.visitorIntent = parsedIntent;
+          changed = true;
+        }
+      }
+    }
+
+    const confirmationConsent = parseConfirmationEmailConsentFromText(sample);
+    if (confirmationConsent !== null && confirmationConsent !== state.confirmationEmailConsent) {
+      state.confirmationEmailConsent = confirmationConsent;
+      if (confirmationConsent === false) {
+        state.confirmationEmailSent = false;
+        state.confirmationEmailSentAt = "";
+      }
+      changed = true;
+    }
+
+    if (settings.promptNewsletter) {
+      const newsletterOptIn = parseNewsletterOptInFromText(sample);
+      if (newsletterOptIn !== null && newsletterOptIn !== state.newsletterOptIn) {
+        state.newsletterOptIn = newsletterOptIn;
+        changed = true;
+      }
+    }
+
+    if (settings.promptTextNotifications) {
+      const textNotificationsInterest = parseTextNotificationInterestFromText(sample);
+      if (
+        textNotificationsInterest !== null &&
+        textNotificationsInterest !== state.textNotificationsInterest
+      ) {
+        state.textNotificationsInterest = textNotificationsInterest;
+        changed = true;
+      }
+    }
+
+    if (settings.promptSalesOutreach) {
+      const salesOutreachConsent = parseSalesOutreachConsentFromText(sample);
+      if (
+        salesOutreachConsent !== null &&
+        salesOutreachConsent !== state.salesOutreachConsent
+      ) {
+        state.salesOutreachConsent = salesOutreachConsent;
+        changed = true;
+      }
+    }
+
+    if (changed) {
+      state.updatedAt = new Date().toISOString();
+      syncLeadCaptureStateToSession(cfg, "lead-capture-updated");
+      maybeSubmitLeadCaptureToBackend(cfg, "transcript-message");
+    }
+    return changed;
   }
 
   function readTrimmedAuthString(source, keys) {
@@ -105,15 +652,20 @@
   function readRuntimeAuthFromStorage() {
     if (typeof window === "undefined" || !window.localStorage) return null;
     try {
-      const raw = window.localStorage.getItem(runtimeAuthStorageKey);
-      if (!raw) return null;
-      let parsed;
-      try {
-        parsed = JSON.parse(raw);
-      } catch (_err) {
-        parsed = raw;
+      for (let i = 0; i < runtimeAuthStorageKeys.length; i += 1) {
+        const storageKey = runtimeAuthStorageKeys[i];
+        const raw = window.localStorage.getItem(storageKey);
+        if (!raw) continue;
+        let parsed;
+        try {
+          parsed = JSON.parse(raw);
+        } catch (_err) {
+          parsed = raw;
+        }
+        const normalized = normalizeRuntimeAuthCandidate(parsed);
+        if (normalized) return normalized;
       }
-      return normalizeRuntimeAuthCandidate(parsed);
+      return null;
     } catch (_err) {
       return null;
     }
@@ -124,7 +676,9 @@
     const normalized = normalizeRuntimeAuthCandidate(auth);
     if (!normalized) return false;
     try {
-      window.localStorage.setItem(runtimeAuthStorageKey, JSON.stringify(normalized));
+      runtimeAuthStorageKeys.forEach(function (storageKey) {
+        window.localStorage.setItem(storageKey, JSON.stringify(normalized));
+      });
       return true;
     } catch (_err) {
       return false;
@@ -134,27 +688,39 @@
   function clearRuntimeAuthStorage() {
     if (typeof window === "undefined" || !window.localStorage) return;
     try {
-      window.localStorage.removeItem(runtimeAuthStorageKey);
+      runtimeAuthStorageKeys.forEach(function (storageKey) {
+        window.localStorage.removeItem(storageKey);
+      });
     } catch (_err) {}
   }
 
   function readRuntimeAuthFromWindow() {
     if (typeof window === "undefined") return null;
     const objectCandidate =
-      window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
-        ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
-        : window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object"
-          ? window.MAXWELLIAN_HUME_AUTH
-          : null;
+      window.MAXWELLIAN_OPENAI_RUNTIME_AUTH && typeof window.MAXWELLIAN_OPENAI_RUNTIME_AUTH === "object"
+        ? window.MAXWELLIAN_OPENAI_RUNTIME_AUTH
+        : window.MAXWELLIAN_OPENAI_AUTH && typeof window.MAXWELLIAN_OPENAI_AUTH === "object"
+          ? window.MAXWELLIAN_OPENAI_AUTH
+          : window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object"
+            ? window.MAXWELLIAN_HUME_RUNTIME_AUTH
+            : window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object"
+              ? window.MAXWELLIAN_HUME_AUTH
+              : null;
     const objectAuth = normalizeRuntimeAuthCandidate(objectCandidate);
     if (objectAuth) return objectAuth;
     const accessToken =
-      typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
-        ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
+      typeof window.MAXWELLIAN_OPENAI_ACCESS_TOKEN === "string"
+        ? window.MAXWELLIAN_OPENAI_ACCESS_TOKEN.trim()
+        : typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string"
+          ? window.MAXWELLIAN_HUME_ACCESS_TOKEN.trim()
         : "";
     if (accessToken) return { type: "accessToken", value: accessToken };
     const apiKey =
-      typeof window.MAXWELLIAN_HUME_API_KEY === "string" ? window.MAXWELLIAN_HUME_API_KEY.trim() : "";
+      typeof window.MAXWELLIAN_OPENAI_API_KEY === "string"
+        ? window.MAXWELLIAN_OPENAI_API_KEY.trim()
+        : typeof window.MAXWELLIAN_HUME_API_KEY === "string"
+          ? window.MAXWELLIAN_HUME_API_KEY.trim()
+          : "";
     if (apiKey) return { type: "apiKey", value: apiKey };
     return null;
   }
@@ -163,13 +729,21 @@
     if (typeof window === "undefined") return;
     const normalized = normalizeRuntimeAuthCandidate(auth);
     if (!normalized) return;
+    window.MAXWELLIAN_OPENAI_RUNTIME_AUTH = {
+      type: normalized.type,
+      value: normalized.value,
+    };
+    window.MAXWELLIAN_OPENAI_AUTH = window.MAXWELLIAN_OPENAI_RUNTIME_AUTH;
     window.MAXWELLIAN_HUME_RUNTIME_AUTH = {
       type: normalized.type,
       value: normalized.value,
     };
+    window.MAXWELLIAN_HUME_AUTH = window.MAXWELLIAN_HUME_RUNTIME_AUTH;
     if (normalized.type === "accessToken") {
+      window.MAXWELLIAN_OPENAI_ACCESS_TOKEN = normalized.value;
       window.MAXWELLIAN_HUME_ACCESS_TOKEN = normalized.value;
     } else if (normalized.type === "apiKey") {
+      window.MAXWELLIAN_OPENAI_API_KEY = normalized.value;
       window.MAXWELLIAN_HUME_API_KEY = normalized.value;
     }
   }
@@ -185,9 +759,61 @@
     return null;
   }
 
+  function shouldFetchServerRuntimeAuth() {
+    if (typeof window === "undefined") return false;
+    if (window.MAXWELLIAN_FORCE_RUNTIME_AUTH_BOOTSTRAP === true) return true;
+    if (window.MAXWELLIAN_DISABLE_RUNTIME_AUTH_BOOTSTRAP === true) return false;
+    const protocol = coerceText(window.location && window.location.protocol).toLowerCase();
+    if (protocol === "file:") return false;
+    return true;
+  }
+
+  function extractRuntimeAuthFromServerPayload(payload) {
+    if (!payload || typeof payload !== "object") return null;
+    return normalizeRuntimeAuthCandidate(
+      payload.auth || payload.runtime_auth || payload.runtimeAuth || payload
+    );
+  }
+
+  function fetchRuntimeAuthFromServer(options) {
+    if (typeof window === "undefined" || typeof window.fetch !== "function") {
+      return Promise.resolve(null);
+    }
+    const opts = options && typeof options === "object" ? options : {};
+    const force = opts.force === true;
+    if (!force && !shouldFetchServerRuntimeAuth()) {
+      return Promise.resolve(null);
+    }
+    const shouldPersist = opts.persist !== false;
+    return window
+      .fetch("/api/hume/runtime-auth", {
+        method: "GET",
+        credentials: "same-origin",
+        headers: { Accept: "application/json" },
+      })
+      .then(function (response) {
+        if (!response || !response.ok) return null;
+        return response.json().catch(function () {
+          return null;
+        });
+      })
+      .then(function (payload) {
+        const candidate = extractRuntimeAuthFromServerPayload(payload);
+        if (!candidate) return null;
+        applyRuntimeAuthToWindow(candidate);
+        if (shouldPersist) {
+          writeRuntimeAuthToStorage(candidate);
+        }
+        return candidate;
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
   function exposeRuntimeAuthHelpers() {
     if (typeof window === "undefined") return;
-    window.setMaxwellianHumeAuth = function (typeOrObject, value, options) {
+    const setRuntimeAuth = function (typeOrObject, value, options) {
       let candidate = null;
       if (typeOrObject && typeof typeOrObject === "object") {
         candidate = normalizeRuntimeAuthCandidate(typeOrObject);
@@ -203,20 +829,42 @@
       if (shouldPersist) writeRuntimeAuthToStorage(candidate);
       return true;
     };
-    window.clearMaxwellianHumeAuth = function () {
+    const clearRuntimeAuth = function () {
       clearRuntimeAuthStorage();
+      if (window.MAXWELLIAN_OPENAI_RUNTIME_AUTH && typeof window.MAXWELLIAN_OPENAI_RUNTIME_AUTH === "object") {
+        window.MAXWELLIAN_OPENAI_RUNTIME_AUTH.type = "";
+        window.MAXWELLIAN_OPENAI_RUNTIME_AUTH.value = "";
+      }
+      if (window.MAXWELLIAN_OPENAI_AUTH && typeof window.MAXWELLIAN_OPENAI_AUTH === "object") {
+        window.MAXWELLIAN_OPENAI_AUTH.type = "";
+        window.MAXWELLIAN_OPENAI_AUTH.value = "";
+      }
       if (window.MAXWELLIAN_HUME_RUNTIME_AUTH && typeof window.MAXWELLIAN_HUME_RUNTIME_AUTH === "object") {
         window.MAXWELLIAN_HUME_RUNTIME_AUTH.type = "";
         window.MAXWELLIAN_HUME_RUNTIME_AUTH.value = "";
       }
+      if (window.MAXWELLIAN_HUME_AUTH && typeof window.MAXWELLIAN_HUME_AUTH === "object") {
+        window.MAXWELLIAN_HUME_AUTH.type = "";
+        window.MAXWELLIAN_HUME_AUTH.value = "";
+      }
+      if (typeof window.MAXWELLIAN_OPENAI_ACCESS_TOKEN === "string") {
+        window.MAXWELLIAN_OPENAI_ACCESS_TOKEN = "";
+      }
       if (typeof window.MAXWELLIAN_HUME_ACCESS_TOKEN === "string") {
         window.MAXWELLIAN_HUME_ACCESS_TOKEN = "";
+      }
+      if (typeof window.MAXWELLIAN_OPENAI_API_KEY === "string") {
+        window.MAXWELLIAN_OPENAI_API_KEY = "";
       }
       if (typeof window.MAXWELLIAN_HUME_API_KEY === "string") {
         window.MAXWELLIAN_HUME_API_KEY = "";
       }
       return true;
     };
+    window.setMaxwellianOpenAIAuth = setRuntimeAuth;
+    window.setMaxwellianHumeAuth = setRuntimeAuth;
+    window.clearMaxwellianOpenAIAuth = clearRuntimeAuth;
+    window.clearMaxwellianHumeAuth = clearRuntimeAuth;
   }
 
   exposeRuntimeAuthHelpers();
@@ -242,15 +890,59 @@
       unity_footer_questions: [],
       unity_footer_rotate_seconds: 15,
       floating_launcher_enabled: true,
-      floating_launcher_tooltip: "Speak with Clerk",
+      floating_launcher_tooltip: "Meet with Clerk",
       floating_launcher_icon_url: "assets/images/unity-maxwell-button.png",
       floating_launcher_context_mode: "technical-follow-up",
       floating_launcher_response_style_hint: "",
+      clerk_page_access_control_enabled: false,
+      clerk_voice_allowed_pages: [],
+      clerk_voice_blocked_pages: ["index", "home"],
+      lead_capture_enabled: true,
+      lead_capture_collect_company: true,
+      lead_capture_prompt_intent: true,
+      lead_capture_require_confirmation_email_consent: true,
+      lead_capture_prompt_newsletter: true,
+      lead_capture_prompt_text_notifications: true,
+      lead_capture_prompt_sales_outreach: true,
+      lead_capture_endpoint: "/api/maxwellian/lead-capture",
+      lead_capture_workflow: "",
+      lead_capture_status_display_seconds: 7,
+      cross_page_roaming_enabled: true,
+      cross_page_roaming_auto_resume: true,
+      cross_page_roaming_followup_prompt:
+        "Ask whether the visitor has any more questions on this page, then offer to guide them to the next tab.",
+      customer_guide_enabled: true,
+      customer_memory_enabled: true,
+      customer_memory_max_entries: 12,
+      customer_memory_excerpt_char_limit: 1200,
+      page_context_memory_enabled: true,
+      page_context_memory_max_entries: 18,
+      page_context_memory_excerpt_char_limit: 420,
+      customer_exit_sweep_enabled: true,
+      customer_exit_sweep_prompt:
+        "Before you exit, should Clerk save a brief memory note from this session for your customer guide?",
+      customer_exit_sweep_note_prompt:
+        "Add an optional note for next time (leave blank to skip):",
+      customer_exit_sweep_saved_status: "Customer memory captured for the next session.",
+      customer_exit_sweep_skipped_status: "",
+      tour_guide_enabled: false,
+      tour_guide_max_candidates: 3,
+      tour_guide_allow_direct_navigation: true,
+      tour_guide_consent_prompt:
+        "If a visitor asks about another area and there is a strong route match, ask: Would you like me to go there? Wait for explicit yes before navigating.",
+      tour_guide_routes: [],
+      tour_guide_keyword_routes: [],
+      tour_guide_page_next_routes: {},
       engagement_protocol: "",
       response_precedence_guidance: "",
       voltage_unit_speech_rule: "",
       maxwellian_knowledge_seed: "",
       knowledge_reference_spine: "",
+      content_awareness_mode: true,
+      content_grounding_policy:
+        "Treat launch context, page context, and selected skill-pack excerpts as the only authoritative Unity sources for factual claims. Do not invent project outcomes, pricing, commitments, statistics, customer names, or deployment guarantees.",
+      unknown_answer_fallback:
+        "I don't have enough verified Unity context to answer that reliably yet. If you share the page, system detail, or document reference, I can give a grounded answer.",
       context_policy_enabled: false,
       context_policy_default_action: "allow",
       context_policy_fallback_context_source: "general",
@@ -281,16 +973,30 @@
       founder_notes_hold_line: "Founder mode active. Please hold while I capture your direction and notes.",
       guardrails_enabled: false,
       guardrails_founder_bypass: true,
-      guardrails_max_questions_per_session: 8,
+      guardrails_max_questions_per_session: 5,
+      guardrails_question_limit_min: 5,
       guardrails_free_questions: 2,
       guardrails_max_session_minutes: 12,
       guardrails_idle_timeout_seconds: 90,
+      guardrails_idle_followup_seconds: 10,
+      guardrails_idle_final_exit_seconds: 10,
+      guardrails_idle_first_prompt_message: "Can I help you with anything else?",
+      guardrails_idle_final_prompt_message:
+        "Are there any other questions? I need to attend to another Maxwellian.",
       guardrails_low_relevance_limit: 2,
       guardrails_min_relevance_score: 1,
       guardrails_max_sessions_per_day: 6,
       guardrails_enable_daily_metering: true,
       guardrails_contact_email: "sales@unityenergy.com",
       guardrails_contact_url: "https://unityenergy.com/contact-us",
+      guardrails_contact_redirect_url: "/UnityEnergy/contact-us.html",
+      guardrails_interested_identity_prompt_after_questions: 3,
+      guardrails_interested_identity_prompt_message:
+        "Happy to keep helping. Before we continue, may I get your name, company, and best email so we can follow up with you directly?",
+      guardrails_interested_followup_message:
+        "Thank you for your interest in Unity Energy. We have your information and will follow up directly. What is your next question?",
+      guardrails_question_limit_message:
+        "You've reached my five-question limit for this page. I can have a specialist contact you, or I can send you to our contact page so you can share your information.",
       guardrails_offboard_message:
         "Thanks for your interest in Clerk. For deeper support, please contact Unity Energy Sales at sales@unityenergy.com or visit unityenergy.com/contact-us.",
       guardrails_relevance_keywords: [
@@ -320,7 +1026,32 @@
       ],
       character_avatar_url: "JamesClerkMaxwell.gif",
       character_background_url: "",
-      embed_url: "",
+      embed_url: "/UnityEnergy/openai_renderer/index.html?v=20260423r5",
+      openai_session_endpoint: "/api/openai/realtime/session",
+      openai_realtime_model: "gpt-4o-realtime-preview",
+      openai_voice: "ash",
+      openai_center_visual_url: "/UnityEnergy/assets/images/Clerk-LineART-accent-composite-3layer.png",
+      signal_wave_bar_count: 30,
+      signal_wave_bar_min_width: 3,
+      signal_wave_bar_max_width: 6,
+      signal_wave_bar_gap: 2,
+      signal_wave_max_width: 188,
+      signal_wave_min_height: 12,
+      signal_wave_idle_height: 16,
+      contact_page_auto_greeting_text:
+        "I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?",
+      openai_delayed_followup_enabled: true,
+      openai_delayed_followup_seconds: 10,
+      openai_delayed_followup_text: "",
+      openai_decline_followup_text: "",
+      openai_turn_detection: {
+        type: "server_vad",
+        threshold: 0.7,
+        prefix_padding_ms: 320,
+        silence_duration_ms: 760,
+        create_response: true,
+        interrupt_response: true,
+      },
       config_id: "",
       voice_id: "",
       auth: { type: "", value: "" },
@@ -371,8 +1102,20 @@
     if (typeof merged.floating_launcher_response_style_hint !== "string") {
       merged.floating_launcher_response_style_hint = defaults.floating_launcher_response_style_hint;
     }
+    if (typeof merged.lead_capture_workflow !== "string") {
+      merged.lead_capture_workflow = defaults.lead_capture_workflow;
+    }
+    if (typeof merged.lead_capture_endpoint !== "string") {
+      merged.lead_capture_endpoint = defaults.lead_capture_endpoint;
+    }
     if (typeof merged.voltage_unit_speech_rule !== "string") {
       merged.voltage_unit_speech_rule = defaults.voltage_unit_speech_rule;
+    }
+    if (typeof merged.content_grounding_policy !== "string") {
+      merged.content_grounding_policy = defaults.content_grounding_policy;
+    }
+    if (typeof merged.unknown_answer_fallback !== "string") {
+      merged.unknown_answer_fallback = defaults.unknown_answer_fallback;
     }
     if (!Array.isArray(merged.context_policy_rules)) {
       merged.context_policy_rules = [];
@@ -398,11 +1141,72 @@
     if (!merged.page_context_profiles || typeof merged.page_context_profiles !== "object") {
       merged.page_context_profiles = {};
     }
+    if (!Array.isArray(merged.tour_guide_routes)) {
+      merged.tour_guide_routes = [];
+    }
+    if (!Array.isArray(merged.tour_guide_keyword_routes)) {
+      merged.tour_guide_keyword_routes = [];
+    }
+    if (!merged.tour_guide_page_next_routes || typeof merged.tour_guide_page_next_routes !== "object") {
+      merged.tour_guide_page_next_routes = {};
+    }
+    if (typeof merged.tour_guide_consent_prompt !== "string") {
+      merged.tour_guide_consent_prompt = defaults.tour_guide_consent_prompt;
+    }
+    if (!merged.openai_turn_detection || typeof merged.openai_turn_detection !== "object") {
+      merged.openai_turn_detection = Object.assign({}, defaults.openai_turn_detection);
+    }
     if (!Number.isFinite(Number(merged.session_context_char_limit))) {
       merged.session_context_char_limit = defaults.session_context_char_limit;
     }
     merged.lock_character_to_default = merged.lock_character_to_default !== false;
     merged.floating_launcher_enabled = merged.floating_launcher_enabled !== false;
+    merged.content_awareness_mode = merged.content_awareness_mode !== false;
+    merged.lead_capture_enabled = merged.lead_capture_enabled !== false;
+    merged.lead_capture_collect_company = merged.lead_capture_collect_company !== false;
+    merged.lead_capture_prompt_intent = merged.lead_capture_prompt_intent !== false;
+    merged.lead_capture_require_confirmation_email_consent =
+      merged.lead_capture_require_confirmation_email_consent !== false;
+    merged.lead_capture_prompt_newsletter = merged.lead_capture_prompt_newsletter !== false;
+    merged.lead_capture_prompt_text_notifications = merged.lead_capture_prompt_text_notifications !== false;
+    merged.lead_capture_prompt_sales_outreach =
+      merged.lead_capture_prompt_sales_outreach !== false;
+    if (!Number.isFinite(Number(merged.lead_capture_status_display_seconds))) {
+      merged.lead_capture_status_display_seconds = defaults.lead_capture_status_display_seconds;
+    }
+    merged.customer_guide_enabled = merged.customer_guide_enabled !== false;
+    merged.customer_memory_enabled = merged.customer_memory_enabled !== false;
+    merged.customer_exit_sweep_enabled = merged.customer_exit_sweep_enabled !== false;
+    merged.tour_guide_enabled = merged.tour_guide_enabled !== false;
+    merged.tour_guide_allow_direct_navigation = merged.tour_guide_allow_direct_navigation !== false;
+    if (!Number.isFinite(Number(merged.tour_guide_max_candidates))) {
+      merged.tour_guide_max_candidates = defaults.tour_guide_max_candidates;
+    }
+    if (!Number.isFinite(Number(merged.customer_memory_max_entries))) {
+      merged.customer_memory_max_entries = defaults.customer_memory_max_entries;
+    }
+    if (!Number.isFinite(Number(merged.customer_memory_excerpt_char_limit))) {
+      merged.customer_memory_excerpt_char_limit = defaults.customer_memory_excerpt_char_limit;
+    }
+    merged.page_context_memory_enabled = merged.page_context_memory_enabled !== false;
+    if (!Number.isFinite(Number(merged.page_context_memory_max_entries))) {
+      merged.page_context_memory_max_entries = defaults.page_context_memory_max_entries;
+    }
+    if (!Number.isFinite(Number(merged.page_context_memory_excerpt_char_limit))) {
+      merged.page_context_memory_excerpt_char_limit = defaults.page_context_memory_excerpt_char_limit;
+    }
+    if (typeof merged.customer_exit_sweep_prompt !== "string") {
+      merged.customer_exit_sweep_prompt = defaults.customer_exit_sweep_prompt;
+    }
+    if (typeof merged.customer_exit_sweep_note_prompt !== "string") {
+      merged.customer_exit_sweep_note_prompt = defaults.customer_exit_sweep_note_prompt;
+    }
+    if (typeof merged.customer_exit_sweep_saved_status !== "string") {
+      merged.customer_exit_sweep_saved_status = defaults.customer_exit_sweep_saved_status;
+    }
+    if (typeof merged.customer_exit_sweep_skipped_status !== "string") {
+      merged.customer_exit_sweep_skipped_status = defaults.customer_exit_sweep_skipped_status;
+    }
     return merged;
   }
 
@@ -412,6 +1216,83 @@
     } catch (_err) {
       return "";
     }
+  }
+
+  function detectVoiceEngine(cfg) {
+    const explicit = coerceText(
+      cfg && (cfg.voice_engine || cfg.voiceEngine || cfg.engine || cfg.voice_stack || cfg.voiceStack)
+    ).toLowerCase();
+    if (explicit === "hume" || explicit === "openai") return explicit;
+    const embedUrl = coerceText(cfg && cfg.embed_url).toLowerCase();
+    if (embedUrl.includes("/hume_renderer/")) return "hume";
+    if (embedUrl.includes("/openai_renderer/")) return "openai";
+    return "openai";
+  }
+
+  function getVoiceEngineLabel(cfg) {
+    return detectVoiceEngine(cfg) === "hume" ? "Hume voice engine" : "OpenAI realtime voice";
+  }
+
+  function getVoiceEngineMissingConfigMessage(cfg) {
+    if (detectVoiceEngine(cfg) === "hume") {
+      return "Voice session config is missing. Set Hume auth (accessToken/apiKey) in runtime auth and confirm embed_url points to hume_renderer.";
+    }
+    return "Voice session config is missing. Set openai_session_endpoint and openai_realtime_model in hume_character_config.js.";
+  }
+
+  function validateVoiceEngineConfig(cfg) {
+    const engine = detectVoiceEngine(cfg);
+    if (engine === "hume") {
+      const auth = normalizeAuthConfig(cfg);
+      if (!auth) {
+        return {
+          ok: false,
+          message:
+            "Hume auth is missing. Provide runtime auth (accessToken or apiKey) before launching Meet with Clerk.",
+        };
+      }
+      return { ok: true, engine: engine };
+    }
+    const openAiModel = coerceText(cfg.openai_realtime_model || cfg.openai_model || cfg.model);
+    const openAiSessionEndpoint = coerceText(cfg.openai_session_endpoint || cfg.openai_session_url);
+    if (!openAiModel || !openAiSessionEndpoint) {
+      return {
+        ok: false,
+        message:
+          "OpenAI realtime config is incomplete. Set openai_session_endpoint and openai_realtime_model in hume_character_config.js.",
+      };
+    }
+    return { ok: true, engine: engine };
+  }
+
+  function resolveOpenAiRendererFallbackUrl(cfg) {
+    const explicit = coerceText(
+      cfg &&
+        (cfg.openai_embed_url ||
+          cfg.openaiEmbedUrl ||
+          cfg.openai_renderer_embed_url ||
+          cfg.openaiRendererEmbedUrl)
+    );
+    if (explicit) return explicit;
+    const embedUrl = coerceText(cfg && cfg.embed_url);
+    if (embedUrl && /\/openai_renderer\//i.test(embedUrl)) return embedUrl;
+    if (embedUrl && /\/hume_renderer\//i.test(embedUrl)) {
+      return embedUrl.replace(/\/hume_renderer\//i, "/openai_renderer/");
+    }
+    return "/UnityEnergy/openai_renderer/index.html?v=20260423r5";
+  }
+
+  function buildOpenAiFallbackConfig(cfg) {
+    if (!cfg || typeof cfg !== "object") return null;
+    const sessionEndpoint = coerceText(cfg.openai_session_endpoint || cfg.openai_session_url);
+    const model = coerceText(cfg.openai_realtime_model || cfg.openai_model || cfg.model);
+    if (!sessionEndpoint || !model) return null;
+    const fallbackEmbedUrl = resolveOpenAiRendererFallbackUrl(cfg);
+    if (!fallbackEmbedUrl) return null;
+    return Object.assign({}, cfg, {
+      voice_engine: "openai",
+      embed_url: fallbackEmbedUrl,
+    });
   }
 
   function normalizeAuthConfig(cfg) {
@@ -430,6 +1311,39 @@
       }
     }
     return normalizeRuntimeAuthCandidate(mergedAuth);
+  }
+
+  function buildHumeConnectConfig(cfg, launchSession) {
+    if (!cfg || typeof cfg !== "object") return null;
+    const auth = normalizeAuthConfig(cfg);
+    if (!auth) return null;
+    const connectConfig = {
+      hostname: coerceText(cfg.hume_hostname || cfg.hostname) || "api.hume.ai",
+      reconnectAttempts: Number.isFinite(Number(cfg.hume_reconnect_attempts || cfg.reconnectAttempts))
+        ? Math.max(0, Math.min(80, Math.floor(Number(cfg.hume_reconnect_attempts || cfg.reconnectAttempts))))
+        : 30,
+      debug: Boolean(cfg.hume_debug || cfg.debug),
+      auth: auth,
+    };
+    const configId = coerceText(cfg.hume_config_id || cfg.config_id);
+    if (configId) connectConfig.configId = configId;
+    const configVersion = Number(cfg.config_version);
+    if (Number.isFinite(configVersion)) {
+      connectConfig.configVersion = Math.max(0, Math.floor(configVersion));
+    }
+    const resumedChatGroupId = coerceText(
+      launchSession &&
+      launchSession.contextPayload &&
+      typeof launchSession.contextPayload === "object" &&
+      (launchSession.contextPayload.resumed_chat_group_id ||
+        launchSession.contextPayload.resumedChatGroupId ||
+        launchSession.contextPayload.chat_group_id ||
+        launchSession.contextPayload.chatGroupId)
+    );
+    if (resumedChatGroupId) {
+      connectConfig.resumedChatGroupId = resumedChatGroupId;
+    }
+    return connectConfig;
   }
 
   function normalizeSessionVariables(cfg) {
@@ -461,6 +1375,28 @@
     return typeof value === "string" ? value.trim() : "";
   }
 
+  function normalizeMptsSpeechText(value) {
+    const text = coerceText(value);
+    if (!text) return text;
+    let normalized = text;
+    normalized = normalized.replace(
+      /\bM(?:\s+|[.\-]\s*)P(?:\s+|[.\-]\s*)T(?:\s+|[.\-]\s*)S(?:['’]s|s)?\b/gi,
+      "M P T S"
+    );
+    normalized = normalized.replace(/\bMPTS(?:['’]s|s)?\b/gi, "M P T S");
+    normalized = normalized.replace(/\bMPT(?:['’]s|s)?\b/gi, "M P T S");
+    normalized = normalized.replace(/\bMP(?:['’]s|s)?\b/g, "M P T S");
+    return normalized;
+  }
+
+  function containsMptsSpeechDrift(value) {
+    const sample = coerceText(value);
+    if (!sample) return false;
+    const hasCanonicalSpacedForm = /\bM(?:\s+|[.\-]\s*)P(?:\s+|[.\-]\s*)T(?:\s+|[.\-]\s*)S\b/i.test(sample);
+    const hasShorthandForm = /\b(?:MPTS|MPT|MP)(?:['’]s|s)?\b/i.test(sample);
+    return hasShorthandForm || !hasCanonicalSpacedForm && /\bmpts\b/i.test(sample);
+  }
+
   function normalizeVoltageSpeechText(value) {
     const text = coerceText(value);
     if (!text) return text;
@@ -490,7 +1426,7 @@
         return `${magnitude} ${resolveVoltageUnit(prefix)}`;
       }
     );
-    return normalized;
+    return normalizeMptsSpeechText(normalized);
   }
 
   function normalizeVoltageSpeechValue(value, depth) {
@@ -519,6 +1455,82 @@
     const configured = coerceText(cfg && cfg.voltage_unit_speech_rule);
     if (configured) return configured;
     return "Before finalizing each spoken response, rewrite voltage abbreviations into spoken units: '480V' or '480 V' becomes '480 volts'; '13.8kV' becomes '13.8 kilovolts'; '24VDC' becomes '24 volts DC'.";
+  }
+
+  function getMptsSpeechRule(cfg) {
+    const configured = coerceText(cfg && cfg.mpts_speech_rule);
+    if (configured) return configured;
+    return "Always articulate the acronym as 'M P T S' (all four letters), never as 'MP', 'MPT', or 'MPTs'.";
+  }
+
+  function getMptsFailSafeRule(cfg) {
+    const configured = coerceText(cfg && cfg.mpts_fail_safe_rule);
+    if (configured) return configured;
+    return "Fail-safe: before finalizing each spoken response, normalize any 'MP', 'MPT', or 'MPTS' variant to 'M P T S' while preserving natural conversational tone.";
+  }
+
+  function buildMptsDriftFingerprint(value) {
+    return coerceText(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function syncMptsSpeechGuardrailToSession(cfg, rawTranscriptText, normalizedTranscriptText, reason) {
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return false;
+    if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+      pendingLaunchSession.contextPayload = {};
+    }
+    const payload = pendingLaunchSession.contextPayload;
+    const rawText = coerceText(rawTranscriptText);
+    const normalizedText = normalizeMptsSpeechText(normalizedTranscriptText || rawText);
+    const hasDrift = containsMptsSpeechDrift(rawText);
+    const driftFingerprint = buildMptsDriftFingerprint(rawText);
+    const mptsSpeechRule = getMptsSpeechRule(cfg);
+    const mptsFailSafeRule = getMptsFailSafeRule(cfg);
+
+    payload.mpts_speech_enforcement_active = true;
+    if (mptsSpeechRule && !coerceText(payload.mpts_speech_rule)) {
+      payload.mpts_speech_rule = mptsSpeechRule;
+    }
+    if (mptsFailSafeRule && !coerceText(payload.mpts_fail_safe_rule)) {
+      payload.mpts_fail_safe_rule = mptsFailSafeRule;
+    }
+    if (!coerceText(payload.mpts_canonical_acronym)) {
+      payload.mpts_canonical_acronym = "M P T S";
+    }
+    if (!coerceText(payload.mpts_full_name)) {
+      payload.mpts_full_name = "Maximum Power Transfer Solution";
+    }
+    if (!coerceText(payload.mpts_manage_layer_positioning)) {
+      payload.mpts_manage_layer_positioning =
+        "M P T S lives in Unity's Manage layer inside Measure-Manage-Exchange.";
+    }
+
+    let shouldPostUpdate = false;
+    if (hasDrift && driftFingerprint && driftFingerprint !== lastMptsDriftFingerprint) {
+      mptsDriftEventCount += 1;
+      lastMptsDriftFingerprint = driftFingerprint;
+      payload.mpts_last_drift_at = new Date().toISOString();
+      payload.mpts_last_drift_reason = coerceText(reason) || "transcript-drift-detected";
+      payload.mpts_last_drift_source_excerpt = cleanReinterpretationText(rawText, 220);
+      payload.mpts_last_drift_corrected_excerpt = cleanReinterpretationText(normalizedText, 220);
+      shouldPostUpdate = true;
+    }
+    payload.mpts_drift_event_count = mptsDriftEventCount;
+    payload.mpts_last_normalized_transcript_excerpt = cleanReinterpretationText(normalizedText, 220);
+
+    if (shouldPostUpdate) {
+      appendSessionDecision(pendingLaunchSession, "mpts-speech-drift-corrected", {
+        drift_count: mptsDriftEventCount,
+        reason: payload.mpts_last_drift_reason,
+        source_excerpt: payload.mpts_last_drift_source_excerpt,
+        corrected_excerpt: payload.mpts_last_drift_corrected_excerpt,
+      });
+      postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
+    }
+    return hasDrift;
   }
 
   function getDefaultCharacterId(cfg) {
@@ -1105,6 +2117,10 @@
         summary: coerceText(entry.summary || entry.description),
         sessionContext: coerceText(entry.session_context || entry.sessionContext),
         keyPoints: keyPoints,
+        sourceFiles: normalizeStringArray(
+          entry.source_files !== undefined ? entry.source_files : entry.sourceFiles,
+          24
+        ),
         contextSources: normalizeStringArrayLower(
           entry.context_sources !== undefined ? entry.context_sources : entry.contextSources,
           16
@@ -1118,6 +2134,129 @@
     return profiles;
   }
 
+  function normalizePageSourceFileMap(cfg) {
+    const source =
+      cfg &&
+      cfg.content_awareness_page_source_files &&
+      typeof cfg.content_awareness_page_source_files === "object"
+        ? cfg.content_awareness_page_source_files
+        : {};
+    const normalized = {};
+    Object.entries(source).forEach(function ([key, value]) {
+      const normalizedKey = coerceText(key).toLowerCase();
+      if (!normalizedKey) return;
+      const files = normalizeStringArray(value, 24);
+      if (files.length === 0) return;
+      normalized[normalizedKey] = files;
+    });
+    return normalized;
+  }
+
+  function getCurrentPagePathname() {
+    try {
+      const pathname =
+        window.location && typeof window.location.pathname === "string" ? window.location.pathname : "/";
+      const normalized = coerceText(pathname);
+      return normalized || "/";
+    } catch (_err) {
+      return "/";
+    }
+  }
+
+  function getCurrentPageHref() {
+    try {
+      const href = window.location && typeof window.location.href === "string" ? window.location.href : "";
+      return coerceText(href);
+    } catch (_err) {
+      return "";
+    }
+  }
+
+  function normalizePostConversationRedirectUrl(value) {
+    const candidate = coerceText(value);
+    if (!candidate) return "";
+    if (/^(?:javascript|data|vbscript):/i.test(candidate)) return "";
+    try {
+      const resolved = new URL(candidate, window.location.href);
+      const protocol = coerceText(resolved.protocol).toLowerCase();
+      if (protocol !== "http:" && protocol !== "https:") return "";
+      if (resolved.origin !== window.location.origin) return "";
+      return resolved.toString();
+    } catch (_err) {
+      return "";
+    }
+  }
+
+  function resolvePostConversationRedirectUrl(launchSession) {
+    if (!launchSession || typeof launchSession !== "object") return "";
+    const payload =
+      launchSession.contextPayload && typeof launchSession.contextPayload === "object"
+        ? launchSession.contextPayload
+        : {};
+    const candidates = [
+      payload.post_conversation_redirect_url,
+      payload.postConversationRedirectUrl,
+      launchSession.postConversationRedirectUrl,
+      launchSession.post_conversation_redirect_url,
+    ];
+    for (let i = 0; i < candidates.length; i += 1) {
+      const normalized = normalizePostConversationRedirectUrl(candidates[i]);
+      if (normalized) return normalized;
+    }
+    return "";
+  }
+
+  function getCurrentPageFileName() {
+    const pathname = getCurrentPagePathname();
+    const filename = pathname.split("/").filter(Boolean).pop() || "index.html";
+    if (filename.includes(".")) return filename;
+    return `${filename}.html`;
+  }
+
+  function collectActivePageContextSnapshot() {
+    const snapshot = {
+      pathname: getCurrentPagePathname(),
+      href: getCurrentPageHref(),
+      fileName: getCurrentPageFileName(),
+      title: "",
+      metaDescription: "",
+      headings: [],
+      excerpt: "",
+    };
+    try {
+      snapshot.title = coerceText(document.title);
+      const metaDescriptionEl = document.querySelector("meta[name='description']");
+      snapshot.metaDescription = coerceText(
+        metaDescriptionEl && typeof metaDescriptionEl.getAttribute === "function"
+          ? metaDescriptionEl.getAttribute("content")
+          : ""
+      );
+      const headingNodes = Array.from(
+        document.querySelectorAll("main h1, main h2, h1, h2")
+      );
+      snapshot.headings = headingNodes
+        .map(function (node) {
+          return coerceText(node && (node.innerText || node.textContent));
+        })
+        .filter(Boolean)
+        .slice(0, 6);
+      const mainEl = document.querySelector("main");
+      const sourceText = coerceText(
+        mainEl && (mainEl.innerText || mainEl.textContent)
+          ? mainEl.innerText || mainEl.textContent
+          : document.body
+            ? document.body.innerText || document.body.textContent
+            : ""
+      )
+        .replace(/\s+/g, " ")
+        .trim();
+      if (sourceText) {
+        snapshot.excerpt = sourceText.length > 560 ? `${sourceText.slice(0, 560)}…` : sourceText;
+      }
+    } catch (_err) {}
+    return snapshot;
+  }
+
   function getCurrentPageSlug() {
     try {
       const pathname = window.location && typeof window.location.pathname === "string" ? window.location.pathname : "";
@@ -1127,6 +2266,1542 @@
     } catch (_err) {
       return "index";
     }
+  }
+
+  function normalizePageSlugToken(value) {
+    const raw = coerceText(value).toLowerCase();
+    if (!raw) return "";
+    const withoutHash = raw.split("#")[0];
+    const withoutQuery = withoutHash.split("?")[0];
+    const filename = withoutQuery.split("/").filter(Boolean).pop() || withoutQuery;
+    const normalized = filename
+      .replace(/\.[^/.]+$/, "")
+      .replace(/[^a-z0-9-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return normalized || "";
+  }
+
+  function normalizeClerkPageSlugList(value) {
+    return normalizeStringArray(value, 64)
+      .map(function (entry) { return normalizePageSlugToken(entry); })
+      .filter(Boolean);
+  }
+  function normalizeTourGuideRoutePath(pathValue) {
+    const raw = coerceText(pathValue);
+    if (!raw) return null;
+    if (/^(?:javascript|data|vbscript):/i.test(raw)) return null;
+    try {
+      const resolved = new URL(raw, window.location.href);
+      const protocol = coerceText(resolved.protocol).toLowerCase();
+      if (protocol !== "http:" && protocol !== "https:") return null;
+      if (resolved.origin !== window.location.origin) return null;
+      const pathname = coerceText(resolved.pathname) || "/";
+      const pageSlug = normalizePageSlugToken(extractPageSlugFromPathname(pathname));
+      return {
+        href: resolved.toString(),
+        path: `${pathname}${resolved.search || ""}${resolved.hash || ""}`,
+        pathname: pathname,
+        pageSlug: pageSlug,
+      };
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function normalizeTourGuideRouteEntry(routeInput) {
+    if (!routeInput || typeof routeInput !== "object") return null;
+    const normalizedPath = normalizeTourGuideRoutePath(routeInput.path || routeInput.href || routeInput.url);
+    if (!normalizedPath) return null;
+    const routeId =
+      normalizePageSlugToken(routeInput.id) ||
+      normalizePageSlugToken(routeInput.route_id || routeInput.routeId) ||
+      normalizedPath.pageSlug;
+    if (!routeId) return null;
+    const title =
+      coerceText(routeInput.title || routeInput.name) ||
+      humanizeSlugToken(routeId) ||
+      routeId;
+    const contextSource =
+      normalizePageSlugToken(routeInput.context_source || routeInput.contextSource) ||
+      normalizedPath.pageSlug ||
+      routeId;
+    const summary = coerceText(routeInput.summary || routeInput.description);
+    const keywords = normalizeStringArrayLower(routeInput.keywords, 28);
+    const referenceTokens = [routeId, contextSource, normalizedPath.pageSlug, title.toLowerCase()]
+      .concat(keywords)
+      .filter(Boolean)
+      .filter(function (token, index, arr) { return arr.indexOf(token) === index; });
+    return {
+      id: routeId,
+      title: title,
+      contextSource: contextSource,
+      summary: summary,
+      href: normalizedPath.href,
+      path: normalizedPath.path,
+      pathname: normalizedPath.pathname,
+      pageSlug: normalizedPath.pageSlug || routeId,
+      keywords: keywords,
+      referenceTokens: referenceTokens,
+    };
+  }
+
+  function normalizeTourGuideKeywordRouteEntry(ruleInput, routeById, index) {
+    if (!ruleInput || typeof ruleInput !== "object") return null;
+    const routeId = normalizePageSlugToken(ruleInput.route_id || ruleInput.routeId);
+    if (!routeId || !routeById[routeId]) return null;
+    const keywords = normalizeStringArrayLower(ruleInput.keywords, 24);
+    if (keywords.length === 0) return null;
+    return {
+      id: coerceText(ruleInput.id) || `tour-keyword-route-${index + 1}`,
+      routeId: routeId,
+      keywords: keywords,
+      priority: clampNumber(ruleInput.priority, -20, 120, 0),
+    };
+  }
+
+  function normalizeTourGuidePageNextRoutes(rawMap, routeById) {
+    const source = rawMap && typeof rawMap === "object" ? rawMap : {};
+    const normalized = {};
+    Object.entries(source).forEach(function ([pageSlug, routeIds]) {
+      const normalizedPage = normalizePageSlugToken(pageSlug);
+      if (!normalizedPage) return;
+      const ids = normalizeStringArray(routeIds, 12)
+        .map(function (entry) { return normalizePageSlugToken(entry); })
+        .filter(Boolean)
+        .filter(function (routeId, index, arr) {
+          return routeById[routeId] && arr.indexOf(routeId) === index;
+        });
+      if (ids.length === 0) return;
+      normalized[normalizedPage] = ids;
+    });
+    return normalized;
+  }
+
+  function getTourGuideConfig(cfg) {
+    const normalizedRoutes = [];
+    (Array.isArray(cfg && cfg.tour_guide_routes) ? cfg.tour_guide_routes : []).forEach(function (entry) {
+      const normalized = normalizeTourGuideRouteEntry(entry);
+      if (!normalized) return;
+      if (normalizedRoutes.some(function (route) { return route.id === normalized.id; })) return;
+      normalizedRoutes.push(normalized);
+    });
+    const routeById = {};
+    normalizedRoutes.forEach(function (route) {
+      routeById[route.id] = route;
+    });
+    const keywordRules = (Array.isArray(cfg && cfg.tour_guide_keyword_routes) ? cfg.tour_guide_keyword_routes : [])
+      .map(function (rule, index) {
+        return normalizeTourGuideKeywordRouteEntry(rule, routeById, index);
+      })
+      .filter(Boolean);
+    return {
+      enabled: Boolean(cfg && cfg.tour_guide_enabled !== false) && normalizedRoutes.length > 0,
+      maxCandidates: clampNumber(cfg && cfg.tour_guide_max_candidates, 1, 6, 3),
+      allowDirectNavigation: !cfg || cfg.tour_guide_allow_direct_navigation !== false,
+      consentPrompt:
+        coerceText(cfg && cfg.tour_guide_consent_prompt) ||
+        "Would you like me to go there?",
+      routes: normalizedRoutes,
+      routeById: routeById,
+      keywordRules: keywordRules,
+      pageNextRoutes: normalizeTourGuidePageNextRoutes(
+        cfg && cfg.tour_guide_page_next_routes,
+        routeById
+      ),
+    };
+  }
+
+  function countTourGuideKeywordHits(sample, keywords) {
+    const normalizedSample = coerceText(sample).toLowerCase();
+    if (!normalizedSample || !Array.isArray(keywords)) return 0;
+    let hits = 0;
+    keywords.forEach(function (keyword) {
+      const token = coerceText(keyword).toLowerCase();
+      if (!token) return;
+      if (normalizedSample.includes(token)) hits += 1;
+    });
+    return hits;
+  }
+
+  function doesTourGuideTextReferenceRoute(sample, route) {
+    const normalizedSample = coerceText(sample).toLowerCase();
+    if (!normalizedSample || !route || !Array.isArray(route.referenceTokens)) return false;
+    return route.referenceTokens.some(function (token) {
+      const normalizedToken = coerceText(token).toLowerCase();
+      if (!normalizedToken || normalizedToken.length < 3) return false;
+      return normalizedSample.includes(normalizedToken);
+    });
+  }
+
+  function parseTourGuideConsentFromText(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return "";
+    if (
+      /\b(no|nope|not now|stay here|keep me here|don't|do not|later|skip|hold off|stop)\b/.test(
+        sample
+      )
+    ) {
+      return "decline";
+    }
+    if (
+      /\b(yes|yeah|yep|sure|ok|okay|please do|go ahead|let's go|lets go|take me there|go there|open it|navigate)\b/.test(
+        sample
+      )
+    ) {
+      return "accept";
+    }
+    return "";
+  }
+
+  function isTourGuideDirectNavigationIntent(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return false;
+    return /\b(go to|take me to|open|navigate to|bring me to|show me|let's go to|lets go to)\b/.test(
+      sample
+    );
+  }
+
+  function getTourGuidePendingState() {
+    if (!tourGuideNavigationState || typeof tourGuideNavigationState !== "object") return null;
+    const createdAtMs = Date.parse(coerceText(tourGuideNavigationState.createdAt));
+    if (Number.isFinite(createdAtMs) && Date.now() - createdAtMs > TOUR_GUIDE_PENDING_TTL_MS) {
+      tourGuideNavigationState = null;
+      return null;
+    }
+    return tourGuideNavigationState;
+  }
+
+  function clearTourGuideNavigationState(reason) {
+    tourGuideNavigationState = null;
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return;
+    if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+      pendingLaunchSession.contextPayload = {};
+    }
+    pendingLaunchSession.contextPayload.tour_navigation_pending = false;
+    pendingLaunchSession.contextPayload.tour_pending_route_id = "";
+    pendingLaunchSession.contextPayload.tour_pending_route_title = "";
+    pendingLaunchSession.contextPayload.tour_pending_route_path = "";
+    pendingLaunchSession.contextPayload.tour_pending_route_set_at = "";
+    if (coerceText(reason)) {
+      pendingLaunchSession.contextPayload.tour_pending_route_cleared_reason = coerceText(reason);
+    }
+  }
+
+  function setTourGuidePendingState(route, candidates, sourceText, currentPageSlug) {
+    if (!route || typeof route !== "object") return null;
+    tourGuideNavigationState = {
+      routeId: route.id,
+      routeTitle: route.title,
+      routePath: route.path,
+      routeHref: route.href,
+      pageSlug: route.pageSlug,
+      contextSource: route.contextSource,
+      candidateRouteIds: Array.isArray(candidates)
+        ? candidates.map(function (candidate) { return candidate.route.id; }).slice(0, 6)
+        : [],
+      sourceText: coerceText(sourceText),
+      currentPageSlug: normalizePageSlugToken(currentPageSlug) || getCurrentPageSlug(),
+      createdAt: new Date().toISOString(),
+    };
+    return tourGuideNavigationState;
+  }
+
+  function evaluateTourGuideRouteCandidates(transcriptText, cfg, launchSession) {
+    const config = getTourGuideConfig(cfg);
+    const sample = coerceText(transcriptText).toLowerCase();
+    const payload =
+      launchSession && launchSession.contextPayload && typeof launchSession.contextPayload === "object"
+        ? launchSession.contextPayload
+        : {};
+    const currentPageSlug =
+      normalizePageSlugToken(payload.source_page || payload.active_page_slug) ||
+      normalizePageSlugToken(getCurrentPageSlug()) ||
+      "index";
+    const hintedRouteIds = Array.isArray(config.pageNextRoutes[currentPageSlug])
+      ? config.pageNextRoutes[currentPageSlug]
+      : [];
+    const candidates = config.routes
+      .map(function (route) {
+        if (route.pageSlug && route.pageSlug === currentPageSlug) return null;
+        const routeKeywordHits = countTourGuideKeywordHits(sample, route.keywords);
+        const routeMention = doesTourGuideTextReferenceRoute(sample, route);
+        const hintBoost = hintedRouteIds.includes(route.id) ? 6 : 0;
+        let score = routeKeywordHits * 4 + hintBoost + (routeMention ? 10 : 0);
+        const matchedKeywords = [];
+        route.keywords.forEach(function (keyword) {
+          const token = coerceText(keyword).toLowerCase();
+          if (!token || !sample.includes(token)) return;
+          if (!matchedKeywords.includes(token)) matchedKeywords.push(token);
+        });
+        config.keywordRules.forEach(function (rule) {
+          if (rule.routeId !== route.id) return;
+          const ruleHits = countTourGuideKeywordHits(sample, rule.keywords);
+          if (!ruleHits) return;
+          score += rule.priority + (ruleHits * 5);
+          rule.keywords.forEach(function (keyword) {
+            const token = coerceText(keyword).toLowerCase();
+            if (!token || !sample.includes(token)) return;
+            if (!matchedKeywords.includes(token)) matchedKeywords.push(token);
+          });
+        });
+        if (score <= 0) return null;
+        return {
+          route: route,
+          score: score,
+          matchedKeywords: matchedKeywords.slice(0, 8),
+          routeMentioned: routeMention,
+          hintedFromPageFlow: hintedRouteIds.includes(route.id),
+        };
+      })
+      .filter(Boolean)
+      .sort(function (a, b) {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.route.id.localeCompare(b.route.id);
+      })
+      .slice(0, config.maxCandidates);
+    const primary = candidates.length > 0 ? candidates[0] : null;
+    const directNavigationRequested =
+      Boolean(primary) &&
+      config.allowDirectNavigation &&
+      isTourGuideDirectNavigationIntent(sample) &&
+      (primary.routeMentioned || primary.score >= 22);
+    return {
+      config: config,
+      currentPageSlug: currentPageSlug,
+      hintedRouteIds: hintedRouteIds.slice(0, 6),
+      candidates: candidates,
+      primary: primary,
+      directNavigationRequested: directNavigationRequested,
+    };
+  }
+
+  function buildTourGuideCandidatePayload(candidates) {
+    if (!Array.isArray(candidates)) return [];
+    return candidates.slice(0, 6).map(function (candidate) {
+      return {
+        id: candidate.route.id,
+        title: candidate.route.title,
+        path: candidate.route.path,
+        context_source: candidate.route.contextSource,
+        summary: candidate.route.summary,
+        score: candidate.score,
+        matched_keywords: candidate.matchedKeywords,
+      };
+    });
+  }
+
+  function buildTourGuideHintCandidatePayload(config, hintedRouteIds) {
+    if (!config || !Array.isArray(config.routes) || !Array.isArray(hintedRouteIds)) return [];
+    return hintedRouteIds
+      .map(function (routeId) { return config.routeById[routeId] || null; })
+      .filter(Boolean)
+      .slice(0, config.maxCandidates)
+      .map(function (route, index) {
+        return {
+          id: route.id,
+          title: route.title,
+          path: route.path,
+          context_source: route.contextSource,
+          summary: route.summary,
+          score: Math.max(1, 10 - index),
+          matched_keywords: [],
+        };
+      });
+  }
+
+  function syncTourGuideContextToSession(cfg, launchSession, evaluation, reason, shouldPostToRenderer) {
+    if (!launchSession || typeof launchSession !== "object") return;
+    if (!launchSession.contextPayload || typeof launchSession.contextPayload !== "object") {
+      launchSession.contextPayload = {};
+    }
+    const payload = launchSession.contextPayload;
+    const result = evaluation && typeof evaluation === "object"
+      ? evaluation
+      : evaluateTourGuideRouteCandidates("", cfg, launchSession);
+    const config = result.config || getTourGuideConfig(cfg);
+    const pending = getTourGuidePendingState();
+    const candidatePayload =
+      result.candidates && result.candidates.length > 0
+        ? buildTourGuideCandidatePayload(result.candidates)
+        : buildTourGuideHintCandidatePayload(config, result.hintedRouteIds || []);
+    payload.tour_guide_enabled = config.enabled;
+    payload.tour_guide_allow_direct_navigation = config.allowDirectNavigation;
+    payload.tour_guide_consent_prompt = config.consentPrompt;
+    payload.tour_current_page_slug = result.currentPageSlug || normalizePageSlugToken(getCurrentPageSlug());
+    payload.tour_page_next_route_ids = (result.hintedRouteIds || []).slice(0, 6);
+    payload.tour_route_candidates = candidatePayload;
+    payload.tour_candidate_count = candidatePayload.length;
+    payload.tour_navigation_pending = Boolean(pending && pending.routeId);
+    if (result.primary && result.primary.route) {
+      payload.tour_primary_route_id = result.primary.route.id;
+      payload.tour_primary_route_title = result.primary.route.title;
+      payload.tour_primary_route_path = result.primary.route.path;
+      payload.tour_primary_route_context_source = result.primary.route.contextSource;
+      payload.tour_primary_route_score = result.primary.score;
+    }
+    if (pending && pending.routeId) {
+      payload.tour_pending_route_id = pending.routeId;
+      payload.tour_pending_route_title = pending.routeTitle;
+      payload.tour_pending_route_path = pending.routePath;
+      payload.tour_pending_route_set_at = pending.createdAt;
+      payload.tour_pending_candidate_route_ids = pending.candidateRouteIds || [];
+    }
+    appendSessionDecision(launchSession, reason || "tour-guide-context-synced", {
+      enabled: config.enabled,
+      current_page: payload.tour_current_page_slug,
+      candidate_count: candidatePayload.length,
+      primary_route_id: payload.tour_primary_route_id || "",
+      pending_route_id: payload.tour_pending_route_id || "",
+    });
+    if (shouldPostToRenderer) {
+      postToWidgetFrame({ type: "maxwellian_session_launch", payload: launchSession });
+    }
+  }
+
+  function navigateToTourGuideRoute(route, cfg, navigationReason) {
+    if (!route || typeof route !== "object") return false;
+    const targetHref = coerceText(route.href);
+    if (!targetHref) return false;
+    markCrossPageRoamingNavigationTarget(route.pageSlug || route.id, pendingLaunchSession || {});
+    if (pendingLaunchSession && typeof pendingLaunchSession === "object") {
+      if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+        pendingLaunchSession.contextPayload = {};
+      }
+      pendingLaunchSession.contextPayload.tour_last_navigation_route_id = route.id;
+      pendingLaunchSession.contextPayload.tour_last_navigation_route_title = route.title;
+      pendingLaunchSession.contextPayload.tour_last_navigation_route_path = route.path;
+      pendingLaunchSession.contextPayload.tour_last_navigation_reason = coerceText(navigationReason);
+      pendingLaunchSession.contextPayload.tour_last_navigation_at = new Date().toISOString();
+      appendSessionDecision(pendingLaunchSession, "tour-guide-navigation-triggered", {
+        route_id: route.id,
+        route_path: route.path,
+        reason: coerceText(navigationReason),
+      });
+      postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
+    }
+    clearTourGuideNavigationState("navigated");
+    setStatus(`Taking you to ${route.title}.`, false, true);
+    pageTransitionInProgress = true;
+    window.setTimeout(function () {
+      try {
+        window.location.assign(targetHref);
+      } catch (_err) {
+        window.location.href = targetHref;
+      }
+    }, 28);
+    return true;
+  }
+
+  function handleTourGuideTranscriptIntent(transcriptText, cfg) {
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return null;
+    const evaluation = evaluateTourGuideRouteCandidates(transcriptText, cfg, pendingLaunchSession);
+    if (!evaluation.config || !evaluation.config.enabled) return null;
+    const consent = parseTourGuideConsentFromText(transcriptText);
+    const pending = getTourGuidePendingState();
+    if (pending && consent === "decline") {
+      clearTourGuideNavigationState("declined");
+      syncTourGuideContextToSession(cfg, pendingLaunchSession, evaluation, "tour-guide-declined", true);
+      appendSessionDecision(pendingLaunchSession, "tour-guide-navigation-declined", {
+        route_id: pending.routeId,
+      });
+      return {
+        handled: true,
+        navigated: false,
+        statusText: "No problem—we can stay here.",
+      };
+    }
+    if (pending && consent === "accept") {
+      const pendingRoute = evaluation.config.routeById[pending.routeId];
+      if (pendingRoute && navigateToTourGuideRoute(pendingRoute, cfg, "consent-accepted")) {
+        return { handled: true, navigated: true };
+      }
+      clearTourGuideNavigationState("stale-pending-route");
+      syncTourGuideContextToSession(cfg, pendingLaunchSession, evaluation, "tour-guide-pending-cleared", true);
+      return null;
+    }
+    if (!evaluation.primary || !evaluation.primary.route) {
+      syncTourGuideContextToSession(cfg, pendingLaunchSession, evaluation, "tour-guide-candidates-refreshed", true);
+      return null;
+    }
+    const primaryRoute = evaluation.primary.route;
+    const priorPending = getTourGuidePendingState();
+    const samePendingRoute =
+      priorPending && normalizePageSlugToken(priorPending.routeId) === normalizePageSlugToken(primaryRoute.id);
+    setTourGuidePendingState(
+      primaryRoute,
+      evaluation.candidates,
+      transcriptText,
+      evaluation.currentPageSlug
+    );
+    syncTourGuideContextToSession(cfg, pendingLaunchSession, evaluation, "tour-guide-route-matched", true);
+    if (evaluation.directNavigationRequested) {
+      if (navigateToTourGuideRoute(primaryRoute, cfg, "direct-navigation-request")) {
+        return { handled: true, navigated: true };
+      }
+    }
+    if (samePendingRoute) return null;
+    return {
+      handled: true,
+      navigated: false,
+      statusText: `I can guide you to ${primaryRoute.title}. ${evaluation.config.consentPrompt}`,
+    };
+  }
+
+  function applyTourGuideLaunchContext(launchSession, cfg) {
+    clearTourGuideNavigationState("launch-reset");
+    const evaluation = evaluateTourGuideRouteCandidates("", cfg, launchSession);
+    syncTourGuideContextToSession(
+      cfg,
+      launchSession,
+      evaluation,
+      "tour-guide-launch-context",
+      false
+    );
+  }
+
+  function getPageContextMemoryStorageKey(scopeRef, cfg) {
+    return getScopedStorageKey(PAGE_CONTEXT_MEMORY_STORAGE_KEY_PREFIX, scopeRef, cfg);
+  }
+
+  function getPageContextMemoryMaxEntries(cfg) {
+    return clampNumber(cfg && cfg.page_context_memory_max_entries, 4, 48, 18);
+  }
+
+  function getPageContextMemoryExcerptLimit(cfg) {
+    return clampNumber(cfg && cfg.page_context_memory_excerpt_char_limit, 180, 2400, 420);
+  }
+
+  function normalizePageContextMemoryText(value, maxChars) {
+    const text = coerceText(value).replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    const limit = Number.isFinite(Number(maxChars)) ? Math.max(80, Math.floor(Number(maxChars))) : 320;
+    return text.length > limit ? `${text.slice(0, limit)}…` : text;
+  }
+
+  function normalizePageContextMemoryHeadings(headings) {
+    return normalizeStringArray(headings, 8)
+      .map(function (heading) { return normalizePageContextMemoryText(heading, 140); })
+      .filter(Boolean)
+      .slice(0, 6);
+  }
+
+  function normalizePageContextMemoryEntry(entryInput, cfg) {
+    const entry = entryInput && typeof entryInput === "object" ? entryInput : {};
+    const pageSlug = normalizePageSlugToken(
+      entry.pageSlug || entry.page_slug || entry.page || entry.slug
+    );
+    if (!pageSlug) return null;
+    const visitCount = clampNumber(entry.visitCount || entry.visit_count, 1, 5000, 1);
+    return {
+      pageSlug: pageSlug,
+      pathname: normalizePageContextMemoryText(entry.pathname, 220),
+      href: normalizePageContextMemoryText(entry.href, 420),
+      fileName: normalizePageContextMemoryText(entry.fileName || entry.file_name, 140),
+      title: normalizePageContextMemoryText(entry.title, 220),
+      metaDescription: normalizePageContextMemoryText(
+        entry.metaDescription || entry.meta_description,
+        360
+      ),
+      headings: normalizePageContextMemoryHeadings(entry.headings),
+      excerpt: normalizePageContextMemoryText(
+        entry.excerpt,
+        getPageContextMemoryExcerptLimit(cfg)
+      ),
+      visitCount: visitCount,
+      lastSeenAt: coerceText(entry.lastSeenAt || entry.last_seen_at) || new Date().toISOString(),
+    };
+  }
+
+  function normalizePageContextMemoryState(rawState, scopeRef, cfg) {
+    if (!rawState || typeof rawState !== "object") return null;
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    const stateScopeToken = normalizeStorageScopeToken(
+      rawState.scope || rawState.scope_key || rawState.scopeKey,
+      scope.scopeToken
+    );
+    if (stateScopeToken && stateScopeToken !== scope.scopeToken) return null;
+    const entriesSource = Array.isArray(rawState.entries)
+      ? rawState.entries
+      : rawState.pages && typeof rawState.pages === "object"
+        ? Object.values(rawState.pages)
+        : [];
+    const entriesByPageSlug = {};
+    entriesSource.forEach(function (entry) {
+      const normalized = normalizePageContextMemoryEntry(entry, cfg);
+      if (!normalized) return;
+      entriesByPageSlug[normalized.pageSlug] = normalized;
+    });
+    const entries = Object.values(entriesByPageSlug);
+    entries.sort(function (a, b) {
+      return Date.parse(a.lastSeenAt || 0) - Date.parse(b.lastSeenAt || 0);
+    });
+    const maxEntries = getPageContextMemoryMaxEntries(cfg);
+    return {
+      scope: scope.scopeToken,
+      guideMode: scope.guideMode,
+      entries: entries.slice(-maxEntries),
+      updatedAt: coerceText(rawState.updatedAt || rawState.updated_at) || new Date().toISOString(),
+    };
+  }
+
+  function readPageContextMemoryState(scopeRef, cfg) {
+    if (cfg && cfg.page_context_memory_enabled === false) return null;
+    if (typeof window === "undefined" || !window.localStorage) return null;
+    const key = getPageContextMemoryStorageKey(scopeRef, cfg);
+    try {
+      const raw = window.localStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      const normalized = normalizePageContextMemoryState(parsed, scopeRef, cfg);
+      if (!normalized) {
+        window.localStorage.removeItem(key);
+        return null;
+      }
+      return normalized;
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function writePageContextMemoryState(nextState, scopeRef, cfg) {
+    if (cfg && cfg.page_context_memory_enabled === false) return false;
+    if (typeof window === "undefined" || !window.localStorage) return false;
+    const key = getPageContextMemoryStorageKey(scopeRef, cfg);
+    const normalized = normalizePageContextMemoryState(nextState, scopeRef, cfg);
+    if (!normalized) return false;
+    try {
+      window.localStorage.setItem(key, JSON.stringify(normalized));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function findPageContextMemoryEntry(memoryState, pageSlug) {
+    const normalizedPageSlug = normalizePageSlugToken(pageSlug);
+    if (!normalizedPageSlug) return null;
+    const entries =
+      memoryState && Array.isArray(memoryState.entries) ? memoryState.entries : [];
+    for (let i = entries.length - 1; i >= 0; i -= 1) {
+      const entry = entries[i];
+      if (!entry || normalizePageSlugToken(entry.pageSlug) !== normalizedPageSlug) continue;
+      return entry;
+    }
+    return null;
+  }
+
+  function upsertPageContextMemorySnapshot(pageSlug, snapshotInput, scopeRef, cfg) {
+    const normalizedPageSlug = normalizePageSlugToken(pageSlug) || "index";
+    const snapshot = snapshotInput && typeof snapshotInput === "object" ? snapshotInput : {};
+    const priorState = readPageContextMemoryState(scopeRef, cfg);
+    const priorEntries =
+      priorState && Array.isArray(priorState.entries) ? priorState.entries.slice() : [];
+    const existing = findPageContextMemoryEntry(priorState, normalizedPageSlug);
+    const nextEntry = normalizePageContextMemoryEntry(
+      {
+        pageSlug: normalizedPageSlug,
+        pathname: snapshot.pathname,
+        href: snapshot.href,
+        fileName: snapshot.fileName,
+        title: snapshot.title,
+        metaDescription: snapshot.metaDescription,
+        headings: snapshot.headings,
+        excerpt: snapshot.excerpt,
+        visitCount: existing ? Number(existing.visitCount || 1) + 1 : 1,
+        lastSeenAt: new Date().toISOString(),
+      },
+      cfg
+    );
+    if (!nextEntry) return { entry: null, state: priorState };
+    const nextEntries = priorEntries.filter(function (entry) {
+      return normalizePageSlugToken(entry && entry.pageSlug) !== normalizedPageSlug;
+    });
+    nextEntries.push(nextEntry);
+    const normalizedState = normalizePageContextMemoryState(
+      {
+        entries: nextEntries,
+        updatedAt: new Date().toISOString(),
+      },
+      scopeRef,
+      cfg
+    );
+    if (!normalizedState) return { entry: nextEntry, state: priorState };
+    writePageContextMemoryState(normalizedState, scopeRef, cfg);
+    return {
+      entry: nextEntry,
+      state: normalizedState,
+    };
+  }
+
+  function buildPageContextMemoryEntrySummary(entryInput, cfg) {
+    if (!entryInput || typeof entryInput !== "object") return "";
+    const entry = normalizePageContextMemoryEntry(entryInput, cfg);
+    if (!entry) return "";
+    const pageLabel =
+      coerceText(entry.title) ||
+      coerceText(entry.fileName) ||
+      humanizeSlugToken(entry.pageSlug) ||
+      entry.pageSlug;
+    const headingHint = Array.isArray(entry.headings) && entry.headings.length > 0
+      ? coerceText(entry.headings[0])
+      : "";
+    const excerpt = coerceText(entry.excerpt || entry.metaDescription);
+    const summary = combineContextBlocks(
+      [
+        pageLabel,
+        headingHint && headingHint !== pageLabel ? `Focus: ${headingHint}` : "",
+        excerpt,
+      ],
+      clampNumber(cfg && cfg.page_context_memory_excerpt_char_limit, 140, 900, 320)
+    );
+    return summary;
+  }
+
+  function buildKnownPageMemorySummaries(memoryState, activePageSlug, cfg) {
+    const currentSlug = normalizePageSlugToken(activePageSlug) || "index";
+    const entries =
+      memoryState && Array.isArray(memoryState.entries) ? memoryState.entries.slice() : [];
+    const summaries = [];
+    entries
+      .slice()
+      .reverse()
+      .forEach(function (entry) {
+        const entrySlug = normalizePageSlugToken(entry && entry.pageSlug);
+        if (!entrySlug || entrySlug === currentSlug) return;
+        const summary = buildPageContextMemoryEntrySummary(entry, cfg);
+        if (!summary) return;
+        summaries.push(`${entrySlug}: ${summary}`);
+      });
+    return summaries.slice(0, 4);
+  }
+
+  function normalizeStorageScopeToken(value, fallback) {
+    const normalized = coerceText(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    if (normalized) return normalized;
+    const fallbackToken = coerceText(fallback)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return fallbackToken || "";
+  }
+
+  function humanizeSlugToken(value) {
+    const normalized = normalizeStorageScopeToken(value, "");
+    if (!normalized) return "";
+    return normalized
+      .split("-")
+      .filter(Boolean)
+      .map(function (part) {
+        return part.charAt(0).toUpperCase() + part.slice(1);
+      })
+      .join(" ");
+  }
+
+  function parseCustomerPathContext(pathname) {
+    const rawPath = coerceText(pathname || getCurrentPagePathname()) || "/";
+    const segments = rawPath.split("/").filter(Boolean);
+    const customerRootIndex = segments.findIndex(function (segment) {
+      return coerceText(segment).toLowerCase() === "customers";
+    });
+    if (customerRootIndex < 0 || customerRootIndex + 1 >= segments.length) {
+      return {
+        isCustomerPath: false,
+        customerSlug: "",
+        customerName: "",
+        siteSlug: "",
+      };
+    }
+    const rawCustomerSegment = segments[customerRootIndex + 1];
+    const customerSlug = normalizeStorageScopeToken(rawCustomerSegment, "");
+    const customerName = humanizeSlugToken(rawCustomerSegment);
+    const possibleSiteSegment = segments[customerRootIndex + 2];
+    const siteSlug =
+      possibleSiteSegment && !/\.[a-z0-9]+$/i.test(possibleSiteSegment)
+        ? normalizeStorageScopeToken(possibleSiteSegment, "")
+        : "";
+    return {
+      isCustomerPath: Boolean(customerSlug),
+      customerSlug: customerSlug,
+      customerName: customerName,
+      siteSlug: siteSlug,
+    };
+  }
+
+  function getStoredCustomerContextKey() {
+    return "maxwellian_clerk_customer_context_v1";
+  }
+
+  function readStoredCustomerContext() {
+    if (typeof window === "undefined" || !window.localStorage) return null;
+    try {
+      const raw = window.localStorage.getItem(getStoredCustomerContextKey());
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return null;
+      const customerSlug = normalizeStorageScopeToken(
+        parsed.customer_slug || parsed.customerSlug || parsed.customer || parsed.customer_id,
+        ""
+      );
+      if (!customerSlug) return null;
+      return {
+        customerSlug: customerSlug,
+        customerName:
+          coerceText(parsed.customer_name || parsed.customerName) ||
+          humanizeSlugToken(customerSlug),
+        sourcePath: coerceText(parsed.source_path || parsed.sourcePath || parsed.path),
+        selectedAt: coerceText(parsed.selected_at || parsed.selectedAt),
+      };
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function persistStoredCustomerContext(contextInput) {
+    if (typeof window === "undefined" || !window.localStorage) return false;
+    const context = contextInput && typeof contextInput === "object" ? contextInput : {};
+    const customerSlug = normalizeStorageScopeToken(
+      context.customer_slug || context.customerSlug || context.customer || context.customer_id,
+      ""
+    );
+    if (!customerSlug) return false;
+    const payload = {
+      customer_slug: customerSlug,
+      customer_name:
+        coerceText(context.customer_name || context.customerName) ||
+        humanizeSlugToken(customerSlug),
+      source_path: coerceText(context.source_path || context.sourcePath || getCurrentPagePathname()),
+      selected_at: new Date().toISOString(),
+    };
+    try {
+      window.localStorage.setItem(getStoredCustomerContextKey(), JSON.stringify(payload));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function isCustomerGuideEnabled(cfg) {
+    return !cfg || cfg.customer_guide_enabled !== false;
+  }
+
+  function getClerkPageAccessPolicy(cfg) {
+    const source = cfg && typeof cfg === "object" ? cfg : {};
+    const enabled = Boolean(source.clerk_page_access_control_enabled);
+    const allowedPages = normalizeClerkPageSlugList(source.clerk_voice_allowed_pages);
+    const configuredBlockedPages = normalizeClerkPageSlugList(source.clerk_voice_blocked_pages);
+    const blockedPages = configuredBlockedPages.length > 0 ? configuredBlockedPages : ["index", "home"];
+    return {
+      enabled: enabled,
+      allowedPages: allowedPages,
+      blockedPages: blockedPages,
+    };
+  }
+
+  function isClerkVoiceAllowedOnPage(pageSlug, cfg) {
+    if (isCustomerGuideEnabled(cfg)) {
+      const pathContext = parseCustomerPathContext(getCurrentPagePathname());
+      if (pathContext.isCustomerPath) return true;
+    }
+    const normalizedPage = normalizePageSlugToken(pageSlug) || normalizePageSlugToken(getCurrentPageSlug());
+    if (!normalizedPage) return false;
+    const policy = getClerkPageAccessPolicy(cfg);
+    if (policy.blockedPages.includes(normalizedPage)) return false;
+    if (policy.enabled && policy.allowedPages.length > 0) {
+      return policy.allowedPages.includes(normalizedPage);
+    }
+    return true;
+  }
+
+  function isClerkVoiceAllowedOnCurrentPage(cfg) {
+    return isClerkVoiceAllowedOnPage(getCurrentPageSlug(), cfg);
+  }
+
+  function extractCustomerFieldsFromPayload(payloadInput) {
+    const payload = payloadInput && typeof payloadInput === "object" ? payloadInput : {};
+    const customerSlug = normalizeStorageScopeToken(
+      payload.customer_slug ||
+      payload.customerSlug ||
+      payload.customer ||
+      payload.customer_id ||
+      payload.portal_customer_slug ||
+      payload.portalCustomerSlug,
+      ""
+    );
+    const customerName =
+      coerceText(payload.customer_name || payload.customerName) ||
+      (customerSlug ? humanizeSlugToken(customerSlug) : "");
+    const siteSlug = normalizeStorageScopeToken(
+      payload.site_slug ||
+      payload.siteSlug ||
+      payload.customer_site ||
+      payload.customerSite ||
+      payload.site,
+      ""
+    );
+    return {
+      customerSlug: customerSlug,
+      customerName: customerName,
+      siteSlug: siteSlug,
+    };
+  }
+
+  function resolveGuideScopeReference(scopeInput, cfg) {
+    const source = scopeInput && typeof scopeInput === "object" ? scopeInput : {};
+    const payload =
+      source.contextPayload && typeof source.contextPayload === "object"
+        ? source.contextPayload
+        : source;
+    const explicitGuideMode = coerceText(
+      payload.guide_mode ||
+      payload.guideMode ||
+      source.guide_mode ||
+      source.guideMode
+    ).toLowerCase();
+    const payloadCustomer = extractCustomerFieldsFromPayload(payload);
+    const pathContext = parseCustomerPathContext(getCurrentPagePathname());
+    const storedCustomerContext = readStoredCustomerContext();
+    const explicitCustomerContext =
+      explicitGuideMode === "customer" ||
+      payload.customer_mode === true ||
+      payload.customer_guide_mode === true ||
+      Boolean(payloadCustomer.customerSlug);
+    const inferredCustomerSlug =
+      payloadCustomer.customerSlug ||
+      pathContext.customerSlug ||
+      (explicitCustomerContext && storedCustomerContext
+        ? normalizeStorageScopeToken(storedCustomerContext.customerSlug, "")
+        : "");
+    const customerSlug = normalizeStorageScopeToken(inferredCustomerSlug, "");
+    const customerName =
+      payloadCustomer.customerName ||
+      pathContext.customerName ||
+      coerceText(storedCustomerContext && storedCustomerContext.customerName) ||
+      (customerSlug ? humanizeSlugToken(customerSlug) : "");
+    const siteSlug =
+      payloadCustomer.siteSlug ||
+      pathContext.siteSlug ||
+      "";
+    const customerGuideEnabled = isCustomerGuideEnabled(cfg);
+    const isCustomerGuide =
+      customerGuideEnabled &&
+      (explicitGuideMode === "customer" || pathContext.isCustomerPath || Boolean(customerSlug));
+    const guideMode = isCustomerGuide ? "customer" : "unity";
+    const scopeToken = isCustomerGuide
+      ? normalizeStorageScopeToken(`customer-${customerSlug || "shared"}`, "customer-shared")
+      : "unity-shared";
+    return {
+      guideMode: guideMode,
+      scopeToken: scopeToken,
+      customerSlug: customerSlug,
+      customerName: customerName,
+      siteSlug: siteSlug,
+      isCustomerGuide: isCustomerGuide,
+    };
+  }
+
+  function applyGuideContextToLaunchSession(launchSession, cfg) {
+    if (!launchSession || typeof launchSession !== "object") return null;
+    if (!launchSession.contextPayload || typeof launchSession.contextPayload !== "object") {
+      launchSession.contextPayload = {};
+    }
+    const scope = resolveGuideScopeReference(launchSession, cfg);
+    const payload = launchSession.contextPayload;
+    payload.guide_mode = scope.guideMode;
+    payload.guide_scope = scope.scopeToken;
+    payload.customer_memory_enabled =
+      scope.guideMode === "customer" && cfg && cfg.customer_memory_enabled !== false;
+    payload.customer_exit_sweep_enabled =
+      scope.guideMode === "customer" && cfg && cfg.customer_exit_sweep_enabled !== false;
+    if (scope.guideMode === "customer") {
+      if (!coerceText(payload.context_source)) {
+        payload.context_source = `customer-${scope.customerSlug || "shared"}`;
+      }
+      if (scope.customerSlug) payload.customer_slug = scope.customerSlug;
+      if (scope.customerName) payload.customer_name = scope.customerName;
+      if (scope.siteSlug) payload.site_slug = scope.siteSlug;
+      if (scope.customerSlug) {
+        persistStoredCustomerContext({
+          customer_slug: scope.customerSlug,
+          customer_name: scope.customerName,
+          source_path: getCurrentPagePathname(),
+        });
+      }
+    }
+    appendSessionDecision(launchSession, "guide-context-selected", {
+      guide_mode: scope.guideMode,
+      guide_scope: scope.scopeToken,
+      customer_slug: scope.customerSlug,
+      site_slug: scope.siteSlug,
+    });
+    return scope;
+  }
+
+  function shouldEnableCrossPageRoaming(cfg, scopeRef) {
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    if (scope.guideMode === "customer") {
+      return isCustomerGuideEnabled(cfg);
+    }
+    return !cfg || cfg.cross_page_roaming_enabled !== false;
+  }
+
+  function shouldAutoResumeCrossPageRoaming(cfg, scopeRef) {
+    if (!shouldEnableCrossPageRoaming(cfg, scopeRef)) return false;
+    return !cfg || cfg.cross_page_roaming_auto_resume !== false;
+  }
+
+  function getScopedStorageKey(prefix, scopeRef, cfg) {
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    const scopeToken = normalizeStorageScopeToken(scope.scopeToken, "unity-shared");
+    return `${prefix}__${scopeToken}`;
+  }
+
+  function getCrossPageRoamingStorageKey(scopeRef, cfg) {
+    return getScopedStorageKey(CROSS_PAGE_ROAMING_STORAGE_KEY_PREFIX, scopeRef, cfg);
+  }
+
+  function getCustomerMemoryStorageKey(scopeRef, cfg) {
+    return getScopedStorageKey(CUSTOMER_MEMORY_STORAGE_KEY_PREFIX, scopeRef, cfg);
+  }
+
+  function getCrossPageRoamingStorage() {
+    if (typeof window === "undefined") return null;
+    try {
+      if (window.sessionStorage) return window.sessionStorage;
+    } catch (_err) {}
+    try {
+      if (window.localStorage) return window.localStorage;
+    } catch (_err) {}
+    return null;
+  }
+
+  function extractPageSlugFromPathname(pathname) {
+    const rawPath = coerceText(pathname);
+    if (!rawPath) return "";
+    const filename = rawPath.split("/").filter(Boolean).pop() || "";
+    if (!filename) return "";
+    return filename.replace(/\.[^/.]+$/, "").toLowerCase();
+  }
+
+  function extractPageSlugFromHref(href) {
+    const rawHref = coerceText(href);
+    if (!rawHref) return "";
+    try {
+      const resolved = new URL(rawHref, window.location.href);
+      if (resolved.origin !== window.location.origin) return "";
+      return extractPageSlugFromPathname(resolved.pathname);
+    } catch (_err) {
+      return "";
+    }
+  }
+
+  function normalizeCrossPageTranscriptEntries(entries) {
+    const source = Array.isArray(entries) ? entries : [];
+    return source
+      .map(function (entry) {
+        if (!entry || typeof entry !== "object") return null;
+        const roleRaw = coerceText(entry.role).toLowerCase();
+        const role = roleRaw === "assistant" ? "assistant" : "user";
+        const text = coerceText(entry.text);
+        if (!text) return null;
+        const compact = text.length > 260 ? `${text.slice(0, 260)}…` : text;
+        return {
+          role: role,
+          text: compact,
+          at: coerceText(entry.at) || new Date().toISOString(),
+        };
+      })
+      .filter(Boolean)
+      .slice(-CROSS_PAGE_ROAMING_MAX_TRANSCRIPT_ENTRIES);
+  }
+
+  function normalizeCrossPageRoamingState(rawState, scopeRef, cfg) {
+    if (!rawState || typeof rawState !== "object") return null;
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    const active = rawState.active !== false;
+    if (!active) return null;
+    const stateScopeToken = normalizeStorageScopeToken(
+      rawState.scope || rawState.scope_key || rawState.scopeKey,
+      scope.scopeToken
+    );
+    if (stateScopeToken && stateScopeToken !== scope.scopeToken) return null;
+    const updatedAt = coerceText(rawState.updatedAt || rawState.updated_at) || new Date().toISOString();
+    const updatedAtMs = Date.parse(updatedAt);
+    if (Number.isFinite(updatedAtMs)) {
+      const ageMs = Date.now() - updatedAtMs;
+      if (ageMs > CROSS_PAGE_ROAMING_STATE_TTL_MS) return null;
+    }
+    const context = coerceText(rawState.context) || "technical-follow-up";
+    const mode = coerceText(rawState.mode) || context;
+    return {
+      active: true,
+      scope: scope.scopeToken,
+      guideMode: coerceText(rawState.guideMode || rawState.guide_mode) || scope.guideMode,
+      customerSlug:
+        normalizeStorageScopeToken(rawState.customerSlug || rawState.customer_slug, "") ||
+        scope.customerSlug,
+      customerName:
+        coerceText(rawState.customerName || rawState.customer_name) ||
+        scope.customerName,
+      siteSlug:
+        normalizeStorageScopeToken(rawState.siteSlug || rawState.site_slug, "") ||
+        scope.siteSlug,
+      resumeAfterNavigation: Boolean(rawState.resumeAfterNavigation || rawState.resume_after_navigation),
+      lastPage: coerceText(rawState.lastPage || rawState.last_page),
+      nextPage: coerceText(rawState.nextPage || rawState.next_page),
+      context: context,
+      mode: mode,
+      transcriptEntries: normalizeCrossPageTranscriptEntries(
+        rawState.transcriptEntries !== undefined ? rawState.transcriptEntries : rawState.transcript_entries
+      ),
+      updatedAt: updatedAt,
+    };
+  }
+
+  function readCrossPageRoamingState(scopeRef, cfg) {
+    const storage = getCrossPageRoamingStorage();
+    if (!storage) return null;
+    const scopedKey = getCrossPageRoamingStorageKey(scopeRef, cfg);
+    try {
+      let raw = storage.getItem(scopedKey);
+      let sourceKey = scopedKey;
+      if (!raw) {
+        const legacyKey = CROSS_PAGE_ROAMING_STORAGE_KEY_PREFIX;
+        if (legacyKey !== scopedKey) {
+          raw = storage.getItem(legacyKey);
+          sourceKey = legacyKey;
+        }
+      }
+      if (!raw) return null;
+      let parsed = null;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (_err) {
+        parsed = null;
+      }
+      const normalized = normalizeCrossPageRoamingState(parsed, scopeRef, cfg);
+      if (!normalized) {
+        if (sourceKey) storage.removeItem(sourceKey);
+        return null;
+      }
+      if (sourceKey !== scopedKey) {
+        storage.setItem(scopedKey, JSON.stringify(normalized));
+        storage.removeItem(sourceKey);
+      }
+      return normalized;
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function writeCrossPageRoamingState(nextState, scopeRef, cfg) {
+    const storage = getCrossPageRoamingStorage();
+    if (!storage) return false;
+    const scopedKey = getCrossPageRoamingStorageKey(scopeRef, cfg);
+    const normalized = normalizeCrossPageRoamingState(nextState, scopeRef, cfg);
+    if (!normalized) {
+      try {
+        storage.removeItem(scopedKey);
+      } catch (_err) {}
+      return false;
+    }
+    try {
+      storage.setItem(scopedKey, JSON.stringify(normalized));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function clearCrossPageRoamingState(scopeRef, cfg) {
+    const storage = getCrossPageRoamingStorage();
+    if (!storage) return;
+    const scopedKey = getCrossPageRoamingStorageKey(scopeRef, cfg);
+    try {
+      storage.removeItem(scopedKey);
+    } catch (_err) {}
+  }
+
+  function normalizeCustomerMemoryEntries(entries, cfg) {
+    const source = Array.isArray(entries) ? entries : [];
+    const maxEntries = clampNumber(cfg && cfg.customer_memory_max_entries, 3, 48, 12);
+    return source
+      .map(function (entry) {
+        if (!entry || typeof entry !== "object") return null;
+        const summary = coerceText(entry.summary || entry.note || entry.text);
+        if (!summary) return null;
+        return {
+          at: coerceText(entry.at) || new Date().toISOString(),
+          page: coerceText(entry.page || entry.source_page),
+          summary: summary.length > 360 ? `${summary.slice(0, 360)}…` : summary,
+        };
+      })
+      .filter(Boolean)
+      .slice(-maxEntries);
+  }
+
+  function normalizeCustomerMemoryState(rawState, scopeRef, cfg) {
+    if (!rawState || typeof rawState !== "object") return null;
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    if (scope.guideMode !== "customer") return null;
+    const stateScopeToken = normalizeStorageScopeToken(
+      rawState.scope || rawState.scope_key || rawState.scopeKey,
+      scope.scopeToken
+    );
+    if (stateScopeToken && stateScopeToken !== scope.scopeToken) return null;
+    return {
+      scope: scope.scopeToken,
+      guideMode: "customer",
+      customerSlug:
+        normalizeStorageScopeToken(rawState.customerSlug || rawState.customer_slug, "") ||
+        scope.customerSlug,
+      customerName:
+        coerceText(rawState.customerName || rawState.customer_name) ||
+        scope.customerName,
+      entries: normalizeCustomerMemoryEntries(rawState.entries, cfg),
+      updatedAt: coerceText(rawState.updatedAt || rawState.updated_at) || new Date().toISOString(),
+    };
+  }
+
+  function readCustomerMemoryState(scopeRef, cfg) {
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    if (scope.guideMode !== "customer") return null;
+    if (cfg && cfg.customer_memory_enabled === false) return null;
+    if (typeof window === "undefined" || !window.localStorage) return null;
+    const key = getCustomerMemoryStorageKey(scope, cfg);
+    try {
+      const raw = window.localStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      const normalized = normalizeCustomerMemoryState(parsed, scope, cfg);
+      if (!normalized) {
+        window.localStorage.removeItem(key);
+        return null;
+      }
+      return normalized;
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function writeCustomerMemoryState(nextState, scopeRef, cfg) {
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    if (scope.guideMode !== "customer") return false;
+    if (cfg && cfg.customer_memory_enabled === false) return false;
+    if (typeof window === "undefined" || !window.localStorage) return false;
+    const key = getCustomerMemoryStorageKey(scope, cfg);
+    const normalized = normalizeCustomerMemoryState(nextState, scope, cfg);
+    if (!normalized) return false;
+    try {
+      window.localStorage.setItem(key, JSON.stringify(normalized));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function appendCustomerMemoryEntry(summaryInput, entryOptions, scopeRef, cfg) {
+    const scope = resolveGuideScopeReference(scopeRef, cfg);
+    if (scope.guideMode !== "customer") return false;
+    if (cfg && cfg.customer_memory_enabled === false) return false;
+    const summary = coerceText(summaryInput);
+    if (!summary) return false;
+    const priorState = readCustomerMemoryState(scope, cfg);
+    const entries = priorState && Array.isArray(priorState.entries) ? priorState.entries.slice() : [];
+    const options = entryOptions && typeof entryOptions === "object" ? entryOptions : {};
+    entries.push({
+      at: new Date().toISOString(),
+      page: coerceText(options.page || getCurrentPageSlug()),
+      summary: summary,
+    });
+    return writeCustomerMemoryState(
+      {
+        scope: scope.scopeToken,
+        guideMode: "customer",
+        customerSlug: scope.customerSlug,
+        customerName: scope.customerName,
+        entries: entries,
+        updatedAt: new Date().toISOString(),
+      },
+      scope,
+      cfg
+    );
+  }
+
+  function buildCustomerMemoryExcerpt(scopeRef, cfg) {
+    const memory = readCustomerMemoryState(scopeRef, cfg);
+    if (!memory || !Array.isArray(memory.entries) || memory.entries.length === 0) return "";
+    const lines = memory.entries.slice(-4).map(function (entry) {
+      const page = coerceText(entry.page) || "customer-page";
+      return `- ${page}: ${coerceText(entry.summary)}`;
+    });
+    const excerpt = `Customer memory recap for ${coerceText(memory.customerName) || "this account"}:\n${lines.join("\n")}`;
+    const limit = clampNumber(cfg && cfg.customer_memory_excerpt_char_limit, 300, 4000, 1200);
+    return excerpt.length > limit ? `${excerpt.slice(0, limit)}…` : excerpt;
+  }
+
+  function buildCustomerMemoryEntryFromSession(launchSession, noteInput, scopeRef, cfg) {
+    const payload =
+      launchSession &&
+      launchSession.contextPayload &&
+      typeof launchSession.contextPayload === "object"
+        ? launchSession.contextPayload
+        : {};
+    const scope = resolveGuideScopeReference(scopeRef || launchSession || {}, cfg);
+    const note = coerceText(noteInput);
+    const intent = coerceText(payload.likely_user_intent || payload.visitor_intent || payload.lead_capture_intent);
+    const page = coerceText(payload.source_page || getCurrentPageSlug()) || getCurrentPageSlug();
+    const questionRecap =
+      Array.isArray(visitorQuestionLog) && visitorQuestionLog.length > 0
+        ? `Recent questions: ${visitorQuestionLog.slice(-2).join(" | ")}`
+        : "";
+    const roamingState = readCrossPageRoamingState(scope, cfg);
+    const transcriptRecap =
+      roamingState && Array.isArray(roamingState.transcriptEntries) && roamingState.transcriptEntries.length > 0
+        ? `Recent dialogue: ${roamingState.transcriptEntries
+            .slice(-3)
+            .map(function (entry) {
+              const who = entry.role === "assistant" ? "Clerk" : "Visitor";
+              return `${who}: ${coerceText(entry.text)}`;
+            })
+            .filter(Boolean)
+            .join(" | ")}`
+        : "";
+    return combineContextBlocks(
+      [
+        `Customer: ${coerceText(scope.customerName) || coerceText(scope.customerSlug) || "unknown"} (${page})`,
+        intent ? `Intent: ${intent}` : "",
+        questionRecap,
+        transcriptRecap,
+        note ? `Exit note: ${note}` : "",
+      ],
+      420
+    );
+  }
+
+  function maybeCaptureCustomerExitSweep(launchSession, closeOptions, cfg) {
+    if (!launchSession || typeof launchSession !== "object") return false;
+    const options = closeOptions && typeof closeOptions === "object" ? closeOptions : {};
+    const closeReason = coerceText(options.reason).toLowerCase();
+    if (options.preserveRoaming) return false;
+    if (closeReason === "page-transition" || closeReason === "relaunch") return false;
+    const scope = resolveGuideScopeReference(launchSession, cfg);
+    if (scope.guideMode !== "customer") return false;
+    if (cfg && cfg.customer_exit_sweep_enabled === false) return false;
+    if (customerExitSweepCaptured) return false;
+    if (typeof window === "undefined" || typeof window.confirm !== "function") return false;
+    customerExitSweepCaptured = true;
+    const savePrompt =
+      coerceText(cfg && cfg.customer_exit_sweep_prompt) ||
+      "Before you exit, should Clerk save a brief memory note from this session for your customer guide?";
+    const shouldSave = window.confirm(savePrompt);
+    if (!shouldSave) {
+      const skippedStatus = coerceText(cfg && cfg.customer_exit_sweep_skipped_status);
+      if (skippedStatus) setStatus(skippedStatus, false, true);
+      return false;
+    }
+    const notePrompt = coerceText(cfg && cfg.customer_exit_sweep_note_prompt);
+    let note = "";
+    if (notePrompt && typeof window.prompt === "function") {
+      const response = window.prompt(notePrompt, "");
+      note = coerceText(response);
+    }
+    const summary = buildCustomerMemoryEntryFromSession(launchSession, note, scope, cfg);
+    const saved = appendCustomerMemoryEntry(summary, { page: getCurrentPageSlug() }, scope, cfg);
+    if (saved) {
+      const savedStatus =
+        coerceText(cfg && cfg.customer_exit_sweep_saved_status) ||
+        "Customer memory captured for the next session.";
+      if (savedStatus) setStatus(savedStatus, false, true);
+    }
+    return saved;
+  }
+
+  function activateCrossPageRoamingFromLaunch(launchSession, cfg) {
+    if (!shouldEnableCrossPageRoaming(cfg, launchSession)) return;
+    if (!launchSession || typeof launchSession !== "object") return;
+    if (isHomePageClerkDisabled()) return;
+    const scope = resolveGuideScopeReference(launchSession, cfg);
+    const payload = launchSession.contextPayload && typeof launchSession.contextPayload === "object"
+      ? launchSession.contextPayload
+      : {};
+    const sourcePage = coerceText(payload.source_page || launchSession.contextSource || getCurrentPageSlug()) || getCurrentPageSlug();
+    const context = coerceText(payload.context || payload.mode) || "technical-follow-up";
+    const mode = coerceText(payload.mode) || context;
+    const previous = readCrossPageRoamingState(scope, cfg);
+    const nextState = {
+      active: true,
+      scope: scope.scopeToken,
+      guideMode: scope.guideMode,
+      customerSlug: scope.customerSlug,
+      customerName: scope.customerName,
+      siteSlug: scope.siteSlug,
+      resumeAfterNavigation: false,
+      lastPage: sourcePage,
+      nextPage: "",
+      context: context,
+      mode: mode,
+      transcriptEntries: previous && Array.isArray(previous.transcriptEntries) ? previous.transcriptEntries : [],
+      updatedAt: new Date().toISOString(),
+    };
+    writeCrossPageRoamingState(nextState, scope, cfg);
+  }
+
+  function appendCrossPageRoamingTranscript(role, text, scopeRef) {
+    const snippet = coerceText(text);
+    if (!snippet) return;
+    const cfg = getVoiceConfig();
+    const state = readCrossPageRoamingState(scopeRef || pendingLaunchSession, cfg);
+    if (!state || !state.active) return;
+    const normalizedRole = isLikelyAssistantRole(role) ? "assistant" : "user";
+    const compact = snippet.length > 260 ? `${snippet.slice(0, 260)}…` : snippet;
+    const nextEntries = Array.isArray(state.transcriptEntries) ? state.transcriptEntries.slice() : [];
+    nextEntries.push({
+      role: normalizedRole,
+      text: compact,
+      at: new Date().toISOString(),
+    });
+    state.transcriptEntries = nextEntries.slice(-CROSS_PAGE_ROAMING_MAX_TRANSCRIPT_ENTRIES);
+    state.updatedAt = new Date().toISOString();
+    writeCrossPageRoamingState(state, scopeRef || pendingLaunchSession, cfg);
+  }
+
+  function markCrossPageRoamingForPageTransition(launchSession) {
+    const cfg = getVoiceConfig();
+    if (!shouldEnableCrossPageRoaming(cfg, launchSession)) return;
+    const state = readCrossPageRoamingState(launchSession, cfg);
+    if (!state || !state.active) return;
+    const payload = launchSession && typeof launchSession === "object" && launchSession.contextPayload && typeof launchSession.contextPayload === "object"
+      ? launchSession.contextPayload
+      : {};
+    const currentPage = coerceText(payload.source_page || getCurrentPageSlug()) || getCurrentPageSlug();
+    const context = coerceText(payload.context || payload.mode || state.context) || "technical-follow-up";
+    const mode = coerceText(payload.mode || state.mode) || context;
+    state.resumeAfterNavigation = true;
+    state.lastPage = currentPage;
+    state.context = context;
+    state.mode = mode;
+    state.updatedAt = new Date().toISOString();
+    writeCrossPageRoamingState(state, launchSession, cfg);
+  }
+
+  function markCrossPageRoamingNavigationTarget(targetPageSlug, scopeRef) {
+    const nextPage = coerceText(targetPageSlug).toLowerCase();
+    if (!nextPage) return;
+    const cfg = getVoiceConfig();
+    const state = readCrossPageRoamingState(scopeRef || pendingLaunchSession, cfg);
+    if (!state || !state.active) return;
+    state.nextPage = nextPage;
+    state.resumeAfterNavigation = true;
+    state.updatedAt = new Date().toISOString();
+    writeCrossPageRoamingState(state, scopeRef || pendingLaunchSession, cfg);
+  }
+
+  function buildCrossPageRoamingSessionContext(cfg, roamingState, currentPage, previousPage) {
+    const followupPrompt =
+      coerceText(cfg && cfg.cross_page_roaming_followup_prompt) ||
+      "Ask whether the visitor has any more questions on this page, then offer to guide them to the next tab.";
+    const transitionLine =
+      previousPage && previousPage !== currentPage
+        ? `Visitor navigated from ${previousPage} to ${currentPage} while keeping the same Clerk conversation active.`
+        : `Visitor is continuing the same Clerk conversation on ${currentPage}.`;
+    const transcriptLines = Array.isArray(roamingState && roamingState.transcriptEntries)
+      ? roamingState.transcriptEntries
+          .slice(-6)
+          .map(function (entry) {
+            const who = entry.role === "assistant" ? "Clerk" : "Visitor";
+            const line = coerceText(entry.text);
+            if (!line) return "";
+            return `${who}: ${line}`;
+          })
+          .filter(Boolean)
+      : [];
+    const transcriptBlock =
+      transcriptLines.length > 0 ? `Recent dialogue context:\n${transcriptLines.join("\n")}` : "";
+    return combineContextBlocks([transitionLine, followupPrompt, transcriptBlock], 1900);
+  }
+
+  function buildCrossPageRoamingLaunchOptions(cfg, roamingState) {
+    if (!roamingState || typeof roamingState !== "object") return null;
+    const currentPage = getCurrentPageSlug();
+    if (!currentPage || currentPage === "index" || currentPage === "home") return null;
+    const previousPage = coerceText(roamingState.lastPage);
+    const context = coerceText(roamingState.context) || "technical-follow-up";
+    const mode = coerceText(roamingState.mode) || context;
+    const guideMode = coerceText(roamingState.guideMode).toLowerCase() === "customer" ? "customer" : "unity";
+    const customerSlug = normalizeStorageScopeToken(roamingState.customerSlug, "");
+    const customerName = coerceText(roamingState.customerName);
+    const entryPrefix =
+      guideMode === "customer" && customerSlug ? `customer-${customerSlug}` : currentPage;
+    return {
+      contextSource: currentPage,
+      context: context,
+      mode: mode,
+      conversationMode: "followup",
+      guideMode: guideMode,
+      customer_slug: customerSlug,
+      customer_name: customerName,
+      sourcePage: currentPage,
+      entryPoint: `${entryPrefix}-cross-page-roaming`,
+      likelyUserIntent:
+        guideMode === "customer"
+          ? "customer visitor continued an existing Clerk conversation while navigating account pages"
+          : "visitor continued an existing Clerk conversation while navigating Unity pages",
+      sessionContext: buildCrossPageRoamingSessionContext(cfg, roamingState, currentPage, previousPage),
+      uiMode: "modal",
+      closeExistingSession: false,
+    };
+  }
+
+  function maybeResumeCrossPageRoamingOnLoad() {
+    const cfg = getVoiceConfig();
+    if (!shouldAutoResumeCrossPageRoaming(cfg)) return false;
+    if (!isClerkVoiceFeatureEnabled()) return false;
+    if (isHomePageClerkDisabled()) return false;
+    const scope = resolveGuideScopeReference({}, cfg);
+    const state = readCrossPageRoamingState(scope, cfg);
+    if (!state || !state.active || !state.resumeAfterNavigation) return false;
+    const currentPage = getCurrentPageSlug();
+    const targetPage = coerceText(state.nextPage);
+    if (targetPage && targetPage !== currentPage) return false;
+    const launchOptions = buildCrossPageRoamingLaunchOptions(cfg, state);
+    if (!launchOptions) return false;
+    state.resumeAfterNavigation = false;
+    state.nextPage = "";
+    state.lastPage = currentPage;
+    state.updatedAt = new Date().toISOString();
+    writeCrossPageRoamingState(state, scope, cfg);
+    window.setTimeout(function () {
+      const modal = document.getElementById("clerkVoiceModal");
+      if (modal && modal.classList.contains("active")) return;
+      openClerkWithPageContext(launchOptions);
+    }, CROSS_PAGE_ROAMING_RESUME_DELAY_MS);
+    return true;
+  }
+
+  function bindCrossPageRoamingNavigation() {
+    if (navigationRoamingBound) return;
+    navigationRoamingBound = true;
+    document.querySelectorAll("a[href]").forEach(function (link) {
+      if (!link || link.dataset.clerkRoamingBound === "1") return;
+      link.dataset.clerkRoamingBound = "1";
+      link.addEventListener("click", function () {
+        const cfg = getVoiceConfig();
+        const state = readCrossPageRoamingState(pendingLaunchSession || {}, cfg);
+        if (!state || !state.active) return;
+        const targetAttr = coerceText(link.getAttribute("target")).toLowerCase();
+        if (targetAttr === "_blank") return;
+        const href = coerceText(link.getAttribute("href"));
+        if (!href || href.startsWith("#") || /^mailto:/i.test(href) || /^tel:/i.test(href) || /^javascript:/i.test(href)) {
+          return;
+        }
+        const targetPageSlug = extractPageSlugFromHref(href);
+        if (!targetPageSlug) return;
+        markCrossPageRoamingNavigationTarget(targetPageSlug, pendingLaunchSession || {});
+      });
+    });
   }
 
   function normalizeLaunchToken(value, fallback) {
@@ -1196,23 +3871,39 @@
     return openClerkWithPageContext(launchOptions);
   }
   function isHomePageClerkDisabled() {
-    const pageSlug = coerceText(getCurrentPageSlug()).toLowerCase();
-    return pageSlug === "index" || pageSlug === "home";
+    return !isClerkVoiceAllowedOnCurrentPage(getVoiceConfig());
   }
 
   function isFloatingLauncherEnabled(cfg) {
     if (!cfg || cfg.floating_launcher_enabled === false) return false;
-    if (isHomePageClerkDisabled()) return false;
+    if (!isClerkVoiceAllowedOnCurrentPage(cfg)) return false;
     return isClerkVoiceFeatureEnabled();
   }
 
   function getFloatingLauncherTooltip(cfg) {
     const configured = coerceText(cfg && cfg.floating_launcher_tooltip);
-    return configured || "Speak with Clerk";
+    return configured || "Meet with Clerk";
+  }
+  function buildFloatingLauncherAssetCandidateVariants(value) {
+    const raw = coerceText(value);
+    if (!raw) return [];
+    const variants = [raw];
+    const isAbsolute =
+      /^(?:[a-z]+:)?\/\//i.test(raw) ||
+      raw.startsWith("data:") ||
+      raw.startsWith("blob:") ||
+      raw.startsWith("/");
+    if (!isAbsolute) {
+      const normalized = raw.replace(/^\.?\//, "");
+      if (normalized && !normalized.startsWith("../")) {
+        variants.push(`/UnityEnergy/${normalized}`);
+      }
+    }
+    return Array.from(new Set(variants));
   }
 
   function getFloatingLauncherIconCandidates(cfg) {
-    const candidates = [
+    const seeds = [
       coerceText(cfg && cfg.floating_launcher_icon_url),
       "assets/images/unity-maxwell-button.png",
       "assets/images/Maxwell_lineARTr01.png",
@@ -1224,7 +3915,14 @@
       "ClerkMaxwell_251207.png",
       "unity-icon-ring-white-512.png",
     ].filter(Boolean);
-    return Array.from(new Set(candidates));
+    const candidates = [];
+    seeds.forEach(function (seed) {
+      buildFloatingLauncherAssetCandidateVariants(seed).forEach(function (variant) {
+        if (!variant || candidates.includes(variant)) return;
+        candidates.push(variant);
+      });
+    });
+    return candidates;
   }
 
   function syncFloatingLauncherIcon(cfg) {
@@ -1279,12 +3977,25 @@
     };
   }
 
-  async function runAppleMobileMicPreflight() {
-    if (!isAppleMobileWebKitBrowser()) return false;
+  async function runUnityStartGatePreflight(cfg) {
+    unityStartGatePreflightReady = false;
+    unityStartGatePreflightAttempted = false;
+    unityStartGatePreflightFailed = false;
+    unityStartGatePreflightStatusMessage = "";
+    unityStartGatePendingRequiresRecovery = false;
+    const requiresStartGate = shouldUseUnityStartGate(cfg);
+    const shouldPreflight = shouldRunMicPreflight(cfg);
+    if (!requiresStartGate && !shouldPreflight) return false;
+    if (!shouldPreflight) return false;
+    unityStartGatePreflightAttempted = true;
     try {
       await requestTopLevelMicAccess();
+      unityStartGatePreflightReady = true;
       return true;
-    } catch (_err) {
+    } catch (err) {
+      unityStartGatePreflightReady = false;
+      unityStartGatePreflightFailed = true;
+      unityStartGatePreflightStatusMessage = getMicrophoneRecoveryMessage(err);
       return false;
     }
   }
@@ -1293,7 +4004,7 @@
     const cfg = getVoiceConfig();
     if (!isFloatingLauncherEnabled(cfg)) return false;
     const launchOptions = buildFloatingLauncherLaunchOptions(cfg);
-    await runAppleMobileMicPreflight();
+    await runUnityStartGatePreflight(cfg);
     return openClerkWithPageContext(launchOptions);
   }
 
@@ -1405,6 +4116,23 @@
       payload.knowledge_reference_spine ||
       (cfg && cfg.knowledge_reference_spine)
     );
+    const contentAwarenessMode = cfg ? cfg.content_awareness_mode !== false : true;
+    const contentGroundingPolicy = coerceText(
+      payload.content_grounding_policy ||
+      (cfg && cfg.content_grounding_policy)
+    );
+    const unknownAnswerFallback = coerceText(
+      payload.unknown_answer_fallback ||
+      (cfg && cfg.unknown_answer_fallback)
+    );
+    const activeSkillPackTitles = Array.isArray(payload.skill_pack_titles)
+      ? payload.skill_pack_titles
+          .map(function (title) { return coerceText(title); })
+          .filter(Boolean)
+          .slice(0, 6)
+          .join(", ")
+      : "";
+    const activeSkillPackExcerpt = coerceText(payload.skill_pack_excerpt);
     const syntaxContext = buildSyntaxAwarenessContext(cfg);
     const responseStyleHint = coerceText(payload.response_style_hint);
     const tokenBudgetProfile =
@@ -1447,6 +4175,13 @@
         ],
         1800
       );
+      if (profile.id === "contact-us") {
+        const contactGreeting =
+          coerceText(payload.openai_auto_greeting_text) ||
+          coerceText(cfg && cfg.contact_page_auto_greeting_text) ||
+          "I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?";
+        assignContextValueIfMissing(payload, "openai_auto_greeting_text", contactGreeting);
+      }
       appendSessionDecision(launchSession, "page-context-applied", {
         profile_id: profile.id,
         skill_pack_ids: profile.skillPackIds || [],
@@ -1459,6 +4194,13 @@
     }
     if (knowledgeReferenceSpine) {
       assignContextValueIfMissing(payload, "knowledge_reference_spine", knowledgeReferenceSpine);
+    }
+    assignContextValueIfMissing(payload, "content_awareness_mode", contentAwarenessMode);
+    if (contentGroundingPolicy) {
+      assignContextValueIfMissing(payload, "content_grounding_policy", contentGroundingPolicy);
+    }
+    if (unknownAnswerFallback) {
+      assignContextValueIfMissing(payload, "unknown_answer_fallback", unknownAnswerFallback);
     }
 
     const sessionContextCharLimitRaw =
@@ -1474,7 +4216,14 @@
         responseStyleHint ? `Response style guidance: ${responseStyleHint}` : "",
         tokenBudgetHint,
         syntaxContext,
-        pageContextBlock
+        pageContextBlock,
+        contentAwarenessMode
+          ? "Content awareness mode is active: only provide Unity claims grounded in launch, page, and selected skill-pack context. If context is incomplete, explicitly state uncertainty before proceeding."
+          : "",
+        contentGroundingPolicy ? `Grounding policy: ${contentGroundingPolicy}` : "",
+        unknownAnswerFallback ? `Unknown-answer fallback: ${unknownAnswerFallback}` : "",
+        activeSkillPackTitles ? `Active grounding skill packs: ${activeSkillPackTitles}` : "",
+        activeSkillPackExcerpt ? `Grounded source excerpt:\n${activeSkillPackExcerpt}` : "",
       ],
       clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
     );
@@ -1484,6 +4233,647 @@
     if (syntaxContext) {
       payload.syntax_awareness_active = true;
     }
+  }
+
+  function applySkillPackGroundingContext(launchSession, cfg) {
+    if (!launchSession || typeof launchSession !== "object") return;
+    if (!launchSession.contextPayload || typeof launchSession.contextPayload !== "object") {
+      launchSession.contextPayload = {};
+    }
+    const payload = launchSession.contextPayload;
+    const skillPackExcerpt = coerceText(payload.skill_pack_excerpt);
+    const skillPackTitles = Array.isArray(payload.skill_pack_titles)
+      ? payload.skill_pack_titles
+          .map(function (title) { return coerceText(title); })
+          .filter(Boolean)
+          .slice(0, 6)
+          .join(", ")
+      : "";
+    const contentGroundingPolicy = coerceText(
+      payload.content_grounding_policy ||
+      (cfg && cfg.content_grounding_policy)
+    );
+    const unknownAnswerFallback = coerceText(
+      payload.unknown_answer_fallback ||
+      (cfg && cfg.unknown_answer_fallback)
+    );
+    const groundingAppendix = combineContextBlocks(
+      [
+        skillPackTitles ? `Active grounding skill packs: ${skillPackTitles}` : "",
+        skillPackExcerpt ? `Grounded source excerpt:\n${skillPackExcerpt}` : "",
+        contentGroundingPolicy ? `Grounding policy: ${contentGroundingPolicy}` : "",
+        unknownAnswerFallback ? `Unknown-answer fallback: ${unknownAnswerFallback}` : "",
+      ],
+      2600
+    );
+    if (!groundingAppendix) return;
+    const sessionContextCharLimitRaw =
+      payload.session_context_char_limit !== undefined
+        ? payload.session_context_char_limit
+        : cfg && cfg.session_context_char_limit;
+    const mergedSessionContext = combineContextBlocks(
+      [coerceText(payload.session_context), groundingAppendix],
+      clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
+    );
+    if (mergedSessionContext) {
+      payload.session_context = mergedSessionContext;
+    }
+  }
+
+  function getContentScopeFallbackMessage(cfg) {
+    const configured = coerceText(cfg && cfg.content_awareness_scope_fallback_message);
+    if (configured) return configured;
+    return "I can answer reliably from this page and approved Unity source files. If you want analysis outside this scope, share the exact page or file reference.";
+  }
+
+  function resolveConfiguredSourceFilesForLaunch(launchSession, cfg, profile) {
+    const payload =
+      launchSession && typeof launchSession.contextPayload === "object"
+        ? launchSession.contextPayload
+        : {};
+    const map = normalizePageSourceFileMap(cfg);
+    const keys = [];
+    const collectKey = function (value) {
+      const normalized = coerceText(value).toLowerCase();
+      if (!normalized || keys.includes(normalized)) return;
+      keys.push(normalized);
+    };
+    collectKey(payload.source_page);
+    collectKey(payload.page_slug);
+    collectKey(profile && profile.id);
+    collectKey(launchSession && launchSession.contextSource);
+    collectLaunchContextSources(launchSession).forEach(function (source) {
+      collectKey(source);
+    });
+    const files = [];
+    keys.forEach(function (key) {
+      const mapped = map[key];
+      if (!Array.isArray(mapped)) return;
+      mapped.forEach(function (filePath) {
+        const normalized = coerceText(filePath);
+        if (!normalized || files.includes(normalized)) return;
+        files.push(normalized);
+      });
+    });
+    return files.slice(0, 32);
+  }
+
+  function resolveAllowedSourceFilesForLaunch(launchSession, cfg, profile) {
+    const payload =
+      launchSession && typeof launchSession.contextPayload === "object"
+        ? launchSession.contextPayload
+        : {};
+    const merged = [];
+    const mergeList = function (value, limit) {
+      normalizeStringArray(value, limit).forEach(function (entry) {
+        const normalized = coerceText(entry);
+        if (!normalized || merged.includes(normalized)) return;
+        merged.push(normalized);
+      });
+    };
+    mergeList(payload.allowed_source_files, 32);
+    mergeList(payload.allowed_context_files, 32);
+    mergeList(payload.content_scope_allowed_files, 32);
+    if (profile && Array.isArray(profile.sourceFiles)) {
+      mergeList(profile.sourceFiles, 32);
+    }
+    mergeList(resolveConfiguredSourceFilesForLaunch(launchSession, cfg, profile), 32);
+    mergeList(payload.skill_pack_source_docs, 32);
+    mergeList(cfg && cfg.content_awareness_allowed_files, 32);
+    return merged.slice(0, 32);
+  }
+
+  function applyContentFileScope(launchSession, cfg) {
+    if (!launchSession || typeof launchSession !== "object") return;
+    if (!launchSession.contextPayload || typeof launchSession.contextPayload !== "object") {
+      launchSession.contextPayload = {};
+    }
+    const payload = launchSession.contextPayload;
+    const profile = resolvePageContextProfile(launchSession, cfg);
+    const snapshot = collectActivePageContextSnapshot();
+    const activePageSlug = normalizePageSlugToken(getCurrentPageSlug()) || "index";
+    let allowedSourceFiles = resolveAllowedSourceFilesForLaunch(launchSession, cfg, profile);
+    const scopeLocked = cfg ? cfg.content_awareness_scope_lock !== false : true;
+    const fallbackMessage = getContentScopeFallbackMessage(cfg);
+    const pageContextMemoryEnabled = cfg ? cfg.page_context_memory_enabled !== false : true;
+    const pageContextMemoryResult = pageContextMemoryEnabled
+      ? upsertPageContextMemorySnapshot(activePageSlug, snapshot, launchSession, cfg)
+      : { entry: null, state: null };
+    const pageContextMemoryState =
+      pageContextMemoryResult && pageContextMemoryResult.state
+        ? pageContextMemoryResult.state
+        : pageContextMemoryEnabled
+          ? readPageContextMemoryState(launchSession, cfg)
+          : null;
+    const activePageMemoryEntry =
+      pageContextMemoryResult && pageContextMemoryResult.entry
+        ? pageContextMemoryResult.entry
+        : findPageContextMemoryEntry(pageContextMemoryState, activePageSlug);
+    const activePageMemorySummary = buildPageContextMemoryEntrySummary(activePageMemoryEntry, cfg);
+    const knownPageMemorySummaries = buildKnownPageMemorySummaries(
+      pageContextMemoryState,
+      activePageSlug,
+      cfg
+    );
+    const patternContext = getActivePagePatternContextForLaunch();
+    const patternSourceFiles = normalizeStringArray(
+      patternContext && Array.isArray(patternContext.source_files)
+        ? patternContext.source_files
+        : [],
+      16
+    );
+    if (patternSourceFiles.length > 0) {
+      allowedSourceFiles = allowedSourceFiles.concat(patternSourceFiles).filter(function (filePath, index, arr) {
+        return Boolean(filePath) && arr.indexOf(filePath) === index;
+      }).slice(0, 32);
+    }
+    const patternSummary =
+      patternContext && typeof patternContext === "object"
+        ? coerceText(patternContext.summary)
+        : "";
+    const patternTextExcerpts = normalizeStringArray(
+      patternContext && Array.isArray(patternContext.text_file_excerpts)
+        ? patternContext.text_file_excerpts
+        : [],
+      6
+    );
+
+    payload.page_context_memory_enabled = pageContextMemoryEnabled;
+    assignContextValueIfMissing(payload, "active_page_slug", activePageSlug);
+    assignContextValueIfMissing(payload, "active_page_pathname", snapshot.pathname);
+    assignContextValueIfMissing(payload, "active_page_file", snapshot.fileName);
+    assignContextValueIfMissing(payload, "active_page_url", snapshot.href);
+    if (snapshot.title) {
+      assignContextValueIfMissing(payload, "active_page_title", snapshot.title);
+    }
+    if (snapshot.metaDescription) {
+      assignContextValueIfMissing(payload, "active_page_meta_description", snapshot.metaDescription);
+    }
+    if (Array.isArray(snapshot.headings) && snapshot.headings.length > 0) {
+      assignContextValueIfMissing(payload, "active_page_headings", snapshot.headings.slice(0, 6));
+    }
+    if (snapshot.excerpt) {
+      assignContextValueIfMissing(payload, "active_page_excerpt", snapshot.excerpt);
+    }
+    if (activePageMemoryEntry) {
+      assignContextValueIfMissing(
+        payload,
+        "active_page_memory_visit_count",
+        Number(activePageMemoryEntry.visitCount) || 1
+      );
+      assignContextValueIfMissing(
+        payload,
+        "active_page_memory_last_seen_at",
+        coerceText(activePageMemoryEntry.lastSeenAt)
+      );
+      if (activePageMemorySummary) {
+        assignContextValueIfMissing(payload, "active_page_memory_summary", activePageMemorySummary);
+      }
+    }
+    if (pageContextMemoryState && Array.isArray(pageContextMemoryState.entries)) {
+      assignContextValueIfMissing(
+        payload,
+        "page_context_memory_entry_count",
+        pageContextMemoryState.entries.length
+      );
+      assignContextValueIfMissing(
+        payload,
+        "page_context_memory_known_pages",
+        pageContextMemoryState.entries
+          .map(function (entry) { return normalizePageSlugToken(entry && entry.pageSlug); })
+          .filter(Boolean)
+          .slice(-12)
+          .reverse()
+      );
+    }
+    if (knownPageMemorySummaries.length > 0) {
+      assignContextValueIfMissing(payload, "known_page_memory_summaries", knownPageMemorySummaries);
+    }
+    payload.active_page_pattern_context_available =
+      Boolean(patternSummary) || patternTextExcerpts.length > 0;
+    if (patternSourceFiles.length > 0) {
+      assignContextValueIfMissing(payload, "active_page_pattern_source_files", patternSourceFiles);
+    }
+    if (patternSummary) {
+      assignContextValueIfMissing(payload, "active_page_pattern_summary", patternSummary);
+    }
+    if (patternTextExcerpts.length > 0) {
+      assignContextValueIfMissing(payload, "active_page_pattern_text_excerpts", patternTextExcerpts);
+    }
+    if (
+      patternContext &&
+      Array.isArray(patternContext.entries) &&
+      patternContext.entries.length > 0
+    ) {
+      assignContextValueIfMissing(
+        payload,
+        "active_page_pattern_entry_count",
+        patternContext.entries.length
+      );
+      assignContextValueIfMissing(
+        payload,
+        "active_page_pattern_entries",
+        patternContext.entries.slice(0, 4)
+      );
+    }
+    payload.content_scope_lock_enabled = scopeLocked;
+    payload.content_scope_mode = scopeLocked ? "strict-page-file" : "guided-page-file";
+    payload.content_scope_fallback_message = fallbackMessage;
+    if (allowedSourceFiles.length > 0) {
+      payload.allowed_source_files = allowedSourceFiles;
+      assignContextValueIfMissing(payload, "content_scope_primary_file", allowedSourceFiles[0]);
+    }
+
+    const scopeInstruction = scopeLocked
+      ? "File scope lock is active: answer only from the active page context and allowed source files. If asked beyond this scope, explicitly say so and request the exact file or page."
+      : "Prioritize the active page context and allowed source files for factual claims.";
+    const allowedFilesBlock =
+      allowedSourceFiles.length > 0
+        ? `Allowed source files for this launch:\n- ${allowedSourceFiles.join("\n- ")}`
+        : "";
+    const patternContextBlock = combineContextBlocks(
+      [
+        patternSummary ? `William pattern summary:\n${patternSummary}` : "",
+        patternTextExcerpts.length > 0
+          ? `Pattern text excerpts:\n- ${patternTextExcerpts.join("\n- ")}`
+          : "",
+      ],
+      2200
+    );
+    const scopeContextBlock = combineContextBlocks(
+      [
+        `Active page file: ${snapshot.fileName} (${snapshot.pathname}).`,
+        snapshot.title ? `Active page title: ${snapshot.title}` : "",
+        snapshot.metaDescription ? `Page description: ${snapshot.metaDescription}` : "",
+        snapshot.excerpt ? `Page excerpt:\n${snapshot.excerpt}` : "",
+        activePageMemorySummary ? `Remembered page context: ${activePageMemorySummary}` : "",
+        knownPageMemorySummaries.length > 0
+          ? `Known page memories:\n- ${knownPageMemorySummaries.join("\n- ")}`
+          : "",
+        patternContextBlock,
+        scopeInstruction,
+        allowedFilesBlock,
+        `Scope fallback: ${fallbackMessage}`,
+      ],
+      2600
+    );
+    payload.content_scope_instructions = combineContextBlocks(
+      [coerceText(payload.content_scope_instructions), scopeInstruction, allowedFilesBlock],
+      2200
+    );
+    const sessionContextCharLimitRaw =
+      payload.session_context_char_limit !== undefined
+        ? payload.session_context_char_limit
+        : cfg && cfg.session_context_char_limit;
+    const mergedSessionContext = combineContextBlocks(
+      [coerceText(payload.session_context), scopeContextBlock],
+      clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
+    );
+    if (mergedSessionContext) {
+      payload.session_context = mergedSessionContext;
+    }
+    appendSessionDecision(launchSession, "content-file-scope-applied", {
+      source_page: coerceText(payload.source_page) || getCurrentPageSlug(),
+      active_page_file: snapshot.fileName,
+      scope_locked: scopeLocked,
+      allowed_file_count: allowedSourceFiles.length,
+      pattern_context_available:
+        Boolean(patternSummary) || patternTextExcerpts.length > 0,
+      pattern_source_file_count: patternSourceFiles.length,
+    });
+  }
+
+  function isLikelySummaryboardPage() {
+    const pathname = getCurrentPagePathname().toLowerCase();
+    const title = coerceText(document && document.title).toLowerCase();
+    return pathname.includes("summaryboard") || title.includes("summaryboard");
+  }
+
+  function buildSummaryboardPatternContextKey() {
+    const pathname = getCurrentPagePathname();
+    const pageSlug = getCurrentPageSlug();
+    return `${pathname}::${pageSlug}`;
+  }
+
+  function resolveRelativeUrlFromCurrentPath(targetPath) {
+    const normalizedTarget = coerceText(targetPath);
+    if (!normalizedTarget) return "";
+    if (/^(?:[a-z]+:)?\/\//i.test(normalizedTarget)) return normalizedTarget;
+    if (normalizedTarget.startsWith("/")) return normalizedTarget;
+    try {
+      const base = new URL(getCurrentPageHref() || window.location.href);
+      return new URL(normalizedTarget, base).pathname;
+    } catch (_err) {
+      return normalizedTarget;
+    }
+  }
+
+  function collectSummaryboardPatternJsonCandidates() {
+    const candidates = [];
+    const addCandidate = function (value) {
+      const normalized = resolveRelativeUrlFromCurrentPath(value);
+      if (!normalized || candidates.includes(normalized)) return;
+      candidates.push(normalized);
+    };
+
+    addCandidate("SET1_PatternAnalysisData.json");
+    addCandidate("./SET1_PatternAnalysisData.json");
+    addCandidate("../SET1_PatternAnalysisData.json");
+
+    try {
+      const scriptNodes = Array.from(document.querySelectorAll("script"));
+      scriptNodes.forEach(function (node) {
+        const content = coerceText(node && (node.textContent || node.innerText));
+        if (!content || !content.includes("PatternAnalysisData")) return;
+        const match = content.match(/['"]([^'"]*PatternAnalysisData[^'"]*\.json)['"]/i);
+        if (!match || !match[1]) return;
+        addCandidate(match[1]);
+      });
+    } catch (_err) {}
+
+    return candidates.slice(0, 6);
+  }
+
+  function normalizePatternNarrativeText(value, maxChars) {
+    const text = coerceText(value).replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    const limit = Number.isFinite(Number(maxChars))
+      ? Math.max(160, Math.floor(Number(maxChars)))
+      : 1500;
+    return text.length > limit ? `${text.slice(0, limit)}…` : text;
+  }
+
+  function extractPatternNarrativeEntriesFromPayload(payloadInput) {
+    const payload = payloadInput && typeof payloadInput === "object" ? payloadInput : {};
+    const entries = [];
+    const sourceLists = [];
+    if (Array.isArray(payload)) {
+      sourceLists.push(payload);
+    } else {
+      [
+        payload.transformers,
+        payload.patterns,
+        payload.items,
+        payload.rows,
+        payload.data,
+      ].forEach(function (candidate) {
+        if (Array.isArray(candidate)) sourceLists.push(candidate);
+      });
+    }
+    if (sourceLists.length === 0 && payload && typeof payload === "object") {
+      const objectValues = Object.values(payload).filter(function (value) {
+        return value && typeof value === "object" && !Array.isArray(value);
+      });
+      if (objectValues.length > 0) {
+        sourceLists.push(objectValues);
+      }
+    }
+    sourceLists.forEach(function (list) {
+      (Array.isArray(list) ? list : []).forEach(function (item) {
+        if (!item || typeof item !== "object") return;
+        const transformerId = normalizePatternNarrativeText(
+          item.transformer_id || item.transformerId || item.transformer || item.id,
+          120
+        );
+        const transformerName = normalizePatternNarrativeText(
+          item.transformer_name || item.transformerName || item.name,
+          160
+        );
+        const summary = normalizePatternNarrativeText(
+          item.pattern_text ||
+            item.pattern_summary ||
+            item.patternSummary ||
+            item.pattern_brief ||
+            item.brief,
+          1600
+        );
+        const part1 = normalizePatternNarrativeText(item.pattern_part1 || item.patternPart1, 1300);
+        const part2 = normalizePatternNarrativeText(item.pattern_part2 || item.patternPart2, 1300);
+        const part3 = normalizePatternNarrativeText(item.pattern_part3 || item.patternPart3, 1300);
+        if (!summary && !part1 && !part2 && !part3) return;
+        entries.push({
+          transformer_id: transformerId,
+          transformer_name: transformerName,
+          pattern_summary: summary,
+          pattern_part1: part1,
+          pattern_part2: part2,
+          pattern_part3: part3,
+        });
+      });
+    });
+    return entries.slice(0, 8);
+  }
+
+  function buildPatternNarrativeSummary(entries) {
+    if (!Array.isArray(entries) || entries.length === 0) return "";
+    const lines = entries
+      .slice(0, 4)
+      .map(function (entry) {
+        const label =
+          coerceText(entry.transformer_name) ||
+          coerceText(entry.transformer_id) ||
+          "Transformer";
+        const summary =
+          coerceText(entry.pattern_summary) ||
+          coerceText(entry.pattern_part1) ||
+          coerceText(entry.pattern_part2) ||
+          coerceText(entry.pattern_part3);
+        if (!summary) return "";
+        return `- ${label}: ${summary}`;
+      })
+      .filter(Boolean);
+    if (lines.length === 0) return "";
+    return combineContextBlocks(
+      ["William pattern interpretation highlights:", lines.join("\n")],
+      2200
+    );
+  }
+
+  function collectPatternTextFileCandidates(patternJsonPath) {
+    const results = [];
+    const addPath = function (value) {
+      const normalized = resolveRelativeUrlFromCurrentPath(value);
+      if (!normalized || results.includes(normalized)) return;
+      if (!/\.txt$/i.test(normalized)) return;
+      results.push(normalized);
+    };
+    if (patternJsonPath) {
+      try {
+        const parsed = new URL(patternJsonPath, window.location.href);
+        const folder = parsed.pathname.split("/").slice(0, -1).join("/");
+        if (folder) {
+          [
+            "Patterns/Pattern_brief.txt",
+            "Patterns/Pattern_explains_p1.txt",
+            "Patterns/Pattern_explains_p2.txt",
+            "Patterns/Pattern_explains_p3.txt",
+            "Patterns/Pattern_savings_howto.txt",
+            "Patterns/Pattern_waste_howto.txt",
+          ].forEach(function (suffix) {
+            addPath(`${folder}/${suffix}`);
+          });
+        }
+      } catch (_err) {}
+    }
+    return results.slice(0, 8);
+  }
+
+  async function fetchTextFileIfExists(url) {
+    if (!url || typeof window.fetch !== "function") return "";
+    try {
+      const response = await window.fetch(url, { credentials: "same-origin" });
+      if (!response || !response.ok) return "";
+      const text = await response.text();
+      return normalizePatternNarrativeText(text, 700);
+    } catch (_err) {
+      return "";
+    }
+  }
+
+  async function loadPatternTextFileNarratives(patternJsonPath) {
+    const candidates = collectPatternTextFileCandidates(patternJsonPath);
+    if (!Array.isArray(candidates) || candidates.length === 0) {
+      return { files: [], excerpts: [] };
+    }
+    const files = [];
+    const excerpts = [];
+    for (let i = 0; i < candidates.length; i += 1) {
+      const filePath = candidates[i];
+      const excerpt = await fetchTextFileIfExists(filePath);
+      if (!excerpt) continue;
+      files.push(filePath);
+      excerpts.push(`${filePath.split("/").pop()}: ${excerpt}`);
+      if (excerpts.length >= 4) break;
+    }
+    return {
+      files: files.slice(0, 6),
+      excerpts: excerpts.slice(0, 4),
+    };
+  }
+
+  function resolveActivePagePatternContextFromCache() {
+    const cacheKey = buildSummaryboardPatternContextKey();
+    if (!cacheKey || cacheKey !== activePagePatternContextCacheKey) return null;
+    const ageMs = Date.now() - Number(activePagePatternContextFetchedAtMs || 0);
+    if (!activePagePatternContextCache) return null;
+    if (!Number.isFinite(ageMs) || ageMs > PATTERN_CONTEXT_PREFETCH_TTL_MS) return null;
+    return activePagePatternContextCache;
+  }
+
+  async function fetchPatternAnalysisJsonContext() {
+    const candidateUrls = collectSummaryboardPatternJsonCandidates();
+    if (!Array.isArray(candidateUrls) || candidateUrls.length === 0) {
+      return {
+        json_url: "",
+        source_files: [],
+        entries: [],
+        summary: "",
+        text_file_excerpts: [],
+      };
+    }
+    for (let i = 0; i < candidateUrls.length; i += 1) {
+      const candidateUrl = candidateUrls[i];
+      try {
+        const response = await window.fetch(candidateUrl, { credentials: "same-origin" });
+        if (!response || !response.ok) continue;
+        const json = await response.json();
+        const entries = extractPatternNarrativeEntriesFromPayload(json);
+        if (!Array.isArray(entries) || entries.length === 0) continue;
+        const summary = buildPatternNarrativeSummary(entries);
+        const textNarratives = await loadPatternTextFileNarratives(candidateUrl);
+        const sourceFiles = [candidateUrl]
+          .concat(textNarratives.files || [])
+          .filter(function (filePath, index, arr) {
+            return Boolean(filePath) && arr.indexOf(filePath) === index;
+          });
+        return {
+          json_url: candidateUrl,
+          source_files: sourceFiles.slice(0, 10),
+          entries: entries.slice(0, 8),
+          summary: summary,
+          text_file_excerpts: (textNarratives.excerpts || []).slice(0, 4),
+        };
+      } catch (_err) {}
+    }
+    return {
+      json_url: "",
+      source_files: [],
+      entries: [],
+      summary: "",
+      text_file_excerpts: [],
+    };
+  }
+
+  async function prefetchActivePagePatternContext() {
+    if (!isLikelySummaryboardPage()) return null;
+    if (typeof window.fetch !== "function") return null;
+    const cacheKey = buildSummaryboardPatternContextKey();
+    const cached = resolveActivePagePatternContextFromCache();
+    if (cached) return cached;
+    if (activePagePatternContextPromise) return activePagePatternContextPromise;
+    activePagePatternContextPromise = (async function () {
+      const fetched = await fetchPatternAnalysisJsonContext();
+      const normalized = {
+        page_key: cacheKey,
+        fetched_at: new Date().toISOString(),
+        json_url: coerceText(fetched && fetched.json_url),
+        source_files: normalizeStringArray(
+          fetched && Array.isArray(fetched.source_files) ? fetched.source_files : [],
+          16
+        ),
+        entries: Array.isArray(fetched && fetched.entries) ? fetched.entries.slice(0, 8) : [],
+        summary: coerceText(fetched && fetched.summary),
+        text_file_excerpts: normalizeStringArray(
+          fetched && Array.isArray(fetched.text_file_excerpts) ? fetched.text_file_excerpts : [],
+          6
+        ),
+      };
+      activePagePatternContextCache = normalized;
+      activePagePatternContextCacheKey = cacheKey;
+      activePagePatternContextFetchedAtMs = Date.now();
+      return normalized;
+    })();
+    try {
+      return await activePagePatternContextPromise;
+    } finally {
+      activePagePatternContextPromise = null;
+    }
+  }
+
+  function getActivePagePatternContextForLaunch() {
+    const cached = resolveActivePagePatternContextFromCache();
+    if (cached && Array.isArray(cached.entries) && cached.entries.length > 0) {
+      return cached;
+    }
+    if (!isLikelySummaryboardPage()) return null;
+    const windowPayloadCandidates = [
+      window && window.PATTERN_DATA,
+      window && window.patternData,
+      window && window.maxwellianPatternData,
+    ];
+    let entries = [];
+    for (let i = 0; i < windowPayloadCandidates.length; i += 1) {
+      const extracted = extractPatternNarrativeEntriesFromPayload(windowPayloadCandidates[i]);
+      if (Array.isArray(extracted) && extracted.length > 0) {
+        entries = extracted;
+        break;
+      }
+    }
+    if (!entries || entries.length === 0) return null;
+    const summary = buildPatternNarrativeSummary(entries);
+    const fallbackContext = {
+      page_key: buildSummaryboardPatternContextKey(),
+      fetched_at: new Date().toISOString(),
+      json_url: "",
+      source_files: collectSummaryboardPatternJsonCandidates().slice(0, 2),
+      entries: entries.slice(0, 8),
+      summary: summary,
+      text_file_excerpts: [],
+    };
+    activePagePatternContextCache = fallbackContext;
+    activePagePatternContextCacheKey = fallbackContext.page_key;
+    activePagePatternContextFetchedAtMs = Date.now();
+    return fallbackContext;
   }
 
   function getTrimmedConfigText(cfg, key) {
@@ -1506,6 +4896,31 @@
     if (words.length === 0) return "";
     const candidate = words.join(" ");
     if (!/^[A-Za-z][A-Za-z' -]{0,46}$/.test(candidate)) return "";
+    return candidate;
+  }
+
+  function normalizeVisitorCompany(rawCompany) {
+    const text = coerceText(rawCompany)
+      .replace(/[<>{}[\]]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!text) return "";
+    const trimmed = text
+      .replace(/^[,.\-:;()\s]+/, "")
+      .replace(/[,.\-:;()\s]+$/, "")
+      .trim();
+    if (!trimmed || trimmed.length < 2) return "";
+    if (trimmed.length > 90) return `${trimmed.slice(0, 90).trim()}…`;
+    return trimmed;
+  }
+
+  function normalizeVisitorEmail(rawEmail) {
+    const candidate = coerceText(rawEmail)
+      .toLowerCase()
+      .replace(/^[<(\["'\s]+/, "")
+      .replace(/[>)\]"'\s.,;:!?]+$/, "");
+    if (!candidate) return "";
+    if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(candidate)) return "";
     return candidate;
   }
 
@@ -1579,17 +4994,44 @@
     return {
       enabled: Boolean(cfg && cfg.guardrails_enabled),
       founderBypass: cfg && cfg.guardrails_founder_bypass !== false,
-      maxQuestions: clampNumber(cfg && cfg.guardrails_max_questions_per_session, 3, 50, 8),
+      maxQuestions: clampNumber(cfg && cfg.guardrails_max_questions_per_session, 3, 50, 5),
+      minQuestions: clampNumber(cfg && cfg.guardrails_question_limit_min, 1, 50, 5),
       freeQuestions: clampNumber(cfg && cfg.guardrails_free_questions, 0, 10, 2),
       maxMinutes: clampNumber(cfg && cfg.guardrails_max_session_minutes, 2, 120, 12),
-      idleSeconds: clampNumber(cfg && cfg.guardrails_idle_timeout_seconds, 15, 1800, 90),
+      idleSeconds: clampNumber(cfg && cfg.guardrails_idle_timeout_seconds, 5, 1800, 90),
+      idleFollowupSeconds: clampNumber(cfg && cfg.guardrails_idle_followup_seconds, 5, 1800, 10),
+      idleFinalExitSeconds: clampNumber(
+        cfg && cfg.guardrails_idle_final_exit_seconds,
+        5,
+        1800,
+        10
+      ),
+      idleFirstPromptMessage:
+        coerceText(cfg && cfg.guardrails_idle_first_prompt_message) ||
+        "Can I help you with anything else?",
+      idleFinalPromptMessage:
+        coerceText(cfg && cfg.guardrails_idle_final_prompt_message) ||
+        "Are there any other questions? I need to attend to another Maxwellian.",
       lowRelevanceLimit: clampNumber(cfg && cfg.guardrails_low_relevance_limit, 1, 6, 2),
       minRelevanceScore: clampNumber(cfg && cfg.guardrails_min_relevance_score, 1, 8, 1),
       maxSessionsPerDay: clampNumber(cfg && cfg.guardrails_max_sessions_per_day, 1, 100, 6),
       dailyMeteringEnabled: !cfg || cfg.guardrails_enable_daily_metering !== false,
+      questionLimitMessage: coerceText(cfg && cfg.guardrails_question_limit_message),
       offboardMessage: coerceText(cfg && cfg.guardrails_offboard_message),
       contactEmail: coerceText(cfg && cfg.guardrails_contact_email) || "sales@unityenergy.com",
       contactUrl: coerceText(cfg && cfg.guardrails_contact_url) || "https://unityenergy.com/contact-us",
+      contactRedirectUrl:
+        coerceText(cfg && cfg.guardrails_contact_redirect_url) || "/UnityEnergy/contact-us.html",
+      interestedIdentityPromptAfterQuestions: clampNumber(
+        cfg && cfg.guardrails_interested_identity_prompt_after_questions,
+        1,
+        12,
+        3
+      ),
+      interestedIdentityPromptMessage: coerceText(
+        cfg && cfg.guardrails_interested_identity_prompt_message
+      ),
+      interestedFollowupMessage: coerceText(cfg && cfg.guardrails_interested_followup_message),
       relevanceKeywords: Array.isArray(cfg && cfg.guardrails_relevance_keywords)
         ? cfg.guardrails_relevance_keywords
             .map(function (kw) { return coerceText(kw).toLowerCase(); })
@@ -1643,6 +5085,13 @@
   }
 
   function buildGuardrailOffboardMessage(settings, reason) {
+    const reasonToken = coerceText(reason).toLowerCase();
+    if (reasonToken === "question-limit") {
+      return (
+        (settings && settings.questionLimitMessage) ||
+        "You've reached my five-question limit for this page. I can have a specialist contact you, or I can send you to our contact page so you can share your information."
+      );
+    }
     const reasonLabel = coerceText(reason).replace(/-/g, " ");
     const core =
       settings && settings.offboardMessage
@@ -1656,6 +5105,131 @@
     if (!guardrailIdleTimer) return;
     window.clearTimeout(guardrailIdleTimer);
     guardrailIdleTimer = null;
+  }
+
+  function clearGuardrailOffboardCloseTimer() {
+    if (!guardrailOffboardCloseTimer) return;
+    window.clearTimeout(guardrailOffboardCloseTimer);
+    guardrailOffboardCloseTimer = null;
+  }
+
+  function setGuardrailIdlePromptStage(nextStage, reason, shouldPostToRenderer) {
+    const normalizedStage = clampNumber(nextStage, 0, 3, 0);
+    guardrailIdlePromptStage = normalizedStage;
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return;
+    if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+      pendingLaunchSession.contextPayload = {};
+    }
+    pendingLaunchSession.contextPayload.guardrail_idle_prompt_stage = normalizedStage;
+    pendingLaunchSession.contextPayload.guardrail_idle_prompt_active = normalizedStage > 0;
+    pendingLaunchSession.contextPayload.guardrail_idle_prompt_updated_at = new Date().toISOString();
+    if (coerceText(reason)) {
+      appendSessionDecision(pendingLaunchSession, reason, {
+        stage: normalizedStage,
+      });
+    }
+    if (shouldPostToRenderer) {
+      postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
+    }
+  }
+
+  function getGuardrailIdleTimeoutMs(settings) {
+    if (guardrailIdlePromptStage <= 0) {
+      return Math.max(1000, settings.idleSeconds * 1000);
+    }
+    if (guardrailIdlePromptStage === 1) {
+      return Math.max(1000, settings.idleFollowupSeconds * 1000);
+    }
+    return Math.max(1000, settings.idleFinalExitSeconds * 1000);
+  }
+
+  function getGuardrailExtendedQaMissingIdentityFields(cfg) {
+    const state = ensureLeadCaptureState(currentVisitorName);
+    const leadSettings = getLeadCaptureSettings(cfg);
+    const missing = [];
+    if (!coerceText(state && state.name)) missing.push("name");
+    if (leadSettings.collectCompany && !coerceText(state && state.company)) missing.push("company");
+    if (!coerceText(state && state.email)) missing.push("email");
+    return missing;
+  }
+
+  function formatMissingFieldListForSpeech(missingFields) {
+    if (!Array.isArray(missingFields) || missingFields.length === 0) return "contact details";
+    if (missingFields.length === 1) return missingFields[0];
+    if (missingFields.length === 2) return `${missingFields[0]} and ${missingFields[1]}`;
+    return `${missingFields.slice(0, -1).join(", ")}, and ${missingFields[missingFields.length - 1]}`;
+  }
+
+  function buildInterestedIdentityCapturePrompt(missingFields, settings) {
+    const configured = coerceText(settings && settings.interestedIdentityPromptMessage);
+    if (configured) return configured;
+    const missingLabel = formatMissingFieldListForSpeech(missingFields);
+    return `Happy to keep helping. Before we continue, may I get your ${missingLabel} so we can follow up with you directly?`;
+  }
+
+  function isInterestedContinuationIntent(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return false;
+    return /\b(more questions|another question|keep going|continue|still have questions|can i ask|i have questions|more help)\b/.test(sample);
+  }
+
+  function maybeHandleInterestedVisitorOnboarding(transcriptText, cfg, questionLogged, settings) {
+    const activeSettings =
+      settings && typeof settings === "object" ? settings : getGuardrailSettings(cfg);
+    const missingIdentityFields = getGuardrailExtendedQaMissingIdentityFields(cfg);
+    const hasMissingIdentity = missingIdentityFields.length > 0;
+    const interestedIntent = isInterestedContinuationIntent(transcriptText);
+    const thresholdHit =
+      Boolean(questionLogged) &&
+      visitorQuestionCount >= activeSettings.interestedIdentityPromptAfterQuestions &&
+      guardrailLeadCapturePromptCount < visitorQuestionCount;
+    if (hasMissingIdentity && (interestedIntent || thresholdHit)) {
+      guardrailLeadCapturePromptCount = Math.max(guardrailLeadCapturePromptCount, visitorQuestionCount);
+      if (pendingLaunchSession && typeof pendingLaunchSession === "object") {
+        if (
+          !pendingLaunchSession.contextPayload ||
+          typeof pendingLaunchSession.contextPayload !== "object"
+        ) {
+          pendingLaunchSession.contextPayload = {};
+        }
+        pendingLaunchSession.contextPayload.lead_capture_extended_qa_gate = true;
+        pendingLaunchSession.contextPayload.lead_capture_extended_qa_missing_identity_fields =
+          missingIdentityFields;
+        pendingLaunchSession.contextPayload.lead_capture_extended_qa_gate_updated_at =
+          new Date().toISOString();
+        appendSessionDecision(pendingLaunchSession, "interested-visitor-identity-gate-prompted", {
+          missing_fields: missingIdentityFields,
+          question_count: visitorQuestionCount,
+          trigger: interestedIntent ? "explicit-interest" : "question-threshold",
+        });
+        postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
+      }
+      return {
+        statusText: buildInterestedIdentityCapturePrompt(missingIdentityFields, activeSettings),
+        statusDurationMs: 3800,
+      };
+    }
+    if (!hasMissingIdentity && interestedIntent) {
+      return {
+        statusText:
+          coerceText(activeSettings.interestedFollowupMessage) ||
+          "Thank you for your interest in Unity Energy. We have your information and will follow up directly. What is your next question?",
+        statusDurationMs: 3000,
+      };
+    }
+    return null;
+  }
+
+  function setGuardrailContactRedirect(settings) {
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return "";
+    if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+      pendingLaunchSession.contextPayload = {};
+    }
+    const redirectUrl =
+      coerceText(settings && settings.contactRedirectUrl) || "/UnityEnergy/contact-us.html";
+    pendingLaunchSession.contextPayload.post_conversation_redirect_url = redirectUrl;
+    pendingLaunchSession.contextPayload.guardrail_contact_redirect_url = redirectUrl;
+    return redirectUrl;
   }
 
   function scoreRelevance(text, settings) {
@@ -1676,11 +5250,16 @@
 
   function resetGuardrailState() {
     clearGuardrailIdleTimer();
+    clearGuardrailOffboardCloseTimer();
+    resetElectricalStoryGuardrailState();
     guardrailSessionStartedAt = 0;
     guardrailLastActivityAt = 0;
     guardrailQuestionCount = 0;
+    guardrailQuestionCap = 0;
     guardrailLowRelevanceStreak = 0;
     guardrailOffboarded = false;
+    guardrailIdlePromptStage = 0;
+    guardrailLeadCapturePromptCount = 0;
     guardrailSessionToken = "";
   }
 
@@ -1688,15 +5267,54 @@
     guardrailLastActivityAt = Date.now();
   }
 
+  function clearGuardrailIdlePromptFlow(cfg, reason, shouldPostToRenderer) {
+    if (guardrailIdlePromptStage <= 0) return;
+    setGuardrailIdlePromptStage(0, reason || "guardrail-idle-flow-cleared", shouldPostToRenderer);
+    const guardrailSettings = getGuardrailSettings(cfg);
+    scheduleGuardrailIdleTimer(guardrailSettings, cfg);
+  }
+
+  function resolveGuardrailQuestionCap(settings) {
+    const maxQuestions = Math.max(1, Number(settings && settings.maxQuestions) || 5);
+    const minQuestions = Math.max(
+      1,
+      Math.min(maxQuestions, Number(settings && settings.minQuestions) || maxQuestions)
+    );
+    if (minQuestions >= maxQuestions) return maxQuestions;
+    return minQuestions + Math.floor(Math.random() * (maxQuestions - minQuestions + 1));
+  }
+
   function scheduleGuardrailIdleTimer(settings, cfg) {
     clearGuardrailIdleTimer();
     if (!settings || !settings.enabled || shouldBypassGuardrails(settings)) return;
     if (!hasConversationStarted) return;
-    const timeoutMs = Math.max(15000, settings.idleSeconds * 1000);
+    const timeoutMs = getGuardrailIdleTimeoutMs(settings);
     guardrailIdleTimer = window.setTimeout(function () {
       const modal = document.getElementById("clerkVoiceModal");
       if (!modal || !modal.classList.contains("active")) return;
       if (guardrailOffboarded) return;
+      if (guardrailIdlePromptStage <= 0) {
+        setGuardrailIdlePromptStage(1, "guardrail-idle-nudge-sent", true);
+        setStatus(
+          coerceText(settings.idleFirstPromptMessage) || "Can I help you with anything else?",
+          false,
+          true
+        );
+        scheduleGuardrailIdleTimer(settings, cfg);
+        return;
+      }
+      if (guardrailIdlePromptStage === 1) {
+        setGuardrailIdlePromptStage(2, "guardrail-idle-final-nudge-sent", true);
+        setStatus(
+          coerceText(settings.idleFinalPromptMessage) ||
+            "Are there any other questions? I need to attend to another Maxwellian.",
+          false,
+          true
+        );
+        scheduleGuardrailIdleTimer(settings, cfg);
+        return;
+      }
+      setGuardrailIdlePromptStage(3, "guardrail-idle-final-timeout", true);
       triggerGuardrailOffboarding("idle-timeout", settings, cfg);
     }, timeoutMs);
   }
@@ -1726,6 +5344,7 @@
     if (!settings || !settings.enabled || shouldBypassGuardrails(settings)) {
       return { allowed: true };
     }
+    guardrailQuestionCap = resolveGuardrailQuestionCap(settings);
 
     if (settings.dailyMeteringEnabled) {
       const meter = readDailyMeter();
@@ -1744,7 +5363,7 @@
     }
 
     pendingLaunchSession.contextPayload.guardrail_limits = {
-      max_questions: settings.maxQuestions,
+      max_questions: guardrailQuestionCap || settings.maxQuestions,
       free_questions: settings.freeQuestions,
       max_minutes: settings.maxMinutes,
       idle_seconds: settings.idleSeconds,
@@ -1766,7 +5385,8 @@
     }
 
     guardrailQuestionCount += 1;
-    if (guardrailQuestionCount > settings.maxQuestions) {
+    const questionCap = guardrailQuestionCap || settings.maxQuestions;
+    if (guardrailQuestionCount >= questionCap) {
       return { allow: false, reason: "question-limit" };
     }
 
@@ -1797,6 +5417,9 @@
     if (guardrailOffboarded) return;
     guardrailOffboarded = true;
     clearGuardrailIdleTimer();
+    clearGuardrailOffboardCloseTimer();
+    setGuardrailIdlePromptStage(3, "guardrail-offboarded", false);
+    const redirectUrl = setGuardrailContactRedirect(settings);
     const message = buildGuardrailOffboardMessage(settings, reason);
     setStatus(message, false, true);
     setStartButtonVisible(false);
@@ -1810,19 +5433,368 @@
         guardrail_offboard_reason: reason,
         guardrail_contact_email: settings.contactEmail,
         guardrail_contact_url: settings.contactUrl,
+        guardrail_contact_redirect_url: redirectUrl,
       });
       appendSessionDecision(pendingLaunchSession, "guardrail-offboarded", {
         reason: reason,
         contact_email: settings.contactEmail,
+        contact_redirect_url: redirectUrl,
       });
       postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
     }
     postToWidgetFrame({ type: "cancel" });
+    guardrailOffboardCloseTimer = window.setTimeout(function () {
+      closeClerkVoiceModal({
+        reason: "guardrail-offboard",
+        preserveRoaming: false,
+        preserveDailyMeter: true,
+      });
+    }, 1800);
+  }
+
+  function getElectricalStoryGuardrailSettings(cfg) {
+    return {
+      enabled: Boolean(cfg && cfg.electrical_story_guardrails_enabled),
+      requireNameCompany:
+        !cfg ||
+        cfg.electrical_story_require_name_company_before_history_answers !== false,
+      maxQuestions: clampNumber(
+        cfg && cfg.electrical_story_history_question_limit,
+        1,
+        20,
+        5
+      ),
+      minQuestions: clampNumber(
+        cfg && cfg.electrical_story_history_question_limit_min,
+        1,
+        20,
+        4
+      ),
+      exitIdleSeconds: clampNumber(
+        cfg && cfg.electrical_story_exit_idle_seconds,
+        5,
+        300,
+        22
+      ),
+      identityPrompt:
+        coerceText(cfg && cfg.electrical_story_identity_prompt) ||
+        "Before we go deeper into the electrical energy history, please share your name and company.",
+      exitPrompt:
+        coerceText(cfg && cfg.electrical_story_exit_prompt) ||
+        "Thanks for your interest in the electrical energy story. It matters because it explains why Unity Energy exists. I need to step away unless you have other Unity Energy questions.",
+    };
+  }
+
+  function isElectricalStorySession(launchSession) {
+    const payload =
+      launchSession &&
+      launchSession.contextPayload &&
+      typeof launchSession.contextPayload === "object"
+        ? launchSession.contextPayload
+        : {};
+    const candidates = [
+      payload.source_page,
+      payload.active_page_slug,
+      payload.page_slug,
+      launchSession && launchSession.contextSource,
+      getCurrentPageSlug(),
+    ];
+    for (let i = 0; i < candidates.length; i += 1) {
+      if (normalizePageSlugToken(candidates[i]) === "electrical-energy-story") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function clearElectricalStoryExitTimer() {
+    if (!electricalStoryExitTimer) return;
+    window.clearTimeout(electricalStoryExitTimer);
+    electricalStoryExitTimer = null;
+  }
+
+  function resetElectricalStoryGuardrailState() {
+    clearElectricalStoryExitTimer();
+    electricalStoryQuestionCount = 0;
+    electricalStoryQuestionCap = 0;
+    electricalStoryExitPromptActive = false;
+    electricalStoryExitPromptSent = false;
+  }
+
+  function resolveElectricalStoryQuestionCap(settings) {
+    const minQuestions = Math.max(
+      1,
+      Math.min(settings.minQuestions || settings.maxQuestions, settings.maxQuestions)
+    );
+    const maxQuestions = Math.max(minQuestions, settings.maxQuestions);
+    if (minQuestions >= maxQuestions) return maxQuestions;
+    return (
+      minQuestions + Math.floor(Math.random() * (maxQuestions - minQuestions + 1))
+    );
+  }
+
+  function getElectricalStoryMissingIdentityFields(settings) {
+    if (!settings || !settings.requireNameCompany) return [];
+    const state = ensureLeadCaptureState(currentVisitorName);
+    const missing = [];
+    if (!coerceText(state && state.name) && !coerceText(currentVisitorName)) {
+      missing.push("name");
+    }
+    if (!coerceText(state && state.company)) {
+      missing.push("company");
+    }
+    return missing;
+  }
+
+  function syncElectricalStoryGuardrailToSession(cfg, reason, shouldPostToRenderer) {
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return;
+    if (
+      !pendingLaunchSession.contextPayload ||
+      typeof pendingLaunchSession.contextPayload !== "object"
+    ) {
+      pendingLaunchSession.contextPayload = {};
+    }
+    const settings = getElectricalStoryGuardrailSettings(cfg);
+    const payload = pendingLaunchSession.contextPayload;
+    const missingIdentityFields = getElectricalStoryMissingIdentityFields(settings);
+    const enabledForSession =
+      Boolean(settings.enabled) && isElectricalStorySession(pendingLaunchSession);
+    Object.assign(payload, {
+      electrical_story_guardrails_enabled: enabledForSession,
+      electrical_story_require_name_company_before_history_answers:
+        settings.requireNameCompany,
+      electrical_story_history_question_count: electricalStoryQuestionCount,
+      electrical_story_history_question_cap:
+        electricalStoryQuestionCap || settings.maxQuestions,
+      electrical_story_exit_prompt_active: electricalStoryExitPromptActive,
+      electrical_story_exit_prompt_sent: electricalStoryExitPromptSent,
+      electrical_story_identity_missing_fields: missingIdentityFields,
+      electrical_story_identity_ready: missingIdentityFields.length === 0,
+      electrical_story_identity_prompt: settings.identityPrompt,
+      electrical_story_exit_prompt: settings.exitPrompt,
+    });
+    if (coerceText(reason)) {
+      appendSessionDecision(pendingLaunchSession, reason, {
+        enabled: enabledForSession,
+        question_count: electricalStoryQuestionCount,
+        question_cap: electricalStoryQuestionCap || settings.maxQuestions,
+        exit_prompt_active: electricalStoryExitPromptActive,
+        missing_identity_fields: missingIdentityFields,
+      });
+    }
+    if (shouldPostToRenderer) {
+      postToWidgetFrame({
+        type: "maxwellian_session_launch",
+        payload: pendingLaunchSession,
+      });
+    }
+  }
+
+  function initializeElectricalStoryGuardrailSession(cfg) {
+    resetElectricalStoryGuardrailState();
+    const settings = getElectricalStoryGuardrailSettings(cfg);
+    if (!settings.enabled || !isElectricalStorySession(pendingLaunchSession)) {
+      syncElectricalStoryGuardrailToSession(
+        cfg,
+        "electrical-story-guardrail-disabled",
+        false
+      );
+      return;
+    }
+    electricalStoryQuestionCap = resolveElectricalStoryQuestionCap(settings);
+    syncElectricalStoryGuardrailToSession(
+      cfg,
+      "electrical-story-guardrail-initialized",
+      false
+    );
+  }
+
+  function isElectricalStoryHistoryQuestion(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return false;
+    const questionLike =
+      sample.includes("?") ||
+      /^(?:what|when|where|who|why|how|did|was|were|can|could|tell me)/.test(sample);
+    if (!questionLike) return false;
+    return /\b(westinghouse|tesla|edison|ferraris|volta|ampere|maxwell|history|historical|timeline|era|period|century|chicago world'?s fair|electric utility|ac|dc|war of currents|generator|alternating current|direct current)\b/.test(
+      sample
+    ) || /\b(?:18|19|20)\d{2}\b/.test(sample);
+  }
+
+  function isElectricalStoryDeclineIntent(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return false;
+    return /\b(no|nope|not now|that'?s all|thats all|nothing else|i'?m done|im done|we'?re done|we are done|all set|goodbye)\b/.test(
+      sample
+    );
+  }
+
+  function isElectricalStoryUnityIntent(text) {
+    const sample = coerceText(text).toLowerCase();
+    if (!sample) return false;
+    if (
+      /\b(unity energy|unity|mpts|measure manage exchange|services|solutions|team|company|about unity)\b/.test(
+        sample
+      )
+    ) {
+      return true;
+    }
+    return /\b(yes|yeah|yep|sure|okay|ok|go ahead)\b/.test(sample);
+  }
+
+  function scheduleElectricalStoryExitTimer(cfg) {
+    clearElectricalStoryExitTimer();
+    if (!electricalStoryExitPromptActive) return;
+    const settings = getElectricalStoryGuardrailSettings(cfg);
+    const timeoutMs = Math.max(5000, settings.exitIdleSeconds * 1000);
+    electricalStoryExitTimer = window.setTimeout(function () {
+      const modal = document.getElementById("clerkVoiceModal");
+      if (!modal || !modal.classList.contains("active")) return;
+      if (!electricalStoryExitPromptActive) return;
+      syncElectricalStoryGuardrailToSession(
+        cfg,
+        "electrical-story-exit-idle-timeout",
+        true
+      );
+      closeElectricalStorySessionWithFade("electrical-story-idle-exit");
+    }, timeoutMs);
+  }
+
+  function clearElectricalStoryExitPromptState(cfg, reason, shouldPostToRenderer) {
+    electricalStoryExitPromptActive = false;
+    electricalStoryExitPromptSent = false;
+    clearElectricalStoryExitTimer();
+    syncElectricalStoryGuardrailToSession(
+      cfg,
+      reason || "electrical-story-exit-prompt-cleared",
+      shouldPostToRenderer
+    );
+  }
+
+  function closeElectricalStorySessionWithFade(reason) {
+    clearElectricalStoryExitTimer();
+    const modal = document.getElementById("clerkVoiceModal");
+    if (!modal || !modal.classList.contains("active")) return false;
+    if (modal.dataset.storyClosing === "1") return true;
+    modal.dataset.storyClosing = "1";
+    modal.style.transition = "opacity 360ms ease";
+    modal.style.opacity = "0";
+    window.setTimeout(function () {
+      modal.style.opacity = "";
+      modal.style.transition = "";
+      modal.dataset.storyClosing = "";
+      closeClerkVoiceModal({ reason: reason || "electrical-story-exit" });
+    }, 380);
+    return true;
+  }
+
+  function handleElectricalStoryGuardrailTurn(transcriptText, cfg, questionLogged) {
+    const settings = getElectricalStoryGuardrailSettings(cfg);
+    if (!settings.enabled || !isElectricalStorySession(pendingLaunchSession)) return null;
+
+    const historyQuestion = Boolean(questionLogged) && isElectricalStoryHistoryQuestion(transcriptText);
+    const declineIntent = isElectricalStoryDeclineIntent(transcriptText);
+    const unityIntent = isElectricalStoryUnityIntent(transcriptText);
+
+    if (electricalStoryExitPromptActive) {
+      clearElectricalStoryExitTimer();
+      if (declineIntent) {
+        syncElectricalStoryGuardrailToSession(
+          cfg,
+          "electrical-story-exit-declined",
+          true
+        );
+        closeElectricalStorySessionWithFade("electrical-story-declined");
+        return { closeTriggered: true };
+      }
+      if (unityIntent) {
+        clearElectricalStoryExitPromptState(
+          cfg,
+          "electrical-story-exit-resumed-on-unity-intent",
+          true
+        );
+        return {
+          statusText: "Absolutely—what would you like to know about Unity Energy?",
+          statusDurationMs: 2600,
+        };
+      }
+      if (historyQuestion) {
+        electricalStoryExitPromptSent = true;
+        syncElectricalStoryGuardrailToSession(
+          cfg,
+          "electrical-story-exit-reminder",
+          true
+        );
+        postToWidgetFrame({ type: "cancel" });
+        scheduleElectricalStoryExitTimer(cfg);
+        return {
+          statusText: settings.exitPrompt,
+          statusDurationMs: 3200,
+        };
+      }
+      scheduleElectricalStoryExitTimer(cfg);
+      return null;
+    }
+
+    if (!historyQuestion) return null;
+
+    const missingIdentityFields = getElectricalStoryMissingIdentityFields(settings);
+    if (missingIdentityFields.length > 0) {
+      electricalStoryExitPromptActive = false;
+      electricalStoryExitPromptSent = false;
+      syncElectricalStoryGuardrailToSession(
+        cfg,
+        "electrical-story-identity-required",
+        true
+      );
+      postToWidgetFrame({ type: "cancel" });
+      return {
+        statusText: settings.identityPrompt,
+        statusDurationMs: 3200,
+      };
+    }
+
+    if (!electricalStoryQuestionCap) {
+      electricalStoryQuestionCap = resolveElectricalStoryQuestionCap(settings);
+    }
+    electricalStoryQuestionCount += 1;
+    if (electricalStoryQuestionCount >= electricalStoryQuestionCap) {
+      electricalStoryExitPromptActive = true;
+      electricalStoryExitPromptSent = true;
+      syncElectricalStoryGuardrailToSession(
+        cfg,
+        "electrical-story-history-limit-reached",
+        true
+      );
+      postToWidgetFrame({ type: "cancel" });
+      scheduleElectricalStoryExitTimer(cfg);
+      return {
+        statusText: settings.exitPrompt,
+        statusDurationMs: 3600,
+      };
+    }
+
+    syncElectricalStoryGuardrailToSession(
+      cfg,
+      "electrical-story-history-question-counted",
+      false
+    );
+    return null;
   }
 
   function extractTranscriptText(payload) {
     if (typeof payload === "string") return payload.trim();
     if (!payload || typeof payload !== "object") return "";
+    const nestedMessage =
+      payload.message && typeof payload.message === "object" ? payload.message : null;
+    if (nestedMessage) {
+      const nestedContent = coerceText(
+        nestedMessage.content ||
+        nestedMessage.text ||
+        nestedMessage.message
+      );
+      if (nestedContent) return nestedContent;
+    }
     const direct = coerceText(
       payload.text ||
         payload.message ||
@@ -1854,9 +5826,18 @@
 
   function extractTranscriptRole(payload) {
     if (!payload || typeof payload !== "object") return "";
-    return coerceText(
+    const nestedMessage =
+      payload.message && typeof payload.message === "object" ? payload.message : null;
+    const role = coerceText(
       payload.role || payload.speaker || payload.author || payload.source || payload.sender || payload.actor
     ).toLowerCase();
+    if (role) return role;
+    const nestedRole = coerceText(nestedMessage && nestedMessage.role).toLowerCase();
+    if (nestedRole) return nestedRole;
+    const payloadType = coerceText(payload.type).toLowerCase();
+    if (payloadType === "assistant_message") return "assistant";
+    if (payloadType === "user_message") return "user";
+    return "";
   }
 
   function isLikelyAssistantRole(role) {
@@ -2275,8 +6256,11 @@
       payload.mode,
       payload.conversation_mode,
       payload.customer,
+      payload.customer_slug,
+      payload.customer_name,
       payload.site,
       payload.board,
+      payload.guide_mode,
       payload.transformer_focus,
       payload.session_context,
       payload.system_prompt_text,
@@ -2546,6 +6530,16 @@
     }
 
     base.characterId = resolveCharacterId(base.characterId, cfg);
+    const guideScope = applyGuideContextToLaunchSession(base, cfg);
+    if (guideScope && guideScope.guideMode === "customer") {
+      const memoryExcerpt = buildCustomerMemoryExcerpt(guideScope, cfg);
+      if (memoryExcerpt) {
+        base.contextPayload.customer_memory_excerpt = memoryExcerpt;
+        base.contextPayload.customer_memory_recap_available = true;
+      } else {
+        base.contextPayload.customer_memory_recap_available = false;
+      }
+    }
     applyLaunchContextPolicy(base, cfg);
     applyIntelligenceProfile(base, cfg);
     applySharedContextAwareness(base, cfg);
@@ -2565,10 +6559,43 @@
     if (voltageUnitSpeechRule && !coerceText(base.contextPayload.voltage_unit_speech_rule)) {
       base.contextPayload.voltage_unit_speech_rule = voltageUnitSpeechRule;
     }
+    const mptsSpeechRule = getMptsSpeechRule(cfg);
+    if (mptsSpeechRule && !coerceText(base.contextPayload.mpts_speech_rule)) {
+      base.contextPayload.mpts_speech_rule = mptsSpeechRule;
+    }
+    const mptsFailSafeRule = getMptsFailSafeRule(cfg);
+    if (mptsFailSafeRule && !coerceText(base.contextPayload.mpts_fail_safe_rule)) {
+      base.contextPayload.mpts_fail_safe_rule = mptsFailSafeRule;
+    }
+    if (!coerceText(base.contextPayload.mpts_canonical_acronym)) {
+      base.contextPayload.mpts_canonical_acronym = "M P T S";
+    }
+    if (!coerceText(base.contextPayload.mpts_full_name)) {
+      base.contextPayload.mpts_full_name = "Maximum Power Transfer Solution";
+    }
+    if (!coerceText(base.contextPayload.mpts_manage_layer_positioning)) {
+      base.contextPayload.mpts_manage_layer_positioning =
+        "M P T S lives in Unity's Manage layer inside Measure-Manage-Exchange.";
+    }
     const knowledgeReferenceSpine = getTrimmedConfigText(cfg, "knowledge_reference_spine");
     if (knowledgeReferenceSpine && !coerceText(base.contextPayload.knowledge_reference_spine)) {
       base.contextPayload.knowledge_reference_spine = knowledgeReferenceSpine;
     }
+    const leadCaptureWorkflow = getTrimmedConfigText(cfg, "lead_capture_workflow");
+    if (leadCaptureWorkflow && !coerceText(base.contextPayload.lead_capture_workflow)) {
+      base.contextPayload.lead_capture_workflow = leadCaptureWorkflow;
+    }
+    base.contextPayload.lead_capture_enabled = cfg.lead_capture_enabled !== false;
+    base.contextPayload.lead_capture_collect_company = cfg.lead_capture_collect_company !== false;
+    base.contextPayload.lead_capture_prompt_intent = cfg.lead_capture_prompt_intent !== false;
+    base.contextPayload.lead_capture_require_confirmation_email_consent =
+      cfg.lead_capture_require_confirmation_email_consent !== false;
+    base.contextPayload.lead_capture_prompt_newsletter =
+      cfg.lead_capture_prompt_newsletter !== false;
+    base.contextPayload.lead_capture_prompt_text_notifications =
+      cfg.lead_capture_prompt_text_notifications !== false;
+    base.contextPayload.lead_capture_prompt_sales_outreach =
+      cfg.lead_capture_prompt_sales_outreach !== false;
     const systemPromptText = getTrimmedConfigText(cfg, "system_prompt_text");
     if (systemPromptText && !coerceText(base.contextPayload.system_prompt_text)) {
       base.contextPayload.system_prompt_text = systemPromptText;
@@ -2597,6 +6624,48 @@
       base.contextPayload.visitor_name = currentVisitorName;
       base.contextPayload.visitor_name_known = true;
     }
+    const leadState = ensureLeadCaptureState(currentVisitorName);
+    if (coerceText(leadState.name) && !base.contextPayload.lead_capture_name) {
+      base.contextPayload.lead_capture_name = leadState.name;
+    }
+    if (coerceText(leadState.company) && !base.contextPayload.lead_capture_company) {
+      base.contextPayload.lead_capture_company = leadState.company;
+      base.contextPayload.visitor_company = leadState.company;
+      base.contextPayload.visitor_company_known = true;
+    }
+    if (coerceText(leadState.email) && !base.contextPayload.lead_capture_email) {
+      base.contextPayload.lead_capture_email = leadState.email;
+      base.contextPayload.visitor_email = leadState.email;
+      base.contextPayload.visitor_email_known = true;
+    }
+    if (coerceText(leadState.visitorIntent) && !base.contextPayload.lead_capture_intent) {
+      base.contextPayload.lead_capture_intent = leadState.visitorIntent;
+      base.contextPayload.visitor_intent = leadState.visitorIntent;
+      base.contextPayload.visitor_intent_known = true;
+      if (!coerceText(base.contextPayload.likely_user_intent)) {
+        base.contextPayload.likely_user_intent = leadState.visitorIntent;
+      }
+    }
+    if (leadState.confirmationEmailConsent !== null) {
+      base.contextPayload.lead_capture_confirmation_email_consent =
+        leadState.confirmationEmailConsent;
+    }
+    if (leadState.newsletterOptIn !== null) {
+      base.contextPayload.lead_capture_newsletter_opt_in = leadState.newsletterOptIn;
+    }
+    if (leadState.textNotificationsInterest !== null) {
+      base.contextPayload.lead_capture_text_notifications_interest =
+        leadState.textNotificationsInterest;
+    }
+    if (leadState.salesOutreachConsent !== null) {
+      base.contextPayload.lead_capture_sales_outreach_consent =
+        leadState.salesOutreachConsent;
+      base.contextPayload.visitor_sales_outreach_consent =
+        leadState.salesOutreachConsent;
+    }
+    base.contextPayload.lead_capture_confirmation_email_sent = Boolean(
+      leadState.confirmationEmailSent
+    );
     if (base.characterId && !base.contextPayload.character_id) {
       base.contextPayload.character_id = base.characterId;
     }
@@ -2612,12 +6681,20 @@
       context_keys: Object.keys(base.contextPayload || {}).slice(0, 30),
     });
     applySkillPackContext(base, cfg);
+    applySkillPackGroundingContext(base, cfg);
+    applyContentFileScope(base, cfg);
+    applyTourGuideLaunchContext(base, cfg);
     base.contextPayload = normalizeVoltageSpeechValue(base.contextPayload, 0);
     appendSessionDecision(base, "launch-ready", {
       policy_action:
         base.policyDecision && typeof base.policyDecision === "object" ? base.policyDecision.action : "none",
       skill_pack_count: Array.isArray(base.contextPayload && base.contextPayload.skill_pack_ids)
         ? base.contextPayload.skill_pack_ids.length
+        : 0,
+      content_scope_mode: coerceText(base.contextPayload && base.contextPayload.content_scope_mode),
+      content_scope_lock_enabled: Boolean(base.contextPayload && base.contextPayload.content_scope_lock_enabled),
+      allowed_source_file_count: Array.isArray(base.contextPayload && base.contextPayload.allowed_source_files)
+        ? base.contextPayload.allowed_source_files.length
         : 0,
     });
     return base;
@@ -2698,11 +6775,30 @@
       coerceText(source.entryPoint || source.entry_point) || `${sourcePage}-clerk-launch`;
     const payload = {
       context: contextValue,
+      context_source: contextSource,
       mode: modeValue,
       conversation_mode: conversationMode,
       source_page: sourcePage,
       entry_point: entryPoint,
     };
+    const pathContext = parseCustomerPathContext(getCurrentPagePathname());
+    const sourceCustomer = extractCustomerFieldsFromPayload(source);
+    const customerSlug =
+      sourceCustomer.customerSlug ||
+      (pathContext.isCustomerPath ? pathContext.customerSlug : "");
+    const customerName =
+      sourceCustomer.customerName ||
+      (pathContext.isCustomerPath ? pathContext.customerName : "");
+    const siteSlug =
+      sourceCustomer.siteSlug ||
+      (pathContext.isCustomerPath ? pathContext.siteSlug : "");
+    const requestedGuideMode = coerceText(source.guideMode || source.guide_mode).toLowerCase();
+    if ((requestedGuideMode === "customer" || customerSlug) && isCustomerGuideEnabled(cfg)) {
+      payload.guide_mode = "customer";
+      if (customerSlug) payload.customer_slug = customerSlug;
+      if (customerName) payload.customer_name = customerName;
+      if (siteSlug) payload.site_slug = siteSlug;
+    }
     assignContextValueIfMissing(payload, "source_media", coerceText(source.sourceMedia || source.source_media));
     if (Number.isFinite(Number(source.sourceMediaSeconds || source.source_media_seconds))) {
       payload.source_media_seconds = Math.max(
@@ -2735,6 +6831,11 @@
       payload,
       "session_context",
       coerceText(source.sessionContext || source.session_context)
+    );
+    assignContextValueIfMissing(
+      payload,
+      "post_conversation_redirect_url",
+      coerceText(source.postConversationRedirectUrl || source.post_conversation_redirect_url)
     );
     assignContextValueIfMissing(
       payload,
@@ -2795,12 +6896,17 @@
 
   function openClerkWithPageContext(input) {
     if (!isClerkVoiceFeatureEnabled()) return false;
-    if (isHomePageClerkDisabled()) return false;
+    const cfg = getVoiceConfig();
+    if (!isClerkVoiceAllowedOnCurrentPage(cfg)) return false;
     const source = input && typeof input === "object" ? input : {};
     const launchPayload = buildClerkPageLaunchPayload(source);
     try {
       if (source.closeExistingSession !== false && typeof closeClerkVoiceModal === "function") {
-        closeClerkVoiceModal();
+        closeClerkVoiceModal({
+          preserveRoaming: true,
+          preserveDailyMeter: true,
+          reason: "relaunch",
+        });
       }
       openClerkVoiceModal(launchPayload);
       const modal = document.getElementById("clerkVoiceModal");
@@ -2827,6 +6933,9 @@
         ? session.policyDecision.action
         : coerceText(contextPayload.context_policy_action);
     const skillPackIds = Array.isArray(contextPayload.skill_pack_ids) ? contextPayload.skill_pack_ids.slice(0, 6) : [];
+    const allowedSourceFiles = Array.isArray(contextPayload.allowed_source_files)
+      ? contextPayload.allowed_source_files.slice(0, 8)
+      : [];
     const diagnostics = {
       phase: phase || "launch",
       characterId: session.characterId || getDefaultCharacterId(cfg),
@@ -2838,6 +6947,12 @@
       tokenBudgetProfile: hasMeaningfulValue(tokenBudgetProfile) ? tokenBudgetProfile : {},
       policyAction: policyAction || "none",
       skillPackIds: skillPackIds,
+      contentScopeMode: coerceText(contextPayload.content_scope_mode),
+      contentScopeLockEnabled: Boolean(contextPayload.content_scope_lock_enabled),
+      activePageFile: coerceText(contextPayload.active_page_file),
+      activePagePathname: coerceText(contextPayload.active_page_pathname),
+      allowedSourceFileCount: allowedSourceFiles.length,
+      allowedSourceFiles: allowedSourceFiles,
       decisionCount: Array.isArray(session.decisionLog) ? session.decisionLog.length : 0,
       embedOrigin: getEmbedOrigin(url || ""),
       timestamp: new Date().toISOString(),
@@ -2866,16 +6981,23 @@
     const isIOSDevice = /iPhone|iPad|iPod/i.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1);
     if (!isIOSDevice) return false;
     const isAppleWebKit = /AppleWebKit/i.test(ua);
-    const isCriOS = /CriOS/i.test(ua);
-    const isFxiOS = /FxiOS/i.test(ua);
-    return isAppleWebKit && !isCriOS && !isFxiOS;
+    return isAppleWebKit;
   }
 
   function shouldUseUnityStartGate(cfg) {
     if (cfg && typeof cfg.force_unity_start_gate === "boolean") {
       return cfg.force_unity_start_gate;
     }
+    if (cfg && typeof cfg.use_unity_start_gate === "boolean") {
+      return cfg.use_unity_start_gate;
+    }
     return isAppleMobileWebKitBrowser();
+  }
+  function shouldRunMicPreflight(cfg) {
+    if (cfg && typeof cfg.preflight_microphone_on_launch === "boolean") {
+      return cfg.preflight_microphone_on_launch;
+    }
+    return false;
   }
 
   function isClerkVoiceFeatureEnabled() {
@@ -2970,7 +7092,10 @@
       const profileConfigId = coerceText(intelligenceProfile.configId);
       const profileVoiceId = coerceText(intelligenceProfile.voiceId);
       if (profileConfigId) merged.config_id = profileConfigId;
-      if (profileVoiceId) merged.voice_id = profileVoiceId;
+      if (profileVoiceId) {
+        merged.voice_id = profileVoiceId;
+        merged.openai_voice = profileVoiceId;
+      }
       const profileId = coerceText(intelligenceProfile.id);
       const profileLabel = coerceText(intelligenceProfile.label);
       const responseStyle = coerceText(intelligenceProfile.responseStyle);
@@ -2996,6 +7121,29 @@
     if (!coerceText(merged.embed_url)) merged.embed_url = coerceText(cfg.embed_url);
     if (!coerceText(merged.config_id)) merged.config_id = coerceText(cfg.config_id);
     if (!coerceText(merged.voice_id)) merged.voice_id = coerceText(cfg.voice_id);
+    if (!coerceText(merged.openai_voice)) {
+      merged.openai_voice = coerceText(cfg.openai_voice) || coerceText(merged.voice_id);
+    }
+    if (!coerceText(merged.openai_realtime_model)) {
+      merged.openai_realtime_model = coerceText(cfg.openai_realtime_model);
+    }
+    if (!coerceText(merged.openai_session_endpoint)) {
+      merged.openai_session_endpoint = coerceText(cfg.openai_session_endpoint);
+    }
+    const launchEnginePreference = coerceText(
+      launchSession &&
+        launchSession.contextPayload &&
+        (launchSession.contextPayload.voice_engine_preference ||
+          launchSession.contextPayload.voiceEnginePreference ||
+          launchSession.contextPayload.engine_preference ||
+          launchSession.contextPayload.enginePreference)
+    ).toLowerCase();
+    if (launchEnginePreference === "openai") {
+      const forcedOpenAiFallback = buildOpenAiFallbackConfig(merged);
+      if (forcedOpenAiFallback) {
+        Object.assign(merged, forcedOpenAiFallback);
+      }
+    }
     if (!coerceText(merged.session_context)) merged.session_context = coerceText(cfg.session_context);
     return merged;
   }
@@ -3011,13 +7159,19 @@
 
   function getUnityLaunchTitle(cfg) {
     const characterName = coerceText(cfg && cfg.character_name) || "Clerk";
-    return `Speak with ${characterName}`;
+    return `Meet with ${characterName}`;
   }
 
   function getUnityLaunchRingCandidates(cfg) {
     const configured = coerceText(cfg && cfg.unity_launch_ring_image_url);
     const options = [
       configured,
+      coerceText(cfg && cfg.openai_center_visual_url),
+      coerceText(cfg && cfg.character_avatar_url),
+      "/UnityEnergy/assets/images/Clerk-LineARTr2.png",
+      "assets/images/Clerk-LineARTr2.png",
+      "/UnityEnergy/ClerkMaxwell_251207.png",
+      "ClerkMaxwell_251207.png",
       "assets/images/unity-icon-ring-white-2048.png",
       "unity-icon-ring-white-2048.png",
       "assets/images/unity-icon-ring-white-512.png",
@@ -3106,12 +7260,421 @@
     const emblem = document.getElementById("clerkVoiceLaunchEmblem");
     if (!emblem) return;
     emblem.hidden = true;
+    if (visible && !hasConversationStarted) {
+      startSignalFormationSequence(getRuntimeVoiceConfig());
+    }
   }
 
   function setUnityOverlayMessage(message) {
     const label = document.getElementById("clerkVoiceUnityMessage");
     if (!label) return;
     label.textContent = message;
+  }
+
+  function clearSignalSpeakingDecayTimer() {
+    if (!signalSpeakingDecayTimer) return;
+    window.clearTimeout(signalSpeakingDecayTimer);
+    signalSpeakingDecayTimer = null;
+  }
+
+  function clearSignalFormationTimer() {
+    if (!signalFormationTimer) return;
+    window.clearTimeout(signalFormationTimer);
+    signalFormationTimer = null;
+  }
+
+  function setSignalStageVisible(visible) {
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    if (!stage) return;
+    stage.hidden = !visible;
+    if (visible) {
+      syncSignalPortraitContrastMode();
+    }
+  }
+
+  function resolveSignalPortraitUrl(cfg) {
+    const preferredTransparentLineArt = "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png";
+    const centerVisualUrl =
+      typeof cfg?.openai_center_visual_url === "string" ? cfg.openai_center_visual_url.trim() : "";
+    const backgroundUrl =
+      typeof cfg?.character_background_url === "string" ? cfg.character_background_url.trim() : "";
+    const avatarUrl =
+      typeof cfg?.character_avatar_url === "string" ? cfg.character_avatar_url.trim() : "";
+    return (
+      preferredTransparentLineArt ||
+      centerVisualUrl ||
+      backgroundUrl ||
+      avatarUrl ||
+      ""
+    );
+  }
+
+  function parseRgbaChannels(colorText) {
+    const sample = coerceText(colorText).toLowerCase();
+    if (!sample || sample === "transparent") return null;
+    const channelMatches = sample.match(/[\d.]+%?/g);
+    if (!channelMatches || channelMatches.length < 3) return null;
+    const parseChannel = function (value) {
+      const normalized = coerceText(value);
+      if (!normalized) return null;
+      if (normalized.endsWith("%")) {
+        const percent = Number(normalized.slice(0, -1));
+        if (!Number.isFinite(percent)) return null;
+        return Math.max(0, Math.min(255, Math.round((percent / 100) * 255)));
+      }
+      const numeric = Number(normalized);
+      if (!Number.isFinite(numeric)) return null;
+      return Math.max(0, Math.min(255, Math.round(numeric)));
+    };
+    const red = parseChannel(channelMatches[0]);
+    const green = parseChannel(channelMatches[1]);
+    const blue = parseChannel(channelMatches[2]);
+    if (red === null || green === null || blue === null) return null;
+    let alpha = 1;
+    if (channelMatches.length >= 4) {
+      const alphaRaw = coerceText(channelMatches[3]);
+      if (alphaRaw.endsWith("%")) {
+        const alphaPercent = Number(alphaRaw.slice(0, -1));
+        if (Number.isFinite(alphaPercent)) {
+          alpha = Math.max(0, Math.min(1, alphaPercent / 100));
+        }
+      } else {
+        const alphaNumeric = Number(alphaRaw);
+        if (Number.isFinite(alphaNumeric)) {
+          alpha = Math.max(0, Math.min(1, alphaNumeric));
+        }
+      }
+    }
+    return { r: red, g: green, b: blue, a: alpha };
+  }
+
+  function calculateRelativeLuminance(colorChannels) {
+    if (!colorChannels || colorChannels.a <= 0.04) return null;
+    const toLinear = function (channel) {
+      const normalized = channel / 255;
+      if (normalized <= 0.03928) return normalized / 12.92;
+      return Math.pow((normalized + 0.055) / 1.055, 2.4);
+    };
+    const red = toLinear(colorChannels.r);
+    const green = toLinear(colorChannels.g);
+    const blue = toLinear(colorChannels.b);
+    return (0.2126 * red) + (0.7152 * green) + (0.0722 * blue);
+  }
+
+  function resolveElementBackgroundLuminance(startNode) {
+    let node = startNode;
+    while (node && node.nodeType === 1) {
+      const styles = window.getComputedStyle(node);
+      const backgroundLuminance = calculateRelativeLuminance(
+        parseRgbaChannels(styles && styles.backgroundColor)
+      );
+      if (backgroundLuminance !== null) return backgroundLuminance;
+      const backgroundImage = coerceText(styles && styles.backgroundImage).toLowerCase();
+      const textLuminance = calculateRelativeLuminance(
+        parseRgbaChannels(styles && styles.color)
+      );
+      if (backgroundImage && backgroundImage !== "none" && textLuminance !== null) {
+        if (textLuminance >= 0.58) return 0.24;
+        if (textLuminance <= 0.42) return 0.78;
+      }
+      node = node.parentElement;
+    }
+    if (document && document.body) {
+      const bodyLuminance = calculateRelativeLuminance(
+        parseRgbaChannels(window.getComputedStyle(document.body).backgroundColor)
+      );
+      if (bodyLuminance !== null) return bodyLuminance;
+    }
+    return null;
+  }
+
+  function syncSignalPortraitContrastMode() {
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    if (!stage) return;
+    const rect = stage.getBoundingClientRect();
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+    const sampleX = Math.max(0, Math.min(viewportWidth - 1, Math.round(rect.left + (rect.width / 2))));
+    const sampleY = Math.max(0, Math.min(viewportHeight - 1, Math.round(rect.top + (rect.height * 0.42))));
+    let sampleNode = document.elementFromPoint(sampleX, sampleY);
+    if (sampleNode && stage.contains(sampleNode)) {
+      sampleNode = stage.parentElement || document.body;
+    }
+    if (!sampleNode) sampleNode = stage.parentElement || document.body;
+    const luminance = resolveElementBackgroundLuminance(sampleNode);
+    const prefersDark =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const useDarkBackgroundMode = luminance !== null ? luminance < 0.52 : prefersDark;
+    stage.classList.toggle("contrast-dark-bg", useDarkBackgroundMode);
+    stage.classList.toggle("contrast-light-bg", !useDarkBackgroundMode);
+  }
+
+  function setSignalPortraitSource(cfg) {
+    const portrait = document.getElementById("clerkVoiceSignalPortrait");
+    if (!portrait) return;
+    const src = resolveSignalPortraitUrl(cfg);
+    if (!src) {
+      portrait.removeAttribute("src");
+      portrait.hidden = true;
+      return;
+    }
+    portrait.src = src;
+    portrait.onload = syncSignalPortraitContrastMode;
+    portrait.hidden = false;
+    syncSignalPortraitContrastMode();
+  }
+
+  function resolveSignalWaveTuning(cfg) {
+    const barCount = clampNumber(
+      cfg && (cfg.signal_wave_bar_count !== undefined ? cfg.signal_wave_bar_count : cfg.voice_signal_bar_count),
+      6,
+      40,
+      30
+    );
+    const minWidth = clampNumber(
+      cfg && (cfg.signal_wave_bar_min_width !== undefined ? cfg.signal_wave_bar_min_width : cfg.voice_signal_bar_min_width),
+      2,
+      16,
+      3
+    );
+    const maxWidth = clampNumber(
+      cfg && (cfg.signal_wave_bar_max_width !== undefined ? cfg.signal_wave_bar_max_width : cfg.voice_signal_bar_max_width),
+      minWidth,
+      24,
+      6
+    );
+    const gap = clampNumber(
+      cfg && (cfg.signal_wave_bar_gap !== undefined ? cfg.signal_wave_bar_gap : cfg.voice_signal_bar_gap),
+      1,
+      14,
+      2
+    );
+    const waveMaxWidth = clampNumber(
+      cfg && (cfg.signal_wave_max_width !== undefined ? cfg.signal_wave_max_width : cfg.voice_signal_wave_max_width),
+      140,
+      420,
+      188
+    );
+    const minHeight = clampNumber(
+      cfg && (cfg.signal_wave_min_height !== undefined ? cfg.signal_wave_min_height : cfg.voice_signal_wave_min_height),
+      6,
+      30,
+      12
+    );
+    const idleHeight = clampNumber(
+      cfg && (cfg.signal_wave_idle_height !== undefined ? cfg.signal_wave_idle_height : cfg.voice_signal_wave_idle_height),
+      minHeight,
+      60,
+      16
+    );
+    return {
+      barCount: barCount,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      gap: gap,
+      waveMaxWidth: waveMaxWidth,
+      minHeight: minHeight,
+      idleHeight: idleHeight,
+    };
+  }
+
+  function syncSignalWaveBars(cfgInput) {
+    const wave = document.querySelector("#clerkVoiceSignalStage .clerk-voice-signal-wave");
+    if (!wave) return;
+    const cfg = cfgInput && typeof cfgInput === "object" ? cfgInput : getRuntimeVoiceConfig();
+    const tuning = resolveSignalWaveTuning(cfg);
+    wave.style.setProperty("--clerk-signal-wave-max-width", `${tuning.waveMaxWidth}px`);
+    wave.style.setProperty("--clerk-signal-gap", `${tuning.gap}px`);
+    wave.style.setProperty("--clerk-signal-bar-min-height", `${tuning.minHeight}px`);
+    wave.style.setProperty("--clerk-signal-bar-idle-height", `${tuning.idleHeight}px`);
+    const fragment = document.createDocumentFragment();
+    const centerIndex = (tuning.barCount - 1) / 2;
+    const widthRange = Math.max(0, tuning.maxWidth - tuning.minWidth);
+    for (let i = 0; i < tuning.barCount; i += 1) {
+      const bar = document.createElement("span");
+      bar.className = "clerk-voice-signal-bar";
+      const normalizedDistance =
+        centerIndex > 0 ? Math.abs(i - centerIndex) / centerIndex : 0;
+      const centerBias = Math.pow(Math.max(0, 1 - normalizedDistance), 0.72);
+      const width = Math.round(tuning.minWidth + (widthRange * centerBias));
+      const delaySeconds = ((i % 8) * 0.075).toFixed(3);
+      bar.style.setProperty("--signal-bar-width", `${width}px`);
+      bar.style.setProperty("--signal-delay", `${delaySeconds}s`);
+      fragment.appendChild(bar);
+    }
+    wave.replaceChildren(fragment);
+  }
+
+  function resolveSignalDisplayName(cfg) {
+    const configuredName = coerceText(cfg && cfg.character_name);
+    if (!configuredName || /^clerk\s+maxwell$/i.test(configuredName)) {
+      return "J. Clerk Maxwell";
+    }
+    return configuredName;
+  }
+  function resolveSignalDisplayTitle(cfg) {
+    const configuredName = coerceText(cfg && cfg.character_name);
+    if (!configuredName || /^clerk\s+maxwell$/i.test(configuredName)) {
+      return "Unity Chief Scientist";
+    }
+    return "";
+  }
+
+  function syncSignalDisplayName(cfg) {
+    const nameplate = document.getElementById("clerkVoiceSignalName");
+    const titleBadge = document.getElementById("clerkVoiceSignalTitle");
+    const runtimeCfg = cfg && typeof cfg === "object" ? cfg : getRuntimeVoiceConfig();
+    if (nameplate) {
+      nameplate.textContent = resolveSignalDisplayName(runtimeCfg);
+    }
+    if (titleBadge) {
+      const resolvedTitle = resolveSignalDisplayTitle(runtimeCfg);
+      titleBadge.textContent = resolvedTitle;
+      titleBadge.hidden = !resolvedTitle;
+    }
+  }
+
+  function setSignalNameVisible(visible) {
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    const nameplate = document.getElementById("clerkVoiceSignalNameplate");
+    const shouldShow = Boolean(visible);
+    if (stage) {
+      stage.classList.toggle("show-clerk-name", shouldShow);
+    }
+    if (nameplate) {
+      nameplate.hidden = !shouldShow;
+    }
+  }
+
+  function setSignalMode(mode) {
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    const label = document.getElementById("clerkVoiceSignalLabel");
+    const normalizedMode =
+      mode === SIGNAL_MODE_SPEAKING
+        ? SIGNAL_MODE_SPEAKING
+        : mode === SIGNAL_MODE_LISTENING
+          ? SIGNAL_MODE_LISTENING
+          : SIGNAL_MODE_IDLE;
+    voiceSignalMode = normalizedMode;
+    if (!stage) return;
+    stage.dataset.mode = normalizedMode;
+    stage.classList.toggle("is-idle", normalizedMode === SIGNAL_MODE_IDLE);
+    stage.classList.toggle("is-listening", normalizedMode === SIGNAL_MODE_LISTENING);
+    stage.classList.toggle("is-speaking", normalizedMode === SIGNAL_MODE_SPEAKING);
+    if (label) {
+      if (!hasConversationStarted && preConversationSignalVisible) {
+        label.textContent = stage.classList.contains("is-forming")
+          ? "Clerk is forming…"
+          : "Clerk is ready.";
+        return;
+      }
+      if (normalizedMode === SIGNAL_MODE_SPEAKING) {
+        label.textContent = "Clerk is speaking…";
+      } else if (normalizedMode === SIGNAL_MODE_LISTENING) {
+        label.textContent = "Clerk is listening…";
+      } else {
+        label.textContent = "Clerk is ready.";
+      }
+    }
+  }
+
+  function startSignalFormationSequence(cfgInput) {
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    if (!stage) return;
+    if (
+      preConversationSignalVisible &&
+      !hasConversationStarted &&
+      (stage.classList.contains("is-forming") || stage.classList.contains("is-formed"))
+    ) {
+      setSignalStageVisible(true);
+      setSignalMode(SIGNAL_MODE_IDLE);
+      return;
+    }
+    const cfg = cfgInput && typeof cfgInput === "object" ? cfgInput : getRuntimeVoiceConfig();
+    clearSignalFormationTimer();
+    preConversationSignalVisible = true;
+    setSignalPortraitSource(cfg);
+    setSignalStageVisible(true);
+    stage.classList.remove("is-formed");
+    stage.classList.add("is-forming");
+    setSignalMode(SIGNAL_MODE_IDLE);
+    signalFormationTimer = window.setTimeout(function () {
+      signalFormationTimer = null;
+      if (hasConversationStarted) return;
+      stage.classList.remove("is-forming");
+      stage.classList.add("is-formed");
+      setSignalMode(SIGNAL_MODE_IDLE);
+      syncSignalPortraitContrastMode();
+    }, SIGNAL_FORMATION_DURATION_MS);
+  }
+
+  function syncSignalStageForConversation() {
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    if (!hasConversationStarted) {
+      if (preConversationSignalVisible) {
+        if (stage) {
+          if (!stage.classList.contains("is-forming")) {
+            stage.classList.add("is-formed");
+          }
+        }
+        setSignalMode(SIGNAL_MODE_IDLE);
+        setSignalStageVisible(true);
+        return;
+      }
+      setSignalMode(SIGNAL_MODE_IDLE);
+      setSignalStageVisible(false);
+      return;
+    }
+    preConversationSignalVisible = false;
+    clearSignalFormationTimer();
+    if (stage) {
+      stage.classList.remove("is-forming");
+      stage.classList.add("is-formed");
+    }
+    const cfg = getRuntimeVoiceConfig();
+    setSignalPortraitSource(cfg);
+    setSignalStageVisible(true);
+    if (voiceSignalMode === SIGNAL_MODE_IDLE) {
+      setSignalMode(SIGNAL_MODE_LISTENING);
+      return;
+    }
+    setSignalMode(voiceSignalMode);
+    syncSignalPortraitContrastMode();
+  }
+
+  function markSignalListening() {
+    if (!hasConversationStarted) return;
+    clearSignalSpeakingDecayTimer();
+    syncSignalStageForConversation();
+    setSignalMode(SIGNAL_MODE_LISTENING);
+  }
+
+  function pulseSignalSpeaking() {
+    if (!hasConversationStarted) return;
+    clearSignalSpeakingDecayTimer();
+    syncSignalStageForConversation();
+    setSignalNameVisible(true);
+    setSignalMode(SIGNAL_MODE_SPEAKING);
+    signalSpeakingDecayTimer = window.setTimeout(function () {
+      signalSpeakingDecayTimer = null;
+      if (!hasConversationStarted) return;
+      setSignalMode(SIGNAL_MODE_LISTENING);
+    }, SIGNAL_SPEAKING_DECAY_MS);
+  }
+
+  function resetSignalStage() {
+    clearSignalSpeakingDecayTimer();
+    clearSignalFormationTimer();
+    preConversationSignalVisible = false;
+    const stage = document.getElementById("clerkVoiceSignalStage");
+    if (stage) {
+      stage.classList.remove("is-forming");
+      stage.classList.remove("is-formed");
+    }
+    setSignalNameVisible(false);
+    setSignalMode(SIGNAL_MODE_IDLE);
+    setSignalStageVisible(false);
   }
   function syncUnityFooterQuestion(questions) {
     if (!Array.isArray(questions) || questions.length === 0) return;
@@ -3128,27 +7691,54 @@
 
 
   function buildWidgetConnectConfig(cfg, launchSession) {
+    if (!cfg || typeof cfg !== "object") return null;
+    if (detectVoiceEngine(cfg) === "hume") {
+      return buildHumeConnectConfig(cfg, launchSession);
+    }
+    const sessionEndpoint =
+      coerceText(cfg.openai_session_endpoint || cfg.openai_session_url || cfg.session_endpoint) ||
+      "/api/openai/realtime/session";
+    const model =
+      coerceText(cfg.openai_realtime_model || cfg.openai_model || cfg.model) ||
+      "gpt-4o-realtime-preview";
+    const voice =
+      coerceText(cfg.openai_voice || cfg.voice_id || cfg.voice) ||
+      "ash";
+    if (!sessionEndpoint || !model) return null;
+    const connectConfig = {
+      sessionEndpoint: sessionEndpoint,
+      openai_session_endpoint: sessionEndpoint,
+      model: model,
+      openai_realtime_model: model,
+      voice: voice,
+      openai_voice: voice,
+      openai_voice_instruction_set: coerceText(cfg.openai_voice_instruction_set),
+      openai_voice_style_hint: coerceText(cfg.openai_voice_style_hint || cfg.voice_style_hint),
+      openai_center_visual_url: coerceText(cfg.openai_center_visual_url || cfg.character_avatar_url),
+      contact_page_auto_greeting_text: coerceText(cfg.contact_page_auto_greeting_text),
+      openai_auto_greeting_enabled: cfg.openai_auto_greeting_enabled !== false,
+      openai_auto_greeting_text: coerceText(cfg.openai_auto_greeting_text),
+      openai_delayed_followup_enabled: cfg.openai_delayed_followup_enabled !== false,
+      openai_delayed_followup_seconds: Number.isFinite(Number(cfg.openai_delayed_followup_seconds))
+        ? Math.max(4, Math.min(30, Math.floor(Number(cfg.openai_delayed_followup_seconds))))
+        : 10,
+      openai_delayed_followup_text: coerceText(cfg.openai_delayed_followup_text),
+      openai_decline_followup_text: coerceText(cfg.openai_decline_followup_text),
+      turnDetection:
+        cfg.openai_turn_detection && typeof cfg.openai_turn_detection === "object"
+          ? Object.assign({}, cfg.openai_turn_detection)
+          : {},
+      system_prompt_text: coerceText(cfg.system_prompt_text),
+      session_context: coerceText(cfg.session_context),
+    };
     const auth = normalizeAuthConfig(cfg);
-    if (!auth) return null;
-    const connectConfig = { auth: auth, hostname: "api.hume.ai" };
-    const configId = resolveConfigId(cfg);
-    if (configId) {
-      connectConfig.configId = configId;
+    if (auth) connectConfig.auth = auth;
+    const temperature = Number(cfg.temperature);
+    if (Number.isFinite(temperature)) {
+      connectConfig.temperature = Math.max(0, Math.min(2, temperature));
     }
-    const configVersion =
-      cfg && Number.isFinite(cfg.config_version) ? Math.max(0, Math.floor(cfg.config_version)) : null;
-    if (configVersion !== null) {
-      connectConfig.configVersion = configVersion;
-    }
-    const resumedChatGroupId =
-      cfg && typeof cfg.resumed_chat_group_id === "string" ? cfg.resumed_chat_group_id.trim() : "";
-    if (resumedChatGroupId) connectConfig.resumedChatGroupId = resumedChatGroupId;
-    const debug = Boolean(cfg && cfg.debug);
+    const debug = Boolean(cfg.debug);
     if (debug) connectConfig.debug = true;
-    const reconnectAttempts =
-      cfg && Number.isFinite(cfg.reconnect_attempts) ? Math.max(1, Math.floor(cfg.reconnect_attempts)) : null;
-    if (reconnectAttempts) connectConfig.reconnectAttempts = reconnectAttempts;
-
     return connectConfig;
   }
 
@@ -3178,6 +7768,39 @@
     postToWidgetFrame({ type: "expand_widget_from_client", payload: dims });
     return true;
   }
+  function clickIframeStartConversationButton() {
+    const frame = document.getElementById("clerkVoiceFrame");
+    if (!frame) return false;
+    try {
+      const doc = frame.contentDocument || (frame.contentWindow && frame.contentWindow.document);
+      if (!doc) return false;
+      const buttons = Array.from(doc.querySelectorAll("button"));
+      const startButton = buttons.find(function (button) {
+        return /start conversation/i.test(coerceText(button && button.textContent));
+      });
+      if (!startButton || startButton.disabled) return false;
+      startButton.click();
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function scheduleIframeStartConversationRetry(maxAttempts, delayMs) {
+    const attemptLimit = Number.isFinite(Number(maxAttempts)) ? Math.max(1, Math.floor(Number(maxAttempts))) : 24;
+    const retryDelay = Number.isFinite(Number(delayMs)) ? Math.max(90, Math.floor(Number(delayMs))) : 180;
+    let attempts = 0;
+    const runAttempt = function () {
+      const modalEl = document.getElementById("clerkVoiceModal");
+      if (!modalEl || !modalEl.classList.contains("active")) return;
+      if (hasConversationStarted) return;
+      if (clickIframeStartConversationButton()) return;
+      attempts += 1;
+      if (attempts >= attemptLimit) return;
+      window.setTimeout(runAttempt, retryDelay);
+    };
+    window.setTimeout(runAttempt, 60);
+  }
 
   function syncVisitorIdentityToSession(visitorName) {
     if (!visitorName) return;
@@ -3187,6 +7810,11 @@
     }
     pendingLaunchSession.contextPayload.visitor_name = visitorName;
     pendingLaunchSession.contextPayload.visitor_name_known = true;
+    const leadState = ensureLeadCaptureState(visitorName);
+    if (leadState && leadState.name !== visitorName) {
+      leadState.name = visitorName;
+      leadState.updatedAt = new Date().toISOString();
+    }
     appendSessionDecision(pendingLaunchSession, "visitor-identity-captured", {
       visitor_name: visitorName,
     });
@@ -3244,28 +7872,57 @@
       } catch (_err) {}
     });
   }
-  function isLikelyMicrophoneError(payloadOrMessage) {
-    if (!payloadOrMessage) return false;
+  function getMicrophoneErrorSignature(payloadOrMessage) {
+    if (!payloadOrMessage) return "";
     if (typeof payloadOrMessage === "string") {
-      const normalizedMessage = payloadOrMessage.toLowerCase();
-      return /(mic|microphone|notallowederror|permission denied|audio input|unable to connect)/.test(
-        normalizedMessage
-      );
+      return payloadOrMessage.toLowerCase();
     }
-    if (typeof payloadOrMessage !== "object") return false;
-    const errorType = coerceText(
-      payloadOrMessage.type ||
-        payloadOrMessage.error_type ||
-        payloadOrMessage.errorType ||
-        payloadOrMessage.code
-    ).toLowerCase();
-    const errorMessage = coerceText(
-      payloadOrMessage.message || payloadOrMessage.detail || payloadOrMessage.reason
-    ).toLowerCase();
-    if (/mic|microphone/.test(errorType)) return true;
-    return /(mic|microphone|notallowederror|permission denied|audio input|unable to connect)/.test(
-      `${errorType} ${errorMessage}`
+    if (typeof payloadOrMessage !== "object") return "";
+    return [
+      payloadOrMessage.type,
+      payloadOrMessage.error_type,
+      payloadOrMessage.errorType,
+      payloadOrMessage.code,
+      payloadOrMessage.name,
+      payloadOrMessage.message,
+      payloadOrMessage.detail,
+      payloadOrMessage.reason,
+    ]
+      .map(function (value) {
+        return coerceText(value).toLowerCase();
+      })
+      .filter(Boolean)
+      .join(" ");
+  }
+  function isLikelyMicrophoneError(payloadOrMessage) {
+    const signature = getMicrophoneErrorSignature(payloadOrMessage);
+    if (!signature) return false;
+    return /(mic|microphone|audio input|audio source|getusermedia|media devices|notallowederror|notfounderror|notreadableerror|securityerror|permission denied|denied permission|user denied|permission blocked|permission policy|not allowed by (the )?(user agent|platform|browser)|unable to connect)/.test(
+      signature
     );
+  }
+  function isLikelyMicrophonePermissionError(payloadOrMessage) {
+    const signature = getMicrophoneErrorSignature(payloadOrMessage);
+    if (!signature) return false;
+    return /(notallowederror|securityerror|permission denied|denied permission|user denied|permission blocked|not allowed by (the )?(user agent|platform|browser)|permission policy)/.test(
+      signature
+    );
+  }
+  function getMicrophoneRecoveryMessage(payloadOrMessage) {
+    const signature = getMicrophoneErrorSignature(payloadOrMessage);
+    if (/secure context|insecure|https|localhost/.test(signature)) {
+      return "Microphone requires a secure page. Open this site with https:// or localhost, then tap Waiting on Clerk again.";
+    }
+    if (/notfounderror|no microphone|device not found|audio input/.test(signature)) {
+      return "No microphone was found. Connect a microphone, allow access for this site, then tap Waiting on Clerk again.";
+    }
+    if (/notreadableerror|could not start audio source|hardware|busy/.test(signature)) {
+      return "Microphone is busy or unavailable. Close other apps using the microphone, then tap Waiting on Clerk again.";
+    }
+    if (isLikelyMicrophonePermissionError(signature)) {
+      return "Microphone access is blocked. Tap Waiting on Clerk, allow access for this site in browser settings, and try again.";
+    }
+    return "Microphone is unavailable. Tap Waiting on Clerk, verify browser microphone access, and try again.";
   }
 
   function bindFrameMessaging() {
@@ -3281,22 +7938,63 @@
         widgetReady = true;
         clearFrameLoadTimer();
         const cfg = getRuntimeVoiceConfig();
-        const configured = sendWidgetConfig(cfg, pendingLaunchSession);
-        if (!configured) {
-          setStatus(
-            "Voice auth is missing. Set MAXWELLIAN_HUME_RUNTIME_AUTH/MAXWELLIAN_HUME.auth, or run setMaxwellianHumeAuth('apiKey'|'accessToken', '...') once in browser console.",
-            true
+        if (unityStartGatePending) {
+          const gateMessage =
+            coerceText(unityStartGatePreflightStatusMessage) ||
+            "Tap Waiting on Clerk to begin speaking with Clerk.";
+          const startBtn = document.getElementById("clerkVoiceStartBtn");
+          if (startBtn) startBtn.textContent = START_BUTTON_WAITING_LABEL;
+          setStatus(gateMessage, unityStartGatePendingRequiresRecovery, true);
+          setWidgetFrameVisible(false);
+          setStartButtonVisible(true);
+          setLaunchEmblemVisible(true);
+          setCompactSquareFrameSize();
+          setPanelMode("centered");
+          setSessionDiagnostics(
+            buildSessionDiagnostics(
+              pendingLaunchSession,
+              cfg,
+              document.getElementById("clerkVoiceFrame")?.src || "",
+              "ready-awaiting-mic"
+            ),
+            false
           );
-          setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
           return;
         }
-        setStatus(`${cfg.character_name} is ready. Use Start Conversation in the voice panel to begin.`, false);
+        const configured = sendWidgetConfig(cfg, pendingLaunchSession);
+        if (!configured) {
+          setStatus(getVoiceEngineMissingConfigMessage(cfg), true);
+          setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
+          setWidgetFrameVisible(false);
+          return;
+        }
+        setWidgetFrameVisible(false);
+        setStatus(`${cfg.character_name} is ready. Initializing voice session…`, false, true);
         setStartButtonVisible(false);
-        setLaunchEmblemVisible(false);
-        setWidgetFrameSize(72, 72);
+        setLaunchEmblemVisible(true);
+        setCompactSquareFrameSize();
         setPanelMode("centered");
+        scheduleIframeStartConversationRetry(28, 170);
+        window.setTimeout(function () {
+          const modalEl = document.getElementById("clerkVoiceModal");
+          if (!modalEl || !modalEl.classList.contains("active")) return;
+          if (hasConversationStarted) return;
+          unityStartGatePending = true;
+          unityStartGatePendingRequiresRecovery = false;
+          unityStartGatePreflightStatusMessage = "Tap Waiting on Clerk to begin speaking with Clerk.";
+          const retryBtn = document.getElementById("clerkVoiceStartBtn");
+          if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
+          setStartButtonVisible(true);
+          setLaunchEmblemVisible(true);
+          setStatus("Tap Waiting on Clerk to begin speaking with Clerk.", false, true);
+        }, 2800);
         setSessionDiagnostics(
-          buildSessionDiagnostics(pendingLaunchSession, cfg, document.getElementById("clerkVoiceFrame")?.src || "", "ready"),
+          buildSessionDiagnostics(
+            pendingLaunchSession,
+            cfg,
+            document.getElementById("clerkVoiceFrame")?.src || "",
+            "ready-awaiting-session-start"
+          ),
           false
         );
         return;
@@ -3306,12 +8004,27 @@
         return;
       }
       if (data.type === "expand_widget") {
+        if (!hasConversationStarted) {
+          setWidgetFrameVisible(false);
+          setStartButtonVisible(Boolean(unityStartGatePending));
+          setLaunchEmblemVisible(true);
+          setPanelMode("centered");
+          return;
+        }
+        setWidgetFrameVisible(true);
         setStartButtonVisible(false);
         setLaunchEmblemVisible(false);
         setPanelMode("centered");
         return;
       }
       if (data.type === "collapse_widget" || data.type === "minimize_widget") {
+        if (!hasConversationStarted) {
+          setWidgetFrameVisible(false);
+          setStartButtonVisible(Boolean(unityStartGatePending));
+          setLaunchEmblemVisible(true);
+          setPanelMode("centered");
+          return;
+        }
         setStartButtonVisible(false);
         setLaunchEmblemVisible(false);
         setPanelMode("docked");
@@ -3320,11 +8033,37 @@
 
       if (data.type === "transcript_message") {
         hasConversationStarted = true;
+        syncSignalStageForConversation();
+        setWidgetFrameVisible(true);
         const transcriptPayload = data && data.payload ? data.payload : null;
+        if (transcriptPayload && typeof transcriptPayload === "object") {
+          const transcriptType = coerceText(transcriptPayload.type).toLowerCase();
+          if (transcriptType === "error") {
+            const detail = coerceText(transcriptPayload.message || transcriptPayload.slug) || "Voice session error.";
+            resetSignalStage();
+            setStatus(`Voice session error: ${detail}`, true, true);
+            return;
+          }
+        }
         const transcriptRole = extractTranscriptRole(transcriptPayload);
-        const transcriptText = extractTranscriptText(transcriptPayload);
-        const canCaptureName = !isLikelyAssistantRole(transcriptRole);
+        const transcriptTextRaw = extractTranscriptText(transcriptPayload);
+        const transcriptText = normalizeMptsSpeechText(transcriptTextRaw);
         const cfg = getRuntimeVoiceConfig();
+        syncMptsSpeechGuardrailToSession(
+          cfg,
+          transcriptTextRaw,
+          transcriptText,
+          isLikelyAssistantRole(transcriptRole)
+            ? "assistant-transcript-message"
+            : "visitor-transcript-message"
+        );
+        if (isLikelyAssistantRole(transcriptRole)) {
+          pulseSignalSpeaking();
+        } else {
+          markSignalListening();
+        }
+        appendCrossPageRoamingTranscript(transcriptRole, transcriptText);
+        const canCaptureName = !isLikelyAssistantRole(transcriptRole);
         const guardrailSettings = getGuardrailSettings(cfg);
         markGuardrailActivity();
         scheduleGuardrailIdleTimer(guardrailSettings, cfg);
@@ -3334,7 +8073,18 @@
           return;
         }
         let shouldHoldForNotes = false;
+        let tourGuideIntentResult = null;
+        let electricalStoryResult = null;
+        let interestedOnboardingResult = null;
+        let questionLogged = false;
         if (canCaptureName) {
+          if (coerceText(transcriptText)) {
+            clearGuardrailIdlePromptFlow(
+              cfg,
+              "guardrail-idle-flow-reset-on-visitor-response",
+              true
+            );
+          }
           const detectedVisitorName = parseVisitorNameFromText(transcriptText);
           if (detectedVisitorName && detectedVisitorName !== currentVisitorName) {
             currentVisitorName = detectedVisitorName;
@@ -3352,7 +8102,8 @@
             syncFounderModeToSession(cfg, transcriptText);
             shouldHoldForNotes = true;
           }
-          const questionLogged = registerVisitorQuestion(transcriptText);
+          const leadCaptureUpdated = updateLeadCaptureFromTranscript(transcriptText, cfg);
+          questionLogged = registerVisitorQuestion(transcriptText);
           if (questionLogged) {
             const guardrailDecision = evaluateGuardrailQuestion(transcriptText, guardrailSettings);
             if (!guardrailDecision.allow) {
@@ -3367,10 +8118,56 @@
               syncQuestionNotesToSession(cfg);
             }
           }
+          if (leadCaptureUpdated && isElectricalStorySession(pendingLaunchSession)) {
+            syncElectricalStoryGuardrailToSession(
+              cfg,
+              "electrical-story-identity-updated",
+              true
+            );
+          }
+          electricalStoryResult = handleElectricalStoryGuardrailTurn(
+            transcriptText,
+            cfg,
+            questionLogged
+          );
+          if (electricalStoryResult && electricalStoryResult.closeTriggered) {
+            return;
+          }
+          tourGuideIntentResult = handleTourGuideTranscriptIntent(transcriptText, cfg);
+          if (tourGuideIntentResult && tourGuideIntentResult.navigated) {
+            return;
+          }
+          interestedOnboardingResult = maybeHandleInterestedVisitorOnboarding(
+            transcriptText,
+            cfg,
+            questionLogged,
+            guardrailSettings
+          );
         }
-        if (shouldHoldForNotes) {
+        if (electricalStoryResult && coerceText(electricalStoryResult.statusText)) {
           clearQuestionNotesStatusTimer();
-      setStatus(getQuestionNotesHoldLine(cfg), false, true);
+          setStatus(electricalStoryResult.statusText, false, true);
+          questionNotesStatusTimer = window.setTimeout(function () {
+            setStatus("", false);
+          }, clampNumber(electricalStoryResult.statusDurationMs, 1200, 8000, 3200));
+        } else if (tourGuideIntentResult && coerceText(tourGuideIntentResult.statusText)) {
+          clearQuestionNotesStatusTimer();
+          setStatus(tourGuideIntentResult.statusText, false, true);
+          questionNotesStatusTimer = window.setTimeout(function () {
+            setStatus("", false);
+          }, 2400);
+        } else if (
+          interestedOnboardingResult &&
+          coerceText(interestedOnboardingResult.statusText)
+        ) {
+          clearQuestionNotesStatusTimer();
+          setStatus(interestedOnboardingResult.statusText, false, true);
+          questionNotesStatusTimer = window.setTimeout(function () {
+            setStatus("", false);
+          }, clampNumber(interestedOnboardingResult.statusDurationMs, 1400, 7000, 3200));
+        } else if (shouldHoldForNotes) {
+          clearQuestionNotesStatusTimer();
+          setStatus(getQuestionNotesHoldLine(cfg), false, true);
           questionNotesStatusTimer = window.setTimeout(function () {
             setStatus("", false);
           }, 1200);
@@ -3384,6 +8181,8 @@
       }
       if (data.type === "audio_output") {
         hasConversationStarted = true;
+        pulseSignalSpeaking();
+        setWidgetFrameVisible(true);
         const cfg = getRuntimeVoiceConfig();
         const guardrailSettings = getGuardrailSettings(cfg);
         markGuardrailActivity();
@@ -3403,20 +8202,28 @@
         const detail = typeof payload.message === "string" ? payload.message : "Unknown voice session error.";
         const cfg = getRuntimeVoiceConfig();
         if (isLikelyMicrophoneError(payload) || isLikelyMicrophoneError(detail)) {
-          setStatus(
-            `Microphone access is blocked. Tap Start speaking with ${cfg.character_name} and allow microphone access for this site, then try again.`,
-            true,
-            true
-          );
+          const micRecoveryMessage = getMicrophoneRecoveryMessage(payload.message ? payload : detail);
+          const startBtn = document.getElementById("clerkVoiceStartBtn");
+          if (startBtn) {
+            startBtn.textContent = START_BUTTON_WAITING_LABEL;
+          }
+          unityStartGatePending = true;
+          unityStartGatePendingRequiresRecovery = true;
+          unityStartGatePreflightStatusMessage = micRecoveryMessage;
+          resetSignalStage();
+          setStatus(micRecoveryMessage, true, true);
+          setWidgetFrameVisible(false);
           setStartButtonVisible(true);
-          setLaunchEmblemVisible(false);
+          setLaunchEmblemVisible(true);
           setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
           setPanelMode("centered");
           return;
         }
+        resetSignalStage();
         setStatus(`Voice session error: ${detail}`, true, true);
-        setStartButtonVisible(false);
-        setLaunchEmblemVisible(false);
+        setWidgetFrameVisible(false);
+        setStartButtonVisible(true);
+        setLaunchEmblemVisible(true);
       }
     });
   }
@@ -3432,27 +8239,6 @@
     }
 
     const params = url.searchParams;
-    const auth = normalizeAuthConfig(cfg);
-    if (auth) {
-      if (auth.type === "apiKey") params.set("apiKey", auth.value);
-      if (auth.type === "accessToken") params.set("accessToken", auth.value);
-    }
-    const configId = resolveConfigId(cfg);
-    if (configId) {
-      params.set("config_id", configId);
-      params.set("configId", configId);
-    }
-    const configVersion =
-      cfg && Number.isFinite(cfg.config_version) ? Math.max(0, Math.floor(cfg.config_version)) : null;
-    if (configVersion !== null) params.set("config_version", String(configVersion));
-    const resumedChatGroupId =
-      cfg && typeof cfg.resumed_chat_group_id === "string" ? cfg.resumed_chat_group_id.trim() : "";
-    if (resumedChatGroupId) params.set("resumed_chat_group_id", resumedChatGroupId);
-    const voiceId = normalizeVoiceId(cfg);
-    if (voiceId) {
-      params.set("voice_id", voiceId);
-      params.set("voiceId", voiceId);
-    }
     const characterName = coerceText(cfg && cfg.character_name);
     if (characterName) params.set("character_name", characterName);
     if (launchSession && typeof launchSession === "object") {
@@ -3487,34 +8273,38 @@
       }
       .clerk-voice-modal.active { display: block; }
       .clerk-voice-modal-content {
-        width: min(460px, calc(100vw - 24px));
-        height: min(620px, calc(100vh - 24px));
-        background: #ffffff;
-        border-radius: 14px;
-        border: 2px solid rgba(129, 163, 43, 0.55);
-        box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+        width: min(320px, calc(100vw - 24px));
+        height: min(320px, calc(100vh - 24px));
+        background: transparent;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        overflow: visible;
       }
       .clerk-voice-modal-header {
-        background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
-        color: rgba(250, 240, 160, 1);
-        padding: 14px 18px;
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        z-index: 6;
+        background: transparent;
+        color: transparent;
+        padding: 0;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid rgba(129, 163, 43, 1);
+        justify-content: flex-end;
+        align-items: flex-start;
+        border: none;
+        pointer-events: none;
       }
       .clerk-voice-header-actions {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
+        gap: 0;
+        pointer-events: auto;
       }
       .clerk-voice-modal-title-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        display: none;
       }
       .clerk-voice-character-wrap {
         display: none !important;
@@ -3555,13 +8345,19 @@
         letter-spacing: 0.4px;
       }
       .clerk-voice-close {
-        background: transparent;
-        color: rgba(255, 248, 200, 1);
-        border: none;
-        font-size: 1.8em;
+        background: rgba(255, 255, 255, 0.92);
+        color: rgba(54, 54, 54, 0.92);
+        border: 1px solid rgba(168, 168, 168, 0.55);
+        font-size: 1.12em;
         line-height: 1;
         cursor: pointer;
-        opacity: 0.85;
+        opacity: 0.74;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
       .clerk-voice-close:hover { opacity: 1; }
       .clerk-voice-toggle {
@@ -3578,60 +8374,66 @@
       }
       .clerk-voice-toggle:hover { filter: brightness(1.08); }
       .clerk-voice-status {
-        margin: 0;
-        padding: 10px 14px;
-        min-height: 40px;
-        font-size: 0.86em;
-        color: rgba(90, 60, 15, 1);
-        background: rgba(255, 248, 225, 1);
-        border-bottom: 1px solid rgba(220, 180, 100, 0.6);
+        display: none;
+        position: absolute;
+        left: 50%;
+        bottom: 68px;
+        transform: translateX(-50%);
+        z-index: 8;
+        width: min(88%, 420px);
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(190, 220, 120, 0.55);
+        background: rgba(14, 22, 4, 0.9);
+        color: rgba(244, 247, 214, 0.96);
+        font-size: 0.78em;
+        font-weight: 700;
+        line-height: 1.35;
+        text-align: center;
       }
       .clerk-voice-status.error {
-        color: rgba(120, 35, 35, 1);
-        background: rgba(255, 235, 235, 1);
-        border-bottom-color: rgba(210, 120, 120, 0.6);
+        display: block;
+        border-color: rgba(255, 188, 110, 0.72);
+        background: rgba(48, 26, 10, 0.93);
+        color: rgba(255, 229, 197, 0.98);
       }
       .clerk-voice-help {
-        margin: 0;
-        padding: 10px 14px;
-        font-size: 0.84em;
-        color: rgba(49, 65, 0, 1);
-        background: rgba(242, 248, 232, 1);
-        border-bottom: 1px solid rgba(180, 210, 120, 0.7);
+        display: none !important;
       }
-      .clerk-voice-help[hidden] { display: none; }
+      .clerk-voice-help[hidden] { display: none !important; }
       .clerk-voice-help a {
         color: rgba(49, 65, 0, 1);
         font-weight: 700;
         text-decoration: underline;
       }
       .clerk-voice-diagnostics {
-        margin: 0;
-        padding: 10px 14px;
-        font-size: 0.76em;
-        line-height: 1.45;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        color: rgba(225, 240, 170, 1);
-        background: rgba(25, 35, 0, 0.82);
-        border-bottom: 1px solid rgba(129, 163, 43, 0.6);
-        white-space: pre-wrap;
-        word-break: break-word;
+        display: none !important;
       }
       .clerk-voice-diagnostics.error {
-        color: rgba(255, 220, 220, 1);
-        background: rgba(65, 20, 20, 0.9);
-        border-bottom-color: rgba(210, 120, 120, 0.7);
+        display: none !important;
       }
-      .clerk-voice-diagnostics[hidden] { display: none; }
+      .clerk-voice-diagnostics[hidden] { display: none !important; }
       .clerk-voice-frame-wrap {
         position: relative;
         width: 100%;
         flex: 1;
-        background: rgba(18, 20, 24, 1);
+        background: transparent;
         overflow: hidden;
       }
       .clerk-voice-backdrop {
-        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-repeat: no-repeat;
+        background-position: center 58%;
+        background-size: min(84%, 460px) auto;
+        opacity: 0.34;
+        filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.32));
+        transition: opacity 180ms ease, background-image 180ms ease;
+      }
+      .clerk-voice-backdrop.docked {
+        opacity: 0.22;
       }
       .clerk-voice-watermark {
         position: absolute;
@@ -3733,7 +8535,7 @@
         height: 50px;
         border: none;
         background: transparent;
-        border-radius: 18px;
+        border-radius: 0;
         overflow: hidden;
         transition: all 220ms ease;
       }
@@ -3744,22 +8546,277 @@
         bottom: 18px;
         transform: none;
       }
+      .clerk-voice-signal-stage {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 14px;
+        pointer-events: none;
+      }
+      .clerk-voice-signal-stage[hidden] {
+        display: none;
+      }
+      .clerk-voice-signal-portrait {
+        position: absolute;
+        left: 50%;
+        top: 44%;
+        width: min(122%, 284px);
+        max-height: 100%;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        object-position: center;
+        opacity: 0.78;
+        filter:
+          brightness(0.68)
+          contrast(1.38)
+          saturate(0.96)
+          drop-shadow(0 12px 24px rgba(0, 0, 0, 0.48));
+      }
+      .clerk-voice-signal-stage.contrast-light-bg .clerk-voice-signal-portrait {
+        opacity: 0.82;
+        filter:
+          brightness(0.54)
+          contrast(1.52)
+          saturate(0.92)
+          drop-shadow(0 13px 26px rgba(0, 0, 0, 0.52));
+      }
+      .clerk-voice-signal-stage.contrast-dark-bg .clerk-voice-signal-portrait {
+        opacity: 0.76;
+        filter:
+          brightness(0.9)
+          contrast(1.22)
+          saturate(0.8)
+          drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
+      }
+      .clerk-voice-signal-stage.is-forming .clerk-voice-signal-portrait {
+        animation: clerkSignalPortraitFormIn ${SIGNAL_FORMATION_DURATION_MS}ms cubic-bezier(0.2, 0.62, 0.18, 1) forwards;
+      }
+      .clerk-voice-signal-stage.is-forming .clerk-voice-signal-wave {
+        animation: clerkSignalWaveFormIn ${SIGNAL_FORMATION_DURATION_MS}ms ease-out forwards;
+      }
+      .clerk-voice-signal-stage.is-forming .clerk-voice-signal-bar {
+        animation-name: clerkSignalBarFormIn;
+        animation-duration: ${SIGNAL_FORMATION_DURATION_MS}ms;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
+      }
+      .clerk-voice-signal-wave {
+        position: absolute;
+        left: 50%;
+        bottom: 54px;
+        transform: translateX(-50%);
+        z-index: 2;
+        width: min(82%, var(--clerk-signal-wave-max-width, 236px));
+        max-width: calc(100% - 22px);
+        height: 72px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: center;
+        gap: var(--clerk-signal-gap, 4px);
+        padding: 0 4px;
+      }
+      .clerk-voice-signal-bar {
+        width: var(--signal-bar-width, 7px);
+        min-height: var(--clerk-signal-bar-min-height, 12px);
+        height: var(--clerk-signal-bar-idle-height, 16px);
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(74, 132, 40, 0.98) 0%, rgba(34, 84, 22, 0.98) 100%);
+        box-shadow: 0 0 10px rgba(44, 102, 28, 0.48);
+        transform-origin: center bottom;
+        animation: clerkSignalListening 1.2s ease-in-out infinite;
+        animation-delay: var(--signal-delay, 0s);
+        flex: 0 0 auto;
+      }
+      .clerk-voice-signal-stage.is-speaking .clerk-voice-signal-bar {
+        animation-name: clerkSignalSpeaking;
+        animation-duration: 520ms;
+      }
+      .clerk-voice-signal-stage.is-idle .clerk-voice-signal-bar {
+        opacity: 0.46;
+      }
+      .clerk-voice-signal-nameplate {
+        position: absolute;
+        left: 50%;
+        bottom: 14px;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+      .clerk-voice-signal-name {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 1.03em;
+        font-style: italic;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: 0.28px;
+        color: rgba(48, 71, 35, 0.98);
+        text-shadow: 0 1px 2px rgba(24, 39, 16, 0.34);
+      }
+      .clerk-voice-signal-title {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.55em;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: 0.82px;
+        color: rgba(72, 96, 54, 0.96);
+        text-shadow: 0 1px 2px rgba(24, 39, 16, 0.28);
+      }
+      .clerk-voice-signal-stage.show-clerk-name .clerk-voice-signal-nameplate {
+        opacity: 0.98;
+      }
+      .clerk-voice-signal-label {
+        display: none;
+      }
+      @keyframes clerkSignalPortraitFormIn {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.72);
+          filter:
+            blur(16px)
+            brightness(2.4)
+            contrast(0.24)
+            saturate(0.78)
+            drop-shadow(0 3px 10px rgba(0, 0, 0, 0.16));
+        }
+        58% {
+          opacity: 0.52;
+          transform: translate(-50%, -50%) scale(0.9);
+          filter:
+            blur(5px)
+            brightness(1.1)
+            contrast(0.82)
+            saturate(0.9)
+            drop-shadow(0 8px 20px rgba(0, 0, 0, 0.28));
+        }
+        100% {
+          opacity: 0.84;
+          transform: translate(-50%, -50%) scale(1);
+          filter:
+            blur(0)
+            brightness(0.62)
+            contrast(1.46)
+            saturate(0.94)
+            drop-shadow(0 14px 28px rgba(0, 0, 0, 0.56));
+        }
+      }
+      @keyframes clerkSignalWaveFormIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) scale(0.7);
+        }
+        55% {
+          opacity: 0.62;
+          transform: translateX(-50%) scale(0.92);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(-50%) scale(1);
+        }
+      }
+      @keyframes clerkSignalBarFormIn {
+        0% {
+          height: 6px;
+          opacity: 0.08;
+        }
+        60% {
+          height: 34px;
+          opacity: 0.68;
+        }
+        100% {
+          height: 16px;
+          opacity: 0.88;
+        }
+      }
+      @keyframes clerkSignalListening {
+        0%, 100% {
+          height: 14px;
+          opacity: 0.82;
+        }
+        40% {
+          height: 24px;
+          opacity: 1;
+        }
+        70% {
+          height: 18px;
+          opacity: 0.9;
+        }
+      }
+      @keyframes clerkSignalSpeaking {
+        0% {
+          height: 16px;
+          opacity: 0.86;
+        }
+        25% {
+          height: 52px;
+          opacity: 1;
+        }
+        50% {
+          height: 28px;
+          opacity: 0.92;
+        }
+        75% {
+          height: 58px;
+          opacity: 1;
+        }
+        100% {
+          height: 18px;
+          opacity: 0.85;
+        }
+      }
       .clerk-voice-start-btn {
         position: absolute;
         left: 50%;
-        bottom: 18px;
+        bottom: -2px;
         transform: translateX(-50%);
         z-index: 3;
-        background: linear-gradient(135deg, rgba(178, 210, 53, 1) 0%, rgba(129, 163, 43, 1) 100%);
-        color: rgba(38, 52, 0, 1);
-        border: 2px solid rgba(220, 240, 140, 0.8);
+        width: min(76%, 184px);
+        max-width: calc(100% - 20px);
+        min-width: 0;
+        min-height: 52px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, rgba(76, 116, 58, 0.98) 0%, rgba(52, 90, 41, 0.98) 100%);
+        color: rgba(255, 255, 255, 0.99) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.99);
+        border: 2px solid rgba(173, 204, 84, 0.96);
         border-radius: 999px;
-        padding: 10px 20px;
-        font-weight: 800;
+        padding: 8px 16px 8px;
+        font-weight: 760;
         font-size: 0.9em;
-        letter-spacing: 0.3px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        line-height: 1.05;
+        letter-spacing: 0.01em;
+        text-align: center;
+        white-space: nowrap;
+        text-shadow: 0 1px 0 rgba(16, 28, 11, 0.42);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 8px 20px rgba(0, 0, 0, 0.44);
         cursor: pointer;
+      }
+      .clerk-voice-start-btn::after {
+        display: block;
+        content: "SELECT" !important;
+        margin-top: 2px;
+        font-size: 0.62em;
+        font-weight: 800;
+        font-style: normal;
+        letter-spacing: 1.15px;
+        color: rgba(250, 240, 160, 0.98);
+        line-height: 1;
       }
       .clerk-voice-start-btn:hover {
         filter: brightness(1.05);
@@ -3768,10 +8825,10 @@
         display: none;
       }
       .clerk-voice-launch-emblem {
+        display: none;
         position: absolute;
         inset: 0;
         z-index: 2;
-        display: flex;
         align-items: center;
         justify-content: center;
         pointer-events: none;
@@ -3790,17 +8847,7 @@
         filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.35));
       }
       .clerk-voice-launch-title {
-        position: absolute;
-        top: 16%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(255, 255, 255, 0.98);
-        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.75);
-        font-family: "Times New Roman", Times, serif;
-        font-size: clamp(18px, 2.6vw, 32px);
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        white-space: nowrap;
+        display: none;
       }
       .clerk-voice-launch-emblem[hidden] {
         display: none;
@@ -3811,6 +8858,7 @@
         bottom: 18px;
         z-index: 11950;
         display: inline-flex;
+        flex-direction: row-reverse;
         align-items: center;
         gap: 10px;
       }
@@ -3819,38 +8867,47 @@
       }
       .clerk-floating-launcher-btn {
         position: relative;
-        width: 106px;
-        height: 106px;
+        width: 138px;
+        height: 138px;
         border-radius: 50%;
-        border: none;
-        background: transparent;
-        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.42);
+        border: 6px solid rgba(84, 143, 65, 0.97);
+        background: rgba(255, 255, 255, 0.99);
+        box-shadow:
+          inset 0 0 0 2px rgba(242, 245, 236, 0.98),
+          0 10px 22px rgba(0, 0, 0, 0.22);
         cursor: pointer;
         padding: 0;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        overflow: visible;
-        transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+        overflow: hidden;
+        transition: box-shadow 160ms ease, filter 160ms ease;
       }
       .clerk-floating-launcher-btn:hover,
       .clerk-floating-launcher-btn:focus-visible {
-        transform: translateY(-2px) scale(1.01);
-        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(178, 210, 53, 0.7);
-        filter: brightness(1.03);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26), 0 0 0 1px rgba(84, 143, 65, 0.56);
+        filter: none;
       }
       .clerk-floating-launcher-btn:focus-visible {
         outline: 2px solid rgba(246, 233, 162, 0.95);
         outline-offset: 2px;
       }
       .clerk-floating-launcher-img {
-        width: 100%;
-        height: 100%;
+        width: 105%;
+        height: 105%;
         border-radius: 50%;
-        object-fit: cover;
-        object-position: center;
+        object-fit: contain;
+        object-position: center 57%;
         border: none;
         background: transparent;
+        filter: brightness(0.65) contrast(1.08);
+        transition: transform 180ms ease, filter 180ms ease;
+        transform-origin: center center;
+      }
+      .clerk-floating-launcher-btn:hover .clerk-floating-launcher-img,
+      .clerk-floating-launcher-btn:focus-visible .clerk-floating-launcher-img {
+        transform: scale(1.25);
+        filter: brightness(0.65) contrast(1.42);
       }
       .clerk-floating-launcher-pulse {
         display: none;
@@ -3871,21 +8928,43 @@
       .clerk-floating-launcher-tooltip {
         opacity: 0;
         transform: translateX(8px);
+        visibility: hidden;
         transition: opacity 140ms ease, transform 140ms ease;
         pointer-events: none;
-        padding: 8px 12px;
+        padding: 8px 12px 9px;
+        min-height: 44px;
         border-radius: 999px;
-        border: 1px solid rgba(198, 225, 120, 0.7);
-        background: rgba(16, 24, 0, 0.92);
-        color: rgba(247, 239, 183, 1);
+        border: 1px solid rgba(173, 204, 84, 0.94);
+        background: linear-gradient(180deg, rgba(86, 128, 64, 0.97) 0%, rgba(58, 99, 45, 0.97) 100%);
+        color: rgba(255, 255, 255, 0.98);
+        text-shadow: 0 1px 0 rgba(34, 49, 22, 0.45);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.05;
         font-size: 0.78em;
         font-weight: 700;
+        font-style: italic;
         letter-spacing: 0.2px;
         white-space: nowrap;
       }
-      .clerk-floating-launcher-wrap:hover .clerk-floating-launcher-tooltip,
-      .clerk-floating-launcher-wrap:focus-within .clerk-floating-launcher-tooltip {
+      .clerk-floating-launcher-tooltip::after {
+        content: "SELECT";
+        margin-top: 2px;
+        font-size: 0.62em;
+        font-weight: 800;
+        font-style: normal;
+        letter-spacing: 1.15px;
+        color: rgba(250, 240, 160, 0.98);
+        line-height: 1;
+      }
+      .clerk-floating-launcher-btn:hover + .clerk-floating-launcher-tooltip,
+      .clerk-floating-launcher-btn:focus-visible + .clerk-floating-launcher-tooltip {
         opacity: 1;
+        visibility: visible;
         transform: translateX(0);
       }
       @media (max-width: 820px) {
@@ -3894,20 +8973,20 @@
           bottom: 92px;
         }
         .clerk-voice-modal-content {
-          width: min(420px, calc(100vw - 14px));
-          height: min(560px, calc(100vh - 14px));
+          width: min(296px, calc(100vw - 14px));
+          height: min(296px, calc(100vh - 14px));
         }
         .clerk-floating-launcher-wrap {
           right: 14px;
           bottom: 14px;
         }
         .clerk-floating-launcher-btn {
-          width: 86px;
-          height: 86px;
+          width: 112px;
+          height: 112px;
         }
         .clerk-floating-launcher-img {
-          width: 100%;
-          height: 100%;
+          width: 105%;
+          height: 105%;
         }
       }
       @media (max-width: 520px) {
@@ -3917,9 +8996,9 @@
           bottom: 84px;
         }
         .clerk-voice-modal-content {
-          width: min(340px, calc(100vw - 16px));
+          width: min(274px, calc(100vw - 16px));
           max-width: calc(100vw - 16px);
-          height: min(520px, calc(100vh - 16px));
+          height: min(274px, calc(100vh - 16px));
           margin: 0 auto;
         }
         .clerk-voice-modal-header {
@@ -3942,8 +9021,8 @@
           bottom: 10px;
         }
         .clerk-floating-launcher-btn {
-          width: 74px;
-          height: 74px;
+          width: 96px;
+          height: 96px;
         }
       }
     `;
@@ -3952,13 +9031,10 @@
 
   function setPresence(cfg) {
     const avatarUrl = typeof cfg.character_avatar_url === "string" ? cfg.character_avatar_url.trim() : "";
-    const backgroundUrl =
-      typeof cfg.character_background_url === "string" ? cfg.character_background_url.trim() : "";
     const headerAvatar = document.getElementById("clerkVoiceHeaderAvatar");
     const backdrop = document.getElementById("clerkVoiceBackdrop");
     const watermark = document.getElementById("clerkVoiceWatermark");
     const watermarkImg = document.getElementById("clerkVoiceWatermarkImg");
-    const primaryBackgroundUrl = backgroundUrl || avatarUrl;
     if (headerAvatar) {
       if (avatarUrl) {
         headerAvatar.src = avatarUrl;
@@ -3968,9 +9044,7 @@
         headerAvatar.hidden = true;
       }
     }
-    if (backdrop && primaryBackgroundUrl) {
-      backdrop.style.backgroundImage = `url('${primaryBackgroundUrl}')`;
-    } else if (backdrop) {
+    if (backdrop) {
       backdrop.style.backgroundImage = "";
     }
     if (watermarkImg) {
@@ -3979,6 +9053,9 @@
     if (watermark) {
       watermark.hidden = true;
     }
+    setSignalPortraitSource(cfg);
+    syncSignalDisplayName(cfg);
+    syncSignalWaveBars(cfg);
     syncFloatingLauncherIcon(cfg);
     syncUnityLaunchEmblem(cfg);
   }
@@ -3990,7 +9067,12 @@
       const modal = document.getElementById("clerkVoiceModal");
       if (!modal || !modal.classList.contains("active")) return;
       try {
-        closeClerkVoiceModal();
+        pageTransitionInProgress = true;
+        closeClerkVoiceModal({
+          preserveRoaming: true,
+          preserveDailyMeter: true,
+          reason: "page-transition",
+        });
       } catch (_err) {}
     };
     window.addEventListener("pagehide", handlePageTransition);
@@ -4008,10 +9090,10 @@
     modal.id = "clerkVoiceModal";
     modal.className = "clerk-voice-modal";
     modal.innerHTML = `
-      <div class="clerk-voice-modal-content" role="dialog" aria-modal="false" aria-label="Speak with Clerk">
+      <div class="clerk-voice-modal-content" role="dialog" aria-modal="false" aria-label="Meet with Clerk">
         <div class="clerk-voice-modal-header">
           <div class="clerk-voice-modal-title-row">
-            <h2 class="clerk-voice-modal-title" id="clerkVoiceTitle">Speak with Clerk</h2>
+            <h2 class="clerk-voice-modal-title" id="clerkVoiceTitle">Meet with Clerk</h2>
             <div id="clerkVoiceCharacterWrap" class="clerk-voice-character-wrap" hidden>
               <span class="clerk-voice-character-label">Character</span>
               <select id="clerkVoiceCharacterSelect" class="clerk-voice-character-select" aria-label="Select voice character"></select>
@@ -4039,22 +9121,40 @@
           <div id="clerkVoiceLaunchEmblem" class="clerk-voice-launch-emblem" hidden>
             <div class="clerk-voice-launch-ring-wrap">
               <img id="clerkVoiceLaunchRing" class="clerk-voice-launch-ring" alt="Unity Energy launch emblem" />
-              <div id="clerkVoiceLaunchTitle" class="clerk-voice-launch-title">Speak with Clerk</div>
+              <div id="clerkVoiceLaunchTitle" class="clerk-voice-launch-title">Meet with Clerk</div>
             </div>
           </div>
-          <button id="clerkVoiceStartBtn" class="clerk-voice-start-btn" type="button" hidden>Start speaking with Clerk</button>
+          <div id="clerkVoiceSignalStage" class="clerk-voice-signal-stage" data-mode="idle" hidden>
+            <img id="clerkVoiceSignalPortrait" class="clerk-voice-signal-portrait" alt="Clerk portrait" hidden />
+            <div class="clerk-voice-signal-wave" aria-hidden="true">
+              <span class="clerk-voice-signal-bar"></span>
+              <span class="clerk-voice-signal-bar"></span>
+              <span class="clerk-voice-signal-bar"></span>
+              <span class="clerk-voice-signal-bar"></span>
+              <span class="clerk-voice-signal-bar"></span>
+              <span class="clerk-voice-signal-bar"></span>
+              <span class="clerk-voice-signal-bar"></span>
+            </div>
+            <div id="clerkVoiceSignalNameplate" class="clerk-voice-signal-nameplate" hidden>
+              <div id="clerkVoiceSignalName" class="clerk-voice-signal-name">J. Clerk Maxwell</div>
+              <div id="clerkVoiceSignalTitle" class="clerk-voice-signal-title">Unity Chief Scientist</div>
+            </div>
+            <div id="clerkVoiceSignalLabel" class="clerk-voice-signal-label">Clerk is ready.</div>
+          </div>
+          <button id="clerkVoiceStartBtn" class="clerk-voice-start-btn" type="button" hidden>Waiting on Clerk</button>
           <iframe
             id="clerkVoiceFrame"
             class="clerk-voice-frame"
-            title="Speak with Clerk"
+            title="Meet with Clerk"
             loading="lazy"
-            allow="microphone *; autoplay *; clipboard-read *; clipboard-write *"
+            allow="microphone; autoplay; clipboard-read; clipboard-write"
             referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
       </div>
     `;
 
     document.body.appendChild(modal);
+    syncSignalWaveBars(getVoiceConfig());
     setPanelMode("docked");
 
     modal.addEventListener("click", function (event) {
@@ -4067,34 +9167,48 @@
     });
     document.getElementById("clerkVoiceStartBtn").addEventListener("click", async function () {
       const cfg = getRuntimeVoiceConfig();
-      setLaunchEmblemVisible(false);
+      setLaunchEmblemVisible(true);
+      setWidgetFrameVisible(false);
       setStatus("Requesting microphone access…", false, true);
       try {
         await requestTopLevelMicAccess();
       } catch (err) {
-        const reason =
-          err && typeof err === "object" && "name" in err ? String(err.name) : "Microphone access denied.";
-        setStatus(`Microphone permission failed (${reason}). Allow microphone access in browser settings.`, true, true);
+        const recoveryMessage = getMicrophoneRecoveryMessage(err);
+        unityStartGatePreflightReady = false;
+        unityStartGatePreflightAttempted = true;
+        unityStartGatePreflightFailed = true;
+        unityStartGatePending = true;
+        unityStartGatePendingRequiresRecovery = true;
+        unityStartGatePreflightStatusMessage = recoveryMessage;
+        const startBtn = document.getElementById("clerkVoiceStartBtn");
+        if (startBtn) startBtn.textContent = START_BUTTON_WAITING_LABEL;
+        setStatus(recoveryMessage, true, true);
         setStartButtonVisible(true);
-        setLaunchEmblemVisible(false);
+        setLaunchEmblemVisible(true);
         return;
       }
+      unityStartGatePreflightReady = true;
+      unityStartGatePreflightAttempted = true;
+      unityStartGatePreflightFailed = false;
+      unityStartGatePreflightStatusMessage = "";
+      unityStartGatePending = false;
+      unityStartGatePendingRequiresRecovery = false;
 
       const configured = sendWidgetConfig(cfg, pendingLaunchSession);
       if (!configured) {
-        setStatus(
-          "Voice auth is missing. Set MAXWELLIAN_HUME_RUNTIME_AUTH/MAXWELLIAN_HUME.auth, or run setMaxwellianHumeAuth('apiKey'|'accessToken', '...') once in browser console.",
-          true,
-          true
-        );
+        setStatus(getVoiceEngineMissingConfigMessage(cfg), true, true);
         setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
         setStartButtonVisible(true);
+        setWidgetFrameVisible(false);
         return;
       }
-      setWidgetFrameSize(72, 72);
+      setCompactSquareFrameSize();
+      setWidgetFrameVisible(false);
+      setLaunchEmblemVisible(true);
       expandWidgetFromClient();
+      scheduleIframeStartConversationRetry(34, 170);
       setStatus(
-        `${cfg.character_name}: “Nice to meet you. How can I help you learn about Unity Energy?”`,
+        `${cfg.character_name} is starting your voice session…`,
         false,
         true
       );
@@ -4105,13 +9219,18 @@
         if (hasConversationStarted) return;
         sendWidgetConfig(cfg, pendingLaunchSession);
         expandWidgetFromClient();
+        scheduleIframeStartConversationRetry(14, 190);
       }, 1500);
       window.setTimeout(function () {
         const modalEl = document.getElementById("clerkVoiceModal");
         if (!modalEl || !modalEl.classList.contains("active")) return;
         if (hasConversationStarted) return;
+        const retryBtn = document.getElementById("clerkVoiceStartBtn");
+        if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
+        setStartButtonVisible(true);
         setStatus(
-          "If audio still does not start, click the small Clerk panel in the lower-right once to activate it.",
+          "Still waiting on Clerk. Tap Waiting on Clerk again if needed.",
+          true,
           true
         );
       }, 5000);
@@ -4166,12 +9285,16 @@
 
   function setPanelMode(mode) {
     const frame = document.getElementById("clerkVoiceFrame");
+    const backdrop = document.getElementById("clerkVoiceBackdrop");
     const toggleBtn = document.getElementById("clerkVoicePanelToggleBtn");
     const overlay = document.getElementById("clerkVoiceUnityOverlay");
     const bottomMask = document.getElementById("clerkVoiceBottomMask");
     panelMode = mode === "docked" ? "docked" : "centered";
     if (frame) {
       frame.classList.toggle("docked", panelMode === "docked");
+    }
+    if (backdrop) {
+      backdrop.classList.toggle("docked", panelMode === "docked");
     }
     if (overlay) {
       overlay.classList.toggle("docked", panelMode === "docked");
@@ -4241,6 +9364,24 @@
     frame.style.height = `${safeH}px`;
   }
 
+  function setCompactSquareFrameSize() {
+    setWidgetFrameSize(COMPACT_SQUARE_FRAME_SIZE, COMPACT_SQUARE_FRAME_SIZE);
+  }
+  function setWidgetFrameVisible(visible) {
+    const frame = document.getElementById("clerkVoiceFrame");
+    const shouldExposeRenderer = Boolean(visible && !hasConversationStarted);
+    const shouldShowSignalStage = Boolean(hasConversationStarted || preConversationSignalVisible);
+    if (frame) {
+      frame.style.opacity = shouldExposeRenderer ? "1" : "0";
+      frame.style.pointerEvents = shouldExposeRenderer ? "auto" : "none";
+    }
+    if (!shouldShowSignalStage || (!visible && !preConversationSignalVisible)) {
+      setSignalStageVisible(false);
+      return;
+    }
+    syncSignalStageForConversation();
+  }
+
   function applyFrameTransparencyOverrides(frame) {
     if (!frame) return;
     try {
@@ -4258,6 +9399,18 @@
           background: transparent !important;
         }
       `;
+      const replaceLaunchHeading = function () {
+        const spans = doc.querySelectorAll("span");
+        spans.forEach(function (node) {
+          const text = coerceText(node.textContent).trim();
+          if (!/^speak with;?$/i.test(text)) return;
+          node.textContent = "Meet with;";
+        });
+      };
+      replaceLaunchHeading();
+      window.setTimeout(replaceLaunchHeading, 120);
+      window.setTimeout(replaceLaunchHeading, 420);
+      window.setTimeout(replaceLaunchHeading, 900);
     } catch (_err) {}
   }
 
@@ -4269,16 +9422,15 @@
   }
 
   function openClerkVoiceModal(launchInput) {
+    const baseCfg = getVoiceConfig();
+    if (!isClerkVoiceAllowedOnCurrentPage(baseCfg)) return;
     ensureModal();
     setFloatingLauncherVisible(false);
+    pageTransitionInProgress = false;
+    resetSignalStage();
+    clearTourGuideNavigationState("modal-open-reset");
     const modal = document.getElementById("clerkVoiceModal");
     const frame = document.getElementById("clerkVoiceFrame");
-    if (isHomePageClerkDisabled()) {
-      if (modal) modal.classList.remove("active");
-      if (frame) frame.removeAttribute("src");
-      setFloatingLauncherVisible(false);
-      return;
-    }
     if (!isClerkVoiceFeatureEnabled()) {
       if (modal) modal.classList.add("active");
       if (frame) frame.removeAttribute("src");
@@ -4286,23 +9438,27 @@
       setStartButtonVisible(false);
       setLaunchEmblemVisible(false);
       setSessionDiagnostics("", false);
-      setStatus("Speak with Clerk is currently unavailable in this release.", false, true);
+      setStatus("Meet with Clerk is currently unavailable in this release.", false, true);
       return;
     }
     clearQuestionNotesStatusTimer();
+    clearLeadCaptureStatusTimer();
     resetGuardrailState();
     currentVisitorName = "";
+    resetLeadCaptureState("");
     visitorQuestionCount = 0;
     questionNotesActivated = false;
     visitorQuestionLog = [];
     lastVisitorQuestionFingerprint = "";
     founderModeActive = false;
     founderModeIdentity = "";
+    mptsDriftEventCount = 0;
+    lastMptsDriftFingerprint = "";
+    resetLeadCaptureState("");
     const previousLaunchSignature = activeLaunchSignature;
     const hadExistingSession = Boolean(
       widgetReady || hasConversationStarted || (frame && coerceText(frame.getAttribute("src")))
     );
-    const baseCfg = getVoiceConfig();
     pendingLaunchSession = normalizeLaunchPayload(parseLaunchInput(launchInput), baseCfg);
     const nextLaunchSignature = buildLaunchSessionSignature(pendingLaunchSession);
     if (hadExistingSession && previousLaunchSignature && previousLaunchSignature !== nextLaunchSignature) {
@@ -4311,7 +9467,34 @@
       hasConversationStarted = false;
     }
     activeLaunchSignature = nextLaunchSignature;
-    const cfg = resolveActiveCharacterConfig(baseCfg, pendingLaunchSession);
+    let cfg = resolveActiveCharacterConfig(baseCfg, pendingLaunchSession);
+    const launchVisitorName = coerceText(
+      pendingLaunchSession &&
+        pendingLaunchSession.contextPayload &&
+        pendingLaunchSession.contextPayload.visitor_name
+    );
+    if (launchVisitorName) {
+      currentVisitorName = normalizeVisitorName(launchVisitorName);
+    }
+    resetLeadCaptureState(currentVisitorName);
+    syncLeadCaptureStateToSession(cfg, "lead-capture-launch-initialized");
+    const preflightReady = unityStartGatePreflightReady;
+    const preflightAttempted = unityStartGatePreflightAttempted;
+    const preflightFailed = unityStartGatePreflightFailed && preflightAttempted && !preflightReady;
+    const preflightStatusMessage = coerceText(unityStartGatePreflightStatusMessage);
+    unityStartGatePreflightReady = false;
+    unityStartGatePreflightAttempted = false;
+    unityStartGatePreflightFailed = false;
+    unityStartGatePreflightStatusMessage = "";
+    const requiresStartGate = shouldUseUnityStartGate(cfg);
+    unityStartGatePending = (requiresStartGate && !preflightReady) || preflightFailed;
+    unityStartGatePendingRequiresRecovery = preflightFailed;
+    if (unityStartGatePending) {
+      unityStartGatePreflightStatusMessage = preflightFailed
+        ? preflightStatusMessage || "Microphone access is blocked. Tap Waiting on Clerk and allow access for this site."
+        : "Tap Waiting on Clerk to begin speaking with Clerk.";
+    }
+    setWidgetFrameVisible(false);
     const policyDecision =
       pendingLaunchSession && typeof pendingLaunchSession.policyDecision === "object"
         ? pendingLaunchSession.policyDecision
@@ -4321,17 +9504,21 @@
     const title = document.getElementById("clerkVoiceTitle");
     const startBtn = document.getElementById("clerkVoiceStartBtn");
 
-    if (title) title.textContent = `Speak with ${cfg.character_name}`;
-    if (startBtn) startBtn.textContent = `Start speaking with ${cfg.character_name}`;
+    if (title) title.textContent = `Meet with ${cfg.character_name}`;
+    if (startBtn) startBtn.textContent = START_BUTTON_WAITING_LABEL;
     syncCharacterSelector(baseCfg, pendingLaunchSession.characterId);
     setPresence(cfg);
+    setSignalPortraitSource(cfg);
     modal.classList.add("active");
+    modal.dataset.humeAuthRetryAttempted = "";
+    modal.dataset.voiceEngineFallbackAttempted = "";
     clearFrameLoadTimer();
     setHelpLink("", false);
     setStartButtonVisible(false);
-    setLaunchEmblemVisible(false);
     hasConversationStarted = false;
-    setWidgetFrameSize(72, 72);
+    setLaunchEmblemVisible(true);
+    customerExitSweepCaptured = false;
+    setCompactSquareFrameSize();
     widgetReady = false;
     setPanelMode("centered");
     setSessionDiagnostics(buildSessionDiagnostics(pendingLaunchSession, cfg, "", "prepared"), false);
@@ -4365,59 +9552,98 @@
       clearGuardrailIdleTimer();
       return;
     }
+    initializeElectricalStoryGuardrailSession(cfg);
 
     if (!window.isSecureContext) {
       frame.removeAttribute("src");
+      setLaunchEmblemVisible(false);
       setStatus(
-        "Microphone requires a secure page. Open this site via https:// or localhost and try Speak with Clerk again.",
+        "Microphone requires a secure page. Open this site via https:// or localhost and try Meet with Clerk again.",
         true
       );
       return;
     }
 
+    let engineValidation = validateVoiceEngineConfig(cfg);
+    if (!engineValidation.ok) {
+      if (detectVoiceEngine(cfg) === "hume" && modal.dataset.humeAuthRetryAttempted !== "1") {
+        modal.dataset.humeAuthRetryAttempted = "1";
+        frame.removeAttribute("src");
+        setLaunchEmblemVisible(true);
+        setStatus("Checking secure runtime auth for Clerk…", false, true);
+        fetchRuntimeAuthFromServer({ force: true }).then(function (runtimeAuth) {
+          modal.dataset.humeAuthRetryAttempted = "";
+          if (runtimeAuth) {
+            openClerkVoiceModal(launchInput);
+            return;
+          }
+          const fallbackLaunchInput = parseLaunchInput(launchInput);
+          if (!fallbackLaunchInput.contextPayload || typeof fallbackLaunchInput.contextPayload !== "object") {
+            fallbackLaunchInput.contextPayload = {};
+          }
+          fallbackLaunchInput.contextPayload.voice_engine_preference = "openai";
+          if (buildOpenAiFallbackConfig(cfg)) {
+            setStatus(
+              "Hume auth is unavailable right now. Launching Clerk with OpenAI voice fallback.",
+              true,
+              true
+            );
+            openClerkVoiceModal(fallbackLaunchInput);
+            return;
+          }
+          setLaunchEmblemVisible(false);
+          setStatus(engineValidation.message || "Voice engine config is incomplete.", true);
+        });
+        return;
+      }
+      if (detectVoiceEngine(cfg) === "hume" && modal.dataset.voiceEngineFallbackAttempted !== "1") {
+        const fallbackCfg = buildOpenAiFallbackConfig(cfg);
+        if (fallbackCfg) {
+          cfg = fallbackCfg;
+          modal.dataset.voiceEngineFallbackAttempted = "1";
+          engineValidation = validateVoiceEngineConfig(cfg);
+          if (engineValidation.ok) {
+            setStatus(
+              "Hume auth is unavailable right now. Launching Clerk with OpenAI voice fallback.",
+              true,
+              true
+            );
+          }
+        }
+      }
+      if (!engineValidation.ok) {
+        frame.removeAttribute("src");
+        setLaunchEmblemVisible(false);
+        setStatus(engineValidation.message || "Voice engine config is incomplete.", true);
+        return;
+      }
+    }
     const url = composeEmbedUrl(cfg, pendingLaunchSession);
     if (!url) {
       frame.removeAttribute("src");
+      setLaunchEmblemVisible(false);
       setStatus(
-        "Voice session URL is not configured. Set embed_url in hume_character_config.js to activate Speak with Clerk.",
+        "Voice session URL is not configured. Set embed_url in hume_character_config.js to activate Meet with Clerk.",
         true
       );
       return;
     }
-
-    const auth = normalizeAuthConfig(cfg);
-    const configId = resolveConfigId(cfg);
-    const voiceId = normalizeVoiceId(cfg);
-    if (!auth) {
-      frame.removeAttribute("src");
-      setStatus(
-        "Voice auth is not configured. Set MAXWELLIAN_HUME_RUNTIME_AUTH/MAXWELLIAN_HUME.auth, or run setMaxwellianHumeAuth('apiKey'|'accessToken', '...') once in browser console.",
-        true
-      );
-      return;
-    }
-    if (!configId) {
-      setStatus(
-        `${cfg.character_name} is connecting with default Hume config (config_id not set).`,
-        false
-      );
-    } else if (voiceId && configId === voiceId) {
-      setStatus(
-        `${cfg.character_name} is connecting with your specified voice profile id.`,
-        false
-      );
-    }
+    activateCrossPageRoamingFromLaunch(pendingLaunchSession, cfg);
 
     activeFrameOrigin = getEmbedOrigin(url);
     frame.src = url;
-    setStatus(`${cfg.character_name} is connecting. Preparing voice panel…`, false);
+    setStatus(`${cfg.character_name} is connecting to ${getVoiceEngineLabel(cfg)}. Preparing voice panel…`, false);
     setSessionDiagnostics(buildSessionDiagnostics(pendingLaunchSession, cfg, url, "connecting"), false);
 
     frameLoadTimer = window.setTimeout(function () {
       const modalEl = document.getElementById("clerkVoiceModal");
       if (!modalEl || !modalEl.classList.contains("active")) return;
+      const timeoutStatus =
+        detectVoiceEngine(cfg) === "hume"
+          ? "Voice widget loaded but Hume session did not initialize. Check Hume auth/runtime token and renderer connectivity, then retry."
+          : "Voice widget loaded but session did not initialize. Check realtime session endpoint and server API key, then retry.";
       setStatus(
-        "Voice widget loaded but session did not initialize. Check auth/config_id, then retry.",
+        timeoutStatus,
         true
       );
       setHelpLink(url, true);
@@ -4425,18 +9651,56 @@
     }, 12000);
   }
 
-  function closeClerkVoiceModal() {
+  function closeClerkVoiceModal(closeInput) {
+    const closeOptions =
+      closeInput &&
+      typeof closeInput === "object" &&
+      (Object.prototype.hasOwnProperty.call(closeInput, "preserveRoaming") ||
+        Object.prototype.hasOwnProperty.call(closeInput, "preserveDailyMeter") ||
+        Object.prototype.hasOwnProperty.call(closeInput, "reason"))
+        ? closeInput
+        : {};
+    const preserveRoaming = Boolean(closeOptions.preserveRoaming);
+    const preserveDailyMeter = Boolean(closeOptions.preserveDailyMeter);
+    const closeReason = coerceText(closeOptions.reason);
+    const closeReasonToken = closeReason.toLowerCase();
+    const cfg = getVoiceConfig();
     const modal = document.getElementById("clerkVoiceModal");
     const frame = document.getElementById("clerkVoiceFrame");
     if (!modal) return;
+    const launchSessionAtClose = pendingLaunchSession;
+    const hadConversationStarted = hasConversationStarted;
+    const redirectAfterCloseUrl = resolvePostConversationRedirectUrl(launchSessionAtClose);
+    const shouldRedirectAfterClose = Boolean(
+      redirectAfterCloseUrl &&
+        hadConversationStarted &&
+        !preserveRoaming &&
+        !pageTransitionInProgress &&
+        closeReasonToken !== "page-transition" &&
+        closeReasonToken !== "relaunch"
+    );
+    maybeCaptureCustomerExitSweep(pendingLaunchSession, closeOptions, cfg);
+    if (preserveRoaming) {
+      if (closeReasonToken === "page-transition" || pageTransitionInProgress) {
+        markCrossPageRoamingForPageTransition(pendingLaunchSession);
+      } else {
+        activateCrossPageRoamingFromLaunch(pendingLaunchSession, cfg);
+      }
+    } else {
+      clearCrossPageRoamingState(pendingLaunchSession, cfg);
+    }
     clearFrameLoadTimer();
     clearQuestionNotesStatusTimer();
+    clearLeadCaptureStatusTimer();
     resetGuardrailState();
+    resetSignalStage();
+    clearTourGuideNavigationState("modal-closed");
     postToWidgetFrame({ type: "cancel" });
     modal.classList.remove("active");
     if (frame) frame.removeAttribute("src");
     activeFrameOrigin = "";
     widgetReady = false;
+    hasConversationStarted = false;
     currentVisitorName = "";
     visitorQuestionCount = 0;
     questionNotesActivated = false;
@@ -4444,19 +9708,37 @@
     lastVisitorQuestionFingerprint = "";
     founderModeActive = false;
     founderModeIdentity = "";
+    mptsDriftEventCount = 0;
+    lastMptsDriftFingerprint = "";
+    resetLeadCaptureState("");
     pendingLaunchSession = null;
     activeLaunchSignature = "";
+    unityStartGatePending = false;
+    customerExitSweepCaptured = false;
     setHelpLink("", false);
     setSessionDiagnostics("", false);
     setStartButtonVisible(false);
     setLaunchEmblemVisible(false);
+    setWidgetFrameVisible(true);
     setWidgetFrameSize(50, 50);
     setPanelMode("docked");
-    clearDailyMeter();
+    if (!preserveDailyMeter) {
+      clearDailyMeter();
+    }
+    pageTransitionInProgress = false;
     setFloatingLauncherVisible(true);
     try {
       window.dispatchEvent(new CustomEvent("clerkVoiceModalClosed"));
     } catch (_) {}
+    if (shouldRedirectAfterClose) {
+      window.setTimeout(function () {
+        try {
+          window.location.assign(redirectAfterCloseUrl);
+        } catch (_err) {
+          window.location.href = redirectAfterCloseUrl;
+        }
+      }, 24);
+    }
   }
 
   function bindLaunchButtons() {
@@ -4494,7 +9776,9 @@
         if (Number.isFinite(sourceMediaSeconds)) {
           fallbackLaunch.sourceMediaSeconds = Math.max(0, Math.floor(sourceMediaSeconds));
         }
-        await runAppleMobileMicPreflight();
+        const cfg = getVoiceConfig();
+        await runUnityStartGatePreflight(cfg);
+        await prefetchActivePagePatternContext();
         const launchInput = parseLaunchInput(button.getAttribute("data-clerk-voice") || "");
         openClerkFromLaunchInput(launchInput, fallbackLaunch);
       });
@@ -4512,5 +9796,8 @@
     ensureModal();
     ensureFloatingLauncher();
     bindLaunchButtons();
+    bindCrossPageRoamingNavigation();
+    prefetchActivePagePatternContext().catch(function (_err) {});
+    maybeResumeCrossPageRoamingOnLoad();
   });
 })();

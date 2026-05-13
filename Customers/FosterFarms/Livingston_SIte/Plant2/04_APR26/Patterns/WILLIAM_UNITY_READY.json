@@ -1,0 +1,87 @@
+{
+  "generated_at_utc": "2026-05-10T17:30:37.305909+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eReports/Livingston_Plant2_APR26/Patterns",
+  "mode": "notify-only",
+  "inventory": {
+    "image_count": 20,
+    "all_images": [
+      "PL2-1Southb_apr26.png",
+      "PL2-1Southbt_apr26.png",
+      "PL2-1Southm_apr26.png",
+      "PL2-1Souths_apr26.png",
+      "PL2-1Southv_apr26.png",
+      "PL2-2Centerb_apr26.png",
+      "PL2-2Centerbt_apr26.png",
+      "PL2-2Centerm_apr26.png",
+      "PL2-2Centers_apr26.png",
+      "PL2-2Centerv_apr26.png",
+      "PL21b_apr26.png",
+      "PL21bt_apr26.png",
+      "PL21m_apr26.png",
+      "PL21s_apr26.png",
+      "PL21v_apr26.png",
+      "PL22b_apr26.png",
+      "PL22bt_apr26.png",
+      "PL22m_apr26.png",
+      "PL22s_apr26.png",
+      "PL22v_apr26.png"
+    ],
+    "transformer_count": 2,
+    "coverage_by_transformer": {
+      "PL21": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL22": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "PL21": [
+        "PL21b_apr26.png",
+        "PL21bt_apr26.png",
+        "PL21m_apr26.png",
+        "PL21s_apr26.png",
+        "PL21v_apr26.png"
+      ],
+      "PL22": [
+        "PL22b_apr26.png",
+        "PL22bt_apr26.png",
+        "PL22m_apr26.png",
+        "PL22s_apr26.png",
+        "PL22v_apr26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "PL21",
+      "PL22"
+    ],
+    "unmatched_files": [
+      "PL2-1Southb_apr26.png",
+      "PL2-1Southbt_apr26.png",
+      "PL2-1Southm_apr26.png",
+      "PL2-1Souths_apr26.png",
+      "PL2-1Southv_apr26.png",
+      "PL2-2Centerb_apr26.png",
+      "PL2-2Centerbt_apr26.png",
+      "PL2-2Centerm_apr26.png",
+      "PL2-2Centers_apr26.png",
+      "PL2-2Centerv_apr26.png"
+    ]
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-10T17:30:37.306757+00:00"
+}

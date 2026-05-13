@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <title>Unity’s Introduction</title>
     <style>
@@ -17,6 +17,7 @@
             --unity-text: rgba(61, 71, 86, 1);
             --unity-bg: rgba(245, 247, 241, 1);
         }
+
 
         * { box-sizing: border-box; }
 
@@ -183,21 +184,110 @@
         .player-block { display: none; }
         .player-block.active { display: block; }
 
-        audio {
-            width: 100%;
-            margin-bottom: 8px;
+        .story-audio-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 6px;
         }
 
-
-        .audio-status {
-            margin: 2px 0 0;
-            font-size: 0.88rem;
-            color: rgba(80, 95, 53, 1);
+        .story-audio-button {
+            border: 1px solid rgba(74, 104, 54, 0.36);
+            border-radius: 12px;
+            padding: 11px 16px;
+            min-height: 58px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(140deg, rgba(46, 82, 54, 0.98) 0%, rgba(39, 67, 41, 0.98) 100%);
+            color: rgba(237, 248, 219, 0.98);
+            border-color: rgba(128, 170, 124, 0.55);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, filter 0.18s ease;
+            font-size: clamp(1rem, 1.1vw, 1.16rem);
         }
 
-        .audio-status.missing {
-            color: rgba(150, 62, 45, 1);
-            font-weight: 600;
+        .story-audio-button:hover {
+            transform: translateY(-1px);
+            border-color: rgba(111, 146, 78, 0.7);
+            box-shadow: 0 8px 20px rgba(51, 70, 34, 0.18);
+        }
+
+        .story-audio-button:active {
+            transform: translateY(0);
+        }
+
+        .story-audio-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            filter: grayscale(0.2);
+            box-shadow: none;
+            transform: none;
+        }
+
+        .story-audio-button-main {
+            font-weight: 700;
+        }
+        .story-audio-button-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .story-audio-button-state {
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 5px 10px;
+            border: 1px solid rgba(124, 166, 106, 0.7);
+            background: linear-gradient(180deg, rgba(232, 244, 211, 0.96) 0%, rgba(202, 224, 174, 0.96) 100%);
+            color: rgba(40, 74, 27, 0.98);
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .story-audio-button-state.is-stop {
+            background: linear-gradient(180deg, rgba(245, 232, 160, 0.98) 0%, rgba(230, 201, 96, 0.98) 100%);
+            border-color: rgba(189, 155, 58, 0.75);
+            color: rgba(84, 55, 8, 0.98);
+        }
+
+        .story-audio-button-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(176, 209, 166, 0.6);
+            background: linear-gradient(180deg, rgba(41, 78, 43, 0.96) 0%, rgba(28, 57, 31, 0.96) 100%);
+            color: rgba(233, 246, 220, 0.98);
+            font-size: 0.68em;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 3px rgba(17, 31, 11, 0.25);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .story-audio-button-reset:hover {
+            filter: brightness(1.03);
+        }
+
+        .story-audio-button.is-active {
+            border-color: rgba(111, 146, 78, 0.78);
+            box-shadow: 0 8px 20px rgba(51, 70, 34, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+        }
+
+        #audio-unity {
+            display: none;
         }
 
         .transcript {
@@ -285,14 +375,22 @@
 
         <section class="player-panel">
             <p class="player-note" id="playerNote">
-                Listen to Unity audio, or read the transcript below.
+                Unity Brief starts automatically. Use the button to stop or start narration.
             </p>
+            <div class="story-audio-controls">
+                <button id="unityStoryToggleButton" type="button" class="story-audio-button" onclick="toggleUnityStoryNarration()">
+                    <span class="story-audio-button-main">Unity Brief</span>
+                    <span class="story-audio-button-controls">
+                        <span class="story-audio-button-state" id="unityStoryToggleStateChip">Start</span>
+                        <span class="story-audio-button-reset" role="button" tabindex="0" aria-label="Reset Unity Brief narration" onclick="resetUnityStoryNarration(event)" onkeydown="handleUnityStoryResetKey(event)">Reset</span>
+                    </span>
+                </button>
+            </div>
 
             <div id="player-unity" class="player-block active">
-                <audio id="audio-unity" controls preload="none">
+                <audio id="audio-unity" preload="none">
                     Your browser does not support audio playback.
                 </audio>
-                <p id="audio-status-unity" class="audio-status"></p>
             </div>
 
 
@@ -373,149 +471,256 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Measure. Manage. Exchange.</p>
     </footer>
 
     <script>
-        async function probeAudio(candidates) {
-            for (const url of candidates) {
-                try {
-                    const response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
-                    if (!response.ok) continue;
-                    const type = (response.headers.get('content-type') || '').toLowerCase();
-                    if (!type || type.includes('audio') || type.includes('octet-stream')) {
-                        return url;
-                    }
-                } catch (_) {
-                    // Continue probing candidates.
-                }
-            }
-            return null;
+        const UNITY_STORY_AUDIO_CANDIDATES = [
+            'assets/audio/unity-story-unity.mp3',
+            '../assets/audio/unity-story-unity.mp3',
+            '/assets/audio/unity-story-unity.mp3'
+        ];
+        const UNITY_STORY_AUTO_START_MAX_ATTEMPTS = 10;
+        const UNITY_STORY_AUTO_START_RETRY_MS = 320;
+        const UNITY_STORY_PLAYBACK_PROGRESS_MIN_SECONDS = 0.08;
+        let unityStoryAutoStartEnabled = true;
+        let unityStoryAutoStartAttempts = 0;
+        let unityStoryAudioCandidateIndex = 0;
+        let unityStoryManualNarrationControl = false;
+
+        function setUnityStoryAudioSource(index) {
+            const audioEl = document.getElementById('audio-unity');
+            if (!audioEl) return false;
+            if (index < 0 || index >= UNITY_STORY_AUDIO_CANDIDATES.length) return false;
+            unityStoryAudioCandidateIndex = index;
+            audioEl.src = UNITY_STORY_AUDIO_CANDIDATES[index];
+            audioEl.preload = 'auto';
+            audioEl.load();
+            return true;
         }
 
-        async function wireStoryAudio() {
+        function setUnityStoryButtonState(isPlaying) {
+            const button = document.getElementById('unityStoryToggleButton');
+            const chip = document.getElementById('unityStoryToggleStateChip');
+            if (!button || !chip) return;
+            button.classList.toggle('is-active', Boolean(isPlaying));
+            chip.textContent = isPlaying ? 'Stop' : 'Start';
+            chip.classList.toggle('is-stop', Boolean(isPlaying));
+            button.setAttribute('aria-label', isPlaying ? 'Stop Unity Brief narration' : 'Start Unity Brief narration');
+            button.setAttribute('title', isPlaying ? 'Stop Unity Brief narration' : 'Start Unity Brief narration');
+        }
+
+        function resetUnityStoryNarration(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const audioEl = document.getElementById('audio-unity');
+            if (!audioEl || !audioEl.src) return;
+            unityStoryManualNarrationControl = true;
+            unityStoryAutoStartEnabled = false;
+            playUnityStoryNarration({ restart: true });
+        }
+
+        function handleUnityStoryResetKey(event) {
+            if (!event) return;
+            if (event.key === 'Enter' || event.key === ' ') {
+                resetUnityStoryNarration(event);
+            }
+        }
+
+        function updatePlayerNote(state) {
+            const playerNote = document.getElementById('playerNote');
+            if (!playerNote) return;
+            if (state === 'playing') {
+                playerNote.textContent = 'Unity Brief is playing. Click the button to stop narration.';
+                return;
+            }
+            if (state === 'paused') {
+                playerNote.textContent = 'Unity Brief is stopped. Click the button to start narration.';
+                return;
+            }
+            if (state === 'unavailable') {
+                playerNote.textContent = 'Audio is temporarily unavailable. Please check back shortly.';
+                return;
+            }
+            playerNote.textContent = 'Unity Brief starts automatically. Use the button to stop or start narration.';
+        }
+
+        function stopUnityStoryNarration(options = {}) {
+            const resetToStart = options.resetToStart !== false;
+            const keepAutoState = options.keepAutoState === true;
+            const audioEl = document.getElementById('audio-unity');
+            if (!audioEl) return;
+            audioEl.pause();
+            if (resetToStart) {
+                try { audioEl.currentTime = 0; } catch (_) {}
+            }
+            setUnityStoryButtonState(false);
+            if (!keepAutoState) {
+                updatePlayerNote('paused');
+            }
+        }
+
+        function scheduleUnityStoryAutoRetry(options = {}) {
+            const forceRestart = options.forceRestart === true;
+            if (!unityStoryAutoStartEnabled || unityStoryManualNarrationControl) return;
+            if (unityStoryAutoStartAttempts >= UNITY_STORY_AUTO_START_MAX_ATTEMPTS) {
+                setUnityStoryButtonState(false);
+                updatePlayerNote('paused');
+                return;
+            }
+            unityStoryAutoStartAttempts += 1;
+            window.setTimeout(function () {
+                if (document.visibilityState !== 'visible') return;
+                tryAutoStartUnityStory({ forceRestart });
+            }, UNITY_STORY_AUTO_START_RETRY_MS);
+        }
+
+        function playUnityStoryNarration(options = {}) {
+            const restart = options.restart === true;
+            const autoStart = options.autoStart === true;
+            const audioEl = document.getElementById('audio-unity');
+            if (!audioEl || !audioEl.src) return;
+            if (!autoStart) {
+                unityStoryManualNarrationControl = true;
+                unityStoryAutoStartEnabled = false;
+            }
+            audioEl.muted = false;
+            audioEl.volume = 1;
+            if (restart) {
+                try { audioEl.currentTime = 0; } catch (_) {}
+            }
+            const playPromise = audioEl.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(function () {
+                    if (autoStart && !unityStoryManualNarrationControl && unityStoryAutoStartEnabled) {
+                        scheduleUnityStoryAutoRetry({ forceRestart: true });
+                        return;
+                    }
+                    setUnityStoryButtonState(false);
+                    updatePlayerNote('paused');
+                });
+            }
+        }
+
+        function toggleUnityStoryNarration() {
+            const audioEl = document.getElementById('audio-unity');
+            if (!audioEl || !audioEl.src) return;
+            unityStoryManualNarrationControl = true;
+            unityStoryAutoStartEnabled = false;
+            if (!audioEl.paused && !audioEl.ended) {
+                stopUnityStoryNarration({ resetToStart: true });
+                return;
+            }
+            playUnityStoryNarration({ restart: audioEl.ended });
+        }
+
+        function tryAutoStartUnityStory(options = {}) {
+            const forceRestart = options.forceRestart === true;
+            if (!unityStoryAutoStartEnabled || unityStoryManualNarrationControl) return;
+            const audioEl = document.getElementById('audio-unity');
+            if (!audioEl || !audioEl.src) return;
+            if (!audioEl.paused && !audioEl.ended) return;
+            if (forceRestart) {
+                stopUnityStoryNarration({ resetToStart: true, keepAutoState: true });
+            }
+            playUnityStoryNarration({ restart: forceRestart || audioEl.ended, autoStart: true });
+        }
+
+        function tryNextUnityStoryAudioSource(shouldAutoStart) {
+            const nextIndex = unityStoryAudioCandidateIndex + 1;
+            if (nextIndex >= UNITY_STORY_AUDIO_CANDIDATES.length) return false;
+            if (!setUnityStoryAudioSource(nextIndex)) return false;
+            if (shouldAutoStart) {
+                scheduleUnityStoryAutoRetry({ forceRestart: true });
+            }
+            return true;
+        }
+
+        function wireStoryAudio() {
             const params = new URLSearchParams(window.location.search);
-            const shouldAutoStart = params.get('autostart') === '1' || window.location.hash === '#unity-introduction-start';
+            const shouldAutoStart = params.get('autostart') !== '0';
+            unityStoryAutoStartEnabled = shouldAutoStart;
+            unityStoryAutoStartAttempts = 0;
+            unityStoryAudioCandidateIndex = 0;
+            unityStoryManualNarrationControl = false;
             if (window.location.hash === '#unity-introduction-start') {
                 window.scrollTo({ top: 0, behavior: 'auto' });
                 try {
                     window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
                 } catch (_) {}
             }
-            const audioConfig = [
-                {
-                    audioId: 'audio-unity',
-                    statusId: 'audio-status-unity',
-                    candidates: [
-                        'assets/audio/unity-story-unity.mp3',
-                        '../assets/audio/unity-story-unity.mp3',
-                        '/assets/audio/unity-story-unity.mp3'
-                    ]
-                }
-            ];
 
-            for (const item of audioConfig) {
-                const audioEl = document.getElementById(item.audioId);
-                const statusEl = document.getElementById(item.statusId);
-                const resolvedUrl = await probeAudio(item.candidates);
+            const button = document.getElementById('unityStoryToggleButton');
+            const audioEl = document.getElementById('audio-unity');
+            const unityPanel = document.getElementById('player-unity');
+            if (unityPanel) unityPanel.classList.add('active');
+            if (!button || !audioEl) return;
 
-                if (resolvedUrl) {
-                    audioEl.src = resolvedUrl;
-                    statusEl.textContent = '';
-                    statusEl.classList.remove('missing');
-                    if (shouldAutoStart && item.audioId === 'audio-unity') {
-                        showPlayer('unity', { autoplayUnity: true, scrollTranscript: false, smoothScroll: false });
+            button.disabled = false;
+            setUnityStoryButtonState(false);
+            updatePlayerNote();
+            setUnityStoryAudioSource(0);
+
+            if (audioEl.dataset.storyAudioBound !== '1') {
+                audioEl.dataset.storyAudioBound = '1';
+                audioEl.addEventListener('playing', function () {
+                    setUnityStoryButtonState(true);
+                    updatePlayerNote('playing');
+                });
+                audioEl.addEventListener('timeupdate', function () {
+                    if (unityStoryManualNarrationControl) return;
+                    if (audioEl.currentTime >= UNITY_STORY_PLAYBACK_PROGRESS_MIN_SECONDS) {
+                        unityStoryAutoStartEnabled = false;
                     }
-                } else {
-                    audioEl.removeAttribute('src');
-                    audioEl.load();
-                    statusEl.textContent = 'Audio is temporarily unavailable. Please check back shortly.';
-                    statusEl.classList.add('missing');
-                }
+                });
+                audioEl.addEventListener('pause', function () {
+                    if (audioEl.ended) return;
+                    setUnityStoryButtonState(false);
+                    updatePlayerNote('paused');
+                    if (!unityStoryManualNarrationControl && unityStoryAutoStartEnabled) {
+                        scheduleUnityStoryAutoRetry();
+                    }
+                });
+                audioEl.addEventListener('ended', function () {
+                    try { audioEl.currentTime = 0; } catch (_) {}
+                    unityStoryAutoStartEnabled = false;
+                    setUnityStoryButtonState(false);
+                    updatePlayerNote('paused');
+                });
+                audioEl.addEventListener('error', function () {
+                    const switched = tryNextUnityStoryAudioSource(!unityStoryManualNarrationControl && unityStoryAutoStartEnabled);
+                    if (switched) return;
+                    button.disabled = true;
+                    setUnityStoryButtonState(false);
+                    updatePlayerNote('unavailable');
+                });
             }
-        }
 
-        function updatePlayerNote(kind, state) {
-            const playerNote = document.getElementById('playerNote');
-            if (!playerNote) return;
-            if (kind === 'unity' && state === 'paused') {
-                playerNote.textContent = 'Unity Audio paused. Select Hear Unity (Audio) again to resume.';
-                return;
+            if (shouldAutoStart) {
+                tryAutoStartUnityStory({ forceRestart: true });
             }
-            if (kind === 'unity' && state === 'playing') {
-                playerNote.textContent = 'Unity Audio playing. Select Hear Unity (Audio) again to pause.';
-                return;
-            }
-            playerNote.textContent = 'Listen to Unity audio, or read the transcript below.';
         }
 
         function resetStoryPlayerState() {
-            const unity = document.getElementById('player-unity');
-            const unityAudio = document.getElementById('audio-unity');
-            const playerNote = document.getElementById('playerNote');
-
-            if (unityAudio) {
-                unityAudio.pause();
-                try { unityAudio.currentTime = 0; } catch (_) {}
-            }
-
-            if (unity) unity.classList.add('active');
-
-            if (playerNote) {
-                playerNote.textContent = 'Listen to Unity audio, or read the transcript below.';
-            }
-        }
-
-        function showPlayer(kind, options) {
-            if (kind !== 'unity') return;
-            const opts = options || {};
-            const unity = document.getElementById('player-unity');
-            const unityAudio = document.getElementById('audio-unity');
-            const playerPanel = document.querySelector('.player-panel');
-            const transcriptSection = document.getElementById('unity-introduction-start');
-            const unityIsActive = unity ? unity.classList.contains('active') : false;
-
-            if (kind === 'unity' && unityIsActive && unityAudio && unityAudio.src) {
-                if (!unityAudio.paused && !unityAudio.ended) {
-                    unityAudio.pause();
-                    updatePlayerNote('unity', 'paused');
-                } else {
-                    updatePlayerNote('unity', 'playing');
-                    const resumePromise = unityAudio.play();
-                    if (resumePromise && typeof resumePromise.catch === 'function') {
-                        resumePromise.catch(function () {
-                            updatePlayerNote('unity');
-                        });
-                    }
-                }
-                return;
-            }
-            updatePlayerNote('unity');
-            if (unity) unity.classList.add('active');
-            if (opts.scrollTranscript && playerPanel) {
-                const scrollTop = window.scrollY + playerPanel.getBoundingClientRect().top - 10;
-                window.scrollTo({
-                    top: Math.max(0, scrollTop),
-                    behavior: opts.smoothScroll === false ? 'auto' : 'smooth'
-                });
-            } else if (opts.scrollTranscript && transcriptSection) {
-                transcriptSection.scrollIntoView({ behavior: opts.smoothScroll === false ? 'auto' : 'smooth', block: 'start' });
-            }
-            if (opts.autoplayUnity && unityAudio && unityAudio.src) {
-                try {
-                    unityAudio.currentTime = 0;
-                } catch (_) {}
-                const playPromise = unityAudio.play();
-                if (playPromise && typeof playPromise.catch === 'function') {
-                    playPromise.catch(function () {
-                        // Some browser contexts still require direct user playback permission.
-                    });
-                }
-            }
+            unityStoryAutoStartEnabled = false;
+            unityStoryManualNarrationControl = false;
+            stopUnityStoryNarration({ resetToStart: true });
+            updatePlayerNote();
         }
 
         window.addEventListener('DOMContentLoaded', wireStoryAudio);
+        window.addEventListener('focus', function () {
+            if (!unityStoryAutoStartEnabled || unityStoryManualNarrationControl) return;
+            tryAutoStartUnityStory();
+        });
+        document.addEventListener('visibilitychange', function () {
+            if (!unityStoryAutoStartEnabled || unityStoryManualNarrationControl) return;
+            if (document.visibilityState !== 'visible') return;
+            tryAutoStartUnityStory();
+        });
         window.addEventListener('clerkVoiceModalClosed', resetStoryPlayerState);
     </script>
 </body>

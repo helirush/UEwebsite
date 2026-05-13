@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="hume_auth_bootstrap.js?v=20260414r"></script>
-    <script src="hume_character_config.js?v=20260414r"></script>
-    <script src="clerk_voice_widget.js?v=20260414r"></script>
+    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_character_config.js?v=20260502r20"></script>
+    <script src="clerk_voice_widget.js?v=20260502r21"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <title>Electrical Energy Field Story - Unity Energy</title>
     <style>
@@ -17,8 +17,27 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(38, 44, 28, 1);
-            background: rgba(241, 244, 233, 1);
+            color: rgba(58, 66, 48, 1);
+            background: linear-gradient(180deg, rgba(245, 242, 233, 1) 0%, rgba(242, 239, 229, 1) 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before,
+        body::after {
+            content: none;
+        }
+        :root {
+            --faraday-scale: 1.25;
+            --faraday-shift-right: 20px;
+            --faraday-shift-down: -150px;
+        }
+        .banner-wrapper,
+        .nav-tabs-container,
+        .page-header,
+        .timeline-shell,
+        footer {
+            position: relative;
+            z-index: 1;
         }
 
         .banner-wrapper {
@@ -53,72 +72,188 @@
             margin-left: 7px;
         }
         .nav-tabs-container {
-            background: rgba(240, 240, 240, 1);
-            padding: 22px 0 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(246, 246, 241, 0.96);
+            padding: 14px 0 24px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
         }
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px 14px;
             flex-wrap: wrap;
-            max-width: 1800px;
+            max-width: none;
             margin: 0 auto;
-            padding: 0 10px;
+            padding: 0;
+        }
+        .nav-tabs > a {
+            position: relative;
+        }
+        .nav-tabs > a:first-child::before,
+        .nav-tabs > a + a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2px;
+            height: 18px;
+            transform: translateY(-50%);
+            background: rgba(60, 79, 46, 0.84);
+            pointer-events: none;
+        }
+        @media (min-width: 1101px) {
+            .nav-tabs {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+                width: min(95%, 1760px);
+                max-width: calc(100% - 24px);
+            }
+            .nav-tabs > a {
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .nav-tabs > a:first-child,
+            .nav-tabs > a + a {
+                border-left: 2px solid rgba(60, 79, 46, 0.84);
+                padding-left: clamp(14px, 1vw, 20px);
+                margin-left: 0;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
+            .nav-tab-portal,
+            .nav-tab-maxwellian {
+                justify-content: center;
+                width: auto;
+                min-width: 0;
+                padding: 7px 10px 7px 12px;
+                font-size: clamp(0.73rem, 0.88vw, 0.95rem);
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
         }
         .nav-tab-portal,
         .nav-tab-maxwellian {
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 0.95em;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 0;
+            padding: 8px 10px 8px 18px;
+            border-radius: 16px;
+            font-size: clamp(0.75rem, 0.95vw, 0.95rem);
             font-weight: 700;
-            letter-spacing: 0.8px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
-            transition: all 0.25s ease;
-            padding: 12px 26px;
+            transition: color 0.22s ease, border-color 0.24s ease, background-color 0.24s ease, box-shadow 0.24s ease, transform 0.2s ease;
+            cursor: pointer;
+            color: rgba(46, 74, 31, 0.94);
+            background-color: transparent;
+            background-image: none;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+            box-shadow: none;
+            white-space: nowrap;
         }
-        .nav-tab-portal {
-            background: rgba(90, 110, 35, 1);
-            color: #fff;
-            border: 2px solid rgba(129, 163, 43, 1);
-        }
-        .nav-tab-portal:hover {
-            background: rgba(49, 65, 0, 1);
-        }
-        .nav-tab-portal.active {
-            background: rgba(49, 65, 0, 1);
-            border-color: rgba(250, 200, 0, 1);
-            color: rgba(250, 240, 160, 1);
+        .nav-tab-portal::after,
+        .nav-tab-maxwellian::after {
+            content: none;
         }
         .nav-tab-maxwellian {
-            background: linear-gradient(135deg, rgba(180, 100, 0, 1) 0%, rgba(220, 140, 0, 1) 100%);
-            color: rgba(255, 248, 200, 1);
-            border: 2px solid rgba(255, 200, 50, 1);
-            box-shadow: 0 0 14px rgba(255, 160, 0, 0.35);
+            color: rgba(118, 88, 24, 0.98);
+            font-weight: 800;
+            border-color: rgba(201, 166, 72, 0.52);
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.78) 0%, rgba(236, 219, 176, 0.78) 100%);
         }
+        .nav-tab-portal:hover,
         .nav-tab-maxwellian:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 26px rgba(255, 160, 0, 0.6);
+            border-color: rgba(98, 123, 69, 0.72);
+            background-color: rgba(216, 227, 199, 0.92);
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%);
+            color: rgba(48, 71, 35, 0.98);
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal.active,
+        .nav-tab-maxwellian.active {
+            border-color: rgba(63, 94, 39, 0.98);
+            background-color: rgba(37, 63, 25, 0.99);
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%);
+            color: rgba(250, 240, 160, 0.98);
+            box-shadow: 0 10px 18px rgba(34, 49, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(18, 33, 12, 0.42);
+            transform: translateY(-1px);
+        }
+        .nav-tab-portal:active,
+        .nav-tab-maxwellian:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 1100px) {
+            .nav-tabs {
+                gap: 8px 10px;
+                padding: 0 10px;
+            }
+            .nav-tabs > a:first-child::before,
+            .nav-tabs > a + a::before {
+                content: none;
+            }
         }
 
         .page-header {
-            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(90, 122, 42, 1) 100%);
-            color: white;
-            padding: 40px 20px 30px;
+            background: linear-gradient(180deg, rgba(237, 229, 211, 1) 0%, rgba(214, 223, 192, 1) 100%);
+            color: rgba(58, 66, 48, 1);
+            padding: 40px 20px 44px;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74);
             text-align: center;
-            border-bottom: 5px solid rgba(129, 163, 43, 1);
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .page-header::before {
+            content: none;
+        }
+        .page-header::after {
+            content: "";
+            position: absolute;
+            right: calc(-24% - 260px + 6in - var(--faraday-shift-right));
+            top: calc(-80px + var(--faraday-shift-down));
+            width: min(calc(1463px * var(--faraday-scale)), calc(124vw * var(--faraday-scale)));
+            height: min(calc(1688px * var(--faraday-scale)), calc(158vh * var(--faraday-scale)));
+            background-image: url('assets/images/Faraday1831_age40.png?v=20260512feather1');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: right top;
+            opacity: 0.26;
+            filter: grayscale(100%) contrast(1.04) brightness(0.9);
+            mix-blend-mode: multiply;
+            -webkit-mask-image: radial-gradient(120% 120% at 84% 28%, rgba(0, 0, 0, 0.98) 22%, rgba(0, 0, 0, 0.84) 46%, rgba(0, 0, 0, 0.38) 66%, transparent 86%);
+            -webkit-mask-repeat: no-repeat;
+            mask-image: radial-gradient(120% 120% at 84% 28%, rgba(0, 0, 0, 0.98) 22%, rgba(0, 0, 0, 0.84) 46%, rgba(0, 0, 0, 0.38) 66%, transparent 86%);
+            mask-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .page-header > * {
+            position: relative;
+            z-index: 2;
         }
         .page-title {
-            font-size: clamp(1.9rem, 4.2vw, 3rem);
+            font-size: clamp(1.95rem, 4vw, 2.9rem);
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            letter-spacing: 0.4px;
+            line-height: 1.15;
+            margin-bottom: 12px;
         }
         .page-subtitle {
-            max-width: 1000px;
+            max-width: 920px;
             margin: 0 auto;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: rgba(239, 246, 209, 1);
+            font-size: 1.06rem;
+            color: rgba(71, 82, 57, 0.98);
         }
 
         .timeline-shell {
@@ -158,6 +293,14 @@
         .timeline-thesis-lines strong {
             color: rgba(57, 74, 21, 1);
             font-weight: 800;
+        }
+        .timeline-thesis-lines accent {
+            color: rgba(57, 74, 21, 1);
+            font-weight: 400;
+            font-size: 1.2rem;
+            font-style: italic;
+            padding: 15px;
+
         }
         .timeline-range {
             color: rgba(149, 94, 12, 1);
@@ -348,9 +491,13 @@
             left: 60%;
             width: 24%;
         }
+        .timeline-overview[data-focus-panel="mpts-dev-testing"] .timeline-scale-window {
+            left: 71%;
+            width: 20%;
+        }
         .timeline-overview[data-focus-panel="mpts-history"] .timeline-scale-window {
-            left: 76%;
-            width: 22%;
+            left: 80%;
+            width: 18%;
         }
         .timeline-overview .timeline-track-overview .timeline-node {
             transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
@@ -360,6 +507,7 @@
         .timeline-overview[data-focus-panel="ac-accel"] .timeline-track-overview .timeline-node:not([data-focus-panel="ac-accel"]),
         .timeline-overview[data-focus-panel="reactive-era"] .timeline-track-overview .timeline-node:not([data-focus-panel="reactive-era"]),
         .timeline-overview[data-focus-panel="utility-billing"] .timeline-track-overview .timeline-node:not([data-focus-panel="utility-billing"]),
+        .timeline-overview[data-focus-panel="mpts-dev-testing"] .timeline-track-overview .timeline-node:not([data-focus-panel="mpts-dev-testing"]),
         .timeline-overview[data-focus-panel="mpts-history"] .timeline-track-overview .timeline-node:not([data-focus-panel="mpts-history"]) {
             opacity: 0.46;
             transform: scale(0.96);
@@ -370,6 +518,7 @@
         .timeline-overview[data-focus-panel="ac-accel"] .timeline-track-overview .timeline-node[data-focus-panel="ac-accel"],
         .timeline-overview[data-focus-panel="reactive-era"] .timeline-track-overview .timeline-node[data-focus-panel="reactive-era"],
         .timeline-overview[data-focus-panel="utility-billing"] .timeline-track-overview .timeline-node[data-focus-panel="utility-billing"],
+        .timeline-overview[data-focus-panel="mpts-dev-testing"] .timeline-track-overview .timeline-node[data-focus-panel="mpts-dev-testing"],
         .timeline-overview[data-focus-panel="mpts-history"] .timeline-track-overview .timeline-node[data-focus-panel="mpts-history"] {
             opacity: 1;
             transform: scale(1);
@@ -695,7 +844,7 @@
             box-shadow: 0 0 0 3px rgba(211, 140, 53, 0.34);
         }
         .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-track-focus {
-            grid-template-columns: repeat(13, minmax(96px, 1fr));
+            grid-template-columns: repeat(14, minmax(96px, 1fr));
             padding-top: 58px;
             padding-bottom: 10px;
             row-gap: 18px;
@@ -768,6 +917,55 @@
             opacity: 0.78;
             font-weight: 700;
         }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker {
+            transform: translateY(84px);
+            opacity: 0.95;
+        }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .timeline-stem {
+            position: absolute;
+            left: 50%;
+            top: -122px;
+            width: 4px;
+            height: 122px;
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(192, 28, 23, 0.96) 0%, rgba(177, 32, 27, 0.88) 72%, rgba(177, 32, 27, 0.52) 100%);
+            box-shadow: 0 0 0 1px rgba(244, 181, 178, 0.36);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .dot,
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .year,
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .label {
+            position: relative;
+            z-index: 2;
+        }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .dot {
+            width: 36px;
+            height: 36px;
+            border-width: 3px;
+            border-color: rgba(238, 181, 177, 1);
+            background: radial-gradient(circle at 34% 30%, rgba(193, 42, 37, 1) 0%, rgba(154, 25, 21, 1) 64%, rgba(110, 14, 12, 1) 100%);
+            box-shadow: 0 0 0 4px rgba(177, 32, 27, 0.2);
+        }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .year {
+            font-size: 0.78rem;
+            color: rgba(131, 25, 21, 1);
+            opacity: 0.94;
+            font-weight: 800;
+        }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker .label {
+            font-size: 0.62rem;
+            color: rgba(114, 18, 15, 1);
+            opacity: 0.9;
+            font-weight: 800;
+        }
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker.active .dot,
+        .timeline-focus-panel[data-focus-panel="ac-accel"] .timeline-node.timeline-execution-marker:hover .dot {
+            background: radial-gradient(circle at 34% 30%, rgba(214, 55, 49, 1) 0%, rgba(171, 29, 24, 1) 64%, rgba(122, 18, 15, 1) 100%);
+            border-color: rgba(248, 205, 202, 1);
+            box-shadow: 0 0 0 5px rgba(191, 38, 32, 0.26);
+        }
         .timeline-focus-panel[data-focus-panel="utility-billing"] .timeline-track-focus {
             grid-template-columns: repeat(10, minmax(96px, 1fr));
             row-gap: 16px;
@@ -833,8 +1031,24 @@
             border-color: rgba(186, 123, 14, 1);
             box-shadow: 0 0 0 3px rgba(197, 133, 28, 0.22);
         }
+        .timeline-focus-panel[data-focus-panel="mpts-dev-testing"] .timeline-track-focus {
+            grid-template-columns: repeat(9, minmax(124px, 1fr));
+            row-gap: 14px;
+            padding-top: 40px;
+        }
+        .timeline-focus-panel[data-focus-panel="mpts-dev-testing"] .timeline-node .dot {
+            width: 35px;
+            height: 35px;
+            border-width: 2px;
+        }
+        .timeline-focus-panel[data-focus-panel="mpts-dev-testing"] .timeline-node .year {
+            font-size: 0.84rem;
+        }
+        .timeline-focus-panel[data-focus-panel="mpts-dev-testing"] .timeline-node .label {
+            font-size: 0.66rem;
+        }
         .timeline-focus-panel[data-focus-panel="mpts-history"] .timeline-track-focus {
-            grid-template-columns: repeat(11, minmax(112px, 1fr));
+            grid-template-columns: repeat(7, minmax(112px, 1fr));
             row-gap: 14px;
             padding-top: 40px;
         }
@@ -1504,31 +1718,40 @@
             margin-top: 60px;
         }
         .hero-quote {
-            width: min(1200px, 92vw);
-            margin: 40px auto 18px;
-            color: rgba(250, 240, 160, 1);
+            width: min(1080px, 92vw);
+            margin: 26px auto 14px;
+            color: rgba(114, 80, 20, 0.98);
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
+            text-shadow: 0 1px 0 rgba(255, 250, 235, 0.28);
         }
         .hero-quote-text {
-            font-size: clamp(1.8rem, 2.7vw, 2.88rem);
+            font-size: clamp(1.68rem, 2.5vw, 2.62rem);
             font-weight: 700;
-            line-height: 1.14;
+            line-height: 1.16;
             text-align: center;
             letter-spacing: 0.2px;
             margin: 0;
         }
         .hero-quote-author {
-            font-size: clamp(1.49rem, 1.89vw, 2.12rem);
+            font-size: clamp(1.32rem, 1.72vw, 1.92rem);
             font-weight: 700;
             line-height: 1.15;
             text-align: right;
-            margin: -30px -50px 0 0;
+            margin: 8px auto 0;
+            max-width: 960px;
         }
 
         @media (max-width: 980px) {
             .event-grid {
                 grid-template-columns: 1fr;
+            }
+            .page-header::after {
+                right: calc(-32% - 180px + 6in - var(--faraday-shift-right));
+                top: calc(-60px + var(--faraday-shift-down));
+                width: min(calc(1181px * var(--faraday-scale)), calc(135vw * var(--faraday-scale)));
+                height: min(calc(1350px * var(--faraday-scale)), calc(146vh * var(--faraday-scale)));
+                opacity: 0.23;
             }
         }
         @media (max-width: 1080px) {
@@ -1591,6 +1814,13 @@
             .timeline-scale-label {
                 font-size: 0.62rem;
             }
+            .page-header::after {
+                right: calc(-44% - 130px + 6in - var(--faraday-shift-right));
+                top: calc(-50px + var(--faraday-shift-down));
+                width: min(calc(930px * var(--faraday-scale)), calc(141vw * var(--faraday-scale)));
+                height: min(calc(1069px * var(--faraday-scale)), calc(141vh * var(--faraday-scale)));
+                opacity: 0.21;
+            }
             .timeline-scale-tick {
                 top: 39px;
                 font-size: 0.58rem;
@@ -1616,22 +1846,22 @@
             <a href="about-unity.html" class="nav-tab-portal">About Unity</a>
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
-            <a href="electrical-energy-story.html" class="nav-tab-portal active">Field Story</a>
-            <a href="customer-portals.html" class="nav-tab-portal">Customer Portal</a>
-            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian</a>
+            <a href="electrical-energy-story.html" class="nav-tab-portal active">Energy Field Story</a>
+            <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
+            <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian Library</a>
             <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
 
     <header class="page-header">
-        <h1 class="page-title">Electrical Energy Field Story</h1>
+        <h1 class="page-title">Electrical Energy Field - The Rest of the Story</h1>
             <div class="hero-quote">
                 <p class="hero-quote-text">“Nothing is too wonderful to be true, if it be consistent with the laws of nature.”</p>
                 <p class="hero-quote-author">— Michael Faraday</p>
             </div>
 
         <p class="page-subtitle">
-            From Faraday’s first induction experiment to the modern industrial field: how invisible behavior became measurable.
+            From induction to governance: the industrial electrical field can now be observed, interpreted, and understood.
         </p>
     </header>
 
@@ -1649,8 +1879,8 @@
                 <div><strong>Hertz proved</strong> the field.</div>
                 <div><strong>Tesla and the AC era industrialized</strong> the field.</div>
                 <div>Industry then lived inside burden: reactive conflict, harmonics, heat, and instability.</div>
-                <div>The grid became one of humanity's most complex real-time physical systems: continuously balanced at the speed of physics.</div>
-                <div>Unity's role is the transition from symptom correction to <strong>measured field intelligence and governable operation</strong>.</div>
+                <div><accent>The grid became one of humanity's most complex real-time physical systems: continuously balanced at the speed of physics.</accent></div>
+                <div>Unity's role is the transition from <strong>reactive correction to governed field intelligence</strong>.</div>
             </div>
             <div class="timeline-range">1791 → 2026 · Macro Anchors → Category Bands → Micro Markers</div>
         </section>
@@ -1722,12 +1952,12 @@
                         <span class="year">1890s–1900s</span>
                         <span class="label">Utility Billing</span>
                     </button>
-                    <button class="timeline-node" data-target="event-2001" data-focus-panel="reactive-era" data-tooltip="2001 · MPTS lineage breakthrough." title="2001 · MPTS lineage breakthrough." type="button">
+                    <button class="timeline-node" data-target="event-2001" data-focus-panel="mpts-dev-testing" data-tooltip="2001 · MPTS lineage breakthrough during development and field testing era." title="2001 · MPTS lineage breakthrough during development and field testing era." type="button">
                         <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
                         <span class="year">2001</span>
                         <span class="label">MPTS Breakthrough</span>
                     </button>
-                    <button class="timeline-node" data-target="event-2026" data-focus-panel="mpts-history" data-tooltip="2018–2026 · MPTS-to-Unity measured field intelligence, portal development, and market activation era." title="2018–2026 · MPTS-to-Unity measured field intelligence, portal development, and market activation era." type="button">
+                    <button class="timeline-node" data-target="event-2018-handoff-to-measured" data-focus-panel="mpts-history" data-tooltip="2018–2026 · Measured field intelligence era from Mike Howell and Adil Khan handoff through current Unity execution." title="2018–2026 · Measured field intelligence era from Mike Howell and Adil Khan handoff through current Unity execution." type="button">
                         <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
                         <span class="year">2018–2026</span>
                         <span class="label">Field Intelligence</span>
@@ -1747,6 +1977,7 @@
                         <button class="focus-chip" type="button" data-focus-panel="ac-accel">Industrial AC Buildout</button>
                         <button class="focus-chip" type="button" data-focus-panel="reactive-era">Field Burden</button>
                         <button class="focus-chip" type="button" data-focus-panel="utility-billing">Utility Abstraction</button>
+                        <button class="focus-chip" type="button" data-focus-panel="mpts-dev-testing">MPTS Dev + Field Testing</button>
                         <button class="focus-chip" type="button" data-focus-panel="mpts-history">Measured Field Intelligence</button>
                     </div>
                 </div>
@@ -1898,6 +2129,12 @@
                             <span class="year">1889</span>
                             <span class="label">3-Phase Motor</span>
                         </button>
+                        <button class="timeline-node node-secondary timeline-execution-marker" data-target="event-1890-auburn-electrocution" data-focus-panel="ac-accel" data-tooltip="May 9, 1890 · Auburn, New York enters the execution-current era around the Kemmler case; first electric-chair execution follows at Auburn in August 1890." title="May 9, 1890 · Auburn, New York enters the execution-current era around the Kemmler case; first electric-chair execution follows at Auburn in August 1890." type="button">
+                            <span class="timeline-stem" aria-hidden="true"></span>
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1886-stanley.svg" alt=""></span>
+                            <span class="year">May 9, 1890</span>
+                            <span class="label">Auburn Execution Marker</span>
+                        </button>
                         <button class="timeline-node node-secondary" data-target="event-1891" data-focus-panel="ac-accel" data-tooltip="July 1891 · Ames / Gold King proves remote industrial AC work" title="July 1891 · Ames / Gold King proves remote industrial AC work" type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/1891-ames.svg" alt=""></span>
                             <span class="year">Jul 1891</span>
@@ -2040,61 +2277,91 @@
                         </button>
                     </div>
                 </div>
+                <div class="timeline-focus-panel" data-focus-panel="mpts-dev-testing">
+                    <p class="focus-panel-caption">MPTS Development and Field Testing Era: from DOE-linked reverse-osmosis motor efficiency research through ballast discovery, scale-up, approvals, and H-series preparation before measured-intelligence due diligence.</p>
+                    <div class="timeline-track timeline-track-focus">
+                        <button class="timeline-node" data-target="event-1998-doe-middle-east" data-focus-panel="mpts-dev-testing" data-tooltip="Late 1990s · DOE-linked Middle East reverse-osmosis motor efficiency project (2 HP and smaller) seeds the discovery pathway." title="Late 1990s · DOE-linked Middle East reverse-osmosis motor efficiency project (2 HP and smaller) seeds the discovery pathway." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">Late 1990s</span>
+                            <span class="label">DOE R&amp;D Project</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2000-project-shelved" data-focus-panel="mpts-dev-testing" data-tooltip="2000 · Project is shelved with Du Pont; teams are sent home and hardware is boxed as spare parts." title="2000 · Project is shelved with Du Pont; teams are sent home and hardware is boxed as spare parts." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2000</span>
+                            <span class="label">Project Shelved</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2001" data-focus-panel="mpts-dev-testing" data-tooltip="Sep 2001 · Spare circuit board on a noisy ballast delivers same light with roughly 40% less energy." title="Sep 2001 · Spare circuit board on a noisy ballast delivers same light with roughly 40% less energy." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">Sep 2001</span>
+                            <span class="label">Ballast Discovery</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2006-led-pivot" data-focus-panel="mpts-dev-testing" data-tooltip="2006 · LED efficiency jump pressures ballast market; Adil Khan redirects development toward whole-circuit 65A control." title="2006 · LED efficiency jump pressures ballast market; Adil Khan redirects development toward whole-circuit 65A control." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2006</span>
+                            <span class="label">LED Pivot</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2008-ballast-era-close" data-focus-panel="mpts-dev-testing" data-tooltip="2001–2008 · Team leader productizes the discovery in the ballast arena before scale-up migration." title="2001–2008 · Team leader productizes the discovery in the ballast arena before scale-up migration." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2008</span>
+                            <span class="label">Ballast Era Close</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2009-65a-scale-up" data-focus-panel="mpts-dev-testing" data-tooltip="2009 · 65A scale-up demonstration completed; patents submitted across 28 countries." title="2009 · 65A scale-up demonstration completed; patents submitted across 28 countries." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2009</span>
+                            <span class="label">65A + Patents</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2013-ul-csa-validation" data-focus-panel="mpts-dev-testing" data-tooltip="2012–2013 · UL pathway, 65A/100A manufacturing tests, and CSA approval sequence." title="2012–2013 · UL pathway, 65A/100A manufacturing tests, and CSA approval sequence." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2012–13</span>
+                            <span class="label">UL/CSA Validation</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2015-h-series-origin" data-focus-panel="mpts-dev-testing" data-tooltip="2015 · Touchscreen revision launches H-series baseline (H240/H490) for broader field testing." title="2015 · Touchscreen revision launches H-series baseline (H240/H490) for broader field testing." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2015</span>
+                            <span class="label">H-Series Begins</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2018-handoff-to-measured" data-focus-panel="mpts-dev-testing" data-tooltip="Feb–Summer 2018 · Mike Howell meets Adil Khan; diligence handoff starts measured-intelligence phase." title="Feb–Summer 2018 · Mike Howell meets Adil Khan; diligence handoff starts measured-intelligence phase." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
+                            <span class="year">2018</span>
+                            <span class="label">Measured Handoff</span>
+                        </button>
+                    </div>
+                </div>
 
                 <div class="timeline-focus-panel" data-focus-panel="mpts-history">
-                    <p class="focus-panel-caption">Measured Field Intelligence Era: from the 2001 MPTS discovery through 2018 diligence alignment, 2019–2023 field deployment proof, and 2024–2026 behavior intelligence with market activation.</p>
+                    <p class="focus-panel-caption">Measured Field Intelligence Era: from 2018 through 2026, where MPTS field behavior becomes continuously observed, interpreted, and operationalized.</p>
                     <div class="timeline-track timeline-track-focus">
-                        <button class="timeline-node" data-target="event-2001" data-focus-panel="mpts-history" data-tooltip="2001 · MPTS discovery opens the measured-field-intelligence pathway" title="2001 · MPTS discovery opens the measured-field-intelligence pathway" type="button">
-                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2001-mpts.svg" alt=""></span>
-                            <span class="year">2001</span>
-                            <span class="label">MPTS Discovery</span>
-                        </button>
-                        <button class="timeline-node" data-target="event-2018-due-diligence" data-focus-panel="mpts-history" data-tooltip="Mar 2018 · Founder-led due diligence begins aligning MPTS behavior with industrial reactive-energy burden" title="Mar 2018 · Founder-led due diligence begins aligning MPTS behavior with industrial reactive-energy burden" type="button">
+                        <button class="timeline-node" data-target="event-2018-handoff-to-measured" data-focus-panel="mpts-history" data-tooltip="Feb–Summer 2018 · Mike Howell meets Adil Khan and measured-intelligence due diligence opens." title="Feb–Summer 2018 · Mike Howell meets Adil Khan and measured-intelligence due diligence opens." type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
-                            <span class="year">Mar 2018</span>
+                            <span class="year">2018</span>
+                            <span class="label">Measured Era Begins</span>
+                        </button>
+                        <button class="timeline-node" data-target="event-2018-due-diligence" data-focus-panel="mpts-history" data-tooltip="Summer 2018 · Due diligence deepens around burden, capability, and deployment readiness." title="Summer 2018 · Due diligence deepens around burden, capability, and deployment readiness." type="button">
+                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
+                            <span class="year">Summer 2018</span>
                             <span class="label">Due Diligence</span>
                         </button>
-                        <button class="timeline-node" data-target="event-2019-aug-commercial" data-focus-panel="mpts-history" data-tooltip="Aug 2019 · Avco Business Center (Wilshire Boulevard) commercial application (3x H240's)" title="Aug 2019 · Avco Business Center (Wilshire Boulevard) commercial application (3x H240's)" type="button">
+                        <button class="timeline-node" data-target="event-2019-aug-commercial" data-focus-panel="mpts-history" data-tooltip="Aug 2019 · Avco Business Center commercial application (3x H240's)." title="Aug 2019 · Avco Business Center commercial application (3x H240's)." type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
                             <span class="year">Aug 2019</span>
                             <span class="label">Avco Center 3x H240</span>
                         </button>
-                        <button class="timeline-node" data-target="event-2019-dec-commercial" data-focus-panel="mpts-history" data-tooltip="Dec 2019 · MPTS commercial application (1x H240)" title="Dec 2019 · MPTS commercial application (1x H240)" type="button">
-                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
-                            <span class="year">Dec 2019</span>
-                            <span class="label">MPTS 1x H240</span>
-                        </button>
-                        <button class="timeline-node" data-target="event-2020" data-focus-panel="mpts-history" data-tooltip="Feb 2020 · Unity Energy formed" title="Feb 2020 · Unity Energy formed" type="button">
+                        <button class="timeline-node" data-target="event-2020" data-focus-panel="mpts-history" data-tooltip="Feb 2020 · Unity Energy formed." title="Feb 2020 · Unity Energy formed." type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
                             <span class="year">Feb 2020</span>
                             <span class="label">Unity Formed</span>
                         </button>
-                        <button class="timeline-node" data-target="event-2021-industrial-h490" data-focus-panel="mpts-history" data-tooltip="Oct 2021 · MPTS industrial application (2x H490's)" title="Oct 2021 · MPTS industrial application (2x H490's)" type="button">
-                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
-                            <span class="year">Oct 2021</span>
-                            <span class="label">MPTS 2x H490</span>
-                        </button>
-                        <button class="timeline-node" data-target="event-2023-may-industrial" data-focus-panel="mpts-history" data-tooltip="May 2023 · MPTS industrial application (1x H240)" title="May 2023 · MPTS industrial application (1x H240)" type="button">
-                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
-                            <span class="year">May 2023</span>
-                            <span class="label">MPTS 1x H240</span>
-                        </button>
-                        <button class="timeline-node" data-target="event-2023-sep-visualization" data-focus-panel="mpts-history" data-tooltip="Sep 2023 · Field visualization milestone" title="Sep 2023 · Field visualization milestone" type="button">
+                        <button class="timeline-node" data-target="event-2023-sep-visualization" data-focus-panel="mpts-history" data-tooltip="Sep 2023 · Field visualization milestone." title="Sep 2023 · Field visualization milestone." type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
                             <span class="year">Sep 2023</span>
                             <span class="label">Field Visualization</span>
                         </button>
-                        <button class="timeline-node" data-target="event-2024" data-focus-panel="mpts-history" data-tooltip="2024 · Behavior modeling" title="2024 · Behavior modeling" type="button">
-                            <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
-                            <span class="year">2024</span>
-                            <span class="label">Behavior Modeling</span>
-                        </button>
-                        <button class="timeline-node" data-target="event-2025-data-optimization" data-focus-panel="mpts-history" data-tooltip="2025 · Data optimization" title="2025 · Data optimization" type="button">
+                        <button class="timeline-node" data-target="event-2025-data-optimization" data-focus-panel="mpts-history" data-tooltip="2025 · Data optimization." title="2025 · Data optimization." type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
                             <span class="year">2025</span>
                             <span class="label">Data Optimization</span>
                         </button>
-                        <button class="timeline-node" data-target="event-2026" data-focus-panel="mpts-history" data-tooltip="2026 · Web portal development/education, capital raise, and investor/customer marketing campaigns" title="2026 · Web portal development/education, capital raise, and investor/customer marketing campaigns" type="button">
+                        <button class="timeline-node" data-target="event-2026" data-focus-panel="mpts-history" data-tooltip="2026 · Web portal development/education, capital raise, and investor/customer marketing campaigns." title="2026 · Web portal development/education, capital raise, and investor/customer marketing campaigns." type="button">
                             <span class="dot" aria-hidden="true"><img class="dot-icon" src="timeline/icons/2026-unity.svg" alt=""></span>
                             <span class="year">2026</span>
                             <span class="label">Portal + Growth</span>
@@ -2499,6 +2766,19 @@
                     <button class="story-button secondary" type="button" disabled>Patent Platform Secured</button>
                 </div>
             </article>
+            <article class="event-card" id="event-1890-auburn-electrocution">
+                <div class="event-icon" aria-hidden="true">🚨</div>
+                <h3>Auburn Electrocution Shock Event (William Kemmler)</h3>
+                <div class="event-meta">May 9, 1890 · Auburn, New York · War of Currents Public Inflection</div>
+                <p class="event-story">
+                    <strong>Scene:</strong> William Kemmler, convicted for killing Tillie Ziegler with a hatchet, became the center of New York’s electric-execution case at Auburn. In the first execution by electric chair (August 1890), an initial 1,000-volt shock failed to kill him and a second roughly 2,000-volt shock followed in a botched, highly publicized event.
+                    <br><strong>Field Insight:</strong> The industrial AC system was no longer abstract engineering—it was publicly understood as physically dangerous and politically charged inside the Edison-Westinghouse current war.
+                    <br><strong>Unity Relevance:</strong> This marker sits directly before Gold King because it marks when society saw electrical energy as a force that could do extreme work and extreme harm, just as long-distance AC industrialization accelerated.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Execution-Current Inflection</button>
+                </div>
+            </article>
 
             <article class="event-card" id="event-1891">
                 <div class="event-icon" aria-hidden="true">🏔️</div>
@@ -2714,31 +2994,135 @@
                 </div>
             </article>
 
-            <article class="event-card" id="event-2001">
-                <div class="event-icon" aria-hidden="true">🧪</div>
-                <h3>MPTS — Maximum Power Transfer Solution (AC) Emerges</h3>
-                <div class="event-meta">2001 · AC Field Solution Discovery</div>
+            <article class="event-card" id="event-1998-doe-middle-east">
+                <div class="event-icon" aria-hidden="true">🛠️</div>
+                <h3>DOE-Linked Middle East Motor Efficiency Project Opens</h3>
+                <div class="event-meta">Late 1990s · Reverse Osmosis Motors (2 HP and Smaller) · Middle East</div>
                 <p class="event-story">
-                    <strong>What happened:</strong> MPTS is identified as a practical AC field-harmonization pathway at industrial voltage.
-                    <br><strong>Why it matters:</strong> industry gains a route beyond correction-only economics into behavior-level understanding.
-                    <br><strong>Toward Unity:</strong> this discovery becomes the seed that later connects reactive burden, billing impact, and governable field intelligence.
+                    <strong>What happened:</strong> a Department-of-Energy-linked project in the Middle East investigates motor-efficiency behavior on small reverse-osmosis motors.
+                    <br><strong>Why it matters:</strong> this research window creates the hardware and circuit-board lineage that later enables the MPTS discovery.
+                    <br><strong>Toward Unity:</strong> foundational field behavior learning begins before MPTS is named or commercialized.
                 </p>
                 <div class="story-actions">
-                    <button class="story-button secondary" type="button" disabled>MPTS Pathway Opens</button>
+                    <button class="story-button secondary" type="button" disabled>DOE Research Origin</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2000-project-shelved">
+                <div class="event-icon" aria-hidden="true">📦</div>
+                <h3>Project Shelved and Teams Disbanded</h3>
+                <div class="event-meta">2000 · Du Pont Collaboration Pauses · Hardware Archived</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> the project is shelved, Du Pont and partner engineers are sent home, and development hardware is boxed as spare parts.
+                    <br><strong>Why it matters:</strong> active progress stops, but the preserved hardware creates an unexpected path to rediscovery.
+                    <br><strong>Toward Unity:</strong> dormant technical artifacts later become the trigger for a major field-efficiency breakthrough.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Shelved-Project Inflection</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2001">
+                <div class="event-icon" aria-hidden="true">🧪</div>
+                <h3>Ballast Discovery from Spare Board Reuse</h3>
+                <div class="event-meta">Sep 2001 · Plant Ballast Noise Problem · Post-9/11 Discovery Moment</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> a young engineer repurposes a circuit board from the shelved project onto a noisy light ballast and gets the same light output with about 40% less energy.
+                    <br><strong>Why it matters:</strong> this confirms a practical field-harmonization effect and launches the MPTS product path.
+                    <br><strong>Toward Unity:</strong> the discovery shifts from archived R&amp;D parts to real plant performance evidence.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>40% Ballast Discovery</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2006-led-pivot">
+                <div class="event-icon" aria-hidden="true">💡</div>
+                <h3>LED Efficiency Pressure Forces Scale Pivot</h3>
+                <div class="event-meta">2006 · Competitive Shift in Lighting Efficiency</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> as LED performance advances, the small ballast-format mPTS can no longer compete in its original niche.
+                    <br><strong>Why it matters:</strong> Adil Khan redirects engineering from sub-amp ballast scope toward 65-amp whole-circuit control.
+                    <br><strong>Toward Unity:</strong> this pivot moves MPTS from component-level optimization toward facility-level field governance.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Scale-Up Decision</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2008-ballast-era-close">
+                <div class="event-icon" aria-hidden="true">🔧</div>
+                <h3>Ballast Productization Era Concludes</h3>
+                <div class="event-meta">2001–2008 · Discovery Converted into Working Ballast-Stage Product</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> after the 2001 discovery, the team leader develops the concept as a ballast-focused product through 2008.
+                    <br><strong>Why it matters:</strong> this period turns a single discovery into sustained engineering practice before larger-current architecture takes over.
+                    <br><strong>Toward Unity:</strong> it bridges lab-like discovery and scalable field-control platform development.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Ballast Era Complete</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2009-65a-scale-up">
+                <div class="event-icon" aria-hidden="true">📈</div>
+                <h3>65A Scale-Up Completed and Global Patent Push Begins</h3>
+                <div class="event-meta">2009 · 65A Demonstration · Patents Filed in 28 Countries</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> the 65-amp platform is demonstrated successfully, followed by patent submissions across 28 countries.
+                    <br><strong>Why it matters:</strong> MPTS moves from narrow ballast utility into industrially meaningful circuit-level control.
+                    <br><strong>Toward Unity:</strong> this milestone establishes protectable, scalable architecture for broader deployment pathways.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>65A Demonstration Milestone</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2013-ul-csa-validation">
+                <div class="event-icon" aria-hidden="true">✅</div>
+                <h3>UL/CSA Validation and 100A Test Expansion</h3>
+                <div class="event-meta">2012–2013 · UL Pathway, 65A and 100A Test Production, CSA Approval</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> units progress through UL review, multiple 65A/100A test builds are produced, and CSA approval follows.
+                    <br><strong>Why it matters:</strong> certification and higher-current testing convert prototype confidence into deployment readiness.
+                    <br><strong>Toward Unity:</strong> compliance and reproducibility enable entry into institutional and government-grade environments.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Certification Readiness</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2015-h-series-origin">
+                <div class="event-icon" aria-hidden="true">🖥️</div>
+                <h3>Touchscreen Revision Launches H-Series Baseline</h3>
+                <div class="event-meta">2015 · H240/H490 Lineage Opens · Field Testing Extends into 2016–2020</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> a touchscreen revision in 2015 marks the start of the H-series family (H240 and H490), with field testing in facilities, hospitals, schools, and government environments.
+                    <br><strong>Why it matters:</strong> MPTS becomes operationally legible and easier to deploy in real institutional settings.
+                    <br><strong>Toward Unity:</strong> this creates the hardware and workflow bridge into modern measured-field-intelligence operations.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>H-Series Foundation</button>
+                </div>
+            </article>
+            <article class="event-card" id="event-2018-handoff-to-measured">
+                <div class="event-icon" aria-hidden="true">🤝</div>
+                <h3>Mike Howell Meets Adil Khan and Measured Handoff Opens</h3>
+                <div class="event-meta">Feb–Summer 2018 · Transition from Development/Testing to Measured Intelligence</div>
+                <p class="event-story">
+                    <strong>What happened:</strong> Mike Howell meets Adil Khan in February 2018, and by summer the work shifts into structured due diligence on MPTS capability.
+                    <br><strong>Why it matters:</strong> leadership, technical interpretation, and commercialization planning converge into a new operational phase.
+                    <br><strong>Toward Unity:</strong> this handoff marks the beginning of measured-intelligence-era execution and evidence-building.
+                </p>
+                <div class="story-actions">
+                    <button class="story-button secondary" type="button" disabled>Measured Handoff Marker</button>
                 </div>
             </article>
 
             <article class="event-card" id="event-2018-due-diligence">
                 <div class="event-icon" aria-hidden="true">🗂️</div>
                 <h3>MPTS Due Diligence Begins</h3>
-                <div class="event-meta">Mar 2018 · MPTS Validation and Commercial Readiness Review</div>
+                <div class="event-meta">Summer 2018 · MPTS Capability, Burden-Relief, and Commercial Readiness Review</div>
                 <p class="event-story">
-                    <strong>What happened:</strong> founder-led due diligence begins to validate MPTS performance, deployment viability, and operational fit.
-                    <br><strong>Why it matters:</strong> the discovery is explicitly connected to industrial reactive-energy burden, billing friction, and measurable outcomes.
-                    <br><strong>Toward Unity:</strong> this is where technical discovery becomes a disciplined modernization program.
+                    <strong>What happened:</strong> during summer 2018, due diligence formalizes around what MPTS does, where it performs, and how it translates into measurable operational outcomes.
+                    <br><strong>Why it matters:</strong> this period connects legacy development/testing history to decision-grade deployment evidence.
+                    <br><strong>Toward Unity:</strong> the diligence runway carries directly into the August 2019 Avco installation milestone.
                 </p>
                 <div class="story-actions">
-                    <button class="story-button secondary" type="button" disabled>Diligence Runway Opens</button>
+                    <button class="story-button secondary" type="button" disabled>Diligence Runway</button>
                 </div>
             </article>
             <article class="event-card" id="event-2019-aug-commercial">
@@ -2930,7 +3314,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved. UE.26.0414.B2</p>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 
@@ -2972,7 +3356,8 @@
             'ac-accel': 'Industrial AC Buildout · 1882 → 1895',
             'utility-billing': 'Utility Formation · 1890s → Present',
             'reactive-era': 'Field Burden Era · 1891 → 2001',
-            'mpts-history': 'Measured Field Intelligence · 2001 → 2026'
+            'mpts-dev-testing': 'MPTS Development & Field Testing · Late 1990s → 2018',
+            'mpts-history': 'Measured Field Intelligence · 2018 → 2026'
         };
         const focusScaleLabels = {
             'pre-emi-discovery': '1791–1831 Pre-Induction Discovery',
@@ -2980,7 +3365,8 @@
             'ac-accel': '1882–1895 Industrial AC Buildout',
             'utility-billing': '1890s–Present Utility Formation',
             'reactive-era': '1891–2001 Field Burden',
-            'mpts-history': '2001–2026 Discovery to Unity Field Intelligence'
+            'mpts-dev-testing': 'Late 1990s–2018 MPTS Development + Field Testing',
+            'mpts-history': '2018–2026 Measured Field Intelligence'
         };
         const focusPanelContext = {
             'pre-emi-discovery': 'Selected milestone belongs to: Pre-Electromagnetic Induction Discovery → Apprenticeship, access, mentorship, and early experiments leading to induction.',
@@ -2988,6 +3374,7 @@
             'ac-accel': 'Selected milestone belongs to: Industrial AC Buildout → Architecture moves from concept to public-scale infrastructure.',
             'reactive-era': 'Selected milestone belongs to: Field Burden → Industrial side effects accumulate as systems scale.',
             'utility-billing': 'Selected milestone belongs to: Utility Abstraction → Field behavior is reduced to billing-era proxies.',
+            'mpts-dev-testing': 'Selected milestone belongs to: MPTS Development and Field Testing → Build, test, and prove period before measured-field-intelligence operations.',
             'mpts-history': 'Selected milestone belongs to: Measured Field Intelligence → Field behavior becomes observable and governable.'
         };
         const interpretationOverrides = {

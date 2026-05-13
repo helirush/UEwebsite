@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVCO Installation Library</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: rgba(247, 243, 241, 1);
+            color: rgba(52, 39, 37, 1);
+            line-height: 1.6;
+        }
+        .wrap { max-width: 1020px; margin: 0 auto; padding: 24px 18px 34px; }
+        .nav { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav a {
+            text-decoration: none;
+            background: rgba(224, 207, 198, 1);
+            color: rgba(74, 45, 41, 1);
+            border: 1px solid rgba(204, 181, 170, 1);
+            border-radius: 7px;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.35px;
+            transition: all 0.2s ease;
+        }
+        .nav a:hover {
+            background: rgba(97, 58, 53, 1);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(76, 44, 40, 1);
+            transform: translateY(-1px);
+        }
+        .panel {
+            background: #fff;
+            border: 1px solid rgba(224, 209, 202, 1);
+            border-left: 6px solid rgba(108, 66, 60, 1);
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 14px rgba(56, 35, 32, 0.08);
+        }
+        h1 { color: rgba(85, 51, 47, 1); margin-bottom: 8px; }
+        p { color: rgba(82, 62, 56, 1); margin-bottom: 10px; }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .gallery-item {
+            border: 1px solid rgba(218, 199, 189, 1);
+            background: rgba(250, 244, 240, 1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(56, 35, 32, 0.14);
+        }
+        .gallery-item a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .thumb {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            display: block;
+            background: rgba(238, 224, 216, 1);
+        }
+        .caption {
+            padding: 9px 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: rgba(82, 62, 56, 1);
+            border-top: 1px solid rgba(221, 205, 196, 1);
+        }
+        code {
+            background: rgba(234, 219, 211, 1);
+            padding: 1px 5px;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 16px;
+            background: rgba(74, 44, 40, 1);
+            color: rgba(250, 244, 240, 1);
+            text-align: center;
+            padding: 12px 10px;
+            border-top: 3px solid rgba(212, 193, 183, 1);
+            font-size: 0.84rem;
+        }
+        @media (max-width: 700px) {
+            .wrap {
+                padding: 18px 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <nav class="nav">
+            <a href="../index.html">Library Hub</a>
+            <a href="../../index.html">AVCO Page</a>
+            <a href="../reference/index.html">Reference Library</a>
+            <a href="../data/index.html">Data Library</a>
+        </nav>
+        <section class="panel">
+            <h1>The Instance Installation Library</h1>
+            <p>This page is prepared for AVCO installation media (photos, commissioning visuals, and field deployment evidence).</p>
+            <p>Click any image to open full size.</p>
+            <p>Drop incoming files in:</p>
+            <p><code>Customers/AVCO/library/installation/files/</code></p>
+            <div class="gallery">
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1041.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1041.jpg" alt="AVCO installation image IMG_1041"><div class="caption">IMG_1041</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1088.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1088.jpg" alt="AVCO installation image IMG_1088"><div class="caption">IMG_1088</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1089.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1089.jpg" alt="AVCO installation image IMG_1089"><div class="caption">IMG_1089</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1090.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1090.jpg" alt="AVCO installation image IMG_1090"><div class="caption">IMG_1090</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1091.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1091.jpg" alt="AVCO installation image IMG_1091"><div class="caption">IMG_1091</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1092.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1092.jpg" alt="AVCO installation image IMG_1092"><div class="caption">IMG_1092</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1093.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1093.jpg" alt="AVCO installation image IMG_1093"><div class="caption">IMG_1093</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1094.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1094.jpg" alt="AVCO installation image IMG_1094"><div class="caption">IMG_1094</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1095.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1095.jpg" alt="AVCO installation image IMG_1095"><div class="caption">IMG_1095</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1096.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1096.jpg" alt="AVCO installation image IMG_1096"><div class="caption">IMG_1096</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1097.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1097.jpg" alt="AVCO installation image IMG_1097"><div class="caption">IMG_1097</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1098.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1098.jpg" alt="AVCO installation image IMG_1098"><div class="caption">IMG_1098</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1099.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1099.jpg" alt="AVCO installation image IMG_1099"><div class="caption">IMG_1099</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1100.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1100.jpg" alt="AVCO installation image IMG_1100"><div class="caption">IMG_1100</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1101.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1101.jpg" alt="AVCO installation image IMG_1101"><div class="caption">IMG_1101</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1130.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1130.jpg" alt="AVCO installation image IMG_1130"><div class="caption">IMG_1130</div></a></article>
+                <article class="gallery-item"><a href="../../images/InstallationImages/web_jpg/IMG_1133.jpg" target="_blank" rel="noopener"><img class="thumb" src="../../images/InstallationImages/web_jpg/IMG_1133.jpg" alt="AVCO installation image IMG_1133"><div class="caption">IMG_1133</div></a></article>
+            </div>
+        </section>
+    </main>
+    <footer>
+        AVCO installation library
+    </footer>
+</body>
+</html>

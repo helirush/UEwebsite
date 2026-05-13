@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T15.Fillet - HEAT Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0404;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1f0808 0%, #0d0404 100%);
+            padding: 12px 20px;
+            border-bottom: 2px solid #aa4600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            color: rgb(249,215,11);
+            font-weight: 500;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #8a3200 0%, #6e2700 100%);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(154, 58, 0, 0.35);
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #aa4600 0%, #6e2700 100%);
+            box-shadow: 0 4px 12px rgba(154, 58, 0, 0.55);
+            transform: translateY(-1px);
+        }
+        
+        .split-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 50px);
+            position: relative;
+        }
+        
+        .pattern-image-container {
+            text-align: center;
+            padding: 20px;
+            background: #120606;
+            border-bottom: 4px solid #aa4600;
+            flex-shrink: 0;
+            width: 100%;
+            height: 350px;
+            overflow: auto;
+        }
+        
+        .pattern-image-container img {
+            width: 95%;
+            max-width: 95%;
+            height: auto;
+            border: 2px solid #5D701A;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+        
+        .pattern-image-container p {
+            color: #888;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        
+        .pattern-image-container img {
+            cursor: pointer;
+        }
+        
+        .pattern-image-container {
+            position: relative;
+        }
+        
+        .fullsize-btn {
+            position: absolute;   /* anchor within the pattern container */
+            top: 10px;
+            right: 20px;         /* move to top-right to avoid overlapping other buttons */
+            left: auto;
+            transform: none;
+            background: linear-gradient(135deg, #5D701A 0%, #4a5a15 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(93, 112, 26, 0.3);
+            z-index: 10;
+            margin: 0;            /* no negative margin */
+        }
+        
+        .fullsize-btn:hover {
+            background: linear-gradient(135deg, #6d8520 0%, #5D701A 100%);
+            box-shadow: 0 4px 12px rgba(93, 112, 26, 0.5);
+            transform: translateY(-1px);
+        }
+        
+        /* Fullscreen overlay */
+        .image-fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 4, 4, 0.98);
+            z-index: 9999;
+            overflow: auto;
+        }
+        
+        .image-fullscreen-overlay.active {
+            display: block;
+        }
+        
+        .fullscreen-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px 40px 40px;
+        }
+        
+        .fullscreen-content img {
+            max-width: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+            border: 2px solid #5D701A;
+            border-radius: 8px;
+        }
+        
+        .fullscreen-content p {
+            color: #888;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .close-fullscreen-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #8a3200 0%, #6e2700 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(154, 58, 0, 0.35);
+            z-index: 10000;
+        }
+        
+        .close-fullscreen-btn:hover {
+            background: linear-gradient(135deg, #aa4600 0%, #6e2700 100%);
+            box-shadow: 0 4px 12px rgba(154, 58, 0, 0.55);
+            transform: translateY(-1px);
+        }
+        
+        .bottom-section {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .markdown-pane {
+            width: 725px;
+            background: #120606;
+            overflow-y: auto;
+            border-right: 4px solid #aa4600;
+            padding: 30px;
+            flex-shrink: 0;
+        }
+        
+        
+        .dashboard-pane {
+            flex: 1;
+            background: #0a0404;
+            overflow-y: auto;
+            min-width: 400px;
+            position: relative;
+        }
+        
+        .dashboard-iframe-container {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .dashboard-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 800px;
+            border: none;
+            display: block;
+        }
+        
+        /* Markdown Styling - Voltage Blue Theme */
+        .markdown-content h1 {
+            color: rgb(249,215,11);
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3d1010;
+        }
+        
+        .markdown-content h2 {
+            color: #f9d70b;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content h3 {
+            color: #f3d67a;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .markdown-content p {
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #b0b0b0;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #b0b0b0;
+        }
+        
+        .markdown-content code {
+            background: #1f0808;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #ff7043;
+        }
+        
+        .markdown-content pre {
+            background: #1f0808;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .markdown-content details {
+            margin-bottom: 20px;
+            border: 1px solid #3d1010;
+            border-radius: 6px;
+            background: #1f0808;
+        }
+        
+        .markdown-content summary {
+            padding: 12px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #aa4600;
+            user-select: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        
+        .markdown-content summary:hover {
+            background: #3d1010;
+        }
+        
+        .markdown-content details[open] summary {
+            border-bottom: 1px solid #3d1010;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: 15px;
+        }
+        
+        .markdown-content details > *:not(summary) {
+            padding: 0 15px 15px 15px;
+        }
+        
+        /* Table styling */
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 11px;
+            background: #1f0808;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .markdown-content details table {
+            font-size: 11px;
+            max-height: 400px;
+            display: block;
+            overflow: auto;
+        }
+        
+        .markdown-content th {
+            background: #3d1010;
+            color: #aa4600;
+            padding: 6px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .markdown-content td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #3d1010;
+            color: #b0b0b0;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .markdown-content tr:hover {
+            background: #2d1212;
+        }
+        
+        .markdown-content tbody tr:first-child td:first-child {
+            position: sticky;
+            left: 0;
+            background: #1f0808;
+            z-index: 5;
+        }
+        
+        .markdown-content strong {
+            color: #aa4600;
+        }
+        
+        .markdown-content em {
+            color: #f3d67a;
+        }
+        
+        /* Style for Group Annotation Points lists */
+        .markdown-content ul.group-annotations {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+        
+        .markdown-content ul.group-annotations li {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: #2d1010;
+            border-left: 3px solid #5D701A;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .markdown-content ul.group-annotations li strong {
+            color: #aa4600;
+        }
+        
+        /* Scrollbar styling */
+        .markdown-pane::-webkit-scrollbar,
+        .dashboard-pane::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .markdown-pane::-webkit-scrollbar-track,
+        .dashboard-pane::-webkit-scrollbar-track {
+            background: #0a0404;
+        }
+        
+        .markdown-pane::-webkit-scrollbar-thumb,
+        .dashboard-pane::-webkit-scrollbar-thumb {
+            background: #3d1010;
+            border-radius: 5px;
+        }
+        
+        .markdown-pane::-webkit-scrollbar-thumb:hover,
+        .dashboard-pane::-webkit-scrollbar-thumb:hover {
+            background: #3a5f8f;
+        }
+
+        /* Markdown fullsize button */
+        .markdown-fullsize-btn {
+            position: sticky;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #5D701A 0%, #4a5a15 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(93, 112, 26, 0.3);
+            z-index: 10;
+            margin-bottom: 20px;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .markdown-fullsize-btn:hover {
+            background: linear-gradient(135deg, #6d8520 0%, #5D701A 100%);
+            box-shadow: 0 4px 12px rgba(93, 112, 26, 0.5);
+            transform: translateX(-50%) translateY(-1px);
+        }
+        
+        /* Dashboard fullsize button */
+        .dashboard-fullsize-btn {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #5D701A 0%, #4a5a15 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(93, 112, 26, 0.3);
+            z-index: 10;
+        }
+        
+        .dashboard-fullsize-btn:hover {
+            background: linear-gradient(135deg, #6d8520 0%, #5D701A 100%);
+            box-shadow: 0 4px 12px rgba(93, 112, 26, 0.5);
+            transform: translateX(-50%) translateY(-1px);
+        }
+        
+        /* Markdown fullscreen overlay */
+        .markdown-fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 4, 4, 0.98);
+            z-index: 9999;
+            overflow: auto;
+        }
+        
+        .markdown-fullscreen-overlay.active {
+            display: block;
+        }
+        
+        .markdown-fullscreen-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px 40px 40px;
+        }
+        
+        /* Dashboard fullscreen overlay */
+        .dashboard-fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 4, 4, 0.98);
+            z-index: 9999;
+            overflow: auto;
+        }
+        
+        .dashboard-fullscreen-overlay.active {
+            display: block;
+        }
+        
+        .dashboard-fullscreen-content {
+            width: 100%;
+            height: 100%;
+            padding: 60px 40px 40px 40px;
+        }
+        
+        .dashboard-fullscreen-content iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 90vh;
+            border: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>T15.Fillet - HEAT Analysis</h1>
+        <button class="back-btn" onclick="goBack()">← Back to Summary</button>
+    </div>
+    
+    <div class="split-container">
+        <div class="pattern-image-container">
+            <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
+            <img src="Patterns/t15m_feb26.png" alt="T15.Fillet - HEAT Pattern" onclick="showFullscreen()">
+            <p>T15.Fillet - HEAT Pattern</p>
+        </div>
+        <div class="bottom-section">
+            <div class="markdown-pane">
+                <button class="markdown-fullsize-btn" onclick="showMarkdownFullscreen()" title="View markdown full size">🔍 Full Size</button>
+                <div class="markdown-content">
+                    <h1>HEAT HEALTH ANALYSIS</h1>
+<p><em>Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery</em></p>
+<p><strong>Transformer:</strong> T15 Fillet<br />
+<strong>Generated:</strong> 2026-03-14 12:39:36<br />
+<strong>Data Source:</strong> AN53110845-V-1minRES_40320CLP_260201-260228c.csv  </p>
+<h2>📊 Analysis Period</h2>
+<ul>
+<li><strong>Period:</strong> February 01, 2026 thru February 28, 2026</li>
+<li><strong>Number of Days:</strong> 28 Days</li>
+<li><strong>Data Resolution:</strong> 1-minute</li>
+<li><strong>Total Data Points:</strong> 40,320</li>
+</ul>
+<h2>🔋 Facility Information</h2>
+<ul>
+<li><strong>Transformer Capacity:</strong> 2,500 kVA</li>
+<li><strong>Nominal Voltage:</strong> 480V (3-Phase)</li>
+<li><strong>Analysis Type:</strong> Thermal Burden &amp; Heat Health Assessment</li>
+<li><strong>Technology Focus:</strong> Unity Energy Management Solutions</li>
+</ul>
+<hr />
+<h2>🔥 Heat Forensics</h2>
+<p><em>Detailed thermal analysis showing heat generation zones, cooling requirements, and energy recovery.</em>
+<em>This section quantifies waste heat produced by electrical inefficiencies and calculates</em>
+<em>the corresponding cooling load that must be removed from conditioned spaces.</em></p>
+<h3>Heat Generation Analysis</h3>
+<ul>
+<li><strong>Device Zone BTU/hr:</strong> 145,672.16</li>
+<li><em>Heat generated within transformer enclosure and immediately adjacent area</em></li>
+<li><strong>Field Zone BTU/hr:</strong> 27,267.06</li>
+<li><em>Heat radiated into surrounding field area and electrical room</em></li>
+</ul>
+<h3>Conditioned Space Impact</h3>
+<ul>
+<li><strong>Total Heat Generated:</strong> 172,939.22 BTU/hr</li>
+<li><em>Combined device and field zone thermal output requiring removal</em></li>
+<li><strong>Air-Conditioned Percentage:</strong> 30.00%</li>
+<li><em>Portion of facility space requiring active cooling and temperature control</em></li>
+</ul>
+<h3>Cooling Load Analysis</h3>
+<ul>
+<li><strong>Baseline Cooling Load:</strong> 147.05 kW</li>
+<li><em>Standard cooling requirement without climate burden factors</em></li>
+<li><strong>Climate Adjusted Cooling:</strong> 50.44 kW</li>
+<li><em>Cooling load adjusted for temperature (69.7°F) and humidity (50.5%)</em></li>
+<li><strong>Climate Burden Multiplier:</strong> 1.002</li>
+<li><em>Thermal load increase factor due to environmental conditions</em></li>
+<li><strong>Total Cooling Load Avoided:</strong> 50.44 kW</li>
+<li><em>Net cooling capacity that would be required without Unity energy management</em></li>
+</ul>
+<h3>Economic Impact</h3>
+<ul>
+<li><strong>Electrical-Energy Waste Cost:</strong> $33,097.66</li>
+<li><em>Direct cost of wasted energy consumption during analysis period</em></li>
+<li><strong>Cooling Cost Avoided:</strong> $147,286.57/year</li>
+<li><em>Annual savings from eliminated cooling equipment operation</em>
+  (Includes $-21,639.83/year climate/impedance bonus)</li>
+</ul>
+<hr />
+<h2>💡 Heat Health Recommendations</h2>
+<p>• Unity MPTS technology eliminates reactive energy waste at source, reducing heat generation
+• Cooling load reduction directly lowers HVAC operating costs and maintenance requirements
+• Thermal burden improvements extend transformer life and reduce thermal stress</p>
+<hr />
+<h1>END OF REPORT</h1>
+                </div>
+            </div>
+            <div class="dashboard-pane">
+                <button class="dashboard-fullsize-btn" onclick="showDashboardFullscreen()" title="View dashboard full size">🔍 Full Size</button>
+                <div class="dashboard-iframe-container">
+                    <iframe src="FIELD-Heatboard_T15 Fillet_AN53110845_260201-260228.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fullscreen Image Overlay -->
+    <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
+        <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
+        <div class="fullscreen-content">
+            <img src="Patterns/t15m_feb26.png" alt="T15.Fillet - HEAT Pattern">
+            <p>T15.Fillet - HEAT Pattern</p>
+        </div>
+    </div>    
+    <!-- Markdown Fullscreen Overlay -->
+    <div class="markdown-fullscreen-overlay" id="markdownFullscreenOverlay">
+        <button class="close-fullscreen-btn" onclick="closeMarkdownFullscreen()">✕ Return to Split View</button>
+        <div class="markdown-fullscreen-content">
+            <div class="markdown-content" id="markdownFullscreenContent">
+                <!-- Content will be cloned here -->
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Dashboard Fullscreen Overlay -->
+    <div class="dashboard-fullscreen-overlay" id="dashboardFullscreenOverlay">
+        <button class="close-fullscreen-btn" onclick="closeDashboardFullscreen()">✕ Return to Split View</button>
+        <div class="dashboard-fullscreen-content">
+            <iframe id="dashboardFullscreenIframe"></iframe>
+        </div>
+    </div>
+    
+    
+    <script>
+        // If the dashboard HTML isn't available (iframe src is "#"), hide the empty pane.
+        (function hideDashboardIfMissing() {
+            const iframe = document.querySelector('.dashboard-pane iframe');
+            if (!iframe) return;
+            const src = (iframe.getAttribute('src') || '').trim();
+            if (!src || src === '#') {
+                const dashPane = document.querySelector('.dashboard-pane');
+                if (dashPane) dashPane.style.display = 'none';
+
+                const markdownPane = document.querySelector('.markdown-pane');
+                if (markdownPane) {
+                    markdownPane.style.width = '100%';
+                    markdownPane.style.flex = '1';
+                }
+
+                const note = document.createElement('div');
+                note.style.cssText = 'margin: 0 0 16px 0; padding: 10px 12px; background: rgba(239, 83, 80, 0.12); border: 1px solid rgba(239, 83, 80, 0.35); border-radius: 8px; color: #f3d67a; font-size: 13px;';
+                note.textContent = 'Dashboard HTML not present in this report build (showing narrative + pattern only).';
+
+                const content = document.querySelector('.markdown-pane .markdown-content');
+                if (content) content.prepend(note);
+            }
+        })();
+
+        function showFullscreen() {
+            document.getElementById('imageFullscreenOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFullscreen() {
+            document.getElementById('imageFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close fullscreen on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFullscreen();
+                closeMarkdownFullscreen();
+                closeDashboardFullscreen();
+            }
+        });
+        
+        function goBack() {
+            // Prefer explicit source summary passed by the Summaryboard button.
+            let summaryPath = '';
+            try {
+                const params = new URLSearchParams(window.location.search || '');
+                summaryPath = (params.get('summary') || '').trim();
+            } catch (e) {}
+
+            // Fallback to injected template value when query param is absent.
+            if (!summaryPath) {
+                summaryPath = ('SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html' || '').trim();
+            }
+
+            // Ignore stale placeholder/legacy values; use history as final fallback.
+            if (summaryPath && summaryPath !== '#' && summaryPath !== 'SITE-FosterFarms-Summaryboard.html') {
+                window.location.href = summaryPath;
+                return;
+            }
+            window.history.back();
+        }
+        
+
+        
+        function showMarkdownFullscreen() {
+            const markdownContent = document.querySelector('.markdown-pane .markdown-content');
+            const markdownFullscreen = document.getElementById('markdownFullscreenContent');
+            markdownFullscreen.innerHTML = markdownContent.innerHTML;
+            document.getElementById('markdownFullscreenOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMarkdownFullscreen() {
+            document.getElementById('markdownFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function showDashboardFullscreen() {
+            const dashboardIframe = document.querySelector('.dashboard-pane iframe');
+            const fullscreenIframe = document.getElementById('dashboardFullscreenIframe');
+            if (dashboardIframe) {
+                fullscreenIframe.src = dashboardIframe.src;
+            }
+            document.getElementById('dashboardFullscreenOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeDashboardFullscreen() {
+            document.getElementById('dashboardFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+</html>

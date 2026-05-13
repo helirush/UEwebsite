@@ -52,6 +52,34 @@ window.portalConfig = {
         'arkansasmyriad': {
             name: 'ARMI',
             path: '../Customers/ARMI/index.html'
+        },
+        'avco': {
+            name: 'AVCO Center',
+            path: '../Customers/AVCO/index.html'
+        },
+        'avcocenter': {
+            name: 'AVCO Center',
+            path: '../Customers/AVCO/index.html'
+        },
+        'avcobuilding': {
+            name: 'AVCO Center',
+            path: '../Customers/AVCO/index.html'
+        },
+        'boa': {
+            name: 'BOA Building',
+            path: '../Customers/BOA_Building/index.html'
+        },
+        'boabuilding': {
+            name: 'BOA Building',
+            path: '../Customers/BOA_Building/index.html'
+        },
+        'bankofamerica': {
+            name: 'BOA Building',
+            path: '../Customers/BOA_Building/index.html'
+        },
+        'mobbuilding': {
+            name: 'BOA Building',
+            path: '../Customers/BOA_Building/index.html'
         }
     }
 };

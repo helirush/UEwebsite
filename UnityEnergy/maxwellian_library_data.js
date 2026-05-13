@@ -1,0 +1,177 @@
+window.MAXWELLIAN_LIBRARY_DATA = {
+  "library": {
+    "name": "Maxwellian Intelligence Brief Library",
+    "description": "Strategic intelligence briefings published by Oliver.h1.mib and edited by Clerk Maxwell for Unity Energy leadership.",
+    "last_updated": "2026-03-24"
+  },
+  "episodes": [
+    {
+      "episode": 1,
+      "title": "Inaugural Edition — Issue No.1.5",
+      "date": "2026-02-16",
+      "type": "standard",
+      "tags": [
+        "inaugural",
+        "market",
+        "data centers",
+        "infrastructure",
+        "investment",
+        "power factor"
+      ],
+      "description": "The inaugural Maxwellian Intelligence Brief — Issue 1.5. Clerk Maxwell opens at the Gold King Mine in Telluride, Colorado, where L.L. Nunn's 1891 Ames hydroelectric project first demonstrated industrial AC power and proved that reactive energy management mattered as much as watts. Five intelligence domains are surveyed: investment capital flowing toward edge efficiency with $3B in battery storage financings; target customers spanning 200–400MW hyperscaler campuses and EV manufacturing lines; transformer lead times running 80–100 weeks with switchgear backlogs beginning to ease; OEM partners expanding power-quality product lines and controls vendors adding VAR APIs; and utilities signaling stricter power-factor penalties alongside queue reform pilots. Strategic synthesis: power constraints, infrastructure timelines, and utility enforcement are converging — creating a window for solutions that unlock capacity without new iron.",
+      "brief_file": "maxwellian/briefs/EP01_MIB_Inaugural_260216.html",
+      "audio_file": "maxwellian/audio/EP01_Unity_Summary.mp3",
+      "audio_summary": "This is the inaugural Maxwellian Intelligence Brief — Issue 1.5, published February 16th, 2026. Clerk Maxwell opens from the Gold King Mine in Telluride, Colorado, where in 1891, L.L. Nunn proved that AC power could drive heavy industrial machinery over distance — and in doing so, taught early operators that reactive energy, VARs, mattered just as much as watts. That lesson is still live today. Five intelligence domains are covered in this first edition. In investment, capital is flowing toward edge efficiency projects with paybacks under two years, and battery storage financings exceed three billion dollars. In target customers, 200 to 400 megawatt hyperscaler campuses are advancing across key metros, and EV manufacturing lines are adding variable torque loads that create unmanaged power factor penalties. In infrastructure, transformer lead times are running 80 to 100 weeks, with switchgear backlogs beginning to ease — opening retrofit windows for Unity installs. In partners, OEMs are expanding their power quality product lines and controls vendors are adding VAR APIs, making closed-loop integration easier. And in the utility landscape, commissions are signaling stricter power factor penalties and launching queue reform pilots that reward power quality guarantees. The strategic synthesis: the signals are converging. Power constraints, stretched infrastructure timelines, and tightening utility enforcement create a window for solutions that unlock capacity without new iron — and that is precisely where Unity operates."
+    },
+    {
+      "episode": 2,
+      "title": "Issue No.2.1 — PJM, Goldman, Transformer Crisis",
+      "date": "2026-02-22",
+      "type": "standard",
+      "tags": [
+        "PJM",
+        "Goldman Sachs",
+        "transformers",
+        "infrastructure",
+        "data centers",
+        "investment"
+      ],
+      "description": "Issue 2.1 opens with three major market signals: PJM's $11.8B RTEP approval — the largest single transmission expansion in the grid's history; Goldman Sachs projecting electricity inflation at 6.9% year-over-year, twice CPI, driven by data-center demand; and transformer lead times hitting 128 weeks with GSU demand up 274% since 2019. Clerk Maxwell's desk draws the connection to William Stanley Jr.'s 1886 Great Barrington demonstration — the first practical AC distribution system — where the transformer decoupled generation from load. Today's crisis is the inverse: generation exists but delivery is constrained. Intelligence spans PJM's 6,623MW capacity shortfall, AEP Ohio queue compression from 30,000 to 5,700MW, Dominion's $50.1B capital plan, Microsoft's 40GW renewable commitment, Hanwha-Chrysalis 3.5GW storage portfolio, and FERC's colocation rule advances. Strategic synthesis: the gap between 128-week lead times and 30% supply deficits is where Unity Energy operates.",
+      "brief_file": "maxwellian/briefs/EP02_MIB_Issue2_260222.html",
+      "audio_file": "maxwellian/audio/EP02_Unity_Summary.mp3",
+      "audio_summary": "Issue 2.1, published February 22nd, 2026. Three signals moved over the weekend and they all point the same direction. First: PJM approved eleven-point-eight billion dollars in new transmission — the largest single RTEP approval in the grid's history. New lines across the mid-Atlantic and Midwest, all chasing data-center load. Second: Goldman Sachs put electricity inflation at 6.9 percent year over year — twice CPI — driven directly by hyperscaler demand. Third: transformer lead times are now running 128 weeks for large power units, with generator step-up transformer demand up 274 percent since 2019. Clerk Maxwell's desk this week is set in Great Barrington, Massachusetts, March 1886 — where William Stanley Jr. lit 23 businesses from a single generator a mile away, using the first practical AC distribution system in the United States. The transformer was the critical wedge: it decoupled generation from load and made distributed electrification possible. Today's crisis is the inverse. We have the generation — what we lack is delivery capacity. Transformer shortages, clogged queues, and reactive load consuming headroom before it reaches the end customer. Unity manages what arrives at the load, recovering capacity without new iron — the same principle Stanley used to extend reach without new generators. Additional signals this week: AEP Ohio's queue compressed from 30,000 to 5,700 megawatts under new reform tariffs; PJM revealed a 6,623 megawatt capacity shortfall — the largest ever recorded; Dominion announced a $50.1 billion capital plan; and FERC advanced its colocation rules. The gap between constrained supply and surging demand is Unity's operating environment — and every week those lead times hold, our value proposition strengthens."
+    },
+    {
+      "episode": 3,
+      "title": "Special Edition — Market Intelligence Issue No.3",
+      "date": "2026-03-02",
+      "type": "special",
+      "tags": [
+        "market",
+        "data centers",
+        "infrastructure",
+        "investment",
+        "special edition"
+      ],
+      "description": "A curated assembly of strategic intelligence spanning five core domains: capital investment activity, target customer deployment opportunities, 480V infrastructure and components, partner ecosystems, and utility landscape developments. Identifies accelerating data center buildout, transformer supply constraints, and emerging market signals for Unity's measure-manage-exchange system. This Special Edition deepens the intelligence framework established in Issues 1 and 2, with expanded source citations and updated market data.",
+      "brief_file": "maxwellian/briefs/EP03_MIB_Issue3_Special_260302.html",
+      "audio_file": "maxwellian/audio/EP03_Unity_Summary.mp3",
+      "audio_summary": "Episode 3, a special edition published March 2nd, 2026. This brief deepens the intelligence framework Oliver has been building across the first two issues — five domains, current signals, Unity relevance. The investment landscape continues to shift toward edge efficiency: capital with short payback horizons is winning mandates, and projects that can demonstrate power quality compliance are moving faster through approvals. In target customers, the data center segment is accelerating beyond earlier projections — hyperscaler campuses are not just getting bigger, they are getting more sensitive to power quality because their density requires it. In infrastructure, the transformer and switchgear story is unchanged: lead times remain extended, allocation is common, and the window for Unity deployments alongside planned maintenance outages is real. In partners, OEM and controls-vendor alignment is improving, which reduces integration friction for Unity. And in the utility landscape, power factor enforcement is tightening — the signal is consistent across multiple commissions. The strategic synthesis this week: the data center buildout and the infrastructure constraint are moving in opposite directions simultaneously, and Unity sits at that intersection. The brief identifies specific points where that tension is most acute — and those are the conversations to have this week."
+    },
+    {
+      "episode": 4,
+      "title": "Special Edition — U.S. Electric Cooperative Intelligence Report",
+      "date": "2026-03-08",
+      "type": "special",
+      "tags": [
+        "cooperatives",
+        "kVA billing",
+        "rural electric",
+        "candidate assessment",
+        "demand charges"
+      ],
+      "description": "A complete national survey of the U.S. electric cooperative landscape as a Unity Energy sales intelligence tool. Covers the history of rural electrification from the REA Act of 1936, top five highest-cost co-op states, cooperatives billing on kWh plus kW demand, cooperatives billing directly on kVA apparent power, and a ranked candidate assessment of the best co-op territories for Unity MPTS deployment.",
+      "brief_file": "maxwellian/briefs/EP04_MIB_CoOp_Edition_260308.html",
+      "audio_file": "maxwellian/audio/EP04_Unity_Summary.mp3",
+      "audio_summary": "Episode 4 is a special edition focused entirely on America's electric cooperative landscape, published March 8th, 2026. There are approximately 900 rural electric cooperatives serving 42 million members across 48 states. The key intelligence finding: cooperatives that bill on kVA apparent power — rather than kilowatts — are Unity's highest priority targets. When a co-op bills on kVA, power factor correction directly reduces the billed demand with no ambiguity, no rate schedule debate, no conversion math. The savings show up on the first bill. Clerk Maxwell's desk this week connects kVA billing to the foundational reactive power equation: S equals P plus jQ. The magnitude of S — apparent power — is what the cooperative meter reads. Unity reduces that magnitude by managing Q, the reactive component. The brief surveys the top five highest-cost cooperative states, distinguishes between demand-based and kVA-based billing structures, and closes with a ranked candidate assessment of the best co-op territories for Unity deployment. If your territory has co-ops billing on kVA, that is your first call list."
+    },
+    {
+      "episode": 5,
+      "title": "Special Edition — Florida Utilities Intelligence Study",
+      "date": "2026-03-08",
+      "type": "special",
+      "tags": [
+        "Florida",
+        "IOU",
+        "municipal",
+        "cooperative",
+        "FPSC",
+        "LCEC",
+        "FPL",
+        "candidate assessment"
+      ],
+      "description": "A deep-dive intelligence study of the complete Florida utility landscape across all three utility types: investor-owned utilities including FPL, Duke Energy Florida, and Tampa Electric; municipal utilities including JEA, OUC, Lakeland Electric, and GRU; and 14 rural electric cooperatives. Covers the FPSC regulatory structure, Florida's fully regulated market, industrial load mapping by sector, and a ranked Unity candidate assessment across all utility types. Clerk Maxwell's editorial addresses the unique reactive energy profile of tropical motor loads running 10 months per year.",
+      "brief_file": "maxwellian/briefs/EP05_MIB_Florida_Utilities_260308.html",
+      "audio_file": "maxwellian/audio/EP05_Unity_Summary.mp3",
+      "audio_summary": "Episode 5 is a complete Florida utility intelligence study covering all three utility types: investor-owned, municipal, and cooperative — published March 8th, 2026. Florida is a fully regulated state. The Florida Public Service Commission controls investor-owned utility rates, which means no retail competition but consistent, predictable rate structures that make Unity's ROI calculations clean and reliable. The study identifies the Florida cooperative territories as Priority 1 Unity targets — particularly those serving cold storage, citrus processing, and phosphate mining operations where motor loads run at high duty cycles year-round. Clerk Maxwell's editorial this week addresses why Florida's subtropical climate makes reactive energy a structural feature of the system, not a seasonal problem. When cooling runs ten months a year and motors never fully rest, the reactive energy demand is constant. Every month is a Unity opportunity. The brief also covers the municipal utilities — JEA, OUC, Lakeland Electric, and GRU — and maps industrial load concentrations by county across the state. The ranked candidate assessment at the close identifies the highest-value co-op and municipal territories for Unity's first Florida deployments."
+    }
+  ],
+  "knowledge_docs": [
+    {
+      "doc_id": "UNITY-KNOWLEDGE-260324",
+      "title": "Unity Energy Company Knowledge Reference",
+      "date": "2026-03-24",
+      "type": "reference",
+      "audience": [
+        "Clerk Maxwell",
+        "Unity Q&A",
+        "Public narrative consistency"
+      ],
+      "description": "Canonical company positioning and approved narrative guidance for About Unity and Hear Unity experiences, including operating law, CTA language, voice roles, and Q&A-ready facts.",
+      "doc_file": "maxwellian/briefs/UNITY_COMPANY_KNOWLEDGE_260324.md",
+      "source_pages": [
+        "about-unity.html",
+        "unity-story.html"
+      ],
+      "canonical_lines": [
+        "Measure • Manage • Exchange is Unity’s operating law.",
+        "This is not a software exercise. It is industrial stewardship.",
+        "For over a century, industry measured electricity. Unity was built to understand the field."
+      ]
+    }
+  ],
+  "ops_handoffs": [
+    {
+      "handoff_id": "LIV-STD-20260310-01",
+      "date": "2026-03-10",
+      "scope": "Livingston Site standardization across January/February 2026 with Deli as active implementation path",
+      "completed": [
+        "Deli February Study260309r0 deployed into eWebmaster at Customers/FosterFarms/Livingston_SIte/Deli/02_FEB26.",
+        "Livingston site index updated: Deli February entry moved from Study Pending to Study Ready.",
+        "Deli split-view parity completed: Energy/Heat/Volt triplet layout standardized and validated.",
+        "Return-to-summary split-view 404 fixed through summary query param wiring and back-navigation fallback logic.",
+        "January Deli title aligned to February naming: LIVINGSTON HQ, DELI GROUP - 480V ELECTRICAL ENERGY SUMMARY.",
+        "February Deli summaryboard top navigation links corrected for nested path depth (site and Unity home).",
+        "Summaryboard template persistence implemented via SITE_HOME_PATH placeholder and renderer path derivation."
+      ],
+      "template_changes": [
+        "dashboard/templates/eUnitySummaryboard.html",
+        "dashboard/templates/eUnitySummaryboard_energy.html",
+        "dashboard/templates/eUnitySplitView.html",
+        "dashboard/templates/eUnitySplitView_Energy.html",
+        "dashboard/templates/eUnitySplitView_Volt.html",
+        "dashboard/working_renderer.py",
+        "dashboard/generate_splitviews.py"
+      ],
+      "pending_focus": [
+        "Standardize Livingston Rendering and NCDC January/February parity to match Deli consistency level.",
+        "Prepare unified Livingston 3-group webmaster update package.",
+        "Generate and wire Unity MP3 assets (site overview + transformer brief/explains/howto) where missing."
+      ],
+      "next_terminal_start": "Continue from Livingston 3-group Jan/Feb standardization and webmaster prep, then complete Unity audio pass."
+    },
+    {
+      "handoff_id": "FF-CHERRY-20260310-02",
+      "date": "2026-03-10",
+      "scope": "Foster Farms Cherry Avenue portal recovery, site sync, deploy verification, and documentation capture",
+      "completed": [
+        "Cherry Avenue portal parser repaired in Customers/FosterFarms/index.html (updateCherryAveCard) to support year-split study groups and ignore pending placeholder links.",
+        "Cherry site index format confirmed and retained at Customers/FosterFarms/CherryAve_Site/index.html with Full Studies 2026/2025 structure and January 2026 active summaryboard.",
+        "Foster Farms top-level card wiring restored: combined efficiency, high/low band, and latest report now repopulate from Cherry site studies.",
+        "Full eWebmaster to uewebsite synchronization completed and website repo updated on origin/main with commit ce02ff605eebcf72da1a7025496bbb98a11d2737.",
+        "Live portal sanity checks completed and validated with Cherry card values present (86.5% combined efficiency, high 89.0%, low 83.7%, latest report January 2026).",
+        "Session summary documented in eMemory under entity 2026-03-10 Foster Farms Cherry Sync + Deploy."
+      ],
+      "template_changes": [
+        "eWebmaster/Customers/FosterFarms/index.html",
+        "eWebmaster/Customers/FosterFarms/CherryAve_Site/index.html",
+        "eWebmaster/UnityEnergy/maxwellian_library.json"
+      ],
+      "pending_focus": [
+        "Confirm Cherry February 2026 summaryboard activation when released and update card rollover order if needed.",
+        "Continue Livingston multi-group parity and audio standardization backlog as previously queued."
+      ],
+      "next_terminal_start": "Start with Foster Farms live spot-check, then proceed to Livingston Rendering/NCDC parity and February release readiness."
+    }
+  ]
+};

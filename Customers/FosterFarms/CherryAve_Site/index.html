@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Energy - Cherry Avenue Site - Foster Farms</title>
+    <script src="../../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../../UnityEnergy/clerk_voice_widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -434,35 +437,10 @@
         footer {
             background: rgba(139, 0, 0, 1);
             color: white;
-            padding: 40px;
+            text-align: center;
+            padding: 30px;
             margin-top: 60px;
             border-top: 3px solid rgba(255, 215, 0, 1);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .footer-text {
-            flex: 1;
-            text-align: center;
-        }
-
-        .footer-logos {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .footer-logo {
-            height: 60px;
-            width: auto;
         }
 
         .libraries-container {
@@ -881,9 +859,30 @@
                              update this Full Studies section immediately:
                              1) month status row (efficiency + label),
                              2) summaryboard study link/button state,
-                             3) period/source text to match the published report. -->
+                             3) period/source text to match the published report,
+                             4) verify ../index.html Cherry card updates latest month + PF from the newest active full-site study. -->
                         <summary>2026 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
                         <div class="study-list month-study-list">
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">APRIL 2026</span>
+                                        <span class="site-summary-eff state-good">85.9% PF</span>
+                                    </div>
+                                    <div class="study-month-meta">30-day Full Site Analysis • 1minRES • source: April Summaryboard</div>
+                                </div>
+                                <a href="./04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">MARCH 2026</span>
+                                        <span class="site-summary-eff state-good">85.8% PF</span>
+                                    </div>
+                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: March Summaryboard</div>
+                                </div>
+                                <a href="./03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
                             <div class="study-item study-month-card">
                                 <div class="study-info">
                                     <div class="study-month-top">
@@ -892,18 +891,18 @@
                                     </div>
                                     <div class="study-month-meta">28-day Full Site Analysis • 1minRES • source: February Summaryboard</div>
                                 </div>
-                                <a href="./February_2026/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                                <a href="./02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW ENERGY FIELDS</a>
                             </div>
 
-                            <div class="study-item study-month-card">
+                            <div class="study-item study-month-card placeholder">
                                 <div class="study-info">
                                     <div class="study-month-top">
                                         <span class="site-summary-name">JANUARY 2026</span>
-                                        <span class="site-summary-eff state-good">84.7% PF</span>
+                                        <span class="site-summary-eff state-unavailable">pending</span>
                                     </div>
-                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: January Summaryboard</div>
+                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES</div>
                                 </div>
-                                <a href="./January_2026/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260101-260131_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                                <span class="study-btn disabled">pending</span>
                             </div>
                         </div>
                     </details>
@@ -911,6 +910,16 @@
                     <details>
                         <summary>2025 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
                         <div class="study-list month-study-list">
+                            <div class="study-item study-month-card placeholder">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">DECEMBER 2025</span>
+                                        <span class="site-summary-eff state-unavailable">pending</span>
+                                    </div>
+                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES</div>
+                                </div>
+                                <span class="study-btn disabled">pending</span>
+                            </div>
                             <div class="study-item study-month-card">
                                 <div class="study-info">
                                     <div class="study-month-top">
@@ -996,18 +1005,8 @@
     </div>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-logos">
-                <img src="../foster-farms-logo.png" alt="Foster Farms" class="footer-logo">
-            </div>
-            <div class="footer-text">
-                <p>&copy; 2026 Unity Energy. All rights reserved.</p>
-                <p>Transforming how facilities understand their electrical systems.</p>
-            </div>
-            <div class="footer-logos">
-                <img src="../unity-logo.png" alt="Unity Energy" class="footer-logo">
-            </div>
-        </div>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
 
     <!-- Video Modal -->
@@ -1116,6 +1115,23 @@
             closeAllLibraryDetails();
             scrollToSecondaryHomePosition();
         });
+    </script>
+    <script>
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "fosterfarms",
+                    customer_name: "Foster Farms",
+                    site_slug: "cherryave-site",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {
+                // ignore storage failures
+            }
+        })();
     </script>
 </body>
 </html>

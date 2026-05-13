@@ -1,0 +1,961 @@
+<!-- 
+    File: eUnityVoltboard.html
+    Created: 2025-09-20 by M. Cove Faraday
+    Version: 1.0
+    Purpose: Unity eVision Voltboard Siteboard | Internal Display
+    Visuals: Locked — style edits should be coordinated with Cove or Unity Faraday
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnityEnergy - T15 Fillet Voltageboard</title>
+  <style>
+    :root {
+      --design-width: 1340;
+      --dash-scale: 1;
+    }
+    body {
+      background: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      padding-top: 50px;
+      margin: 0;
+    }
+    .voltboard-container {
+      position: relative;
+      max-width: 1340px;
+      margin: auto;
+      background: #1a1a1a;
+      border-radius: 10px;
+      border: 30px solid rgb(214,214,194);
+      padding: 20px;
+    }
+    /*Label = UNITY VOLTAGE FORENSICS*/
+    .voltboard-title {
+      text-align: center;
+      font-size: 30pt;
+      font-weight: bold;
+      color: rgb(250,240,160);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 15px;
+      margin-bottom: 6px;
+    }
+    .voltboard-title-main {
+      font-size: 26pt;
+      font-weight: bold;
+      display: inline;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .voltboard-sub {
+      text-align: center;
+    }
+    .voltboard-title-sub {
+      text-align: center;
+      font-size: 20pt;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    /* Live Voltage Metrics */
+    .volt-metrics {
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    /*label= Live Voltage Metrics*/
+    .volt-metrics h2 {
+      color: rgb(250,240,160);
+      font-size: 22pt;
+      margin: 0 0 15px 0;
+      text-align: center;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+    .metric-item {
+      background: rgba(20, 70, 140, 1);
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .metric-label {
+      color: rgb(249,215,11);
+      font-size: 12pt;
+      font-style: italic;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .metric-value {
+      color: rgb(255,255,255); /* Unity White */
+      font-size: 18pt;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /*********************************************************/
+    /* Groups table */
+    .groups-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11pt;
+    }
+    .groups-table th, .groups-table td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: left;
+    }
+    .groups-table th {
+      background: rgba(10, 100, 200, 1);
+
+      color: rgb(250,240,160);
+    }
+    .badge {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10pt;
+      color: #000;
+      display: inline-block;
+    }
+    .risk-low { background: #ffd36e; color: #1a1a1a; }
+    .risk-med { background: #ff9a74; color: #1a1a1a; }
+    .risk-high { background: #ff5c5c; color: #ffffff; }
+    .risk-crit { background: #d92929; color: #ffffff; }
+
+    /* Calculation steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .step {
+      background: #333;
+      border: 1px solid #555;
+      border-left: 3px solid rgb(0, 150, 255); /* Unity Blue */
+      border-radius: 4px;
+      padding: 10px;
+    }
+    .step-title {
+      color: rgb(211,213,188);
+      font-size: 12pt;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .step-body {
+      color: rgb(211,213,188);
+      font-family: 'Courier New', monospace;
+      font-size: 10pt;
+      line-height: 1.35;
+    }
+    .step-result {
+      color: rgb(249,215,11);
+      font-weight: bold;
+      margin-top: 6px;
+      font-size: 12pt;
+    }
+    /* Suspect motors */
+    .suspects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .suspect-card {
+      background: #333;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .suspect-title { color: #fff; font-weight: bold; font-size: 13pt; margin-bottom: 4px; }
+    .suspect-meta { color: #bbb; font-size: 10pt; }
+
+    /* Inputs */
+    .param-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .param-item { background:#333; border:1px solid #555; border-left:3px solid #2fa4ff; border-radius:4px; padding:10px; }
+    .param-label { color: rgb(250,240,160); font-size: 11pt; font-style: italic; margin-bottom: 4px; }
+    .param-value { color: #fff; font-size: 16pt; }
+
+    /* Branding */
+    .unity-branding {
+      text-align: center;
+      margin-top: 26px;
+      padding-top: 10px;
+      border-top: 1px solid #444;
+      color: #666;
+      font-size: 10pt;
+    }
+    .unitylogo-branding {
+      position: absolute;
+      bottom: 90px;
+      right: 50px;
+      display: flex; flex-direction: column; align-items: center;
+      z-index: 10; pointer-events: none;
+    }
+    .unitylogo-branding .unity-logo { width: 100px; height: auto; opacity: 1; }
+    .unitylogo-date { 
+      font-family: Arial, sans-serif;
+      font-size: 10pt;
+      font-weight: normal;
+      color: rgba(166, 193, 28, 1);
+      text-align: center;
+      transform: translateX(7px) translateY(-85px);
+      margin-top: 5px;
+    }
+
+    /* Back button */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #2fa4ff, #0a64c8);
+      color: #fff;
+      border: 2px solid #1a8fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14pt;
+      font-weight: bold;
+      text-decoration: none;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .back-button:hover {
+      background: linear-gradient(135deg, #0a64c8, #2fa4ff);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+    .back-button::before {
+      content: '←';
+      margin-right: 8px;
+      font-size: 18pt;
+    }
+
+  </style>
+<script>
+  window.__UNITY_VOLT_DASHBOARD_DATA__ = {
+  "nominal_voltage": 488.8150175158678,
+  "transformer_name": "T15 Fillet",
+  "transformer_capacity": 2500.0,
+  "voltage_avg": 488.8150175158678,
+  "min_voltage": 390.5369891304348,
+  "max_voltage": 346360.2341311475,
+  "voltage_std": 9.483158129130818,
+  "voltage_spread": 345969.6971420171,
+  "power_factor": 0.8423315376841077,
+  "vhi_avg": 1.0,
+  "vhi_max": 708.5711807532674,
+  "vhi_high_events": 7,
+  "voltage_dip_count": 9008,
+  "pct_below_nominal": 57.71968550807311,
+  "estimated_running_amps": 1764.8855644085845,
+  "vhi_threshold": 5.0,
+  "lrc_multiplier": 6.0,
+  "data_resolution": "1minRES",
+  "field_efficiency": 0.92,
+  "time_period_hours": 744,
+  "analysis_period": "260201-260228",
+  "file_name": "AN53110845-V-1minRES_40320CLP_260201-260228c.csv",
+  "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/CherryAve/aSITE2026/02_FEB2026/AN53110845-V-1minRES_40320CLP_260201-260228c.csv",
+  "drop_groups": [
+    {
+      "id": "G1",
+      "group_id": "G1",
+      "drop_count": 8991,
+      "voltage_range": "464.0-469.3V",
+      "amp_range": "1272.9-2232.7A",
+      "delta_v": 20.7,
+      "est_stall_amps": 420.0,
+      "estimated_hp": 280,
+      "classification": "SIGNIFICANT",
+      "risk": "SIGNIFICANT",
+      "days": 19,
+      "center_v": 466.6323032786885,
+      "min_v": 464.0046721311475,
+      "max_v": 469.2599344262295,
+      "avg_amps": 1764.8855644085845,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G2",
+      "group_id": "G2",
+      "drop_count": 5,
+      "voltage_range": "416.0-418.1V",
+      "amp_range": "1188.6-1682.8A",
+      "delta_v": 71.9,
+      "est_stall_amps": 240.0,
+      "estimated_hp": 160,
+      "classification": "CRITICAL",
+      "risk": "CRITICAL",
+      "days": 5,
+      "center_v": 417.04143442622956,
+      "min_v": 416.0100327868853,
+      "max_v": 418.07283606557377,
+      "avg_amps": 1461.0545540983608,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G3",
+      "group_id": "G3",
+      "drop_count": 3,
+      "voltage_range": "438.7-441.7V",
+      "amp_range": "299.0-322.4A",
+      "delta_v": 48.8,
+      "est_stall_amps": 60.0,
+      "estimated_hp": 40,
+      "classification": "SEVERE",
+      "risk": "SEVERE",
+      "days": 3,
+      "center_v": 440.1866721311476,
+      "min_v": 438.7152786885246,
+      "max_v": 441.6580655737705,
+      "avg_amps": 307.7547103825137,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G4",
+      "group_id": "G4",
+      "drop_count": 2,
+      "voltage_range": "432.0-432.6V",
+      "amp_range": "1287.7-1291.2A",
+      "delta_v": 56.5,
+      "est_stall_amps": 210.0,
+      "estimated_hp": 140,
+      "classification": "CRITICAL",
+      "risk": "CRITICAL",
+      "days": 2,
+      "center_v": 432.3165229885057,
+      "min_v": 432.0138390804597,
+      "max_v": 432.6192068965517,
+      "avg_amps": 1289.4353735632185,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G5",
+      "group_id": "G5",
+      "drop_count": 1,
+      "voltage_range": "390.5-390.5V",
+      "amp_range": "1528.5-1528.5A",
+      "delta_v": 98.3,
+      "est_stall_amps": 240.0,
+      "estimated_hp": 160,
+      "classification": "EXTREME",
+      "risk": "EXTREME",
+      "days": 1,
+      "center_v": 390.5369891304348,
+      "min_v": 390.5369891304348,
+      "max_v": 390.5369891304348,
+      "avg_amps": 1528.4958804347823,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G6",
+      "group_id": "G6",
+      "drop_count": 1,
+      "voltage_range": "395.5-395.5V",
+      "amp_range": "1398.8-1398.8A",
+      "delta_v": 93.3,
+      "est_stall_amps": 210.0,
+      "estimated_hp": 140,
+      "classification": "EXTREME",
+      "risk": "EXTREME",
+      "days": 1,
+      "center_v": 395.5026976744186,
+      "min_v": 395.5026976744186,
+      "max_v": 395.5026976744186,
+      "avg_amps": 1398.8331046511628,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G7",
+      "group_id": "G7",
+      "drop_count": 1,
+      "voltage_range": "408.7-408.7V",
+      "amp_range": "1353.9-1353.9A",
+      "delta_v": 80.1,
+      "est_stall_amps": 210.0,
+      "estimated_hp": 140,
+      "classification": "CRITICAL",
+      "risk": "CRITICAL",
+      "days": 1,
+      "center_v": 408.67890163934425,
+      "min_v": 408.67890163934425,
+      "max_v": 408.67890163934425,
+      "avg_amps": 1353.9145573770493,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G8",
+      "group_id": "G8",
+      "drop_count": 1,
+      "voltage_range": "423.7-423.7V",
+      "amp_range": "1423.0-1423.0A",
+      "delta_v": 65.1,
+      "est_stall_amps": 240.0,
+      "estimated_hp": 160,
+      "classification": "CRITICAL",
+      "risk": "CRITICAL",
+      "days": 1,
+      "center_v": 423.7314918032787,
+      "min_v": 423.7314918032787,
+      "max_v": 423.7314918032787,
+      "avg_amps": 1423.019868852459,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G9",
+      "group_id": "G9",
+      "drop_count": 1,
+      "voltage_range": "436.4-436.4V",
+      "amp_range": "280.7-280.7A",
+      "delta_v": 52.4,
+      "est_stall_amps": 45.0,
+      "estimated_hp": 30,
+      "classification": "CRITICAL",
+      "risk": "CRITICAL",
+      "days": 1,
+      "center_v": 436.4440163934426,
+      "min_v": 436.4440163934426,
+      "max_v": 436.4440163934426,
+      "avg_amps": 280.66249180327867,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G10",
+      "group_id": "G10",
+      "drop_count": 1,
+      "voltage_range": "449.3-449.3V",
+      "amp_range": "349.6-349.6A",
+      "delta_v": 39.6,
+      "est_stall_amps": 60.0,
+      "estimated_hp": 40,
+      "classification": "SIGNIFICANT",
+      "risk": "SIGNIFICANT",
+      "days": 1,
+      "center_v": 449.2622786885246,
+      "min_v": 449.2622786885246,
+      "max_v": 449.2622786885246,
+      "avg_amps": 349.5853770491803,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    },
+    {
+      "id": "G11",
+      "group_id": "G11",
+      "drop_count": 1,
+      "voltage_range": "458.1-458.1V",
+      "amp_range": "1583.4-1583.4A",
+      "delta_v": 30.7,
+      "est_stall_amps": 315.0,
+      "estimated_hp": 210,
+      "classification": "SIGNIFICANT",
+      "risk": "SIGNIFICANT",
+      "days": 1,
+      "center_v": 458.0882950819672,
+      "min_v": 458.0882950819672,
+      "max_v": 458.0882950819672,
+      "avg_amps": 1583.4366229508198,
+      "lrc_factor": 6.0,
+      "power_factor": 0.8423315376841077,
+      "efficiency": 0.92
+    }
+  ],
+  "voltage_center": 466.6323032786885,
+  "delta_v_primary": 20.7
+};
+</script>
+</head>
+<body>
+  <!-- Back to Summary Button -->
+  <a href="#" class="back-button" id="back-to-summary">Back to Summary</a>
+
+<div class="voltboard-container">
+  
+  <!-- ⚡ UNITY VOLTAGE FORENSICS HEADER -->
+  <div class="voltboard-title">
+    <span class="voltboard-title-main">T15 Fillet - VOLTAGE Analysis</span>
+  </div>
+      <hr style="border: 3px solid rgba(10, 100, 200, 1); width: 95%;">
+
+  <div class="voltboard-sub">
+    <span class="voltboard-title-sub" id="voltboard-subtitle">2500kVA Transformer (c.260201-260228 • 28.0 days • 1minRES)</span>
+  </div>
+
+  <!-- 🧠 Live Voltage Metrics -->
+  <div class="volt-metrics">
+    <h2>Live Voltage Metrics</h2>
+    <div class="metrics-grid" id="metricsGrid">
+      <div class="metric-item">
+        <div class="metric-label">Average Voltage</div>
+        <div class="metric-value" id="metric-avg-voltage">488.8 V</div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-label">Minimum Voltage</div>
+        <div class="metric-value" id="metric-min-voltage">390.5 V</div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-label">Maximum Voltage</div>
+        <div class="metric-value" id="metric-max-voltage">346360.2 V</div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-label">Voltage Spread</div>
+        <div class="metric-value" id="metric-voltage-std">345969.7 V</div>
+      </div>
+
+      <div class="metric-item">
+        <div class="metric-label">VHI (Avg)</div>
+        <div class="metric-value" id="metric-vhi-avg">1.00</div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-label">VHI (Max)</div>
+        <div class="metric-value" id="metric-vhi-max">708.57</div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-label">High VHI Events (&gt;5)</div>
+        <div class="metric-value" id="metric-vhi-high-events">7</div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-label">% Below Nominal (480V)</div>
+        <div class="metric-value" id="metric-below-nominal">57.7%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔋 Voltage Drop Groups -->
+  <div class="volt-metrics">
+    <h2>Voltage Drop Groups</h2>
+    <table class="groups-table" id="groupsTable">
+      <thead>
+      <tr>
+        <th>Group</th>
+        <th>Drop Count</th>
+        <th>Voltage Range</th>
+        <th>Amp Range</th>
+        <th>ΔV</th>
+        <th>Est. Stall Amps</th>
+        <th>Estimated HP</th>
+        <th>Classification</th>
+        <th>Days</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Table rows will be dynamically populated by JavaScript from drop_groups data -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 🧮 Model Input Parameters & Constants -->
+  <div class="volt-metrics">
+    <h2>Model Input Parameters & Constants</h2>
+    <div class="param-grid">
+      
+      <div class="param-item">
+        <div class="param-label">Transformer</div>
+        <div class="param-value" id="p-xfmr">T15 Fillet</div>
+      </div>
+      
+      <div class="param-item">
+        <div class="param-label">Data Resolution</div>
+        <div class="param-value" id="param-resolution">1minRES</div>
+      </div>
+      
+      <div class="param-item">
+        <div class="param-label">Total Voltage Drops</div>
+        <div class="param-value" id="param-volt-drops">9008</div>
+      </div>
+      
+      <div class="param-item">
+        <div class="param-label">VHI Threshold</div>
+        <div class="param-value" id="param-vhi-threshold">5.0</div>
+      </div>
+
+      <div class="param-item">
+        <div class="param-label">kWH Cost</div>
+        <div class="param-value" id="param-kwh-cost">0.3333 $/kWh</div>
+      </div>
+      
+      <div class="param-item">
+        <div class="param-label">Power Factor Default</div>
+        <div class="param-value" id="param-power-factor">0.842</div>
+      </div>
+      
+      <div class="param-item">
+        <div class="param-label">Transfer Efficiency</div>
+        <div class="param-value" id="param-field-efficiency">0.92</div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- TEMPORARILY DISABLED: Energy Field Voltage Intelligence Section
+  <div class="volt-metrics">
+    <h2>Energy Field Voltage Intelligence</h2>
+    <div class="steps-grid">
+      ... [Intelligence section content temporarily hidden] ...
+    </div>
+  </div>
+  -->
+
+  <!-- 🔗 Unity Branding & Footer -->
+  <div class="unity-branding">
+    Generated by <span class="unity-logo" style="color:#B2D235;font-weight:bold;">Unity Energy Management Solutions</span><br>
+    Voltage Forensics Model v25.829 | Professional Energy Field Analysis
+  </div>
+
+  <div class="unitylogo-branding">
+            <img src="data:image/png;base64,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" alt="Unity Logo" class="unity-logo">
+        <div class="unitylogo-date" id="unityDate">UE.25.0101</div>
+    </div>
+</div>
+
+<script>
+  function updateUnityDate() {
+    const today = new Date();
+    const y = today.getFullYear().toString().slice(-2);
+    const m = String(today.getMonth()+1).padStart(2,'0');
+    const d = String(today.getDate()).padStart(2,'0');
+    const el = document.getElementById('unityDate');
+    if (el) el.textContent = `UE.${y}.${m}${d}`;
+  }
+
+  async function loadVoltData() {
+    try {
+      const inlineData = window.__UNITY_VOLT_DASHBOARD_DATA__;
+      if (inlineData) {
+        console.log('Using inline voltage data payload');
+        applyVoltData(inlineData);
+        return;
+      }
+
+      console.log('Loading voltage data from JSON...');
+      const response = await fetch('dashboard_data_T15_Fillet.json');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Voltage data loaded successfully:', data);
+      applyVoltData(data);
+    } catch (e) {
+      console.error('Error loading voltage data:', e);
+      console.log('Using static placeholder values for voltage dashboard');
+      
+      // Create fallback data with sample drop groups to test rendering
+      const fallbackData = {
+        drop_groups: [
+          {
+            id: 'G1',
+            drop_count: 15,
+            voltage_range: '465.2–475.8V',
+            amp_range: '95.0–125.5A',
+            delta_v: 8.2,
+            est_stall_amps: 630,
+            estimated_hp: 75,
+            classification: 'Medium',
+            days: 28
+          }
+        ]
+      };
+      
+      console.log('Applying fallback data with sample groups:', fallbackData);
+      applyVoltData(fallbackData);
+    }
+  }
+
+  function pct(n) { return `${(n*100).toFixed(1)}%`; }
+
+  function applyVoltData(data) {
+    console.log('applyVoltData called with data:', data);
+    
+    try {
+      const nomV = data.nominal_voltage || 480.0;
+      const avgV = data.voltage_avg ?? data.avg_voltage ?? nomV;
+      const minV = data.min_voltage ?? avgV;
+      const maxV = data.max_voltage ?? avgV;
+      const spreadV = data.voltage_spread ?? data.std_voltage ?? data.voltage_std ?? 0.0;
+      const vhiAvg = data.vhi_avg ?? data.vhi?.avg ?? 1.0;
+      const vhiMax = data.vhi_max ?? data.vhi?.max ?? 1.0;
+      const vhiHigh = data.vhi_high_events ?? data.vhi?.high_events ?? 0;
+
+      let belowPct = data.pct_below_nominal ?? data.percent_below_nominal ?? (avgV < 480 ? (480-avgV)/480 : 0);
+
+      console.log('Voltage data values:', {
+        nomV, avgV, minV, maxV, spreadV, vhiAvg, vhiMax, vhiHigh, belowPct
+      });
+      
+      console.log('Updating voltage metrics...');
+      setText('metric-avg-voltage', `${avgV.toFixed(1)} V`);
+      setText('metric-min-voltage', `${minV.toFixed(1)} V`);
+      setText('metric-max-voltage', `${maxV.toFixed(1)} V`);
+      setText('metric-voltage-std', `${spreadV.toFixed(1)} V`);
+      setText('metric-vhi-avg', (typeof vhiAvg === 'number' ? vhiAvg.toFixed(2) : vhiAvg));
+      setText('metric-vhi-max', (typeof vhiMax === 'number' ? vhiMax.toFixed(2) : vhiMax));
+      setText('metric-vhi-high-events', `${vhiHigh}`);
+      if (typeof belowPct === 'number') {
+        const formattedPct = belowPct > 1.0 ? `${belowPct.toFixed(1)}%` : pct(belowPct);
+        setText('metric-below-nominal', formattedPct);
+      } else {
+        setText('metric-below-nominal', `${belowPct}`);
+      }
+      
+      console.log('Voltage metrics update completed');
+
+      // Inputs
+      console.log('Updating input parameters...');
+      setText('param-transformer-name', data.transformer_name || 'T15 Fillet');
+      if (data.analysis_period) setText('param-period', String(data.analysis_period));
+      if (data.file_name || data.csv_file_path) setText('param-file-name', `${data.file_name || data.csv_file_path}`);
+      if (data.nominal_voltage) setText('param-nominal-voltage', `${nomV.toFixed(1)} V`);
+
+      // Groups - This is the critical section for the voltage drop groups table
+      console.log('Processing voltage drop groups...', data.drop_groups);
+      if (data.drop_groups !== undefined) {
+        if (Array.isArray(data.drop_groups)) {
+          console.log(`Found ${data.drop_groups.length} drop groups to render`);
+          renderGroups(data.drop_groups);
+          // Use first (most severe) group for steps
+          if (data.drop_groups.length > 0) {
+            console.log('Updating calculations from first group...');
+            updateCalcFromGroup(data.drop_groups[0], avgV);
+          }
+        } else {
+          console.error('drop_groups exists but is not an array:', typeof data.drop_groups, data.drop_groups);
+          renderGroups([]); // This will show "No voltage drop groups detected"
+        }
+      } else {
+        console.warn('No drop_groups found in data');
+        renderGroups([]); // This will show "No voltage drop groups detected"
+      }
+
+      // Suspects
+      console.log('Processing suspect motors...', data.suspect_motors);
+      if (Array.isArray(data.suspect_motors)) {
+        renderSuspects(data.suspect_motors);
+      } else {
+        console.log('No suspect_motors data found or not an array');
+      }
+      
+      console.log('applyVoltData completed successfully');
+      
+    } catch (error) {
+      console.error('Error in applyVoltData:', error);
+    }
+  }
+
+  function setText(id, text) { 
+    const el = document.getElementById(id); 
+    if (el) {
+      el.textContent = text;
+      console.log(`Updated ${id} with: ${text}`);
+    } else {
+      console.error(`Element with id '${id}' not found!`);
+    }
+  }
+
+  function riskBadge(level) {
+    const map = { low: 'risk-med', medium: 'risk-med', high: 'risk-high', severe: 'risk-high', critical: 'risk-crit', extreme: 'risk-crit' };
+    const cls = map[(level||'').toLowerCase()] || 'risk-low';
+    return `<span class="badge ${cls}">${level||'Normal'}</span>`;
+  }
+
+  function renderGroups(groups) {
+    console.log('renderGroups called with:', groups);
+    
+    const tbody = document.querySelector('#groupsTable tbody');
+    if (!tbody) {
+      console.error('Could not find tbody element for groups table');
+      return;
+    }
+    
+    if (!Array.isArray(groups)) {
+      console.error('Groups is not an array:', typeof groups, groups);
+      return;
+    }
+    
+    if (groups.length === 0) {
+      console.warn('No groups data to render');
+      tbody.innerHTML = '<tr><td colspan="9">No voltage drop groups detected</td></tr>';
+      return;
+    }
+    
+    console.log(`Rendering ${groups.length} voltage drop groups...`);
+    tbody.innerHTML = '';
+    
+    try {
+      groups.forEach((g, idx) => {
+        console.log(`Processing group ${idx}:`, g);
+        
+        const tr = document.createElement('tr');
+        const volts = g.voltage_range || g.v_range || `${(g.min_v??0).toFixed?.(1)||g.min_v||'—'}–${(g.max_v??0).toFixed?.(1)||g.max_v||'—'}V`;
+        const amps = g.amp_range || g.i_range || `${(g.min_i??0).toFixed?.(1)||g.min_i||'—'}–${(g.max_i??0).toFixed?.(1)||g.max_i||'—'}A`;
+        const dv = g.delta_v ?? g.dV ?? (480 - (g.center_v ?? 480));
+        const stall = g.est_stall_amps ?? g.stall_amps ?? 0;
+        const hp = g.estimated_hp ?? g.est_hp ?? 0;
+        const risk = g.classification || g.risk || 'Normal';
+        const days = g.days ?? g.day_count ?? 0;
+
+        tr.innerHTML = `
+          <td>${g.id || g.group_id || `G${idx+1}`}</td>
+          <td>${g.drop_count ?? g.count ?? 0}</td>
+          <td>${volts}</td>
+          <td>${amps}</td>
+          <td>${Number(dv).toFixed(1)}</td>
+          <td>${Number(stall).toFixed(1)}</td>
+          <td>${Math.round(hp)}</td>
+          <td>${riskBadge(risk)}</td>
+          <td>${days}</td>`;
+        tbody.appendChild(tr);
+        
+        console.log(`Successfully added group ${idx} to table`);
+      });
+      
+      console.log(`Successfully rendered ${groups.length} groups to voltage drop table`);
+      
+    } catch (error) {
+      console.error('Error rendering groups:', error);
+      tbody.innerHTML = '<tr><td colspan="9">Error rendering voltage drop groups</td></tr>';
+    }
+  }
+
+  function updateCalcFromGroup(g, fallbackAvgV) {
+    const Vc = g.center_v ?? (g.min_v && g.max_v ? (g.min_v+g.max_v)/2 : (fallbackAvgV||480));
+    const dV = 480 - Vc;
+    const I_mult = 480 / (Vc || 480);
+    const I_run = (g.avg_amps ?? g.mean_i ?? 0) * I_mult;
+    const LRC = g.lrc_factor ?? 6.0; // locked-rotor current multiplier
+    const PF = g.power_factor ?? 0.85;
+    const ETA = g.efficiency ?? 0.92;
+    const I_stall = I_run * LRC;
+    const HP = (Math.sqrt(3) * (Vc||480) * (I_run||0) * PF * ETA) / 746.0;
+
+    setHTML('s1', `→ Vc: ${Vc.toFixed(1)}V, ΔV: ${dV.toFixed(1)}V`);
+    setHTML('s2', `→ I_mult: ${I_mult.toFixed(3)}×`);
+    setHTML('s3', `→ I_run: ${I_run.toFixed(1)} A, I_stall: ${I_stall.toFixed(1)} A`);
+    setHTML('s4', `→ Est HP: ${Math.round(HP)}`);
+
+    // Simple priority rule
+    const priority = (dV > 20 || I_stall > 1500 || HP > 2000) ? 'Critical' : (dV > 10 || HP > 1000 ? 'High' : (dV > 5 ? 'Medium' : 'Low'));
+    setHTML('s5', `→ Priority: ${priority}`);
+    setHTML('s6', `→ Flag: ${priority === 'Critical' || priority === 'High' ? 'Yes' : 'No'}`);
+    setHTML('s7', `→ Inspect: Group ${g.id || g.group_id || 'G1'} (center ${Vc.toFixed(1)}V)`);
+  }
+
+  function setHTML(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
+
+  function renderSuspects(list) {
+    const grid = document.getElementById('suspectsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    if (list.length === 0) {
+      grid.innerHTML = `<div class="suspect-card"><div class="suspect-title">No suspects</div><div class="suspect-meta">Awaiting data</div></div>`;
+      return;
+    }
+    list.slice(0,6).forEach((s, idx) => {
+      const card = document.createElement('div');
+      card.className = 'suspect-card';
+      const hp = s.estimated_hp ?? s.hp ?? 0;
+      const amps = s.amps ?? s.i_run ?? 0;
+      const risk = s.risk || 'Normal';
+      card.innerHTML = `
+        <div class="suspect-title">${s.name || s.id || `Suspect ${idx+1}`}</div>
+        <div class="suspect-meta">HP: ${Math.round(hp)} | Amps: ${Math.round(amps)} | ${risk}</div>
+        <div class="suspect-meta">Group: ${s.group_id || '—'} | Center: ${(s.center_v??'—')}</div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updateUnityDate();
+    loadVoltData();
+
+    // Back to Summary navigation
+    const backBtn = document.getElementById('back-to-summary');
+    if (backBtn) {
+      // Hide button if loaded in iframe
+      if (window.self !== window.top) {
+        backBtn.style.display = 'none';
+      }
+      backBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Try to navigate up to find site summary - looks for SITE-*Summaryboard* file in parent's CherryAve_Site directory
+        // This works for the standard structure: FosterFarms/TransformerX/ (current) -> FosterFarms/CherryAve_Site/ (target)
+        window.history.back();
+      });
+    }
+  });
+</script>
+  
+  <script>
+    // Auto-scale dashboard to fit viewport
+    function autoScaleDashboard() {
+      const container = document.querySelector('.dashboard-container');
+      if (!container) return;
+      
+      // Get the natural size of the dashboard
+      const designWidth = 1340; // Base design width
+      const designHeight = 900; // Approximate design height
+      
+      // Get available viewport size (minus padding/margins)
+      const viewportWidth = window.innerWidth - 40; // Account for body padding
+      const viewportHeight = window.innerHeight - 100; // Account for body padding
+      
+      // Calculate scale factors
+      const scaleX = viewportWidth / designWidth;
+      const scaleY = viewportHeight / designHeight;
+      
+      // Use the smaller scale to ensure everything fits
+      const scale = Math.min(scaleX, scaleY, 1.0); // Never scale up beyond 100%
+      
+      // Apply the scale transform
+      container.style.transform = `scale(${scale})`;
+      container.style.transformOrigin = 'top center';
+      
+      // Adjust body height to prevent scrolling issues
+      const scaledHeight = designHeight * scale;
+      document.body.style.minHeight = `${scaledHeight + 100}px`;
+      
+      console.log(`Dashboard scaled to ${(scale * 100).toFixed(1)}%`);
+    }
+    
+    // Run on load and resize
+    window.addEventListener('load', autoScaleDashboard);
+    window.addEventListener('resize', autoScaleDashboard);
+  </script>
+</body>
+</html>
