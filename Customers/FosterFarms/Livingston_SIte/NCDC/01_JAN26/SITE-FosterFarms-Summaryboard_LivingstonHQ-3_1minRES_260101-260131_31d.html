@@ -1611,17 +1611,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -1630,15 +1690,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2351,22 +2421,29 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    
+    const getElText = (id) => {
+      const el = document.getElementById(id);
+      return el ? (el.textContent || '').trim() : '';
+    };
     
     if (type === 'summary') {
       title = `${transformerName} - Performance Summary`;
@@ -2380,84 +2457,81 @@
       }
     } else {
       title = `${transformerName} - Detailed Narrative`;
-      // Prefer new three-part narrative if available
-      const p1 = (xfmrData && xfmrData.pattern_part1) || '';
-      const p2 = (xfmrData && xfmrData.pattern_part2) || '';
-      const p3 = (xfmrData && xfmrData.pattern_part3) || '';
-      let narrative;
-      if (p1 || p2 || p3) {
-        narrative = `PART 1: CURRENT STATE\n${p1}\n\nPART 2: MPTS SOLUTION\n${p2}\n\nPART 3: EXPECTED RESULTS\n${p3}`.trim();
-        content = `
-          <div style="text-align:left">
-            ${p1 ? `<h4>Part 1 — Current State</h4><p>${p1.replace(/\n/g,'<br/>')}</p>` : ''}
-            ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p>${p2.replace(/\n/g,'<br/>')}</p>` : ''}
-            ${p3 ? `<h4>Part 3 — Expected Results</h4><p>${p3.replace(/\n/g,'<br/>')}</p>` : ''}
-          </div>
-        `;
-      } else {
-        narrative = (xfmrData && xfmrData.pattern_interpretation) || 'No narrative available.';
-        content = `<div style=\"text-align:left\"><p>${narrative.replace(/\n/g,'<br/>')}</p></div>`;
+      let p1 = (xfmrData && xfmrData.pattern_part1) || '';
+      let p2 = (xfmrData && xfmrData.pattern_part2) || '';
+      let p3 = (xfmrData && xfmrData.pattern_part3) || '';
+      if (!(p1 || p2 || p3)) {
+        const pfText = getElText(`xfmr${xfmrNum}-metric-pf`) || '—';
+        const avgKwText = getElText(`xfmr${xfmrNum}-avg-kw`) || '—';
+        const wasteText = getElText(`xfmr${xfmrNum}-metric-energy-waste`) || '—';
+        const annualHint = (Array.isArray((xfmrData && xfmrData.pattern_summary) ? xfmrData.pattern_summary : []) ? ((xfmrData && xfmrData.pattern_summary) || []) : [])
+          .find(line => /annual\s+savings\s+potential/i.test(String(line || '')));
+        p1 = `Welcome. I'm Unity. This is your current state for ${transformerName}. Average power factor is ${pfText}, active load is ${avgKwText}, and reactive waste is ${wasteText}.`;
+        p2 = `Unity MPTS is sized to your measured reactive profile so the field harmonizes at the transformer and circulating reactive current is reduced at the source.`;
+        p3 = `Expected result is higher field efficiency, lower thermal burden, and improved annual value potential${annualHint ? ` (${String(annualHint).replace(/^.*?:\s*/,'')})` : ''}.`;
       }
-      
-      // Store plain text for speech synthesis and transformer ID for MP3
+      const narrative = `PART 1: CURRENT STATE\n${p1}\n\nPART 2: MPTS SOLUTION\n${p2}\n\nPART 3: EXPECTED RESULTS\n${p3}`.trim();
       currentNarrativeText = narrative;
+      const summaryPoints = (xfmrData && xfmrData.pattern_summary) ? xfmrData.pattern_summary : [];
+      currentBriefText = summaryPoints.length ? summaryPoints.join(' ') : (p1 || narrative);
       currentTransformerId = tid;
       showAudioBtn = true;
-      
-      // Get the power factor value for baseline image from displayed metric
       const pfElement = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
       let pfValue = 0;
       if (pfElement) {
         const pfText = pfElement.textContent.replace('%', '').trim();
         const pfPercent = parseFloat(pfText);
         if (!isNaN(pfPercent)) {
-          pfValue = Math.round(pfPercent * 10); // Convert 88.3% to 883
+          pfValue = Math.round(pfPercent * 10);
         }
       }
-      
-      // Format narrative with baseline image at top and styled paragraphs
-      // Pattern month suffix - dynamically replaced by generator
-      let monthSuffix = 'jan26'; // e.g., 'nov25' for November 2025
+      let monthSuffix = 'jan26';
       const monthYearEl = document.getElementById('month-year');
       if (monthYearEl) {
-        const monthYear = monthYearEl.textContent.trim().toLowerCase().replace(/\s+/g, ''); // Remove all spaces
-        monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
+        const monthYear = monthYearEl.textContent.trim().toLowerCase().replace(/\s+/g, '');
+        monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2);
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong);
+      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      const installationImagePath = (typeof getInstallationImagePath === 'function') ? getInstallationImagePath() : '';
+      const part2EquipmentCandidates = [installationImagePath, '/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'].filter(Boolean);
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
-      console.log(`Loading images for ${tid}:`, baselineCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
-      
-      const paragraphs = narrative.split('\n\n').filter(p => p.trim());
-      
-      const formattedParagraphs = paragraphs.map(para => {
-        // Bold key terms
-        let formatted = para
-          .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
-          .replace(/(target|baseline)/gi, '<strong>$1</strong>')
-          .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
-          .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\"color: #5D701A;\">$1</strong>');
-        
-        return `<p style=\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\">${formatted}</p>`;
-      }).join('');
-      
-      // Baseline image at top, narrative text in middle, simulator image at bottom
-      // Images are clickable for full-screen zoom
+      console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
+      const formatNarrativeText = (text) => (text || '')
+        .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
+        .replace(/(target|baseline)/gi, '<strong>$1</strong>')
+        .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
+        .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\"color: #5D701A;\">$1</strong>');
       content = `
-        <div style="text-align: center; margin-bottom: 20px;">
-          <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern" 
-               onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Current State)')" 
+        <div style="text-align: left;">
+          ${p1 ? `<h4>Part 1 — Current State</h4><p style="text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;">${formatNarrativeText(p1).replace(/\n/g,'<br/>')}</p>` : ''}
+        </div>
+        <div style="text-align: center; margin-bottom: 24px;">
+          <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+               onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Part 1: Current State)')"
+               data-narrative-part="1"
                style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
-          <p style="font-size: 12px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
+          <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 1 Image — Baseline Pattern (Current State)</p>
         </div>
         <div style="text-align: left;">
-          ${formattedParagraphs}
+          ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p style="text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;">${formatNarrativeText(p2).replace(/\n/g,'<br/>')}</p>` : ''}
+        </div>
+        <div style="text-align: center; margin-bottom: 24px;">
+          <img id="part2PatternImg" src="" alt="${tid} MPTS Installation"
+               onclick="showPatternFullscreen(this.src, '${tid} MPTS Installation (Part 2)')"
+               data-narrative-part="2"
+               style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+          <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image — MPTS Installation</p>
+        </div>
+        <div style="text-align: left;">
+          ${p3 ? `<h4>Part 3 — Expected Results</h4><p style="text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;">${formatNarrativeText(p3).replace(/\n/g,'<br/>')}</p>` : ''}
         </div>
         <div style="text-align: center; margin-top: 30px;">
-          <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern" 
-               onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (After Unity Optimization)')" 
+          <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+               onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (Part 3: Expected Results)')"
+               data-narrative-part="3"
                style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
-          <p style="font-size: 12px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
+          <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 3 Image — MPTS Simulator Pattern (After Unity Optimization)</p>
         </div>
       `;
     }
@@ -2473,14 +2547,26 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2);
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
+      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      const installationImagePath = (typeof getInstallationImagePath === 'function') ? getInstallationImagePath() : '';
+      const part2EquipmentCandidates = [installationImagePath, '/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'].filter(Boolean);
+      const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
       attachPatternFallback(
         document.getElementById('baselinePatternImg'),
-        buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong),
+        baselineCandidates,
         `${transformerName} baseline`
       );
+      const part2PatternImg = document.getElementById('part2PatternImg');
+      if (part2PatternImg) {
+        attachPatternFallback(
+          part2PatternImg,
+          part2EquipmentCandidates,
+          `${transformerName} part2 installation equipment`
+        );
+      }
       attachPatternFallback(
         document.getElementById('simulatorPatternImg'),
-        buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong),
+        simulatorCandidates,
         `${transformerName} simulator`
       );
     }

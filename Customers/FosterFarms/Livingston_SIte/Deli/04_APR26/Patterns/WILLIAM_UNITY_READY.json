@@ -1,19 +1,37 @@
 {
-  "generated_at_utc": "2026-05-08T00:10:14.877419+00:00",
+  "generated_at_utc": "2026-05-14T17:58:17.473796+00:00",
   "status": "completed",
-  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/Deli/patterns",
-  "mode": "render-only",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Deli/04_APR26/Patterns",
+  "mode": "scripts-only",
   "inventory": {
-    "image_count": 5,
+    "image_count": 13,
     "all_images": [
+      "AgenticTeam.png",
+      "DeliFb_apr26.png",
+      "DeliFbt_apr26.png",
+      "DeliFm_apr26.png",
+      "DeliFs_apr26.png",
+      "DeliFv_apr26.png",
       "DeliGb_apr26.png",
       "DeliGbt_apr26.png",
       "DeliGm_apr26.png",
       "DeliGs_apr26.png",
-      "DeliGv_apr26.png"
+      "DeliGv_apr26.png",
+      "UE_logo.png",
+      "unity-field-backdrop.png"
     ],
-    "transformer_count": 1,
+    "transformer_count": 3,
     "coverage_by_transformer": {
+      "AGENTICTEA": [
+        "m"
+      ],
+      "DELIF": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
       "DELIG": [
         "b",
         "bt",
@@ -23,6 +41,16 @@
       ]
     },
     "files_by_transformer": {
+      "AGENTICTEA": [
+        "AgenticTeam.png"
+      ],
+      "DELIF": [
+        "DeliFb_apr26.png",
+        "DeliFbt_apr26.png",
+        "DeliFm_apr26.png",
+        "DeliFs_apr26.png",
+        "DeliFv_apr26.png"
+      ],
       "DELIG": [
         "DeliGb_apr26.png",
         "DeliGbt_apr26.png",
@@ -32,9 +60,13 @@
       ]
     },
     "baseline_ready_transformers": [
+      "DELIF",
       "DELIG"
     ],
-    "unmatched_files": []
+    "unmatched_files": [
+      "UE_logo.png",
+      "unity-field-backdrop.png"
+    ]
   },
   "notes": {
     "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
@@ -43,9 +75,12 @@
   "william_command": [
     "/opt/anaconda3/bin/python3",
     "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
-    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/Deli/patterns",
-    "--render-only"
+    "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Deli/04_APR26/Patterns",
+    "--scripts-only",
+    "--force",
+    "--verbosity",
+    "standard"
   ],
   "william_exit_code": 0,
-  "completed_at_utc": "2026-05-08T00:12:07.542806+00:00"
+  "completed_at_utc": "2026-05-14T18:01:16.514295+00:00"
 }

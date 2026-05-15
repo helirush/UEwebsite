@@ -1,0 +1,117 @@
+{
+  "generated_at_utc": "2026-05-14T18:09:48.286802+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Plant1/04_APR26/Patterns",
+  "mode": "scripts-only",
+  "inventory": {
+    "image_count": 21,
+    "all_images": [
+      "PL1-MShopb_apr26.png",
+      "PL1-MShopbt_apr26.png",
+      "PL1-MShopm_apr26.png",
+      "PL1-MShops_apr26.png",
+      "PL1-MShopv_apr26.png",
+      "PL1-Proc1b_apr26.png",
+      "PL1-Proc1bt_apr26.png",
+      "PL1-Proc1m_apr26.png",
+      "PL1-Proc1s_apr26.png",
+      "PL1-Proc1v_apr26.png",
+      "PL1MSb_apr26.png",
+      "PL1MSbt_apr26.png",
+      "PL1MSm_apr26.png",
+      "PL1MSs_apr26.png",
+      "PL1MSv_apr26.png",
+      "PL1P1b_apr26.png",
+      "PL1P1bt_apr26.png",
+      "PL1P1m_apr26.png",
+      "PL1P1s_apr26.png",
+      "PL1P1v_apr26.png",
+      "UE_logo.png"
+    ],
+    "transformer_count": 4,
+    "coverage_by_transformer": {
+      "PL1-MSHOP": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL1-PROC1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL1MS": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL1P1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "PL1-MSHOP": [
+        "PL1-MShopb_apr26.png",
+        "PL1-MShopbt_apr26.png",
+        "PL1-MShopm_apr26.png",
+        "PL1-MShops_apr26.png",
+        "PL1-MShopv_apr26.png"
+      ],
+      "PL1-PROC1": [
+        "PL1-Proc1b_apr26.png",
+        "PL1-Proc1bt_apr26.png",
+        "PL1-Proc1m_apr26.png",
+        "PL1-Proc1s_apr26.png",
+        "PL1-Proc1v_apr26.png"
+      ],
+      "PL1MS": [
+        "PL1MSb_apr26.png",
+        "PL1MSbt_apr26.png",
+        "PL1MSm_apr26.png",
+        "PL1MSs_apr26.png",
+        "PL1MSv_apr26.png"
+      ],
+      "PL1P1": [
+        "PL1P1b_apr26.png",
+        "PL1P1bt_apr26.png",
+        "PL1P1m_apr26.png",
+        "PL1P1s_apr26.png",
+        "PL1P1v_apr26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "PL1-MSHOP",
+      "PL1-PROC1",
+      "PL1MS",
+      "PL1P1"
+    ],
+    "unmatched_files": [
+      "UE_logo.png"
+    ]
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Plant1/04_APR26/Patterns",
+    "--scripts-only",
+    "--force",
+    "--verbosity",
+    "standard"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-14T18:12:33.001949+00:00"
+}

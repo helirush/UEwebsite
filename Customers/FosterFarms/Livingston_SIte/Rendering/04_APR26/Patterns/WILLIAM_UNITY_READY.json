@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-05-10T20:54:30.575954+00:00",
+  "generated_at_utc": "2026-05-14T18:15:26.788753+00:00",
   "status": "completed",
-  "pattern_dir": "/Users/mdhowell/eestream/eReports/Livingston_Rendering_APR26/Patterns",
-  "mode": "full",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Rendering/04_APR26/Patterns",
+  "mode": "scripts-only",
   "inventory": {
-    "image_count": 15,
+    "image_count": 25,
     "all_images": [
       "Rend1b_apr26.png",
       "Rend1bt_apr26.png",
@@ -12,17 +12,27 @@
       "Rend1s_apr26.png",
       "Rend1v_apr26.png",
       "Rend2b_apr26.png",
-      "Rend2bmapr26.png",
       "Rend2bt_apr26.png",
+      "Rend2m_apr26.png",
       "Rend2s_apr26.png",
       "Rend2v_apr26.png",
       "Rend3b_apr26.png",
       "Rend3bt_apr26.png",
       "Rend3m_apr26.png",
       "Rend3s_apr26.png",
-      "Rend3v_apr26.png"
+      "Rend3v_apr26.png",
+      "Rendering1bt_apr26.png",
+      "Rendering1s_apr26.png",
+      "Rendering1v_apr26.png",
+      "Rendering2bt_apr26.png",
+      "Rendering2s_apr26.png",
+      "Rendering2v_apr26.png",
+      "Rendering3bt_apr26.png",
+      "Rendering3s_apr26.png",
+      "Rendering3v_apr26.png",
+      "UE_logo.png"
     ],
-    "transformer_count": 3,
+    "transformer_count": 6,
     "coverage_by_transformer": {
       "REND1": [
         "b",
@@ -34,6 +44,7 @@
       "REND2": [
         "b",
         "bt",
+        "m",
         "s",
         "v"
       ],
@@ -41,6 +52,21 @@
         "b",
         "bt",
         "m",
+        "s",
+        "v"
+      ],
+      "RENDERING1": [
+        "bt",
+        "s",
+        "v"
+      ],
+      "RENDERING2": [
+        "bt",
+        "s",
+        "v"
+      ],
+      "RENDERING3": [
+        "bt",
         "s",
         "v"
       ]
@@ -56,6 +82,7 @@
       "REND2": [
         "Rend2b_apr26.png",
         "Rend2bt_apr26.png",
+        "Rend2m_apr26.png",
         "Rend2s_apr26.png",
         "Rend2v_apr26.png"
       ],
@@ -65,15 +92,33 @@
         "Rend3m_apr26.png",
         "Rend3s_apr26.png",
         "Rend3v_apr26.png"
+      ],
+      "RENDERING1": [
+        "Rendering1bt_apr26.png",
+        "Rendering1s_apr26.png",
+        "Rendering1v_apr26.png"
+      ],
+      "RENDERING2": [
+        "Rendering2bt_apr26.png",
+        "Rendering2s_apr26.png",
+        "Rendering2v_apr26.png"
+      ],
+      "RENDERING3": [
+        "Rendering3bt_apr26.png",
+        "Rendering3s_apr26.png",
+        "Rendering3v_apr26.png"
       ]
     },
     "baseline_ready_transformers": [
       "REND1",
       "REND2",
-      "REND3"
+      "REND3",
+      "RENDERING1",
+      "RENDERING2",
+      "RENDERING3"
     ],
     "unmatched_files": [
-      "Rend2bmapr26.png"
+      "UE_logo.png"
     ]
   },
   "notes": {
@@ -83,10 +128,12 @@
   "william_command": [
     "/opt/anaconda3/bin/python3",
     "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
-    "/Users/mdhowell/eestream/eReports/Livingston_Rendering_APR26/Patterns",
+    "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Rendering/04_APR26/Patterns",
+    "--scripts-only",
     "--force",
-    "--no-review"
+    "--verbosity",
+    "standard"
   ],
   "william_exit_code": 0,
-  "completed_at_utc": "2026-05-10T21:04:16.364900+00:00"
+  "completed_at_utc": "2026-05-14T18:19:41.521989+00:00"
 }

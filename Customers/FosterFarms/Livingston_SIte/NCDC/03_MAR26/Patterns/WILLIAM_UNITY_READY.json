@@ -1,80 +1,106 @@
 {
-  "generated_at_utc": "2026-05-08T15:21:05.884896+00:00",
+  "generated_at_utc": "2026-05-14T18:01:17.567780+00:00",
   "status": "completed",
-  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/NCND/patterns",
-  "mode": "full",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/NCDC/03_MAR26/Patterns",
+  "mode": "scripts-only",
   "inventory": {
-    "image_count": 15,
+    "image_count": 22,
     "all_images": [
-      "NCND1b_apr26.png",
-      "NCND1bt_apr26.png",
-      "NCND1m_apr26.png",
-      "NCND1s_apr26.png",
-      "NCND1v_apr26.png",
-      "NCND2b_apr26.png",
-      "NCND2bt_apr26.png",
-      "NCND2m_apr26.png",
-      "NCND2s_apr26.png",
-      "NCND2v_apr26.png",
-      "NCND3b_apr26.png",
-      "NCND3bt_apr26.png",
-      "NCND3m_apr26.png",
-      "NCND3s_apr26.png",
-      "NCND3v_apr26.png"
+      "AgenticTeam.png",
+      "NCDC1b_mar26.png",
+      "NCDC1bt_mar26.png",
+      "NCDC1m_mar26.png",
+      "NCDC1s_mar26.png",
+      "NCDC1v_mar26.png",
+      "NCDC2b_mar26.png",
+      "NCDC2bt_mar26.png",
+      "NCDC2m_mar26.png",
+      "NCDC2s_mar26.png",
+      "NCDC2v_mar26.png",
+      "NCDC3b_mar26.png",
+      "NCDC3bt_mar26.png",
+      "NCDC3m_mar26.png",
+      "NCDC3s_mar26.png",
+      "NCDC3v_mar26.png",
+      "UE_logo.png",
+      "installation_1.png",
+      "metering_2.jpeg",
+      "part2a.png",
+      "part2b.jpeg",
+      "unity-field-backdrop.png"
     ],
-    "transformer_count": 3,
+    "transformer_count": 5,
     "coverage_by_transformer": {
-      "NCND1": [
+      "AGENTICTEA": [
+        "m"
+      ],
+      "NCDC1": [
         "b",
         "bt",
         "m",
         "s",
         "v"
       ],
-      "NCND2": [
+      "NCDC2": [
         "b",
         "bt",
         "m",
         "s",
         "v"
       ],
-      "NCND3": [
+      "NCDC3": [
         "b",
         "bt",
         "m",
         "s",
         "v"
+      ],
+      "PART2": [
+        "b"
       ]
     },
     "files_by_transformer": {
-      "NCND1": [
-        "NCND1b_apr26.png",
-        "NCND1bt_apr26.png",
-        "NCND1m_apr26.png",
-        "NCND1s_apr26.png",
-        "NCND1v_apr26.png"
+      "AGENTICTEA": [
+        "AgenticTeam.png"
       ],
-      "NCND2": [
-        "NCND2b_apr26.png",
-        "NCND2bt_apr26.png",
-        "NCND2m_apr26.png",
-        "NCND2s_apr26.png",
-        "NCND2v_apr26.png"
+      "NCDC1": [
+        "NCDC1b_mar26.png",
+        "NCDC1bt_mar26.png",
+        "NCDC1m_mar26.png",
+        "NCDC1s_mar26.png",
+        "NCDC1v_mar26.png"
       ],
-      "NCND3": [
-        "NCND3b_apr26.png",
-        "NCND3bt_apr26.png",
-        "NCND3m_apr26.png",
-        "NCND3s_apr26.png",
-        "NCND3v_apr26.png"
+      "NCDC2": [
+        "NCDC2b_mar26.png",
+        "NCDC2bt_mar26.png",
+        "NCDC2m_mar26.png",
+        "NCDC2s_mar26.png",
+        "NCDC2v_mar26.png"
+      ],
+      "NCDC3": [
+        "NCDC3b_mar26.png",
+        "NCDC3bt_mar26.png",
+        "NCDC3m_mar26.png",
+        "NCDC3s_mar26.png",
+        "NCDC3v_mar26.png"
+      ],
+      "PART2": [
+        "part2b.jpeg"
       ]
     },
     "baseline_ready_transformers": [
-      "NCND1",
-      "NCND2",
-      "NCND3"
+      "NCDC1",
+      "NCDC2",
+      "NCDC3",
+      "PART2"
     ],
-    "unmatched_files": []
+    "unmatched_files": [
+      "UE_logo.png",
+      "installation_1.png",
+      "metering_2.jpeg",
+      "part2a.png",
+      "unity-field-backdrop.png"
+    ]
   },
   "notes": {
     "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
@@ -83,9 +109,12 @@
   "william_command": [
     "/opt/anaconda3/bin/python3",
     "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
-    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/NCND/patterns",
-    "--no-review"
+    "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/NCDC/03_MAR26/Patterns",
+    "--scripts-only",
+    "--force",
+    "--verbosity",
+    "standard"
   ],
   "william_exit_code": 0,
-  "completed_at_utc": "2026-05-08T15:28:35.381941+00:00"
+  "completed_at_utc": "2026-05-14T18:05:31.694604+00:00"
 }

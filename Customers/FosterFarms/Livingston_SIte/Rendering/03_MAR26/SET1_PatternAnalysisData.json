@@ -1,0 +1,31 @@
+{
+  "transformers": {
+    "REND1": {
+      "transformer_name": "REND1",
+      "source_transformer_id": "REND1",
+      "bt_target_kva": 2083.0,
+      "target_kva_image": 2083.0,
+      "target_validated": 2083.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_CREATED",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    },
+    "REND2": {
+      "transformer_name": "REND2",
+      "source_transformer_id": "REND2",
+      "bt_target_kva": 1805.0,
+      "target_kva_image": 1805.0,
+      "target_validated": 1805.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_CREATED",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    },
+    "REND3": {
+      "transformer_name": "REND3",
+      "source_transformer_id": "REND3",
+      "bt_target_kva": 1928.0,
+      "target_kva_image": 1928.0,
+      "target_validated": 1928.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_CREATED",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    }
+  }
+}

@@ -1,4 +1,4 @@
-# Keep Unity top-nav sections private to eWebmaster until approved for publish
+# Unity website sync exclusions
 .git/
 **/.git/
 .DS_Store
@@ -23,9 +23,4 @@ UnityEnergy/openai_realtime_server.py
 UnityEnergy/openai_renderer/
 UnityEnergy/vendor/
 UnityEnergy/index.html.bak_*
-UnityEnergy/about-unity.html
-UnityEnergy/about-unity/
-UnityEnergy/our-systems.html
-UnityEnergy/our-systems/
-UnityEnergy/products-services.html
-UnityEnergy/products-services/
+**/william_unity_handoff.py

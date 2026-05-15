@@ -604,6 +604,99 @@
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
     }
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
 
     .pattern-modal-body ul {
       list-style: none;
@@ -696,10 +789,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
@@ -1395,9 +1486,34 @@
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, NCDC GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
@@ -1457,15 +1573,15 @@
 <g class="tick-marks" id="xfmr1-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">85.0%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">85.1%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">600kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">2127kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">12.2%</span></div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">75.2%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1493,7 +1609,7 @@
 </div>
 <div class="stats">
 <div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">448.7 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$98.62</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$98.63</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">78.6 kW</span></div>
 <div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$17.27</span></div>
 </div>
@@ -1548,10 +1664,10 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">975kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">2269kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">19.3%</span></div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">65.3%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1578,10 +1694,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">714.2 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$156.98</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">72.6 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$15.95</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">714.4 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$157.01</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">72.5 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$15.94</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1634,10 +1750,10 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">658kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr3-target-pattern">2500kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">17.7%</span></div>
+    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">74.7%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1664,10 +1780,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">464.2 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$102.02</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">78.0 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$17.14</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">464.3 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$102.04</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">77.9 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$17.12</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1849,17 +1965,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -1868,15 +2044,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2118,117 +2304,114 @@
   }
 
   // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
-  function getTransformerRoutingInfo(transformerName) {
-    const clean = (transformerName || '').replace(/\s+/g, '');
-    const upper = clean.toUpperCase();
+  function uniqueRoutingValues(values) {
+    const out = [];
+    const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
+  }
 
-    const tMatch = upper.match(/^(T\d+)/);
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
     if (tMatch) {
       const t = tMatch[1];
       return {
-        keys: [t, t.toLowerCase(), clean, upper],
-        fileIds: [t.toLowerCase(), t, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
-    const ncdcMatch = upper.match(/^(NCDC\d+)/);
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
     if (ncdcMatch) {
       const ncdc = ncdcMatch[1];
       return {
-        keys: [ncdc, ncdc.toLowerCase(), clean, upper],
-        fileIds: [ncdc, ncdc.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
-    const renderingMatch = upper.match(/^RENDERING-?(\d+)/);
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
     if (renderingMatch) {
       const n = renderingMatch[1];
       return {
-        keys: [`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, clean, upper],
-        fileIds: [`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Generic numeric prefixes like "ABC1..."
-    const baseMatch = upper.match(/^([A-Z]+\d+)/);
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
     if (baseMatch) {
       const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
       return {
-        keys: [base, base.toLowerCase(), clean, upper],
-        fileIds: [base, base.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
       };
     }
 
-    return { keys: [upper, clean], fileIds: [clean, clean.toLowerCase()] };
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
   }
 
-  function buildPatternCandidates(fileIds, prefix, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
+  function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
     const out = [];
     const seen = new Set();
     const exts = (extensions && extensions.length) ? extensions : ['png'];
+    const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
     fileIds.forEach(id => {
-      exts.forEach(ext => {
-        [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
-          if (!seen.has(fn)) {
-            seen.add(fn);
-            out.push(`Patterns/${fn}`);
-          }
+      prefixList.forEach(prefix => {
+        exts.forEach(ext => {
+          [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
+            if (!seen.has(fn)) {
+              seen.add(fn);
+              out.push(`Patterns/${fn}`);
+            }
+          });
         });
       });
     });
-    return out;
-  }
-  function buildPart2InstallationCandidatesLegacyUnused(fileIds, monthSuffixShort, monthSuffixLong, slot = 1) {
-    const out = [];
-    const seen = new Set();
-    const exts = ['png', 'jpg', 'jpeg'];
-    const ids = [...new Set((fileIds || []).map((id) => (id || '').toString().toLowerCase()).filter(Boolean))].slice(0, 2);
-    const monthTokens = [...new Set([monthSuffixShort, monthSuffixLong].filter(Boolean))];
-    monthTokens.push('');
-    const slotStems = slot === 1
-      ? ['p2a', 'install1', 'installation1', 'solution1']
-      : ['p2b', 'install2', 'installation2', 'meter2', 'metering2'];
-    const globalStems = slot === 1
-      ? ['part2a', 'installation_1']
-      : ['part2b', 'installation_2', 'metering_2'];
-
-    const pushCandidate = (filename) => {
-      if (!seen.has(filename)) {
-        seen.add(filename);
-        out.push(`Patterns/${filename}`);
-      }
-    };
-
-    const pushStemVariants = (base, stem) => {
-      monthTokens.forEach((token) => {
-        exts.forEach((ext) => {
-          if (token) {
-            pushCandidate(`${base}${stem}_${token}.${ext}`);
-            pushCandidate(`${base}_${stem}_${token}.${ext}`);
-          } else {
-            pushCandidate(`${base}${stem}.${ext}`);
-            pushCandidate(`${base}_${stem}.${ext}`);
-          }
-        });
-      });
-    };
-
-    // Prefer shared/global Part 2 images so every transformer uses the same installation pair by default.
-
-    globalStems.forEach((stem) => {
-      exts.forEach((ext) => {
-        monthTokens.forEach((token) => {
-          if (token) pushCandidate(`${stem}_${token}.${ext}`);
-          else pushCandidate(`${stem}.${ext}`);
-        });
-      });
-    });
-    ids.forEach((id) => {
-      slotStems.forEach((stem) => pushStemVariants(id, stem));
-    });
-
     return out;
   }
 
@@ -2258,6 +2441,169 @@
     applySrc();
   }
 
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
+  function updatePatternBaseScale() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
+    if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
+      state.baseScale = 1;
+      return;
+    }
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
+    }
+  }
+
+  function getPatternRenderScale() {
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
+  }
+
+  function clampPatternImagePosition() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
+    if (scaledWidth <= viewportWidth) {
+      state.translateX = (viewportWidth - scaledWidth) / 2;
+    } else {
+      const minX = viewportWidth - scaledWidth;
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
+    }
+    if (scaledHeight <= viewportHeight) {
+      state.translateY = (viewportHeight - scaledHeight) / 2;
+    } else {
+      const minY = viewportHeight - scaledHeight;
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
+    }
+  }
+
+  function applyPatternImageTransform() {
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
+    }
+  }
+
+  function resetPatternImageView() {
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
+    updatePatternBaseScale();
+    state.translateX = 0;
+    state.translateY = 0;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function handlePatternImageWheel(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    event.preventDefault();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
+    const pointerX = event.clientX - rect.left;
+    const pointerY = event.clientY - rect.top;
+    const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
+    const currentRenderScale = getPatternRenderScale();
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
+    const scaleRatio = nextRenderScale / currentRenderScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function startPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function movePatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function stopPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
+      try {
+        state.viewport.releasePointerCapture(event.pointerId);
+      } catch (_) {}
+    }
+  }
+
+  function initializePatternImageView() {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
+      resetPatternImageView();
+    });
+    resetPatternImageView();
+  }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
+
   function viewPattern(transformerId, type) {
     try {
       // transformerId is like 'xfmr1', 'xfmr2', etc.
@@ -2274,15 +2620,25 @@
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
-      // Prefix mapping: b=Baseline, bt=Base-Target, m=MPTS Variables, s=Solution, v=Voltage
-      let prefix = 'b';
+      // Prefix mapping:
+      // baseline -> bt first, then b fallback
+      // mpts -> s first, then m fallback
+      // mpts-vars -> bt
+      // voltage -> v
+      let prefixCandidates = ['bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefix = 's'; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefix = 'bt'; patternLabel = 'Base Target'; }
-      else if (type === 'voltage') { prefix = 'v'; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
-      const candidates = buildPatternCandidates(routing.fileIds, prefix, monthSuffixShort, monthSuffixLong);
+      let candidates = buildPatternCandidates(
+        routing.fileIds,
+        prefixCandidates,
+        monthSuffixShort,
+        monthSuffixLong,
+        ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']
+      );
 
       // Modal elements
       const modal = document.getElementById('patternModal');
@@ -2312,17 +2668,27 @@
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
+      clearPatternImageView();
       modalBody.innerHTML = `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
+          </div>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
                  onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
-                 >
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+            <div class="pattern-view-actions">
+              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+            </div>
           </div>
         </div>`;
 
+      initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
     } catch (error) {
@@ -2411,7 +2777,150 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-  "transformers": {}
+  "transformers": {
+    "NCDC2": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your March baseline energy field for NCDC2. Let me walk you through what you're seeing.\n\nThe dark blue layer shows your kilovolt-ampere supply \u2014 that's the total electrical burden your transformer carries. Light blue underneath is your kilowatt consumption \u2014 the actual work power your facility uses. That green layer between them? That's reactive kilovolt-amperes reactive \u2014 electromagnetic waste that travels back and forth but delivers no productive work. The orange line tracks your power factor hour by hour.\n\nLooking at your production rhythm, I see strong weekday demand blocks running consistently around 800 to 1000 kilowatts consumed throughout the month. Clean weekend valleys drop to baseline levels. You're running about 75 to 80% electric operations \u2014 a solid industrial schedule.\n\nBut here's the issue \u2014 your power factor hovers chronically in the 85 to 92% range with frequent instability. Your reactive demand averages 330 kilovolt-amperes reactive but spikes to 1855 at peak. That reactive burden generates 263,000 BTU per hour of thermal waste, costing you roughly $7 per hour just in additional cooling. Total waste: approximately $182,000 annually.\n\nNow let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand hits 1855 kilovolt-amperes reactive. Using our sizing methodology \u2014 that's 1855 divided by 400, rounded up \u2014 you need five H490 MPTS units for total compensation capacity of 2000 kilovolt-amperes reactive.\n\nThe estimated installed investment ranges from approximately $800,000 to about $1.2 million. These are planning-level estimates \u2014 final pricing depends on engineering scope, labor requirements, and site-specific conditions.\n\nHere's what MPTS does in plain language. Those five units inject precisely compensating reactive power to neutralize your facility's lagging reactive demand. Power factor rises to 99.5%. The green reactive layer collapses. Your apparent power requirement drops from 787 kilovolt-amperes down to about 681 kilovolt-amperes.\n\nVisually, you'll see the dark blue supply layer pull down much closer to your light blue consumption. Your conductors run cooler. Your transformer thermal burden drops significantly. You free up roughly 100 kilovolt-amperes of capacity headroom.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $850,000 to $1,150,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has virtually disappeared. Your apparent power tracks much closer to your actual consumption. Power factor holds steady at 99.5% \u2014 no more chronic instability.\n\nThe numbers tell the recovery story. You're looking at approximately $15,000 monthly in recovered value \u2014 that's about $181,000 annually in eliminated waste. With an estimated installed investment of roughly $1 million, you're projecting about a 66-month payback period.\n\nAfter payback, every hour is recovered value. Your facility draws less current to perform the same productive work. Thermal burden drops by over 260,000 BTU per hour. Cooling costs fall by nearly about $7 hourly. Your transformer operates in a fundamentally cleaner electromagnetic environment.\n\nThis isn't just cost reduction \u2014 it's capacity liberation. You've freed up substantial electrical headroom for future expansion without upgrading your supply infrastructure.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your March baseline energy field for NCDC2. Let me walk you through what you're seeing.\n\nThe dark blue layer shows your kilovolt-ampere supply \u2014 that's the total electrical burden your transformer carries. Light blue underneath is your kilowatt consumption \u2014 the actual work power your facility uses. That green layer between them? That's reactive kilovolt-amperes reactive \u2014 electromagnetic waste that travels back and forth but delivers no productive work. The orange line tracks your power factor hour by hour.\n\nLooking at your production rhythm, I see strong weekday demand blocks running consistently around 800 to 1000 kilowatts consumed throughout the month. Clean weekend valleys drop to baseline levels. You're running about 75 to 80% electric operations \u2014 a solid industrial schedule.\n\nBut here's the issue \u2014 your power factor hovers chronically in the 85 to 92% range with frequent instability. Your reactive demand averages 330 kilovolt-amperes reactive but spikes to 1855 at peak. That reactive burden generates 263,000 BTU per hour of thermal waste, costing you roughly $7 per hour just in additional cooling. Total waste: approximately $182,000 annually.\n\nNow let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand hits 1855 kilovolt-amperes reactive. Using our sizing methodology \u2014 that's 1855 divided by 400, rounded up \u2014 you need five H490 MPTS units for total compensation capacity of 2000 kilovolt-amperes reactive.\n\nThe estimated installed investment ranges from approximately $800,000 to about $1.2 million. These are planning-level estimates \u2014 final pricing depends on engineering scope, labor requirements, and site-specific conditions.\n\nHere's what MPTS does in plain language. Those five units inject precisely compensating reactive power to neutralize your facility's lagging reactive demand. Power factor rises to 99.5%. The green reactive layer collapses. Your apparent power requirement drops from 787 kilovolt-amperes down to about 681 kilovolt-amperes.\n\nVisually, you'll see the dark blue supply layer pull down much closer to your light blue consumption. Your conductors run cooler. Your transformer thermal burden drops significantly. You free up roughly 100 kilovolt-amperes of capacity headroom.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $850,000 to $1,150,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has virtually disappeared. Your apparent power tracks much closer to your actual consumption. Power factor holds steady at 99.5% \u2014 no more chronic instability.\n\nThe numbers tell the recovery story. You're looking at approximately $15,000 monthly in recovered value \u2014 that's about $181,000 annually in eliminated waste. With an estimated installed investment of roughly $1 million, you're projecting about a 66-month payback period.\n\nAfter payback, every hour is recovered value. Your facility draws less current to perform the same productive work. Thermal burden drops by over 260,000 BTU per hour. Cooling costs fall by nearly about $7 hourly. Your transformer operates in a fundamentally cleaner electromagnetic environment.\n\nThis isn't just cost reduction \u2014 it's capacity liberation. You've freed up substantial electrical headroom for future expansion without upgrading your supply infrastructure.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're looking at your NCDC2 transformer \u2014 and there's significant value at stake here. Your March field shows a 90.8% power factor with reactive demand spiking to 1855 kilovolt-amperes reactive. That's costing you roughly $182,000 annually in energy waste, thermal burden, and cooling overhead.\n\nYour peak reactive demand indicates you need five H490 MPTS units \u2014 about 2000 kilovolt-amperes reactive of compensation capacity. The estimated installed investment runs approximately $800,000 to about $1.2 million, depending on engineering scope and site conditions. \n\nPost-MPTS, you're looking at 99.5% power factor and roughly $15,000 monthly in recovered value. That projects to about a 66-month payback, then every hour becomes pure recovered efficiency. Your conductors run cooler, your transformer breathes easier, and you free up substantial capacity headroom.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 90.8% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: ~787 kVA (inferred) | match: \u26a0\ufe0f MAJOR DISCREPANCY  \nkvar_max_csv_est: 0 kVAR | kvar_max_image: 1854.5 kVAR | variance: \u26a0\ufe0f INFINITE DISCREPANCY\nmonthly_waste_csv: $0.00 | monthly_waste_image: $181,812/yr | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 5\u00d7 H490 = 2000 kVAR capacity | approximately $1,000,000 installed\nPAYBACK: $15,151/month | ~66 months",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-04-23 14:43:13",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "NCDC2"
+    },
+    "NCND1": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for NCND1. The dark blue layer shows your total supplied power \u2014 the kVA your utility delivers. The light blue shows your consumed power \u2014 the productive kW doing actual work. That green layer? That's reactive kVAR \u2014 electromagnetic waste circulating through your conductors but doing zero productive work. The orange line tracks your power factor, running steady around eighty-five percent all month. I can see your production rhythm clearly \u2014 consistent weekday operations around twenty-one hundred kVA with modest weekend valleys. Roughly eighty-five percent of your operating days run at or above baseline demand \u2014 classic food processing pattern. Your peak reactive demand hits three hundred fifty-eight kVAR. That's creating two hundred eighty-four thousand BTU per hour of thermal burden, costing you over eight dollars per hour just to cool the waste heat. Monthly waste total: roughly eighteen thousand dollars. Annually, that's over two hundred thousand in pure electromagnetic waste. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand is three hundred fifty-eight kVAR. Take that, divide by four hundred, round up \u2014 that gives us one H490 unit. Four hundred kVAR total capacity for an estimated installed investment of approximately two hundred thousand dollars. These figures are planning-level estimates \u2014 final pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what MPTS does in plain language: it injects precisely-timed compensating reactive current that cancels your electromagnetic waste. Power factor jumps to ninety-nine point five percent. The visual result is dramatic \u2014 that green reactive layer collapses to almost nothing. Your supplied power drops much closer to your consumed power. Same production work, but your conductors run cooler, your transformers breathe easier, and your electrical infrastructure operates at peak efficiency. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 from three hundred fifty-eight kVAR down to roughly forty. Your supplied power drops much closer to your consumed power, creating a tight, efficient energy envelope. Power factor jumps to ninety-nine point five percent and stays there. The savings are substantial \u2014 approximately seventeen thousand per month, roughly two hundred six thousand annually. With an estimated two hundred thousand dollar installation, you're looking at about twelve months simple payback. After that, every hour is recovered value. Your transformers run cooler. Your conductors carry less current delivering the same productive work. Your electrical infrastructure operates at Unity standard efficiency. Production stays exactly the same \u2014 efficiency improves dramatically. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for NCND1. The dark blue layer shows your total supplied power \u2014 the kVA your utility delivers. The light blue shows your consumed power \u2014 the productive kW doing actual work. That green layer? That's reactive kVAR \u2014 electromagnetic waste circulating through your conductors but doing zero productive work. The orange line tracks your power factor, running steady around eighty-five percent all month. I can see your production rhythm clearly \u2014 consistent weekday operations around twenty-one hundred kVA with modest weekend valleys. Roughly eighty-five percent of your operating days run at or above baseline demand \u2014 classic food processing pattern. Your peak reactive demand hits three hundred fifty-eight kVAR. That's creating two hundred eighty-four thousand BTU per hour of thermal burden, costing you over eight dollars per hour just to cool the waste heat. Monthly waste total: roughly eighteen thousand dollars. Annually, that's over two hundred thousand in pure electromagnetic waste. Now let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand is three hundred fifty-eight kVAR. Take that, divide by four hundred, round up \u2014 that gives us one H490 unit. Four hundred kVAR total capacity for an estimated installed investment of approximately two hundred thousand dollars. These figures are planning-level estimates \u2014 final pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what MPTS does in plain language: it injects precisely-timed compensating reactive current that cancels your electromagnetic waste. Power factor jumps to ninety-nine point five percent. The visual result is dramatic \u2014 that green reactive layer collapses to almost nothing. Your supplied power drops much closer to your consumed power. Same production work, but your conductors run cooler, your transformers breathe easier, and your electrical infrastructure operates at peak efficiency. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 from three hundred fifty-eight kVAR down to roughly forty. Your supplied power drops much closer to your consumed power, creating a tight, efficient energy envelope. Power factor jumps to ninety-nine point five percent and stays there. The savings are substantial \u2014 approximately seventeen thousand per month, roughly two hundred six thousand annually. With an estimated two hundred thousand dollar installation, you're looking at about twelve months simple payback. After that, every hour is recovered value. Your transformers run cooler. Your conductors carry less current delivering the same productive work. Your electrical infrastructure operates at Unity standard efficiency. Production stays exactly the same \u2014 efficiency improves dramatically. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer NCND1, and there's significant electromagnetic waste happening here. Your power factor is running at eighty-five percent \u2014 that means for every dollar of productive work, you're paying twenty cents extra for reactive power that does no useful work. Your peak reactive demand hits three hundred fifty-eight kVAR, creating substantial thermal burden on your conductors. This waste is costing you roughly two hundred seventeen thousand dollars annually in energy losses, thermal burden, and cooling overhead. We can correct this with one H490 MPTS unit \u2014 approximately four hundred kVAR of reactive compensation for an estimated two hundred thousand dollar installation. That brings your power factor to ninety-nine point five percent and recovers roughly two hundred six thousand annually. Simple payback is approximately twelve months, then every hour after that is pure recovered value. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 85.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f DATA MISSING\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 358.0 kVAR | variance: INFINITE (CSV empty)\nmonthly_waste_csv: $0.00 | monthly_waste_image: $217,083 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 1\u00d7 H490 = 400 kVAR capacity | $200,000 installed\nPAYBACK: $0/month | UNDEFINED (CSV shows no waste)\n\n\u26a0\ufe0f CRITICAL: CSV data appears incomplete (all zeros). Using image data as primary source for this analysis.",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-05-08 11:21:52",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "NCND1"
+    },
+    "NCND2": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for NCND2.\n\nThe dark blue layer shows your total kVA supply \u2014 what your transformer is actually delivering. The light blue beneath it is your productive kW consumption \u2014 the work you're paying for. That green layer in between? That's reactive kVAR \u2014 pure waste cycling back and forth through your conductors.\n\nYour production rhythm is clear. Strong weekday operational blocks around one thousand kVA, dropping to weekend valleys around seven fifty to eight hundred. Most of those weekday operations are pushing well above your optimal efficiency baseline.\n\nThe waste numbers tell the story. Peak demand just over one thousand kilowatts. Average reactive power three oh eight kilovars, spiking to four hundred eighteen. Power factor stuck at ninety-one percent.\n\nThat translates to nearly two hundred fifty thousand BTU per hour of thermal burden. Seven dollars and twenty-seven cents every hour just to cool the excess heat. Total annual waste approximately one hundred eighty-eight thousand dollars.\n\nNow let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction.\n\nYour peak reactive demand hits four hundred eighteen kilovars. Using our sizing protocol \u2014 that's four eighteen divided by four hundred, rounded up \u2014 you need two H490 units. That gives you eight hundred kilovars of correction capacity, roughly four hundred thousand in estimated installed investment.\n\nThese figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions.\n\nMPTS works by injecting precisely compensating reactive power. When your motors and transformers demand lagging reactive, the H490 units supply leading reactive. The net result pushes your power factor to ninety-nine point five percent.\n\nVisually, you'll see that green reactive layer collapse. Your conductors run cooler. Your transformer capacity gets freed up to do actual work instead of shuttling waste back and forth.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like.\n\nThat green reactive layer \u2014 nearly gone. Your total kVA supply drops dramatically closer to your productive kW consumption. Power factor locked at ninety-nine point five percent. Same production output, far less electromagnetic stress.\n\nThe savings are substantial. Approximately fifteen thousand six hundred per month, roughly one hundred eighty-eight thousand annually. Against that four hundred thousand estimated installation investment, you're looking at about twenty-six months to payback.\n\nAfter payback, every hour is recovered value. Cooler conductors, freed transformer capacity, eliminated reactive power charges \u2014 all flowing straight to your operational efficiency.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for NCND2.\n\nThe dark blue layer shows your total kVA supply \u2014 what your transformer is actually delivering. The light blue beneath it is your productive kW consumption \u2014 the work you're paying for. That green layer in between? That's reactive kVAR \u2014 pure waste cycling back and forth through your conductors.\n\nYour production rhythm is clear. Strong weekday operational blocks around one thousand kVA, dropping to weekend valleys around seven fifty to eight hundred. Most of those weekday operations are pushing well above your optimal efficiency baseline.\n\nThe waste numbers tell the story. Peak demand just over one thousand kilowatts. Average reactive power three oh eight kilovars, spiking to four hundred eighteen. Power factor stuck at ninety-one percent.\n\nThat translates to nearly two hundred fifty thousand BTU per hour of thermal burden. Seven dollars and twenty-seven cents every hour just to cool the excess heat. Total annual waste approximately one hundred eighty-eight thousand dollars.\n\nNow let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction.\n\nYour peak reactive demand hits four hundred eighteen kilovars. Using our sizing protocol \u2014 that's four eighteen divided by four hundred, rounded up \u2014 you need two H490 units. That gives you eight hundred kilovars of correction capacity, roughly four hundred thousand in estimated installed investment.\n\nThese figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions.\n\nMPTS works by injecting precisely compensating reactive power. When your motors and transformers demand lagging reactive, the H490 units supply leading reactive. The net result pushes your power factor to ninety-nine point five percent.\n\nVisually, you'll see that green reactive layer collapse. Your conductors run cooler. Your transformer capacity gets freed up to do actual work instead of shuttling waste back and forth.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like.\n\nThat green reactive layer \u2014 nearly gone. Your total kVA supply drops dramatically closer to your productive kW consumption. Power factor locked at ninety-nine point five percent. Same production output, far less electromagnetic stress.\n\nThe savings are substantial. Approximately fifteen thousand six hundred per month, roughly one hundred eighty-eight thousand annually. Against that four hundred thousand estimated installation investment, you're looking at about twenty-six months to payback.\n\nAfter payback, every hour is recovered value. Cooler conductors, freed transformer capacity, eliminated reactive power charges \u2014 all flowing straight to your operational efficiency.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer NCND2 \u2014 and this field is hemorrhaging value.\n\nYour power factor is sitting at ninety-one percent. That means every month, roughly four hundred eighteen kilovars of reactive power are cycling through your conductors \u2014 doing no productive work, but burning energy and generating heat.\n\nThe annual waste cost here is approximately one hundred eighty-eight thousand dollars. That's reactive losses, thermal burden on your transformers, and the cooling overhead to handle all that excess heat.\n\nFor MPTS correction, you'd need two H490 units \u2014 about four hundred thousand in estimated installed investment. At fifteen thousand six hundred monthly savings, you're looking at roughly twenty-six months to payback. After that, every hour is recovered value.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 91.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f NO DATA\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 417.8 kVAR | variance: \u26a0\ufe0f INFINITE\nmonthly_waste_csv: $0.00 | monthly_waste_image: $187,954 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 2\u00d7 H490 = 800 kVAR capacity | ~$400,000 installed\nPAYBACK: $15,663/month | ~26 months",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-05-08 11:22:37",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "NCND2"
+    },
+    "NCND3": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for NCND3. Let me walk you through what these colors mean. The dark blue layer shows your total kilovolt-amperes supplied \u2014 that's the full electromagnetic burden on your conductors. The light blue beneath it is your consumed kilowatts \u2014 the work you're actually getting done. That green layer in between? That's pure reactive waste \u2014 magnetic field energy that's not doing any productive work for you. The orange line tracks your power factor hour by hour. Now, looking at your production rhythm, I can see consistent weekday blocks running in the two thousand to twenty-two fifty kilovolt-amperes range, with clear weekend valleys. Most of your weekdays are running above the operational baseline, suggesting about seventy-five to eighty percent electric operations efficiency during production periods. But here's what's costing you: three seventy-nine kilovolt-amperes reactive at peak, generating two ninety-six thousand BTUs per hour of thermal burden, and wasting roughly two hundred twenty-six thousand dollars annually. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand is three seventy-nine kilovolt-amperes. Using our standard sizing methodology \u2014 that's three seventy-nine divided by four hundred, rounded up \u2014 you need one H490 MPTS unit. That gives you four hundred kilovolt-amperes of compensation capacity for an estimated installed investment of approximately two hundred thousand dollars. Now, these figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what the MPTS does in plain language: it injects precisely tuned compensating reactive power that brings your power factor from eighty-five percent up to ninety-nine point five percent. Visually, you'll see that green reactive layer collapse almost completely. Your conductors run cooler. Your transformer capacity gets freed up. The same production work gets done with dramatically less electromagnetic burden. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 you've gone from three seventy-nine kilovolt-amperes reactive down to almost nothing. The dark blue supplied kilovolt-amperes now tracks much closer to your light blue consumed kilowatts. Your power factor line holds steady at ninety-nine point five percent throughout the month. The savings? Approximately eighteen thousand eight hundred dollars per month \u2014 that's roughly two hundred fifteen thousand annually in recovered electromagnetic waste. Your estimated return on investment: two hundred thousand dollar install divided by eighteen thousand eight hundred per month equals about eleven months payback. After that eleven-month point, every single hour is recovered value flowing directly to your operational efficiency. You're delivering the same production output with a fraction of the electromagnetic burden. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for NCND3. Let me walk you through what these colors mean. The dark blue layer shows your total kilovolt-amperes supplied \u2014 that's the full electromagnetic burden on your conductors. The light blue beneath it is your consumed kilowatts \u2014 the work you're actually getting done. That green layer in between? That's pure reactive waste \u2014 magnetic field energy that's not doing any productive work for you. The orange line tracks your power factor hour by hour. Now, looking at your production rhythm, I can see consistent weekday blocks running in the two thousand to twenty-two fifty kilovolt-amperes range, with clear weekend valleys. Most of your weekdays are running above the operational baseline, suggesting about seventy-five to eighty percent electric operations efficiency during production periods. But here's what's costing you: three seventy-nine kilovolt-amperes reactive at peak, generating two ninety-six thousand BTUs per hour of thermal burden, and wasting roughly two hundred twenty-six thousand dollars annually. Now let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand is three seventy-nine kilovolt-amperes. Using our standard sizing methodology \u2014 that's three seventy-nine divided by four hundred, rounded up \u2014 you need one H490 MPTS unit. That gives you four hundred kilovolt-amperes of compensation capacity for an estimated installed investment of approximately two hundred thousand dollars. Now, these figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what the MPTS does in plain language: it injects precisely tuned compensating reactive power that brings your power factor from eighty-five percent up to ninety-nine point five percent. Visually, you'll see that green reactive layer collapse almost completely. Your conductors run cooler. Your transformer capacity gets freed up. The same production work gets done with dramatically less electromagnetic burden. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 you've gone from three seventy-nine kilovolt-amperes reactive down to almost nothing. The dark blue supplied kilovolt-amperes now tracks much closer to your light blue consumed kilowatts. Your power factor line holds steady at ninety-nine point five percent throughout the month. The savings? Approximately eighteen thousand eight hundred dollars per month \u2014 that's roughly two hundred fifteen thousand annually in recovered electromagnetic waste. Your estimated return on investment: two hundred thousand dollar install divided by eighteen thousand eight hundred per month equals about eleven months payback. After that eleven-month point, every single hour is recovered value flowing directly to your operational efficiency. You're delivering the same production output with a fraction of the electromagnetic burden. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer NCND3 \u2014 and we need to talk about what's at stake here. Your power factor is sitting at eighty-five percent, pulling three seventy-nine kilovolt-amperes reactive at peak. That's costing you roughly two hundred twenty-six thousand dollars annually in electromagnetic waste. Here's what I recommend: one H490 MPTS unit \u2014 about four hundred kilovolt-amperes of compensation capacity for approximately two hundred thousand dollars installed. That brings your power factor to ninety-nine point five percent and recovers about eighteen thousand eight hundred per month in wasted energy costs. With an estimated eleven-month payback, every hour after that is recovered value flowing straight to your bottom line. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 85.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f BOTH MISSING\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 379.3 kVAR | variance: INFINITE\nmonthly_waste_csv: $0.00 | monthly_waste_image: $226,353 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 1\u00d7 H490 = 400 kVAR capacity | ~$200,000 installed\nPAYBACK: $18,863/month | ~11 months",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-05-08 11:23:20",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "NCND3"
+    },
+    "NCDC1": {
+      "pattern_text": "PART 1: NARRATION READY\nYour NCDC1 field tells a clear story of industrial efficiency opportunity. You've got excellent voltage stability at 481.5 volts with good utility supply consistency \u2014 that's your solid foundation. But you're carrying a heavy reactive burden that's costing approximately $217,000 annually.\n\nYour power factor sits at 85% with 274.7 kVAR of maximum reactive demand. That's creating steady electromagnetic stress throughout your production cycles \u2014 about 625 to 650 amps of reactive current during operations. It's not chaotic loading, it's consistent inductive demand from your motors and transformers.\n\nThe thermal impact is significant. You're generating 284,343 BTU per hour of waste heat, requiring roughly $8.39 per hour in additional cooling \u2014 that's 41.5 kilowatts of cooling load just to handle electromagnetic inefficiency.\n\nYour production pattern shows strong weekday operational blocks with about 80% of operations exceeding your 2250 kVA supply target during peak periods. Weekends drop to about 250 kVA, showing clear production scheduling.\n\nMPTS harmonic correction projects transforming that 85% power factor to 99.5%. The reactive stress virtually disappears \u2014 you're looking at approximately $205,880 in annual recovered value. One H490 unit should handle your 274.7 kVAR maximum demand effectively, with estimated installed investment of approximately $200,000.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nNCDC1 demonstrates solid voltage stability but significant reactive waste at 85% power factor. You're spending approximately $217,000 annually on electromagnetic inefficiency with 274.7 kVAR maximum demand creating substantial thermal burden. MPTS correction projects 99.5% power factor with roughly $205,880 in annual recovered value. The reactive stress layer virtually disappears with one H490 unit estimated at approximately $200,000 installed investment. That's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $184,000 to $250,000.\n\nPART 3: ENGINEERING DETAILED\nLet's examine your NCDC1 electromagnetic field systematically across all four analytical views. Your voltage health demonstrates excellent utility supply consistency with regulation holding tight around 481.5 volts throughout April. There were several brief voltage sag events mid-month, but recovery was rapid and didn't compromise field stability.\n\nThe baseline energy analysis reveals the core inefficiency. You're operating at 85% power factor with 274.7 kVAR maximum reactive demand. Your production pattern shows consistent weekday operational blocks consuming around 500 kVA during business hours, dropping to 250 kVA on weekends. Approximately 80% of your weekday operations exceed the 2250 kVA supply target, indicating heavy reactive loading during peak production periods.\n\nThe reactive stress signature is unmistakable in the active-reactive-harmonic view. You're seeing 625 to 650 amps of consistent reactive current \u2014 not chaotic spikes, but steady inductive demand from your industrial equipment. Total harmonic distortion holds at 6% with predictable harmonic patterns. This tells us your motors, compressors, and transformers are demanding magnetizing current continuously during production cycles.\n\nThe thermal implications are substantial. You're generating 284,343 BTU per hour of waste heat, creating additional cooling costs of about $8.39 per hour \u2014 that's 41.5 kilowatts of cooling load just to manage electromagnetic inefficiency. This thermal burden affects your entire HVAC load profile and operational costs.\n\nMPTS harmonic correction simulation shows dramatic transformation. Power factor rises to 99.5% with 270 to 280 kVAR eliminated from the field. The red reactive stress layer virtually disappears, leaving clean consumed power that tracks closely with supplied kVA. You're looking at approximately $205,880 in annual recovered value.\n\nEngineering recommendations include precision load measurements during peak production periods to validate the reactive compensation requirement. Those brief voltage sag events warrant investigation \u2014 verify correlation with large motor starting sequences. One H490 MPTS unit should handle your maximum reactive demand effectively, with estimated installed investment of approximately $200,000 depending on engineering scope and site conditions.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Your NCDC1 field tells a clear story of industrial efficiency opportunity. You've got excellent voltage stability at 481.5 volts with good utility supply consistency \u2014 that's your solid foundation. But you're carrying a heavy reactive burden that's costing approximately $217,000 annually.\n\nYour power factor sits at 85% with 274.7 kVAR of maximum reactive demand. That's creating steady electromagnetic stress throughout your production cycles \u2014 about 625 to 650 amps of reactive current during operations. It's not chaotic loading, it's consistent inductive demand from your motors and transformers.\n\nThe thermal impact is significant. You're generating 284,343 BTU per hour of waste heat, requiring roughly $8.39 per hour in additional cooling \u2014 that's 41.5 kilowatts of cooling load just to handle electromagnetic inefficiency.\n\nYour production pattern shows strong weekday operational blocks with about 80% of operations exceeding your 2250 kVA supply target during peak periods. Weekends drop to about 250 kVA, showing clear production scheduling.\n\nMPTS harmonic correction projects transforming that 85% power factor to 99.5%. The reactive stress virtually disappears \u2014 you're looking at approximately $205,880 in annual recovered value. One H490 unit should handle your 274.7 kVAR maximum demand effectively, with estimated installed investment of approximately $200,000.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part2": "NCDC1 demonstrates solid voltage stability but significant reactive waste at 85% power factor. You're spending approximately $217,000 annually on electromagnetic inefficiency with 274.7 kVAR maximum demand creating substantial thermal burden. MPTS correction projects 99.5% power factor with roughly $205,880 in annual recovered value. The reactive stress layer virtually disappears with one H490 unit estimated at approximately $200,000 installed investment. That's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $184,000 to $250,000.",
+      "pattern_part3": "Let's examine your NCDC1 electromagnetic field systematically across all four analytical views. Your voltage health demonstrates excellent utility supply consistency with regulation holding tight around 481.5 volts throughout April. There were several brief voltage sag events mid-month, but recovery was rapid and didn't compromise field stability.\n\nThe baseline energy analysis reveals the core inefficiency. You're operating at 85% power factor with 274.7 kVAR maximum reactive demand. Your production pattern shows consistent weekday operational blocks consuming around 500 kVA during business hours, dropping to 250 kVA on weekends. Approximately 80% of your weekday operations exceed the 2250 kVA supply target, indicating heavy reactive loading during peak production periods.\n\nThe reactive stress signature is unmistakable in the active-reactive-harmonic view. You're seeing 625 to 650 amps of consistent reactive current \u2014 not chaotic spikes, but steady inductive demand from your industrial equipment. Total harmonic distortion holds at 6% with predictable harmonic patterns. This tells us your motors, compressors, and transformers are demanding magnetizing current continuously during production cycles.\n\nThe thermal implications are substantial. You're generating 284,343 BTU per hour of waste heat, creating additional cooling costs of about $8.39 per hour \u2014 that's 41.5 kilowatts of cooling load just to manage electromagnetic inefficiency. This thermal burden affects your entire HVAC load profile and operational costs.\n\nMPTS harmonic correction simulation shows dramatic transformation. Power factor rises to 99.5% with 270 to 280 kVAR eliminated from the field. The red reactive stress layer virtually disappears, leaving clean consumed power that tracks closely with supplied kVA. You're looking at approximately $205,880 in annual recovered value.\n\nEngineering recommendations include precision load measurements during peak production periods to validate the reactive compensation requirement. Those brief voltage sag events warrant investigation \u2014 verify correlation with large motor starting sequences. One H490 MPTS unit should handle your maximum reactive demand effectively, with estimated installed investment of approximately $200,000 depending on engineering scope and site conditions.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "**Field Condition Summary:** NCDC1 shows solid industrial operations with stable voltage at 481.5 volts, but significant reactive burden costing approximately $217,000 annually at 85% power factor.\n\n**Voltage Stability Findings:** Excellent utility supply consistency with brief mid-month voltage sags that recovered quickly \u2014 good foundation for MPTS correction.\n\n**Reactive Harmonic Findings:** Consistent 625-650 amp reactive current from industrial equipment, 6% THD, steady inductive loading rather than chaotic stress patterns.\n\n**Operational Stress Interpretation:** Strong weekday production blocks with 80% of operations exceeding 2250 kVA supply target, creating 284,343 BTU/hr thermal burden and about $8.39/hr cooling costs.\n\n**Simulated MPTS Outcome:** Power factor rises to 99.5% with 270-280 kVAR eliminated, approximately $205,880 annual recovered value, reactive stress layer virtually disappears.\n\n**Recommended Engineering Attention Areas:** Precision load measurements during peak production, investigate mid-month voltage sag correlation with motor starting, address thermal management implications, one H490 MPTS unit estimated for the reactive load.",
+      "field_condition_summary": "NCDC1 demonstrates solid industrial operations with stable voltage regulation at 481.5 volts, but you're carrying a substantial reactive burden that's costing approximately $217,000 annually. Your field runs at 85% power factor with 274.7 kVAR maximum reactive demand, creating significant thermal stress at 284,343 BTU per hour. The voltage foundation is strong, but the electromagnetic inefficiency is measurable and costly.",
+      "voltage_stability_findings": "Your voltage health shows excellent utility supply consistency with tight regulation around 481.5 volts throughout April. There were several brief voltage sag events mid-month around the 17th through 20th, but your field recovered quickly to nominal levels. This stable voltage foundation provides good conditions for MPTS harmonic correction \u2014 you won't be fighting utility supply issues while addressing the reactive component.",
+      "reactive_harmonic_findings": "The reactive stress signature is unmistakable \u2014 you're seeing 625 to 650 amps of consistent reactive current throughout operational periods. This isn't chaotic loading, it's steady inductive demand from your industrial equipment. Total harmonic distortion holds at approximately 6% with harmonic content concentrated in predictable patterns. Your motors, compressors, and transformers are demanding magnetizing current continuously during production cycles.",
+      "operational_stress_interpretation": "Your production pattern shows strong weekday operational blocks with consistent energy demand around 500 kVA during business hours, dropping to 250 kVA on weekends. About 80% of your weekday operations exceed the 2250 kVA supply target, indicating heavy reactive loading during peak production. The thermal burden of 284,343 BTU per hour is creating additional cooling costs of roughly $8.39 per hour \u2014 that's about 41.5 kW of cooling load just to handle the heat from electromagnetic inefficiency.",
+      "simulated_mpts_outcome": "MPTS harmonic correction projects your power factor rising to 99.5% with approximately 270 to 280 kVAR eliminated from the field. The red reactive stress layer virtually disappears, leaving clean green consumed power that tracks closely with supplied kVA. You're looking at roughly $205,880 in annual recovered value. The transformation is dramatic \u2014 from reactive-heavy electromagnetic stress to purely resistive load characteristics with minimal kVAR demand.",
+      "recommended_engineering_attention_areas": "Priority one: quantify the reactive power compensation requirement with precision load measurements during peak production periods. The brief voltage sag events mid-month warrant investigation \u2014 verify if these correlate with large motor starting sequences or utility supply variations. Consider the thermal management implications \u2014 that 284,343 BTU per hour thermal burden affects your entire HVAC load profile. MPTS sizing analysis suggests one H490 unit should handle the 274.7 kVAR maximum demand effectively.",
+      "narration_ready_text": "Your NCDC1 field tells a clear story of industrial efficiency opportunity. You've got excellent voltage stability at 481.5 volts with good utility supply consistency \u2014 that's your solid foundation. But you're carrying a heavy reactive burden that's costing approximately $217,000 annually.\n\nYour power factor sits at 85% with 274.7 kVAR of maximum reactive demand. That's creating steady electromagnetic stress throughout your production cycles \u2014 about 625 to 650 amps of reactive current during operations. It's not chaotic loading, it's consistent inductive demand from your motors and transformers.\n\nThe thermal impact is significant. You're generating 284,343 BTU per hour of waste heat, requiring roughly $8.39 per hour in additional cooling \u2014 that's 41.5 kilowatts of cooling load just to handle electromagnetic inefficiency.\n\nYour production pattern shows strong weekday operational blocks with about 80% of operations exceeding your 2250 kVA supply target during peak periods. Weekends drop to about 250 kVA, showing clear production scheduling.\n\nMPTS harmonic correction projects transforming that 85% power factor to 99.5%. The reactive stress virtually disappears \u2014 you're looking at approximately $205,880 in annual recovered value. One H490 unit should handle your 274.7 kVAR maximum demand effectively, with estimated installed investment of approximately $200,000.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "executive_summary_short": "NCDC1 demonstrates solid voltage stability but significant reactive waste at 85% power factor. You're spending approximately $217,000 annually on electromagnetic inefficiency with 274.7 kVAR maximum demand creating substantial thermal burden. MPTS correction projects 99.5% power factor with roughly $205,880 in annual recovered value. The reactive stress layer virtually disappears with one H490 unit estimated at approximately $200,000 installed investment. That's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $184,000 to $250,000.",
+      "engineering_narration_detailed": "Let's examine your NCDC1 electromagnetic field systematically across all four analytical views. Your voltage health demonstrates excellent utility supply consistency with regulation holding tight around 481.5 volts throughout April. There were several brief voltage sag events mid-month, but recovery was rapid and didn't compromise field stability.\n\nThe baseline energy analysis reveals the core inefficiency. You're operating at 85% power factor with 274.7 kVAR maximum reactive demand. Your production pattern shows consistent weekday operational blocks consuming around 500 kVA during business hours, dropping to 250 kVA on weekends. Approximately 80% of your weekday operations exceed the 2250 kVA supply target, indicating heavy reactive loading during peak production periods.\n\nThe reactive stress signature is unmistakable in the active-reactive-harmonic view. You're seeing 625 to 650 amps of consistent reactive current \u2014 not chaotic spikes, but steady inductive demand from your industrial equipment. Total harmonic distortion holds at 6% with predictable harmonic patterns. This tells us your motors, compressors, and transformers are demanding magnetizing current continuously during production cycles.\n\nThe thermal implications are substantial. You're generating 284,343 BTU per hour of waste heat, creating additional cooling costs of about $8.39 per hour \u2014 that's 41.5 kilowatts of cooling load just to manage electromagnetic inefficiency. This thermal burden affects your entire HVAC load profile and operational costs.\n\nMPTS harmonic correction simulation shows dramatic transformation. Power factor rises to 99.5% with 270 to 280 kVAR eliminated from the field. The red reactive stress layer virtually disappears, leaving clean consumed power that tracks closely with supplied kVA. You're looking at approximately $205,880 in annual recovered value.\n\nEngineering recommendations include precision load measurements during peak production periods to validate the reactive compensation requirement. Those brief voltage sag events warrant investigation \u2014 verify correlation with large motor starting sequences. One H490 MPTS unit should handle your maximum reactive demand effectively, with estimated installed investment of approximately $200,000 depending on engineering scope and site conditions.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "voltage_baseline_notes": "The voltage view shows stable 481.5-volt supply with brief mid-month sags that recovered quickly. In the baseline view, look for the blue dashed line at 2250 kVA \u2014 that's your daily supply target. The weekday operational blocks consistently run above this line, showing about 80% of operations exceeding the target. The header shows 85% power factor and 274.7 kVAR maximum reactive demand, creating approximately $217,000 in annual waste costs plus 284,343 BTU per hour of thermal burden requiring additional cooling.",
+      "reactive_mpts_notes": "The reactive view shows thick red amperage layers at 625-650 amps during operations \u2014 that's your reactive stress signature from motors and transformers. In the MPTS simulation view, this red reactive layer virtually disappears, with power factor rising to 99.5%. The field transforms to clean green consumed power tracking closely with supplied kVA, showing approximately $205,880 in annual recovered value from eliminating the reactive waste.",
+      "energy_field_summary_brief": "**Field Condition Summary:** NCDC1 shows solid industrial operations with stable voltage at 481.5 volts, but significant reactive burden costing approximately $217,000 annually at 85% power factor.\n\n**Voltage Stability Findings:** Excellent utility supply consistency with brief mid-month voltage sags that recovered quickly \u2014 good foundation for MPTS correction.\n\n**Reactive Harmonic Findings:** Consistent 625-650 amp reactive current from industrial equipment, 6% THD, steady inductive loading rather than chaotic stress patterns.\n\n**Operational Stress Interpretation:** Strong weekday production blocks with 80% of operations exceeding 2250 kVA supply target, creating 284,343 BTU/hr thermal burden and about $8.39/hr cooling costs.\n\n**Simulated MPTS Outcome:** Power factor rises to 99.5% with 270-280 kVAR eliminated, approximately $205,880 annual recovered value, reactive stress layer virtually disappears.\n\n**Recommended Engineering Attention Areas:** Precision load measurements during peak production, investigate mid-month voltage sag correlation with motor starting, address thermal management implications, one H490 MPTS unit estimated for the reactive load.",
+      "clerk_text_files": {
+        "structured_brief": "NCDC1_brief.txt",
+        "narration_ready": "NCDC1_explains_p1.txt",
+        "executive_short": "NCDC1_explains_p2.txt",
+        "engineering_detailed": "NCDC1_explains_p3.txt",
+        "voltage_baseline_notes": "NCDC1_waste_howto.txt",
+        "reactive_mpts_notes": "NCDC1_savings_howto.txt",
+        "field_condition_summary": "NCDC1_field_condition_summary.txt",
+        "voltage_stability_findings": "NCDC1_voltage_stability_findings.txt",
+        "reactive_harmonic_findings": "NCDC1_reactive_harmonic_findings.txt",
+        "operational_stress_interpretation": "NCDC1_operational_stress_interpretation.txt",
+        "simulated_mpts_outcome": "NCDC1_simulated_mpts_outcome.txt",
+        "recommended_engineering_attention_areas": "NCDC1_recommended_engineering_attention_areas.txt"
+      },
+      "cross_check": "\u26a0\ufe0f Mercury analysis not available \u2014 synthesis from vision only. All dollar figures are planning-level estimates. Image shows 2250 kVA supply target, 85% power factor, 274.7 kVAR maximum reactive demand, approximately $217,000 annual waste cost. MPTS sizing estimate: 1 H490 unit (274.7 \u00f7 400 = 0.69, rounded up). Estimated installed investment: approximately $200,000.",
+      "william_version": "eeWILLIAM-4view-holistic-v1",
+      "analyzed_at": "2026-05-08 19:53:50",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "NCDC1"
+    },
+    "NCDC3": {
+      "pattern_text": "PART 1: NARRATION READY\nLooking at your NCDC3 transformer field, you're seeing a solid industrial operation with one significant electromagnetic challenge. Your voltage health is excellent \u2014 480.2 volts holding steady throughout the month with good utility regulation. That's your foundation.\n\nBut here's where it gets expensive. Your power factor sits at 85 percent, which means roughly 15 percent of your 2500 kVA transformer capacity is tied up managing reactive power instead of doing productive work. Peak demand hits 703 kilowatts while reactive demand peaks at 374 kilovars \u2014 that reactive stress is costing you approximately 226 thousand dollars annually in wasted energy, thermal burden, and cooling overhead.\n\nYour facility runs strong electric operations about 75 percent of weekdays above the supply target line. Continuous process loads with minimal weekend valleys suggest industrial operations like food processing or cold storage. The electromagnetic stress creates 296 thousand BTU per hour thermal burden, requiring an extra 43 kilowatts of cooling capacity.\n\nMPTS harmonization transforms this picture completely. Power factor climbs to 99.5 percent, eliminating virtually all reactive stress. You'd recover approximately 271 megatonnes per year of electromagnetic waste, translating to roughly 215 thousand dollars in annual savings. Based on 374 kilovar max, you'd need one H490 unit with estimated installation investment of approximately 200 thousand dollars \u2014 that's about an 11-month payback.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nYour NCDC3 field shows stable voltage but expensive reactive power stress. At 85 percent power factor, you're wasting approximately 226 thousand dollars annually while your transformer carries 374 kilovar peak reactive load.\n\nMPTS correction delivers 99.5 percent power factor, recovering roughly 215 thousand dollars per year with one H490 unit. Estimated 200 thousand dollar installation investment pays back in about 11 months.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions.\n\nPART 3: ENGINEERING DETAILED\nLet me walk you through the complete electromagnetic story of your NCDC3 facility. Starting with voltage health \u2014 you've got excellent 480.2 volt regulation throughout the monitoring period. Amperage cycles naturally between 1200 and 1800 amps following your operational patterns, but that voltage baseline stays rock-steady. No sags, no swells, no disturbances. That's a clean foundation for any reactive power correction work.\n\nMoving to your baseline energy profile, here's where the electromagnetic inefficiency shows up. You're pulling 2500 kVA supply capacity with power factor at 85 percent. Peak demand hits 702.9 kilowatts while reactive demand peaks at 373.9 kilovars maximum. That reactive stress shows up as persistent oscillations throughout the month \u2014 not turbulent, but constant. Your transformer is cycling that reactive energy back and forth instead of focusing on productive power delivery.\n\nThe operational pattern tells an industrial story. About 75 percent of weekdays run above your supply target line \u2014 that's strong utilization but electromagnetically expensive. Minimal weekend valleys suggest continuous process loads, likely food processing, cold storage, or similar operations. This reactive stress creates 296,087 BTU per hour thermal burden, requiring approximately 43.2 kilowatts of additional cooling capacity costing roughly $8.71 per hour. You're essentially paying to cool the electromagnetic stress your reactive power creates.\n\nHarmonic content stays reasonable at 5.8 percent iTHD, so this is primarily reactive power management rather than harmonic distortion. The visual separation between active power at 500 kilowatts, reactive power at 250 kilovars average, and minimal harmonics confirms this diagnosis.\n\nMPTS harmonization delivers dramatic transformation. Power factor climbs to 99.5 percent, eliminating virtually all reactive stress. You'd recover approximately 271.4 megatonnes per year of electromagnetic waste, translating to roughly $215,077 in annual savings. The visual change is striking \u2014 that reactive stress layer disappears, supply demand flattens to optimal efficiency, and your transformer field quiets to steady-state operation.\n\nBased on 373.9 kilovar maximum, you'd need one H490 unit with estimated installation investment of approximately $200,000. That's about an 11-month payback while reducing long-term transformer wear and cooling costs. Priority one is scheduling this correction during your next maintenance window to minimize process disruption.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Looking at your NCDC3 transformer field, you're seeing a solid industrial operation with one significant electromagnetic challenge. Your voltage health is excellent \u2014 480.2 volts holding steady throughout the month with good utility regulation. That's your foundation.\n\nBut here's where it gets expensive. Your power factor sits at 85 percent, which means roughly 15 percent of your 2500 kVA transformer capacity is tied up managing reactive power instead of doing productive work. Peak demand hits 703 kilowatts while reactive demand peaks at 374 kilovars \u2014 that reactive stress is costing you approximately 226 thousand dollars annually in wasted energy, thermal burden, and cooling overhead.\n\nYour facility runs strong electric operations about 75 percent of weekdays above the supply target line. Continuous process loads with minimal weekend valleys suggest industrial operations like food processing or cold storage. The electromagnetic stress creates 296 thousand BTU per hour thermal burden, requiring an extra 43 kilowatts of cooling capacity.\n\nMPTS harmonization transforms this picture completely. Power factor climbs to 99.5 percent, eliminating virtually all reactive stress. You'd recover approximately 271 megatonnes per year of electromagnetic waste, translating to roughly 215 thousand dollars in annual savings. Based on 374 kilovar max, you'd need one H490 unit with estimated installation investment of approximately 200 thousand dollars \u2014 that's about an 11-month payback.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part2": "Your NCDC3 field shows stable voltage but expensive reactive power stress. At 85 percent power factor, you're wasting approximately 226 thousand dollars annually while your transformer carries 374 kilovar peak reactive load.\n\nMPTS correction delivers 99.5 percent power factor, recovering roughly 215 thousand dollars per year with one H490 unit. Estimated 200 thousand dollar installation investment pays back in about 11 months.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions.",
+      "pattern_part3": "Let me walk you through the complete electromagnetic story of your NCDC3 facility. Starting with voltage health \u2014 you've got excellent 480.2 volt regulation throughout the monitoring period. Amperage cycles naturally between 1200 and 1800 amps following your operational patterns, but that voltage baseline stays rock-steady. No sags, no swells, no disturbances. That's a clean foundation for any reactive power correction work.\n\nMoving to your baseline energy profile, here's where the electromagnetic inefficiency shows up. You're pulling 2500 kVA supply capacity with power factor at 85 percent. Peak demand hits 702.9 kilowatts while reactive demand peaks at 373.9 kilovars maximum. That reactive stress shows up as persistent oscillations throughout the month \u2014 not turbulent, but constant. Your transformer is cycling that reactive energy back and forth instead of focusing on productive power delivery.\n\nThe operational pattern tells an industrial story. About 75 percent of weekdays run above your supply target line \u2014 that's strong utilization but electromagnetically expensive. Minimal weekend valleys suggest continuous process loads, likely food processing, cold storage, or similar operations. This reactive stress creates 296,087 BTU per hour thermal burden, requiring approximately 43.2 kilowatts of additional cooling capacity costing roughly $8.71 per hour. You're essentially paying to cool the electromagnetic stress your reactive power creates.\n\nHarmonic content stays reasonable at 5.8 percent iTHD, so this is primarily reactive power management rather than harmonic distortion. The visual separation between active power at 500 kilowatts, reactive power at 250 kilovars average, and minimal harmonics confirms this diagnosis.\n\nMPTS harmonization delivers dramatic transformation. Power factor climbs to 99.5 percent, eliminating virtually all reactive stress. You'd recover approximately 271.4 megatonnes per year of electromagnetic waste, translating to roughly $215,077 in annual savings. The visual change is striking \u2014 that reactive stress layer disappears, supply demand flattens to optimal efficiency, and your transformer field quiets to steady-state operation.\n\nBased on 373.9 kilovar maximum, you'd need one H490 unit with estimated installation investment of approximately $200,000. That's about an 11-month payback while reducing long-term transformer wear and cooling costs. Priority one is scheduling this correction during your next maintenance window to minimize process disruption.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "**Field Condition Summary:** NCDC3 shows stable voltage with significant reactive power stress at 85.0% power factor, costing approximately $226,353 annually.\n\n**Voltage Stability Findings:** Solid 480.2V regulation throughout monitoring period, providing clean foundation for electromagnetic correction.\n\n**Reactive Harmonic Findings:** Persistent 373.9 kVAR MAX reactive stress with reasonable 5.8% iTHD \u2014 primarily reactive power management challenge.\n\n**Operational Stress Interpretation:** 75% weekday utilization above supply target, continuous process loads creating 296,087 BTU/hr thermal burden.\n\n**Simulated MPTS Outcome:** Power factor rises to 99.5%, recovering 271.4 MT/YR waste for approximately $215,077 annual savings with one H490 unit.\n\n**Recommended Engineering Attention Areas:** Priority reactive power correction with estimated 11-month payback, scheduled during maintenance window for minimal disruption.",
+      "field_condition_summary": "Your NCDC3 facility is running a classic industrial electromagnetic profile \u2014 stable voltage foundation with significant reactive power stress. You're pulling 2500 kVA supply capacity with your power factor sitting at 85.0%, which means roughly 15% of your transformer capacity is tied up managing reactive power instead of productive work. Peak demand hits 702.9 kW while reactive demand peaks at 373.9 kVAR. That's electromagnetic inefficiency costing you approximately $226,353 annually in wasted energy, thermal burden, and cooling overhead.",
+      "voltage_stability_findings": "Your voltage health looks solid \u2014 480.2V nominal holding steady throughout the monitoring period with good utility regulation. Amperage cycles naturally between 1200-1800 amps following your operational patterns, but the voltage baseline stays rock-steady. No significant sags, swells, or disturbances visible. This gives us a clean foundation for reactive power correction \u2014 your utility supply is stable, so any electromagnetic improvements will hold consistently.",
+      "reactive_harmonic_findings": "The reactive power story is where your field needs attention. You're seeing persistent 287.5 kVAR average loading with peaks hitting 373.9 kVAR MAX. That reactive stress shows up as yellow-green oscillations throughout the month \u2014 it's not turbulent, but it's constant. Harmonic content stays reasonable at 5.8% iTHD, so this is primarily a reactive power management challenge rather than a harmonic distortion issue. Your transformer is working harder than it needs to, cycling that reactive energy back and forth instead of focusing on productive power delivery.",
+      "operational_stress_interpretation": "Looking at your electric operations pattern, you're running about 75% of weekdays above your supply target line \u2014 that's strong utilization but it's electromagnetically expensive. Your facility maintains consistent process loads with minimal weekend valleys, suggesting continuous industrial operation. The thermal burden hits 296,087 BTU/hr, requiring approximately 43.2 kW of additional cooling capacity costing roughly $8.71 per hour. You're essentially paying to cool the electromagnetic stress your reactive power creates.",
+      "simulated_mpts_outcome": "MPTS harmonization transforms this field dramatically. Power factor climbs to 99.5%, eliminating virtually all reactive stress. You'd recover approximately 271.4 MT/YR of electromagnetic waste, translating to roughly $215,077 in annual savings. The visual change is striking \u2014 that reactive stress layer disappears, supply demand flattens to optimal efficiency, and your transformer field quiets to steady-state operation. Based on 373.9 kVAR MAX, you'd need one H490 unit, with estimated installation investment of approximately $200,000.",
+      "recommended_engineering_attention_areas": "Priority one is reactive power correction \u2014 that 373.9 kVAR MAX is your primary electromagnetic drain. The stable voltage foundation means MPTS installation should deliver consistent results. Monitor thermal loading closely \u2014 296,087 BTU/hr thermal burden is significant operational stress. Consider scheduling correction during your next maintenance window to minimize process disruption. With estimated 11-month payback, this correction pays for itself quickly while reducing long-term transformer wear and cooling costs.",
+      "narration_ready_text": "Looking at your NCDC3 transformer field, you're seeing a solid industrial operation with one significant electromagnetic challenge. Your voltage health is excellent \u2014 480.2 volts holding steady throughout the month with good utility regulation. That's your foundation.\n\nBut here's where it gets expensive. Your power factor sits at 85 percent, which means roughly 15 percent of your 2500 kVA transformer capacity is tied up managing reactive power instead of doing productive work. Peak demand hits 703 kilowatts while reactive demand peaks at 374 kilovars \u2014 that reactive stress is costing you approximately 226 thousand dollars annually in wasted energy, thermal burden, and cooling overhead.\n\nYour facility runs strong electric operations about 75 percent of weekdays above the supply target line. Continuous process loads with minimal weekend valleys suggest industrial operations like food processing or cold storage. The electromagnetic stress creates 296 thousand BTU per hour thermal burden, requiring an extra 43 kilowatts of cooling capacity.\n\nMPTS harmonization transforms this picture completely. Power factor climbs to 99.5 percent, eliminating virtually all reactive stress. You'd recover approximately 271 megatonnes per year of electromagnetic waste, translating to roughly 215 thousand dollars in annual savings. Based on 374 kilovar max, you'd need one H490 unit with estimated installation investment of approximately 200 thousand dollars \u2014 that's about an 11-month payback.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "executive_summary_short": "Your NCDC3 field shows stable voltage but expensive reactive power stress. At 85 percent power factor, you're wasting approximately 226 thousand dollars annually while your transformer carries 374 kilovar peak reactive load.\n\nMPTS correction delivers 99.5 percent power factor, recovering roughly 215 thousand dollars per year with one H490 unit. Estimated 200 thousand dollar installation investment pays back in about 11 months.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions.",
+      "engineering_narration_detailed": "Let me walk you through the complete electromagnetic story of your NCDC3 facility. Starting with voltage health \u2014 you've got excellent 480.2 volt regulation throughout the monitoring period. Amperage cycles naturally between 1200 and 1800 amps following your operational patterns, but that voltage baseline stays rock-steady. No sags, no swells, no disturbances. That's a clean foundation for any reactive power correction work.\n\nMoving to your baseline energy profile, here's where the electromagnetic inefficiency shows up. You're pulling 2500 kVA supply capacity with power factor at 85 percent. Peak demand hits 702.9 kilowatts while reactive demand peaks at 373.9 kilovars maximum. That reactive stress shows up as persistent oscillations throughout the month \u2014 not turbulent, but constant. Your transformer is cycling that reactive energy back and forth instead of focusing on productive power delivery.\n\nThe operational pattern tells an industrial story. About 75 percent of weekdays run above your supply target line \u2014 that's strong utilization but electromagnetically expensive. Minimal weekend valleys suggest continuous process loads, likely food processing, cold storage, or similar operations. This reactive stress creates 296,087 BTU per hour thermal burden, requiring approximately 43.2 kilowatts of additional cooling capacity costing roughly $8.71 per hour. You're essentially paying to cool the electromagnetic stress your reactive power creates.\n\nHarmonic content stays reasonable at 5.8 percent iTHD, so this is primarily reactive power management rather than harmonic distortion. The visual separation between active power at 500 kilowatts, reactive power at 250 kilovars average, and minimal harmonics confirms this diagnosis.\n\nMPTS harmonization delivers dramatic transformation. Power factor climbs to 99.5 percent, eliminating virtually all reactive stress. You'd recover approximately 271.4 megatonnes per year of electromagnetic waste, translating to roughly $215,077 in annual savings. The visual change is striking \u2014 that reactive stress layer disappears, supply demand flattens to optimal efficiency, and your transformer field quiets to steady-state operation.\n\nBased on 373.9 kilovar maximum, you'd need one H490 unit with estimated installation investment of approximately $200,000. That's about an 11-month payback while reducing long-term transformer wear and cooling costs. Priority one is scheduling this correction during your next maintenance window to minimize process disruption.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "voltage_baseline_notes": "Your voltage stays stable at 480.2V throughout the month \u2014 that's good utility regulation. But your power factor at 85% means 15% of your 2500 kVA transformer capacity manages reactive power instead of productive work. Peak reactive demand hits 374 kVAR, creating thermal burden of 296,087 BTU/hr that requires extra cooling. This electromagnetic stress costs approximately $226,353 annually in wasted energy and cooling overhead.",
+      "reactive_mpts_notes": "MPTS correction eliminates the reactive power stress by raising power factor to 99.5%. That 374 kVAR reactive load disappears, recovering approximately 271 MT/YR of electromagnetic waste. Your transformer runs at optimal efficiency, thermal burden drops significantly, and cooling costs decrease. Total annual savings reach approximately $215,077 with one H490 unit installation.",
+      "energy_field_summary_brief": "**Field Condition Summary:** NCDC3 shows stable voltage with significant reactive power stress at 85.0% power factor, costing approximately $226,353 annually.\n\n**Voltage Stability Findings:** Solid 480.2V regulation throughout monitoring period, providing clean foundation for electromagnetic correction.\n\n**Reactive Harmonic Findings:** Persistent 373.9 kVAR MAX reactive stress with reasonable 5.8% iTHD \u2014 primarily reactive power management challenge.\n\n**Operational Stress Interpretation:** 75% weekday utilization above supply target, continuous process loads creating 296,087 BTU/hr thermal burden.\n\n**Simulated MPTS Outcome:** Power factor rises to 99.5%, recovering 271.4 MT/YR waste for approximately $215,077 annual savings with one H490 unit.\n\n**Recommended Engineering Attention Areas:** Priority reactive power correction with estimated 11-month payback, scheduled during maintenance window for minimal disruption.",
+      "clerk_text_files": {
+        "structured_brief": "NCDC3_brief.txt",
+        "narration_ready": "NCDC3_explains_p1.txt",
+        "executive_short": "NCDC3_explains_p2.txt",
+        "engineering_detailed": "NCDC3_explains_p3.txt",
+        "voltage_baseline_notes": "NCDC3_waste_howto.txt",
+        "reactive_mpts_notes": "NCDC3_savings_howto.txt",
+        "field_condition_summary": "NCDC3_field_condition_summary.txt",
+        "voltage_stability_findings": "NCDC3_voltage_stability_findings.txt",
+        "reactive_harmonic_findings": "NCDC3_reactive_harmonic_findings.txt",
+        "operational_stress_interpretation": "NCDC3_operational_stress_interpretation.txt",
+        "simulated_mpts_outcome": "NCDC3_simulated_mpts_outcome.txt",
+        "recommended_engineering_attention_areas": "NCDC3_recommended_engineering_attention_areas.txt"
+      },
+      "cross_check": "\u26a0\ufe0f Mercury CSV analysis not available \u2014 working from visual data only. Image readings show 2500 kVA target, 85.0% power factor, 373.9 kVAR MAX, approximately $226,353 annual waste. All monetary values treated as planning estimates pending detailed engineering scope.",
+      "william_version": "eeWILLIAM-4view-holistic-v1",
+      "analyzed_at": "2026-05-08 19:56:05",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "NCDC3"
+    }
+  }
 };
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
@@ -2755,22 +3264,26 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
 
     const getElText = (id) => {
       const el = document.getElementById(id);
@@ -2939,8 +3452,8 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
-      const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
@@ -3037,7 +3550,7 @@
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
       attachPatternFallback(
         document.getElementById('baselinePatternImg'),
-        [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)],
+        baselineCandidates,
         `${transformerName} baseline`
       );
       attachPatternFallback(
@@ -3047,13 +3560,14 @@
       );
       const part2PatternImg = document.getElementById('part2PatternImg');
       if (part2PatternImg) {
-        const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
         attachPatternFallback(
           part2PatternImg,
           part2EquipmentCandidates,
           `${transformerName} part2 installation equipment`
         );
       }
+      const secondaryWrap = document.getElementById('part2InstallWrapSecondary');
+      if (secondaryWrap) secondaryWrap.style.display = 'none';
     }
     
     // Show/hide Unity audio buttons based on content type
@@ -3097,6 +3611,7 @@
     }
     currentNarrativeText = '';
     currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
     currentExplainsPartIndex = 0;
     currentHowToPath = '';
@@ -3291,6 +3806,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3309,9 +3829,8 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (!tidMatch) continue;
-      const tid = tidMatch[1].toLowerCase();
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
       
       transformerCount++;
       
@@ -3645,74 +4164,5 @@
 </div>
 
 
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
-
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
-
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

@@ -604,6 +604,99 @@
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
     }
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
 
     .pattern-modal-body ul {
       list-style: none;
@@ -696,10 +789,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
@@ -1395,9 +1486,34 @@
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, RENDERING GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
@@ -1457,15 +1573,15 @@
 <g class="tick-marks" id="xfmr1-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">83.9%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">83.3%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">1501kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">2083kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">17.9%</span></div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">40.8%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1492,10 +1608,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">1028.3 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$226.01</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">1028.4 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$226.03</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">205.5 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$45.17</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$45.18</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1543,15 +1659,15 @@
 <g class="tick-marks" id="xfmr2-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">74.2%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">72.2%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">1723kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">1805kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">26.5%</span></div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">29.8%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1578,10 +1694,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">914.4 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$200.99</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">352.2 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$77.42</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">914.5 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$201.02</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">352.1 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$77.39</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1629,15 +1745,15 @@
 <g class="tick-marks" id="xfmr3-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">77.1%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">77.2%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">841kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr3-target-pattern">1928kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">12.8%</span></div>
+    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">62.0%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1665,7 +1781,7 @@
 </div>
 <div class="stats">
 <div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">566.1 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$124.42</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$124.43</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">167.6 kW</span></div>
 <div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$36.84</span></div>
 </div>
@@ -1849,17 +1965,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -1868,15 +2044,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2118,50 +2304,95 @@
   }
 
   // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
-  function getTransformerRoutingInfo(transformerName) {
-    const clean = (transformerName || '').replace(/\s+/g, '');
-    const upper = clean.toUpperCase();
+  function uniqueRoutingValues(values) {
+    const out = [];
+    const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
+  }
 
-    const tMatch = upper.match(/^(T\d+)/);
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
     if (tMatch) {
       const t = tMatch[1];
       return {
-        keys: [t, t.toLowerCase(), clean, upper],
-        fileIds: [t.toLowerCase(), t, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
-    const ncdcMatch = upper.match(/^(NCDC\d+)/);
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
     if (ncdcMatch) {
       const ncdc = ncdcMatch[1];
       return {
-        keys: [ncdc, ncdc.toLowerCase(), clean, upper],
-        fileIds: [ncdc, ncdc.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
-    const renderingMatch = upper.match(/^RENDERING-?(\d+)/);
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
     if (renderingMatch) {
       const n = renderingMatch[1];
       return {
-        keys: [`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, clean, upper],
-        fileIds: [`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Generic numeric prefixes like "ABC1..."
-    const baseMatch = upper.match(/^([A-Z]+\d+)/);
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
     if (baseMatch) {
       const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
       return {
-        keys: [base, base.toLowerCase(), clean, upper],
-        fileIds: [base, base.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
       };
     }
 
-    return { keys: [upper, clean], fileIds: [clean, clean.toLowerCase()] };
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
   }
 
   function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
@@ -2181,57 +2412,6 @@
         });
       });
     });
-    return out;
-  }
-  function buildPart2InstallationCandidatesLegacyUnused(fileIds, monthSuffixShort, monthSuffixLong, slot = 1) {
-    const out = [];
-    const seen = new Set();
-    const exts = ['png', 'jpg', 'jpeg'];
-    const ids = [...new Set((fileIds || []).map((id) => (id || '').toString().toLowerCase()).filter(Boolean))].slice(0, 2);
-    const monthTokens = [...new Set([monthSuffixShort, monthSuffixLong].filter(Boolean))];
-    monthTokens.push('');
-    const slotStems = slot === 1
-      ? ['p2a', 'install1', 'installation1', 'solution1']
-      : ['p2b', 'install2', 'installation2', 'meter2', 'metering2'];
-    const globalStems = slot === 1
-      ? ['part2a', 'installation_1']
-      : ['part2b', 'installation_2', 'metering_2'];
-
-    const pushCandidate = (filename) => {
-      if (!seen.has(filename)) {
-        seen.add(filename);
-        out.push(`Patterns/${filename}`);
-      }
-    };
-
-    const pushStemVariants = (base, stem) => {
-      monthTokens.forEach((token) => {
-        exts.forEach((ext) => {
-          if (token) {
-            pushCandidate(`${base}${stem}_${token}.${ext}`);
-            pushCandidate(`${base}_${stem}_${token}.${ext}`);
-          } else {
-            pushCandidate(`${base}${stem}.${ext}`);
-            pushCandidate(`${base}_${stem}.${ext}`);
-          }
-        });
-      });
-    };
-
-    // Prefer shared/global Part 2 images so every transformer uses the same installation pair by default.
-
-    globalStems.forEach((stem) => {
-      exts.forEach((ext) => {
-        monthTokens.forEach((token) => {
-          if (token) pushCandidate(`${stem}_${token}.${ext}`);
-          else pushCandidate(`${stem}.${ext}`);
-        });
-      });
-    });
-    ids.forEach((id) => {
-      slotStems.forEach((stem) => pushStemVariants(id, stem));
-    });
-
     return out;
   }
 
@@ -2260,6 +2440,169 @@
     };
     applySrc();
   }
+
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
+  function updatePatternBaseScale() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
+    if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
+      state.baseScale = 1;
+      return;
+    }
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
+    }
+  }
+
+  function getPatternRenderScale() {
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
+  }
+
+  function clampPatternImagePosition() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
+    if (scaledWidth <= viewportWidth) {
+      state.translateX = (viewportWidth - scaledWidth) / 2;
+    } else {
+      const minX = viewportWidth - scaledWidth;
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
+    }
+    if (scaledHeight <= viewportHeight) {
+      state.translateY = (viewportHeight - scaledHeight) / 2;
+    } else {
+      const minY = viewportHeight - scaledHeight;
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
+    }
+  }
+
+  function applyPatternImageTransform() {
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
+    }
+  }
+
+  function resetPatternImageView() {
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
+    updatePatternBaseScale();
+    state.translateX = 0;
+    state.translateY = 0;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function handlePatternImageWheel(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    event.preventDefault();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
+    const pointerX = event.clientX - rect.left;
+    const pointerY = event.clientY - rect.top;
+    const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
+    const currentRenderScale = getPatternRenderScale();
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
+    const scaleRatio = nextRenderScale / currentRenderScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function startPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function movePatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function stopPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
+      try {
+        state.viewport.releasePointerCapture(event.pointerId);
+      } catch (_) {}
+    }
+  }
+
+  function initializePatternImageView() {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
+      resetPatternImageView();
+    });
+    resetPatternImageView();
+  }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
 
   function viewPattern(transformerId, type) {
     try {
@@ -2325,17 +2668,27 @@
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
+      clearPatternImageView();
       modalBody.innerHTML = `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
+          </div>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
                  onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
-                 >
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+            <div class="pattern-view-actions">
+              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+            </div>
           </div>
         </div>`;
 
+      initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
     } catch (error) {
@@ -2768,22 +3121,26 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
 
     const getElText = (id) => {
       const el = document.getElementById(id);
@@ -2952,8 +3309,8 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
-      const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
@@ -3111,6 +3468,7 @@
     }
     currentNarrativeText = '';
     currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
     currentExplainsPartIndex = 0;
     currentHowToPath = '';
@@ -3663,74 +4021,5 @@
 </div>
 
 
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
-
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
-
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

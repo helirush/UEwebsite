@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title id="page-title">Unity Energy – Summaryboard</title>
+<title id="page-title">Unity Energy – Summaryboard – FosterFarms</title>
 <style>
     :root {
       --unity-ltylo: rgba(250, 240, 160, 1);
@@ -172,16 +172,6 @@
       max-width: 520px;
     }
 
-    .dashboard-grid.layout-3 {
-      grid-template-columns: repeat(3, minmax(360px, 1fr));
-      max-width: 1340px;
-    }
-
-    .dashboard-grid.layout-4 {
-      grid-template-columns: repeat(4, minmax(300px, 1fr));
-      max-width: 1340px;
-    }
-
     .xfmr-card {
       background: linear-gradient(145deg, rgb(60, 68, 45), rgb(70, 78, 46));
       border-radius: 15px;
@@ -195,10 +185,6 @@
       transform: translateY(-2px);
       border: .5px solid rgb(161, 188, 26); 
 
-    }
-
-    .hidden {
-      display: none !important;
     }
 
     /* Hide cards with empty or placeholder data */
@@ -375,59 +361,7 @@
       font-weight: 600;
       font-size: 18pt;
     }
-
-    /* EFSI front-panel line: match Reactive Waste bright green */
-    .efsi-status-line {
-      color: var(--unity-ltgreen);
-    }
-
-    .efsi-status-line span,
-    .efsi-status-line .efsi-front-label,
-    .efsi-status-line.efsi-positive,
-    .efsi-status-line.efsi-neutral,
-    .efsi-status-line.efsi-negative {
-      color: var(--unity-ltgreen) !important;
-    }
-
-    /* small help icon next to EFSI label (superscript) */
-    .help-icon {
-      display: inline-block;
-      margin-left: 2px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #314100;
-      color: #FAF0A0;
-      font-weight: 700;
-      font-size: 10px;
-      line-height: 12px;
-      text-align: center;
-      cursor: help;
-      vertical-align: super;
-      position: relative;
-      top: -1px;
-    }
-
-    /* EFSI color classes applied via JavaScript
-       CRITICAL (<=52%) red, WARNING (>52-<57%) orange, POOR (57-<62%) yellow, GOOD (62-72%) green, CLEAN (>72%) blue
-    */
-    .efsi-critical { color: #ff3b30 !important; }
-    .efsi-warning { color: #ff8c00 !important; }
-    .efsi-poor { color: #fde047 !important; }
-    .efsi-good { color: var(--unity-ltgreen) !important; }
-    .efsi-clean { color: #3db0f0 !important; }
-
-    .efsi-front-label {
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    .efsi-front-label.efsi-critical { color: #ff3b30 !important; }
-    .efsi-front-label.efsi-warning { color: #ff8c00 !important; }
-    .efsi-front-label.efsi-poor { color: #fde047 !important; }
-    .efsi-front-label.efsi-good { color: var(--unity-ltgreen) !important; }
-    .efsi-front-label.efsi-clean { color: #3db0f0 !important; }
-
+    
     /* ElecOps percentage - blue for positive (↑), orange for negative (↓), white for neutral */
     .uptime-value span[id$="-uptime-pct"],
     .uptime-value span[id$="-production-direction"] {
@@ -436,11 +370,11 @@
     
     /* ElecOps text colors applied via JavaScript */
     .elecops-positive {
-      color: #B2D235 !important;  /* Unity green for above target */
+      color: #5ca3b8 !important;  /* Sky blue for positive/above target */
     }
     
     .elecops-negative {
-      color: #B2D235 !important;  /* Unity green for below target */
+      color: #ff8c00 !important;  /* Orange for negative/below target */
     }
     
     .elecops-neutral {
@@ -531,6 +465,7 @@
     .bird-metric { color: rgba(192, 192, 192, 1); margin: 5px 0; font-size: 12pt; }
     .bird-metric span { color: rgba(255, 255, 255, 1); font-weight: 600; font-size: 13pt; }
     .bird-metric.site-output-pct span { color: var(--unity-ltgreen); }
+    body[data-summary-mode="energy"] .bird-metrics { display: none !important; }
 
     .pattern-buttons {
       margin: 10px 0;
@@ -569,9 +504,10 @@
       transform: translateY(0);
     }
 
-    .summary-btn-full {
+    .pattern-buttons .pattern-btn.summary-btn-full {
       background: linear-gradient(135deg, #5D701A, #4a5a15);
       border: .5px solid rgb(161, 188, 26);
+      border-left: .5px solid rgb(161, 188, 26);
       color: var(--unity-ltylo);
       font-weight: 600;
       font-size: 10pt;
@@ -579,8 +515,7 @@
       letter-spacing: 1px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .summary-btn-full:hover {
+    .pattern-buttons .pattern-btn.summary-btn-full:hover {
       background: linear-gradient(135deg, #6d8020, #5a6a1a);
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(93, 112, 26, 0.4);
@@ -669,17 +604,98 @@
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
     }
-
-    /* Summary-mode backdrop: put the energy-field image UNDER the card (fills the modal whitespace). */
-    .pattern-modal-body.unity-summary-mode {
-      /* Match Site Summary green canvas (keep backdrop image + readability) */
-      background-color: rgba(93, 112, 26, 0.10);
-      background-image:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(93, 112, 26, 0.18) 100%),
-        var(--unity-field-backdrop, none);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
     .pattern-modal-body ul {
@@ -773,10 +789,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
@@ -1250,133 +1264,98 @@
       font-size: 20pt;
       color: rgb(255, 252, 232);
     }
-  
+
     /* Unity Field Summary Card (friendly icon layout)
        Note: the energy-field image is applied to the MODAL BODY (summary mode), not inside this card.
        The card itself stays solid/opaque for readability. */
     .unity-field-summary {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr; /* baseline-only */
-      gap: 18px;
+      grid-template-columns: 1fr;
+      gap: 22px;
       align-items: stretch;
-      margin: 12px auto 8px auto;
-      /* Reduce overall card width by ~25% (keep centered) */
-      max-width: 735px;
-      padding: 14px;
+      margin: 14px auto 8px auto;
+      max-width: 900px;
+      padding: 18px;
       border-radius: 18px;
       overflow: hidden;
-      /* Clean Site Summary framing (no extra shading) */
-      border: 2px solid #5D701A;
-      /* Slightly darker green layer behind the text blocks */
-      background: rgba(93, 112, 26, 0.12);
+      border: 2px solid rgba(49, 65, 0, 0.22);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(246, 246, 242, 0.82) 100%);
       box-shadow: 0 18px 50px rgba(0,0,0,0.18);
     }
     .unity-column {
       border-radius: 12px;
-      padding: 12px 12px 10px 12px;
-      border: 2px solid rgba(93, 112, 26, 0.30);
-      /* Clean + readable: solid panel (no gradient shading) */
-      background: rgba(241, 246, 234, 0.96);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+      padding: 16px 16px 12px 16px;
+      border: 2px solid rgba(49, 65, 0, 0.22);
+      background: linear-gradient(90deg, rgba(214, 214, 194, 1) 0%, rgba(242, 242, 236, 1) 72%, rgba(255, 255, 255, 1) 100%);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.14);
       min-width: 0;
     }
     .unity-column.before {
-      border-color: rgba(93, 112, 26, 0.34);
-      background: rgba(220, 230, 200, 0.96); /* Slightly darker light green */
-    }
-    .unity-column.after {
-      /* kept for compatibility (not used in baseline-only layout) */
-      border-color: rgba(93, 112, 26, 0.30);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(93, 112, 26, 0.08) 100%);
+      border-left: 10px solid rgba(93, 112, 26, 1);
     }
     .unity-column h2 {
-      margin: 0 0 12px 0;
-      font-size: 16px;
-      font-weight: 700; /* Bold dark green text */
+      margin: 0 0 14px 0;
+      font-size: 14px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      /* Inverted style: dark green text on white background with light border */
-      color: #3d4a10;
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(93, 112, 26, 0.35);
-      padding: 8px 12px;
+      color: rgba(49, 65, 0, 1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(242, 242, 238, 0.78) 100%);
+      border: 1px solid rgba(49, 65, 0, 0.30);
+      padding: 7px 12px;
       border-radius: 10px;
       display: inline-block;
-      text-shadow: none;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.25);
     }
-    .unity-flow {
-      display: none; /* baseline-only */
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      font-weight: 900;
-      color: rgba(49, 65, 0, 0.65);
-      text-shadow: none;
-      padding: 0 6px;
+    .unity-column.before h2 {
+      border-color: rgba(93, 112, 26, 0.55);
     }
     .unity-metric {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: 10px;
+      gap: 12px;
       align-items: baseline;
-      padding: 10px 12px 10px 22px; /* Added left padding for indent */
+      padding: 12px 14px;
       border-radius: 10px;
-      margin-bottom: 10px;
-      /* Site Summary style: thick SOLID green tab (10px wide), minimal shading */
-      border-left: 10px solid #5D701A;
-      background: rgba(255, 255, 255, 0.96);
-      border-top: 1px solid rgba(93, 112, 26, 0.22);
-      border-right: 1px solid rgba(93, 112, 26, 0.22);
-      border-bottom: 1px solid rgba(93, 112, 26, 0.22);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-      will-change: transform;
-    }
-
-    .unity-metric:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
-      background: rgba(248, 250, 245, 0.98);
+      margin-bottom: 12px;
+      border-left: 8px solid rgba(178, 210, 53, 0.95);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(247, 247, 243, 0.94) 100%);
+      border: 1px solid rgba(49, 65, 0, 0.14);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      min-width: 0;
     }
     .unity-metric .value {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
       color: rgba(49, 65, 0, 1);
       white-space: nowrap;
-    }
-    .unity-metric .value.wrap {
-      white-space: normal;
-      line-height: 1.2;
+      min-width: 0;
     }
     .unity-arrow {
-      font-size: 30px;
+      font-size: 48px;
       font-weight: 900;
       letter-spacing: -1px;
-      margin-right: 4px;
-      vertical-align: -2px;
+      margin-right: 8px;
+      vertical-align: -6px;
       display: inline-block;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.10);
     }
-    /* Power triangle balance (Active vs Reactive)
-       - Keep Active/Reactive labels on ONE line.
-       - Show split bar, plus a small deviation band underneath centered at "neutral" (50/50). */
     .triangle-legend {
       grid-column: 1 / -1;
       display: flex;
       justify-content: space-between;
       gap: 14px;
       margin-top: 8px;
-      /* Make Active/Reactive labels as readable as PF number */
-      font-size: 22px;
+      font-size: 17px;
       font-weight: 900;
       white-space: nowrap;
-      color: rgba(49, 65, 0, 0.85);
+      color: rgba(49, 65, 0, 0.88);
     }
-    .triangle-legend .active { color: #0b79b8; } /* Teal blue - matches power factor ball */
-    .triangle-legend .reactive { color: #5D701A; } /* Unity dark green */
-
+    .triangle-legend .active { color: #0b79b8; }
+    .triangle-legend .reactive { color: #5D701A; }
     .triangle-bar-track {
       grid-column: 1 / -1;
-      height: 22px; /* thicker bar */
+      height: 16px;
       border-radius: 999px;
       overflow: hidden;
       display: flex;
@@ -1386,88 +1365,164 @@
     }
     .triangle-bar-active {
       height: 100%;
-      /* Teal blue gradient - matches power factor ball colors */
       background: linear-gradient(90deg, #7ad3ff 0%, #44a8ff 40%, #0b79b8 80%, #144a8b 100%);
     }
     .triangle-bar-reactive {
       height: 100%;
-      /* Unity green gradient - bright to dark */
       background: linear-gradient(90deg, #B2D235 0%, #8ea825 40%, #5D701A 80%, #3d4a10 100%);
     }
-
-    /* Remove the small deviation mini-bar under the triangle (kept in code history for reference). */
-    .triangle-deviation-track,
-    .triangle-deviation-fill {
-      display: none;
+    .unity-metric.thermal .value {
+      font-size: 22px;
+    }
+    .unity-metric.thermal .label {
+      font-size: 16px;
     }
     .unity-metric .label {
-      font-size: 16px;
-      /* Same label tone as Site Summary cards */
-      color: #4a5568;
-      font-weight: 700;
+      font-size: 15px;
+      color: rgba(49, 65, 0, 0.80);
+      font-weight: 800;
+      min-width: 0;
     }
-    /* The page has a global `.label::after { content: ' :' }` for stat rows.
-       Disable it inside the Unity summary card so we control punctuation. */
     .unity-metric .label::after {
       content: '';
     }
-    /* Unify metric accents to Site Summary green */
-    .unity-metric.thermal { border-left-color: #5D701A; }
-    .unity-metric.heat { border-left-color: #5D701A; }
-    .unity-metric.harmonic { border-left-color: #5D701A; }
-    .unity-metric.cooling { border-left-color: #5D701A; }
+    .unity-metric.thermal { border-left-color: rgba(250, 240, 160, 0.95); }
+    .unity-metric.heat { border-left-color: rgba(167, 46, 35, 0.95); }
+    .unity-metric.harmonic { border-left-color: rgba(178, 210, 53, 0.95); }
+    .unity-metric.cooling { border-left-color: rgba(61, 176, 240, 0.95); }
+    .unity-metric.co2 { border-left-color: rgba(93, 112, 26, 0.95); }
 
-    /* EFSI mini bar - solid dark green 0-100% indicator */
+    /* EFSI mini bar */
     .efsi-bar-track {
       grid-column: 1 / -1;
-      height: 14px; /* thicker for readability */
+      height: 12px;
       border-radius: 999px;
-      background: rgba(93, 112, 26, 0.15);
+      background: rgba(0, 0, 0, 0.08);
       overflow: hidden;
       margin-top: 10px;
-      border: 1px solid rgba(93, 112, 26, 0.3);
     }
     .efsi-bar-fill {
       height: 100%;
       width: 0;
-      background: #5D701A;
+      background: rgba(178, 210, 53, 0.95);
       border-radius: 999px;
       transition: width 0.6s ease;
     }
+
+    /* EFSI front-panel line */
+    .efsi-status-line {
+      color: var(--unity-ltgreen);
+    }
+    .efsi-status-line span,
+    .efsi-status-line .efsi-front-label {
+      color: var(--unity-ltgreen) !important;
+    }
+    /* help icon next to EFSI label */
+    .help-icon {
+      display: inline-block;
+      margin-left: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #314100;
+      color: #FAF0A0;
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 12px;
+      text-align: center;
+      cursor: help;
+      vertical-align: super;
+      position: relative;
+      top: -1px;
+    }
+    /* EFSI color classes applied via JavaScript */
+    .efsi-warning { color: #ef4444 !important; }
+    .efsi-low    { color: #f59e0b !important; }
+    .efsi-normal { color: var(--unity-ltgreen) !important; }
+    .efsi-good   { color: #3db0f0 !important; }
+    .efsi-front-label {
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .efsi-front-label.efsi-warning { color: #ef4444 !important; }
+    .efsi-front-label.efsi-low    { color: #f59e0b !important; }
+    .efsi-front-label.efsi-normal { color: var(--unity-ltgreen) !important; }
+    .efsi-front-label.efsi-good   { color: #3db0f0 !important; }
     /* EFSI status label colors for summary panel */
-    .efsi-status-clean { color: #3db0f0 !important; }
-    .efsi-status-good { color: #22c55e !important; }
-    .efsi-status-poor { color: #fde047 !important; }
-    .efsi-status-warning { color: #ff8c00 !important; }
-    .efsi-status-critical { color: #ff3b30 !important; }
+    .efsi-status-good    { color: #3db0f0 !important; }
+    .efsi-status-normal  { color: #22c55e !important; }
+    .efsi-status-low     { color: #f59e0b !important; }
+    .efsi-status-warning { color: #ef4444 !important; }
+    /* Mode-based visibility: EFSI vs ElecOps */
+    .efsi-section { display: none; }
+    body[data-summary-mode="energy"] .efsi-section { display: block; }
+    body[data-summary-mode="energy"] .elecops-section { display: none; }
+
+    /* Summary-mode backdrop: put the energy-field image UNDER the card (fills the modal whitespace). */
+    .pattern-modal-body.unity-summary-mode {
+      background-color: rgba(255, 255, 255, 0.55);
+      background-image:
+        linear-gradient(180deg,
+          rgba(20, 30, 0, 0.18) 0%,
+          rgba(20, 30, 0, 0.08) 55%,
+          rgba(20, 30, 0, 0.00) 100%
+        ),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(245, 247, 250, 0.82) 100%),
+        var(--unity-field-backdrop, none);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
 
     @media (max-width: 760px) {
       .unity-field-summary {
         grid-template-columns: 1fr;
       }
-      .unity-flow {
-        display: none;
-      }
     }
   </style>
 </head>
-<body>
+<body data-summary-mode="energy">
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO LIVINGSTON HQ FACILITY</a>
-  <a href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
 
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
-<span class="siteboard-title-main">FOSTER FARMS, LIVINGSTON HQ FACILITY - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
+<span class="siteboard-title-main" id="site-facility-name">FOSTERFARMS, RENDERING GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
 <hr style="border: 3px solid rgb(161, 188, 26); width: 95%; margin-bottom: 25px; margin-top: 0px;"/>
 <div class="siteboard-sub">
 <span class="siteboard-title-sub" id="transformer-count">3 Transformers</span>
-<span class="siteboard-title-sub"> • </span>
+<span class="siteboard-title-sub" id="site-meta-sep-1"> • </span>
 <span class="siteboard-title-sub">Time Period <span id="param-period">c.260101-260131</span> (<span id="month-year">January 2026</span>) • <span id="param-days">31</span> days</span>
-<span class="siteboard-title-sub"> • </span>
+<span class="siteboard-title-sub" id="site-meta-sep-2"> • </span>
 <span class="siteboard-title-sub" id="heat-resolution">1-minute Resolution</span>
 </div>
 
@@ -1478,11 +1533,11 @@
   </div>
   <div class="env-factor">
     <span class="env-factor-label">🌡️ Temperature:</span>
-    <span class="env-factor-value" id="env-temp">69.6</span>
+    <span class="env-factor-value" id="env-temp">70.0</span>
   </div>
   <div class="env-factor">
     <span class="env-factor-label">💧 Humidity:</span>
-    <span class="env-factor-value" id="env-humidity">50.7</span>
+    <span class="env-factor-value" id="env-humidity">50.0</span>
   </div>
 </div>
 
@@ -1498,17 +1553,13 @@
     ⚡ SITE SUMMARY - UNITY SYSTEM
   </button>
 </div>
-
-<!-- Hidden site aggregation values (populated by working_renderer via ID replacements) -->
-<span id="site-total-cooling-kw" style="display:none">460.02</span>
-<div class="dashboard-grid layout-3">
+<div class="dashboard-grid layout-4">
 <div class="xfmr-card" id="xfmr1-card">
 <h2>
 <span id="xfmr1-name">Rendering-1</span>
-<span id="xfmr1-code" style="display:none">REND1</span>
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1522,21 +1573,34 @@
 <g class="tick-marks" id="xfmr1-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">82.2%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">82.5%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">1397.0kVA STD DAILY PATTERN</div>
-  <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-  <div class="uptime-value efsi-status-line"><span id="xfmr1-efsi-direction">↓</span> <span id="xfmr1-efsi-pct">59% active</span> — <span id="xfmr1-efsi-label" class="efsi-front-label"></span></div>
+  <div class="uptime-target" id="xfmr1-target-pattern">2062kVA STD DAILY PATTERN</div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">39.5%</span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr1-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr1-efsi-direction">→</span> <span id="xfmr1-efsi-pct">—% stable</span> — <span id="xfmr1-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
-<div class="bird-metrics" style="display:none">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird"></span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird"></span></div>
+<div class="bird-metrics">
+  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.438 kWh</span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">9.6 cents</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr1-production-birds"></span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr1-site-percent"></span></div>
+  <div class="bird-metric"><span id="xfmr1-production-birds">850,655 birds</span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr1-site-percent">20% of site output</span></div>
 </div>
 <div class="pattern-buttons">
   <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr1', 'summary')">
@@ -1544,10 +1608,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">1064.1 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$233.90</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">230.3 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$50.61</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">1028.8 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$226.12</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">218.5 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$48.03</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1579,10 +1643,9 @@
 <div class="xfmr-card" id="xfmr2-card">
 <h2>
 <span id="xfmr2-name">Rendering-2</span>
-<span id="xfmr2-code" style="display:none">REND2</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1596,21 +1659,34 @@
 <g class="tick-marks" id="xfmr2-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">70.5%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">71.0%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">1559.4kVA STD DAILY PATTERN</div>
-  <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-  <div class="uptime-value efsi-status-line"><span id="xfmr2-efsi-direction">↓</span> <span id="xfmr2-efsi-pct">50% active</span> — <span id="xfmr2-efsi-label" class="efsi-front-label"></span></div>
+  <div class="uptime-target" id="xfmr2-target-pattern">1775kVA STD DAILY PATTERN</div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">23.0%</span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr2-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr2-efsi-direction">→</span> <span id="xfmr2-efsi-pct">—% stable</span> — <span id="xfmr2-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
-<div class="bird-metrics" style="display:none">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird"></span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird"></span></div>
+<div class="bird-metrics">
+  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.438 kWh</span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">9.6 cents</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr2-production-birds"></span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr2-site-percent"></span></div>
+  <div class="bird-metric"><span id="xfmr2-production-birds">1,182,845 birds</span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr2-site-percent">27% of site output</span></div>
 </div>
 <div class="pattern-buttons">
   <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr2', 'summary')">
@@ -1618,10 +1694,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">1024.4 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$225.16</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">426.4 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$93.72</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">970.2 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$213.25</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">396.3 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$87.10</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1653,10 +1729,9 @@
 <div class="xfmr-card" id="xfmr3-card">
 <h2>
 <span id="xfmr3-name">Rendering-3</span>
-<span id="xfmr3-code" style="display:none">REND3</span>
 <span id="xfmr3-kva-wrap"> (<span id="xfmr3-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1670,21 +1745,34 @@
 <g class="tick-marks" id="xfmr3-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">76.7%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">76.8%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">705.8kVA STD DAILY PATTERN</div>
-  <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-  <div class="uptime-value efsi-status-line"><span id="xfmr3-efsi-direction">↓</span> <span id="xfmr3-efsi-pct">54% active</span> — <span id="xfmr3-efsi-label" class="efsi-front-label"></span></div>
+  <div class="uptime-target" id="xfmr3-target-pattern">1919kVA STD DAILY PATTERN</div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">63.1%</span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr3-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr3-efsi-direction">→</span> <span id="xfmr3-efsi-pct">—% stable</span> — <span id="xfmr3-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
-<div class="bird-metrics" style="display:none">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird"></span></div>
-  <div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird"></span></div>
+<div class="bird-metrics">
+  <div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird">0.438 kWh</span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird">9.6 cents</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr3-production-birds"></span></div>
-  <div class="bird-metric site-output-pct"><span id="xfmr3-site-percent"></span></div>
+  <div class="bird-metric"><span id="xfmr3-production-birds">1,038,426 birds</span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr3-site-percent">24% of site output</span></div>
 </div>
 <div class="pattern-buttons">
   <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr3', 'summary')">
@@ -1692,10 +1780,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">569.9 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$125.27</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">172.7 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$37.96</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">544.3 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$119.64</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">164.7 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$36.21</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1727,10 +1815,9 @@
 <div class="xfmr-card" id="xfmr4-card">
 <h2>
 <span id="xfmr4-name"></span>
-<span id="xfmr4-code" style="display:none"></span>
 <span id="xfmr4-kva-wrap"> (<span id="xfmr4-kva"></span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view MPTS Variables pattern">
+<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view Base Target pattern">
 <svg class="gauge-svg" viewBox="0 0 200 200">
       <defs>
         <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
@@ -1750,10 +1837,23 @@
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
   <div class="uptime-target" id="xfmr4-target-pattern"></div>
-  <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-  <div class="uptime-value efsi-status-line"><span id="xfmr4-efsi-direction"></span> <span id="xfmr4-efsi-pct"></span></div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr4-production-direction"></span> <span id="xfmr4-uptime-pct"></span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr4-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr4-efsi-direction">→</span> <span id="xfmr4-efsi-pct">—% stable</span> — <span id="xfmr4-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
-<div class="bird-metrics" style="display:none">
+<div class="bird-metrics">
   <div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird"></span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr4-cost-per-bird"></span></div>
   <div class="bird-metric">Production Level</div>
@@ -1809,23 +1909,7 @@
 </div>
 </div>
 <!-- Unity Dashboard - Unified JavaScript System -->
-<!-- <script src="../static/unity-dashboard.js"></script> -->
 <script>
-
-  function shouldBlockJanuaryAudio() {
-    if (JANUARY_AUDIO_ENABLED) return false;
-    try { window.speechSynthesis.cancel(); } catch (e) {}
-    if (currentAudioElement) {
-      try {
-        currentAudioElement.pause();
-        currentAudioElement.currentTime = 0;
-      } catch (e) {}
-    }
-    isSpeaking = false;
-    currentExplainsPartIndex = 0;
-    return true;
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     // Set Unity date
     const today = new Date();
@@ -1833,22 +1917,34 @@
     const dateEl = document.getElementById('unityDate');
     if (dateEl) dateEl.textContent = dateStr;
     
-    // Show separators in site meta only when values exist (defensive: separators may not exist in this template)
+    // Show separators in site meta only when values exist
     const hasPeriod = (document.getElementById('param-period')?.textContent || '').trim().length > 0;
     const hasDays = (document.getElementById('param-days')?.textContent || '').trim().length > 0;
-    const sep1 = document.getElementById('site-meta-sep-1');
-    const sep2 = document.getElementById('site-meta-sep-2');
-    if (hasPeriod && sep1) sep1.style.display = 'inline';
-    if (hasDays && sep2) sep2.style.display = 'inline';
+    if (hasPeriod) document.getElementById('site-meta-sep-1').style.display = 'inline';
+    if (hasDays) document.getElementById('site-meta-sep-2').style.display = 'inline';
 
     // Transformer performance data with correct Minimum Target calculations
+    function calculateTargetPerformance(targetKWh, actualKWh) {
+      const target = Number(targetKWh) || 0;
+      const actual = Number(actualKWh) || 0;
+      if (target <= 0) {
+        return { target: 0, performance: '0.0', label: 'Target Delta' };
+      }
+      const deltaPct = ((actual - target) / target) * 100;
+      const label = deltaPct >= 0 ? 'Above Target' : 'Below Target';
+      return {
+        target: Math.round(target),
+        performance: Math.abs(deltaPct).toFixed(1),
+        label
+      };
+    }
     // Formula: tMax_SUPPLY × Power_Factor × 18_hours × days_in_period = Minimum_Target_kWh
     // tMax_SUPPLY is the actual max kVA from data (top 5% outliers trimmed)
-    const days = 31; // Analysis period from Python binding
+    const days = parseInt((document.getElementById('param-days')?.textContent || '30').trim(), 10) || 30;
     const minimumHours = 18; // Minimum operating hours per day (18hr baseline expectation)
     
     const transformerData = [
-      { id: 1, name: 'AN21061800', efficiency: 0.8471, tmaxKVA: 2214.145130092259, powerFactor: 0.8471, actualKWh: 978063 },
+      { id: 1, name: '', efficiency: 0.0, tmaxKVA: 0.0, powerFactor: 0.0, actualKWh: 0 },
       { id: 2, name: '', efficiency: 0.0, tmaxKVA: 0.0, powerFactor: 0.0, actualKWh: 0 },
       { id: 3, name: '', efficiency: 0.0, tmaxKVA: 0.0, powerFactor: 0.0, actualKWh: 0 },
       { id: 4, name: '', efficiency: 0.0, tmaxKVA: 0.0, powerFactor: 0.0, actualKWh: 0 }
@@ -1856,11 +1952,120 @@
     
     // Energy Wasted data separate from existing structure
     const energyWasteData = [
-      { id: 1, wasteEnergykW: 237.85615533577402, coolingkW: 102.65460103692294, supplyKVA: 1555.8821847701815 },
+      { id: 1, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 },
       { id: 2, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 },
       { id: 3, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 },
       { id: 4, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 }
     ];
+
+    // Normalize PF numeric input to a percentage (0-100), accepting either 0-1 or 0-100 values.
+    function normalizePfPercent(value) {
+      const n = Number(value);
+      if (!isFinite(n) || n <= 0) return null;
+      const pct = n <= 1 ? (n * 100) : n;
+      return Math.max(0, Math.min(100, pct));
+    }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
+
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
+      try {
+        const routing = getTransformerRoutingInfo(transformerName || '');
+        const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
+        if (!tData || !routing || !Array.isArray(routing.keys)) return null;
+
+        for (const k of routing.keys) {
+          const entry = tData[k];
+          if (!entry) continue;
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
+        }
+      } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
+
+      return null;
+    }
     
     // Calculate minimum targets dynamically
     transformerData.forEach(data => {
@@ -1870,17 +2075,13 @@
     // Apply performance metrics
     transformerData.forEach(data => {
       // Bubbles now use fixed 3D blue gradient from template - no dynamic coloring
-
-      // Some facility templates do not include the target-performance helpers.
-      // If they're not present, skip this block so we don't abort the whole DOMContentLoaded init.
-      if (typeof calculateTargetPerformance !== 'function') return;
-
+      
       // Calculate and display performance metrics using new Minimum Target formula
       const result = calculateTargetPerformance(data.targetKWh, data.actualKWh);
-
+      
       const targetEl = document.getElementById(`xfmr${data.id}-target`);
       const belowEl = document.getElementById(`xfmr${data.id}-below`);
-
+      
       if (targetEl) {
         targetEl.textContent = `${result.target} kWh`;
       }
@@ -1892,7 +2093,7 @@
         }
         belowEl.textContent = `${result.performance}%`;
       }
-
+      
     });
     
     // Note: Production uptime percentage is now injected by inject_bird_metrics.py
@@ -1905,6 +2106,7 @@
       const kvaEl = document.getElementById(`xfmr${i}-kva`);
       const kvaWrap = document.getElementById(`xfmr${i}-kva-wrap`);
       const pfEl = document.getElementById(`xfmr${i}-metric-pf`);
+      const transformerName = (nameEl?.textContent || '').trim();
 
       // Hide card if no name bound
       const hasName = (nameEl?.textContent || '').trim().length > 0;
@@ -1913,24 +2115,17 @@
         continue;
       }
 
+      // Dynamically bind PF bubble value (prevents stale hardcoded text).
+      if (pfEl) {
+        const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
+        if (resolvedPfPct !== null) {
+          pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
+        }
+      }
+
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
-    }
-
-    // Hide production metrics section when not populated (mixed production / partial-field studies)
-    for (let i = 1; i <= 4; i++) {
-      const cardEl = document.getElementById(`xfmr${i}-card`);
-      if (!cardEl) continue;
-
-      const birdMetricsEl = cardEl.querySelector('.bird-metrics');
-      if (!birdMetricsEl) continue;
-
-      const prodEl = document.getElementById(`xfmr${i}-production-birds`);
-      const hasProd = (prodEl?.textContent || '').trim().length > 0;
-      if (!hasProd) {
-        birdMetricsEl.classList.add('hidden');
-      }
     }
     
     // Add click handler to power factor gauge circles to open MPTS variables (M) image
@@ -1995,6 +2190,9 @@
       }
     }
 
+    // Energy mode always displays EFSI front line derived from PF.
+    applyEfsiColors();
+
   });
 
   // Draw tick marks around all gauge circles
@@ -2034,81 +2232,66 @@
       }
     }
   }
+  
+  // Call tick drawing after DOM loads
+  document.addEventListener('DOMContentLoaded', drawGaugeTicks);
 
+  // Apply EFSI status classes based on PF-derived active share
   function applyEfsiColors() {
+    const computeEfsiFromPfPercent = (pfPercent) => {
+      const pfPct = parseFloat(pfPercent);
+      if (!isFinite(pfPct) || pfPct <= 0) return null;
+      const pf = Math.max(0, Math.min(1, pfPct / 100.0));
+      const reactive = Math.sqrt(Math.max(0, 1 - (pf * pf)));
+      const denom = pf + reactive;
+      if (!isFinite(denom) || denom <= 0) return null;
+      return Math.round((pf / denom) * 100);
+    };
+
     for (let i = 1; i <= 4; i++) {
       const pctEl = document.getElementById(`xfmr${i}-efsi-pct`);
       const dirEl = document.getElementById(`xfmr${i}-efsi-direction`);
       const labelEl = document.getElementById(`xfmr${i}-efsi-label`);
-      if (!pctEl || !dirEl) continue;
+      const pfEl = document.getElementById(`xfmr${i}-metric-pf`);
+      if (!pctEl || !dirEl || !labelEl || !pfEl) continue;
 
-      const m = (pctEl.textContent || '').match(/(\d+)/);
-      if (!m) continue;
-      const pct = parseInt(m[1], 10);
+      const pfMatch = (pfEl.textContent || '').match(/([0-9]+(?:\.[0-9]+)?)/);
+      const efsiPct = pfMatch ? computeEfsiFromPfPercent(pfMatch[1]) : null;
+      if (efsiPct === null) continue;
 
-      // Corrected EFSI labeling algorithm:
-      // <=52 = CRITICAL, >52-<57 = WARNING, 57-<62 = POOR, 62-72 = GOOD, >72 = CLEAN
-      let label = 'CRITICAL';
-      let arrow = '↓';
-      let cls = 'efsi-critical';
+      pctEl.textContent = `${efsiPct}% stable`;
+      let label = 'WARNING', arrow = '↓', cls = 'efsi-warning';
+      if (efsiPct >= 70)      { label = 'GOOD';    arrow = '↑'; cls = 'efsi-good'; }
+      else if (efsiPct >= 63) { label = 'NORMAL';  arrow = '→'; cls = 'efsi-normal'; }
+      else if (efsiPct >= 60) { label = 'LOW';     arrow = '↓'; cls = 'efsi-low'; }
 
-      if (pct > 72) {
-        label = 'CLEAN';
-        arrow = '↑';
-        cls = 'efsi-clean';
-      } else if (pct >= 62) {
-        label = 'GOOD';
-        arrow = '→';
-        cls = 'efsi-good';
-      } else if (pct >= 57) {
-        label = 'POOR';
-        arrow = '↓';
-        cls = 'efsi-poor';
-      } else if (pct > 52) {
-        label = 'WARNING';
-        arrow = '↓';
-        cls = 'efsi-warning';
-      }
+      labelEl.textContent = label;
+      labelEl.classList.remove('efsi-warning', 'efsi-low', 'efsi-normal', 'efsi-good');
+      labelEl.classList.add(cls);
 
-      if (labelEl) {
-        labelEl.textContent = label;
-        labelEl.classList.remove('efsi-critical', 'efsi-warning', 'efsi-poor', 'efsi-good', 'efsi-clean');
-        labelEl.classList.add(cls);
-      }
-
-      pctEl.classList.remove('efsi-critical', 'efsi-warning', 'efsi-poor', 'efsi-good', 'efsi-clean');
-      dirEl.classList.remove('efsi-critical', 'efsi-warning', 'efsi-poor', 'efsi-good', 'efsi-clean');
-      pctEl.classList.add(cls);
-      dirEl.classList.add(cls);
-
-      // Normalize arrow
+      // Arrow and percentage stay green by .efsi-status-line CSS.
+      pctEl.classList.remove('efsi-warning', 'efsi-low', 'efsi-normal', 'efsi-good');
+      dirEl.classList.remove('efsi-warning', 'efsi-low', 'efsi-normal', 'efsi-good');
       dirEl.textContent = arrow;
     }
   }
-  
-  // Call tick drawing + EFSI coloring after DOM loads
-  document.addEventListener('DOMContentLoaded', function() {
-    drawGaugeTicks();
-    applyEfsiColors();
-  });
 
   // Navigation functions for pattern images and detail views
-  // Convert transformer name to filename-safe ID.
-  // Prefer the hidden xfmr{N}-code span if present so display names can differ from meter/source naming.
-  function getTransformerFileId(xfmrNum, transformerName) {
-    try {
-      const codeEl = document.getElementById(`xfmr${xfmrNum}-code`);
-      const code = codeEl ? codeEl.textContent.trim() : '';
-      if (code) return code;
-    } catch (e) {}
-
-    // Fallback: derive from visible name
-    const tidMatch = (transformerName || '').match(/^(T\d+)/);
+  // Convert transformer name to filename-safe ID (e.g., "Deli F" -> "DeliF", "T10 AirChiller" -> "T10")
+  function getTransformerFileId(transformerName) {
+    // For T## format, extract just the T## part
+    const tidMatch = transformerName.match(/^(T\d+)/);
     if (tidMatch) return tidMatch[1];
-    return (transformerName || '').replace(/\s+/g, '');
+    // For Rendering style, map to Rend# filename base
+    const renderingMatch = transformerName.match(/rendering[-\s]*(\d+)/i);
+    if (renderingMatch) return `Rend${renderingMatch[1]}`;
+    // For other names (e.g., "Deli F"), remove spaces and use as-is
+    return transformerName.replace(/\s+/g, '');
   }
 
-  // Get month suffix from displayed month-year (e.g., "January 2026" -> "jan26")
+  // Get month suffix from displayed month-year.
+  // Most pattern naming is short form (e.g., "January 2026" -> "jan26").
+  // Some legacy folders used long form ("jan2026"), so viewPattern will fall back automatically.
   function getMonthSuffix() {
     const monthYearEl = document.getElementById('month-year');
     if (monthYearEl) {
@@ -2120,14 +2303,306 @@
     return 'jan26'; // fallback
   }
 
-  // Pattern images are case-sensitive on GitHub Pages.
-  // For Rendering groups we intentionally store pattern PNGs as Rend1*, Rend2*, Rend3*.
-  // This keeps narrative/audio IDs (REND1/2/3) independent from PNG naming.
-  function getPatternImageId(tid) {
-    const m = (tid || '').match(/^REND(\d+)$/i);
-    if (m) return `Rend${m[1]}`;
-    return tid;
+  // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
+  function uniqueRoutingValues(values) {
+    const out = [];
+    const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
   }
+
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
+    if (tMatch) {
+      const t = tMatch[1];
+      return {
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+      };
+    }
+
+    // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
+    if (ncdcMatch) {
+      const ncdc = ncdcMatch[1];
+      return {
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+      };
+    }
+
+    // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
+    if (renderingMatch) {
+      const n = renderingMatch[1];
+      return {
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+      };
+    }
+
+    // Generic numeric prefixes like "ABC1..."
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
+    if (baseMatch) {
+      const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
+      return {
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
+      };
+    }
+
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
+  }
+
+  function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
+    const out = [];
+    const seen = new Set();
+    const exts = (extensions && extensions.length) ? extensions : ['png'];
+    const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
+    fileIds.forEach(id => {
+      prefixList.forEach(prefix => {
+        exts.forEach(ext => {
+          [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
+            if (!seen.has(fn)) {
+              seen.add(fn);
+              out.push(`Patterns/${fn}`);
+            }
+          });
+        });
+      });
+    });
+    return out;
+  }
+
+  function attachPatternFallback(imgEl, candidates, patternLabel, options = {}) {
+    if (!imgEl || !candidates || !candidates.length) {
+      if (options && typeof options.onNotFound === 'function') {
+        options.onNotFound(imgEl);
+      }
+      return;
+    }
+    let idx = 0;
+    const showError = options.showError !== false;
+    const applySrc = () => { imgEl.src = candidates[idx]; };
+    imgEl.onerror = function() {
+      idx += 1;
+      if (idx < candidates.length) {
+        applySrc();
+      } else {
+        if (typeof options.onNotFound === 'function') {
+          options.onNotFound(this);
+        }
+        if (showError) {
+          this.parentElement.innerHTML = `<p style='color:#f87171; text-align:center; font-weight:700;'>Patterns are currently unavailable.</p>`;
+        }
+      }
+    };
+    applySrc();
+  }
+
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
+  function updatePatternBaseScale() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
+    if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
+      state.baseScale = 1;
+      return;
+    }
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
+    }
+  }
+
+  function getPatternRenderScale() {
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
+  }
+
+  function clampPatternImagePosition() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
+    if (scaledWidth <= viewportWidth) {
+      state.translateX = (viewportWidth - scaledWidth) / 2;
+    } else {
+      const minX = viewportWidth - scaledWidth;
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
+    }
+    if (scaledHeight <= viewportHeight) {
+      state.translateY = (viewportHeight - scaledHeight) / 2;
+    } else {
+      const minY = viewportHeight - scaledHeight;
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
+    }
+  }
+
+  function applyPatternImageTransform() {
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
+    }
+  }
+
+  function resetPatternImageView() {
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
+    updatePatternBaseScale();
+    state.translateX = 0;
+    state.translateY = 0;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function handlePatternImageWheel(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    event.preventDefault();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
+    const pointerX = event.clientX - rect.left;
+    const pointerY = event.clientY - rect.top;
+    const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
+    const currentRenderScale = getPatternRenderScale();
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
+    const scaleRatio = nextRenderScale / currentRenderScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function startPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function movePatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function stopPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
+      try {
+        state.viewport.releasePointerCapture(event.pointerId);
+      } catch (_) {}
+    }
+  }
+
+  function initializePatternImageView() {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
+      resetPatternImageView();
+    });
+    resetPatternImageView();
+  }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
 
   function viewPattern(transformerId, type) {
     try {
@@ -2138,58 +2613,83 @@
       const transformerName = nameElement.textContent.trim();
       if (!transformerName) return;
 
-      // Use helper function to get filename-safe transformer ID (prefer hidden xfmr{N}-code)
-      const tid = getTransformerFileId(xfmrNum, transformerName);
+      // Use routing helper to resolve filename-safe transformer IDs
+      const routing = getTransformerRoutingInfo(transformerName);
 
       // Get month suffix dynamically from the displayed month-year
-      const monthSuffix = getMonthSuffix();
+      const monthSuffixShort = getMonthSuffix(); // e.g., jan26
+      const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
-      // Prefix mapping: b=Baseline, bt=Base-Target, m=MPTS Variables, s=Solution, v=Voltage
-      let prefix = 'b';
+      // Prefix mapping:
+      // baseline -> bt first, then b fallback
+      // mpts -> s first, then m fallback
+      // mpts-vars -> bt
+      // voltage -> v
+      let prefixCandidates = ['bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefix = 's'; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefix = 'm'; patternLabel = 'MPTS Variables'; }
-      else if (type === 'voltage') { prefix = 'v'; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
 
-      // Simple filename: tid + prefix + month (no PF needed)
-      const imgTid = getPatternImageId(tid);
-      const filename = `${imgTid}${prefix}_${monthSuffix}.png`;
-      const patternPath = `Patterns/${filename}`;
+      // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
+      let candidates = buildPatternCandidates(
+        routing.fileIds,
+        prefixCandidates,
+        monthSuffixShort,
+        monthSuffixLong,
+        ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']
+      );
 
       // Modal elements
       const modal = document.getElementById('patternModal');
       const modalTitle = document.getElementById('patternModalTitle');
       const modalBody = document.getElementById('patternModalBody');
-
-      // Baseline/MPTS views: show the per-site "How to Read Chart" overview button.
+      const audioBtn = document.getElementById('narrativeAudioBtn');
+      if (audioBtn) audioBtn.style.display = 'none';
       const unityBriefBtn = document.getElementById('unityBriefBtn');
       const unityExplainsBtn = document.getElementById('unityExplainsBtn');
       const unityHowToBtn = document.getElementById('unityHowToBtn');
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
       if (unityHowToBtn) {
-        const showHowTo = (type === 'baseline' || type === 'mpts');
-        const isSavingsMode = type === 'mpts';
-        unityHowToBtn.style.display = showHowTo ? 'inline-block' : 'none';
-        unityHowToBtn.dataset.chartMode = showHowTo ? (isSavingsMode ? 'savings' : 'waste') : '';
-        unityHowToBtn.textContent = isSavingsMode ? '🎧 How to Read the Savings Chart' : '🎧 How to Read the Waste Chart';
-        unityHowToBtn.title = unityHowToBtn.textContent;
+        if (type === 'baseline') {
+          unityHowToBtn.textContent = '🎧 How to Read Waste';
+          currentHowToPath = `Patterns/${routing.keys[0]}_waste_howto.mp3`;
+          unityHowToBtn.style.display = 'inline-block';
+        } else if (type === 'mpts') {
+          unityHowToBtn.textContent = '🎧 How to Read Savings';
+          currentHowToPath = `Patterns/${routing.keys[0]}_savings_howto.mp3`;
+          unityHowToBtn.style.display = 'inline-block';
+        } else {
+          currentHowToPath = '';
+          unityHowToBtn.style.display = 'none';
+        }
       }
-
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
-      // Render with strict red-flag if missing
+      // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
+      clearPatternImageView();
       modalBody.innerHTML = `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen('${patternPath}', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="${patternPath}" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
-                 onclick="showPatternFullscreen('${patternPath}', '${transformerName} ${patternLabel}')"
-                 onerror="this.parentElement.innerHTML='<p style=\'color:#f87171; text-align:center; font-weight:700;\'>Pattern not found: ${filename}. Check Patterns folder.</p>';">
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
+          </div>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
+                 onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+            <div class="pattern-view-actions">
+              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+            </div>
           </div>
         </div>`;
 
+      initializePatternImageView();
+      attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
     } catch (error) {
       console.error('Error in viewPattern:', error);
@@ -2250,26 +2750,15 @@
     if (!transformerName) return;
     
     // Convert transformer name to SplitView filename format
-    // Prefer the hidden xfmr{N}-code where possible so display names can vary without breaking routing.
     // For T## names: "T10 Air Chiller" -> "T10.AirChiller"
     // For other names: "Deli F" -> "Deli-F" (hyphenated)
-    let formattedName = '';
-
-    // Special-case: Rendering groups are stored as "Rendering-{n}" splitview names.
-    try {
-      const code = document.getElementById(`xfmr${xfmrNum}-code`)?.textContent.trim() || '';
-      const m = code.match(/^REND(\d+)$/i);
-      if (m) formattedName = `Rendering-${m[1]}`;
-    } catch (e) {}
-
-    if (!formattedName) {
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (tidMatch) {
-        formattedName = transformerName.replace(/\s+/g, '').replace(/^(T\d+)/, '$1.');
-      } else {
-        // For non-T## names, use hyphen format (e.g., "Deli F" -> "Deli-F")
-        formattedName = transformerName.replace(/\s+/g, '-');
-      }
+    let formattedName;
+    const tidMatch = transformerName.match(/^(T\d+)/);
+    if (tidMatch) {
+      formattedName = transformerName.replace(/\s+/g, '').replace(/^(T\d+)/, '$1.');
+    } else {
+      // For non-T## names, use hyphen format (e.g., "Deli F" -> "Deli-F")
+      formattedName = transformerName.replace(/\s+/g, '-');
     }
     
     const periodMatch = document.getElementById('param-period')?.textContent.match(/c\.(\d{6}-\d{6})/);
@@ -2281,54 +2770,42 @@
     // Navigate to split-view page
     // Format: SplitView-{type}-{transformer}-{period}.html?summary={current_summary_board}
     const splitViewFile = `SplitView-${detailType}-${formattedName}-${period}.html`;
-    window.location.href = `${splitViewFile}?summary=${currentFilename}`;
+    window.location.href = `${splitViewFile}?summary=${encodeURIComponent(currentFilename)}`;
   }
 
   // Embedded pattern data to avoid CORS issues with file:// protocol
-  // Injected by working_renderer.py at generation time.
-  const PATTERN_DATA = {
-  "last_updated": "2026-02-26 09:47:19",
-  "analysis_period": "260101-260131",
-  "transformers": {
-    "REND1": {
-      "pattern_interpretation": "PART 1: CURRENT STATE\nWelcome. I\u2019m Unity.  \nYou\u2019re looking at your January baseline energy field for this transformer \u2014 the full rectangle is the entire month, left to right from Jan 1 to Jan 31, and every vertical slice is a day. The stacked colors are your energy layers: dark blue at the top is what the utility is supplying in kVA, light blue is what you\u2019re actually converting into useful work in kW, and the green layer at the bottom is reactive demand \u2014 the part that creates stress and heat without doing productive work. The orange line riding over the top is your power factor.\n\nNow, I want you to find the blue dashed target line in the chart body \u2014 it\u2019s labeled in a little blue box as your \u201cSupply\u201d baseline. On this view, I\u2019m not seeing that blue \u201cSupply: ____ kVA\u201d label clearly enough to read with confidence, so I\u2019m going to anchor our baseline discussion to the hard header values you *can* see: your peak demand is **1347.0 kW**, your average active load is about **1.0 MW**, and your power factor is **82.6%**. In other words, even when production looks steady, a meaningful chunk of what you\u2019re paying for is not turning into work.\n\nAs you scan across the month, you can see a repeating weekly rhythm \u2014 higher weekday blocks and lower weekend blocks. But there are also multiple mid\u2011week dropouts where the supplied and consumed layers collapse sharply for a short window \u2014 that\u2019s downtime behavior inside what should be production days. Visually, I\u2019m counting **about 6 weekday days** where your peaks look clearly strong, and **about 16 weekday days** where you\u2019re materially under that expected production height, plus the remaining days in mixed or partial performance. Net-net, you didn\u2019t \u201cmiss\u201d because the plant had no power \u2014 you missed because your field spent too many weekday hours running under its intended level, while still carrying a heavy reactive burden.\n\nAnd that reactive burden is not subtle. In your header, the reactive section shows **706.8 kVAR** average, and \u2014 this is the one that matters for equipment sizing \u2014 **1150.1 kVAR MAX**. That peak reactive demand is why your power factor sits at **82.6%**, and it\u2019s why your system runs hotter and harder than it needs to.\n\nLet\u2019s translate that into business impact you can feel. On the right side, you\u2019re seeing **Total Wasted: $556,208 per year**. You\u2019re also carrying a **thermal burden of 817,853 BTU/hr**, and your \u201ccooling and decay\u201d penalty is running **$21.43 per hour**, which is **119.6 kW** of continuous overhead. So even on \u201cnormal\u201d days, you\u2019re spending real money just to handle the byproducts of inefficiency.  \n\nNow let me show you how we clean this up with MPTS \u2014 and why the sizing starts with that **1150.1 kVAR MAX** number you just saw.\n\n---\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now you scroll to the MPTS solution, and this is where the field starts behaving like it should.  \nThe first step is sizing to your peak reactive demand. In your REACTIVE header tile, the small line reads **1150.1 kVAR MAX**. That\u2019s the peak waste we have to cancel, not the average.\n\nUnity\u2019s MPTS units come in two standard blocks: **H240 at 200 kVAR** and **H490 at 400 kVAR**. Since **1150.1 kVAR** is above 800, this is beyond the off-the-shelf \u201ctwo H490\u201d range \u2014 it requires a **custom configuration** so you\u2019re not under-covered on your worst reactive events. A straightforward build is **3 \u00d7 H490 units**: that gives you **1200 kVAR** of capacity, enough to cover your **1150.1 kVAR** peak with headroom. Installed cost is simple and transparent: **3 units \u00d7 $200,000 each = $600,000 installed**.\n\nHere\u2019s what that equipment is doing in plain language. Your motors and inductive loads pull current that\u2019s out of phase with voltage \u2014 that\u2019s reactive power. MPTS injects the equal-and-opposite reactive component, in real time, so the transformer and utility stop carrying that \u201cextra\u201d current. That raises your power factor from today\u2019s **82.6%** up to the **99.5%** Unity target. In the chart, what that means is the green layer collapses \u2014 not because production drops, but because waste drops.\n\nNow let\u2019s move into what you should expect to see in the before-and-after numbers \u2014 and what that\u2019s worth in dollars.\n\n---\n\nPART 3: EXPECTED RESULTS\nNow look at the post\u2011MPTS field. This is what \u201charmonized\u201d looks like.  \nYour production shape can stay the same \u2014 but the waste layer is stripped out. The supplied kVA stops being inflated by reactive demand, the orange power factor line climbs and stabilizes near **99.5%**, and the entire transformer runs cooler and calmer.\n\nLet\u2019s compare the key baseline numbers you just saw. Baseline power factor was **82.6%** with reactive peaks up to **1150.1 kVAR**. With properly sized MPTS, that reactive component is actively canceled during peak moments, which removes the driver behind overheating, nuisance stress, and that constant drag on your electrical capacity.\n\nNow let\u2019s do the money. In your baseline image, your totals show:  \n- **Total Wasted: $556,208 per year**  \n- **Cooling and decay costs: $21.43 per hour**  \n\nIf we conservatively assume MPTS eliminates **90%** of that electrical waste and **50%** of the cooling/decay penalty \u2014 because you\u2019re no longer forcing extra current through the transformer and conductors \u2014 your savings look like this:  \n- Electrical waste savings: **0.90 \u00d7 $556,208/yr = $500,587/yr**  \n- Cooling/decay savings: **0.50 \u00d7 $21.43/hr = $10.72/hr** \u2192 **$10.72 \u00d7 8760 = $93,907/yr**  \nSo total savings: **$500,587 + $93,907 = $594,494 per year**.\n\nConvert that to the cadence you manage by:  \n- Hourly savings: **$594,494 / 8760 \u2248 $67.9 per hour**  \n- Monthly savings: **$67.9 \u00d7 730 \u2248 $49,600 per month**  \n- Annual savings: **\u2248 $594,500 per year**\n\nAnd now ROI. With the correctly covered solution \u2014 **3 \u00d7 H490 = $600,000 installed** \u2014 your payback is:  \n- **$600,000 / $49,600 per month \u2248 12.1 months**.\n\nAfter that first year, you\u2019re not \u201choping\u201d for savings \u2014 you\u2019re booking them. Lower current, lower heat, higher usable capacity, cleaner power factor, and a calmer transformer that\u2019s no longer being asked to carry waste.  \n\nThat\u2019s what electromagnetic stewardship looks like. And that\u2019s the Unity standard: make your field efficient, measurable, and sustainably profitable.",
-      "pattern_summary": [
-        "Peak reactive demand: 1,150 kVAR",
-        "Annual savings potential: $556,208",
-        "Significant cost savings projected"
-      ],
-      "pattern_part1": "Welcome. I\u2019m Unity.  \nYou\u2019re looking at your January baseline energy field for this transformer \u2014 the full rectangle is the entire month, left to right from Jan 1 to Jan 31, and every vertical slice is a day. The stacked colors are your energy layers: dark blue at the top is what the utility is supplying in kVA, light blue is what you\u2019re actually converting into useful work in kW, and the green layer at the bottom is reactive demand \u2014 the part that creates stress and heat without doing productive work. The orange line riding over the top is your power factor.\n\nNow, I want you to find the blue dashed target line in the chart body \u2014 it\u2019s labeled in a little blue box as your \u201cSupply\u201d baseline. On this view, I\u2019m not seeing that blue \u201cSupply: ____ kVA\u201d label clearly enough to read with confidence, so I\u2019m going to anchor our baseline discussion to the hard header values you *can* see: your peak demand is **1347.0 kW**, your average active load is about **1.0 MW**, and your power factor is **82.6%**. In other words, even when production looks steady, a meaningful chunk of what you\u2019re paying for is not turning into work.\n\nAs you scan across the month, you can see a repeating weekly rhythm \u2014 higher weekday blocks and lower weekend blocks. But there are also multiple mid\u2011week dropouts where the supplied and consumed layers collapse sharply for a short window \u2014 that\u2019s downtime behavior inside what should be production days. Visually, I\u2019m counting **about 6 weekday days** where your peaks look clearly strong, and **about 16 weekday days** where you\u2019re materially under that expected production height, plus the remaining days in mixed or partial performance. Net-net, you didn\u2019t \u201cmiss\u201d because the plant had no power \u2014 you missed because your field spent too many weekday hours running under its intended level, while still carrying a heavy reactive burden.\n\nAnd that reactive burden is not subtle. In your header, the reactive section shows **706.8 kVAR** average, and \u2014 this is the one that matters for equipment sizing \u2014 **1150.1 kVAR MAX**. That peak reactive demand is why your power factor sits at **82.6%**, and it\u2019s why your system runs hotter and harder than it needs to.\n\nLet\u2019s translate that into business impact you can feel. On the right side, you\u2019re seeing **Total Wasted: $556,208 per year**. You\u2019re also carrying a **thermal burden of 817,853 BTU/hr**, and your \u201ccooling and decay\u201d penalty is running **$21.43 per hour**, which is **119.6 kW** of continuous overhead. So even on \u201cnormal\u201d days, you\u2019re spending real money just to handle the byproducts of inefficiency.  \n\nNow let me show you how we clean this up with MPTS \u2014 and why the sizing starts with that **1150.1 kVAR MAX** number you just saw.\n\n---",
-      "pattern_part2": "Alright \u2014 now you scroll to the MPTS solution, and this is where the field starts behaving like it should.  \nThe first step is sizing to your peak reactive demand. In your REACTIVE header tile, the small line reads **1150.1 kVAR MAX**. That\u2019s the peak waste we have to cancel, not the average.\n\nUnity\u2019s MPTS units come in two standard blocks: **H240 at 200 kVAR** and **H490 at 400 kVAR**. Since **1150.1 kVAR** is above 800, this is beyond the off-the-shelf \u201ctwo H490\u201d range \u2014 it requires a **custom configuration** so you\u2019re not under-covered on your worst reactive events. A straightforward build is **3 \u00d7 H490 units**: that gives you **1200 kVAR** of capacity, enough to cover your **1150.1 kVAR** peak with headroom. Installed cost is simple and transparent: **3 units \u00d7 $200,000 each = $600,000 installed**.\n\nHere\u2019s what that equipment is doing in plain language. Your motors and inductive loads pull current that\u2019s out of phase with voltage \u2014 that\u2019s reactive power. MPTS injects the equal-and-opposite reactive component, in real time, so the transformer and utility stop carrying that \u201cextra\u201d current. That raises your power factor from today\u2019s **82.6%** up to the **99.5%** Unity target. In the chart, what that means is the green layer collapses \u2014 not because production drops, but because waste drops.\n\nNow let\u2019s move into what you should expect to see in the before-and-after numbers \u2014 and what that\u2019s worth in dollars.\n\n---",
-      "pattern_part3": "Now look at the post\u2011MPTS field. This is what \u201charmonized\u201d looks like.  \nYour production shape can stay the same \u2014 but the waste layer is stripped out. The supplied kVA stops being inflated by reactive demand, the orange power factor line climbs and stabilizes near **99.5%**, and the entire transformer runs cooler and calmer.\n\nLet\u2019s compare the key baseline numbers you just saw. Baseline power factor was **82.6%** with reactive peaks up to **1150.1 kVAR**. With properly sized MPTS, that reactive component is actively canceled during peak moments, which removes the driver behind overheating, nuisance stress, and that constant drag on your electrical capacity.\n\nNow let\u2019s do the money. In your baseline image, your totals show:  \n- **Total Wasted: $556,208 per year**  \n- **Cooling and decay costs: $21.43 per hour**  \n\nIf we conservatively assume MPTS eliminates **90%** of that electrical waste and **50%** of the cooling/decay penalty \u2014 because you\u2019re no longer forcing extra current through the transformer and conductors \u2014 your savings look like this:  \n- Electrical waste savings: **0.90 \u00d7 $556,208/yr = $500,587/yr**  \n- Cooling/decay savings: **0.50 \u00d7 $21.43/hr = $10.72/hr** \u2192 **$10.72 \u00d7 8760 = $93,907/yr**  \nSo total savings: **$500,587 + $93,907 = $594,494 per year**.\n\nConvert that to the cadence you manage by:  \n- Hourly savings: **$594,494 / 8760 \u2248 $67.9 per hour**  \n- Monthly savings: **$67.9 \u00d7 730 \u2248 $49,600 per month**  \n- Annual savings: **\u2248 $594,500 per year**\n\nAnd now ROI. With the correctly covered solution \u2014 **3 \u00d7 H490 = $600,000 installed** \u2014 your payback is:  \n- **$600,000 / $49,600 per month \u2248 12.1 months**.\n\nAfter that first year, you\u2019re not \u201choping\u201d for savings \u2014 you\u2019re booking them. Lower current, lower heat, higher usable capacity, cleaner power factor, and a calmer transformer that\u2019s no longer being asked to carry waste.  \n\nThat\u2019s what electromagnetic stewardship looks like. And that\u2019s the Unity standard: make your field efficient, measurable, and sustainably profitable.",
-      "last_analyzed": "2026-02-26 09:47:19"
-    },
-    "REND2": {
-      "pattern_interpretation": "PART 1: CURRENT STATE\nWelcome. I\u2019m Unity.  \nYou\u2019re looking at your January baseline energy field for the Livingston HQ facility\u201431 days, left to right, at one\u2011minute resolution. Up in the header is the \u201cwhat\u201d of your month\u2014voltage, current, power factor, reactive load. Over on the right is the \u201cso what\u201d\u2014your waste and your dollars. And down here in the big rectangle, this stacked area chart is your complete electrical behavior for the month.\n\nNow, as you read this chart, height is load magnitude. Taller sections mean higher demand. The colors matter. The green layer at the bottom is reactive kVAR\u2014energy you\u2019re paying for that isn\u2019t doing productive work. The light blue is real consumed kW\u2014useful work. The dark blue is supplied kVA\u2014what the transformer and utility had to deliver. And that orange line riding over the top is your power factor.\n\nHere\u2019s what jumps out immediately from your baseline header: your peak demand is **1,439.8 kW**. Your average voltage is **475.5 volts**, and your power factor is sitting at **70.8%**\u2014that\u2019s low, and it explains why the green layer stays so thick.\n\nNow let me orient you to operations. Across the month, I\u2019m seeing roughly four full weekly cycles\u2014weekday production blocks with weekend drop-downs. Those weekend low valleys are expected\u2014cleaning and maintenance patterns. On weekdays, your supplied kVA repeatedly climbs into the **1,600 to 2,000 kVA** range, and your reactive kVAR layer rises right along with it, which is the signature of inductive motor load pulling your field out of alignment.\n\nLet me count the performance pattern the way a facility manager needs it. Visually scanning Jan 1 through Jan 31, I see about **17 weekday production days** that reach their normal high operating band, and about **6 weekday days** that clearly under-run that pattern\u2014where the stack height is noticeably depressed compared to adjacent weekdays. I also see at least **two sharp weekday drop events** where the field collapses close to the floor\u2014around the middle of the month and again closer to the last third\u2014those look like downtime or curtailed production windows, followed by catch-up days where the stack height rebounds.\n\nWhen you translate that into electrical operations performance\u2014your \u201cdid we run the field the way we intended to run it?\u201d\u2014you\u2019re not short on energy. You\u2019re short on *quality* of energy. Your power factor at **70.8%** means a big portion of what you\u2019re moving through that 2500 kVA transformer is waste circulation\u2014reactive flow that heats conductors, loads the transformer, and inflates kVA without increasing production.\n\nAnd the business impact is already printed on your screen. Your **total wasted value is $1,010,922 per year**. You\u2019re also carrying **cooling and decay costs of $38.86 per hour**, which the system translates to about **218.3 kW** of continuous cooling burden. So yes\u2014your field is running, but it\u2019s running hot and heavy.\n\nNow, let me show you how we correct the field\u2014without asking you to change your process schedule\u2014by targeting the exact source of that green layer.\n\n---\n\nPART 2: MPTS SOLUTION\nAlright\u2014now you scroll, and this is where the fix becomes very concrete.  \nTo size MPTS correctly, I\u2019m not interested in the average reactive number. I\u2019m looking for your peak reactive demand\u2014the one labeled **kVAR MAX** in the REACTIVE tile.\n\nIn your baseline header, I see **966.4 kVAR** as the main reactive figure, and underneath it the number we size to: **1,372.4 kVAR MAX**. That peak is the moment your field was most out of phase\u2014your worst case.\n\nSo here\u2019s the sizing math, plain and simple.  \nYour peak is **1,372.4 kVAR**. An H490 unit provides **400 kVAR**. We never undersize, so we round up.  \n1,372.4 divided by 400 is 3.43, which means you need **4 \u00d7 H490** units to fully cover the peak. That gives you **1,600 kVAR** of capacity\u2014enough headroom to stay stable during spikes. Installed cost is **$200,000 per unit**, so **4 units is $800,000 installed**.\n\nWhat does MPTS actually do for you? It injects compensating reactive power\u2014right phase, right time\u2014so your motors still do the same work, but the transformer stops hauling that extra reactive baggage. In the chart language you\u2019re already looking at, it collapses that green kVAR layer, lifts your power factor from **70.8%** to the **99.5%** target, and it reduces heat generation across the system\u2014because you\u2019re no longer turning reactive circulation into thermal stress.\n\nNow let\u2019s look at what that means in results\u2014visually first, and then financially.\n\n---\n\nPART 3: EXPECTED RESULTS\nNow look at the \u201cafter\u201d field\u2014this is what your month looks like once MPTS is in place.  \nThe most important visual change is that the chart tightens up. The green waste layer that used to sit under everything gets dramatically reduced, because we\u2019re cancelling reactive flow instead of feeding it through the transformer. And the orange power factor line stabilizes near the top\u2014because the field is finally aligned.\n\nLet\u2019s anchor this in your baseline numbers. You started with **70.8% power factor**, and a peak reactive demand of **1,372.4 kVAR MAX**. That\u2019s why your system showed **$1,010,922 per year** in total wasted value, plus **$38.86 per hour** in cooling and decay cost. You were paying twice\u2014once in electrical inefficiency, and again to remove the heat that inefficiency creates.\n\nNow the savings math. I\u2019m going to be conservative and use only the values you can already see on your baseline screen as the \u201csavings pool,\u201d because those are directly tied to reactive waste and heat.  \nIf we eliminate the bulk of that waste, your recoverable value is approximately:\n\n- **Energy waste value:** $1,010,922 per year \u00f7 8,760 hours \u2248 **$115.40 per hour**  \n- **Cooling and decay costs:** **$38.86 per hour**  \n\nAdd those together and you\u2019re at about **$154.26 per hour** in combined savings potential.\n\nNow let\u2019s extend it:  \n- Monthly savings: $154.26 \u00d7 730 hours \u2248 **$112,610 per month**  \n- Annual savings: $154.26 \u00d7 8,760 hours \u2248 **$1,351,318 per year**\n\nYour installed MPTS cost from the sizing we just did is **$800,000**.  \nPayback time is $800,000 \u00f7 $1,351,318 per year \u2248 **0.59 years**, or about **7.1 months**.\n\nAnd after payback, this isn\u2019t a one-time win. It\u2019s an ongoing correction to how your transformer carries load\u2014lower kVA strain, lower heat, cleaner power factor, and a calmer, more stable electrical field day after day.\n\nThat\u2019s electromagnetic stewardship. You keep the same operation\u2014but you stop paying for waste.",
-      "pattern_summary": [
-        "Peak reactive demand: 966 kVAR",
-        "Annual savings potential: $1,010,922",
-        "Significant cost savings projected"
-      ],
-      "pattern_part1": "Welcome. I\u2019m Unity.  \nYou\u2019re looking at your January baseline energy field for the Livingston HQ facility\u201431 days, left to right, at one\u2011minute resolution. Up in the header is the \u201cwhat\u201d of your month\u2014voltage, current, power factor, reactive load. Over on the right is the \u201cso what\u201d\u2014your waste and your dollars. And down here in the big rectangle, this stacked area chart is your complete electrical behavior for the month.\n\nNow, as you read this chart, height is load magnitude. Taller sections mean higher demand. The colors matter. The green layer at the bottom is reactive kVAR\u2014energy you\u2019re paying for that isn\u2019t doing productive work. The light blue is real consumed kW\u2014useful work. The dark blue is supplied kVA\u2014what the transformer and utility had to deliver. And that orange line riding over the top is your power factor.\n\nHere\u2019s what jumps out immediately from your baseline header: your peak demand is **1,439.8 kW**. Your average voltage is **475.5 volts**, and your power factor is sitting at **70.8%**\u2014that\u2019s low, and it explains why the green layer stays so thick.\n\nNow let me orient you to operations. Across the month, I\u2019m seeing roughly four full weekly cycles\u2014weekday production blocks with weekend drop-downs. Those weekend low valleys are expected\u2014cleaning and maintenance patterns. On weekdays, your supplied kVA repeatedly climbs into the **1,600 to 2,000 kVA** range, and your reactive kVAR layer rises right along with it, which is the signature of inductive motor load pulling your field out of alignment.\n\nLet me count the performance pattern the way a facility manager needs it. Visually scanning Jan 1 through Jan 31, I see about **17 weekday production days** that reach their normal high operating band, and about **6 weekday days** that clearly under-run that pattern\u2014where the stack height is noticeably depressed compared to adjacent weekdays. I also see at least **two sharp weekday drop events** where the field collapses close to the floor\u2014around the middle of the month and again closer to the last third\u2014those look like downtime or curtailed production windows, followed by catch-up days where the stack height rebounds.\n\nWhen you translate that into electrical operations performance\u2014your \u201cdid we run the field the way we intended to run it?\u201d\u2014you\u2019re not short on energy. You\u2019re short on *quality* of energy. Your power factor at **70.8%** means a big portion of what you\u2019re moving through that 2500 kVA transformer is waste circulation\u2014reactive flow that heats conductors, loads the transformer, and inflates kVA without increasing production.\n\nAnd the business impact is already printed on your screen. Your **total wasted value is $1,010,922 per year**. You\u2019re also carrying **cooling and decay costs of $38.86 per hour**, which the system translates to about **218.3 kW** of continuous cooling burden. So yes\u2014your field is running, but it\u2019s running hot and heavy.\n\nNow, let me show you how we correct the field\u2014without asking you to change your process schedule\u2014by targeting the exact source of that green layer.\n\n---",
-      "pattern_part2": "Alright\u2014now you scroll, and this is where the fix becomes very concrete.  \nTo size MPTS correctly, I\u2019m not interested in the average reactive number. I\u2019m looking for your peak reactive demand\u2014the one labeled **kVAR MAX** in the REACTIVE tile.\n\nIn your baseline header, I see **966.4 kVAR** as the main reactive figure, and underneath it the number we size to: **1,372.4 kVAR MAX**. That peak is the moment your field was most out of phase\u2014your worst case.\n\nSo here\u2019s the sizing math, plain and simple.  \nYour peak is **1,372.4 kVAR**. An H490 unit provides **400 kVAR**. We never undersize, so we round up.  \n1,372.4 divided by 400 is 3.43, which means you need **4 \u00d7 H490** units to fully cover the peak. That gives you **1,600 kVAR** of capacity\u2014enough headroom to stay stable during spikes. Installed cost is **$200,000 per unit**, so **4 units is $800,000 installed**.\n\nWhat does MPTS actually do for you? It injects compensating reactive power\u2014right phase, right time\u2014so your motors still do the same work, but the transformer stops hauling that extra reactive baggage. In the chart language you\u2019re already looking at, it collapses that green kVAR layer, lifts your power factor from **70.8%** to the **99.5%** target, and it reduces heat generation across the system\u2014because you\u2019re no longer turning reactive circulation into thermal stress.\n\nNow let\u2019s look at what that means in results\u2014visually first, and then financially.\n\n---",
-      "pattern_part3": "Now look at the \u201cafter\u201d field\u2014this is what your month looks like once MPTS is in place.  \nThe most important visual change is that the chart tightens up. The green waste layer that used to sit under everything gets dramatically reduced, because we\u2019re cancelling reactive flow instead of feeding it through the transformer. And the orange power factor line stabilizes near the top\u2014because the field is finally aligned.\n\nLet\u2019s anchor this in your baseline numbers. You started with **70.8% power factor**, and a peak reactive demand of **1,372.4 kVAR MAX**. That\u2019s why your system showed **$1,010,922 per year** in total wasted value, plus **$38.86 per hour** in cooling and decay cost. You were paying twice\u2014once in electrical inefficiency, and again to remove the heat that inefficiency creates.\n\nNow the savings math. I\u2019m going to be conservative and use only the values you can already see on your baseline screen as the \u201csavings pool,\u201d because those are directly tied to reactive waste and heat.  \nIf we eliminate the bulk of that waste, your recoverable value is approximately:\n\n- **Energy waste value:** $1,010,922 per year \u00f7 8,760 hours \u2248 **$115.40 per hour**  \n- **Cooling and decay costs:** **$38.86 per hour**  \n\nAdd those together and you\u2019re at about **$154.26 per hour** in combined savings potential.\n\nNow let\u2019s extend it:  \n- Monthly savings: $154.26 \u00d7 730 hours \u2248 **$112,610 per month**  \n- Annual savings: $154.26 \u00d7 8,760 hours \u2248 **$1,351,318 per year**\n\nYour installed MPTS cost from the sizing we just did is **$800,000**.  \nPayback time is $800,000 \u00f7 $1,351,318 per year \u2248 **0.59 years**, or about **7.1 months**.\n\nAnd after payback, this isn\u2019t a one-time win. It\u2019s an ongoing correction to how your transformer carries load\u2014lower kVA strain, lower heat, cleaner power factor, and a calmer, more stable electrical field day after day.\n\nThat\u2019s electromagnetic stewardship. You keep the same operation\u2014but you stop paying for waste.",
-      "last_analyzed": "2026-02-26 09:47:19"
-    },
-    "REND3": {
-      "pattern_interpretation": "PART 1: CURRENT STATE\nWelcome. I\u2019m Unity.  \nYou\u2019re looking at your January baseline energy field for the Livingston HQ facility\u201431 days, measured every minute\u2014so this rectangle is the whole month, left to right, Jan 1 through Jan 31. The stacked layers tell the story: dark blue is what you\u2019re being supplied in kVA, light blue is the real work you consume in kW, and that green layer at the bottom is reactive kVAR\u2014energy you pay for and heat you manage, but it doesn\u2019t do productive work. And that orange line riding across the top is your power factor.\n\nNow, I want you to find the blue dashed target line running across the chart body. That line is labeled \u201cSupply,\u201d and it\u2019s the baseline reference we judge everything against. In this view, that dashed supply line is sitting around the mid-band of your daily peaks\u2014so when your dark-blue top stays below it, you\u2019re running under your intended electrical posture for that period. When it rides above it, you\u2019re pushing harder than baseline.\n\nLet\u2019s walk the month visually. Your weekends show the expected behavior\u2014those short, low profiles that look like cleaning and maintenance. That part is normal. What matters is the Monday-through-Friday rhythm. Across the month, most weekdays are clustered in a fairly tight band, but I also see at least one clear downtime-style event early in the month\u2014right near the left edge\u2014where the supplied kVA collapses close to the floor for a stretch, and then the field snaps back. That\u2019s the kind of interruption that forces you to recover later with heavier days.\n\nNow zoom your attention to the header metrics. Your peak demand is 780.5 kW for the period, your average active load is 544.2 kW, and your power factor is 77.0%. That\u2019s the headline. A 77% power factor means a big slice of what you\u2019re drawing is non-productive current. And you can see that in the green layer: average reactive is 454.8 kVAR, and the reactive peaks as high as 874.7 kVAR MAX. That reactive demand doesn\u2019t make product\u2014it makes heat, it loads your transformer, and it forces the facility to carry extra electrical stress.\n\nAnd the money is already calling it out for you. On the right side, your total wasted value is showing $416,551 per year. You\u2019re also showing cooling-and-decay costs at $15.92 per hour, which the panel translates to about $139,424 per year. So even before we talk about operations, your baseline is telling us you\u2019re paying twice: once for waste in the electrical field, and again to remove the thermal burden that waste creates.\n\nSo here\u2019s the transition. Your field is stable enough to fix\u2014and it\u2019s expensive enough that fixing it matters. Now let me show you the MPTS solution and how we size it correctly for your real peak reactive demand.\n\nPART 2: MPTS SOLUTION\nAlright\u2014now we move from observation to correction.  \nIn the header, in the REACTIVE box, you\u2019ll see two numbers. The big number is your average reactive\u2014454.8 kVAR. That\u2019s not what we size to. The number that matters is the smaller line underneath: 874.7 kVAR MAX. That\u2019s your peak reactive demand\u2014the worst moment your system had to carry.\n\nNow, here\u2019s how we size MPTS. Our units come in two standard blocks: the H240 at 200 kVAR, and the H490 at 400 kVAR. With a peak of 874.7 kVAR, we don\u2019t undersize. We round up and cover the peak with headroom. Two H490 units gives you 800 kVAR\u2014not enough. So the correct standard configuration is three H490 units: 1,200 kVAR of capacity. That fully covers your 874.7 kVAR peak, and it gives you margin for production variability and future load.\n\nInstalled cost is straightforward: each H490 is $200,000 installed. Three units is $600,000.\n\nWhat MPTS actually does\u2014plain language\u2014is it supplies the reactive power locally, at the right phase angle, so your utility feed no longer has to haul that non-productive current through your transformer and conductors. In the chart terms: the green reactive layer collapses, and your power factor rises from today\u2019s 77% up to the 99.5% target. When that happens, your field stops \u201cfighting itself,\u201d and the electrical system runs cooler, cleaner, and more efficiently.\n\nNow let\u2019s look at what that means in the after-image\u2014what your field looks like when it\u2019s harmonized, and what that translates to in savings and payback.\n\nPART 3: EXPECTED RESULTS\nNow look at the after state\u2014this is the part I want you to feel immediately as you scroll.  \nThe shape of the month stays recognizable\u2014because your operation schedule is your operation schedule\u2014but the field becomes cleaner. The green reactive layer that was dragging along the bottom gets minimized, and the orange power-factor line stabilizes up near 99.5%. That\u2019s the visual signature of a corrected electrical posture: the same work, with less waste riding along for the trip.\n\nLet\u2019s tie it directly to your baseline dollars. In your current baseline, the \u201cEnergy Waste\u201d panel shows $21,693 for this dataset\u2014about $255 per hour. Separately, your cooling-and-decay costs are $15.92 per hour. Together, that\u2019s about $271 per hour of waste-driven cost pressure in this baseline view.\n\nWhen MPTS corrects the reactive demand, you\u2019re not just improving a score\u2014you\u2019re removing the source of that waste. So, conservatively, if we treat that combined $271 per hour as the addressable bucket, your savings math looks like this:  \nAbout $271 per hour.  \nThat\u2019s about $198,000 per month at 730 hours.  \nAnd about $2.37 million per year at 8,760 hours.\n\nNow compare that to the install. We sized you at three H490 units for a $600,000 installed total. With $2.37 million per year of savings, your simple payback is roughly 3 months\u2014right around 3.0 months when you divide $600,000 by about $197,000 per month.\n\nAnd after payback, the story changes from \u201cproject\u201d to \u201cpermanent advantage.\u201d Lower transformer stress, less heat, less distortion pressure, and a power factor that stays where it belongs\u2014near unity\u2014so your operation isn\u2019t paying to circulate waste.  \nThis is what electromagnetic stewardship looks like: same facility, same production intent\u2014cleaner field, lower cost, and a system that runs like it was designed to.",
-      "pattern_summary": [
-        "Power factor: 77.0% efficiency",
-        "Peak reactive demand: 875 kVAR",
-        "MPTS optimization recommended",
-        "Significant cost savings projected"
-      ],
-      "pattern_part1": "Welcome. I\u2019m Unity.  \nYou\u2019re looking at your January baseline energy field for the Livingston HQ facility\u201431 days, measured every minute\u2014so this rectangle is the whole month, left to right, Jan 1 through Jan 31. The stacked layers tell the story: dark blue is what you\u2019re being supplied in kVA, light blue is the real work you consume in kW, and that green layer at the bottom is reactive kVAR\u2014energy you pay for and heat you manage, but it doesn\u2019t do productive work. And that orange line riding across the top is your power factor.\n\nNow, I want you to find the blue dashed target line running across the chart body. That line is labeled \u201cSupply,\u201d and it\u2019s the baseline reference we judge everything against. In this view, that dashed supply line is sitting around the mid-band of your daily peaks\u2014so when your dark-blue top stays below it, you\u2019re running under your intended electrical posture for that period. When it rides above it, you\u2019re pushing harder than baseline.\n\nLet\u2019s walk the month visually. Your weekends show the expected behavior\u2014those short, low profiles that look like cleaning and maintenance. That part is normal. What matters is the Monday-through-Friday rhythm. Across the month, most weekdays are clustered in a fairly tight band, but I also see at least one clear downtime-style event early in the month\u2014right near the left edge\u2014where the supplied kVA collapses close to the floor for a stretch, and then the field snaps back. That\u2019s the kind of interruption that forces you to recover later with heavier days.\n\nNow zoom your attention to the header metrics. Your peak demand is 780.5 kW for the period, your average active load is 544.2 kW, and your power factor is 77.0%. That\u2019s the headline. A 77% power factor means a big slice of what you\u2019re drawing is non-productive current. And you can see that in the green layer: average reactive is 454.8 kVAR, and the reactive peaks as high as 874.7 kVAR MAX. That reactive demand doesn\u2019t make product\u2014it makes heat, it loads your transformer, and it forces the facility to carry extra electrical stress.\n\nAnd the money is already calling it out for you. On the right side, your total wasted value is showing $416,551 per year. You\u2019re also showing cooling-and-decay costs at $15.92 per hour, which the panel translates to about $139,424 per year. So even before we talk about operations, your baseline is telling us you\u2019re paying twice: once for waste in the electrical field, and again to remove the thermal burden that waste creates.\n\nSo here\u2019s the transition. Your field is stable enough to fix\u2014and it\u2019s expensive enough that fixing it matters. Now let me show you the MPTS solution and how we size it correctly for your real peak reactive demand.",
-      "pattern_part2": "Alright\u2014now we move from observation to correction.  \nIn the header, in the REACTIVE box, you\u2019ll see two numbers. The big number is your average reactive\u2014454.8 kVAR. That\u2019s not what we size to. The number that matters is the smaller line underneath: 874.7 kVAR MAX. That\u2019s your peak reactive demand\u2014the worst moment your system had to carry.\n\nNow, here\u2019s how we size MPTS. Our units come in two standard blocks: the H240 at 200 kVAR, and the H490 at 400 kVAR. With a peak of 874.7 kVAR, we don\u2019t undersize. We round up and cover the peak with headroom. Two H490 units gives you 800 kVAR\u2014not enough. So the correct standard configuration is three H490 units: 1,200 kVAR of capacity. That fully covers your 874.7 kVAR peak, and it gives you margin for production variability and future load.\n\nInstalled cost is straightforward: each H490 is $200,000 installed. Three units is $600,000.\n\nWhat MPTS actually does\u2014plain language\u2014is it supplies the reactive power locally, at the right phase angle, so your utility feed no longer has to haul that non-productive current through your transformer and conductors. In the chart terms: the green reactive layer collapses, and your power factor rises from today\u2019s 77% up to the 99.5% target. When that happens, your field stops \u201cfighting itself,\u201d and the electrical system runs cooler, cleaner, and more efficiently.\n\nNow let\u2019s look at what that means in the after-image\u2014what your field looks like when it\u2019s harmonized, and what that translates to in savings and payback.",
-      "pattern_part3": "Now look at the after state\u2014this is the part I want you to feel immediately as you scroll.  \nThe shape of the month stays recognizable\u2014because your operation schedule is your operation schedule\u2014but the field becomes cleaner. The green reactive layer that was dragging along the bottom gets minimized, and the orange power-factor line stabilizes up near 99.5%. That\u2019s the visual signature of a corrected electrical posture: the same work, with less waste riding along for the trip.\n\nLet\u2019s tie it directly to your baseline dollars. In your current baseline, the \u201cEnergy Waste\u201d panel shows $21,693 for this dataset\u2014about $255 per hour. Separately, your cooling-and-decay costs are $15.92 per hour. Together, that\u2019s about $271 per hour of waste-driven cost pressure in this baseline view.\n\nWhen MPTS corrects the reactive demand, you\u2019re not just improving a score\u2014you\u2019re removing the source of that waste. So, conservatively, if we treat that combined $271 per hour as the addressable bucket, your savings math looks like this:  \nAbout $271 per hour.  \nThat\u2019s about $198,000 per month at 730 hours.  \nAnd about $2.37 million per year at 8,760 hours.\n\nNow compare that to the install. We sized you at three H490 units for a $600,000 installed total. With $2.37 million per year of savings, your simple payback is roughly 3 months\u2014right around 3.0 months when you divide $600,000 by about $197,000 per month.\n\nAnd after payback, the story changes from \u201cproject\u201d to \u201cpermanent advantage.\u201d Lower transformer stress, less heat, less distortion pressure, and a power factor that stays where it belongs\u2014near unity\u2014so your operation isn\u2019t paying to circulate waste.  \nThis is what electromagnetic stewardship looks like: same facility, same production intent\u2014cleaner field, lower cost, and a system that runs like it was designed to.",
-      "last_analyzed": "2026-02-26 09:47:19"
-    }
-  }
+  // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
+  // from SET1_PatternAnalysisData.json (or an empty structure if not present).
+  let PATTERN_DATA = {
+  "transformers": {}
 };
+  let patternDataLoadPromise = null;
+  function hasPatternDataReady() {
+    return !!(PATTERN_DATA && PATTERN_DATA.transformers && Object.keys(PATTERN_DATA.transformers).length > 0);
+  }
+  async function ensurePatternDataReady() {
+    if (hasPatternDataReady()) return PATTERN_DATA;
+    if (patternDataLoadPromise) return patternDataLoadPromise;
+    patternDataLoadPromise = fetch('SET1_PatternAnalysisData.json', { cache: 'no-store' })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (data && data.transformers && Object.keys(data.transformers).length > 0) {
+          PATTERN_DATA = data;
+          console.log('Pattern data loaded from SET1_PatternAnalysisData.json');
+        } else {
+          console.warn('Pattern data JSON loaded but no transformer entries found.');
+        }
+        return PATTERN_DATA;
+      })
+      .catch((err) => {
+        console.warn('Could not load SET1_PatternAnalysisData.json at runtime:', err);
+        return PATTERN_DATA;
+      });
+    return patternDataLoadPromise;
+  }
   
   // Audio state management
   let currentSpeech = null;
@@ -2337,192 +2814,106 @@
   let currentAudioElement = null;
   let currentTransformerId = '';
   let isSpeaking = false;
-
-  // Play 3-part Unity Explains audio (sequential playback of p1, p2, p3)
+  let currentHowToPath = '';
   let currentExplainsPartIndex = 0;
+  let siteOverviewPlaybackToken = 0;
   const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
-
-  const JANUARY_AUDIO_ENABLED = false;
-
-  function disableJanuaryAudioButtons() {
-    if (JANUARY_AUDIO_ENABLED) return;
-    const buttons = document.querySelectorAll('#unityBriefBtn, #unityExplainsBtn, #unityHowToBtn');
-    buttons.forEach((btn) => {
-      if (!(btn instanceof HTMLButtonElement)) return;
-      btn.disabled = true;
-      btn.hidden = true;
-      btn.setAttribute('aria-disabled', 'true');
-      btn.style.setProperty('display', 'none', 'important');
-      btn.style.setProperty('visibility', 'hidden', 'important');
-      btn.style.setProperty('opacity', '0', 'important');
-      btn.style.setProperty('pointer-events', 'none', 'important');
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    disableJanuaryAudioButtons();
-    if (typeof window.showPatternModal === 'function' && !window.__janAudioHideWrapped) {
-      const baseShowPatternModal = window.showPatternModal;
-      window.showPatternModal = function(...args) {
-        const result = baseShowPatternModal.apply(this, args);
-        disableJanuaryAudioButtons();
-        return result;
-      };
-      window.__janAudioHideWrapped = true;
+  // Play site overview Unity audio only; second click stops playback
+  async function playSiteOverview() {
+    const speechActive = !!(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
+    const audioActive = !!(currentAudioElement && !currentAudioElement.paused && !currentAudioElement.ended);
+    if (isSpeaking || speechActive || audioActive) {
+      siteOverviewPlaybackToken += 1;
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      if (currentSpeech) {
+        try {
+          currentSpeech.onend = null;
+          currentSpeech.onerror = null;
+        } catch (e) {}
+        currentSpeech = null;
+      }
+      if (currentAudioElement) {
+        currentAudioElement.pause();
+        currentAudioElement.currentTime = 0;
+      }
+      currentAudioElement = null;
+      isSpeaking = false;
+      currentExplainsPartIndex = 0;
+      return;
     }
-  });
-
-
-  // Resolve shared assets in Installation/ regardless of whether we're viewing:
-  // - a standalone study folder (StudyXXXX/...) via file://
-  // - eWebmaster staging via http://127.0.0.1
-  // - deployed GitHub Pages
-  function getInstallationAssetPath(filename) {
-    const parts = (window.location.pathname || '').split('/').filter(Boolean);
-    const anchorStudy = parts.findIndex(p => /^Study\d{6}r\d+$/i.test(p));
-    const anchorEwb = parts.lastIndexOf('eWebmaster');
-
-    let anchorIndex = -1;
-    if (anchorStudy >= 0) anchorIndex = anchorStudy;
-    else if (anchorEwb >= 0) anchorIndex = anchorEwb;
-
-    // Directory depth (number of path segments after the anchor, excluding the filename)
-    // Example: /Study260226r0/SITE-...html => depth=0 => Installation/... (same folder)
-    // Example: /eWebmaster/FosterFarms/.../Nov_2025/SITE...html => depth=3 => ../../../Installation/...
-    // Note: The fallback path differs depending on whether we're served from:
-    // - GitHub Pages *project* site: /uewebsite/<customer>/<site>/...
-    // - a server rooted at eWebmaster: /<customer>/<site>/...
-    const isProjectSite = ((parts[0] || '').toLowerCase() === 'uewebsite');
-
-    const dirDepth = (anchorIndex >= 0)
-      ? Math.max(0, (parts.length - 2) - anchorIndex)
-      : (isProjectSite ? Math.max(0, parts.length - 2) : Math.max(0, parts.length - 1));
-
-    const up = '../'.repeat(dirDepth);
-    return `${up}Installation/${filename}`;
-  }
-
-  // Same anchor logic, but for assets that live at the anchor root (not inside Installation/)
-  function getRootAssetPath(filename) {
-    const parts = (window.location.pathname || '').split('/').filter(Boolean);
-    const anchorStudy = parts.findIndex(p => /^Study\d{6}r\d+$/i.test(p));
-    const anchorEwb = parts.lastIndexOf('eWebmaster');
-
-    let anchorIndex = -1;
-    if (anchorStudy >= 0) anchorIndex = anchorStudy;
-    else if (anchorEwb >= 0) anchorIndex = anchorEwb;
-
-    const isProjectSite = ((parts[0] || '').toLowerCase() === 'uewebsite');
-
-    const dirDepth = (anchorIndex >= 0)
-      ? Math.max(0, (parts.length - 2) - anchorIndex)
-      : (isProjectSite ? Math.max(0, parts.length - 2) : Math.max(0, parts.length - 1));
-
-    const up = '../'.repeat(dirDepth);
-    return `${up}${filename}`;
-  }
-
-  // Resolve a per-site shared asset (e.g. Audio/...) located at:
-  // - GitHub Pages: /<repo>/<customer>/<site>/Audio/...
-  // - eWebmaster:  /eWebmaster/<customer>/<site>/Audio/...
-  function getSiteAssetPath(relativePathFromSiteRoot) {
-    const parts = (window.location.pathname || '').split('/').filter(Boolean);
-    const anchorStudy = parts.findIndex(p => /^Study\d{6}r\d+$/i.test(p));
-    const anchorEwb = parts.lastIndexOf('eWebmaster');
-
-    // "Site root" index points to the site directory segment (e.g. Livingston_SIte)
-    let siteRootIndex = -1;
-    if (anchorEwb >= 0) {
-      siteRootIndex = anchorEwb + 2;
-    } else if (anchorStudy >= 0) {
-      // Standalone studies don't have a customer/site tree; treat the study folder as the root.
-      siteRootIndex = anchorStudy;
-    } else {
-      // Deployed: assume /<repo>/<customer>/<site>/... or /<customer>/<site>/...
-      // If it's a GitHub Pages project site, the repo is parts[0] and the site is parts[2].
-      siteRootIndex = Math.min(2, Math.max(0, parts.length - 2));
+    const playbackToken = ++siteOverviewPlaybackToken;
+    const audioCandidates = [
+      'Audio/site_overview.mp3',
+      'audio/site_overview.mp3'
+    ];
+    for (const candidate of audioCandidates) {
+      const audio = new Audio(candidate);
+      currentAudioElement = audio;
+      const played = await new Promise((resolve) => {
+        let settled = false;
+        const settle = (ok) => {
+          if (settled) return;
+          settled = true;
+          resolve(ok);
+        };
+        const fail = () => {
+          try {
+            audio.pause();
+            audio.currentTime = 0;
+          } catch (e) {}
+          if (currentAudioElement === audio) currentAudioElement = null;
+          isSpeaking = false;
+          settle(false);
+        };
+        audio.onended = function() {
+          if (currentAudioElement === audio) currentAudioElement = null;
+          isSpeaking = false;
+        };
+        audio.onerror = function() { fail(); };
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.then(() => {
+            isSpeaking = true;
+            settle(true);
+          }).catch(() => {
+            fail();
+          });
+        } else {
+          isSpeaking = true;
+          settle(true);
+        }
+      });
+      if (playbackToken !== siteOverviewPlaybackToken) {
+        return;
+      }
+      if (played) return;
     }
-
-    const dirDepth = Math.max(0, (parts.length - 2) - siteRootIndex);
-    const up = '../'.repeat(dirDepth);
-    return `${up}${relativePathFromSiteRoot}`;
+    if (playbackToken !== siteOverviewPlaybackToken) {
+      return;
+    }
+    console.warn('Unity site overview audio not found (expected Audio/site_overview.mp3).');
+    alert('Unity site overview audio is not available yet. Please generate Audio/site_overview.mp3 for this study.');
   }
 
-  function getInstallationImagePath() {
-    return getInstallationAssetPath('unity_system_overview.png');
-  }
-
-  // Scroll to narrative image by index (1=baseline, 2=hardware, 3=simulator)
+  // Scroll to narrative image by index (1=baseline, 2=middle section, 3=simulator)
   function scrollToNarrativeImage(imageIndex) {
     const modalBody = document.getElementById('patternModalBody');
     if (!modalBody) return;
-
+    const taggedImage = modalBody.querySelector(`img[data-narrative-part="${imageIndex}"]`);
+    if (taggedImage) {
+      taggedImage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     const images = modalBody.querySelectorAll('img');
     if (images.length >= imageIndex && imageIndex > 0) {
       images[imageIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
-
-
-  function playSiteOverview() {
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      if (currentAudioElement) {
-        currentAudioElement.pause();
-        currentAudioElement.currentTime = 0;
-      }
-      isSpeaking = false;
-      currentExplainsPartIndex = 0;
-      return;
-    }
-
-    const startOverviewTTS = () => {
-      const siteName = (
-        document.getElementById('site-facility-name')?.textContent ||
-        document.querySelector('.siteboard-title-main')?.textContent ||
-        'this site'
-      ).replace(/\s*-\s*$/, '').trim();
-      const period = (document.getElementById('param-period')?.textContent || '').trim();
-      const days = (document.getElementById('param-days')?.textContent || '').trim();
-      const transformerCount = (document.getElementById('transformer-count')?.textContent || '').trim();
-      const text = `Welcome. I'm Unity. This is your site overview for ${siteName}. Analysis period ${period || 'current period'} over ${days || 'multiple'} days with ${transformerCount || 'active transformers'} monitored. Use Site Summary Baseline for current state and Site Summary Unity System for harmonized optimization potential.`;
-      currentSpeech = new SpeechSynthesisUtterance(text);
-      const voices = window.speechSynthesis.getVoices();
-      let preferredVoice = voices.find(v => v.name.toLowerCase().includes('unity faraday'));
-      if (!preferredVoice) {
-        preferredVoice = voices.find(v => v.name.includes('Samantha') || v.name.includes('Female') || v.lang === 'en-US');
-      }
-      if (preferredVoice) currentSpeech.voice = preferredVoice;
-      currentSpeech.rate = 0.95;
-      currentSpeech.pitch = 1.0;
-      currentSpeech.volume = 1.0;
-      currentSpeech.onend = function() { isSpeaking = false; };
-      currentSpeech.onerror = function() { isSpeaking = false; };
-      isSpeaking = true;
-      window.speechSynthesis.speak(currentSpeech);
-    };
-
-    const mp3File = 'Audio/site_overview.mp3';
-    currentAudioElement = new Audio(mp3File);
-    currentAudioElement.onended = function() { isSpeaking = false; };
-    currentAudioElement.onerror = function() {
-      console.warn('Site overview MP3 not available, using TTS fallback.');
-      isSpeaking = false;
-      startOverviewTTS();
-    };
-
-    isSpeaking = true;
-    currentAudioElement.play().catch(() => {
-      console.warn('Site overview playback failed, using TTS fallback.');
-      isSpeaking = false;
-      startOverviewTTS();
-    });
-  }
-
+  // Play Unity Explains audio in three parts; fall back to TTS
   function speakNarrative() {
-    if (shouldBlockJanuaryAudio()) return;
-    // If currently speaking, stop
     if (isSpeaking) {
       if (currentAudioElement) {
         currentAudioElement.pause();
@@ -2533,8 +2924,6 @@
       currentExplainsPartIndex = 0;
       return;
     }
-
-    // Start playing from part 1
     currentExplainsPartIndex = 0;
     playExplainsPart();
   }
@@ -2546,12 +2935,9 @@
       return;
     }
 
-    // Scroll to corresponding image: Part 1→Image 1, Part 2→Image 2, Part 3→Image 3
     scrollToNarrativeImage(currentExplainsPartIndex + 1);
-
     const mp3File = `Patterns/${currentTransformerId}${explainsParts[currentExplainsPartIndex]}`;
 
-    // TTS fallback if MP3s missing
     let triedTTS = false;
     const startTTS = () => {
       if (triedTTS) return;
@@ -2577,17 +2963,13 @@
     };
 
     currentAudioElement = new Audio(mp3File);
-
     currentAudioElement.onended = function() {
       currentExplainsPartIndex++;
       playExplainsPart();
     };
-
     currentAudioElement.onerror = function() {
       console.warn('Unity Explains MP3 not available:', mp3File);
-      // If the first part is missing, fall back to TTS; otherwise try to continue
       if (currentExplainsPartIndex === 0) {
-        // Fall back to TTS for the full narrative
         startTTS();
         currentExplainsPartIndex = 0;
       } else {
@@ -2602,15 +2984,13 @@
     });
   }
 
-  // Play Unity Brief (60-second overview audio)
+  // Play Unity Brief (single-file summary); fall back to TTS
   function playUnityBrief() {
-    if (shouldBlockJanuaryAudio()) return;
     if (!currentTransformerId) {
       console.error('No transformer selected for Unity Brief');
       return;
     }
 
-    // If currently speaking/playing, stop
     if (isSpeaking) {
       window.speechSynthesis.cancel();
       if (currentAudioElement) {
@@ -2622,7 +3002,6 @@
     }
 
     const mp3File = `Patterns/${currentTransformerId}_brief.mp3`;
-
     const startBriefTTS = () => {
       const text = (currentBriefText || currentNarrativeText || '').trim();
       if (!text) {
@@ -2645,7 +3024,6 @@
       window.speechSynthesis.speak(currentSpeech);
     };
 
-    // Scroll to baseline image (Image 1) for Unity Brief
     scrollToNarrativeImage(1);
 
     currentAudioElement = new Audio(mp3File);
@@ -2664,13 +3042,22 @@
     });
   }
 
-  // Play per-site shared "How to Read" overview audio.
-  // Expected location (relative to the site root):
-  // - Audio/how-to-read-waste-chart.mp3
-  // - Audio/how-to-read-savings-chart.mp3
-  function playUnityHowToChart() {
-    if (shouldBlockJanuaryAudio()) return;
-    // If currently speaking/playing, stop
+  // Play How to Read audio (waste or savings) for current pattern view
+  function openHowToFullscreenFromCurrentView() {
+    const imageEl =
+      document.getElementById('patternImage') ||
+      (currentHowToPath && currentHowToPath.includes('_waste_howto') ? document.getElementById('baselinePatternImg') : null) ||
+      (currentHowToPath && currentHowToPath.includes('_savings_howto') ? document.getElementById('simulatorPatternImg') : null) ||
+      document.getElementById('baselinePatternImg') ||
+      document.getElementById('simulatorPatternImg');
+    if (!imageEl || !imageEl.src) return;
+    const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
+    let howToLabel = 'How to Read';
+    if (currentHowToPath && currentHowToPath.includes('_waste_howto')) howToLabel = 'How to Read Waste';
+    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
+    showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
+  }
+  function playHowToAudio() {
     if (isSpeaking) {
       window.speechSynthesis.cancel();
       if (currentAudioElement) {
@@ -2682,31 +3069,14 @@
       return;
     }
 
-    // Derive a friendly company name for TTS fallback.
-    let company = 'your facility';
-    try {
-      const parts = (window.location.pathname || '').split('/').filter(Boolean);
-      const anchorEwb = parts.lastIndexOf('eWebmaster');
-      if (anchorEwb >= 0 && parts[anchorEwb + 1]) {
-        company = parts[anchorEwb + 1];
-      } else if (parts.length >= 3) {
-        // Deployed GitHub Pages (project site): /<repo>/<customer>/<site>/...
-        company = parts[1];
-      } else if (parts.length >= 1) {
-        company = parts[0];
-      }
-      company = (company || '').replace(/_/g, ' ').trim() || company;
-    } catch (e) {}
-
-    const unityHowToBtn = document.getElementById('unityHowToBtn');
-    const howToMode = (unityHowToBtn && unityHowToBtn.dataset && unityHowToBtn.dataset.chartMode === 'savings') ? 'savings' : 'waste';
-    const isSavingsMode = howToMode === 'savings';
-    const mp3File = getSiteAssetPath(isSavingsMode ? 'Audio/how-to-read-savings-chart.mp3' : 'Audio/how-to-read-waste-chart.mp3');
-
+    if (!currentHowToPath) {
+      alert('How to Read audio not available for this view.');
+      return;
+    }
+    openHowToFullscreenFromCurrentView();
+    const mp3File = currentHowToPath;
     const startHowToTTS = () => {
-      const text = isSavingsMode
-        ? `Welcome. I'm Unity. This quick guide for ${company} explains how to read the MPTS savings chart. The chart shows the harmonized state after Unity optimization. Read left to right across the full period. Height indicates load magnitude. Dark blue is supplied kVA, light blue is consumed kW, and green is reactive kVAR. The orange line is power factor. Compare this chart to baseline to understand recovered waste and projected monthly and annual savings.`
-        : `Welcome. I'm Unity. This quick guide for ${company} explains how to read the baseline waste chart. The chart shows current operation before optimization. Read left to right across the full period. Height indicates load magnitude. Dark blue is supplied kVA, light blue is consumed kW, and green is reactive kVAR. The orange line is power factor. Areas with elevated reactive energy indicate waste that Unity can reduce.`;
+      const text = `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
       currentSpeech = new SpeechSynthesisUtterance(text);
       const voices = window.speechSynthesis.getVoices();
       let preferredVoice = voices.find(v => v.name.toLowerCase().includes('unity faraday'));
@@ -2740,7 +3110,8 @@
   }
 
   // Show pattern modal with summary or narrative
-  function showPatternModal(transformerId, type) {
+  async function showPatternModal(transformerId, type) {
+    await ensurePatternDataReady();
     const xfmrNum = transformerId.replace('xfmr', '');
     const nameElement = document.getElementById(`xfmr${xfmrNum}-name`);
     if (!nameElement) return;
@@ -2748,58 +3119,41 @@
     const transformerName = nameElement.textContent.trim();
     if (!transformerName) return;
     
-    // Extract canonical transformer key for PATTERN_DATA lookup.
-    // Prefer hidden xfmr{N}-code so display names can differ from meter/source naming.
-    let tid = '';
-    try {
-      const codeEl = document.getElementById(`xfmr${xfmrNum}-code`);
-      const codeText = codeEl ? codeEl.textContent.trim() : '';
-      if (codeText) {
-        tid = codeText.toUpperCase();
-      }
-    } catch (e) {}
-
-    if (!tid) {
-      // Fallback: derive from visible name
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (tidMatch) {
-        tid = tidMatch[1].toUpperCase();
-      } else {
-        const prefixMatch = transformerName.match(/^([A-Za-z]+\d+)/);
-        if (prefixMatch) {
-          tid = prefixMatch[1].toUpperCase();
-        } else {
-          tid = transformerName.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+    // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
+    const routing = getTransformerRoutingInfo(transformerName);
+    
+    // Get data from embedded PATTERN_DATA
+    let xfmrData = null;
+    let matchedPatternKey = '';
+    if (PATTERN_DATA.transformers) {
+      for (const k of routing.keys) {
+        if (PATTERN_DATA.transformers[k]) {
+          xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
+          break;
         }
       }
     }
-
-    // Get data from embedded PATTERN_DATA
-    const xfmrData = PATTERN_DATA.transformers ? PATTERN_DATA.transformers[tid] : null;
-    if (!xfmrData) {
-      console.error('No pattern data found for', tid);
-      alert(`No pattern data available for ${tid}`);
-      return;
-    }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
-    
-    function getElText(id) {
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
+
+    const getElText = (id) => {
       const el = document.getElementById(id);
       return el ? (el.textContent || '').trim() : '';
-    }
+    };
 
     function renderUnityFieldSummaryCard(xfmrNum, transformerName, summaryLines) {
       const pfText = getElText(`xfmr${xfmrNum}-metric-pf`) || '—';
       const kwText = getElText(`xfmr${xfmrNum}-avg-kw`) || '—';
       const wasteText = getElText(`xfmr${xfmrNum}-metric-energy-waste`) || '—';
 
-      // Pull a couple of key numeric items out of the "pattern_summary" list and place them in-card.
       let peakReactiveDemandValue = '—';
       let annualSavingsPotentialValue = '—';
-      let annualSavingsPotentialNum = null;
       try {
         const lines = Array.isArray(summaryLines) ? summaryLines : [];
         for (let i = 0; i < lines.length; i++) {
@@ -2812,7 +3166,6 @@
           const annual = line.match(/annual\s+savings\s+potential\s*:\s*\$?\s*([\d,.]+)/i);
           if (annual) {
             const n = parseFloat((annual[1] || '').replace(/,/g, ''));
-            annualSavingsPotentialNum = isNaN(n) ? null : n;
             annualSavingsPotentialValue = isNaN(n) ? `$${annual[1]}` : `$${n.toLocaleString('en-US', {maximumFractionDigits: 0})}`;
           }
         }
@@ -2822,9 +3175,6 @@
       const pfPct = pfNumMatch ? parseFloat(pfNumMatch[1]) : null;
       const pf = (pfPct === null || isNaN(pfPct)) ? null : Math.max(0, Math.min(100, pfPct)) / 100;
 
-      // Power triangle (derived from PF):
-      // P = cos(phi) = PF; Q = sin(phi) = sqrt(1 - PF^2)
-      // Normalize to (P + Q) so PF=0.707 gives 50% active / 50% reactive ("neutral" point).
       let activeShare = null;
       let reactiveShare = null;
       if (pf !== null) {
@@ -2847,89 +3197,32 @@
       const efsiNumMatch = efsiText.match(/(\d+)/);
       const efsiNum = efsiNumMatch ? Math.max(0, Math.min(100, parseInt(efsiNumMatch[1], 10))) : null;
       const efsiWidth = efsiNum === null ? 0 : efsiNum;
-      const efsiVariant = efsiNum === null ? 'thermal' : (efsiNum >= 80 ? 'harmonic' : (efsiNum < 70 ? 'heat' : 'thermal'));
-      
-      // EFSI status label and color (matches front panel logic)
-      let efsiStatusLabel = 'CRITICAL';
-      let efsiStatusClass = 'efsi-status-critical';
+
+      let efsiStatusLabel = 'WARNING';
+      let efsiStatusClass = 'efsi-status-warning';
       if (efsiNum !== null) {
-        if (efsiNum > 72) {
-          efsiStatusLabel = 'CLEAN';
-          efsiStatusClass = 'efsi-status-clean';
-        } else if (efsiNum >= 62) {
+        if (efsiNum >= 70) {
           efsiStatusLabel = 'GOOD';
           efsiStatusClass = 'efsi-status-good';
-        } else if (efsiNum >= 57) {
-          efsiStatusLabel = 'POOR';
-          efsiStatusClass = 'efsi-status-poor';
-        } else if (efsiNum > 52) {
-          efsiStatusLabel = 'WARNING';
-          efsiStatusClass = 'efsi-status-warning';
+        } else if (efsiNum >= 63) {
+          efsiStatusLabel = 'NORMAL';
+          efsiStatusClass = 'efsi-status-normal';
+        } else if (efsiNum >= 60) {
+          efsiStatusLabel = 'LOW';
+          efsiStatusClass = 'efsi-status-low';
         }
       }
-
-      // "After" column is intentionally qualitative (iconic / easy to read) and not a numeric promise.
-      const efsiTarget = 90;
 
       const trianglePfValue = (pfPct === null) ? 'PF —' : `PF ${pfPct.toFixed(1)}%`;
       const triangleActiveText = (activeShare === null) ? 'Active —' : `Active (${activeShare}%)`;
       const triangleReactiveText = (reactiveShare === null) ? 'Reactive —' : `Reactive (${reactiveShare}%)`;
-
-      let deviationLeft = 50;
-      let deviationWidth = 0;
-      let deviationClass = 'active';
-      if (activeShare !== null) {
-        const dev = activeShare - 50;
-        if (dev >= 0) {
-          deviationLeft = 50;
-          deviationWidth = dev;
-          deviationClass = 'active';
-        } else {
-          deviationLeft = 50 + dev;
-          deviationWidth = -dev;
-          deviationClass = 'reactive';
-        }
-      }
-
       const wasteShareValue = (wastePct === null) ? '—' : `${wastePct}% reactive`;
-
-      // ROI / Payback (years) — derived from narrative sizing if present.
-      let paybackValue = '—';
-      try {
-        const part2Text = (xfmrData && (xfmrData.pattern_part2 || xfmrData.pattern_interpretation))
-          ? (xfmrData.pattern_part2 || xfmrData.pattern_interpretation)
-          : '';
-
-        let installedCost = null;
-        const installedMatch = (part2Text || '').match(/\$\s*([\d,.]+)\s*installed/i);
-        if (installedMatch) {
-          const n = parseFloat((installedMatch[1] || '').replace(/,/g, ''));
-          installedCost = isNaN(n) ? null : n;
-        }
-
-        // Fallback: pick the largest dollar value in part2 (usually the full installed cost).
-        if (installedCost === null) {
-          const matches = (part2Text || '').match(/\$\s*[\d,.]+/g) || [];
-          for (let i = 0; i < matches.length; i++) {
-            const n = parseFloat((matches[i] || '').replace(/[^0-9.]/g, ''));
-            if (!isNaN(n)) installedCost = installedCost === null ? n : Math.max(installedCost, n);
-          }
-        }
-
-        if (installedCost !== null && annualSavingsPotentialNum !== null && annualSavingsPotentialNum > 0) {
-          const years = installedCost / annualSavingsPotentialNum;
-          const months = years * 12;
-          paybackValue = years >= 1
-            ? `~${years.toFixed(1)} years`
-            : `~${years.toFixed(2)} years (≈${Math.round(months)} mo)`;
-        }
-      } catch (e) {}
 
       return `
         <div class="unity-field-summary">
           <div class="unity-column before">
-            <h2>Energy Field Summary</h2>
-            <div class="unity-metric ${efsiVariant}">
+            <h2>ENERGY FIELD SUMMARY</h2>
+            <div class="unity-metric harmonic">
               <span class="value"><span class="unity-arrow">${efsiDir}</span>${efsiText} — <span class="${efsiStatusClass}">${efsiStatusLabel}</span></span>
               <span class="label">Energy Field Stability Index (0-100%)</span>
               <div class="efsi-bar-track"><div class="efsi-bar-fill" style="width:${efsiWidth}%;"></div></div>
@@ -2965,114 +3258,127 @@
           </div>
         </div>`;
     }
-
+    
     if (type === 'summary') {
       title = `${transformerName} - Energy Field Summary`;
-
-      const summary = xfmrData.pattern_summary || [];
-      const card = renderUnityFieldSummaryCard(xfmrNum, transformerName, summary);
-      content = card;
+      const summary = (xfmrData && xfmrData.pattern_summary) ? xfmrData.pattern_summary : [];
+      content = renderUnityFieldSummaryCard(xfmrNum, transformerName, summary);
     } else {
       title = `${transformerName} - Detailed Narrative`;
       // Prefer new three-part narrative if available
-      const p1 = xfmrData.pattern_part1 || '';
-      const p2 = xfmrData.pattern_part2 || '';
-      const p3 = xfmrData.pattern_part3 || '';
-
-      // Build narrative text for speech synthesis fallback
+      const p1 = (xfmrData && xfmrData.pattern_part1) || '';
+      const p2 = (xfmrData && xfmrData.pattern_part2) || '';
+      const p3 = (xfmrData && xfmrData.pattern_part3) || '';
       let narrative;
       if (p1 || p2 || p3) {
-        narrative = `${p1}\n\n${p2}\n\n${p3}`.trim();
-      } else {
-        narrative = xfmrData.pattern_interpretation || 'No narrative available.';
-      }
-
-      // Store text for speech synthesis and transformer ID for audio
-      currentNarrativeText = narrative;
-      currentTransformerId = tid;
-      const summaryPoints = xfmrData.pattern_summary || [];
-      currentBriefText = summaryPoints.length ? summaryPoints.join(' ') : (p1 || narrative);
-      showAudioBtn = true;
-
-      // Get month suffix dynamically from the displayed month-year
-      const monthSuffix = getMonthSuffix();
-
-      // Image paths (PNG naming may differ from narrative/audio transformer IDs)
-      const imgTid = getPatternImageId(tid);
-      const baselineImg = `Patterns/${imgTid}bt_${monthSuffix}.png`; // Baseline + Target
-      const hardwareImg = getInstallationImagePath();
-      const simulatorImg = `Patterns/${imgTid}s_${monthSuffix}.png`; // MPTS Simulator
-
-      // Helper function to format paragraph text
-      const formatText = (text) => {
-        return (text || '').split('\n\n').filter(p => p.trim()).map(para => {
-          let formatted = para
-            .replace(/(power factor|reactive|MPTS|kVAR|kVA|BTU)/gi, '<strong>$1</strong>')
-            .replace(/(\$[\d,]+)/g, '<strong style="color: #5D701A;">$1</strong>');
-          return `<p style="text-align: justify; line-height: 1.8; margin-bottom: 12px; font-size: 1.15em;">${formatted}</p>`;
-        }).join('');
-      };
-
-      // Build 3-part content with images between sections
-      if (p1 || p2 || p3) {
+        narrative = `PART 1: CURRENT STATE\n${p1}\n\nPART 2: MPTS SOLUTION\n${p2}\n\nPART 3: EXPECTED RESULTS\n${p3}`.trim();
         content = `
-          <!-- Part 1: Current State -->
-          <div style="text-align: center; margin-bottom: 15px;">
-            <img src="${baselineImg}" alt="${tid} Baseline Pattern" 
-                 onclick="showPatternFullscreen('${baselineImg}', '${tid} Baseline Pattern (Current State)')" 
-                 onerror="this.style.display='none';" 
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 11px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
-          </div>
-          <div style="text-align: left; margin-bottom: 30px; padding: 0 10px;">
-            <h3 style="color: #5D701A; border-bottom: 2px solid #B2D235; padding-bottom: 8px; margin-bottom: 15px;">Part 1 — What I'm Seeing</h3>
-            ${formatText(p1)}
-          </div>
-
-          <!-- Part 2: MPTS Solution -->
-          <div style="text-align: center; margin-bottom: 15px;">
-            <img src="${hardwareImg}" alt="Unity MPTS System Overview" 
-                 onclick="showPatternFullscreen('${hardwareImg}', 'Unity MPTS System Overview')" 
-                 onerror="this.style.display='none';" 
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 11px; color: #888; margin-top: 5px;">Unity MPTS System Overview - Click to enlarge</p>
-          </div>
-          <div style="text-align: left; margin-bottom: 30px; padding: 0 10px;">
-            <h3 style="color: #5D701A; border-bottom: 2px solid #B2D235; padding-bottom: 8px; margin-bottom: 15px;">Part 2 — How We Fix It</h3>
-            ${formatText(p2)}
-          </div>
-
-          <!-- Part 3: Expected Results -->
-          <div style="text-align: center; margin-bottom: 15px;">
-            <img src="${simulatorImg}" alt="${tid} MPTS Simulator" 
-                 onclick="showPatternFullscreen('${simulatorImg}', '${tid} MPTS Simulator (After Unity Optimization)')" 
-                 onerror="this.style.display='none';" 
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 11px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
-          </div>
-          <div style="text-align: left; padding: 0 10px;">
-            <h3 style="color: #5D701A; border-bottom: 2px solid #B2D235; padding-bottom: 8px; margin-bottom: 15px;">Part 3 — What Happens Next</h3>
-            ${formatText(p3)}
+          <div style="text-align:left">
+            ${p1 ? `<h4>Part 1 — Current State</h4><p>${p1.replace(/\n/g,'<br/>')}</p>` : ''}
+            ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p>${p2.replace(/\n/g,'<br/>')}</p>` : ''}
+            ${p3 ? `<h4>Part 3 — Expected Results</h4><p>${p3.replace(/\n/g,'<br/>')}</p>` : ''}
           </div>
         `;
       } else {
-        // Fallback for old-style single narrative
-        const formattedNarrative = formatText(narrative);
+        narrative = (xfmrData && xfmrData.pattern_interpretation) || 'No narrative available.';
+        content = `<div style=\"text-align:left\"><p>${narrative.replace(/\n/g,'<br/>')}</p></div>`;
+      }
+      
+      // Store plain text for speech synthesis and transformer ID for MP3
+      currentNarrativeText = narrative;
+      currentTransformerId = tid;
+      showAudioBtn = true;
+      
+      // Get the power factor value for baseline image from displayed metric
+      const pfElement = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
+      let pfValue = 0;
+      if (pfElement) {
+        const pfText = pfElement.textContent.replace('%', '').trim();
+        const pfPercent = parseFloat(pfText);
+        if (!isNaN(pfPercent)) {
+          pfValue = Math.round(pfPercent * 10); // Convert 88.3% to 883
+        }
+      }
+      
+      // Format narrative with baseline image at top and styled paragraphs
+      // Pattern month suffix - dynamically replaced by generator
+      let monthSuffix = 'jan26'; // e.g., 'nov25' for November 2025
+      const monthYearEl = document.getElementById('month-year');
+      if (monthYearEl) {
+        const monthYear = monthYearEl.textContent.trim().toLowerCase().replace(/\s+/g, ''); // Remove all spaces
+        monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
+      }
+      const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+      const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
+      console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
+      const formatNarrativeText = (text) => (text || '')
+        .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
+        .replace(/(target|baseline)/gi, '<strong>$1</strong>')
+        .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
+        .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\\\"color: #5D701A;\\\">$1</strong>');
+      if (p1 || p2 || p3) {
         content = `
-          <div style="text-align: center; margin-bottom: 20px;">
-            <img src="${baselineImg}" alt="${tid} Baseline Pattern" 
-                 onclick="showPatternFullscreen('${baselineImg}', '${tid} Baseline Pattern')" 
-                 onerror="this.style.display='none';" 
+          <div style="text-align: left;">
+            ${p1 ? `<h4>Part 1 — Current State</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p1).replace(/\n/g,'<br/>')}</p>` : ''}
+          </div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Part 1: Current State)')"
+                 data-narrative-part="1"
                  style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 1 Image — Baseline Pattern (Current State)</p>
           </div>
           <div style="text-align: left;">
-            ${formattedNarrative}
+            ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p2).replace(/\n/g,'<br/>')}</p>` : ''}
+          </div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px;">
+              <div id="part2InstallWrapPrimary" style="flex:1 1 320px; max-width:100%;">
+                <img id="part2PatternImg" src="" alt="${tid} MPTS Installation"
+                     onclick="showPatternFullscreen(this.src, '${tid} MPTS Installation (Part 2A)')"
+                     data-narrative-part="2"
+                     style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+                <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image A — MPTS Installation</p>
+              </div>
+              <div id="part2InstallWrapSecondary" style="flex:1 1 320px; max-width:100%;">
+                <img id="part2PatternImg2" src="" alt="${tid} Metering and Verification"
+                     onclick="showPatternFullscreen(this.src, '${tid} Metering and Verification (Part 2B)')"
+                     style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+                <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image B — Metering & Verification</p>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: left;">
+            ${p3 ? `<h4>Part 3 — Expected Results</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p3).replace(/\n/g,'<br/>')}</p>` : ''}
           </div>
           <div style="text-align: center; margin-top: 30px;">
-            <img src="${simulatorImg}" alt="${tid} Simulator Pattern" 
-                 onclick="showPatternFullscreen('${simulatorImg}', '${tid} MPTS Simulator')" 
-                 onerror="this.style.display='none';" 
+            <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (Part 3: Expected Results)')"
+                 data-narrative-part="3"
                  style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 3 Image — MPTS Simulator Pattern (After Unity Optimization)</p>
+          </div>
+        `;
+      } else {
+        const paragraphs = narrative.split('\n\n').filter(p => p.trim());
+        const formattedParagraphs = paragraphs.map(para => `<p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(para)}</p>`).join('');
+        content = `
+          <div style="text-align: center; margin-bottom: 20px;">
+            <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Current State)')"
+                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
+          </div>
+          <div style="text-align: left;">
+            ${formattedParagraphs}
+          </div>
+          <div style="text-align: center; margin-top: 30px;">
+            <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (After Unity Optimization)')"
+                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
           </div>
         `;
       }
@@ -3082,34 +3388,59 @@
     document.getElementById('patternModalTitle').textContent = title;
     const modalBody = document.getElementById('patternModalBody');
     modalBody.innerHTML = content;
-
-    // Summary-mode styling: apply energy-field backdrop UNDER the card.
     try {
       if (type === 'summary') {
-        const backdropPath = getInstallationAssetPath('unity-field-backdrop.png');
         modalBody.classList.add('unity-summary-mode');
-        modalBody.style.setProperty('--unity-field-backdrop', `url('${backdropPath}')`);
+        modalBody.style.setProperty('--unity-field-backdrop', `url('Patterns/unity-field-backdrop.png')`);
       } else {
         modalBody.classList.remove('unity-summary-mode');
         modalBody.style.removeProperty('--unity-field-backdrop');
       }
     } catch (e) {}
+    if (type !== 'summary') {
+      const monthYearEl = document.getElementById('month-year');
+      let monthSuffix = 'jan26';
+      if (monthYearEl) {
+        const monthYear = monthYearEl.textContent.trim().toLowerCase().replace(/\s+/g, '');
+        monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2);
+      }
+      const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
+      attachPatternFallback(
+        document.getElementById('baselinePatternImg'),
+        baselineCandidates,
+        `${transformerName} baseline`
+      );
+      attachPatternFallback(
+        document.getElementById('simulatorPatternImg'),
+        buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong),
+        `${transformerName} simulator`
+      );
+      const part2PatternImg = document.getElementById('part2PatternImg');
+      if (part2PatternImg) {
+        attachPatternFallback(
+          part2PatternImg,
+          part2EquipmentCandidates,
+          `${transformerName} part2 installation equipment`
+        );
+      }
+      const secondaryWrap = document.getElementById('part2InstallWrapSecondary');
+      if (secondaryWrap) secondaryWrap.style.display = 'none';
+    }
     
-    // Show/hide Unity buttons based on content type
+    // Show/hide Unity audio buttons based on content type
     const unityBriefBtn = document.getElementById('unityBriefBtn');
     const unityExplainsBtn = document.getElementById('unityExplainsBtn');
     const unityHowToBtn = document.getElementById('unityHowToBtn');
-
-    // Never show "How to Read" in summary/narrative modal modes.
-    if (unityHowToBtn) unityHowToBtn.style.display = 'none';
-
     if (showAudioBtn) {
       if (unityBriefBtn) unityBriefBtn.style.display = 'inline-block';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'inline-block';
+      if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     } else {
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
+    if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     }
+    currentHowToPath = '';
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
@@ -3135,21 +3466,27 @@
       }
       isSpeaking = false;
     }
-    currentExplainsPartIndex = 0;
     currentNarrativeText = '';
+    currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
-
-    // Reset summary-mode backdrop state
+    currentExplainsPartIndex = 0;
+    currentHowToPath = '';
+    const howToBtn = document.getElementById('unityHowToBtn');
+    if (howToBtn) howToBtn.style.display = 'none';
+    const unityBriefBtn = document.getElementById('unityBriefBtn');
+    const unityExplainsBtn = document.getElementById('unityExplainsBtn');
+    if (unityBriefBtn) unityBriefBtn.style.display = 'none';
+    if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
     try {
       const modalBody = document.getElementById('patternModalBody');
       modalBody.classList.remove('unity-summary-mode');
       modalBody.style.removeProperty('--unity-field-backdrop');
     } catch (e) {}
-
     document.getElementById('patternModal').style.display = 'none';
   }
 
-  // Show Site Summary Modal with aggregated data
+  // Show Site Summary Modal
   function showSiteSummaryModal() {
     const modal = document.getElementById('siteSummaryModal');
     const body = document.getElementById('siteSummaryBody');
@@ -3218,16 +3555,7 @@
     
     const avgPowerFactor = transformerCount > 0 ? (pfSum / transformerCount).toFixed(1) : 0;
     const total480V = totalActivePower + totalWaste; // Total 480V supply = active + reactive
-
-    // Total cooling burden (kW) aggregated across transformers (injected by generator)
-    let totalCoolingKw = 0;
-    try {
-      const el = document.getElementById('site-total-cooling-kw');
-      const v = parseFloat(el?.textContent || '0');
-      totalCoolingKw = isNaN(v) ? 0 : v;
-    } catch (e) {
-      totalCoolingKw = 0;
-    }
+    const totalCoolingKw = 344.32; // Cooling waste embedded in active power
     
     // Extract data resolution from filename
     const filename = window.location.pathname.split('/').pop();
@@ -3335,6 +3663,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3353,18 +3686,9 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-
-      // Use canonical transformer code when available (e.g., NCDC1, DELIF, T10)
-      // Falls back to first token of the display name.
-      let tidRaw = '';
-      const codeElement = document.getElementById(`xfmr${i}-code`);
-      if (codeElement && codeElement.textContent && codeElement.textContent.trim()) {
-        tidRaw = codeElement.textContent.trim();
-      } else {
-        tidRaw = transformerName.split(/\s+/)[0];
-      }
-      const tid = tidRaw.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
-
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
+      
       transformerCount++;
       
       // BASELINE metrics
@@ -3417,16 +3741,8 @@
     const mptsRemainingWasteCost = baselineTotalWasteCost * (1 - wasteReductionPct);
     
     // Cooling load reduction: 95% of waste heat eliminated means 95% less cooling required
-    // Total site cooling burden (kW) aggregated across transformers (injected by generator)
-    let totalCoolingKw = 0;
-    try {
-      const el = document.getElementById('site-total-cooling-kw');
-      const v = parseFloat(el?.textContent || '0');
-      totalCoolingKw = isNaN(v) ? 0 : v;
-    } catch (e) {
-      totalCoolingKw = 0;
-    }
-
+    // Total site cooling load from thermal burden analysis (placeholder - will be populated by Maxwell)
+    const totalCoolingKw = 344.32; // kW - from site JSON total_cooling_kw
     const mptsCoolingReduction = totalCoolingKw * wasteReductionPct; // 95% cooling reduction
     
     // Optimized active power = baseline active - cooling reduction
@@ -3550,10 +3866,10 @@
     document.getElementById('siteSummaryMPTSModal').style.display = 'none';
   }
 
-  // Show Contact Details
+  // Show Contact Details Modal
   function showContactDetailsModal() {
-    // Keep all facility boards consistent: open the shared contact page.
-    window.location.href = '../../../../../contact-us.html';
+    const modal = document.getElementById('contactDetailsModal');
+    modal.style.display = 'block';
   }
 
   // Close Contact Details Modal
@@ -3597,7 +3913,7 @@
           🎙️ Unity Brief
         </button>
         <button id="unityExplainsBtn" onclick="speakNarrative(); scrollToNarrative();" 
-                style="display: none; padding: 12px 24px; min-width: 280px; white-space: nowrap; margin-right: 0px;
+                style="display: none; padding: 12px 24px; min-width: 280px; white-space: nowrap; margin-right: 0px; 
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
@@ -3606,15 +3922,15 @@
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
           🔊 Unity Faraday Explains...
         </button>
-        <button id="unityHowToBtn" onclick="playUnityHowToChart();" 
-                style="display: none; padding: 12px 24px; min-width: 220px; white-space: nowrap;
+        <button id="unityHowToBtn" onclick="playHowToAudio();" 
+                style="display: none; padding: 12px 24px; min-width: 200px; white-space: nowrap;
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
                        transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
                 onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
-          🎧 How to Read the Waste Chart
+          🎧 How to Read Chart
         </button>
         <button class="pattern-modal-close" onclick="closePatternModal()">&times;</button>
       </div>
@@ -3660,13 +3976,13 @@
     </div>
     <div class="info-modal-body" id="contactDetailsBody" style="padding: 0; position: relative; min-height: 400px;">
       <!-- Cove & Clerk background -->
-      <div id="contactBackdrop" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-                  background-image: none; 
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                  background-image: url('Patterns/AgenticTeam.png'); 
                   background-size: cover; background-position: center top; opacity: 0.40; z-index: 0;"></div>
       <!-- Content overlay -->
       <div style="position: relative; z-index: 1; padding: 40px 30px; text-align: center;
                   background: linear-gradient(135deg, rgba(40, 55, 10, 0.70) 0%, rgba(60, 80, 25, 0.70) 100%);">
-        <img id="contactLogo" src="" alt="Unity Energy" style="width: 280px; margin-bottom: 20px;">
+        <img src="Patterns/UE_logo.png" alt="Unity Energy" style="width: 280px; margin-bottom: 20px;">
         <h3 style="color: #FAF0A0; font-size: 1.8em; margin-bottom: 10px;">Contact Us</h3>
         <p style="color: #B2D235; font-style: italic; font-size: 1.1em; margin-bottom: 25px;">"Welcome to the Future of Electricity"</p>
         <p style="color: rgba(255,255,255,0.9); font-size: 1em; line-height: 1.6; margin-bottom: 30px; max-width: 450px; margin-left: auto; margin-right: auto;">
@@ -3705,106 +4021,5 @@
 </div>
 
 
-<script id="audio-retention-guard">
-(function(){
-  var msg = "Audio is no longer available for this report period (retention policy: only March and April 2026 remain active).";
-  function isMp3(v){ return typeof v === 'string' && /\.mp3([?#].*)?$/i.test(v.trim()); }
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-      if (href && isMp3(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){ e.preventDefault(); alert(msg); });
-      }
-      if (src && isMp3(src)) {
-        el.removeAttribute('src');
-      }
-      if (onclick && /\.mp3/i.test(onclick)) {
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-    document.querySelectorAll('audio').forEach(function(a){
-      a.removeAttribute('src');
-      try { a.load(); } catch(e) {}
-      a.addEventListener('play', function(e){
-        e.preventDefault();
-        try { a.pause(); } catch(err) {}
-        alert(msg);
-      });
-    });
-  });
-})();
-</script>
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
-
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
-
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

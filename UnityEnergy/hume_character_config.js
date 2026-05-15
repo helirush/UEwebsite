@@ -903,44 +903,44 @@ window.MAXWELLIAN_HUME = {
   ],
   question_notes_threshold: 2,
   question_notes_hold_line: "Please hold while I go back and get my notes.",
-  // Guardrail test mode enabled for customer interaction boundary validation.
+  // Customer-session guardrails enabled for production-style readiness.
   guardrails_enabled: true,
   guardrails_founder_bypass: true,
   electrical_story_guardrails_enabled: true,
   electrical_story_require_name_company_before_history_answers: true,
-  electrical_story_history_question_limit: 5,
+  electrical_story_history_question_limit: 6,
   electrical_story_history_question_limit_min: 4,
-  electrical_story_exit_idle_seconds: 12,
+  electrical_story_exit_idle_seconds: 24,
   electrical_story_identity_prompt:
     "Before we continue with Electrical Energy Story history questions, may I get your name and company?",
   electrical_story_exit_prompt:
-    "We appreciate your interest in the electrical energy field and the story. It is very important to understand so that you understand why Unity Energy exists. However, I have some other work I need to attend to, and I am going to leave you here unless you have other questions about Unity Energy.",
-  guardrails_max_questions_per_session: 5,
-  guardrails_question_limit_min: 5,
-  guardrails_free_questions: 2,
-  guardrails_max_session_minutes: 12,
-  guardrails_idle_timeout_seconds: 10,
-  guardrails_idle_followup_seconds: 10,
-  guardrails_idle_final_exit_seconds: 10,
-  guardrails_idle_first_prompt_message: "Can I help you with anything else?",
+    "Thank you for your interest in the electrical energy story. I need to return to Unity-focused support now, but I can keep helping with Unity Energy questions.",
+  guardrails_max_questions_per_session: 10,
+  guardrails_question_limit_min: 8,
+  guardrails_free_questions: 3,
+  guardrails_max_session_minutes: 18,
+  guardrails_idle_timeout_seconds: 90,
+  guardrails_idle_followup_seconds: 35,
+  guardrails_idle_final_exit_seconds: 25,
+  guardrails_idle_first_prompt_message: "Can I help with anything else on this page?",
   guardrails_idle_final_prompt_message:
-    "Are there any other questions? I need to attend to another Maxwellian.",
-  guardrails_low_relevance_limit: 2,
-  guardrails_min_relevance_score: 2,
-  guardrails_max_sessions_per_day: 6,
+    "Any other Unity Energy questions before I close this session?",
+  guardrails_low_relevance_limit: 3,
+  guardrails_min_relevance_score: 1,
+  guardrails_max_sessions_per_day: 20,
   guardrails_enable_daily_metering: true,
   guardrails_contact_email: "sales@unityenergy.com",
   guardrails_contact_url: "https://unityenergy.com/contact-us",
   guardrails_contact_redirect_url: "/UnityEnergy/contact-us.html",
-  guardrails_interested_identity_prompt_after_questions: 3,
+  guardrails_interested_identity_prompt_after_questions: 4,
   guardrails_interested_identity_prompt_message:
     "Happy to keep helping. Before we continue, may I get your name, company, and best email so we can follow up with you directly?",
   guardrails_interested_followup_message:
     "Thank you for your interest in Unity Energy. We have your information and will follow up directly. What is your next question?",
   guardrails_question_limit_message:
-    "You've reached my five-question limit for this page. I can have a specialist contact you, or I can send you to our contact page so you can share your information.",
+    "You've reached this session's question limit for this page. I can have a specialist contact you, or send you to our contact page so you can share your information.",
   guardrails_offboard_message:
-    "We appreciate your interest in Clerk. For deeper support, please contact Unity Energy Sales at sales@unityenergy.com or visit unityenergy.com/contact-us.",
+    "We appreciate your interest in Unity Energy. For deeper support, please contact Unity Energy Sales at sales@unityenergy.com or visit unityenergy.com/contact-us.",
   guardrails_relevance_keywords: [
     "unity",
     "unity energy",
@@ -1029,6 +1029,8 @@ window.MAXWELLIAN_HUME = {
   // Keep desktop launch simple: let the realtime renderer request mic directly.
   preflight_microphone_on_launch: true,
   // OpenAI cognition defaults (used as text-generation guidance).
+  // Keep false unless a production OpenAI realtime session backend is available.
+  allow_openai_fallback: false,
   openai_session_endpoint: "/api/openai/realtime/session",
   openai_realtime_model: "gpt-4o-realtime-preview",
   openai_voice: "ash",

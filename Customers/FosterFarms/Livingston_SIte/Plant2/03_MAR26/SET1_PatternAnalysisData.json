@@ -1,0 +1,31 @@
+{
+  "transformers": {
+    "PL2-1SOUTH": {
+      "transformer_name": "PL2-1SOUTH",
+      "source_transformer_id": "PL2-1SOUTH",
+      "bt_target_kva": 2157.0,
+      "target_kva_image": 2157.0,
+      "target_validated": 2157.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_CREATED",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    },
+    "PL2-2CENTER": {
+      "transformer_name": "PL2-2CENTER",
+      "source_transformer_id": "PL2-2CENTER",
+      "bt_target_kva": 2110.0,
+      "target_kva_image": 2110.0,
+      "target_validated": 2110.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_CREATED",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    },
+    "PL2-3NORTH": {
+      "transformer_name": "PL2-3NORTH",
+      "source_transformer_id": "PL2-3NORTH",
+      "bt_target_kva": 1598.0,
+      "target_kva_image": 1598.0,
+      "target_validated": 1598.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_CREATED",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    }
+  }
+}

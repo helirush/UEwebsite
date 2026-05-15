@@ -229,224 +229,128 @@
       transform: translateX(-50px) translateY(45px);
 
     }
-
     /* Power Factor Gauge Container */
     .gauge-container {
       position: relative;
-      width: 210px;
-      height: 210px;
+      width: 200px;
+      height: 200px;
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.14s ease, filter 0.14s ease;
+      transition: transform 0.1s ease, filter 0.1s ease;
     }
 
     .gauge-container:active {
-      transform: scale(0.97);
-      filter: brightness(0.92);
+      transform: scale(0.95);
+      filter: brightness(0.7);
     }
 
-    /* PF Dial SVG */
+    /* SVG Gauge Styling */
     .gauge-svg {
       width: 100%;
       height: 100%;
-      transform: translateY(19px);
-      transition: filter 0.15s ease;
+      transform: rotate(-90deg);
+      transition: filter 0.1s ease;
     }
 
-    .pf-dial-body {
-      fill: url(#pfDialCoreGradient);
-      stroke: rgba(130, 145, 70, 0.7);
-      stroke-width: 2;
-    }
-
-    .pf-dial-core-shadow {
-      fill: rgba(0, 0, 0, 0.22);
-    }
-
-    .pf-dial-outer-arc {
+    .gauge-bg {
       fill: none;
-      stroke: rgba(216, 142, 56, 0.98);
-      stroke-width: 7;
-      stroke-linecap: round;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      stroke: var(--unity-orange);
+      stroke-width: 8;
+      transition: stroke-width 0.1s ease;
     }
 
-    .pf-dial-band-track {
+    .gauge-container:active .gauge-bg {
+      stroke-width: 6;
+    }
+
+    .gauge-background {
+      fill: url(#blueGradient);
+      transition: opacity 0.1s ease;
+    }
+
+    .gauge-container:active .gauge-background {
+      opacity: 0.8;
+    }
+
+    .gauge-progress {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.12);
-      stroke-width: 2;
+      stroke-width: 10;
       stroke-linecap: round;
+      transform-origin: center;
+      transition: stroke-dashoffset 1s ease-in-out;
     }
 
-    .pf-dial-band-live {
-      fill: none;
-      stroke: url(#pfDialTopBandGradient);
-      stroke-width: 36;
-      stroke-linecap: round;
-      stroke-dasharray: 0 100;
-      transition: stroke-dasharray 0.7s ease;
-      filter: drop-shadow(0 0 4px rgba(255, 188, 82, 0.35));
+    /* Tick marks */
+    .tick {
+      stroke: var(--unity-ltgreen);
+      stroke-width: 1.5;
+      opacity: 0.6;
+      transition: all 0.15s ease;
     }
 
-    .pf-dial-glass {
-      fill: url(#pfDialGlassGradient);
-      stroke: rgba(255, 255, 255, 0.25);
-      stroke-width: 1.1;
+    .tick-major {
+      stroke-width: 2.5;
+      stroke: var(--unity-ltgreen);
+      opacity: 0.9;
+      transition: all 0.15s ease;
     }
 
-    .pf-dial-sheen {
-      fill: url(#pfDialSheenGradient);
-      opacity: 0.55;
+    /* On click: make some ticks disappear and brighten others */
+    .gauge-container:active .tick:nth-child(3n) {
+      opacity: 0;
     }
 
-    .pf-marker-line {
-      stroke: rgba(95, 114, 36, 0.95);
-      stroke-width: 2;
-      stroke-linecap: round;
+    .gauge-container:active .tick:not(:nth-child(3n)) {
+      opacity: 0.9;
+      filter: brightness(1.4) drop-shadow(0 0 3px var(--unity-ltgreen));
     }
 
-    .pf-needle-group {
-      transition: transform 0.75s cubic-bezier(0.2, 0.9, 0.18, 1.02);
-      transform-origin: 110px 110px;
-    }
-
-    .pf-needle-shadow {
-      stroke: rgba(0, 0, 0, 0.55);
-      stroke-width: 7;
-      stroke-linecap: round;
-      opacity: 0.35;
-    }
-
-    .pf-needle-stem {
-      stroke: linear-gradient(180deg, #3e5213 0%, #7d9330 100%);
-      stroke: rgba(71, 93, 19, 0.95);
-      stroke-width: 5.5;
-      stroke-linecap: round;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
-    }
-
-    .pf-needle-tip {
-      fill: rgba(65, 88, 18, 0.96);
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-    }
-
-    .pf-needle-hub-shadow {
-      fill: rgba(0,0,0,0.35);
-    }
-
-    .pf-needle-hub {
-      fill: url(#pfDialHubGradient);
-      stroke: rgba(190, 211, 112, 0.95);
-      stroke-width: 1;
-    }
-
-    .pf-needle-post {
-      fill: rgba(232, 240, 198, 0.96);
-      stroke: rgba(116, 133, 45, 0.9);
-      stroke-width: 0.8;
-    }
-
-    .pf-marker {
-      position: absolute;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      pointer-events: none;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .pf-marker-yellow {
-      color: #f5eb5f;
-      font-size: 18px;
-    }
-
-    .pf-marker-pill {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.95);
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      padding: 0;
-      box-shadow: none;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .pf-marker-80 {
-      top: 71px;
-      left: 26px;
-      transform: translate(-10px, -10px);
-    }
-
-    .pf-marker-90 {
-      top: 71px;
-      right: 26px;
-      transform: translate(10px, -10px);
-    }
-
-    .pf-marker-707 {
-      bottom: 23px;
-      left: 2px;
-    }
-
-    .pf-marker-100 {
-      bottom: 23px;
-      right: -2px;
+    .gauge-container:active .tick-major {
+      opacity: 1;
+      filter: brightness(1.5) drop-shadow(0 0 4px var(--unity-ltgreen));
+      stroke-width: 3;
     }
 
     /* Center display */
     .gauge-value {
       position: absolute;
-      top: 25px;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 24px;
+      font-size: 30px;
       font-weight: bold;
-      color: #111;
-      background: rgba(244, 247, 255, 0.96);
-      border: 1px solid rgba(101, 132, 213, 0.65);
-      border-radius: 24px;
-      padding: 6px 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      color: rgba(255, 255, 255, 1);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
       pointer-events: none;
-      text-shadow: none;
-      min-width: 96px;
-      text-align: center;
-      transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.18s ease, filter 0.18s ease;
-      z-index: 6;
-    }
-
-    .gauge-container:hover .gauge-value {
-      transform: translate(-50%, -51%);
-      filter: brightness(1.07);
-      box-shadow:
-        0 3px 10px rgba(0,0,0,0.45),
-        0 0 10px rgba(140, 190, 255, 0.16);
     }
 
     .gauge-label {
       position: absolute;
-      top: 159px;
+      top: 70px;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 9.5pt;
-      color: rgba(255, 255, 255, 0.95);
+      font-size: 10pt;
+      color: rgba(255, 255, 255, 1);
       text-transform: lowercase;
       letter-spacing: 1px;
+      opacity: 0.9;
       pointer-events: none;
     }
 
     .gauge-unit {
       position: absolute;
-      bottom: 31px;
+      bottom: 35%;
       left: 50%;
       transform: translate(-50%, 50%);
-      font-size: 9pt;
-      color: rgba(255, 255, 255, 0.88);
+      font-size: 10pt;
+      color: rgba(255, 255, 255, 1);
       text-transform: lowercase;
       pointer-events: none;
     }
+
     .uptime {
       margin: 12px 0;
       text-align: center;
@@ -600,9 +504,10 @@
       transform: translateY(0);
     }
 
-    .summary-btn-full {
+    .pattern-buttons .pattern-btn.summary-btn-full {
       background: linear-gradient(135deg, #5D701A, #4a5a15);
       border: .5px solid rgb(161, 188, 26);
+      border-left: .5px solid rgb(161, 188, 26);
       color: var(--unity-ltylo);
       font-weight: 600;
       font-size: 10pt;
@@ -610,8 +515,7 @@
       letter-spacing: 1px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .summary-btn-full:hover {
+    .pattern-buttons .pattern-btn.summary-btn-full:hover {
       background: linear-gradient(135deg, #6d8020, #5a6a1a);
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(93, 112, 26, 0.4);
@@ -699,6 +603,99 @@
       overflow-y: auto;
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
+    }
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
     .pattern-modal-body ul {
@@ -792,10 +789,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
@@ -1489,11 +1484,36 @@
 </head>
 <body data-summary-mode="energy">
 <div class="siteboard-container">
-<!-- Back Navigation - Top -->
+  <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-<a class="header-info-btn" href="../../index.html#libraries" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-<a class="header-info-btn" href="../../../../../UnityEnergy/index.html" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, DELI GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
@@ -1505,33 +1525,32 @@
 <span class="siteboard-title-sub" id="site-meta-sep-2"> • </span>
 <span class="siteboard-title-sub" id="heat-resolution">1-minute Resolution</span>
 </div>
+
 <!-- Environmental Factors -->
 <div class="environmental-bar">
-<div class="env-factor">
-<span class="env-factor-label">📊 Environmental Conditions:</span>
+  <div class="env-factor">
+    <span class="env-factor-label">📊 Environmental Conditions:</span>
+  </div>
+  <div class="env-factor">
+    <span class="env-factor-label">🌡️ Temperature:</span>
+    <span class="env-factor-value" id="env-temp">69.7</span>
+  </div>
+  <div class="env-factor">
+    <span class="env-factor-label">💧 Humidity:</span>
+    <span class="env-factor-value" id="env-humidity">50.6</span>
+  </div>
 </div>
-<div class="env-factor">
-<span class="env-factor-label">🌡️ Temperature:</span>
-<span class="env-factor-value" id="env-temp">69.7</span>
-</div>
-<div class="env-factor">
-<span class="env-factor-label">💧 Humidity:</span>
-<span class="env-factor-value" id="env-humidity">50.6</span>
-</div>
-</div>
+
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-<button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
+  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
     🔊 LISTEN: SITE OVERVIEW
   </button>
-<button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
+  <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
     📊 SITE SUMMARY - BASELINE
   </button>
-<button class="header-info-btn" onclick="showSiteSummaryMPTSModal()" title="View Unity/MPTS optimized site metrics">
+  <button class="header-info-btn" onclick="showSiteSummaryMPTSModal()" title="View Unity/MPTS optimized site metrics">
     ⚡ SITE SUMMARY - UNITY SYSTEM
-  </button>
-<button class="header-info-btn" onclick="showContactDetailsModal()" title="View Unity Energy contact information">
-    📞 UNITY CONTACT DETAILS
   </button>
 </div>
 <div class="dashboard-grid layout-2">
@@ -1540,80 +1559,51 @@
 <span id="xfmr1-name">Deli F</span>
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr1-pf-dial" viewbox="0 0 220 220">
-<defs>
-<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
-<stop offset="0%" stop-color="#d7dcc8"></stop>
-<stop offset="45%" stop-color="#c8ccb8"></stop>
-<stop offset="100%" stop-color="#808a5b"></stop>
-</radialgradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
-<stop offset="0%" stop-color="#e65744"></stop>
-<stop offset="14%" stop-color="#e98a4b"></stop>
-<stop offset="28%" stop-color="#7ca137"></stop>
-<stop offset="58%" stop-color="#8ec843"></stop>
-<stop offset="80%" stop-color="#93d355"></stop>
-<stop offset="100%" stop-color="#87d7ef"></stop>
-</lineargradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
-<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
-</lineargradient>
-<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
-<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
-</radialgradient>
-<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
-<stop offset="0%" stop-color="#f0f5d7"></stop>
-<stop offset="100%" stop-color="#7d8f3a"></stop>
-</radialgradient>
-</defs>
-<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
-<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
-<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
-<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
-<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
-<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
-<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr1-pf-band-live" pathlength="100"></path>
-<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
-<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
-<g class="pf-needle-group" id="xfmr1-pf-needle">
-<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
-<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
-<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
-<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
-<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
-<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
-</g>
-</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr1-metric-pf">86.9%</div><div class="gauge-unit">efficiency</div></div>
+<div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view Base Target pattern">
+<svg class="gauge-svg" viewBox="0 0 200 200">
+      <defs>
+        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
+          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
+          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        </radialGradient>
+      </defs>
+<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
+<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
+<g class="tick-marks" id="xfmr1-ticks"></g>
+</svg>
+<div class="gauge-label">Power Factor</div>
+<div class="gauge-value" id="xfmr1-metric-pf">89.1%</div>
+<div class="gauge-unit">efficiency</div>
+</div>
 <div class="uptime">
-<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-<div class="uptime-target" id="xfmr1-target-pattern">1660kVA STD DAILY PATTERN</div>
-<div class="elecops-section">
-<div class="uptime-value">Electric Operations:</div>
-<div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">46.0%</span></div>
-<!-- ElecOps Bar Gauge -->
-<div class="elecops-bar-container">
-<div class="elecops-bar-track">
-<div class="elecops-bar-center"></div>
-<div class="elecops-bar-fill" id="xfmr1-elecops-bar"></div>
-</div>
-</div>
-</div>
-<div class="efsi-section">
-<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-<div class="uptime-value efsi-status-line"><span id="xfmr1-efsi-direction">→</span> <span id="xfmr1-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr1-efsi-label"></span></div>
-</div>
+  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">1660kVA STD DAILY PATTERN</div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">46.0%</span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr1-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr1-efsi-direction">→</span> <span id="xfmr1-efsi-pct">—% stable</span> — <span id="xfmr1-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
 <div class="bird-metrics">
-<div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.241 kWh</span></div>
-<div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">5.3 cents</span></div>
-<div class="bird-metric">Production Level</div>
-<div class="bird-metric"><span id="xfmr1-production-birds">850,655 birds</span></div>
-<div class="bird-metric site-output-pct"><span id="xfmr1-site-percent">20% of site output</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.241 kWh</span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">5.3 cents</span></div>
+  <div class="bird-metric">Production Level</div>
+  <div class="bird-metric"><span id="xfmr1-production-birds">850,655 birds</span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr1-site-percent">20% of site output</span></div>
 </div>
 <div class="pattern-buttons">
-<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr1', 'summary')">
+  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr1', 'summary')">
     Summary
   </button>
 </div>
@@ -1625,28 +1615,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr1', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr1', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-<div class="nav-row">
-<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr1', 'baseline')" title="View baseline power pattern">
+  <div class="nav-row">
+    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr1', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr1', 'mpts')" title="View MPTS simulated optimization">
+    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr1', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-</div>
-<div class="nav-row">
-<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr1', 'energy')" title="View energy detail dashboard">
-<span class="btn-icon">⚡</span> Energy
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr1', 'energy')" title="View energy detail dashboard">
+      <span class="btn-icon">⚡</span> Energy
     </button>
-<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr1', 'heat')" title="View heat/waste detail dashboard">
-<span class="btn-icon">🔥</span> Heat
+    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr1', 'heat')" title="View heat/waste detail dashboard">
+      <span class="btn-icon">🔥</span> Heat
     </button>
-<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr1', 'volt')" title="View voltage detail dashboard">
-<span class="btn-icon">⚡</span> Volt
+    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr1', 'volt')" title="View voltage detail dashboard">
+      <span class="btn-icon">⚡</span> Volt
     </button>
-</div>
+  </div>
 </div>
 </div>
 <!-- Transformer Slot 2 -->
@@ -1655,80 +1645,51 @@
 <span id="xfmr2-name">Deli G</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr2-pf-dial" viewbox="0 0 220 220">
-<defs>
-<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
-<stop offset="0%" stop-color="#d7dcc8"></stop>
-<stop offset="45%" stop-color="#c8ccb8"></stop>
-<stop offset="100%" stop-color="#808a5b"></stop>
-</radialgradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
-<stop offset="0%" stop-color="#e65744"></stop>
-<stop offset="14%" stop-color="#e98a4b"></stop>
-<stop offset="28%" stop-color="#7ca137"></stop>
-<stop offset="58%" stop-color="#8ec843"></stop>
-<stop offset="80%" stop-color="#93d355"></stop>
-<stop offset="100%" stop-color="#87d7ef"></stop>
-</lineargradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
-<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
-</lineargradient>
-<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
-<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
-</radialgradient>
-<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
-<stop offset="0%" stop-color="#f0f5d7"></stop>
-<stop offset="100%" stop-color="#7d8f3a"></stop>
-</radialgradient>
-</defs>
-<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
-<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
-<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
-<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
-<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
-<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
-<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr2-pf-band-live" pathlength="100"></path>
-<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
-<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
-<g class="pf-needle-group" id="xfmr2-pf-needle">
-<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
-<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
-<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
-<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
-<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
-<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
-</g>
-</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr2-metric-pf">86.6%</div><div class="gauge-unit">efficiency</div></div>
+<div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
+<svg class="gauge-svg" viewBox="0 0 200 200">
+      <defs>
+        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
+          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
+          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        </radialGradient>
+      </defs>
+<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
+<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
+<g class="tick-marks" id="xfmr2-ticks"></g>
+</svg>
+<div class="gauge-label">Power Factor</div>
+<div class="gauge-value" id="xfmr2-metric-pf">89.6%</div>
+<div class="gauge-unit">efficiency</div>
+</div>
 <div class="uptime">
-<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-<div class="uptime-target" id="xfmr2-target-pattern">1546kVA STD DAILY PATTERN</div>
-<div class="elecops-section">
-<div class="uptime-value">Electric Operations:</div>
-<div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">56.6%</span></div>
-<!-- ElecOps Bar Gauge -->
-<div class="elecops-bar-container">
-<div class="elecops-bar-track">
-<div class="elecops-bar-center"></div>
-<div class="elecops-bar-fill" id="xfmr2-elecops-bar"></div>
-</div>
-</div>
-</div>
-<div class="efsi-section">
-<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-<div class="uptime-value efsi-status-line"><span id="xfmr2-efsi-direction">→</span> <span id="xfmr2-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr2-efsi-label"></span></div>
-</div>
+  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">1546kVA STD DAILY PATTERN</div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">56.6%</span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr2-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr2-efsi-direction">→</span> <span id="xfmr2-efsi-pct">—% stable</span> — <span id="xfmr2-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
 <div class="bird-metrics">
-<div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.241 kWh</span></div>
-<div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">5.3 cents</span></div>
-<div class="bird-metric">Production Level</div>
-<div class="bird-metric"><span id="xfmr2-production-birds">1,182,845 birds</span></div>
-<div class="bird-metric site-output-pct"><span id="xfmr2-site-percent">27% of site output</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.241 kWh</span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">5.3 cents</span></div>
+  <div class="bird-metric">Production Level</div>
+  <div class="bird-metric"><span id="xfmr2-production-birds">1,182,845 birds</span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr2-site-percent">27% of site output</span></div>
 </div>
 <div class="pattern-buttons">
-<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr2', 'summary')">
+  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr2', 'summary')">
     Summary
   </button>
 </div>
@@ -1740,28 +1701,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr2', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr2', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-<div class="nav-row">
-<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr2', 'baseline')" title="View baseline power pattern">
+  <div class="nav-row">
+    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr2', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr2', 'mpts')" title="View MPTS simulated optimization">
+    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr2', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-</div>
-<div class="nav-row">
-<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr2', 'energy')" title="View energy detail dashboard">
-<span class="btn-icon">⚡</span> Energy
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr2', 'energy')" title="View energy detail dashboard">
+      <span class="btn-icon">⚡</span> Energy
     </button>
-<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr2', 'heat')" title="View heat/waste detail dashboard">
-<span class="btn-icon">🔥</span> Heat
+    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr2', 'heat')" title="View heat/waste detail dashboard">
+      <span class="btn-icon">🔥</span> Heat
     </button>
-<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr2', 'volt')" title="View voltage detail dashboard">
-<span class="btn-icon">⚡</span> Volt
+    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr2', 'volt')" title="View voltage detail dashboard">
+      <span class="btn-icon">⚡</span> Volt
     </button>
-</div>
+  </div>
 </div>
 </div>
 <!-- Transformer Slot 3 -->
@@ -1770,80 +1731,51 @@
 <span id="xfmr3-name"></span>
 <span id="xfmr3-kva-wrap"> (<span id="xfmr3-kva"></span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr3-pf-dial" viewbox="0 0 220 220">
-<defs>
-<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
-<stop offset="0%" stop-color="#d7dcc8"></stop>
-<stop offset="45%" stop-color="#c8ccb8"></stop>
-<stop offset="100%" stop-color="#808a5b"></stop>
-</radialgradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
-<stop offset="0%" stop-color="#e65744"></stop>
-<stop offset="14%" stop-color="#e98a4b"></stop>
-<stop offset="28%" stop-color="#7ca137"></stop>
-<stop offset="58%" stop-color="#8ec843"></stop>
-<stop offset="80%" stop-color="#93d355"></stop>
-<stop offset="100%" stop-color="#87d7ef"></stop>
-</lineargradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
-<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
-</lineargradient>
-<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
-<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
-</radialgradient>
-<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
-<stop offset="0%" stop-color="#f0f5d7"></stop>
-<stop offset="100%" stop-color="#7d8f3a"></stop>
-</radialgradient>
-</defs>
-<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
-<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
-<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
-<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
-<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
-<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
-<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr3-pf-band-live" pathlength="100"></path>
-<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
-<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
-<g class="pf-needle-group" id="xfmr3-pf-needle">
-<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
-<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
-<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
-<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
-<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
-<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
-</g>
-</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr3-metric-pf"></div><div class="gauge-unit">efficiency</div></div>
+<div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view Base Target pattern">
+<svg class="gauge-svg" viewBox="0 0 200 200">
+      <defs>
+        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
+          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
+          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        </radialGradient>
+      </defs>
+<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
+<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
+<g class="tick-marks" id="xfmr3-ticks"></g>
+</svg>
+<div class="gauge-label">Power Factor</div>
+<div class="gauge-value" id="xfmr3-metric-pf"></div>
+<div class="gauge-unit">efficiency</div>
+</div>
 <div class="uptime">
-<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-<div class="uptime-target" id="xfmr3-target-pattern"></div>
-<div class="elecops-section">
-<div class="uptime-value">Electric Operations:</div>
-<div class="uptime-value"><span id="xfmr3-production-direction"></span> <span id="xfmr3-uptime-pct"></span></div>
-<!-- ElecOps Bar Gauge -->
-<div class="elecops-bar-container">
-<div class="elecops-bar-track">
-<div class="elecops-bar-center"></div>
-<div class="elecops-bar-fill" id="xfmr3-elecops-bar"></div>
-</div>
-</div>
-</div>
-<div class="efsi-section">
-<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-<div class="uptime-value efsi-status-line"><span id="xfmr3-efsi-direction">→</span> <span id="xfmr3-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr3-efsi-label"></span></div>
-</div>
+  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+  <div class="uptime-target" id="xfmr3-target-pattern"></div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr3-production-direction"></span> <span id="xfmr3-uptime-pct"></span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr3-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr3-efsi-direction">→</span> <span id="xfmr3-efsi-pct">—% stable</span> — <span id="xfmr3-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
 <div class="bird-metrics">
-<div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird"></span></div>
-<div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird"></span></div>
-<div class="bird-metric">Production Level</div>
-<div class="bird-metric"><span id="xfmr3-production-birds"></span></div>
-<div class="bird-metric site-output-pct"><span id="xfmr3-site-percent"></span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird"></span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird"></span></div>
+  <div class="bird-metric">Production Level</div>
+  <div class="bird-metric"><span id="xfmr3-production-birds"></span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr3-site-percent"></span></div>
 </div>
 <div class="pattern-buttons">
-<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr3', 'summary')">
+  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr3', 'summary')">
     Summary
   </button>
 </div>
@@ -1855,28 +1787,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr3', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr3', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-<div class="nav-row">
-<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr3', 'baseline')" title="View baseline power pattern">
+  <div class="nav-row">
+    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr3', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr3', 'mpts')" title="View MPTS simulated optimization">
+    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr3', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-</div>
-<div class="nav-row">
-<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr3', 'energy')" title="View energy detail dashboard">
-<span class="btn-icon">⚡</span> Energy
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr3', 'energy')" title="View energy detail dashboard">
+      <span class="btn-icon">⚡</span> Energy
     </button>
-<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr3', 'heat')" title="View heat/waste detail dashboard">
-<span class="btn-icon">🔥</span> Heat
+    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr3', 'heat')" title="View heat/waste detail dashboard">
+      <span class="btn-icon">🔥</span> Heat
     </button>
-<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr3', 'volt')" title="View voltage detail dashboard">
-<span class="btn-icon">⚡</span> Volt
+    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr3', 'volt')" title="View voltage detail dashboard">
+      <span class="btn-icon">⚡</span> Volt
     </button>
-</div>
+  </div>
 </div>
 </div>
 <!-- Transformer Slot 4 -->
@@ -1885,80 +1817,51 @@
 <span id="xfmr4-name"></span>
 <span id="xfmr4-kva-wrap"> (<span id="xfmr4-kva"></span> kVA)</span>
 </h2>
-<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view MPTS Variables pattern"><svg class="gauge-svg" id="xfmr4-pf-dial" viewbox="0 0 220 220">
-<defs>
-<radialgradient cx="42%" cy="42%" id="pfDialCoreGradient" r="78%">
-<stop offset="0%" stop-color="#d7dcc8"></stop>
-<stop offset="45%" stop-color="#c8ccb8"></stop>
-<stop offset="100%" stop-color="#808a5b"></stop>
-</radialgradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialTopBandGradient" x1="44" x2="176" y1="136" y2="136">
-<stop offset="0%" stop-color="#e65744"></stop>
-<stop offset="14%" stop-color="#e98a4b"></stop>
-<stop offset="28%" stop-color="#7ca137"></stop>
-<stop offset="58%" stop-color="#8ec843"></stop>
-<stop offset="80%" stop-color="#93d355"></stop>
-<stop offset="100%" stop-color="#87d7ef"></stop>
-</lineargradient>
-<lineargradient gradientunits="userSpaceOnUse" id="pfDialGlassGradient" x1="0" x2="0" y1="68" y2="150">
-<stop offset="0%" stop-color="rgba(255,255,255,0.34)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0.04)"></stop>
-</lineargradient>
-<radialgradient cx="40%" cy="25%" id="pfDialSheenGradient" r="70%">
-<stop offset="0%" stop-color="rgba(255,255,255,0.42)"></stop>
-<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
-</radialgradient>
-<radialgradient cx="34%" cy="34%" id="pfDialHubGradient" r="70%">
-<stop offset="0%" stop-color="#f0f5d7"></stop>
-<stop offset="100%" stop-color="#7d8f3a"></stop>
-</radialgradient>
-</defs>
-<circle class="pf-dial-core-shadow" cx="110" cy="112" r="74"></circle>
-<circle class="pf-dial-body" cx="110" cy="110" r="74"></circle>
-<path class="pf-dial-outer-arc" d="M 22 146 A 88 88 0 0 1 198 146"></path>
-<line class="pf-marker-line" x1="58" x2="82" y1="97" y2="121"></line>
-<line class="pf-marker-line" x1="162" x2="138" y1="97" y2="121"></line>
-<path class="pf-dial-band-track" d="M 56 141 A 70 70 0 0 1 164 141" pathlength="100"></path>
-<path class="pf-dial-band-live" d="M 56 141 A 70 70 0 0 1 164 141" id="xfmr4-pf-band-live" pathlength="100"></path>
-<path class="pf-dial-glass" d="M 48 141 A 72 72 0 0 1 172 141 L 166 154 A 64 64 0 0 0 54 154 Z"></path>
-<ellipse class="pf-dial-sheen" cx="102" cy="102" rx="48" ry="30"></ellipse>
-<g class="pf-needle-group" id="xfmr4-pf-needle">
-<line class="pf-needle-shadow" x1="112" x2="112" y1="112" y2="58"></line>
-<line class="pf-needle-stem" x1="110" x2="110" y1="110" y2="58"></line>
-<polygon class="pf-needle-tip" points="110,50 104,61 116,61"></polygon>
-<circle class="pf-needle-hub-shadow" cx="110" cy="110" r="12"></circle>
-<circle class="pf-needle-hub" cx="110" cy="110" r="8"></circle>
-<circle class="pf-needle-post" cx="110" cy="110" r="3"></circle>
-</g>
-</svg><span class="pf-marker pf-marker-yellow pf-marker-80">80%</span><span class="pf-marker pf-marker-yellow pf-marker-90">90%</span><span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span><span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span><div class="gauge-label">Power Factor</div><div class="gauge-value" id="xfmr4-metric-pf"></div><div class="gauge-unit">efficiency</div></div>
+<div class="gauge-container" onclick="viewPattern('xfmr4', 'mpts-vars')" title="Click to view Base Target pattern">
+<svg class="gauge-svg" viewBox="0 0 200 200">
+      <defs>
+        <radialGradient id="blueGradient" cx="35%" cy="35%" r="85%">
+          <stop offset="0%" stop-color="#5ca3b8" stop-opacity="1.0" />
+          <stop offset="60%" stop-color="#3d8599" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#2a6d7f" stop-opacity="0.9" />
+        </radialGradient>
+      </defs>
+<circle class="gauge-background" cx="100" cy="100" r="80" fill="url(#blueGradient)"></circle>
+<circle class="gauge-bg" cx="100" cy="100" r="92"></circle>
+<g class="tick-marks" id="xfmr4-ticks"></g>
+</svg>
+<div class="gauge-label">Power Factor</div>
+<div class="gauge-value" id="xfmr4-metric-pf"></div>
+<div class="gauge-unit">efficiency</div>
+</div>
 <div class="uptime">
-<div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-<div class="uptime-target" id="xfmr4-target-pattern"></div>
-<div class="elecops-section">
-<div class="uptime-value">Electric Operations:</div>
-<div class="uptime-value"><span id="xfmr4-production-direction"></span> <span id="xfmr4-uptime-pct"></span></div>
-<!-- ElecOps Bar Gauge -->
-<div class="elecops-bar-container">
-<div class="elecops-bar-track">
-<div class="elecops-bar-center"></div>
-<div class="elecops-bar-fill" id="xfmr4-elecops-bar"></div>
-</div>
-</div>
-</div>
-<div class="efsi-section">
-<div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
-<div class="uptime-value efsi-status-line"><span id="xfmr4-efsi-direction">→</span> <span id="xfmr4-efsi-pct">—% stable</span> — <span class="efsi-front-label" id="xfmr4-efsi-label"></span></div>
-</div>
+  <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
+  <div class="uptime-target" id="xfmr4-target-pattern"></div>
+  <div class="elecops-section">
+    <div class="uptime-value">Electric Operations:</div>
+    <div class="uptime-value"><span id="xfmr4-production-direction"></span> <span id="xfmr4-uptime-pct"></span></div>
+    <!-- ElecOps Bar Gauge -->
+    <div class="elecops-bar-container">
+      <div class="elecops-bar-track">
+        <div class="elecops-bar-center"></div>
+        <div class="elecops-bar-fill" id="xfmr4-elecops-bar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="efsi-section">
+    <div class="uptime-value">Energy Field Stability Index<span class="help-icon" title="EFSI = % of active energy in the field (kW ÷ (kW + kVAR)). At 50%, active equals reactive — the warning floor. Higher is more stable.">?</span></div>
+    <div class="uptime-value efsi-status-line"><span id="xfmr4-efsi-direction">→</span> <span id="xfmr4-efsi-pct">—% stable</span> — <span id="xfmr4-efsi-label" class="efsi-front-label"></span></div>
+  </div>
 </div>
 <div class="bird-metrics">
-<div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird"></span></div>
-<div class="bird-metric">Cost per Bird: <span id="xfmr4-cost-per-bird"></span></div>
-<div class="bird-metric">Production Level</div>
-<div class="bird-metric"><span id="xfmr4-production-birds"></span></div>
-<div class="bird-metric site-output-pct"><span id="xfmr4-site-percent"></span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird"></span></div>
+  <div class="bird-metric">Cost per Bird: <span id="xfmr4-cost-per-bird"></span></div>
+  <div class="bird-metric">Production Level</div>
+  <div class="bird-metric"><span id="xfmr4-production-birds"></span></div>
+  <div class="bird-metric site-output-pct"><span id="xfmr4-site-percent"></span></div>
 </div>
 <div class="pattern-buttons">
-<button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr4', 'summary')">
+  <button class="pattern-btn summary-btn-full" onclick="showPatternModal('xfmr4', 'summary')">
     Summary
   </button>
 </div>
@@ -1970,28 +1873,28 @@
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
-<button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr4', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
+  <button class="nav-btn comparison-btn" onclick="showPatternModal('xfmr4', 'narrative')" title="View baseline pattern with Unity analysis and simulator projection">
     Full Analysis
   </button>
-<div class="nav-row">
-<button class="nav-btn baseline-btn" onclick="viewPattern('xfmr4', 'baseline')" title="View baseline power pattern">
+  <div class="nav-row">
+    <button class="nav-btn baseline-btn" onclick="viewPattern('xfmr4', 'baseline')" title="View baseline power pattern">
       Baseline
     </button>
-<button class="nav-btn mpts-btn" onclick="viewPattern('xfmr4', 'mpts')" title="View MPTS simulated optimization">
+    <button class="nav-btn mpts-btn" onclick="viewPattern('xfmr4', 'mpts')" title="View MPTS simulated optimization">
       MPTS
     </button>
-</div>
-<div class="nav-row">
-<button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr4', 'energy')" title="View energy detail dashboard">
-<span class="btn-icon">⚡</span> Energy
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn detail-btn energy" onclick="viewDetail('xfmr4', 'energy')" title="View energy detail dashboard">
+      <span class="btn-icon">⚡</span> Energy
     </button>
-<button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr4', 'heat')" title="View heat/waste detail dashboard">
-<span class="btn-icon">🔥</span> Heat
+    <button class="nav-btn detail-btn heat" onclick="viewDetail('xfmr4', 'heat')" title="View heat/waste detail dashboard">
+      <span class="btn-icon">🔥</span> Heat
     </button>
-<button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr4', 'volt')" title="View voltage detail dashboard">
-<span class="btn-icon">⚡</span> Volt
+    <button class="nav-btn detail-btn volt" onclick="viewDetail('xfmr4', 'volt')" title="View voltage detail dashboard">
+      <span class="btn-icon">⚡</span> Volt
     </button>
-</div>
+  </div>
 </div>
 </div>
 </div> <!-- Close dashboard-grid -->
@@ -2006,7 +1909,6 @@
 </div>
 </div>
 <!-- Unity Dashboard - Unified JavaScript System -->
-<!-- <script src="../static/unity-dashboard.js"></script> -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     // Set Unity date
@@ -2022,6 +1924,20 @@
     if (hasDays) document.getElementById('site-meta-sep-2').style.display = 'inline';
 
     // Transformer performance data with correct Minimum Target calculations
+    function calculateTargetPerformance(targetKWh, actualKWh) {
+      const target = Number(targetKWh) || 0;
+      const actual = Number(actualKWh) || 0;
+      if (target <= 0) {
+        return { target: 0, performance: '0.0', label: 'Target Delta' };
+      }
+      const deltaPct = ((actual - target) / target) * 100;
+      const label = deltaPct >= 0 ? 'Above Target' : 'Below Target';
+      return {
+        target: Math.round(target),
+        performance: Math.abs(deltaPct).toFixed(1),
+        label
+      };
+    }
     // Formula: tMax_SUPPLY × Power_Factor × 18_hours × days_in_period = Minimum_Target_kWh
     // tMax_SUPPLY is the actual max kVA from data (top 5% outliers trimmed)
     const days = parseInt((document.getElementById('param-days')?.textContent || '30').trim(), 10) || 30;
@@ -2049,17 +1965,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -2068,15 +2044,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2140,11 +2126,6 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
-
-      // Initialize PF dial rendering from bound metric
-      if (pfEl) {
-        initializePowerFactorDial(i);
-      }
     }
     
     // Add click handler to power factor gauge circles to open MPTS variables (M) image
@@ -2214,142 +2195,46 @@
 
   });
 
-
-
-  // Initialize dynamic PF dial (70.7% -> 100%) for each transformer card
-  function initializePowerFactorDial(xfmrNum) {
-    const pfEl = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
-    const needleEl = document.getElementById(`xfmr${xfmrNum}-pf-needle`);
-    const bandLiveEl = document.getElementById(`xfmr${xfmrNum}-pf-band-live`);
-    const dialSvg = document.getElementById(`xfmr${xfmrNum}-pf-dial`);
-    if (!pfEl || !needleEl || !bandLiveEl || !dialSvg) return;
-
-    // Ensure the lower transition arc ends in light blue (red -> orange -> light blue)
-    const bandGradient = dialSvg.querySelector('#pfDialTopBandGradient');
-    if (bandGradient) {
-      bandGradient.innerHTML = `
-        <stop offset="0%" stop-color="#e65744"/>
-        <stop offset="14%" stop-color="#e98a4b"/>
-        <stop offset="28%" stop-color="#7ca137"/>
-        <stop offset="58%" stop-color="#8ec843"/>
-        <stop offset="80%" stop-color="#93d355"/>
-        <stop offset="92%" stop-color="#71c5d8"/>
-        <stop offset="100%" stop-color="#87d7ef"/>
-      `;
-    }
-
-    // Pull 80/90 guide lines radially away from the outer orange arc
-    const markerLines = dialSvg.querySelectorAll('.pf-marker-line');
-    if (markerLines.length >= 2) {
-      markerLines[0].setAttribute('x1', '46');
-      markerLines[0].setAttribute('y1', '83');
-      markerLines[0].setAttribute('x2', '78');
-      markerLines[0].setAttribute('y2', '122');
-
-      markerLines[1].setAttribute('x1', '174');
-      markerLines[1].setAttribute('y1', '83');
-      markerLines[1].setAttribute('x2', '142');
-      markerLines[1].setAttribute('y2', '122');
-    }
-
-    const pfRaw = (pfEl.textContent || '').match(/([\d.]+)/);
-    if (!pfRaw) return;
-    const pfValue = parseFloat(pfRaw[1]);
-    if (Number.isNaN(pfValue)) return;
-
-    const minPf = 70.7;
-    const maxPf = 100.0;
-    const clampedPf = Math.max(minPf, Math.min(maxPf, pfValue));
-    const ratio = (clampedPf - minPf) / (maxPf - minPf);
-
-    // Arc is mapped from left to right with tighter bounds to keep the needle inside the dial
-    const startAngle = 215;
-    const endAngle = 325;
-    const pointerAngle = startAngle + ((endAngle - startAngle) * ratio);
-
-    // Build needle geometry directly so the hub stays centered for all PF values
-    const cx = 110;
-    const cy = 110;
-    const rad = pointerAngle * (Math.PI / 180);
-    const tipLen = 66;
-    const shadowLen = 68;
-    const tipX = cx + (tipLen * Math.cos(rad));
-    const tipY = cy + (tipLen * Math.sin(rad));
-    const shadowX = cx + (shadowLen * Math.cos(rad));
-    const shadowY = cy + (shadowLen * Math.sin(rad));
-
-    const stemEl = needleEl.querySelector('.pf-needle-stem');
-    const stemShadowEl = needleEl.querySelector('.pf-needle-shadow');
-    const tipEl = needleEl.querySelector('.pf-needle-tip');
-    const hubShadowEl = needleEl.querySelector('.pf-needle-hub-shadow');
-    const hubEl = needleEl.querySelector('.pf-needle-hub');
-    const postEl = needleEl.querySelector('.pf-needle-post');
-    if (stemEl && stemShadowEl && tipEl && hubShadowEl && hubEl && postEl) {
-      stemEl.setAttribute('x1', `${cx}`);
-      stemEl.setAttribute('y1', `${cy}`);
-      stemEl.setAttribute('x2', `${tipX}`);
-      stemEl.setAttribute('y2', `${tipY}`);
-
-      stemShadowEl.setAttribute('x1', `${cx + 1.5}`);
-      stemShadowEl.setAttribute('y1', `${cy + 1.5}`);
-      stemShadowEl.setAttribute('x2', `${shadowX + 1.5}`);
-      stemShadowEl.setAttribute('y2', `${shadowY + 1.5}`);
-
-      const nx = -Math.sin(rad);
-      const ny = Math.cos(rad);
-      const tipWidth = 5.5;
-      const baseBack = 8;
-      const bx = tipX - (baseBack * Math.cos(rad));
-      const by = tipY - (baseBack * Math.sin(rad));
-      const leftX = bx + (tipWidth * nx);
-      const leftY = by + (tipWidth * ny);
-      const rightX = bx - (tipWidth * nx);
-      const rightY = by - (tipWidth * ny);
-      tipEl.setAttribute('points', `${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}`);
-
-      // Force hub/post to remain centered
-      hubShadowEl.setAttribute('cx', `${cx}`);
-      hubShadowEl.setAttribute('cy', `${cy}`);
-      hubEl.setAttribute('cx', `${cx}`);
-      hubEl.setAttribute('cy', `${cy}`);
-      postEl.setAttribute('cx', `${cx}`);
-      postEl.setAttribute('cy', `${cy}`);
-    }
-
-    // Animate top-band "sweep" amount
-    const livePct = 100;
-    bandLiveEl.style.strokeDasharray = `${livePct} 100`;
-
-    // Smooth tint shift on the value pill:
-    // lower PF -> warm/red tint, higher PF -> cool/blue tint
-    const rLow = 228, gLow = 90,  bLow = 80;
-    const rHigh = 218, gHigh = 235, bHigh = 255;
-    const rr = Math.round(rLow + ((rHigh - rLow) * ratio));
-    const gg = Math.round(gLow + ((gHigh - gLow) * ratio));
-    const bb = Math.round(bLow + ((bHigh - bLow) * ratio));
-
-    // Keep it subtle and dark for normal operating ranges (dark base + tinted gradient)
-    const alphaMid = 0.20 + (ratio * 0.10);
-    const alphaEdge = 0.13 + (ratio * 0.07);
-    pfEl.style.background = `linear-gradient(155deg, rgba(18, 22, 28, 0.92) 0%, rgba(${rr}, ${gg}, ${bb}, ${alphaMid.toFixed(3)}) 56%, rgba(10, 14, 20, 0.94) 100%)`;
-
-    // Border follows tint slightly
-    const br = Math.round(120 + (ratio * 40));
-    const bg = Math.round(128 + (ratio * 40));
-    const bborder = Math.round(160 + (ratio * 60));
-    pfEl.style.border = `1px solid rgba(${br}, ${bg}, ${bborder}, 0.58)`;
-    pfEl.style.boxShadow = `0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(${rr}, ${gg}, ${bb}, ${alphaEdge.toFixed(3)})`;
-
-    // Very low-end floor style: red pill with white text
-    if (clampedPf <= 71.0) {
-      pfEl.style.background = 'linear-gradient(160deg, rgba(54, 18, 17, 0.96) 0%, rgba(196, 66, 58, 0.88) 58%, rgba(45, 12, 12, 0.95) 100%)';
-      pfEl.style.color = 'rgba(255,255,255,0.98)';
-      pfEl.style.border = '1px solid rgba(255, 205, 205, 0.75)';
-      pfEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255, 190, 190, 0.22)';
-    } else {
-      pfEl.style.color = 'rgba(245, 248, 255, 0.96)';
+  // Draw tick marks around all gauge circles
+  function drawGaugeTicks() {
+    for (let i = 1; i <= 4; i++) {
+      const ticksContainer = document.getElementById(`xfmr${i}-ticks`);
+      if (!ticksContainer) continue;
+      
+      const centerX = 100;
+      const centerY = 100;
+      const radius = 92;
+      const tickLength = 8;
+      const tickWidth = 3;
+      const tickCount = 60; // 60 ticks for full circle
+      const tickColor = 'rgba(255, 255, 255, 0.5)';
+      
+      // Draw ticks in a full circle (360 degrees)
+      for (let j = 0; j < tickCount; j++) {
+        const angle = (j * 360 / tickCount); // 0 to 360 degrees
+        const angleRad = (angle * Math.PI) / 180;
+        
+        const x1 = centerX + radius * Math.cos(angleRad);
+        const y1 = centerY + radius * Math.sin(angleRad);
+        const x2 = centerX + (radius - tickLength) * Math.cos(angleRad);
+        const y2 = centerY + (radius - tickLength) * Math.sin(angleRad);
+        
+        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        tick.setAttribute('class', 'tick'); // Add class for CSS styling
+        tick.setAttribute('x1', x1);
+        tick.setAttribute('y1', y1);
+        tick.setAttribute('x2', x2);
+        tick.setAttribute('y2', y2);
+        tick.setAttribute('stroke', tickColor);
+        tick.setAttribute('stroke-width', tickWidth);
+        
+        ticksContainer.appendChild(tick);
+      }
     }
   }
+  
+  // Call tick drawing after DOM loads
+  document.addEventListener('DOMContentLoaded', drawGaugeTicks);
 
   // Apply EFSI status classes based on PF-derived active share
   function applyEfsiColors() {
@@ -2377,7 +2262,7 @@
       pctEl.textContent = `${efsiPct}% stable`;
       let label = 'WARNING', arrow = '↓', cls = 'efsi-warning';
       if (efsiPct >= 70)      { label = 'GOOD';    arrow = '↑'; cls = 'efsi-good'; }
-      else if (efsiPct >= 65) { label = 'NORMAL';  arrow = '→'; cls = 'efsi-normal'; }
+      else if (efsiPct >= 63) { label = 'NORMAL';  arrow = '→'; cls = 'efsi-normal'; }
       else if (efsiPct >= 60) { label = 'LOW';     arrow = '↓'; cls = 'efsi-low'; }
 
       labelEl.textContent = label;
@@ -2419,52 +2304,305 @@
   }
 
   // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
-  function getTransformerRoutingInfo(transformerName) {
-    const tMatch = transformerName.match(/^(T\d+)/i);
-    if (tMatch) {
-      const t = tMatch[1].toUpperCase();
-      return { keys: [t, t.toLowerCase()], fileIds: [t.toLowerCase(), t] };
-    }
-    const nMatch = transformerName.match(/(\d+)/);
-    if (nMatch) {
-      const n = nMatch[1];
-      return {
-        keys: [`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, `T${n}`],
-        fileIds: [`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`]
-      };
-    }
-    const clean = transformerName.replace(/\s+/g, '');
-    return { keys: [clean.toUpperCase(), clean], fileIds: [clean, clean.toLowerCase()] };
-  }
-
-  function buildPatternCandidates(fileIds, prefix, monthSuffixShort, monthSuffixLong) {
+  function uniqueRoutingValues(values) {
     const out = [];
     const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
+  }
+
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
+    if (tMatch) {
+      const t = tMatch[1];
+      return {
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+      };
+    }
+
+    // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
+    if (ncdcMatch) {
+      const ncdc = ncdcMatch[1];
+      return {
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+      };
+    }
+
+    // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
+    if (renderingMatch) {
+      const n = renderingMatch[1];
+      return {
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+      };
+    }
+
+    // Generic numeric prefixes like "ABC1..."
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
+    if (baseMatch) {
+      const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
+      return {
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
+      };
+    }
+
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
+  }
+
+  function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
+    const out = [];
+    const seen = new Set();
+    const exts = (extensions && extensions.length) ? extensions : ['png'];
+    const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
     fileIds.forEach(id => {
-      [`${id}${prefix}_${monthSuffixShort}.png`, `${id}${prefix}_${monthSuffixLong}.png`].forEach(fn => {
-        if (!seen.has(fn)) {
-          seen.add(fn);
-          out.push(`Patterns/${fn}`);
-        }
+      prefixList.forEach(prefix => {
+        exts.forEach(ext => {
+          [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
+            if (!seen.has(fn)) {
+              seen.add(fn);
+              out.push(`Patterns/${fn}`);
+            }
+          });
+        });
       });
     });
     return out;
   }
 
-  function attachPatternFallback(imgEl, candidates, patternLabel) {
-    if (!imgEl || !candidates || !candidates.length) return;
+  function attachPatternFallback(imgEl, candidates, patternLabel, options = {}) {
+    if (!imgEl || !candidates || !candidates.length) {
+      if (options && typeof options.onNotFound === 'function') {
+        options.onNotFound(imgEl);
+      }
+      return;
+    }
     let idx = 0;
+    const showError = options.showError !== false;
     const applySrc = () => { imgEl.src = candidates[idx]; };
     imgEl.onerror = function() {
       idx += 1;
       if (idx < candidates.length) {
         applySrc();
       } else {
-        this.parentElement.innerHTML = `<p style='color:#f87171; text-align:center; font-weight:700;'>Pattern not found for ${patternLabel}. Tried ${candidates.length} filename variants.</p>`;
+        if (typeof options.onNotFound === 'function') {
+          options.onNotFound(this);
+        }
+        if (showError) {
+          this.parentElement.innerHTML = `<p style='color:#f87171; text-align:center; font-weight:700;'>Patterns are currently unavailable.</p>`;
+        }
       }
     };
     applySrc();
   }
+
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
+  function updatePatternBaseScale() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
+    if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
+      state.baseScale = 1;
+      return;
+    }
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
+    }
+  }
+
+  function getPatternRenderScale() {
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
+  }
+
+  function clampPatternImagePosition() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
+    if (scaledWidth <= viewportWidth) {
+      state.translateX = (viewportWidth - scaledWidth) / 2;
+    } else {
+      const minX = viewportWidth - scaledWidth;
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
+    }
+    if (scaledHeight <= viewportHeight) {
+      state.translateY = (viewportHeight - scaledHeight) / 2;
+    } else {
+      const minY = viewportHeight - scaledHeight;
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
+    }
+  }
+
+  function applyPatternImageTransform() {
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
+    }
+  }
+
+  function resetPatternImageView() {
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
+    updatePatternBaseScale();
+    state.translateX = 0;
+    state.translateY = 0;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function handlePatternImageWheel(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    event.preventDefault();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
+    const pointerX = event.clientX - rect.left;
+    const pointerY = event.clientY - rect.top;
+    const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
+    const currentRenderScale = getPatternRenderScale();
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
+    const scaleRatio = nextRenderScale / currentRenderScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function startPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function movePatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function stopPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
+      try {
+        state.viewport.releasePointerCapture(event.pointerId);
+      } catch (_) {}
+    }
+  }
+
+  function initializePatternImageView() {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
+      resetPatternImageView();
+    });
+    resetPatternImageView();
+  }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
 
   function viewPattern(transformerId, type) {
     try {
@@ -2482,15 +2620,25 @@
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
-      // Prefix mapping: b=Baseline, bt=Base-Target, m=MPTS Variables, s=Solution, v=Voltage
-      let prefix = 'b';
+      // Prefix mapping:
+      // baseline -> bt first, then b fallback
+      // mpts -> s first, then m fallback
+      // mpts-vars -> bt
+      // voltage -> v
+      let prefixCandidates = ['bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefix = 's'; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefix = 'm'; patternLabel = 'MPTS Variables'; }
-      else if (type === 'voltage') { prefix = 'v'; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
-      const candidates = buildPatternCandidates(routing.fileIds, prefix, monthSuffixShort, monthSuffixLong);
+      let candidates = buildPatternCandidates(
+        routing.fileIds,
+        prefixCandidates,
+        monthSuffixShort,
+        monthSuffixLong,
+        ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']
+      );
 
       // Modal elements
       const modal = document.getElementById('patternModal');
@@ -2504,22 +2652,43 @@
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
       if (unityHowToBtn) {
-        unityHowToBtn.style.display = (type === 'baseline' || type === 'mpts') ? 'inline-block' : 'none';
+        if (type === 'baseline') {
+          unityHowToBtn.textContent = '🎧 How to Read Waste';
+          currentHowToPath = `Patterns/${routing.keys[0]}_waste_howto.mp3`;
+          unityHowToBtn.style.display = 'inline-block';
+        } else if (type === 'mpts') {
+          unityHowToBtn.textContent = '🎧 How to Read Savings';
+          currentHowToPath = `Patterns/${routing.keys[0]}_savings_howto.mp3`;
+          unityHowToBtn.style.display = 'inline-block';
+        } else {
+          currentHowToPath = '';
+          unityHowToBtn.style.display = 'none';
+        }
       }
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
+      clearPatternImageView();
       modalBody.innerHTML = `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
+          </div>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
                  onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
-                 >
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+            <div class="pattern-view-actions">
+              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+            </div>
           </div>
         </div>`;
 
+      initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
     } catch (error) {
@@ -2607,7 +2776,7 @@
   // Embedded pattern data to avoid CORS issues with file:// protocol
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
-  const PATTERN_DATA = {
+  let PATTERN_DATA = {
   "transformers": {
     "DELIF": {
       "pattern_part1": "Welcome. I'm Unity. This is the current state for Deli F. Average power factor is 0.869. Average load is 896.01 kVA with peak load at 2,165.46 kVA. Measured energy for the period is 535,864.46 kWh with 65,672.54 kWh of reactive waste.",
@@ -2637,6 +2806,33 @@
     }
   }
 };
+  let patternDataLoadPromise = null;
+  function hasPatternDataReady() {
+    return !!(PATTERN_DATA && PATTERN_DATA.transformers && Object.keys(PATTERN_DATA.transformers).length > 0);
+  }
+  async function ensurePatternDataReady() {
+    if (hasPatternDataReady()) return PATTERN_DATA;
+    if (patternDataLoadPromise) return patternDataLoadPromise;
+    patternDataLoadPromise = fetch('SET1_PatternAnalysisData.json', { cache: 'no-store' })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (data && data.transformers && Object.keys(data.transformers).length > 0) {
+          PATTERN_DATA = data;
+          console.log('Pattern data loaded from SET1_PatternAnalysisData.json');
+        } else {
+          console.warn('Pattern data JSON loaded but no transformer entries found.');
+        }
+        return PATTERN_DATA;
+      })
+      .catch((err) => {
+        console.warn('Could not load SET1_PatternAnalysisData.json at runtime:', err);
+        return PATTERN_DATA;
+      });
+    return patternDataLoadPromise;
+  }
   
   // Audio state management
   let currentSpeech = null;
@@ -2645,63 +2841,98 @@
   let currentAudioElement = null;
   let currentTransformerId = '';
   let isSpeaking = false;
+  let currentHowToPath = '';
   let currentExplainsPartIndex = 0;
+  let siteOverviewPlaybackToken = 0;
   const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
-
-  // Play site overview audio
-  function playSiteOverview() {
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
+  // Play site overview Unity audio only; second click stops playback
+  async function playSiteOverview() {
+    const speechActive = !!(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
+    const audioActive = !!(currentAudioElement && !currentAudioElement.paused && !currentAudioElement.ended);
+    if (isSpeaking || speechActive || audioActive) {
+      siteOverviewPlaybackToken += 1;
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      if (currentSpeech) {
+        try {
+          currentSpeech.onend = null;
+          currentSpeech.onerror = null;
+        } catch (e) {}
+        currentSpeech = null;
+      }
       if (currentAudioElement) {
         currentAudioElement.pause();
         currentAudioElement.currentTime = 0;
       }
+      currentAudioElement = null;
       isSpeaking = false;
       currentExplainsPartIndex = 0;
       return;
     }
-
-    const startOverviewTTS = () => {
-      const siteName = (document.getElementById('site-facility-name')?.textContent || 'this site').replace(/\s*-\s*$/, '').trim();
-      const period = (document.getElementById('param-period')?.textContent || '').trim();
-      const days = (document.getElementById('param-days')?.textContent || '').trim();
-      const transformerCount = (document.getElementById('transformer-count')?.textContent || '').trim();
-      const text = `Welcome. I'm Unity. This is your site overview for ${siteName}. Analysis period ${period || 'current period'} over ${days || 'multiple'} days with ${transformerCount || 'active transformers'} monitored. Use Site Summary Baseline for current state and Site Summary Unity System for harmonized optimization potential.`;
-      currentSpeech = new SpeechSynthesisUtterance(text);
-      const voices = window.speechSynthesis.getVoices();
-      let preferredVoice = voices.find(v => v.name.toLowerCase().includes('unity faraday'));
-      if (!preferredVoice) {
-        preferredVoice = voices.find(v => v.name.includes('Samantha') || v.name.includes('Female') || v.lang === 'en-US');
+    const playbackToken = ++siteOverviewPlaybackToken;
+    const audioCandidates = [
+      'Audio/site_overview.mp3',
+      'audio/site_overview.mp3'
+    ];
+    for (const candidate of audioCandidates) {
+      const audio = new Audio(candidate);
+      currentAudioElement = audio;
+      const played = await new Promise((resolve) => {
+        let settled = false;
+        const settle = (ok) => {
+          if (settled) return;
+          settled = true;
+          resolve(ok);
+        };
+        const fail = () => {
+          try {
+            audio.pause();
+            audio.currentTime = 0;
+          } catch (e) {}
+          if (currentAudioElement === audio) currentAudioElement = null;
+          isSpeaking = false;
+          settle(false);
+        };
+        audio.onended = function() {
+          if (currentAudioElement === audio) currentAudioElement = null;
+          isSpeaking = false;
+        };
+        audio.onerror = function() { fail(); };
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.then(() => {
+            isSpeaking = true;
+            settle(true);
+          }).catch(() => {
+            fail();
+          });
+        } else {
+          isSpeaking = true;
+          settle(true);
+        }
+      });
+      if (playbackToken !== siteOverviewPlaybackToken) {
+        return;
       }
-      if (preferredVoice) currentSpeech.voice = preferredVoice;
-      currentSpeech.rate = 0.95;
-      currentSpeech.pitch = 1.0;
-      currentSpeech.volume = 1.0;
-      currentSpeech.onend = function() { isSpeaking = false; };
-      currentSpeech.onerror = function() { isSpeaking = false; };
-      isSpeaking = true;
-      window.speechSynthesis.speak(currentSpeech);
-    };
-    const mp3File = 'Audio/site_overview.mp3';
-    currentAudioElement = new Audio(mp3File);
-    currentAudioElement.onended = function() { isSpeaking = false; };
-    currentAudioElement.onerror = function() {
-      console.warn('Site overview MP3 not available, using TTS fallback.');
-      isSpeaking = false;
-      startOverviewTTS();
-    };
-    isSpeaking = true;
-    currentAudioElement.play().catch(() => {
-      console.warn('Site overview playback failed, using TTS fallback.');
-      isSpeaking = false;
-      startOverviewTTS();
-    });
+      if (played) return;
+    }
+    if (playbackToken !== siteOverviewPlaybackToken) {
+      return;
+    }
+    console.warn('Unity site overview audio not found (expected Audio/site_overview.mp3).');
+    alert('Unity site overview audio is not available yet. Please generate Audio/site_overview.mp3 for this study.');
   }
 
   // Scroll to narrative image by index (1=baseline, 2=middle section, 3=simulator)
   function scrollToNarrativeImage(imageIndex) {
     const modalBody = document.getElementById('patternModalBody');
     if (!modalBody) return;
+    const taggedImage = modalBody.querySelector(`img[data-narrative-part="${imageIndex}"]`);
+    if (taggedImage) {
+      taggedImage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     const images = modalBody.querySelectorAll('img');
     if (images.length >= imageIndex && imageIndex > 0) {
       images[imageIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2838,8 +3069,22 @@
     });
   }
 
-  // Play shared "How to Read Chart" audio; fall back to TTS
-  function playUnityHowToChart() {
+  // Play How to Read audio (waste or savings) for current pattern view
+  function openHowToFullscreenFromCurrentView() {
+    const imageEl =
+      document.getElementById('patternImage') ||
+      (currentHowToPath && currentHowToPath.includes('_waste_howto') ? document.getElementById('baselinePatternImg') : null) ||
+      (currentHowToPath && currentHowToPath.includes('_savings_howto') ? document.getElementById('simulatorPatternImg') : null) ||
+      document.getElementById('baselinePatternImg') ||
+      document.getElementById('simulatorPatternImg');
+    if (!imageEl || !imageEl.src) return;
+    const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
+    let howToLabel = 'How to Read';
+    if (currentHowToPath && currentHowToPath.includes('_waste_howto')) howToLabel = 'How to Read Waste';
+    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
+    showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
+  }
+  function playHowToAudio() {
     if (isSpeaking) {
       window.speechSynthesis.cancel();
       if (currentAudioElement) {
@@ -2851,27 +3096,14 @@
       return;
     }
 
-    let company = 'your facility';
-    try {
-      const parts = (window.location.pathname || '').split('/').filter(Boolean);
-      const anchorEwb = parts.lastIndexOf('eWebmaster');
-      if (anchorEwb >= 0) {
-        const hasCustomersSeg = (parts[anchorEwb + 1] || '').toLowerCase() === 'customers';
-        company = parts[anchorEwb + (hasCustomersSeg ? 2 : 1)] || company;
-      } else if ((parts[0] || '').toLowerCase() === 'uewebsite') {
-        const hasCustomersSeg = (parts[1] || '').toLowerCase() === 'customers';
-        company = parts[hasCustomersSeg ? 2 : 1] || company;
-      } else if ((parts[0] || '').toLowerCase() === 'customers') {
-        company = parts[1] || company;
-      } else if (parts.length >= 1) {
-        company = parts[0] || company;
-      }
-      company = (company || '').replace(/_/g, ' ').trim() || company;
-    } catch (e) {}
-
-    const mp3File = 'Audio/how-to-read-the-chart.mp3';
+    if (!currentHowToPath) {
+      alert('How to Read audio not available for this view.');
+      return;
+    }
+    openHowToFullscreenFromCurrentView();
+    const mp3File = currentHowToPath;
     const startHowToTTS = () => {
-      const text = `Welcome. I'm Unity. This is a quick overview for ${company} on how to read the energy field chart. The rectangle represents the full time period from left to right. Height means load magnitude. Dark blue is supplied kVA, light blue is consumed kW, and green is reactive kVAR. The orange line is power factor. Baseline shows current behavior; MPTS shows the harmonized state after Unity optimization.`;
+      const text = `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
       currentSpeech = new SpeechSynthesisUtterance(text);
       const voices = window.speechSynthesis.getVoices();
       let preferredVoice = voices.find(v => v.name.toLowerCase().includes('unity faraday'));
@@ -2905,7 +3137,8 @@
   }
 
   // Show pattern modal with summary or narrative
-  function showPatternModal(transformerId, type) {
+  async function showPatternModal(transformerId, type) {
+    await ensurePatternDataReady();
     const xfmrNum = transformerId.replace('xfmr', '');
     const nameElement = document.getElementById(`xfmr${xfmrNum}-name`);
     if (!nameElement) return;
@@ -2915,22 +3148,26 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
 
     const getElText = (id) => {
       const el = document.getElementById(id);
@@ -2994,7 +3231,7 @@
         if (efsiNum >= 70) {
           efsiStatusLabel = 'GOOD';
           efsiStatusClass = 'efsi-status-good';
-        } else if (efsiNum >= 65) {
+        } else if (efsiNum >= 63) {
           efsiStatusLabel = 'NORMAL';
           efsiStatusClass = 'efsi-status-normal';
         } else if (efsiNum >= 60) {
@@ -3099,42 +3336,79 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong);
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
-      console.log(`Loading images for ${tid}:`, baselineCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
-      
-      const paragraphs = narrative.split('\n\n').filter(p => p.trim());
-      
-      const formattedParagraphs = paragraphs.map(para => {
-        // Bold key terms
-        let formatted = para
-          .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
-          .replace(/(target|baseline)/gi, '<strong>$1</strong>')
-          .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
-          .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\"color: #5D701A;\">$1</strong>');
-        
-        return `<p style=\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\">${formatted}</p>`;
-      }).join('');
-      
-      // Baseline image at top, narrative text in middle, simulator image at bottom
-      // Images are clickable for full-screen zoom
-      content = `
-        <div style="text-align: center; margin-bottom: 20px;">
-          <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern" 
-               onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Current State)')" 
-               style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
-          <p style="font-size: 12px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
-        </div>
-        <div style="text-align: left;">
-          ${formattedParagraphs}
-        </div>
-        <div style="text-align: center; margin-top: 30px;">
-          <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern" 
-               onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (After Unity Optimization)')" 
-               style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
-          <p style="font-size: 12px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
-        </div>
-      `;
+      console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
+      const formatNarrativeText = (text) => (text || '')
+        .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
+        .replace(/(target|baseline)/gi, '<strong>$1</strong>')
+        .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
+        .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\\\"color: #5D701A;\\\">$1</strong>');
+      if (p1 || p2 || p3) {
+        content = `
+          <div style="text-align: left;">
+            ${p1 ? `<h4>Part 1 — Current State</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p1).replace(/\n/g,'<br/>')}</p>` : ''}
+          </div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Part 1: Current State)')"
+                 data-narrative-part="1"
+                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 1 Image — Baseline Pattern (Current State)</p>
+          </div>
+          <div style="text-align: left;">
+            ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p2).replace(/\n/g,'<br/>')}</p>` : ''}
+          </div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px;">
+              <div id="part2InstallWrapPrimary" style="flex:1 1 320px; max-width:100%;">
+                <img id="part2PatternImg" src="" alt="${tid} MPTS Installation"
+                     onclick="showPatternFullscreen(this.src, '${tid} MPTS Installation (Part 2A)')"
+                     data-narrative-part="2"
+                     style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+                <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image A — MPTS Installation</p>
+              </div>
+              <div id="part2InstallWrapSecondary" style="flex:1 1 320px; max-width:100%;">
+                <img id="part2PatternImg2" src="" alt="${tid} Metering and Verification"
+                     onclick="showPatternFullscreen(this.src, '${tid} Metering and Verification (Part 2B)')"
+                     style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+                <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image B — Metering & Verification</p>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: left;">
+            ${p3 ? `<h4>Part 3 — Expected Results</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p3).replace(/\n/g,'<br/>')}</p>` : ''}
+          </div>
+          <div style="text-align: center; margin-top: 30px;">
+            <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (Part 3: Expected Results)')"
+                 data-narrative-part="3"
+                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 3 Image — MPTS Simulator Pattern (After Unity Optimization)</p>
+          </div>
+        `;
+      } else {
+        const paragraphs = narrative.split('\n\n').filter(p => p.trim());
+        const formattedParagraphs = paragraphs.map(para => `<p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(para)}</p>`).join('');
+        content = `
+          <div style="text-align: center; margin-bottom: 20px;">
+            <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Current State)')"
+                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
+          </div>
+          <div style="text-align: left;">
+            ${formattedParagraphs}
+          </div>
+          <div style="text-align: center; margin-top: 30px;">
+            <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+                 onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (After Unity Optimization)')"
+                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
+            <p style="font-size: 12px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
+          </div>
+        `;
+      }
     }
     
     // Set modal content
@@ -3160,7 +3434,7 @@
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
       attachPatternFallback(
         document.getElementById('baselinePatternImg'),
-        buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong),
+        baselineCandidates,
         `${transformerName} baseline`
       );
       attachPatternFallback(
@@ -3168,6 +3442,16 @@
         buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong),
         `${transformerName} simulator`
       );
+      const part2PatternImg = document.getElementById('part2PatternImg');
+      if (part2PatternImg) {
+        attachPatternFallback(
+          part2PatternImg,
+          part2EquipmentCandidates,
+          `${transformerName} part2 installation equipment`
+        );
+      }
+      const secondaryWrap = document.getElementById('part2InstallWrapSecondary');
+      if (secondaryWrap) secondaryWrap.style.display = 'none';
     }
     
     // Show/hide Unity audio buttons based on content type
@@ -3181,8 +3465,9 @@
     } else {
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
-      if (unityHowToBtn) unityHowToBtn.style.display = 'none';
+    if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     }
+    currentHowToPath = '';
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
@@ -3210,8 +3495,16 @@
     }
     currentNarrativeText = '';
     currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
     currentExplainsPartIndex = 0;
+    currentHowToPath = '';
+    const howToBtn = document.getElementById('unityHowToBtn');
+    if (howToBtn) howToBtn.style.display = 'none';
+    const unityBriefBtn = document.getElementById('unityBriefBtn');
+    const unityExplainsBtn = document.getElementById('unityExplainsBtn');
+    if (unityBriefBtn) unityBriefBtn.style.display = 'none';
+    if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
     try {
       const modalBody = document.getElementById('patternModalBody');
       modalBody.classList.remove('unity-summary-mode');
@@ -3220,7 +3513,7 @@
     document.getElementById('patternModal').style.display = 'none';
   }
 
-  // Show Site Summary Modal with aggregated data
+  // Show Site Summary Modal
   function showSiteSummaryModal() {
     const modal = document.getElementById('siteSummaryModal');
     const body = document.getElementById('siteSummaryBody');
@@ -3397,6 +3690,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3415,9 +3713,8 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (!tidMatch) continue;
-      const tid = tidMatch[1].toLowerCase();
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
       
       transformerCount++;
       
@@ -3625,216 +3922,131 @@
     }
   }
 </script>
+
 <!-- Pattern Analysis Modal -->
-<div class="pattern-modal" id="patternModal">
-<div class="pattern-modal-content">
-<div class="pattern-modal-header">
-<h2 class="pattern-modal-title" id="patternModalTitle">Pattern Analysis</h2>
-<div style="display: flex; gap: 10px; align-items: center;">
-<button id="unityBriefBtn" onclick="playUnityBrief();" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'" style="display: none; padding: 12px 24px; min-width: 160px; white-space: nowrap;
+<div id="patternModal" class="pattern-modal">
+  <div class="pattern-modal-content">
+    <div class="pattern-modal-header">
+      <h2 class="pattern-modal-title" id="patternModalTitle">Pattern Analysis</h2>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button id="unityBriefBtn" onclick="playUnityBrief();" 
+                style="display: none; padding: 12px 24px; min-width: 160px; white-space: nowrap;
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
-                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
+                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
           🎙️ Unity Brief
         </button>
-<button id="unityExplainsBtn" onclick="speakNarrative(); scrollToNarrative();" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'" style="display: none; padding: 12px 24px; min-width: 280px; white-space: nowrap; margin-right: 0px; 
+        <button id="unityExplainsBtn" onclick="speakNarrative(); scrollToNarrative();" 
+                style="display: none; padding: 12px 24px; min-width: 280px; white-space: nowrap; margin-right: 0px; 
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
-                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
+                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
           🔊 Unity Faraday Explains...
         </button>
-<button id="unityHowToBtn" onclick="playUnityHowToChart();" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'" style="display: none; padding: 12px 24px; min-width: 220px; white-space: nowrap;
+        <button id="unityHowToBtn" onclick="playHowToAudio();" 
+                style="display: none; padding: 12px 24px; min-width: 200px; white-space: nowrap;
                        background: linear-gradient(135deg, #5D701A 0%, #7c942a 100%); 
                        border: 2px solid #B2D235; border-radius: 8px; 
                        color: #ffffff; font-size: 11pt; font-weight: 700; cursor: pointer; 
-                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                       transition: all 0.3s ease; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"
+                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 0 15px rgba(255, 255, 255, 0.6)'; this.style.background='linear-gradient(135deg, #6d8020 0%, #8fa832 100%)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='linear-gradient(135deg, #5D701A 0%, #7c942a 100%)'">
           🎧 How to Read Chart
         </button>
-<button class="pattern-modal-close" onclick="closePatternModal()">×</button>
-</div>
-</div>
-<div class="pattern-modal-body" id="patternModalBody">
+        <button class="pattern-modal-close" onclick="closePatternModal()">&times;</button>
+      </div>
+    </div>
+    <div class="pattern-modal-body" id="patternModalBody">
       Loading...
     </div>
+  </div>
 </div>
-</div>
+
 <!-- Site Summary Modal -->
-<div class="info-modal" id="siteSummaryModal">
-<div class="info-modal-content" style="max-width: 900px;">
-<div class="info-modal-header">
-<h2 class="info-modal-title">Site Summary - Baseline</h2>
-<button class="info-modal-close" onclick="closeSiteSummaryModal()">×</button>
-</div>
-<div class="info-modal-body" id="siteSummaryBody">
+<div id="siteSummaryModal" class="info-modal">
+  <div class="info-modal-content" style="max-width: 900px;">
+    <div class="info-modal-header">
+      <h2 class="info-modal-title">Site Summary - Baseline</h2>
+      <button class="info-modal-close" onclick="closeSiteSummaryModal()">&times;</button>
+    </div>
+    <div class="info-modal-body" id="siteSummaryBody">
       Loading...
     </div>
+  </div>
 </div>
-</div>
+
 <!-- MPTS Site Summary Modal -->
-<div class="info-modal" id="siteSummaryMPTSModal">
-<div class="info-modal-content" style="max-width: 900px;">
-<div class="info-modal-header">
-<h2 class="info-modal-title">Site Summary - Unity/MPTS Optimization</h2>
-<button class="info-modal-close" onclick="closeSiteSummaryMPTSModal()">×</button>
-</div>
-<div class="info-modal-body" id="siteSummaryMPTSBody">
+<div id="siteSummaryMPTSModal" class="info-modal">
+  <div class="info-modal-content" style="max-width: 900px;">
+    <div class="info-modal-header">
+      <h2 class="info-modal-title">Site Summary - Unity/MPTS Optimization</h2>
+      <button class="info-modal-close" onclick="closeSiteSummaryMPTSModal()">&times;</button>
+    </div>
+    <div class="info-modal-body" id="siteSummaryMPTSBody">
       Loading...
     </div>
+  </div>
 </div>
-</div>
+
 <!-- Unity Contact Details Modal -->
-<div class="info-modal" id="contactDetailsModal">
-<div class="info-modal-content" style="max-width: 600px; overflow: hidden;">
-<div class="info-modal-header">
-<h2 class="info-modal-title">Unity Contact Details</h2>
-<button class="info-modal-close" onclick="closeContactDetailsModal()">×</button>
-</div>
-<div class="info-modal-body" id="contactDetailsBody" style="padding: 0; position: relative; min-height: 400px;">
-<!-- Cove & Clerk background -->
-<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+<div id="contactDetailsModal" class="info-modal">
+  <div class="info-modal-content" style="max-width: 600px; overflow: hidden;">
+    <div class="info-modal-header">
+      <h2 class="info-modal-title">Unity Contact Details</h2>
+      <button class="info-modal-close" onclick="closeContactDetailsModal()">&times;</button>
+    </div>
+    <div class="info-modal-body" id="contactDetailsBody" style="padding: 0; position: relative; min-height: 400px;">
+      <!-- Cove & Clerk background -->
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
                   background-image: url('Patterns/AgenticTeam.png'); 
                   background-size: cover; background-position: center top; opacity: 0.40; z-index: 0;"></div>
-<!-- Content overlay -->
-<div style="position: relative; z-index: 1; padding: 40px 30px; text-align: center;
+      <!-- Content overlay -->
+      <div style="position: relative; z-index: 1; padding: 40px 30px; text-align: center;
                   background: linear-gradient(135deg, rgba(40, 55, 10, 0.70) 0%, rgba(60, 80, 25, 0.70) 100%);">
-<img alt="Unity Energy" src="Patterns/UE_logo.png" style="width: 280px; margin-bottom: 20px;"/>
-<h3 style="color: #FAF0A0; font-size: 1.8em; margin-bottom: 10px;">Contact Us</h3>
-<p style="color: #B2D235; font-style: italic; font-size: 1.1em; margin-bottom: 25px;">"Welcome to the Future of Electricity"</p>
-<p style="color: rgba(255,255,255,0.9); font-size: 1em; line-height: 1.6; margin-bottom: 30px; max-width: 450px; margin-left: auto; margin-right: auto;">
+        <img src="Patterns/UE_logo.png" alt="Unity Energy" style="width: 280px; margin-bottom: 20px;">
+        <h3 style="color: #FAF0A0; font-size: 1.8em; margin-bottom: 10px;">Contact Us</h3>
+        <p style="color: #B2D235; font-style: italic; font-size: 1.1em; margin-bottom: 25px;">"Welcome to the Future of Electricity"</p>
+        <p style="color: rgba(255,255,255,0.9); font-size: 1em; line-height: 1.6; margin-bottom: 30px; max-width: 450px; margin-left: auto; margin-right: auto;">
           Curious about how Unity Energy can transform your facility's electrical system? 
           Reach out to our Team and let's start the conversation.
         </p>
-<div style="background: rgba(70, 95, 20, 0.5); border-radius: 12px; padding: 25px; border: 2px solid rgba(178, 210, 53, 0.4); margin-bottom: 25px;">
-<p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Harmonized Energy?</p>
-<a href="mailto:info@UnityEnergy.com" style="display: inline-block; background: #fff; color: #314100; padding: 12px 30px; 
+        <div style="background: rgba(70, 95, 20, 0.5); border-radius: 12px; padding: 25px; border: 2px solid rgba(178, 210, 53, 0.4); margin-bottom: 25px;">
+          <p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Harmonized Energy?</p>
+          <a href="mailto:info@UnityEnergy.com" 
+             style="display: inline-block; background: #fff; color: #314100; padding: 12px 30px; 
                     border-radius: 50px; font-weight: 600; text-decoration: none; 
                     box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
             info@UnityEnergy.com
           </a>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 40px; padding-top: 20px; border-top: 1px solid rgba(200,200,200,0.3);">
+          <div style="text-align: center;">
+            <div style="font-size: 1.5em;">📍</div>
+            <p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Location</p>
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Jupiter, Florida</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5em;">🌐</div>
+            <p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Website</p>
+            <p style="color: #B2D235; font-size: 0.85em;">UnityEnergy.com</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5em;">⚡</div>
+            <p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Focus</p>
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Industrial 480V</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div style="display: flex; justify-content: center; gap: 40px; padding-top: 20px; border-top: 1px solid rgba(200,200,200,0.3);">
-<div style="text-align: center;">
-<div style="font-size: 1.5em;">📍</div>
-<p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Location</p>
-<p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Jupiter, Florida</p>
-</div>
-<div style="text-align: center;">
-<div style="font-size: 1.5em;">🌐</div>
-<p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Website</p>
-<p style="color: #B2D235; font-size: 0.85em;">UnityEnergy.com</p>
-</div>
-<div style="text-align: center;">
-<div style="font-size: 1.5em;">⚡</div>
-<p style="color: #FAF0A0; font-weight: 600; font-size: 0.9em;">Focus</p>
-<p style="color: rgba(255,255,255,0.8); font-size: 0.85em;">Industrial 480V</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script id="audio-retention-guard">
-(function(){
-  var msg = "Audio is no longer available for this report period (retention policy: only March and April 2026 remain active).";
-  function isMp3(v){ return typeof v === 'string' && /\.mp3([?#].*)?$/i.test(v.trim()); }
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-      if (href && isMp3(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){ e.preventDefault(); alert(msg); });
-      }
-      if (src && isMp3(src)) {
-        el.removeAttribute('src');
-      }
-      if (onclick && /\.mp3/i.test(onclick)) {
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-    document.querySelectorAll('audio').forEach(function(a){
-      a.removeAttribute('src');
-      try { a.load(); } catch(e) {}
-      a.addEventListener('play', function(e){
-        e.preventDefault();
-        try { a.pause(); } catch(err) {}
-        alert(msg);
-      });
-    });
-  });
-})();
-</script>
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
 
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
 
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

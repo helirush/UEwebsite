@@ -604,6 +604,99 @@
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
     }
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
 
     .pattern-modal-body ul {
       list-style: none;
@@ -696,123 +789,14 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
       background: linear-gradient(135deg, rgba(178, 210, 53, 0.95), rgba(93, 112, 26, 0.95));
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(0,0,0,0.6);
-    }
-
-    .pattern-image-stage {
-      background: linear-gradient(180deg, rgba(15, 20, 13, 0.98) 0%, rgba(11, 16, 11, 0.98) 100%);
-      border: 1px solid rgba(123, 151, 89, 0.35);
-      border-radius: 12px;
-      padding: 18px;
-      position: relative;
-      min-height: 60vh;
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 12px;
-    }
-
-    .pattern-image-frame {
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid rgba(120, 144, 96, 0.44);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 239, 223, 0.9) 100%);
-      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
-      padding: 8px;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .pattern-image-viewport {
-      width: 100%;
-      min-height: 62vh;
-      max-height: 74vh;
-      overflow: hidden;
-      border-radius: 10px;
-      background: rgba(12, 16, 10, 0.95);
-      cursor: grab;
-      touch-action: none;
-      position: relative;
-    }
-
-    .pattern-image-viewport.is-dragging {
-      cursor: grabbing;
-    }
-
-    .pattern-image-canvas {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: auto;
-      height: auto;
-      max-width: none;
-      max-height: none;
-      border-radius: 0;
-      transform-origin: 0 0;
-      will-change: transform;
-      user-select: none;
-      -webkit-user-drag: none;
-      pointer-events: none;
-    }
-
-    .pattern-image-tools {
-      border-top: 1px solid rgba(97, 127, 67, 0.28);
-      padding-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pattern-zoom-help {
-      color: rgba(224, 236, 202, 0.95);
-      font-size: 11pt;
-      font-weight: 650;
-      letter-spacing: 0.01em;
-    }
-
-    .pattern-view-actions {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pattern-reset-view {
-      border: 1px solid rgba(128, 170, 124, 0.55);
-      border-radius: 10px;
-      padding: 9px 14px;
-      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
-      color: #2f4a1f;
-      font-size: 10.5pt;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.02em;
-    }
-
-    .pattern-reset-view:hover {
-      border-color: rgba(102, 136, 74, 0.76);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 230, 212, 0.94) 100%);
-    }
-
-    .pattern-zoom-indicator {
-      border-radius: 10px;
-      border: 1px solid rgba(128, 170, 124, 0.4);
-      background: rgba(247, 243, 228, 0.92);
-      color: rgba(48, 67, 35, 0.98);
-      padding: 8px 12px;
-      font-size: 10.5pt;
-      font-weight: 800;
-      letter-spacing: 0.02em;
     }
 
     .stats {
@@ -1502,9 +1486,34 @@
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, DELI GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
@@ -1547,7 +1556,7 @@
 <div class="dashboard-grid layout-2">
 <div class="xfmr-card" id="xfmr1-card">
 <h2>
-<span id="xfmr1-name">Deli G</span>
+<span id="xfmr1-name">Deli F</span>
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view Base Target pattern">
@@ -1564,15 +1573,15 @@
 <g class="tick-marks" id="xfmr1-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">87.2%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">88.9%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">1275kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">2500kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">45.1%</span></div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">57.3%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1599,10 +1608,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">630.2 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$138.52</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">70.1 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$15.40</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">843.8 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$185.46</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">105.6 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$23.21</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1633,7 +1642,7 @@
 <!-- Transformer Slot 2 -->
 <div class="xfmr-card" id="xfmr2-card">
 <h2>
-<span id="xfmr2-name">Deli F</span>
+<span id="xfmr2-name">Deli G</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
@@ -1650,15 +1659,15 @@
 <g class="tick-marks" id="xfmr2-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">86.6%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">90.1%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">1626kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">1500kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">41.6%</span></div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">68.9%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1685,10 +1694,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">843.8 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$185.46</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">105.7 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$23.23</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">630.2 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$138.53</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">69.4 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$15.26</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1956,17 +1965,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -1975,15 +2044,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2225,117 +2304,114 @@
   }
 
   // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
-  function getTransformerRoutingInfo(transformerName) {
-    const clean = (transformerName || '').replace(/\s+/g, '');
-    const upper = clean.toUpperCase();
+  function uniqueRoutingValues(values) {
+    const out = [];
+    const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
+  }
 
-    const tMatch = upper.match(/^(T\d+)/);
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
     if (tMatch) {
       const t = tMatch[1];
       return {
-        keys: [t, t.toLowerCase(), clean, upper],
-        fileIds: [t.toLowerCase(), t, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
-    const ncdcMatch = upper.match(/^(NCDC\d+)/);
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
     if (ncdcMatch) {
       const ncdc = ncdcMatch[1];
       return {
-        keys: [ncdc, ncdc.toLowerCase(), clean, upper],
-        fileIds: [ncdc, ncdc.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
-    const renderingMatch = upper.match(/^RENDERING-?(\d+)/);
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
     if (renderingMatch) {
       const n = renderingMatch[1];
       return {
-        keys: [`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, clean, upper],
-        fileIds: [`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Generic numeric prefixes like "ABC1..."
-    const baseMatch = upper.match(/^([A-Z]+\d+)/);
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
     if (baseMatch) {
       const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
       return {
-        keys: [base, base.toLowerCase(), clean, upper],
-        fileIds: [base, base.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
       };
     }
 
-    return { keys: [upper, clean], fileIds: [clean, clean.toLowerCase()] };
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
   }
 
-  function buildPatternCandidates(fileIds, prefix, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
+  function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
     const out = [];
     const seen = new Set();
     const exts = (extensions && extensions.length) ? extensions : ['png'];
+    const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
     fileIds.forEach(id => {
-      exts.forEach(ext => {
-        [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
-          if (!seen.has(fn)) {
-            seen.add(fn);
-            out.push(`Patterns/${fn}`);
-          }
+      prefixList.forEach(prefix => {
+        exts.forEach(ext => {
+          [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
+            if (!seen.has(fn)) {
+              seen.add(fn);
+              out.push(`Patterns/${fn}`);
+            }
+          });
         });
       });
     });
-    return out;
-  }
-  function buildPart2InstallationCandidatesLegacyUnused(fileIds, monthSuffixShort, monthSuffixLong, slot = 1) {
-    const out = [];
-    const seen = new Set();
-    const exts = ['png', 'jpg', 'jpeg'];
-    const ids = [...new Set((fileIds || []).map((id) => (id || '').toString().toLowerCase()).filter(Boolean))].slice(0, 2);
-    const monthTokens = [...new Set([monthSuffixShort, monthSuffixLong].filter(Boolean))];
-    monthTokens.push('');
-    const slotStems = slot === 1
-      ? ['p2a', 'install1', 'installation1', 'solution1']
-      : ['p2b', 'install2', 'installation2', 'meter2', 'metering2'];
-    const globalStems = slot === 1
-      ? ['part2a', 'installation_1']
-      : ['part2b', 'installation_2', 'metering_2'];
-
-    const pushCandidate = (filename) => {
-      if (!seen.has(filename)) {
-        seen.add(filename);
-        out.push(`Patterns/${filename}`);
-      }
-    };
-
-    const pushStemVariants = (base, stem) => {
-      monthTokens.forEach((token) => {
-        exts.forEach((ext) => {
-          if (token) {
-            pushCandidate(`${base}${stem}_${token}.${ext}`);
-            pushCandidate(`${base}_${stem}_${token}.${ext}`);
-          } else {
-            pushCandidate(`${base}${stem}.${ext}`);
-            pushCandidate(`${base}_${stem}.${ext}`);
-          }
-        });
-      });
-    };
-
-    // Prefer shared/global Part 2 images so every transformer uses the same installation pair by default.
-
-    globalStems.forEach((stem) => {
-      exts.forEach((ext) => {
-        monthTokens.forEach((token) => {
-          if (token) pushCandidate(`${stem}_${token}.${ext}`);
-          else pushCandidate(`${stem}.${ext}`);
-        });
-      });
-    });
-    ids.forEach((id) => {
-      slotStems.forEach((stem) => pushStemVariants(id, stem));
-    });
-
     return out;
   }
 
@@ -2365,149 +2441,168 @@
     applySrc();
   }
 
-  const PATTERN_MIN_SCALE = 1;
-  const PATTERN_MAX_SCALE = 5;
-  let patternViewport = null;
-  let patternImage = null;
-  let patternZoomIndicator = null;
-  let patternBaseScale = 1;
-  let patternScale = 1;
-  let patternTranslateX = 0;
-  let patternTranslateY = 0;
-  let patternIsDragging = false;
-  let patternDragOffsetX = 0;
-  let patternDragOffsetY = 0;
-  let patternResizeListenerAttached = false;
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
   function updatePatternBaseScale() {
-    if (!patternViewport || !patternImage) return;
-    const viewportWidth = patternViewport.clientWidth;
-    const viewportHeight = patternViewport.clientHeight;
-    const naturalWidth = patternImage.naturalWidth || 0;
-    const naturalHeight = patternImage.naturalHeight || 0;
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
     if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
-      patternBaseScale = 1;
+      state.baseScale = 1;
       return;
     }
-    patternBaseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
-    if (!isFinite(patternBaseScale) || patternBaseScale <= 0) {
-      patternBaseScale = 1;
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
     }
   }
 
   function getPatternRenderScale() {
-    return patternBaseScale * patternScale;
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
   }
+
   function clampPatternImagePosition() {
-    if (!patternViewport || !patternImage) return;
-    const viewportWidth = patternViewport.clientWidth;
-    const viewportHeight = patternViewport.clientHeight;
-    const scaledWidth = (patternImage.naturalWidth || viewportWidth) * getPatternRenderScale();
-    const scaledHeight = (patternImage.naturalHeight || viewportHeight) * getPatternRenderScale();
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
     if (scaledWidth <= viewportWidth) {
-      patternTranslateX = (viewportWidth - scaledWidth) / 2;
+      state.translateX = (viewportWidth - scaledWidth) / 2;
     } else {
       const minX = viewportWidth - scaledWidth;
-      const maxX = 0;
-      patternTranslateX = Math.max(minX, Math.min(maxX, patternTranslateX));
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
     }
     if (scaledHeight <= viewportHeight) {
-      patternTranslateY = (viewportHeight - scaledHeight) / 2;
+      state.translateY = (viewportHeight - scaledHeight) / 2;
     } else {
       const minY = viewportHeight - scaledHeight;
-      const maxY = 0;
-      patternTranslateY = Math.max(minY, Math.min(maxY, patternTranslateY));
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
     }
   }
 
   function applyPatternImageTransform() {
-    if (!patternImage) return;
-    patternImage.style.transform = `translate(${patternTranslateX}px, ${patternTranslateY}px) scale(${getPatternRenderScale()})`;
-    if (patternZoomIndicator) {
-      patternZoomIndicator.textContent = `Zoom ${Math.round(patternScale * 100)}%`;
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
     }
   }
 
   function resetPatternImageView() {
-    patternScale = PATTERN_MIN_SCALE;
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
     updatePatternBaseScale();
-    patternTranslateX = 0;
-    patternTranslateY = 0;
+    state.translateX = 0;
+    state.translateY = 0;
     clampPatternImagePosition();
     applyPatternImageTransform();
   }
 
   function handlePatternImageWheel(event) {
-    if (!patternViewport || !patternImage) return;
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
     event.preventDefault();
-    const rect = patternViewport.getBoundingClientRect();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
     const pointerX = event.clientX - rect.left;
     const pointerY = event.clientY - rect.top;
     const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
-    const nextScale = Math.max(PATTERN_MIN_SCALE, Math.min(PATTERN_MAX_SCALE, patternScale * zoomFactor));
-    if (nextScale === patternScale) return;
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
     const currentRenderScale = getPatternRenderScale();
-    const nextRenderScale = patternBaseScale * nextScale;
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
     const scaleRatio = nextRenderScale / currentRenderScale;
-    patternTranslateX = pointerX - ((pointerX - patternTranslateX) * scaleRatio);
-    patternTranslateY = pointerY - ((pointerY - patternTranslateY) * scaleRatio);
-    patternScale = nextScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
     clampPatternImagePosition();
     applyPatternImageTransform();
   }
 
   function startPatternImageDrag(event) {
-    if (!patternViewport || patternScale <= PATTERN_MIN_SCALE) return;
-    patternIsDragging = true;
-    patternDragOffsetX = event.clientX - patternTranslateX;
-    patternDragOffsetY = event.clientY - patternTranslateY;
-    patternViewport.classList.add('is-dragging');
-    if (typeof patternViewport.setPointerCapture === 'function') {
-      patternViewport.setPointerCapture(event.pointerId);
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
     }
   }
 
   function movePatternImageDrag(event) {
-    if (!patternIsDragging) return;
-    patternTranslateX = event.clientX - patternDragOffsetX;
-    patternTranslateY = event.clientY - patternDragOffsetY;
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
     clampPatternImagePosition();
     applyPatternImageTransform();
   }
 
   function stopPatternImageDrag(event) {
-    if (!patternIsDragging || !patternViewport) return;
-    patternIsDragging = false;
-    patternViewport.classList.remove('is-dragging');
-    if (event && typeof patternViewport.releasePointerCapture === 'function') {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
       try {
-        patternViewport.releasePointerCapture(event.pointerId);
+        state.viewport.releasePointerCapture(event.pointerId);
       } catch (_) {}
     }
   }
 
   function initializePatternImageView() {
-    patternViewport = document.getElementById('patternImageViewport');
-    patternImage = document.getElementById('patternImage');
-    patternZoomIndicator = document.getElementById('patternZoomIndicator');
-    if (!patternViewport || !patternImage) return;
-    patternViewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
-    patternViewport.addEventListener('pointerdown', startPatternImageDrag);
-    patternViewport.addEventListener('pointermove', movePatternImageDrag);
-    patternViewport.addEventListener('pointerup', stopPatternImageDrag);
-    patternViewport.addEventListener('pointercancel', stopPatternImageDrag);
-    patternViewport.addEventListener('pointerleave', stopPatternImageDrag);
-    patternViewport.addEventListener('dblclick', resetPatternImageView);
-    patternImage.addEventListener('load', function () {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
       resetPatternImageView();
     });
-    if (!patternResizeListenerAttached) {
-      patternResizeListenerAttached = true;
-      window.addEventListener('resize', function () {
-        resetPatternImageView();
-      });
-    }
     resetPatternImageView();
   }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
 
   function viewPattern(transformerId, type) {
     try {
@@ -2525,15 +2620,25 @@
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
-      // Prefix mapping: b=Baseline, bt=Base-Target, m=MPTS Variables, s=Solution, v=Voltage
-      let prefix = 'b';
+      // Prefix mapping:
+      // baseline -> bt first, then b fallback
+      // mpts -> s first, then m fallback
+      // mpts-vars -> bt
+      // voltage -> v
+      let prefixCandidates = ['bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefix = 's'; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefix = 'bt'; patternLabel = 'Base Target'; }
-      else if (type === 'voltage') { prefix = 'v'; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
-      const candidates = buildPatternCandidates(routing.fileIds, prefix, monthSuffixShort, monthSuffixLong);
+      let candidates = buildPatternCandidates(
+        routing.fileIds,
+        prefixCandidates,
+        monthSuffixShort,
+        monthSuffixLong,
+        ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']
+      );
 
       // Modal elements
       const modal = document.getElementById('patternModal');
@@ -2561,39 +2666,29 @@
         }
       }
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
-      const enableZoomFrame = type === 'baseline';
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
-      modalBody.innerHTML = enableZoomFrame ? `
-        <div class="pattern-image-stage" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div class="pattern-image-frame">
-            <div class="pattern-image-viewport" id="patternImageViewport">
-              <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                   class="pattern-image-canvas"
-                   draggable="false"
-                   onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')">
-            </div>
+      clearPatternImageView();
+      modalBody.innerHTML = `
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
           </div>
-          <div class="pattern-image-tools">
-            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the chart.</p>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
+                 onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
             <div class="pattern-view-actions">
               <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
               <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
             </div>
           </div>
-        </div>` : `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
-                 onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')">
-          </div>
         </div>`;
-      if (enableZoomFrame) {
-        initializePatternImageView();
-      }
+
+      initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
     } catch (error) {
@@ -2682,7 +2777,38 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-  "transformers": {}
+  "transformers": {
+    "DELIG": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for DELIG. This chart shows minute-by-minute data across 30 days of operations. The dark blue layer is your total kVA supplied from the transformer. The light blue underneath is your actual consumed kW \u2014 the work you're paying for. That green band between them? That's reactive kVAR \u2014 magnetic field energy that does no useful work but loads your conductors and generates heat. The orange line tracks your power factor percentage. Your facility shows a classic agricultural processing pattern \u2014 heavy weekday operations consistently pushing above that 1500 kVA target line. I'm counting about 20 out of 30 days where your field breaks through that blue dashed baseline. That puts you at roughly 67 percent Electric Operations days. The weekend valleys drop cleanly to baseline, but those weekday blocks are driving reactive demand spikes up to 1875 kVAR. You're carrying 251,363 BTU per hour of thermal burden, requiring 36.7 kilowatts just for cooling. The total waste cost runs approximately 193,550 dollars annually. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand hits 1875 kVAR during heavy operations. Using our standard sizing protocol, that requires five H490 units \u2014 each delivers 400 kVAR of compensation capacity. Five units gives you 2000 kVAR total capacity, with approximately one million dollars in estimated installed investment. Keep in mind, these figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what MPTS does in plain language: it injects precisely timed compensating reactive power that cancels out your facility's inductive burden. Your power factor jumps from 86.7 percent to 99.5 percent. Visually, you'll see that green reactive layer collapse. Your conductors run cooler. Your transformer capacity gets freed up. The dark blue kVA line drops down closer to your light blue kW consumption. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $850,000 to $1,150,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has virtually disappeared. Your field now runs clean with the blue consumption line tracking tight against the orange supply curve. The spiky reactive peaks are gone, and you're operating well within your thermal envelope. Your power factor holds steady at 99.5 percent. The savings run approximately 16,129 dollars monthly \u2014 that's roughly 193,550 dollars annually in recovered operational value. With an estimated one million dollar installation investment, your payback period runs about 62 months. After payback, every hour is recovered value flowing directly to your bottom line. You're delivering the same production output with significantly less electromagnetic burden. Your cooling costs drop. Your conductors run at lower amperage. Your transformer operates with greater margin. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for DELIG. This chart shows minute-by-minute data across 30 days of operations. The dark blue layer is your total kVA supplied from the transformer. The light blue underneath is your actual consumed kW \u2014 the work you're paying for. That green band between them? That's reactive kVAR \u2014 magnetic field energy that does no useful work but loads your conductors and generates heat. The orange line tracks your power factor percentage. Your facility shows a classic agricultural processing pattern \u2014 heavy weekday operations consistently pushing above that 1500 kVA target line. I'm counting about 20 out of 30 days where your field breaks through that blue dashed baseline. That puts you at roughly 67 percent Electric Operations days. The weekend valleys drop cleanly to baseline, but those weekday blocks are driving reactive demand spikes up to 1875 kVAR. You're carrying 251,363 BTU per hour of thermal burden, requiring 36.7 kilowatts just for cooling. The total waste cost runs approximately 193,550 dollars annually. Now let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand hits 1875 kVAR during heavy operations. Using our standard sizing protocol, that requires five H490 units \u2014 each delivers 400 kVAR of compensation capacity. Five units gives you 2000 kVAR total capacity, with approximately one million dollars in estimated installed investment. Keep in mind, these figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what MPTS does in plain language: it injects precisely timed compensating reactive power that cancels out your facility's inductive burden. Your power factor jumps from 86.7 percent to 99.5 percent. Visually, you'll see that green reactive layer collapse. Your conductors run cooler. Your transformer capacity gets freed up. The dark blue kVA line drops down closer to your light blue kW consumption. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $850,000 to $1,150,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has virtually disappeared. Your field now runs clean with the blue consumption line tracking tight against the orange supply curve. The spiky reactive peaks are gone, and you're operating well within your thermal envelope. Your power factor holds steady at 99.5 percent. The savings run approximately 16,129 dollars monthly \u2014 that's roughly 193,550 dollars annually in recovered operational value. With an estimated one million dollar installation investment, your payback period runs about 62 months. After payback, every hour is recovered value flowing directly to your bottom line. You're delivering the same production output with significantly less electromagnetic burden. Your cooling costs drop. Your conductors run at lower amperage. Your transformer operates with greater margin. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're operating a 1500 kVA transformer at DELIG, and your April field analysis shows significant reactive power burden that's costing you money every hour. Your power factor is running at 86.7 percent, with reactive demand spiking to 1875 kVAR during peak operations. That reactive burden is generating approximately 193,550 dollars in annual waste through energy losses, thermal loading, and cooling overhead. My recommendation is five H490 MPTS units \u2014 that's 2000 kVAR of compensation capacity for roughly one million dollars installed. This configuration brings your power factor to 99.5 percent and recovers approximately 16,129 dollars monthly in operational savings. Your payback period runs about 62 months, after which every hour generates recovered value for your operation. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 86.7% | match: \u26a0\ufe0f DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: 1500 kVA | match: \u26a0\ufe0f DISCREPANCY  \nkvar_max_csv_est: 0 kVAR | kvar_max_image: 1875.2 kVAR | variance: >10%\nmonthly_waste_csv: $0.00 | monthly_waste_image: $193,550/yr | match: \u26a0\ufe0f DISCREPANCY\nSIZING USED: 5\u00d7 H490 = 2000 kVAR capacity | approximately $1,000,000 installed\nPAYBACK: approximately $16,129/month | ~62 months",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-05-07 20:08:02",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "DELIG"
+    },
+    "DELIF": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for DELIF. This chart shows your 2500 kVA transformer under full operational load. The dark blue layer is your total kVA supply \u2014 what the utility delivers. The light blue underneath is your consumed kW \u2014 the real work being done. That green layer between them? That's reactive kVAR \u2014 electromagnetic waste that heats your conductors but does no productive work. The orange trace shows your power factor fluctuating between 70 and 90% during operations. Your field shows classic industrial processing rhythm. I'm seeing distinct weekday blocks where you're pulling well above your 2500 kVA target during production hours, then clean weekend valleys when operations scale back. That's about 75% Electric Operations \u2014 you're running heavy reactive loads during your processing cycles. The waste here is substantial. You're averaging 407 kVAR with peaks hitting 726.7 kVAR. That reactive demand is generating 361,000 BTU per hour of thermal burden, costing you $10.54 per hour just in cooling overhead. Total electromagnetic waste: approximately $276,000 per year. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand is hitting 726.7 kVAR during production periods. Using our sizing methodology, that requires two H490 units providing 800 kVAR of total reactive compensation. The estimated installed investment range is approximately $400,000, though final pricing depends on engineering scope, site conditions, and local labor rates. Here's what MPTS does in plain language. These units inject precisely tuned compensating reactive power that cancels your inductive load. Think of it as electromagnetic noise cancellation. The result? Your power factor jumps to 99.5% and holds steady throughout all operating periods. Visually, you'll see that green reactive layer collapse to almost nothing. Your conductors run cooler because they're carrying less current to deliver the same productive work. Your transformer capacity gets freed up for actual production expansion instead of wasted reactive circulation. The electromagnetic field becomes clean, efficient, and harmonized with your industrial rhythm. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has essentially disappeared \u2014 you're seeing clean electromagnetic delivery throughout your production cycles. The dark blue kVA supply trace now closely follows your light blue consumed kW, showing efficient power transfer. Your power factor holds steady at 99.5% during all operating periods. The savings are substantial. You're recovering approximately $23,000 per month, or about $276,000 annually in eliminated waste, reduced thermal burden, and cooling cost relief. With an estimated install investment of roughly $400,000, you're looking at simple payback in approximately 17 months. After that payback period, every hour is recovered value \u2014 about $23,000 monthly flowing directly to your operational efficiency. Your production rhythm stays exactly the same. Your processing capacity remains unchanged. But now your electromagnetic field is working with you instead of against you. Clean power factor, eliminated reactive waste, cooler conductors, freed transformer capacity. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for DELIF. This chart shows your 2500 kVA transformer under full operational load. The dark blue layer is your total kVA supply \u2014 what the utility delivers. The light blue underneath is your consumed kW \u2014 the real work being done. That green layer between them? That's reactive kVAR \u2014 electromagnetic waste that heats your conductors but does no productive work. The orange trace shows your power factor fluctuating between 70 and 90% during operations. Your field shows classic industrial processing rhythm. I'm seeing distinct weekday blocks where you're pulling well above your 2500 kVA target during production hours, then clean weekend valleys when operations scale back. That's about 75% Electric Operations \u2014 you're running heavy reactive loads during your processing cycles. The waste here is substantial. You're averaging 407 kVAR with peaks hitting 726.7 kVAR. That reactive demand is generating 361,000 BTU per hour of thermal burden, costing you $10.54 per hour just in cooling overhead. Total electromagnetic waste: approximately $276,000 per year. Now let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand is hitting 726.7 kVAR during production periods. Using our sizing methodology, that requires two H490 units providing 800 kVAR of total reactive compensation. The estimated installed investment range is approximately $400,000, though final pricing depends on engineering scope, site conditions, and local labor rates. Here's what MPTS does in plain language. These units inject precisely tuned compensating reactive power that cancels your inductive load. Think of it as electromagnetic noise cancellation. The result? Your power factor jumps to 99.5% and holds steady throughout all operating periods. Visually, you'll see that green reactive layer collapse to almost nothing. Your conductors run cooler because they're carrying less current to deliver the same productive work. Your transformer capacity gets freed up for actual production expansion instead of wasted reactive circulation. The electromagnetic field becomes clean, efficient, and harmonized with your industrial rhythm. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $340,000 to $460,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has essentially disappeared \u2014 you're seeing clean electromagnetic delivery throughout your production cycles. The dark blue kVA supply trace now closely follows your light blue consumed kW, showing efficient power transfer. Your power factor holds steady at 99.5% during all operating periods. The savings are substantial. You're recovering approximately $23,000 per month, or about $276,000 annually in eliminated waste, reduced thermal burden, and cooling cost relief. With an estimated install investment of roughly $400,000, you're looking at simple payback in approximately 17 months. After that payback period, every hour is recovered value \u2014 about $23,000 monthly flowing directly to your operational efficiency. Your production rhythm stays exactly the same. Your processing capacity remains unchanged. But now your electromagnetic field is working with you instead of against you. Clean power factor, eliminated reactive waste, cooler conductors, freed transformer capacity. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're looking at DELIF's 2500 kVA transformer \u2014 and there's significant waste happening here. Your power factor is running at 85.3%, pulling 726.7 kVAR of reactive demand during peak operations. That electromagnetic stress is costing you approximately $276,000 per year in wasted energy, thermal burden, and cooling overhead. Your field shows classic industrial processing rhythm \u2014 heavy weekday production blocks riding well above target, clean weekend valleys. We're seeing about 75% Electric Operations during your processing cycles. The solution is two H490 MPTS units, providing 800 kVAR of reactive compensation for roughly $400,000 installed investment. That eliminates the reactive waste, raises your power factor to 99.5%, and recovers approximately $276,000 annually. Simple payback in about 17 months. After that, every hour is recovered value flowing straight to your bottom line. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 85.3% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: 2500 kVA | match: \u26a0\ufe0f MAJOR DISCREPANCY  \nkvar_max_csv_est: 0 kVAR | kvar_max_image: 726.7 kVAR | variance: N/A (CSV unavailable)\nmonthly_waste_csv: $0.00 | monthly_waste_image: $276,493/yr | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 2\u00d7 H490 = 800 kVAR capacity | approximately $400,000 installed\nPAYBACK: $23,041/month | ~17 months",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-05-07 20:54:58",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "DELIF"
+    }
+  }
 };
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
@@ -3026,22 +3152,26 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
 
     const getElText = (id) => {
       const el = document.getElementById(id);
@@ -3210,8 +3340,8 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
-      const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
@@ -3369,6 +3499,7 @@
     }
     currentNarrativeText = '';
     currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
     currentExplainsPartIndex = 0;
     currentHowToPath = '';
@@ -3383,10 +3514,6 @@
       modalBody.classList.remove('unity-summary-mode');
       modalBody.style.removeProperty('--unity-field-backdrop');
     } catch (e) {}
-    patternIsDragging = false;
-    patternViewport = null;
-    patternImage = null;
-    patternZoomIndicator = null;
     document.getElementById('patternModal').style.display = 'none';
   }
 
@@ -3567,6 +3694,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3585,9 +3717,8 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (!tidMatch) continue;
-      const tid = tidMatch[1].toLowerCase();
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
       
       transformerCount++;
       
@@ -3921,74 +4052,5 @@
 </div>
 
 
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
-
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
-
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

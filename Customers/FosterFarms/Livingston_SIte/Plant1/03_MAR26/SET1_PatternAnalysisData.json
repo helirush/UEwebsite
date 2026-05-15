@@ -1,0 +1,31 @@
+{
+  "transformers": {
+    "PL1-PROC1": {
+      "transformer_name": "PL1-PROC1",
+      "source_transformer_id": "PL1-PROC1",
+      "bt_target_kva": 2116.0,
+      "target_kva_image": 2116.0,
+      "target_validated": 2116.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_LATEST",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    },
+    "PL1-MSHOP": {
+      "transformer_name": "PL1-MSHOP",
+      "source_transformer_id": "PL1-MSHOP",
+      "bt_target_kva": 2173.0,
+      "target_kva_image": 2173.0,
+      "target_validated": 2173.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_LATEST",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    },
+    "PL1-PROC2": {
+      "transformer_name": "PL1-PROC2",
+      "source_transformer_id": "PL1-PROC2",
+      "bt_target_kva": 2158.0,
+      "target_kva_image": 2158.0,
+      "target_validated": 2158.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK_LATEST",
+      "cross_check": "Fallback target synchronized from published STD DAILY PATTERN card value due missing BT-derived JSON key."
+    }
+  }
+}

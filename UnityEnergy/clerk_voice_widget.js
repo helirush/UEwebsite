@@ -973,32 +973,32 @@
       founder_notes_hold_line: "Founder mode active. Please hold while I capture your direction and notes.",
       guardrails_enabled: false,
       guardrails_founder_bypass: true,
-      guardrails_max_questions_per_session: 5,
-      guardrails_question_limit_min: 5,
-      guardrails_free_questions: 2,
-      guardrails_max_session_minutes: 12,
+      guardrails_max_questions_per_session: 10,
+      guardrails_question_limit_min: 8,
+      guardrails_free_questions: 3,
+      guardrails_max_session_minutes: 18,
       guardrails_idle_timeout_seconds: 90,
-      guardrails_idle_followup_seconds: 10,
-      guardrails_idle_final_exit_seconds: 10,
-      guardrails_idle_first_prompt_message: "Can I help you with anything else?",
+      guardrails_idle_followup_seconds: 35,
+      guardrails_idle_final_exit_seconds: 25,
+      guardrails_idle_first_prompt_message: "Can I help with anything else on this page?",
       guardrails_idle_final_prompt_message:
-        "Are there any other questions? I need to attend to another Maxwellian.",
-      guardrails_low_relevance_limit: 2,
+        "Any other Unity Energy questions before I close this session?",
+      guardrails_low_relevance_limit: 3,
       guardrails_min_relevance_score: 1,
-      guardrails_max_sessions_per_day: 6,
+      guardrails_max_sessions_per_day: 20,
       guardrails_enable_daily_metering: true,
       guardrails_contact_email: "sales@unityenergy.com",
       guardrails_contact_url: "https://unityenergy.com/contact-us",
       guardrails_contact_redirect_url: "/UnityEnergy/contact-us.html",
-      guardrails_interested_identity_prompt_after_questions: 3,
+      guardrails_interested_identity_prompt_after_questions: 4,
       guardrails_interested_identity_prompt_message:
         "Happy to keep helping. Before we continue, may I get your name, company, and best email so we can follow up with you directly?",
       guardrails_interested_followup_message:
         "Thank you for your interest in Unity Energy. We have your information and will follow up directly. What is your next question?",
       guardrails_question_limit_message:
-        "You've reached my five-question limit for this page. I can have a specialist contact you, or I can send you to our contact page so you can share your information.",
+        "You've reached this session's question limit for this page. I can have a specialist contact you, or send you to our contact page so you can share your information.",
       guardrails_offboard_message:
-        "Thanks for your interest in Clerk. For deeper support, please contact Unity Energy Sales at sales@unityenergy.com or visit unityenergy.com/contact-us.",
+        "We appreciate your interest in Unity Energy. For deeper support, please contact Unity Energy Sales at sales@unityenergy.com or visit unityenergy.com/contact-us.",
       guardrails_relevance_keywords: [
         "unity",
         "unity energy",
@@ -1030,6 +1030,8 @@
       openai_session_endpoint: "/api/openai/realtime/session",
       openai_realtime_model: "gpt-4o-realtime-preview",
       openai_voice: "ash",
+      allow_openai_fallback: false,
+      allow_openai_voice_fallback: false,
       openai_center_visual_url: "/UnityEnergy/assets/images/Clerk-LineART-accent-composite-3layer.png",
       signal_wave_bar_count: 30,
       signal_wave_bar_min_width: 3,
@@ -1284,6 +1286,9 @@
 
   function buildOpenAiFallbackConfig(cfg) {
     if (!cfg || typeof cfg !== "object") return null;
+    const fallbackExplicitlyEnabled =
+      cfg.allow_openai_fallback === true || cfg.allow_openai_voice_fallback === true;
+    if (!fallbackExplicitlyEnabled) return null;
     const sessionEndpoint = coerceText(cfg.openai_session_endpoint || cfg.openai_session_url);
     const model = coerceText(cfg.openai_realtime_model || cfg.openai_model || cfg.model);
     if (!sessionEndpoint || !model) return null;
@@ -4994,27 +4999,27 @@
     return {
       enabled: Boolean(cfg && cfg.guardrails_enabled),
       founderBypass: cfg && cfg.guardrails_founder_bypass !== false,
-      maxQuestions: clampNumber(cfg && cfg.guardrails_max_questions_per_session, 3, 50, 5),
-      minQuestions: clampNumber(cfg && cfg.guardrails_question_limit_min, 1, 50, 5),
-      freeQuestions: clampNumber(cfg && cfg.guardrails_free_questions, 0, 10, 2),
-      maxMinutes: clampNumber(cfg && cfg.guardrails_max_session_minutes, 2, 120, 12),
+      maxQuestions: clampNumber(cfg && cfg.guardrails_max_questions_per_session, 3, 50, 10),
+      minQuestions: clampNumber(cfg && cfg.guardrails_question_limit_min, 1, 50, 8),
+      freeQuestions: clampNumber(cfg && cfg.guardrails_free_questions, 0, 10, 3),
+      maxMinutes: clampNumber(cfg && cfg.guardrails_max_session_minutes, 2, 120, 18),
       idleSeconds: clampNumber(cfg && cfg.guardrails_idle_timeout_seconds, 5, 1800, 90),
-      idleFollowupSeconds: clampNumber(cfg && cfg.guardrails_idle_followup_seconds, 5, 1800, 10),
+      idleFollowupSeconds: clampNumber(cfg && cfg.guardrails_idle_followup_seconds, 5, 1800, 35),
       idleFinalExitSeconds: clampNumber(
         cfg && cfg.guardrails_idle_final_exit_seconds,
         5,
         1800,
-        10
+        25
       ),
       idleFirstPromptMessage:
         coerceText(cfg && cfg.guardrails_idle_first_prompt_message) ||
-        "Can I help you with anything else?",
+        "Can I help with anything else on this page?",
       idleFinalPromptMessage:
         coerceText(cfg && cfg.guardrails_idle_final_prompt_message) ||
-        "Are there any other questions? I need to attend to another Maxwellian.",
-      lowRelevanceLimit: clampNumber(cfg && cfg.guardrails_low_relevance_limit, 1, 6, 2),
+        "Any other Unity Energy questions before I close this session?",
+      lowRelevanceLimit: clampNumber(cfg && cfg.guardrails_low_relevance_limit, 1, 6, 3),
       minRelevanceScore: clampNumber(cfg && cfg.guardrails_min_relevance_score, 1, 8, 1),
-      maxSessionsPerDay: clampNumber(cfg && cfg.guardrails_max_sessions_per_day, 1, 100, 6),
+      maxSessionsPerDay: clampNumber(cfg && cfg.guardrails_max_sessions_per_day, 1, 100, 20),
       dailyMeteringEnabled: !cfg || cfg.guardrails_enable_daily_metering !== false,
       questionLimitMessage: coerceText(cfg && cfg.guardrails_question_limit_message),
       offboardMessage: coerceText(cfg && cfg.guardrails_offboard_message),
@@ -5026,7 +5031,7 @@
         cfg && cfg.guardrails_interested_identity_prompt_after_questions,
         1,
         12,
-        3
+        4
       ),
       interestedIdentityPromptMessage: coerceText(
         cfg && cfg.guardrails_interested_identity_prompt_message
@@ -5089,14 +5094,14 @@
     if (reasonToken === "question-limit") {
       return (
         (settings && settings.questionLimitMessage) ||
-        "You've reached my five-question limit for this page. I can have a specialist contact you, or I can send you to our contact page so you can share your information."
+        "You've reached this session's question limit for this page. I can have a specialist contact you, or send you to our contact page so you can share your information."
       );
     }
     const reasonLabel = coerceText(reason).replace(/-/g, " ");
     const core =
       settings && settings.offboardMessage
         ? settings.offboardMessage
-        : "Thanks for your interest in Clerk. For deeper support, please contact Unity Energy Sales.";
+        : "We appreciate your interest in Unity Energy. For deeper support, please contact Unity Energy Sales.";
     if (!reasonLabel) return core;
     return `${core} (${reasonLabel})`;
   }
@@ -5296,7 +5301,7 @@
       if (guardrailIdlePromptStage <= 0) {
         setGuardrailIdlePromptStage(1, "guardrail-idle-nudge-sent", true);
         setStatus(
-          coerceText(settings.idleFirstPromptMessage) || "Can I help you with anything else?",
+          coerceText(settings.idleFirstPromptMessage) || "Can I help with anything else on this page?",
           false,
           true
         );
@@ -5307,7 +5312,7 @@
         setGuardrailIdlePromptStage(2, "guardrail-idle-final-nudge-sent", true);
         setStatus(
           coerceText(settings.idleFinalPromptMessage) ||
-            "Are there any other questions? I need to attend to another Maxwellian.",
+            "Any other Unity Energy questions before I close this session?",
           false,
           true
         );
@@ -5386,7 +5391,7 @@
 
     guardrailQuestionCount += 1;
     const questionCap = guardrailQuestionCap || settings.maxQuestions;
-    if (guardrailQuestionCount >= questionCap) {
+    if (guardrailQuestionCount > questionCap) {
       return { allow: false, reason: "question-limit" };
     }
 
@@ -5462,7 +5467,7 @@
         cfg && cfg.electrical_story_history_question_limit,
         1,
         20,
-        5
+        6
       ),
       minQuestions: clampNumber(
         cfg && cfg.electrical_story_history_question_limit_min,
@@ -5474,14 +5479,14 @@
         cfg && cfg.electrical_story_exit_idle_seconds,
         5,
         300,
-        22
+        24
       ),
       identityPrompt:
         coerceText(cfg && cfg.electrical_story_identity_prompt) ||
         "Before we go deeper into the electrical energy history, please share your name and company.",
       exitPrompt:
         coerceText(cfg && cfg.electrical_story_exit_prompt) ||
-        "Thanks for your interest in the electrical energy story. It matters because it explains why Unity Energy exists. I need to step away unless you have other Unity Energy questions.",
+        "Thank you for your interest in the electrical energy story. I need to return to Unity-focused support now, but I can keep helping with Unity Energy questions.",
     };
   }
 
@@ -5758,7 +5763,7 @@
       electricalStoryQuestionCap = resolveElectricalStoryQuestionCap(settings);
     }
     electricalStoryQuestionCount += 1;
-    if (electricalStoryQuestionCount >= electricalStoryQuestionCap) {
+    if (electricalStoryQuestionCount > electricalStoryQuestionCap) {
       electricalStoryExitPromptActive = true;
       electricalStoryExitPromptSent = true;
       syncElectricalStoryGuardrailToSession(
@@ -9592,7 +9597,10 @@
             return;
           }
           setLaunchEmblemVisible(false);
-          setStatus(engineValidation.message || "Voice engine config is incomplete.", true);
+          setStatus(
+            "Clerk runtime auth is unavailable on this device. Configure /api/hume/runtime-auth or inject runtime auth before launching.",
+            true
+          );
         });
         return;
       }
@@ -9722,7 +9730,12 @@
     setWidgetFrameVisible(true);
     setWidgetFrameSize(50, 50);
     setPanelMode("docked");
-    if (!preserveDailyMeter) {
+    const shouldPersistDailyMeter = Boolean(
+      cfg &&
+        cfg.guardrails_enabled &&
+        cfg.guardrails_enable_daily_metering !== false
+    );
+    if (!preserveDailyMeter && !shouldPersistDailyMeter) {
       clearDailyMeter();
     }
     pageTransitionInProgress = false;

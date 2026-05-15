@@ -604,6 +604,99 @@
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
     }
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
 
     .pattern-modal-body ul {
       list-style: none;
@@ -696,10 +789,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
@@ -1395,15 +1486,40 @@
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, BNR GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
 <hr style="border: 3px solid rgb(161, 188, 26); width: 95%; margin-bottom: 25px; margin-top: 0px;"/>
 <div class="siteboard-sub">
-<span class="siteboard-title-sub" id="transformer-count">1 Transformer</span>
+<span class="siteboard-title-sub" id="transformer-count">2 Transformers</span>
 <span class="siteboard-title-sub" id="site-meta-sep-1"> • </span>
 <span class="siteboard-title-sub">Time Period <span id="param-period">c.260314-260331</span> (<span id="month-year">March 2026</span>) • <span id="param-days">18</span> days</span>
 <span class="siteboard-title-sub" id="site-meta-sep-2"> • </span>
@@ -1437,7 +1553,7 @@
     ⚡ SITE SUMMARY - UNITY SYSTEM
   </button>
 </div>
-<div class="dashboard-grid layout-1">
+<div class="dashboard-grid layout-2">
 <div class="xfmr-card" id="xfmr1-card">
 <h2>
 <span id="xfmr1-name">BNR-1</span>
@@ -1462,10 +1578,10 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">1549kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">1541.7kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">2.6%</span></div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">32.9%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1480,7 +1596,7 @@
   </div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.236 kWh</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">0.235 kWh</span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">5.2 cents</span></div>
   <div class="bird-metric">Production Level</div>
   <div class="bird-metric"><span id="xfmr1-production-birds">850,655 birds</span></div>
@@ -1492,10 +1608,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">1353.9 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$297.58</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">156.1 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$34.32</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">1347.9 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$296.27</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">155.4 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$34.15</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1526,7 +1642,7 @@
 <!-- Transformer Slot 2 -->
 <div class="xfmr-card" id="xfmr2-card">
 <h2>
-<span id="xfmr2-name"></span>
+<span id="xfmr2-name">BNR-2</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
@@ -1548,10 +1664,10 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">17kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">2409kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">2.6%</span></div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">99.3%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1566,7 +1682,7 @@
   </div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.236 kWh</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">0.235 kWh</span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">5.2 cents</span></div>
   <div class="bird-metric">Production Level</div>
   <div class="bird-metric"><span id="xfmr2-production-birds">1,182,845 birds</span></div>
@@ -1578,8 +1694,8 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">16.1 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$3.53</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">16.0 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$3.51</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">0.6 kW</span></div>
 <div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$0.13</span></div>
 </div>
@@ -1849,17 +1965,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -1868,15 +2044,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2091,7 +2277,7 @@
   }
 
   // Navigation functions for pattern images and detail views
-  // Convert transformer name to filename-safe ID (e.g., "Deli F" -> "DeliF", "BNR-1" -> "BNR1", "T10 AirChiller" -> "T10")
+  // Convert transformer name to filename-safe ID (e.g., "Deli F" -> "DeliF", "T10 AirChiller" -> "T10")
   function getTransformerFileId(transformerName) {
     // For T## format, extract just the T## part
     const tidMatch = transformerName.match(/^(T\d+)/);
@@ -2099,8 +2285,8 @@
     // For Rendering style, map to Rend# filename base
     const renderingMatch = transformerName.match(/rendering[-\s]*(\d+)/i);
     if (renderingMatch) return `Rend${renderingMatch[1]}`;
-    // For other names, remove separators and keep only letters/numbers
-    return transformerName.replace(/[^A-Za-z0-9]/g, '');
+    // For other names (e.g., "Deli F"), remove spaces and use as-is
+    return transformerName.replace(/\s+/g, '');
   }
 
   // Get month suffix from displayed month-year.
@@ -2118,117 +2304,114 @@
   }
 
   // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
-  function getTransformerRoutingInfo(transformerName) {
-    const clean = (transformerName || '').replace(/[^A-Za-z0-9]/g, '');
-    const upper = clean.toUpperCase();
+  function uniqueRoutingValues(values) {
+    const out = [];
+    const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
+  }
 
-    const tMatch = upper.match(/^(T\d+)/);
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
     if (tMatch) {
       const t = tMatch[1];
       return {
-        keys: [t, t.toLowerCase(), clean, upper],
-        fileIds: [t.toLowerCase(), t, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
-    const ncdcMatch = upper.match(/^(NCDC\d+)/);
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
     if (ncdcMatch) {
       const ncdc = ncdcMatch[1];
       return {
-        keys: [ncdc, ncdc.toLowerCase(), clean, upper],
-        fileIds: [ncdc, ncdc.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
-    const renderingMatch = upper.match(/^RENDERING-?(\d+)/);
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
     if (renderingMatch) {
       const n = renderingMatch[1];
       return {
-        keys: [`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, clean, upper],
-        fileIds: [`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Generic numeric prefixes like "ABC1..."
-    const baseMatch = upper.match(/^([A-Z]+\d+)/);
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
     if (baseMatch) {
       const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
       return {
-        keys: [base, base.toLowerCase(), clean, upper],
-        fileIds: [base, base.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
       };
     }
 
-    return { keys: [upper, clean], fileIds: [clean, clean.toLowerCase()] };
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
   }
 
-  function buildPatternCandidates(fileIds, prefix, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
+  function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
     const out = [];
     const seen = new Set();
     const exts = (extensions && extensions.length) ? extensions : ['png'];
+    const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
     fileIds.forEach(id => {
-      exts.forEach(ext => {
-        [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
-          if (!seen.has(fn)) {
-            seen.add(fn);
-            out.push(`Patterns/${fn}`);
-          }
+      prefixList.forEach(prefix => {
+        exts.forEach(ext => {
+          [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
+            if (!seen.has(fn)) {
+              seen.add(fn);
+              out.push(`Patterns/${fn}`);
+            }
+          });
         });
       });
     });
-    return out;
-  }
-  function buildPart2InstallationCandidatesLegacyUnused(fileIds, monthSuffixShort, monthSuffixLong, slot = 1) {
-    const out = [];
-    const seen = new Set();
-    const exts = ['png', 'jpg', 'jpeg'];
-    const ids = [...new Set((fileIds || []).map((id) => (id || '').toString().toLowerCase()).filter(Boolean))].slice(0, 2);
-    const monthTokens = [...new Set([monthSuffixShort, monthSuffixLong].filter(Boolean))];
-    monthTokens.push('');
-    const slotStems = slot === 1
-      ? ['p2a', 'install1', 'installation1', 'solution1']
-      : ['p2b', 'install2', 'installation2', 'meter2', 'metering2'];
-    const globalStems = slot === 1
-      ? ['part2a', 'installation_1']
-      : ['part2b', 'installation_2', 'metering_2'];
-
-    const pushCandidate = (filename) => {
-      if (!seen.has(filename)) {
-        seen.add(filename);
-        out.push(`Patterns/${filename}`);
-      }
-    };
-
-    const pushStemVariants = (base, stem) => {
-      monthTokens.forEach((token) => {
-        exts.forEach((ext) => {
-          if (token) {
-            pushCandidate(`${base}${stem}_${token}.${ext}`);
-            pushCandidate(`${base}_${stem}_${token}.${ext}`);
-          } else {
-            pushCandidate(`${base}${stem}.${ext}`);
-            pushCandidate(`${base}_${stem}.${ext}`);
-          }
-        });
-      });
-    };
-
-    // Prefer shared/global Part 2 images so every transformer uses the same installation pair by default.
-
-    globalStems.forEach((stem) => {
-      exts.forEach((ext) => {
-        monthTokens.forEach((token) => {
-          if (token) pushCandidate(`${stem}_${token}.${ext}`);
-          else pushCandidate(`${stem}.${ext}`);
-        });
-      });
-    });
-    ids.forEach((id) => {
-      slotStems.forEach((stem) => pushStemVariants(id, stem));
-    });
-
     return out;
   }
 
@@ -2258,6 +2441,169 @@
     applySrc();
   }
 
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
+  function updatePatternBaseScale() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
+    if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
+      state.baseScale = 1;
+      return;
+    }
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
+    }
+  }
+
+  function getPatternRenderScale() {
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
+  }
+
+  function clampPatternImagePosition() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
+    if (scaledWidth <= viewportWidth) {
+      state.translateX = (viewportWidth - scaledWidth) / 2;
+    } else {
+      const minX = viewportWidth - scaledWidth;
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
+    }
+    if (scaledHeight <= viewportHeight) {
+      state.translateY = (viewportHeight - scaledHeight) / 2;
+    } else {
+      const minY = viewportHeight - scaledHeight;
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
+    }
+  }
+
+  function applyPatternImageTransform() {
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
+    }
+  }
+
+  function resetPatternImageView() {
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
+    updatePatternBaseScale();
+    state.translateX = 0;
+    state.translateY = 0;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function handlePatternImageWheel(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    event.preventDefault();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
+    const pointerX = event.clientX - rect.left;
+    const pointerY = event.clientY - rect.top;
+    const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
+    const currentRenderScale = getPatternRenderScale();
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
+    const scaleRatio = nextRenderScale / currentRenderScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function startPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function movePatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function stopPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
+      try {
+        state.viewport.releasePointerCapture(event.pointerId);
+      } catch (_) {}
+    }
+  }
+
+  function initializePatternImageView() {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
+      resetPatternImageView();
+    });
+    resetPatternImageView();
+  }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
+
   function viewPattern(transformerId, type) {
     try {
       // transformerId is like 'xfmr1', 'xfmr2', etc.
@@ -2274,15 +2620,25 @@
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
-      // Prefix mapping: b=Baseline, bt=Base-Target, m=MPTS Variables, s=Solution, v=Voltage
-      let prefix = 'b';
+      // Prefix mapping:
+      // baseline -> bt first, then b fallback
+      // mpts -> s first, then m fallback
+      // mpts-vars -> bt
+      // voltage -> v
+      let prefixCandidates = ['bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefix = 's'; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefix = 'bt'; patternLabel = 'Base Target'; }
-      else if (type === 'voltage') { prefix = 'v'; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
-      const candidates = buildPatternCandidates(routing.fileIds, prefix, monthSuffixShort, monthSuffixLong);
+      let candidates = buildPatternCandidates(
+        routing.fileIds,
+        prefixCandidates,
+        monthSuffixShort,
+        monthSuffixLong,
+        ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']
+      );
 
       // Modal elements
       const modal = document.getElementById('patternModal');
@@ -2312,17 +2668,27 @@
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
+      clearPatternImageView();
       modalBody.innerHTML = `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
+          </div>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
                  onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
-                 >
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+            <div class="pattern-view-actions">
+              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+            </div>
           </div>
         </div>`;
 
+      initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
     } catch (error) {
@@ -2411,7 +2777,64 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-  "transformers": {}
+  "transformers": {
+    "BNR1": {
+      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for BNR1.\n\nLet me walk you through what you're seeing. The dark blue envelope shows your kilovolt-ampere supply \u2014 that's the total electrical capacity flowing to your operations. The light blue shows your kilowatt consumption \u2014 that's the actual work being done. The green layer between them? That's your reactive kilovolt-amperes \u2014 electromagnetic waste creating heat and stealing capacity.\n\nYour production rhythm tells a clear story. Strong weekday blocks running consistently around fourteen to fifteen hundred kilovolt-amperes throughout the month. Clean weekend valleys dropping to baseline. I'm seeing roughly eighty-five to ninety percent electric operations \u2014 typical for agricultural processing with disciplined production schedules.\n\nYour target supply line holds at fifteen forty-one point seven kilovolt-amperes. But look at that green reactive layer \u2014 you're averaging six hundred eighty kilovolt-amperes reactive, peaking at seven hundred three. That's a power factor of eighty-nine point seven percent.\n\nThis reactive demand is generating five hundred ninety thousand BTUs per hour of thermal burden. That's costing you over seventeen dollars per hour just in cooling overhead \u2014 eighty-six kilowatts of additional air conditioning load. Total waste: approximately four hundred forty thousand dollars annually.\n\nNow let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction.\n\nYour peak reactive demand hits seven hundred three kilovolt-amperes. Using Unity's sizing protocol, I take seven hundred three divided by four hundred, round up \u2014 that gives us two H490 units delivering eight hundred kilovolt-amperes reactive of compensation capacity.\n\nEstimated installed investment is approximately four hundred thousand dollars for the two-unit MPTS system. These figures are planning-level estimates \u2014 final installed pricing depends on specific engineering scope, site conditions, and installation requirements.\n\nHere's what MPTS does in simple terms. Each unit continuously monitors your electromagnetic field and injects precisely the compensating reactive power needed to neutralize that green waste layer. Your power factor jumps to ninety-nine point five percent. The reactive demand essentially disappears.\n\nVisually, you'll see that green layer collapse. The dark blue supply envelope drops much closer to your light blue consumption. Your conductors run cooler. Your transformer capacity is freed up. The thermal burden drops dramatically.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like.\n\nThe green reactive layer has virtually disappeared. Your power factor now sits at ninety-nine point five percent. The dark blue supply envelope runs much tighter to your light blue consumption \u2014 that's efficient power delivery.\n\nThe savings are substantial. Approximately four hundred nine thousand dollars annually in recovered waste \u2014 that's roughly thirty-six thousand seven hundred per month in eliminated losses. These are planning estimates based on your current field characteristics.\n\nWith an estimated four hundred thousand dollar MPTS investment and roughly thirty-six thousand seven hundred monthly recovery, you're looking at approximately eleven months to payback. After that eleven month point, every hour is recovered value flowing directly to your operations.\n\nYour thermal burden drops dramatically. Your conductors run cooler. Your transformer operates with freed capacity. Your cooling costs drop by over eighty-six kilowatts of air conditioning load.\n\nThis isn't just about efficiency \u2014 it's about stewardship. Taking responsibility for your electromagnetic footprint. Running clean, disciplined electrical operations.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for BNR1.\n\nLet me walk you through what you're seeing. The dark blue envelope shows your kilovolt-ampere supply \u2014 that's the total electrical capacity flowing to your operations. The light blue shows your kilowatt consumption \u2014 that's the actual work being done. The green layer between them? That's your reactive kilovolt-amperes \u2014 electromagnetic waste creating heat and stealing capacity.\n\nYour production rhythm tells a clear story. Strong weekday blocks running consistently around fourteen to fifteen hundred kilovolt-amperes throughout the month. Clean weekend valleys dropping to baseline. I'm seeing roughly eighty-five to ninety percent electric operations \u2014 typical for agricultural processing with disciplined production schedules.\n\nYour target supply line holds at fifteen forty-one point seven kilovolt-amperes. But look at that green reactive layer \u2014 you're averaging six hundred eighty kilovolt-amperes reactive, peaking at seven hundred three. That's a power factor of eighty-nine point seven percent.\n\nThis reactive demand is generating five hundred ninety thousand BTUs per hour of thermal burden. That's costing you over seventeen dollars per hour just in cooling overhead \u2014 eighty-six kilowatts of additional air conditioning load. Total waste: approximately four hundred forty thousand dollars annually.\n\nNow let me show you how we clean this up.",
+      "pattern_part2": "Alright \u2014 now we move from observation to correction.\n\nYour peak reactive demand hits seven hundred three kilovolt-amperes. Using Unity's sizing protocol, I take seven hundred three divided by four hundred, round up \u2014 that gives us two H490 units delivering eight hundred kilovolt-amperes reactive of compensation capacity.\n\nEstimated installed investment is approximately four hundred thousand dollars for the two-unit MPTS system. These figures are planning-level estimates \u2014 final installed pricing depends on specific engineering scope, site conditions, and installation requirements.\n\nHere's what MPTS does in simple terms. Each unit continuously monitors your electromagnetic field and injects precisely the compensating reactive power needed to neutralize that green waste layer. Your power factor jumps to ninety-nine point five percent. The reactive demand essentially disappears.\n\nVisually, you'll see that green layer collapse. The dark blue supply envelope drops much closer to your light blue consumption. Your conductors run cooler. Your transformer capacity is freed up. The thermal burden drops dramatically.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.",
+      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like.\n\nThe green reactive layer has virtually disappeared. Your power factor now sits at ninety-nine point five percent. The dark blue supply envelope runs much tighter to your light blue consumption \u2014 that's efficient power delivery.\n\nThe savings are substantial. Approximately four hundred nine thousand dollars annually in recovered waste \u2014 that's roughly thirty-six thousand seven hundred per month in eliminated losses. These are planning estimates based on your current field characteristics.\n\nWith an estimated four hundred thousand dollar MPTS investment and roughly thirty-six thousand seven hundred monthly recovery, you're looking at approximately eleven months to payback. After that eleven month point, every hour is recovered value flowing directly to your operations.\n\nYour thermal burden drops dramatically. Your conductors run cooler. Your transformer operates with freed capacity. Your cooling costs drop by over eighty-six kilowatts of air conditioning load.\n\nThis isn't just about efficiency \u2014 it's about stewardship. Taking responsibility for your electromagnetic footprint. Running clean, disciplined electrical operations.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "Welcome. I'm Unity. You're looking at BNR1 \u2014 your fifteen hundred forty-one kilovolt-ampere transformer serving what appears to be agricultural processing operations.\n\nYour power factor sits at eighty-nine point seven percent. That means you're pulling seven hundred three kilovolt-amperes reactive at peak \u2014 that's significant reactive demand creating thermal stress and capacity waste.\n\nThis field is costing you approximately four hundred forty thousand dollars annually in energy waste, thermal burden, and cooling overhead. Your conductors are running hot, transformers working harder than they should.\n\nHere's my recommendation: two Unity H490 MPTS units delivering eight hundred kilovolt-amperes reactive of compensation. Estimated installed investment of roughly four hundred thousand dollars. That drives your power factor to ninety-nine point five percent and recovers approximately four hundred nine thousand annually in waste elimination.\n\nYour estimated payback is around eleven months. After that, every month is recovered value flowing straight to operations.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 89.7% | match: \u26a0\ufe0f DISCREPANCY - CSV unavailable\ntarget_kva_csv: 0.0 kVA | target_kva_image: 1541.7 kVA | match: \u26a0\ufe0f DISCREPANCY - CSV unavailable\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 703.4 kVAR | variance: \u26a0\ufe0f DISCREPANCY - CSV unavailable\nmonthly_waste_csv: $0.00 | monthly_waste_image: $440,695/yr | match: \u26a0\ufe0f DISCREPANCY - CSV unavailable\nSIZING USED: 2\u00d7 H490 = 800 kVAR capacity | ~$400,000 installed\nPAYBACK: ~$36,725/month | ~11 months",
+      "william_version": "eeWILLIAM-3step",
+      "analyzed_at": "2026-05-07 14:40:30",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "BNR1"
+    },
+    "BNR2": {
+      "pattern_text": "PART 1: NARRATION READY\nLooking at your BNR2 transformer data, I'm seeing something quite remarkable. You're operating at 2400 kVA supply capacity with a 96.4% power factor \u2014 that's exceptionally clean performance for an industrial facility.\n\nYour reactive power demand is just 4.6 kVAR maximum across the entire monitoring period. Most facilities we analyze show much higher reactive burdens. The field pattern is remarkably steady from April 2nd through the 30th, suggesting automated systems running in continuous steady state rather than typical batch processing cycles.\n\nThe thermal burden on your transformer is minimal \u2014 just 2,286 BTU per hour with cooling overhead of only 0.3 kilowatts. Your annual electromagnetic waste costs are approximately $3,064, which is quite low for a system this size.\n\nWhen we run the MPTS simulation, it shows virtually no change. That's because there's minimal reactive power to correct. Your facility is already operating near Unity's target performance standards. The 95% electric operations consistency tells us your electrical infrastructure is well-maintained and properly sized for your loads.\n\nThis is an unusual case where the transformer is already running clean and efficient. Rather than active correction, I'd recommend maintaining these excellent operating conditions through periodic power quality monitoring. That's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nYour BNR2 transformer is already operating exceptionally well. At 96.4% power factor with just 4.6 kVAR reactive demand, you're achieving near-optimal performance. Annual waste costs are only approximately $3,064 \u2014 quite low for a 2400 kVA system. The MPTS simulation shows minimal potential improvement because there's little reactive power to correct. Focus on maintaining these excellent operating conditions rather than active correction. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $2,600 to $3,500.\n\nPART 3: ENGINEERING DETAILED\nLet me walk you through the detailed electromagnetic analysis of your BNR2 transformer. You're operating with a 2400 kVA supply capacity, and what immediately stands out is the exceptional power factor of 96.4%. This is well above typical industrial standards.\n\nYour reactive power profile tells a compelling story. At just 4.6 kVAR both average and maximum, you're operating with minimal reactive burden. Most industrial facilities we analyze show reactive demands in the hundreds of kVAR range. The consistency of this low reactive profile across the entire April monitoring period suggests well-tuned, properly sized equipment.\n\nThe thermal analysis reveals minimal stress on your transformer infrastructure. At 2,286 BTU per hour thermal burden with only 0.3 kilowatts cooling overhead, your system is running well within thermal limits. The approximately $3,064 annual electromagnetic waste cost represents excellent efficiency for a system this size.\n\nYour operational pattern shows 95% electric operations consistency \u2014 meaning your loads are running in steady, predictable patterns without significant variations. This suggests automated systems like HVAC or water treatment operating in continuous mode rather than variable industrial processes.\n\nWhen we run the MPTS harmonic simulation, it projects virtually no field change. This is because there's minimal reactive power to correct. Your facility is already operating at near-Unity performance standards. An H240 MPTS unit would provide more correction capacity than your system requires.\n\nFrom an engineering perspective, this transformer represents optimal electromagnetic behavior. The recommendation is to maintain these exceptional operating conditions through periodic monitoring rather than active power factor correction. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part1": "Looking at your BNR2 transformer data, I'm seeing something quite remarkable. You're operating at 2400 kVA supply capacity with a 96.4% power factor \u2014 that's exceptionally clean performance for an industrial facility.\n\nYour reactive power demand is just 4.6 kVAR maximum across the entire monitoring period. Most facilities we analyze show much higher reactive burdens. The field pattern is remarkably steady from April 2nd through the 30th, suggesting automated systems running in continuous steady state rather than typical batch processing cycles.\n\nThe thermal burden on your transformer is minimal \u2014 just 2,286 BTU per hour with cooling overhead of only 0.3 kilowatts. Your annual electromagnetic waste costs are approximately $3,064, which is quite low for a system this size.\n\nWhen we run the MPTS simulation, it shows virtually no change. That's because there's minimal reactive power to correct. Your facility is already operating near Unity's target performance standards. The 95% electric operations consistency tells us your electrical infrastructure is well-maintained and properly sized for your loads.\n\nThis is an unusual case where the transformer is already running clean and efficient. Rather than active correction, I'd recommend maintaining these excellent operating conditions through periodic power quality monitoring. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_part2": "Your BNR2 transformer is already operating exceptionally well. At 96.4% power factor with just 4.6 kVAR reactive demand, you're achieving near-optimal performance. Annual waste costs are only approximately $3,064 \u2014 quite low for a 2400 kVA system. The MPTS simulation shows minimal potential improvement because there's little reactive power to correct. Focus on maintaining these excellent operating conditions rather than active correction. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $2,600 to $3,500.",
+      "pattern_part3": "Let me walk you through the detailed electromagnetic analysis of your BNR2 transformer. You're operating with a 2400 kVA supply capacity, and what immediately stands out is the exceptional power factor of 96.4%. This is well above typical industrial standards.\n\nYour reactive power profile tells a compelling story. At just 4.6 kVAR both average and maximum, you're operating with minimal reactive burden. Most industrial facilities we analyze show reactive demands in the hundreds of kVAR range. The consistency of this low reactive profile across the entire April monitoring period suggests well-tuned, properly sized equipment.\n\nThe thermal analysis reveals minimal stress on your transformer infrastructure. At 2,286 BTU per hour thermal burden with only 0.3 kilowatts cooling overhead, your system is running well within thermal limits. The approximately $3,064 annual electromagnetic waste cost represents excellent efficiency for a system this size.\n\nYour operational pattern shows 95% electric operations consistency \u2014 meaning your loads are running in steady, predictable patterns without significant variations. This suggests automated systems like HVAC or water treatment operating in continuous mode rather than variable industrial processes.\n\nWhen we run the MPTS harmonic simulation, it projects virtually no field change. This is because there's minimal reactive power to correct. Your facility is already operating at near-Unity performance standards. An H240 MPTS unit would provide more correction capacity than your system requires.\n\nFrom an engineering perspective, this transformer represents optimal electromagnetic behavior. The recommendation is to maintain these exceptional operating conditions through periodic monitoring rather than active power factor correction. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "pattern_brief": "**Field Condition Summary:** Your BNR2 transformer operates in remarkably clean condition at 2400 kVA capacity with 96.4% power factor and minimal 4.6 kVAR reactive demand.\n\n**Voltage Stability Findings:** Baseline pattern shows exceptional consistency with stable supply conditions throughout the monitoring period.\n\n**Reactive Harmonic Findings:** Exceptionally clean reactive profile with minimal harmonic distortion \u2014 unusual for industrial facilities.\n\n**Operational Stress Interpretation:** Low thermal burden of 2,286 BTU/hr and 0.3 kW cooling overhead indicate minimal transformer stress with approximately $3,064 annual waste costs.\n\n**Simulated MPTS Outcome:** MPTS simulation shows virtually no change \u2014 facility already operates near Unity target standards with minimal reactive correction needed.\n\n**Recommended Engineering Attention Areas:** Maintain existing excellent conditions through periodic monitoring rather than active correction \u2014 this transformer is already running optimally.",
+      "field_condition_summary": "Your BNR2 transformer is operating in remarkably clean condition. At 2400 kVA supply capacity with a 96.4% power factor, you're already achieving near-optimal electromagnetic performance. The field shows steady-state operations with minimal reactive disturbances \u2014 just 4.6 kVAR maximum demand across the monitoring period. This suggests well-tuned automated systems running continuously rather than typical industrial batch cycles.",
+      "voltage_stability_findings": "Voltage stability data not provided in this analysis dataset. The baseline energy pattern shows exceptional consistency with minimal day-to-day variation, indicating stable supply conditions. The flat consumption profile from April 2nd through 30th suggests your electrical infrastructure is maintaining steady voltage delivery to your loads.",
+      "reactive_harmonic_findings": "Your reactive power profile is exceptionally clean. At just 4.6 kVAR average and maximum, you're operating with minimal reactive burden on your transformer. The consistent power factor line near 96% indicates well-behaved loads without significant harmonic distortion. This is unusual for industrial facilities \u2014 most operations we analyze show much higher reactive demands and more variable power factors.",
+      "operational_stress_interpretation": "The thermal burden of 2,286 BTU per hour and cooling overhead of just 0.3 kilowatts indicate your transformer is operating under very low stress. The approximately $3,064 annual waste cost represents minimal electromagnetic losses for a 2400 kVA system. Your 95% electric operations consistency suggests automated processes running in steady state \u2014 likely HVAC, water treatment, or similar continuous systems.",
+      "simulated_mpts_outcome": "The MPTS simulation shows virtually no change because there's minimal reactive power to correct. Your facility is already operating near Unity's target performance standards. With only 4.6 kVAR maximum demand, an H240 unit would provide more correction capacity than needed. The simulation confirms what the baseline shows \u2014 this transformer is already running clean and efficient.",
+      "recommended_engineering_attention_areas": "This transformer requires minimal engineering attention from a power quality perspective. Focus should be on maintaining existing equipment conditions that are delivering this exceptional performance. Consider periodic power quality monitoring to ensure these clean operating conditions persist as equipment ages. The low waste costs suggest excellent facility electrical maintenance practices.",
+      "narration_ready_text": "Looking at your BNR2 transformer data, I'm seeing something quite remarkable. You're operating at 2400 kVA supply capacity with a 96.4% power factor \u2014 that's exceptionally clean performance for an industrial facility.\n\nYour reactive power demand is just 4.6 kVAR maximum across the entire monitoring period. Most facilities we analyze show much higher reactive burdens. The field pattern is remarkably steady from April 2nd through the 30th, suggesting automated systems running in continuous steady state rather than typical batch processing cycles.\n\nThe thermal burden on your transformer is minimal \u2014 just 2,286 BTU per hour with cooling overhead of only 0.3 kilowatts. Your annual electromagnetic waste costs are approximately $3,064, which is quite low for a system this size.\n\nWhen we run the MPTS simulation, it shows virtually no change. That's because there's minimal reactive power to correct. Your facility is already operating near Unity's target performance standards. The 95% electric operations consistency tells us your electrical infrastructure is well-maintained and properly sized for your loads.\n\nThis is an unusual case where the transformer is already running clean and efficient. Rather than active correction, I'd recommend maintaining these excellent operating conditions through periodic power quality monitoring. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "executive_summary_short": "Your BNR2 transformer is already operating exceptionally well. At 96.4% power factor with just 4.6 kVAR reactive demand, you're achieving near-optimal performance. Annual waste costs are only approximately $3,064 \u2014 quite low for a 2400 kVA system. The MPTS simulation shows minimal potential improvement because there's little reactive power to correct. Focus on maintaining these excellent operating conditions rather than active correction. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $2,600 to $3,500.",
+      "engineering_narration_detailed": "Let me walk you through the detailed electromagnetic analysis of your BNR2 transformer. You're operating with a 2400 kVA supply capacity, and what immediately stands out is the exceptional power factor of 96.4%. This is well above typical industrial standards.\n\nYour reactive power profile tells a compelling story. At just 4.6 kVAR both average and maximum, you're operating with minimal reactive burden. Most industrial facilities we analyze show reactive demands in the hundreds of kVAR range. The consistency of this low reactive profile across the entire April monitoring period suggests well-tuned, properly sized equipment.\n\nThe thermal analysis reveals minimal stress on your transformer infrastructure. At 2,286 BTU per hour thermal burden with only 0.3 kilowatts cooling overhead, your system is running well within thermal limits. The approximately $3,064 annual electromagnetic waste cost represents excellent efficiency for a system this size.\n\nYour operational pattern shows 95% electric operations consistency \u2014 meaning your loads are running in steady, predictable patterns without significant variations. This suggests automated systems like HVAC or water treatment operating in continuous mode rather than variable industrial processes.\n\nWhen we run the MPTS harmonic simulation, it projects virtually no field change. This is because there's minimal reactive power to correct. Your facility is already operating at near-Unity performance standards. An H240 MPTS unit would provide more correction capacity than your system requires.\n\nFrom an engineering perspective, this transformer represents optimal electromagnetic behavior. The recommendation is to maintain these exceptional operating conditions through periodic monitoring rather than active power factor correction. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
+      "voltage_baseline_notes": "The voltage stability wasn't provided in this analysis, but the baseline energy view shows your facility consuming power very consistently. The flat pattern from April 2nd through 30th indicates stable electrical conditions. Your waste costs of approximately $3,064 annually come from minimal reactive losses and low thermal burden \u2014 this is excellent performance for a 2400 kVA transformer.",
+      "reactive_mpts_notes": "Your reactive power is already exceptionally low at just 4.6 kVAR maximum. The MPTS simulation shows virtually no change because there's minimal reactive power to correct. With a 96.4% power factor, you're already operating near Unity's target standards. Rather than MPTS installation, focus on maintaining these excellent operating conditions through periodic monitoring.",
+      "energy_field_summary_brief": "**Field Condition Summary:** Your BNR2 transformer operates in remarkably clean condition at 2400 kVA capacity with 96.4% power factor and minimal 4.6 kVAR reactive demand.\n\n**Voltage Stability Findings:** Baseline pattern shows exceptional consistency with stable supply conditions throughout the monitoring period.\n\n**Reactive Harmonic Findings:** Exceptionally clean reactive profile with minimal harmonic distortion \u2014 unusual for industrial facilities.\n\n**Operational Stress Interpretation:** Low thermal burden of 2,286 BTU/hr and 0.3 kW cooling overhead indicate minimal transformer stress with approximately $3,064 annual waste costs.\n\n**Simulated MPTS Outcome:** MPTS simulation shows virtually no change \u2014 facility already operates near Unity target standards with minimal reactive correction needed.\n\n**Recommended Engineering Attention Areas:** Maintain existing excellent conditions through periodic monitoring rather than active correction \u2014 this transformer is already running optimally.",
+      "clerk_text_files": {
+        "structured_brief": "BNR2_brief.txt",
+        "narration_ready": "BNR2_explains_p1.txt",
+        "executive_short": "BNR2_explains_p2.txt",
+        "engineering_detailed": "BNR2_explains_p3.txt",
+        "voltage_baseline_notes": "BNR2_waste_howto.txt",
+        "reactive_mpts_notes": "BNR2_savings_howto.txt",
+        "field_condition_summary": "BNR2_field_condition_summary.txt",
+        "voltage_stability_findings": "BNR2_voltage_stability_findings.txt",
+        "reactive_harmonic_findings": "BNR2_reactive_harmonic_findings.txt",
+        "operational_stress_interpretation": "BNR2_operational_stress_interpretation.txt",
+        "simulated_mpts_outcome": "BNR2_simulated_mpts_outcome.txt",
+        "recommended_engineering_attention_areas": "BNR2_recommended_engineering_attention_areas.txt"
+      },
+      "cross_check": "\u26a0\ufe0f Mercury CSV analysis not available \u2014 using visual analysis only. Image shows 2400 kVA supply target, 96.4% power factor, 4.6 kVAR maximum reactive demand, and approximately $3,064 annual waste costs. No significant discrepancies to flag since CSV data is unavailable.",
+      "william_version": "eeWILLIAM-4view-holistic-v1",
+      "analyzed_at": "2026-05-08 19:58:14",
+      "tmax_supply": 0.0,
+      "power_factor": 0.0,
+      "avg_kvar": 0.0,
+      "waste_cost": 0.0,
+      "transformer_name": "BNR2"
+    }
+  }
 };
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
@@ -2755,22 +3178,26 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
 
     const getElText = (id) => {
       const el = document.getElementById(id);
@@ -2939,8 +3366,8 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
-      const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
@@ -3037,7 +3464,7 @@
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
       attachPatternFallback(
         document.getElementById('baselinePatternImg'),
-        [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)],
+        baselineCandidates,
         `${transformerName} baseline`
       );
       attachPatternFallback(
@@ -3047,13 +3474,14 @@
       );
       const part2PatternImg = document.getElementById('part2PatternImg');
       if (part2PatternImg) {
-        const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
         attachPatternFallback(
           part2PatternImg,
           part2EquipmentCandidates,
           `${transformerName} part2 installation equipment`
         );
       }
+      const secondaryWrap = document.getElementById('part2InstallWrapSecondary');
+      if (secondaryWrap) secondaryWrap.style.display = 'none';
     }
     
     // Show/hide Unity audio buttons based on content type
@@ -3097,6 +3525,7 @@
     }
     currentNarrativeText = '';
     currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
     currentExplainsPartIndex = 0;
     currentHowToPath = '';
@@ -3291,6 +3720,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3309,9 +3743,8 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (!tidMatch) continue;
-      const tid = tidMatch[1].toLowerCase();
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
       
       transformerCount++;
       
@@ -3645,74 +4078,5 @@
 </div>
 
 
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
-
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
-
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

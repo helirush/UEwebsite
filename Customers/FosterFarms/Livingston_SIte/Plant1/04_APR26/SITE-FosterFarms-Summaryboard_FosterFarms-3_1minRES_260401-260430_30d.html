@@ -172,15 +172,6 @@
       max-width: 520px;
     }
 
-    .dashboard-grid.layout-3 {
-      grid-template-columns: repeat(3, minmax(320px, 1fr));
-      max-width: 1300px;
-    }
-
-    .dashboard-grid.layout-3 .xfmr-card {
-      max-width: 420px;
-    }
-
     .xfmr-card {
       background: linear-gradient(145deg, rgb(60, 68, 45), rgb(70, 78, 46));
       border-radius: 15px;
@@ -194,80 +185,6 @@
       transform: translateY(-2px);
       border: .5px solid rgb(161, 188, 26); 
 
-    }
-
-    .under-review-card {
-      position: relative;
-      background: linear-gradient(145deg, rgba(74, 79, 85, 0.95), rgba(58, 63, 70, 0.95));
-      border: 1px dashed rgba(196, 202, 210, 0.85);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-      min-height: 585px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .under-review-card:hover {
-      transform: none;
-      border: 1px dashed rgba(196, 202, 210, 0.85);
-    }
-
-    .under-review-badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: rgba(17, 24, 39, 0.85);
-      border: 1px solid rgba(209, 213, 219, 0.8);
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 9pt;
-      font-weight: 700;
-      color: rgba(229, 231, 235, 0.95);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .under-review-dome {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 3px dashed rgba(209, 213, 219, 0.55);
-      background: radial-gradient(circle at 35% 30%, rgba(148, 163, 184, 0.4) 0%, rgba(71, 85, 105, 0.55) 60%, rgba(51, 65, 85, 0.7) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .under-review-dome-text {
-      font-size: 12pt;
-      font-weight: 700;
-      color: rgba(229, 231, 235, 0.92);
-      line-height: 1.3;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .under-review-label {
-      font-size: 18pt;
-      font-weight: 800;
-      color: rgba(229, 231, 235, 0.95);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-align: center;
-      max-width: 90%;
-    }
-
-    .under-review-muted {
-      font-size: 11pt;
-      color: rgba(209, 213, 219, 0.9);
-      text-align: center;
-      max-width: 90%;
-      line-height: 1.45;
     }
 
     /* Hide cards with empty or placeholder data */
@@ -779,6 +696,105 @@
       font-size: 9.2pt;
       font-weight: 800;
       letter-spacing: 0.02em;
+    }
+    .proc2-waiting-placeholder {
+      width: 100%;
+      min-height: 62vh;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: linear-gradient(150deg, rgba(9, 11, 14, 1) 0%, rgba(27, 31, 38, 1) 45%, rgba(63, 70, 80, 1) 100%);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.48), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: rgba(243, 244, 246, 0.98);
+      padding: 40px 30px;
+      box-sizing: border-box;
+      gap: 12px;
+    }
+    .proc2-waiting-badge {
+      font-size: 10pt;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(209, 213, 219, 0.94);
+      border: 1px solid rgba(156, 163, 175, 0.62);
+      border-radius: 999px;
+      padding: 7px 14px;
+      background: rgba(17, 24, 39, 0.42);
+    }
+    .proc2-waiting-placeholder h3 {
+      margin: 6px 0 2px 0;
+      font-size: 22pt;
+      color: rgba(229, 231, 235, 1);
+      letter-spacing: 0.02em;
+    }
+    .proc2-waiting-placeholder p {
+      margin: 0;
+      font-size: 13pt;
+      color: rgba(226, 232, 240, 0.96);
+    }
+    .proc2-waiting-placeholder .proc2-waiting-sub {
+      max-width: 760px;
+      color: rgba(203, 213, 225, 0.86);
+      font-size: 11.5pt;
+      line-height: 1.75;
+    }
+    .xfmr-card.proc2-front-waiting {
+      background: linear-gradient(150deg, rgba(10, 12, 16, 1) 0%, rgba(24, 28, 35, 1) 45%, rgba(58, 65, 74, 1) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.52), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      min-height: 870px;
+      display: flex;
+      flex-direction: column;
+    }
+    .xfmr-card.proc2-front-waiting:hover {
+      transform: none;
+      border: 1px solid rgba(148, 163, 184, 0.42);
+    }
+    .xfmr-card.proc2-front-waiting .gauge-container,
+    .xfmr-card.proc2-front-waiting .uptime,
+    .xfmr-card.proc2-front-waiting .bird-metrics,
+    .xfmr-card.proc2-front-waiting .pattern-buttons,
+    .xfmr-card.proc2-front-waiting .stats,
+    .xfmr-card.proc2-front-waiting .nav-buttons {
+      display: none;
+    }
+    .proc2-front-placeholder {
+      flex: 1;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: linear-gradient(150deg, rgba(8, 10, 13, 1) 0%, rgba(20, 24, 31, 1) 48%, rgba(49, 56, 65, 1) 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: rgba(243, 244, 246, 0.98);
+      padding: 34px 24px;
+      box-sizing: border-box;
+      gap: 12px;
+    }
+    .proc2-front-placeholder h3 {
+      margin: 4px 0 2px 0;
+      font-size: 21pt;
+      color: rgba(229, 231, 235, 1);
+      letter-spacing: 0.02em;
+    }
+    .proc2-front-placeholder p {
+      margin: 0;
+      font-size: 13pt;
+      color: rgba(226, 232, 240, 0.96);
+      line-height: 1.5;
+    }
+    .proc2-front-placeholder .proc2-waiting-sub {
+      max-width: 320px;
+      color: rgba(203, 213, 225, 0.86);
+      font-size: 11pt;
+      line-height: 1.65;
     }
 
     .pattern-modal-body ul {
@@ -1569,15 +1585,40 @@
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
 <div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO LIVINGSTON HQ FACILITY</a>
-  <a href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
+  <a id="unityHomeLink" href="../../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, PL1 GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
 <hr style="border: 3px solid rgb(161, 188, 26); width: 95%; margin-bottom: 25px; margin-top: 0px;"/>
 <div class="siteboard-sub">
-<span class="siteboard-title-sub" id="transformer-count">2 Transformers</span>
+<span class="siteboard-title-sub" id="transformer-count">3 Transformers</span>
 <span class="siteboard-title-sub" id="site-meta-sep-1"> • </span>
 <span class="siteboard-title-sub">Time Period <span id="param-period">c.260401-260430</span> (<span id="month-year">April 2026</span>) • <span id="param-days">30</span> days</span>
 <span class="siteboard-title-sub" id="site-meta-sep-2"> • </span>
@@ -1601,8 +1642,8 @@
 
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
-    🔊 LISTEN: SITE OVERVIEW
+  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's group-level site overview across all transformers">
+    🔊 LISTEN: GROUP SITE OVERVIEW
   </button>
   <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
     📊 SITE SUMMARY - BASELINE
@@ -1611,10 +1652,10 @@
     ⚡ SITE SUMMARY - UNITY SYSTEM
   </button>
 </div>
-<div class="dashboard-grid layout-3">
+<div class="dashboard-grid layout-4">
 <div class="xfmr-card" id="xfmr1-card">
 <h2>
-<span id="xfmr1-name">PL1-Proc1</span>
+<span id="xfmr1-name">PL1-MShop</span>
 <span id="xfmr1-kva-wrap"> (<span id="xfmr1-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr1', 'mpts-vars')" title="Click to view Base Target pattern">
@@ -1631,15 +1672,15 @@
 <g class="tick-marks" id="xfmr1-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">86.3%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">86.2%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">246kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">2500kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">19.4%</span></div>
+    <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">85.1%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1666,10 +1707,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">170.5 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$37.47</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">27.9 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$6.14</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">277.4 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$60.97</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">44.6 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$9.79</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1700,7 +1741,7 @@
 <!-- Transformer Slot 2 -->
 <div class="xfmr-card" id="xfmr2-card">
 <h2>
-<span id="xfmr2-name">PL1-MShop</span>
+<span id="xfmr2-name">PL1-Proc1</span>
 <span id="xfmr2-kva-wrap"> (<span id="xfmr2-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr2', 'mpts-vars')" title="Click to view Base Target pattern">
@@ -1717,15 +1758,15 @@
 <g class="tick-marks" id="xfmr2-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">86.8%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">85.9%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">658kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">309.9kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">51.1%</span></div>
+    <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">90.8%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1752,10 +1793,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">277.4 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$60.96</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">44.5 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$9.78</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">170.7 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$37.51</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">28.0 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$6.14</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1783,19 +1824,10 @@
   </div>
 </div>
 </div>
-<div class="xfmr-card under-review-card" id="pl1-proc2-under-review-card" aria-label="PL1-Proc2 under review placeholder">
-  <div class="under-review-badge">Under Review</div>
-  <h2>PL1-Proc2 (2500 kVA)</h2>
-  <div class="under-review-dome">
-    <div class="under-review-dome-text">Data-Reporting<br/>Under Review</div>
-  </div>
-  <div class="under-review-label">Data-Reporting Under Review.</div>
-  <div class="under-review-muted">This meter is currently under diagnostics and validation, so live reporting is temporarily unavailable.</div>
-</div>
 <!-- Transformer Slot 3 -->
 <div class="xfmr-card" id="xfmr3-card">
 <h2>
-<span id="xfmr3-name"></span>
+<span id="xfmr3-name">PL1-Proc2</span>
 <span id="xfmr3-kva-wrap"> (<span id="xfmr3-kva">2500</span> kVA)</span>
 </h2>
 <div class="gauge-container" onclick="viewPattern('xfmr3', 'mpts-vars')" title="Click to view Base Target pattern">
@@ -1812,15 +1844,15 @@
 <g class="tick-marks" id="xfmr3-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">84.0%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">85.8%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">897kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr3-target-pattern">2145kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">41.1%</span></div>
+    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">75.4%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1849,8 +1881,8 @@
 <div class="stats">
 <div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">453.6 kW</span></div>
 <div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$99.70</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">75.1 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$16.50</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">75.0 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$16.49</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -2032,17 +2064,77 @@
       const pct = n <= 1 ? (n * 100) : n;
       return Math.max(0, Math.min(100, pct));
     }
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
 
-    // Resolve PF% for a transformer from bound data first, then PATTERN_DATA summary fallback.
-    function resolvePfPercentForTransformer(xfmrId, transformerName) {
-      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
-      if (dataRow) {
-        const pfFromData = normalizePfPercent(dataRow.powerFactor);
-        if (pfFromData !== null) return pfFromData;
-        const effFromData = normalizePfPercent(dataRow.efficiency);
-        if (effFromData !== null) return effFromData;
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
       }
 
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
       try {
         const routing = getTransformerRoutingInfo(transformerName || '');
         const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
@@ -2051,15 +2143,25 @@
         for (const k of routing.keys) {
           const entry = tData[k];
           if (!entry) continue;
-          const lines = Array.isArray(entry.pattern_summary) ? entry.pattern_summary : [];
-          for (const line of lines) {
-            const m = String(line).match(/power\s*factor\s*\(avg\)\s*:\s*([0-9.]+)/i);
-            if (!m) continue;
-            const parsed = normalizePfPercent(parseFloat(m[1]));
-            if (parsed !== null) return parsed;
-          }
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
         }
       } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
 
       return null;
     }
@@ -2300,51 +2402,201 @@
     return 'jan26'; // fallback
   }
 
-  // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
-  function getTransformerRoutingInfo(transformerName) {
-    const clean = (transformerName || '').replace(/\s+/g, '');
-    const upper = clean.toUpperCase();
+  function shouldShowProc2WaitingPlaceholder(transformerName) {
+    const normalized = (transformerName || '')
+      .toString()
+      .toUpperCase()
+      .replace(/[^A-Z0-9]/g, '');
+    return normalized === 'PL1PROC2' && getMonthSuffix() === 'apr26';
+  }
 
-    const tMatch = upper.match(/^(T\d+)/);
+  function renderProc2WaitingPlaceholderCard(transformerName, patternLabel = 'Pattern Data') {
+    return `
+      <div class="proc2-waiting-placeholder" role="status" aria-live="polite">
+        <div class="proc2-waiting-badge">PL1-Proc2 Placeholder</div>
+        <h3>${transformerName} — ${patternLabel}</h3>
+        <p>Waiting on data capture.</p>
+        <p class="proc2-waiting-sub">Pattern images are intentionally on hold while the CT position issue is being corrected.</p>
+      </div>
+    `;
+  }
+  const UNITY_INSTRUCTION_ARTIFACT_PATTERNS = [
+    /^\s*you are william\b/i,
+    /^\s*task\s*:/i,
+    /^\s*mission\s*:/i,
+    /^\s*output format\b/i,
+    /^\s*required cross-check\b/i,
+    /^\s*csv reference values\b/i,
+    /^\s*critical requirements\b/i,
+    /^\s*tone\s*&\s*voice guidelines\b/i,
+    /^\s*please\s+(combine|write|produce|create)\b/i,
+    /^\s*this is a fact-finding step\b/i,
+    /^\s*be precise\./i,
+    /^\s*no narrative yet\b/i,
+    /^\s*use only the delimiters\b/i,
+    /^===\s*[A-Z0-9_ \-]+\s*===\s*$/i
+  ];
+  const UNITY_INSTRUCTION_BRACKET_HINTS = [
+    'section',
+    'optional',
+    'plain language',
+    'cross-check',
+    'if missing',
+    'use estimate',
+    'narration',
+    'spoken',
+    'format',
+    'output',
+    'delimiter',
+    'task',
+    'instruction'
+  ];
+  function sanitizeUnityNarrativeText(text) {
+    const normalized = (text || '').toString().replace(/\r\n?/g, '\n');
+    if (!normalized.trim()) return '';
+    const cleanedLines = [];
+    for (const line of normalized.split('\n')) {
+      const stripped = line.trim();
+      if (!stripped) {
+        cleanedLines.push('');
+        continue;
+      }
+      let isArtifact = false;
+      if (UNITY_INSTRUCTION_ARTIFACT_PATTERNS.some((pattern) => pattern.test(stripped))) {
+        isArtifact = true;
+      } else if (stripped.startsWith('[') && stripped.endsWith(']')) {
+        const lowered = stripped.toLowerCase();
+        if (UNITY_INSTRUCTION_BRACKET_HINTS.some((hint) => lowered.includes(hint))) {
+          isArtifact = true;
+        }
+      }
+      if (!isArtifact) cleanedLines.push(line);
+    }
+    return cleanedLines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function applyProc2FrontCardPlaceholder() {
+    const card = document.getElementById('xfmr3-card');
+    const transformerName = document.getElementById('xfmr3-name')?.textContent?.trim() || '';
+    if (!card || !transformerName) return;
+    const shouldShow = shouldShowProc2WaitingPlaceholder(transformerName);
+    card.classList.toggle('proc2-front-waiting', shouldShow);
+    const existing = document.getElementById('xfmr3-front-waiting-placeholder');
+    if (!shouldShow) {
+      if (existing) existing.remove();
+      return;
+    }
+    if (existing) return;
+    const placeholder = document.createElement('div');
+    placeholder.id = 'xfmr3-front-waiting-placeholder';
+    placeholder.className = 'proc2-front-placeholder';
+    placeholder.setAttribute('role', 'status');
+    placeholder.setAttribute('aria-live', 'polite');
+    placeholder.innerHTML = `
+      <div class="proc2-waiting-badge">PL1-Proc2 Placeholder</div>
+      <h3>Waiting on data capture</h3>
+      <p>CT position issue under correction.</p>
+      <p class="proc2-waiting-sub">Pattern visuals are intentionally paused for this transformer until corrected capture data is available.</p>
+    `;
+    const heading = card.querySelector('h2');
+    if (heading && heading.nextSibling) {
+      card.insertBefore(placeholder, heading.nextSibling);
+    } else {
+      card.appendChild(placeholder);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', applyProc2FrontCardPlaceholder);
+
+  // Build transformer key/file-id candidates for routing pattern assets and PATTERN_DATA keys.
+  function uniqueRoutingValues(values) {
+    const out = [];
+    const seen = new Set();
+    values.forEach((value) => {
+      const v = (value || '').toString().trim();
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      out.push(v);
+    });
+    return out;
+  }
+
+  function getShortTransformerId(compactUpper) {
+    const parts = compactUpper.split(/[-_]/).filter(Boolean);
+    if (parts.length < 2) return '';
+    const base = parts[0];
+    const suffix = parts.slice(1).join('');
+    if (!base || !suffix) return '';
+
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
+
+    const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
+    if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
+
+    if (/^[A-Z]+$/.test(suffix)) return `${base}${suffix.slice(0, 2)}`;
+
+    const mixed = suffix.match(/([A-Z]+)?(\d+)?/);
+    if (mixed && (mixed[1] || mixed[2])) {
+      const letterPart = mixed[1] ? mixed[1][0] : '';
+      const digitPart = mixed[2] || '';
+      return `${base}${letterPart}${digitPart}`;
+    }
+
+    return '';
+  }
+
+  function getTransformerRoutingInfo(transformerName) {
+    const raw = (transformerName || '').trim();
+    const compact = raw.replace(/\s+/g, '');
+    const compactUpper = compact.toUpperCase();
+    const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+    const cleanAlnumUpper = cleanAlnum.toUpperCase();
+
+    const tMatch = compactUpper.match(/^(T\d+)/);
     if (tMatch) {
       const t = tMatch[1];
       return {
-        keys: [t, t.toLowerCase(), clean, upper],
-        fileIds: [t.toLowerCase(), t, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([t, t.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([t.toLowerCase(), t, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // NCDC naming (e.g., "NCDC1 West11c" -> "NCDC1b_feb26.png")
-    const ncdcMatch = upper.match(/^(NCDC\d+)/);
+    const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
     if (ncdcMatch) {
       const ncdc = ncdcMatch[1];
       return {
-        keys: [ncdc, ncdc.toLowerCase(), clean, upper],
-        fileIds: [ncdc, ncdc.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Rendering naming (e.g., "Rendering-1" -> "Rend1b_...")
-    const renderingMatch = upper.match(/^RENDERING-?(\d+)/);
+    const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
     if (renderingMatch) {
       const n = renderingMatch[1];
       return {
-        keys: [`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, clean, upper],
-        fileIds: [`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([`REND${n}`, `RENDERING-${n}`, `RENDERING${n}`, compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([`Rend${n}`, `rend${n}`, `Rendering-${n}`, `rendering-${n}`, compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
     // Generic numeric prefixes like "ABC1..."
-    const baseMatch = upper.match(/^([A-Z]+\d+)/);
+    const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
     if (baseMatch) {
       const base = baseMatch[1];
+      const shortId = getShortTransformerId(compactUpper);
       return {
-        keys: [base, base.toLowerCase(), clean, upper],
-        fileIds: [base, base.toLowerCase(), clean, clean.toLowerCase()]
+        keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum, shortId, shortId.toLowerCase(), base, base.toLowerCase()]),
+        fileIds: uniqueRoutingValues([shortId, shortId.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper, base, base.toLowerCase()])
       };
     }
 
-    return { keys: [upper, clean], fileIds: [clean, clean.toLowerCase()] };
+    return {
+      keys: uniqueRoutingValues([compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+      fileIds: uniqueRoutingValues([compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+    };
   }
 
   function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
@@ -2364,57 +2616,6 @@
         });
       });
     });
-    return out;
-  }
-  function buildPart2InstallationCandidatesLegacyUnused(fileIds, monthSuffixShort, monthSuffixLong, slot = 1) {
-    const out = [];
-    const seen = new Set();
-    const exts = ['png', 'jpg', 'jpeg'];
-    const ids = [...new Set((fileIds || []).map((id) => (id || '').toString().toLowerCase()).filter(Boolean))].slice(0, 2);
-    const monthTokens = [...new Set([monthSuffixShort, monthSuffixLong].filter(Boolean))];
-    monthTokens.push('');
-    const slotStems = slot === 1
-      ? ['p2a', 'install1', 'installation1', 'solution1']
-      : ['p2b', 'install2', 'installation2', 'meter2', 'metering2'];
-    const globalStems = slot === 1
-      ? ['part2a', 'installation_1']
-      : ['part2b', 'installation_2', 'metering_2'];
-
-    const pushCandidate = (filename) => {
-      if (!seen.has(filename)) {
-        seen.add(filename);
-        out.push(`Patterns/${filename}`);
-      }
-    };
-
-    const pushStemVariants = (base, stem) => {
-      monthTokens.forEach((token) => {
-        exts.forEach((ext) => {
-          if (token) {
-            pushCandidate(`${base}${stem}_${token}.${ext}`);
-            pushCandidate(`${base}_${stem}_${token}.${ext}`);
-          } else {
-            pushCandidate(`${base}${stem}.${ext}`);
-            pushCandidate(`${base}_${stem}.${ext}`);
-          }
-        });
-      });
-    };
-
-    // Prefer shared/global Part 2 images so every transformer uses the same installation pair by default.
-
-    globalStems.forEach((stem) => {
-      exts.forEach((ext) => {
-        monthTokens.forEach((token) => {
-          if (token) pushCandidate(`${stem}_${token}.${ext}`);
-          else pushCandidate(`${stem}.${ext}`);
-        });
-      });
-    });
-    ids.forEach((id) => {
-      slotStems.forEach((stem) => pushStemVariants(id, stem));
-    });
-
     return out;
   }
 
@@ -2672,27 +2873,30 @@
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
       clearPatternImageView();
-      modalBody.innerHTML = `
-        <div class="pattern-image-frame" id="imageContainer">
-          <div class="pattern-image-top-actions">
-            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          </div>
-          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
-            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
-                 draggable="false">
-          </div>
-          <div class="pattern-view-tools">
-            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
-            <div class="pattern-view-actions">
-              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
-              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+      if (shouldShowProc2WaitingPlaceholder(transformerName)) {
+        modalBody.innerHTML = renderProc2WaitingPlaceholderCard(transformerName, patternLabel);
+      } else {
+        modalBody.innerHTML = `
+          <div class="pattern-image-frame" id="imageContainer">
+            <div class="pattern-image-top-actions">
+              <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
             </div>
-          </div>
-        </div>`;
-
-      initializePatternImageView();
-      attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
+            <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+              <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
+                   onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
+                   draggable="false">
+            </div>
+            <div class="pattern-view-tools">
+              <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+              <div class="pattern-view-actions">
+                <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+                <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+              </div>
+            </div>
+          </div>`;
+        initializePatternImageView();
+        attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
+      }
       modal.style.display = 'block';
     } catch (error) {
       console.error('Error in viewPattern:', error);
@@ -2780,7 +2984,36 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-  "transformers": {}
+  "transformers": {
+    "PL1-PROC1": {
+      "pattern_text": "PART 1: CURRENT STATE\nPL1-Proc1 baseline in April shows a stable production profile with average active load near 170.5 kW and average power factor of 86.3%. Reactive waste remains elevated at roughly 27.9 kW, creating recurring avoidable energy and thermal burden.\n\nPART 2: MPTS SOLUTION\nUnity MPTS deployment is expected to collapse most reactive demand and move this field toward harmonized operation. With peak reactive demand around 196.2 kVAR, this field is a viable correction candidate for targeted compensation sizing and staged installation.\n\nPART 3: EXPECTED RESULTS\nProjected recovery for PL1-Proc1 is approximately $67,483 per year, with lower cooling load and improved field stability. Expected outcome is reduced waste intensity while maintaining current production throughput.",
+      "pattern_part1": "PL1-Proc1 baseline in April shows a stable production profile with average active load near 170.5 kW and average power factor of 86.3%. Reactive waste remains elevated at roughly 27.9 kW, creating recurring avoidable energy and thermal burden.",
+      "pattern_part2": "Unity MPTS deployment is expected to collapse most reactive demand and move this field toward harmonized operation. With peak reactive demand around 196.2 kVAR, this field is a viable correction candidate for targeted compensation sizing and staged installation.",
+      "pattern_part3": "Projected recovery for PL1-Proc1 is approximately $67,483 per year, with lower cooling load and improved field stability. Expected outcome is reduced waste intensity while maintaining current production throughput.",
+      "pattern_summary": [
+        "Power Factor (avg): 86.3",
+        "Peak Reactive Demand: 196.2 kVAR",
+        "Annual Savings Potential: $67,483"
+      ],
+      "transformer_name": "PL1-Proc1",
+      "power_factor": 0.8628913951061116,
+      "tmax_supply": 309.89
+    },
+    "PL1-MSHOP": {
+      "pattern_text": "PART 1: CURRENT STATE\nPL1-MShop baseline in April carries higher field loading, averaging about 277.4 kW active demand at 86.8% power factor. Reactive waste averages 44.5 kW and contributes to significant avoidable thermal and cooling burden.\n\nPART 2: MPTS SOLUTION\nUnity MPTS correction is designed to neutralize the lagging reactive component and stabilize this field near target operation. With peak reactive demand near 437.2 kVAR, compensation planning can be sized directly against this observed burden.\n\nPART 3: EXPECTED RESULTS\nProjected recovery for PL1-MShop is approximately $107,222 per year, with meaningful cooling-load reduction and cleaner electrical behavior under production load. Net result is improved efficiency and reclaimed electrical capacity margin.",
+      "pattern_part1": "PL1-MShop baseline in April carries higher field loading, averaging about 277.4 kW active demand at 86.8% power factor. Reactive waste averages 44.5 kW and contributes to significant avoidable thermal and cooling burden.",
+      "pattern_part2": "Unity MPTS correction is designed to neutralize the lagging reactive component and stabilize this field near target operation. With peak reactive demand near 437.2 kVAR, compensation planning can be sized directly against this observed burden.",
+      "pattern_part3": "Projected recovery for PL1-MShop is approximately $107,222 per year, with meaningful cooling-load reduction and cleaner electrical behavior under production load. Net result is improved efficiency and reclaimed electrical capacity margin.",
+      "pattern_summary": [
+        "Power Factor (avg): 86.8",
+        "Peak Reactive Demand: 437.2 kVAR",
+        "Annual Savings Potential: $107,222"
+      ],
+      "transformer_name": "PL1-MShop",
+      "power_factor": 0.8680193158394516,
+      "tmax_supply": 898.39
+    }
+  }
 };
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
@@ -3124,22 +3357,26 @@
     
     // Resolve transformer routing keys/file IDs for T## and non-T styles (e.g., Rendering-1)
     const routing = getTransformerRoutingInfo(transformerName);
-    const tid = routing.keys[0];
     
     // Get data from embedded PATTERN_DATA
     let xfmrData = null;
+    let matchedPatternKey = '';
     if (PATTERN_DATA.transformers) {
       for (const k of routing.keys) {
         if (PATTERN_DATA.transformers[k]) {
           xfmrData = PATTERN_DATA.transformers[k];
+          matchedPatternKey = k;
           break;
         }
       }
     }
+    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
     
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
 
     const getElText = (id) => {
       const el = document.getElementById(id);
@@ -3264,122 +3501,132 @@
       content = renderUnityFieldSummaryCard(xfmrNum, transformerName, summary);
     } else {
       title = `${transformerName} - Detailed Narrative`;
-      // Prefer new three-part narrative if available
-      const p1 = (xfmrData && xfmrData.pattern_part1) || '';
-      const p2 = (xfmrData && xfmrData.pattern_part2) || '';
-      const p3 = (xfmrData && xfmrData.pattern_part3) || '';
-      let narrative;
-      if (p1 || p2 || p3) {
-        narrative = `PART 1: CURRENT STATE\n${p1}\n\nPART 2: MPTS SOLUTION\n${p2}\n\nPART 3: EXPECTED RESULTS\n${p3}`.trim();
-        content = `
-          <div style="text-align:left">
-            ${p1 ? `<h4>Part 1 — Current State</h4><p>${p1.replace(/\n/g,'<br/>')}</p>` : ''}
-            ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p>${p2.replace(/\n/g,'<br/>')}</p>` : ''}
-            ${p3 ? `<h4>Part 3 — Expected Results</h4><p>${p3.replace(/\n/g,'<br/>')}</p>` : ''}
-          </div>
-        `;
+      if (shouldShowProc2WaitingPlaceholder(transformerName)) {
+        content = renderProc2WaitingPlaceholderCard(transformerName, 'Full Analysis');
+        currentNarrativeText = '';
+        currentBriefText = '';
+        currentTransformerId = '';
+        showAudioBtn = false;
       } else {
-        narrative = (xfmrData && xfmrData.pattern_interpretation) || 'No narrative available.';
-        content = `<div style=\"text-align:left\"><p>${narrative.replace(/\n/g,'<br/>')}</p></div>`;
-      }
-      
-      // Store plain text for speech synthesis and transformer ID for MP3
-      currentNarrativeText = narrative;
-      currentTransformerId = tid;
-      showAudioBtn = true;
-      
-      // Get the power factor value for baseline image from displayed metric
-      const pfElement = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
-      let pfValue = 0;
-      if (pfElement) {
-        const pfText = pfElement.textContent.replace('%', '').trim();
-        const pfPercent = parseFloat(pfText);
-        if (!isNaN(pfPercent)) {
-          pfValue = Math.round(pfPercent * 10); // Convert 88.3% to 883
+        // Prefer new three-part narrative if available
+        const p1 = sanitizeUnityNarrativeText((xfmrData && xfmrData.pattern_part1) || '');
+        const p2 = sanitizeUnityNarrativeText((xfmrData && xfmrData.pattern_part2) || '');
+        const p3 = sanitizeUnityNarrativeText((xfmrData && xfmrData.pattern_part3) || '');
+        const briefText = sanitizeUnityNarrativeText((xfmrData && xfmrData.pattern_brief) || '');
+        let narrative;
+        if (p1 || p2 || p3) {
+          narrative = sanitizeUnityNarrativeText(`PART 1: CURRENT STATE\n${p1}\n\nPART 2: MPTS SOLUTION\n${p2}\n\nPART 3: EXPECTED RESULTS\n${p3}`.trim());
+          content = `
+            <div style="text-align:left">
+              ${p1 ? `<h4>Part 1 — Current State</h4><p>${p1.replace(/\n/g,'<br/>')}</p>` : ''}
+              ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p>${p2.replace(/\n/g,'<br/>')}</p>` : ''}
+              ${p3 ? `<h4>Part 3 — Expected Results</h4><p>${p3.replace(/\n/g,'<br/>')}</p>` : ''}
+            </div>
+          `;
+        } else {
+          narrative = sanitizeUnityNarrativeText((xfmrData && xfmrData.pattern_interpretation) || 'No narrative available.');
+          content = `<div style=\"text-align:left\"><p>${narrative.replace(/\n/g,'<br/>')}</p></div>`;
         }
-      }
-      
-      // Format narrative with baseline image at top and styled paragraphs
-      // Pattern month suffix - dynamically replaced by generator
-      let monthSuffix = 'apr26'; // e.g., 'nov25' for November 2025
-      const monthYearEl = document.getElementById('month-year');
-      if (monthYearEl) {
-        const monthYear = monthYearEl.textContent.trim().toLowerCase().replace(/\s+/g, ''); // Remove all spaces
-        monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
-      }
-      const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
-      const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
-      const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
-      console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
-      const formatNarrativeText = (text) => (text || '')
-        .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
-        .replace(/(target|baseline)/gi, '<strong>$1</strong>')
-        .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
-        .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\\\"color: #5D701A;\\\">$1</strong>');
-      if (p1 || p2 || p3) {
-        content = `
-          <div style="text-align: left;">
-            ${p1 ? `<h4>Part 1 — Current State</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p1).replace(/\n/g,'<br/>')}</p>` : ''}
-          </div>
-          <div style="text-align: center; margin-bottom: 24px;">
-            <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
-                 onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Part 1: Current State)')"
-                 data-narrative-part="1"
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 1 Image — Baseline Pattern (Current State)</p>
-          </div>
-          <div style="text-align: left;">
-            ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p2).replace(/\n/g,'<br/>')}</p>` : ''}
-          </div>
-          <div style="text-align: center; margin-bottom: 24px;">
-            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px;">
-              <div id="part2InstallWrapPrimary" style="flex:1 1 320px; max-width:100%;">
-                <img id="part2PatternImg" src="" alt="${tid} MPTS Installation"
-                     onclick="showPatternFullscreen(this.src, '${tid} MPTS Installation (Part 2A)')"
-                     data-narrative-part="2"
-                     style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
-                <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image A — MPTS Installation</p>
-              </div>
-              <div id="part2InstallWrapSecondary" style="flex:1 1 320px; max-width:100%;">
-                <img id="part2PatternImg2" src="" alt="${tid} Metering and Verification"
-                     onclick="showPatternFullscreen(this.src, '${tid} Metering and Verification (Part 2B)')"
-                     style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
-                <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image B — Metering & Verification</p>
+        
+        // Store plain text for speech synthesis and transformer ID for MP3
+        currentNarrativeText = narrative;
+        currentBriefText = briefText || narrative;
+        currentTransformerId = tid;
+        showAudioBtn = true;
+        
+        // Get the power factor value for baseline image from displayed metric
+        const pfElement = document.getElementById(`xfmr${xfmrNum}-metric-pf`);
+        let pfValue = 0;
+        if (pfElement) {
+          const pfText = pfElement.textContent.replace('%', '').trim();
+          const pfPercent = parseFloat(pfText);
+          if (!isNaN(pfPercent)) {
+            pfValue = Math.round(pfPercent * 10); // Convert 88.3% to 883
+          }
+        }
+        
+        // Format narrative with baseline image at top and styled paragraphs
+        // Pattern month suffix - dynamically replaced by generator
+        let monthSuffix = 'apr26'; // e.g., 'nov25' for November 2025
+        const monthYearEl = document.getElementById('month-year');
+        if (monthYearEl) {
+          const monthYear = monthYearEl.textContent.trim().toLowerCase().replace(/\s+/g, ''); // Remove all spaces
+          monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
+        }
+        const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
+        baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+        part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+        const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
+        console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
+        const formatNarrativeText = (text) => (text || '')
+          .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
+          .replace(/(target|baseline)/gi, '<strong>$1</strong>')
+          .replace(/(efficiency|production|profitable)/gi, '<strong>$1</strong>')
+          .replace(/(January \d+(?:st|nd|rd|th)?(?:-\d+(?:st|nd|rd|th)?)?)/gi, '<strong style=\\\"color: #5D701A;\\\">$1</strong>');
+        if (p1 || p2 || p3) {
+          content = `
+            <div style="text-align: left;">
+              ${p1 ? `<h4>Part 1 — Current State</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p1).replace(/\n/g,'<br/>')}</p>` : ''}
+            </div>
+            <div style="text-align: center; margin-bottom: 24px;">
+              <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+                   onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Part 1: Current State)')"
+                   data-narrative-part="1"
+                   style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
+              <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 1 Image — Baseline Pattern (Current State)</p>
+            </div>
+            <div style="text-align: left;">
+              ${p2 ? `<h4>Part 2 — MPTS Solution</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p2).replace(/\n/g,'<br/>')}</p>` : ''}
+            </div>
+            <div style="text-align: center; margin-bottom: 24px;">
+              <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px;">
+                <div id="part2InstallWrapPrimary" style="flex:1 1 320px; max-width:100%;">
+                  <img id="part2PatternImg" src="" alt="${tid} MPTS Installation"
+                       onclick="showPatternFullscreen(this.src, '${tid} MPTS Installation (Part 2A)')"
+                       data-narrative-part="2"
+                       style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+                  <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image A — MPTS Installation</p>
+                </div>
+                <div id="part2InstallWrapSecondary" style="flex:1 1 320px; max-width:100%;">
+                  <img id="part2PatternImg2" src="" alt="${tid} Metering and Verification"
+                       onclick="showPatternFullscreen(this.src, '${tid} Metering and Verification (Part 2B)')"
+                       style="max-width: 100%; width: 100%; height: auto; border: 2px solid #7ca137; border-radius: 8px; cursor: pointer;">
+                  <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 2 Image B — Metering & Verification</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div style="text-align: left;">
-            ${p3 ? `<h4>Part 3 — Expected Results</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p3).replace(/\n/g,'<br/>')}</p>` : ''}
-          </div>
-          <div style="text-align: center; margin-top: 30px;">
-            <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
-                 onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (Part 3: Expected Results)')"
-                 data-narrative-part="3"
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 3 Image — MPTS Simulator Pattern (After Unity Optimization)</p>
-          </div>
-        `;
-      } else {
-        const paragraphs = narrative.split('\n\n').filter(p => p.trim());
-        const formattedParagraphs = paragraphs.map(para => `<p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(para)}</p>`).join('');
-        content = `
-          <div style="text-align: center; margin-bottom: 20px;">
-            <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
-                 onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Current State)')"
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 12px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
-          </div>
-          <div style="text-align: left;">
-            ${formattedParagraphs}
-          </div>
-          <div style="text-align: center; margin-top: 30px;">
-            <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
-                 onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (After Unity Optimization)')"
-                 style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
-            <p style="font-size: 12px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
-          </div>
-        `;
+            <div style="text-align: left;">
+              ${p3 ? `<h4>Part 3 — Expected Results</h4><p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(p3).replace(/\n/g,'<br/>')}</p>` : ''}
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+              <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+                   onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (Part 3: Expected Results)')"
+                   data-narrative-part="3"
+                   style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
+              <p style="font-size: 12px; color: #888; margin-top: 5px;">Part 3 Image — MPTS Simulator Pattern (After Unity Optimization)</p>
+            </div>
+          `;
+        } else {
+          const paragraphs = narrative.split('\n\n').filter(p => p.trim());
+          const formattedParagraphs = paragraphs.map(para => `<p style=\\\"text-align: justify; line-height: 1.92; margin-bottom: 15px; font-size: 1.2em;\\\">${formatNarrativeText(para)}</p>`).join('');
+          content = `
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img id="baselinePatternImg" src="" alt="${tid} Baseline Pattern"
+                   onclick="showPatternFullscreen(this.src, '${tid} Baseline Pattern (Current State)')"
+                   style="max-width: 100%; width: 100%; height: auto; border: 2px solid #5D701A; border-radius: 8px; cursor: pointer;">
+              <p style="font-size: 12px; color: #888; margin-top: 5px;">Baseline Pattern (Current State) - Click to enlarge</p>
+            </div>
+            <div style="text-align: left;">
+              ${formattedParagraphs}
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+              <img id="simulatorPatternImg" src="" alt="${tid} Simulator Pattern"
+                   onclick="showPatternFullscreen(this.src, '${tid} MPTS Simulator Pattern (After Unity Optimization)')"
+                   style="max-width: 100%; width: 100%; height: auto; border: 2px solid #B2D235; border-radius: 8px; cursor: pointer;">
+              <p style="font-size: 12px; color: #888; margin-top: 5px;">MPTS Simulator Pattern (After Unity Optimization) - Click to enlarge</p>
+            </div>
+          `;
+        }
       }
     }
     
@@ -3422,6 +3669,8 @@
           `${transformerName} part2 installation equipment`
         );
       }
+      const secondaryWrap = document.getElementById('part2InstallWrapSecondary');
+      if (secondaryWrap) secondaryWrap.style.display = 'none';
     }
     
     // Show/hide Unity audio buttons based on content type
@@ -3660,6 +3909,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3678,9 +3932,8 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (!tidMatch) continue;
-      const tid = tidMatch[1].toLowerCase();
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
       
       transformerCount++;
       
@@ -4014,74 +4267,5 @@
 </div>
 
 
-<script id="pattern-retention-guard">
-(function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
-  var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
-
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
-
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
-      }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
-      }
-      return nativeFetch(input, init);
-    };
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
-
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
-})();
-</script>
 </body>
 </html>

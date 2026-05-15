@@ -13,7 +13,12 @@
       "power_factor": 0.0,
       "avg_kvar": 0.0,
       "waste_cost": 0.0,
-      "transformer_name": "DELIG"
+      "transformer_name": "DELIG",
+      "bt_target_kva": 1500.0,
+      "target_kva_image": 1500.0,
+      "target_validated": 1500.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK",
+      "source_transformer_id": "DELIG"
     },
     "DELIF": {
       "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for DELIF. This chart shows your 2500 kVA transformer under full operational load. The dark blue layer is your total kVA supply \u2014 what the utility delivers. The light blue underneath is your consumed kW \u2014 the real work being done. That green layer between them? That's reactive kVAR \u2014 electromagnetic waste that heats your conductors but does no productive work. The orange trace shows your power factor fluctuating between 70 and 90% during operations. Your field shows classic industrial processing rhythm. I'm seeing distinct weekday blocks where you're pulling well above your 2500 kVA target during production hours, then clean weekend valleys when operations scale back. That's about 75% Electric Operations \u2014 you're running heavy reactive loads during your processing cycles. The waste here is substantial. You're averaging 407 kVAR with peaks hitting 726.7 kVAR. That reactive demand is generating 361,000 BTU per hour of thermal burden, costing you $10.54 per hour just in cooling overhead. Total electromagnetic waste: approximately $276,000 per year. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand is hitting 726.7 kVAR during production periods. Using our sizing methodology, that requires two H490 units providing 800 kVAR of total reactive compensation. The estimated installed investment range is approximately $400,000, though final pricing depends on engineering scope, site conditions, and local labor rates. Here's what MPTS does in plain language. These units inject precisely tuned compensating reactive power that cancels your inductive load. Think of it as electromagnetic noise cancellation. The result? Your power factor jumps to 99.5% and holds steady throughout all operating periods. Visually, you'll see that green reactive layer collapse to almost nothing. Your conductors run cooler because they're carrying less current to deliver the same productive work. Your transformer capacity gets freed up for actual production expansion instead of wasted reactive circulation. The electromagnetic field becomes clean, efficient, and harmonized with your industrial rhythm. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That green reactive layer has essentially disappeared \u2014 you're seeing clean electromagnetic delivery throughout your production cycles. The dark blue kVA supply trace now closely follows your light blue consumed kW, showing efficient power transfer. Your power factor holds steady at 99.5% during all operating periods. The savings are substantial. You're recovering approximately $23,000 per month, or about $276,000 annually in eliminated waste, reduced thermal burden, and cooling cost relief. With an estimated install investment of roughly $400,000, you're looking at simple payback in approximately 17 months. After that payback period, every hour is recovered value \u2014 about $23,000 monthly flowing directly to your operational efficiency. Your production rhythm stays exactly the same. Your processing capacity remains unchanged. But now your electromagnetic field is working with you instead of against you. Clean power factor, eliminated reactive waste, cooler conductors, freed transformer capacity. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
@@ -28,7 +33,12 @@
       "power_factor": 0.0,
       "avg_kvar": 0.0,
       "waste_cost": 0.0,
-      "transformer_name": "DELIF"
+      "transformer_name": "DELIF",
+      "bt_target_kva": 2500.0,
+      "target_kva_image": 2500.0,
+      "target_validated": 2500.0,
+      "target_source": "HTML_STD_DAILY_PATTERN_FALLBACK",
+      "source_transformer_id": "DELIF"
     }
   }
 }

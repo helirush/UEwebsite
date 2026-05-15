@@ -1,0 +1,13 @@
+Your PL2-2Center facility presents a comprehensive case study in reactive power management. Starting with voltage health, you maintain stable 482-volt operation with controlled load-responsive variations - that's your electrical foundation working correctly. However, the amperage signature reveals significant cyclical patterns with peaks reaching 764 amps, indicating substantial reactive power turbulence beneath those stable voltage readings.
+
+The baseline energy profile shows the economic impact. You're operating at 86.2% power factor with 170 kilovolt-amperes average reactive demand, peaking at 306 kVAR during maximum production periods. This reactive burden translates to concrete costs: approximately $128,000 annually through reactive losses, thermal burden, and cooling overhead. Your transformer generates 166,246 BTUs per hour in thermal stress, requiring 24.3 kilowatts of cooling capacity at roughly five dollars per operating hour.
+
+Your operational efficiency is actually quite good - clean weekday production patterns with about 70% of operating time above baseline consumption levels. The electromagnetic inefficiency isn't from poor scheduling or erratic loads - it's from the reactive power component your inductive equipment demands during normal operations. The purple reactive layer in your field visualization shows this electromagnetic burden clearly.
+
+Harmonic analysis reveals moderate stress at 5.5% iTHD, approaching your 11.1% threshold but still within manageable ranges. However, reactive power and harmonics often interact - high reactive demand can amplify harmonic effects and create additional transformer stress beyond the thermal burden.
+
+MPTS correction addresses these interconnected issues comprehensively. The simulated outcome shows power factor jumping to 99.5%, virtually eliminating reactive demand from your field. That thick purple reactive layer disappears, leaving clean blue active power consumption. The visual transformation represents real operational benefits: reduced thermal stress, lower cooling requirements, improved transformer longevity, and eliminated reactive power penalties.
+
+Based on your 306 kVAR maximum demand, engineering assessment would focus on single H490 unit deployment with estimated installation around $200,000. The projected about $121,000 annual recovery comes from eliminated reactive losses, reduced thermal burden, cooling efficiency gains, and avoided reactive power penalties. Implementation timing should align with production scheduling to minimize operational disruption while capturing full reactive behavior patterns.
+
+That's electromagnetic stewardship - and that's the Unity standard.

@@ -1501,6 +1501,20 @@
     if (hasDays) document.getElementById('site-meta-sep-2').style.display = 'inline';
 
     // Transformer performance data with correct Minimum Target calculations
+    function calculateTargetPerformance(targetKWh, actualKWh) {
+      const target = Number(targetKWh) || 0;
+      const actual = Number(actualKWh) || 0;
+      if (target <= 0) {
+        return { target: 0, performance: '0.0', label: 'Target Delta' };
+      }
+      const deltaPct = ((actual - target) / target) * 100;
+      const label = deltaPct >= 0 ? 'Above Target' : 'Below Target';
+      return {
+        target: Math.round(target),
+        performance: Math.abs(deltaPct).toFixed(1),
+        label
+      };
+    }
     // Formula: tMax_SUPPLY × Power_Factor × 18_hours × days_in_period = Minimum_Target_kWh
     // tMax_SUPPLY is the actual max kVA from data (top 5% outliers trimmed)
     const days = 31; // Analysis period from Python binding
@@ -1520,6 +1534,112 @@
       { id: 3, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 },
       { id: 4, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 }
     ];
+    // Normalize PF numeric input to a percentage (0-100), accepting either 0-1 or 0-100 values.
+    function normalizePfPercent(value) {
+      const n = Number(value);
+      if (!isFinite(n) || n <= 0) return null;
+      const pct = n <= 1 ? (n * 100) : n;
+      return Math.max(0, Math.min(100, pct));
+    }
+
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
+
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
+      try {
+        const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
+        if (!tData) return null;
+        const tidMatch = String(transformerName || '').trim().match(/^(T\d+)/i);
+        if (!tidMatch) return null;
+        const entry = tData[tidMatch[1].toUpperCase()];
+        if (!entry) return null;
+        return resolvePfPercentFromPatternEntry(entry);
+      } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
+
+      return null;
+    }
     
     // Calculate minimum targets dynamically
     transformerData.forEach(data => {
@@ -1560,6 +1680,7 @@
       const kvaEl = document.getElementById(`xfmr${i}-kva`);
       const kvaWrap = document.getElementById(`xfmr${i}-kva-wrap`);
       const pfEl = document.getElementById(`xfmr${i}-metric-pf`);
+      const transformerName = (nameEl?.textContent || '').trim();
 
       // Hide card if no name bound
       const hasName = (nameEl?.textContent || '').trim().length > 0;
@@ -1571,6 +1692,13 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
+      // Dynamically bind PF bubble value (prevents stale hardcoded text).
+      if (pfEl) {
+        const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
+        if (resolvedPfPct !== null) {
+          pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
+        }
+      }
     }
     
     // Add click handler to power factor gauge circles to open MPTS variables (M) image

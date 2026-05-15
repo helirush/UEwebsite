@@ -26,10 +26,6 @@ window.portalConfig = {
     customers: {
         // NOTE: keys should match the normalization rule in UnityEnergy/index.html
         // (lowercase + strip all non-alphanumeric characters).
-        'unityenergy': {
-            name: 'Unity Energy',
-            path: '../Customers/FosterFarms/index.html'
-        },
         'fosterfarms': {
             name: 'Foster Farms',
             path: '../Customers/FosterFarms/index.html'

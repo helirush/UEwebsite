@@ -5,7 +5,7 @@
     <script src="passwords.js?v=20260402b"></script>
     <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
     <script src="hume_character_config.js?v=20260502r20"></script>
-    <script src="clerk_voice_widget.js?v=20260502r21"></script>
+    <script src="clerk_voice_widget.js?v=20260513r23"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -672,48 +672,50 @@
                 <p>Welcome to Unity’s customer access portal. Please fill out all required fields to gain entrance. We hope you enjoy the visit.</p>
             </div>
             <div class="login-form">
-                <div class="login-section-title">Visitor Profile</div>
-                <div class="required-fields-note"><span class="required-asterisk">*</span> Required fields</div>
-                <div class="visitor-grid">
-                    <input type="text" id="visitorFirstName" name="visitor_first_name" placeholder="First Name *" autocomplete="given-name">
-                    <input type="text" id="visitorLastName" name="visitor_last_name" placeholder="Last Name *" autocomplete="family-name">
+                <div id="visitorProfileSection">
+                    <div class="login-section-title">Visitor Profile</div>
+                    <div class="required-fields-note"><span class="required-asterisk">*</span> Required fields</div>
+                    <div class="visitor-grid">
+                        <input type="text" id="visitorFirstName" name="visitor_first_name" placeholder="First Name *" autocomplete="given-name">
+                        <input type="text" id="visitorLastName" name="visitor_last_name" placeholder="Last Name *" autocomplete="family-name">
+                    </div>
+                    <label class="login-field-label" for="visitorEmail">Email Address<span class="required-asterisk">*</span></label>
+                    <input type="email" id="visitorEmail" name="visitor_email" placeholder="Business Email Address" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
+                    <div class="visitor-grid">
+                        <select id="visitorRole" name="visitor_role" autocomplete="off">
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="facility-executive">Facility Executive</option>
+                            <option value="plant-manager">Plant Manager</option>
+                            <option value="maintenance-manager">Maintenance Manager</option>
+                            <option value="electrical-engineer">Electrical Engineer</option>
+                            <option value="energy-manager">Energy Manager</option>
+                            <option value="operations-lead">Operations Lead</option>
+                            <option value="procurement-finance">Procurement / Finance</option>
+                        </select>
+                        <select id="visitorObjective" name="visitor_objective" autocomplete="off">
+                            <option value="" disabled selected>Primary Objective</option>
+                            <option value="energy-cost-reduction">Reduce Energy Cost</option>
+                            <option value="power-quality-reliability">Improve Power Quality</option>
+                            <option value="co2e-emissions-visibility">Track CO2e & Emissions</option>
+                            <option value="thermal-cooling-optimization">Optimize Thermal/Cooling Burden</option>
+                            <option value="transformer-health-risk">Monitor Transformer Health & Risk</option>
+                            <option value="executive-briefing">Executive Performance Review</option>
+                        </select>
+                    </div>
+                    <label class="visitor-optin">
+                        <input type="checkbox" id="visitorUpdates" name="visitor_updates">
+                        <span class="visitor-optin-copy">Yes, send Unity Energy updates and relevant technical portal enhancements.</span>
+                    </label>
+                    <div class="login-divider"></div>
                 </div>
-                <label class="login-field-label" for="visitorEmail">Email Address<span class="required-asterisk">*</span></label>
-                <input type="email" id="visitorEmail" name="visitor_email" placeholder="Business Email Address" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
-                <div class="visitor-grid">
-                    <select id="visitorRole" name="visitor_role" autocomplete="off">
-                        <option value="" disabled selected>Select Role</option>
-                        <option value="facility-executive">Facility Executive</option>
-                        <option value="plant-manager">Plant Manager</option>
-                        <option value="maintenance-manager">Maintenance Manager</option>
-                        <option value="electrical-engineer">Electrical Engineer</option>
-                        <option value="energy-manager">Energy Manager</option>
-                        <option value="operations-lead">Operations Lead</option>
-                        <option value="procurement-finance">Procurement / Finance</option>
-                    </select>
-                    <select id="visitorObjective" name="visitor_objective" autocomplete="off">
-                        <option value="" disabled selected>Primary Objective</option>
-                        <option value="energy-cost-reduction">Reduce Energy Cost</option>
-                        <option value="power-quality-reliability">Improve Power Quality</option>
-                        <option value="co2e-emissions-visibility">Track CO2e & Emissions</option>
-                        <option value="thermal-cooling-optimization">Optimize Thermal/Cooling Burden</option>
-                        <option value="transformer-health-risk">Monitor Transformer Health & Risk</option>
-                        <option value="executive-briefing">Executive Performance Review</option>
-                    </select>
-                </div>
-                <label class="visitor-optin">
-                    <input type="checkbox" id="visitorUpdates" name="visitor_updates">
-                    <span class="visitor-optin-copy">Yes, send Unity Energy updates and relevant technical portal enhancements.</span>
-                </label>
-                <div class="login-divider"></div>
-                <div class="login-section-title">Portal Credentials</div>
-                <div class="login-helper-text">Select your company (or choose Guest) and continue to portal access.</div>
+                <div class="login-section-title" id="portalCredentialsTitle">Portal Credentials</div>
+                <div class="login-helper-text" id="portalCredentialsHelperText">Select your company (or choose Guest) and continue to portal access.</div>
                 <select id="customerName" name="ue_company" autocomplete="off">
                     <option value="" disabled selected>Select Company or Guest</option>
                 </select>
                 <input type="password" id="customerPassword" name="ue_password" placeholder="Portal Password" autocomplete="off" style="display:none;">
                 <div class="login-error" id="loginError"></div>
-                <button class="login-btn" onclick="attemptLogin()">Access Unity Portal →</button>
+                <button class="login-btn" id="portalAccessButton" onclick="attemptLogin()">Access Unity Portal →</button>
                 <div class="dev-mode-notice" id="devModeNotice" style="display:none;">No password required</div>
             </div>
         </div>
@@ -725,7 +727,9 @@
     <script>
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
         const UNITY_PORTAL_SESSION_KEY = 'unity_portal_session_v1';
+        const UNITY_FOUNDER_SESSION_KEY = 'unity_founder_session_v1';
         const PORTAL_SWITCH_QUERY_PARAM = 'portalSwitch';
+        const FOUNDER_EMAIL_WHITELIST = new Set(['mike@unityenergy.com']);
         const INVALID_NAME_TOKENS = new Set([
             'x', 'xx', 'xxx', 'xxxx', 'xxxxx', 'xxxxxx', 'test', 'testing', 'asdf', 'qwerty',
             'abc', 'name', 'firstname', 'lastname', 'unknown', 'none', 'null', 'na', 'n/a',
@@ -740,6 +744,43 @@
             'domain.com', 'invalid.com', 'none.com'
         ]);
         let visitorEmailManuallyEdited = false;
+        function normalizeEmailAddress(value) {
+            return String(value || '').trim().toLowerCase();
+        }
+        function isFounderEmail(value) {
+            return FOUNDER_EMAIL_WHITELIST.has(normalizeEmailAddress(value));
+        }
+        function readFounderSessionState() {
+            try {
+                const raw = window.sessionStorage.getItem(UNITY_FOUNDER_SESSION_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                const email = normalizeEmailAddress(parsed?.email);
+                if (!email || !isFounderEmail(email)) return null;
+                return {
+                    email,
+                    firstName: String(parsed?.first_name || '').trim(),
+                    lastName: String(parsed?.last_name || '').trim(),
+                    loginAt: String(parsed?.login_at || '').trim(),
+                };
+            } catch (_err) {
+                return null;
+            }
+        }
+        function writeFounderSessionState(params) {
+            try {
+                const email = normalizeEmailAddress(params?.email);
+                if (!isFounderEmail(email)) return;
+                const payload = {
+                    email,
+                    first_name: String(params?.firstName || '').trim(),
+                    last_name: String(params?.lastName || '').trim(),
+                    login_at: new Date().toISOString(),
+                    source_path: window.location.pathname,
+                };
+                window.sessionStorage.setItem(UNITY_FOUNDER_SESSION_KEY, JSON.stringify(payload));
+            } catch (_err) {}
+        }
         function normalizeAlphaToken(value) {
             return String(value || '').toLowerCase().replace(/[^a-z]/g, '');
         }
@@ -859,9 +900,11 @@
         }
         function openLoginModal(event) {
             const ownerSwitchRequested = !!(event && (event.shiftKey || event.altKey || event.metaKey));
+            const founderSession = readFounderSessionState();
+            const founderQuickMode = !!(founderSession && isFounderEmail(founderSession.email));
             if (ownerSwitchRequested) {
                 clearPortalSessionState();
-            } else if (!isPortalSwitchModeEnabled() && routeToPortalSessionDestination()) {
+            } else if (!founderQuickMode && !isPortalSwitchModeEnabled() && routeToPortalSessionDestination()) {
                 return;
             }
             const modal = document.getElementById('loginModal');
@@ -889,6 +932,7 @@
         function populateCustomerDropdown(cfg, preserveSelection) {
             const selectEl = document.getElementById('customerName');
             if (!selectEl) return;
+            const founderQuickMode = !!readFounderSessionState();
             const customers = cfg?.customers || {};
             const seen = new Set();
             const options = [];
@@ -906,18 +950,20 @@
             selectEl.innerHTML = '';
             const placeholder = document.createElement('option');
             placeholder.value = '';
-            placeholder.textContent = 'Select Company or Guest';
+            placeholder.textContent = founderQuickMode ? 'Select Customer Portal' : 'Select Company or Guest';
             placeholder.disabled = true;
             placeholder.selected = true;
             selectEl.appendChild(placeholder);
-            const guestOpt = document.createElement('option');
-            guestOpt.value = '__guest__';
-            guestOpt.textContent = 'Guest';
-            if (previousValue && previousValue === '__guest__') {
-                guestOpt.selected = true;
-                placeholder.selected = false;
+            if (!founderQuickMode) {
+                const guestOpt = document.createElement('option');
+                guestOpt.value = '__guest__';
+                guestOpt.textContent = 'Guest';
+                if (previousValue && previousValue === '__guest__') {
+                    guestOpt.selected = true;
+                    placeholder.selected = false;
+                }
+                selectEl.appendChild(guestOpt);
             }
-            selectEl.appendChild(guestOpt);
             for (const option of options) {
                 const opt = document.createElement('option');
                 opt.value = option.key;
@@ -954,10 +1000,37 @@
         }
         function updatePortalAuthVisibility() {
             const cfg = getPortalConfigSafe();
+            const founderSession = readFounderSessionState();
+            const founderQuickMode = !!(founderSession && isFounderEmail(founderSession.email));
             const selectedCustomerKey = document.getElementById('customerName')?.value || '';
             const isGuestSelection = selectedCustomerKey === '__guest__';
             const devNotice = document.getElementById('devModeNotice');
             const pwField = document.getElementById('customerPassword');
+            const visitorProfileSection = document.getElementById('visitorProfileSection');
+            const portalCredentialsTitle = document.getElementById('portalCredentialsTitle');
+            const portalCredentialsHelperText = document.getElementById('portalCredentialsHelperText');
+            const portalAccessButton = document.getElementById('portalAccessButton');
+            if (founderQuickMode) {
+                if (visitorProfileSection) visitorProfileSection.style.display = 'none';
+                if (portalCredentialsTitle) portalCredentialsTitle.textContent = 'Founder Quick Access';
+                if (portalCredentialsHelperText) {
+                    portalCredentialsHelperText.textContent = `Founder session active (${founderSession.email}) — select customer and continue.`;
+                }
+                if (portalAccessButton) portalAccessButton.textContent = 'Open Selected Customer Portal →';
+                if (pwField) {
+                    pwField.style.display = 'none';
+                    pwField.value = '';
+                }
+                if (devNotice) {
+                    devNotice.textContent = 'Founder quick access active for this browser session.';
+                    devNotice.style.display = 'block';
+                }
+                return;
+            }
+            if (visitorProfileSection) visitorProfileSection.style.display = '';
+            if (portalCredentialsTitle) portalCredentialsTitle.textContent = 'Portal Credentials';
+            if (portalCredentialsHelperText) portalCredentialsHelperText.textContent = 'Select your company (or choose Guest) and continue to portal access.';
+            if (portalAccessButton) portalAccessButton.textContent = 'Access Unity Portal →';
             if (isGuestSelection) {
                 if (pwField) {
                     pwField.style.display = 'none';
@@ -992,29 +1065,33 @@
         }
         function attemptLogin() {
             const cfg = getPortalConfigSafe();
+            const founderSession = readFounderSessionState();
+            const founderQuickMode = !!(founderSession && isFounderEmail(founderSession.email));
             const selectedCustomerKey = document.getElementById('customerName')?.value || '';
             const isGuestSelection = selectedCustomerKey === '__guest__';
-            const firstName = String(document.getElementById('visitorFirstName')?.value || '').trim();
-            const lastName = String(document.getElementById('visitorLastName')?.value || '').trim();
-            const email = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const firstNameInput = String(document.getElementById('visitorFirstName')?.value || '').trim();
+            const lastNameInput = String(document.getElementById('visitorLastName')?.value || '').trim();
+            const emailInput = String(document.getElementById('visitorEmail')?.value || '').trim();
             const role = String(document.getElementById('visitorRole')?.value || '').trim();
             const objective = String(document.getElementById('visitorObjective')?.value || '').trim();
             const wantsUpdates = !!document.getElementById('visitorUpdates')?.checked;
             clearLoginError();
-            if (!firstName || !lastName || !email) {
-                showLoginError('Please enter your first name, last name, and a valid email address.');
-                return;
-            }
-            if (!isLikelyValidName(firstName) || !isLikelyValidName(lastName)) {
-                showLoginError('Please enter your real first and last name (no placeholder names).');
-                return;
-            }
-            if (!isLikelyValidEmail(email)) {
-                showLoginError('Please enter a valid business email address (placeholder emails are not allowed).');
-                return;
+            if (!founderQuickMode) {
+                if (!firstNameInput || !lastNameInput || !emailInput) {
+                    showLoginError('Please enter your first name, last name, and a valid email address.');
+                    return;
+                }
+                if (!isLikelyValidName(firstNameInput) || !isLikelyValidName(lastNameInput)) {
+                    showLoginError('Please enter your real first and last name (no placeholder names).');
+                    return;
+                }
+                if (!isLikelyValidEmail(emailInput)) {
+                    showLoginError('Please enter a valid business email address (placeholder emails are not allowed).');
+                    return;
+                }
             }
             if (!selectedCustomerKey) {
-                showLoginError('Please select your company or Guest.');
+                showLoginError(founderQuickMode ? 'Please select a customer portal.' : 'Please select your company or Guest.');
                 return;
             }
             if (!isGuestSelection && !cfg.customers) {
@@ -1026,13 +1103,27 @@
                 showLoginError('Selected company is unavailable. Please refresh and try again.');
                 return;
             }
+            const normalizedInputEmail = normalizeEmailAddress(emailInput);
+            const founderFirstLoginDetected = !founderQuickMode && isFounderEmail(normalizedInputEmail);
+            const founderAccessActive = founderQuickMode || founderFirstLoginDetected;
+            const effectiveFirstName = founderQuickMode ? String(founderSession?.firstName || 'Mike') : firstNameInput;
+            const effectiveLastName = founderQuickMode ? String(founderSession?.lastName || 'Howell') : lastNameInput;
+            const effectiveEmail = founderQuickMode ? String(founderSession?.email || 'mike@unityenergy.com') : normalizedInputEmail;
             const passwordEl = document.getElementById('customerPassword');
-            if (!isGuestSelection && !cfg.devMode) {
+            if (!isGuestSelection && !founderQuickMode && !cfg.devMode) {
                 const enteredPassword = passwordEl?.value || '';
                 if (enteredPassword !== cfg.password) {
                     showLoginError('Incorrect password. Please try again.');
                     return;
                 }
+            }
+            if (founderFirstLoginDetected) {
+                writeFounderSessionState({
+                    email: effectiveEmail,
+                    firstName: effectiveFirstName,
+                    lastName: effectiveLastName,
+                });
+                clearPortalSessionState();
             }
             try {
                 const selectedAt = new Date().toISOString();
@@ -1046,9 +1137,9 @@
                     };
                     window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify(payload));
                     const visitorProfile = {
-                        first_name: firstName,
-                        last_name: lastName,
-                        email,
+                        first_name: effectiveFirstName,
+                        last_name: effectiveLastName,
+                        email: effectiveEmail,
                         role,
                         objective,
                         wants_updates: wantsUpdates,
@@ -1059,15 +1150,17 @@
                     };
                     window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
                     setUnitySiteAccessUnlocked({
-                        visitorType: 'guest',
+                        visitorType: founderAccessActive ? 'founder' : 'guest',
                         customerName: 'Guest',
                         customerSlug: 'guest',
                     });
-                    writePortalSessionState({
-                        destinationPath: guestDestinationPath,
-                        customerSlug: 'guest',
-                        customerName: 'Guest',
-                    });
+                    if (!founderAccessActive) {
+                        writePortalSessionState({
+                            destinationPath: guestDestinationPath,
+                            customerSlug: 'guest',
+                            customerName: 'Guest',
+                        });
+                    }
                     window.location.href = guestDestinationPath;
                     return;
                 }
@@ -1089,9 +1182,9 @@
                     };
                     window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify(payload));
                     const visitorProfile = {
-                        first_name: firstName,
-                        last_name: lastName,
-                        email,
+                        first_name: effectiveFirstName,
+                        last_name: effectiveLastName,
+                        email: effectiveEmail,
                         role,
                         objective,
                         wants_updates: wantsUpdates,
@@ -1102,15 +1195,17 @@
                     };
                     window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
                     setUnitySiteAccessUnlocked({
-                        visitorType: 'customer',
+                        visitorType: founderAccessActive ? 'founder' : 'customer',
                         customerName,
                         customerSlug,
                     });
-                    writePortalSessionState({
-                        destinationPath: String(customer.path || ''),
-                        customerSlug,
-                        customerName,
-                    });
+                    if (!founderAccessActive) {
+                        writePortalSessionState({
+                            destinationPath: String(customer.path || ''),
+                            customerSlug,
+                            customerName,
+                        });
+                    }
                 }
             } catch (_err) {}
             window.location.href = customer.path;
@@ -1128,7 +1223,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (isPortalSwitchModeEnabled()) {
                 clearPortalSessionState();
-            } else if (routeToPortalSessionDestination()) {
+            } else if (!readFounderSessionState() && routeToPortalSessionDestination()) {
                 return;
             }
             populateCustomerDropdown(getPortalConfigSafe(), false);

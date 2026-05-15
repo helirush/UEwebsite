@@ -1,0 +1,109 @@
+{
+  "generated_at_utc": "2026-05-14T17:52:53.117080+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/BNR/03_MAR26/Patterns",
+  "mode": "scripts-only",
+  "inventory": {
+    "image_count": 22,
+    "all_images": [
+      "AgenticTeam.png",
+      "BNR1b_apr26.png",
+      "BNR1b_mar26.png",
+      "BNR1bt_apr26.png.png",
+      "BNR1bt_mar26.png",
+      "BNR1m_apr26.png",
+      "BNR1m_mar26.png",
+      "BNR1s_apr26.png.png",
+      "BNR1s_mar26.png",
+      "BNR1v_apr26.png.png",
+      "BNR1v_mar26.png",
+      "BNR2b_apr26.png.png",
+      "BNR2b_mar26.png",
+      "BNR2bt_mar26.png",
+      "BNR2s_mar26.png",
+      "BNR2v_mar26.png",
+      "UE_logo.png",
+      "installation_1.png",
+      "metering_2.jpeg",
+      "part2a.png",
+      "part2b.jpeg",
+      "unity-field-backdrop.png"
+    ],
+    "transformer_count": 4,
+    "coverage_by_transformer": {
+      "AGENTICTEA": [
+        "m"
+      ],
+      "BNR1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "BNR2": [
+        "b",
+        "bt",
+        "s",
+        "v"
+      ],
+      "PART2": [
+        "b"
+      ]
+    },
+    "files_by_transformer": {
+      "AGENTICTEA": [
+        "AgenticTeam.png"
+      ],
+      "BNR1": [
+        "BNR1b_apr26.png",
+        "BNR1b_mar26.png",
+        "BNR1bt_apr26.png.png",
+        "BNR1bt_mar26.png",
+        "BNR1m_apr26.png",
+        "BNR1m_mar26.png",
+        "BNR1s_apr26.png.png",
+        "BNR1s_mar26.png",
+        "BNR1v_apr26.png.png",
+        "BNR1v_mar26.png"
+      ],
+      "BNR2": [
+        "BNR2b_apr26.png.png",
+        "BNR2b_mar26.png",
+        "BNR2bt_mar26.png",
+        "BNR2s_mar26.png",
+        "BNR2v_mar26.png"
+      ],
+      "PART2": [
+        "part2b.jpeg"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "BNR1",
+      "BNR2",
+      "PART2"
+    ],
+    "unmatched_files": [
+      "UE_logo.png",
+      "installation_1.png",
+      "metering_2.jpeg",
+      "part2a.png",
+      "unity-field-backdrop.png"
+    ]
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/BNR/03_MAR26/Patterns",
+    "--scripts-only",
+    "--force",
+    "--verbosity",
+    "standard"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-14T17:55:35.835110+00:00"
+}

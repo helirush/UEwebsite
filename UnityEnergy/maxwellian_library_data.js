@@ -2,7 +2,7 @@ window.MAXWELLIAN_LIBRARY_DATA = {
   "library": {
     "name": "Maxwellian Intelligence Brief Library",
     "description": "Strategic intelligence briefings published by Oliver.h1.mib and edited by Clerk Maxwell for Unity Energy leadership.",
-    "last_updated": "2026-03-24"
+    "last_updated": "2026-05-14"
   },
   "episodes": [
     {
@@ -172,6 +172,34 @@ window.MAXWELLIAN_LIBRARY_DATA = {
         "Continue Livingston multi-group parity and audio standardization backlog as previously queued."
       ],
       "next_terminal_start": "Start with Foster Farms live spot-check, then proceed to Livingston Rendering/NCDC parity and February release readiness."
+    },
+    {
+      "handoff_id": "FF-RET-20260514-03",
+      "date": "2026-05-14",
+      "scope": "March+ retention/archive standardization closure checks, Cherry STD DAILY PATTERN BT-target guardrail verification, and BOA two-transformer readiness sanity pass",
+      "completed": [
+        "Template-level retention config and guard confirmed in dashboard/templates/eUnitySummaryboard.html and dashboard/templates/eUnitySummaryboard_energy.html (generic UNITY archive flags, March-2026-forward policy gate).",
+        "Shared helper confirmed at eWebmaster/archive_narration_to_zarchive.sh and Cherry April wrapper confirmed at Customers/FosterFarms/CherryAve_Site/04_APR26/archive_apr26_narration_to_zarchive.sh.",
+        "Cherry April summaryboard confirmed on generic retention flags with default live mode (window.__UNITY_NARRATION_ARCHIVED__ = false; reportMonthCode 2604).",
+        "Cherry March/April front-card STD DAILY PATTERN values verified against BT image targets: March = 1433/2106/2111/2215 and April = 1200/2500/1500/2250.",
+        "BOA two-transformer dry-run executed with shared helper against Customers/BOA_Building/03_MAR26; helper pathing and archive staging behavior validated in dry-run."
+      ],
+      "template_changes": [
+        "eBehavior/dashboard/templates/eUnitySummaryboard.html",
+        "eBehavior/dashboard/templates/eUnitySummaryboard_energy.html",
+        "eWebmaster/archive_narration_to_zarchive.sh",
+        "eWebmaster/Customers/FosterFarms/CherryAve_Site/04_APR26/archive_apr26_narration_to_zarchive.sh",
+        "eBehavior/dashboard/dashboard_utils.py",
+        "eBehavior/dashboard/inject_bird_metrics.py",
+        "eWebmaster/Customers/FosterFarms/CherryAve_Site/03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html",
+        "eWebmaster/Customers/FosterFarms/CherryAve_Site/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html"
+      ],
+      "pending_focus": [
+        "Regenerate BOA two-transformer summaryboards from current templates so UNITY retention config/guard blocks are present in shipped HTML.",
+        "Decide whether Cherry March summaryboard should be migrated to explicit UNITY retention config for policy-start parity (March 2026 forward) versus template-on-next-render only.",
+        "Run a non-dry-run BOA archive validation after retention flags are present, confirming narrative modal/audio suppression behavior when archive mode is true."
+      ],
+      "next_terminal_start": "Regenerate BOA March summaryboard from template, confirm retention flag presence, then run shared helper dry-run/non-dry-run validation on two-transformer output."
     }
   ]
 };

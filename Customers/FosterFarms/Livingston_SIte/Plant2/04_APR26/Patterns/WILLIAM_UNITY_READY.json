@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-05-10T17:30:37.305909+00:00",
+  "generated_at_utc": "2026-05-14T18:24:58.035556+00:00",
   "status": "completed",
-  "pattern_dir": "/Users/mdhowell/eestream/eReports/Livingston_Plant2_APR26/Patterns",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Plant2/04_APR26/Patterns",
   "mode": "notify-only",
   "inventory": {
-    "image_count": 20,
+    "image_count": 21,
     "all_images": [
       "PL2-1Southb_apr26.png",
       "PL2-1Southbt_apr26.png",
@@ -25,10 +25,25 @@
       "PL22bt_apr26.png",
       "PL22m_apr26.png",
       "PL22s_apr26.png",
-      "PL22v_apr26.png"
+      "PL22v_apr26.png",
+      "UE_logo.png"
     ],
-    "transformer_count": 2,
+    "transformer_count": 4,
     "coverage_by_transformer": {
+      "PL2-1SOUTH": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL2-2CENTER": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
       "PL21": [
         "b",
         "bt",
@@ -45,6 +60,20 @@
       ]
     },
     "files_by_transformer": {
+      "PL2-1SOUTH": [
+        "PL2-1Southb_apr26.png",
+        "PL2-1Southbt_apr26.png",
+        "PL2-1Southm_apr26.png",
+        "PL2-1Souths_apr26.png",
+        "PL2-1Southv_apr26.png"
+      ],
+      "PL2-2CENTER": [
+        "PL2-2Centerb_apr26.png",
+        "PL2-2Centerbt_apr26.png",
+        "PL2-2Centerm_apr26.png",
+        "PL2-2Centers_apr26.png",
+        "PL2-2Centerv_apr26.png"
+      ],
       "PL21": [
         "PL21b_apr26.png",
         "PL21bt_apr26.png",
@@ -61,20 +90,13 @@
       ]
     },
     "baseline_ready_transformers": [
+      "PL2-1SOUTH",
+      "PL2-2CENTER",
       "PL21",
       "PL22"
     ],
     "unmatched_files": [
-      "PL2-1Southb_apr26.png",
-      "PL2-1Southbt_apr26.png",
-      "PL2-1Southm_apr26.png",
-      "PL2-1Souths_apr26.png",
-      "PL2-1Southv_apr26.png",
-      "PL2-2Centerb_apr26.png",
-      "PL2-2Centerbt_apr26.png",
-      "PL2-2Centerm_apr26.png",
-      "PL2-2Centers_apr26.png",
-      "PL2-2Centerv_apr26.png"
+      "UE_logo.png"
     ]
   },
   "notes": {
@@ -83,5 +105,5 @@
   },
   "william_command": [],
   "william_exit_code": 0,
-  "completed_at_utc": "2026-05-10T17:30:37.306757+00:00"
+  "completed_at_utc": "2026-05-14T18:24:58.036119+00:00"
 }

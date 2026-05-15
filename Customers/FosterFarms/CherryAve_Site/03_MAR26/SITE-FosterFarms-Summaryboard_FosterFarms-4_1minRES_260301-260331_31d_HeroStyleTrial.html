@@ -1771,7 +1771,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">89.3%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">87.9%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -1896,7 +1896,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">83.6%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">84.3%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -2021,7 +2021,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">82.0%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">84.5%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -2146,7 +2146,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr4-metric-pf">88.5%</div>
+<div class="gauge-value" id="xfmr4-metric-pf">88.6%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -2272,6 +2272,115 @@
       { id: 3, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 },
       { id: 4, wasteEnergykW: 0.0, coolingkW: 0.0, supplyKVA: 0.0 }
     ];
+    // Normalize PF numeric input to a percentage (0-100), accepting either 0-1 or 0-100 values.
+    function normalizePfPercent(value) {
+      const n = Number(value);
+      if (!isFinite(n) || n <= 0) return null;
+      const pct = n <= 1 ? (n * 100) : n;
+      return Math.max(0, Math.min(100, pct));
+    }
+
+    function extractPfPercentFromText(text) {
+      const raw = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!raw) return null;
+
+      const patterns = [
+        /([0-9]+(?:\.[0-9]+)?)\s*%\s*power\s*factor/i,
+        /([0-9]+(?:\.[0-9]+)?)\s*percent\s*power\s*factor/i,
+        /\bpf\b\s*(?:is|=|:|at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i,
+        /power\s*factor(?:\s*\(avg\))?\s*(?:is|=|:|at|of|sits at|sitting at|operating at)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:%|percent)?/i
+      ];
+
+      for (const pattern of patterns) {
+        const m = raw.match(pattern);
+        if (!m) continue;
+        const parsed = normalizePfPercent(parseFloat(m[1]));
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function collectTextFragments(out, value) {
+      if (value == null) return;
+      if (Array.isArray(value)) {
+        value.forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      if (typeof value === 'object') {
+        Object.values(value).forEach((v) => collectTextFragments(out, v));
+        return;
+      }
+      const text = String(value).trim();
+      if (text) out.push(text);
+    }
+
+    function resolvePfPercentFromPatternEntry(entry) {
+      if (!entry || typeof entry !== 'object') return null;
+
+      // Prefer image-linked narrative/cross-check text over dashboard aggregates.
+      const prioritizedFields = [
+        'cross_check',
+        'pattern_part1',
+        'narration_ready_text',
+        'pattern_text',
+        'pattern_brief',
+        'pattern_interpretation',
+        'pattern_part2',
+        'pattern_part3',
+        'pattern_summary'
+      ];
+
+      const textCandidates = [];
+      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
+
+      if (!textCandidates.length) {
+        Object.keys(entry).forEach((key) => {
+          if (/(pattern|narrat|brief|cross|summary|interpret|part|power|pf)/i.test(key)) {
+            collectTextFragments(textCandidates, entry[key]);
+          }
+        });
+      }
+
+      for (const text of textCandidates) {
+        const parsed = extractPfPercentFromText(text);
+        if (parsed !== null) return parsed;
+      }
+
+      return null;
+    }
+
+    function resolvePfPercentFromPatternData(transformerName) {
+      try {
+        const routing = getTransformerRoutingInfo(transformerName || '');
+        const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
+        if (!tData || !routing || !Array.isArray(routing.keys)) return null;
+
+        for (const k of routing.keys) {
+          const entry = tData[k];
+          if (!entry) continue;
+          const parsed = resolvePfPercentFromPatternEntry(entry);
+          if (parsed !== null) return parsed;
+        }
+      } catch (e) {}
+
+      return null;
+    }
+
+    // Resolve PF% for a transformer from image-linked pattern data first, then bound data fallback.
+    function resolvePfPercentForTransformer(xfmrId, transformerName) {
+      const pfFromPattern = resolvePfPercentFromPatternData(transformerName || '');
+      if (pfFromPattern !== null) return pfFromPattern;
+      const dataRow = transformerData.find(d => String(d.id) === String(xfmrId));
+      if (dataRow) {
+        const pfFromData = normalizePfPercent(dataRow.powerFactor);
+        if (pfFromData !== null) return pfFromData;
+        const effFromData = normalizePfPercent(dataRow.efficiency);
+        if (effFromData !== null) return effFromData;
+      }
+
+      return null;
+    }
     
     // Calculate minimum targets dynamically
     transformerData.forEach(data => {
@@ -2312,6 +2421,7 @@
       const kvaEl = document.getElementById(`xfmr${i}-kva`);
       const kvaWrap = document.getElementById(`xfmr${i}-kva-wrap`);
       const pfEl = document.getElementById(`xfmr${i}-metric-pf`);
+      const transformerName = (nameEl?.textContent || '').trim();
 
       // Hide card if no name bound
       const hasName = (nameEl?.textContent || '').trim().length > 0;
@@ -2323,6 +2433,13 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
+      // Dynamically bind PF bubble value (prevents stale hardcoded text).
+      if (pfEl) {
+        const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
+        if (resolvedPfPct !== null) {
+          pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
+        }
+      }
 
       // Initialize PF dial rendering from bound metric
       if (pfEl) {
@@ -3460,6 +3577,8 @@
     let content = '';
     let title = '';
     let showAudioBtn = false;
+    let baselineCandidates = [];
+    let part2EquipmentCandidates = [];
     const getElText = (id) => {
       const el = document.getElementById(id);
       return el ? (el.textContent || '').trim() : '';
@@ -3655,8 +3774,8 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      const baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
-      const part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
+      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
       const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
@@ -4438,6 +4557,61 @@
       });
     });
   });
+})();
+</script>
+<script id="march-narrative-retention-guard">
+(function(){
+  var textMsg = "Pattern text is archived for this report period (retention policy).";
+  var audioMsg = "Audio is no longer available for this report period (retention policy).";
+
+  function hideNarrativeAudioButtons() {
+    ['unityBriefBtn','unityExplainsBtn','unityHowToBtn','narrativeAudioBtn'].forEach(function(id){
+      var btn = document.getElementById(id);
+      if (btn) btn.style.display = 'none';
+    });
+  }
+
+  function showArchivedNarrativeModal(transformerId) {
+    var xfmrNum = String(transformerId || '').replace('xfmr', '');
+    var nameEl = document.getElementById('xfmr' + xfmrNum + '-name');
+    var transformerName = nameEl ? (nameEl.textContent || '').trim() : '';
+    var modal = document.getElementById('patternModal');
+    var titleEl = document.getElementById('patternModalTitle');
+    var bodyEl = document.getElementById('patternModalBody');
+    if (titleEl) titleEl.textContent = (transformerName || 'Transformer') + ' - Detailed Narrative';
+    if (bodyEl) {
+      bodyEl.innerHTML = '<div style="text-align:left;"><p>' + textMsg + '</p></div>';
+      if (bodyEl.classList) bodyEl.classList.remove('unity-summary-mode');
+      if (bodyEl.style && typeof bodyEl.style.removeProperty === 'function') {
+        bodyEl.style.removeProperty('--unity-field-backdrop');
+      }
+    }
+    hideNarrativeAudioButtons();
+    if (modal) modal.style.display = 'block';
+  }
+
+  var originalShowPatternModal = window.showPatternModal;
+  if (typeof originalShowPatternModal === 'function') {
+    window.showPatternModal = function(transformerId, type) {
+      if (type === 'narrative') {
+        if (typeof window.stopCurrentPlayback === 'function') {
+          try { window.stopCurrentPlayback(); } catch (e) {}
+        } else if (window.speechSynthesis && typeof window.speechSynthesis.cancel === 'function') {
+          try { window.speechSynthesis.cancel(); } catch (e) {}
+        }
+        window.currentNarrativeText = '';
+        window.currentBriefText = '';
+        window.currentTransformerId = '';
+        showArchivedNarrativeModal(transformerId);
+        return;
+      }
+      return originalShowPatternModal.apply(this, arguments);
+    };
+  }
+
+  window.speakNarrative = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
+  window.playUnityBrief = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
+  window.playHowToAudio = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
 })();
 </script>
 </body>
