@@ -1760,13 +1760,24 @@
             pastValueEl.textContent = formatCompositeCostPerKwh(LIVINGSTON_SITE_COMPOSITE_BASELINE.previous.costPerKwh);
             currentValueEl.textContent = formatCompositeCostPerKwh(LIVINGSTON_SITE_COMPOSITE_BASELINE.current.costPerKwh);
         }
-        function updateLivingstonHeroSiteAverage() {
+        function updateLivingstonHeroSiteAverage(groupSnapshots) {
             const heroAvgEl = document.getElementById('livingston-hero-site-avg-pf');
             if (!heroAvgEl) return;
+            const snapshotPfValues = Array.isArray(groupSnapshots)
+                ? groupSnapshots.flatMap((snapshot) => {
+                    const values = snapshot?.latestMetrics?.pfValues;
+                    if (!Array.isArray(values)) return [];
+                    return values
+                        .map((value) => Number(value))
+                        .filter((value) => Number.isFinite(value) && value > 0);
+                })
+                : [];
 
-            const pfValues = Array.from(document.querySelectorAll('.group-section [data-group-pf-current]'))
-                .map((el) => parseFloat(String(el.textContent || '').replace(/[^0-9.]/g, '')))
-                .filter((value) => Number.isFinite(value) && value > 0);
+            const pfValues = snapshotPfValues.length
+                ? snapshotPfValues
+                : Array.from(document.querySelectorAll('.group-section [data-group-pf-current]'))
+                    .map((el) => parseFloat(String(el.textContent || '').replace(/[^0-9.]/g, '')))
+                    .filter((value) => Number.isFinite(value) && value > 0);
 
             if (!pfValues.length) {
                 heroAvgEl.textContent = '--.-%PF';
@@ -1871,7 +1882,8 @@
 
             return {
                 pfPercent: avgPf,
-                totalCostPerHour
+                totalCostPerHour,
+                pfValues
             };
         }
 
@@ -1970,7 +1982,7 @@
         async function updateAllGroupSummaries() {
             const groupSections = document.querySelectorAll('.group-section');
             const groupSnapshots = await Promise.all(Array.from(groupSections).map(updateGroupSummary));
-            updateLivingstonHeroSiteAverage();
+            updateLivingstonHeroSiteAverage(groupSnapshots);
             updateLivingstonHeroTopline(groupSnapshots);
             updateLivingstonCompositeTitlePills();
         }
@@ -1981,7 +1993,7 @@
                 chickenRight.currentTime = 5; // offset by 5 seconds
             }
             updateAllGroupSummaries().catch(() => {
-                updateLivingstonHeroSiteAverage();
+                updateLivingstonHeroSiteAverage([]);
                 updateLivingstonHeroTopline([]);
                 updateLivingstonCompositeTitlePills();
             });
