@@ -98,6 +98,64 @@
     .section {
       padding: 20px 0 56px;
     }
+    .utility-window {
+      margin: 0 0 26px;
+      padding: 20px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(18, 34, 68, 0.78) 0%, rgba(8, 15, 28, 0.95) 100%);
+    }
+    .utility-kicker {
+      display: inline-block;
+      margin: 0 0 10px;
+      color: #081325;
+      background: var(--unity-cyan);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 5px 11px;
+    }
+    .utility-window h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    }
+    .utility-intro {
+      margin: 0;
+      color: var(--muted);
+      max-width: 920px;
+    }
+    .utility-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .utility-item {
+      border: 1px solid #274170;
+      border-radius: 12px;
+      padding: 12px 13px;
+      background: rgba(9, 17, 34, 0.76);
+    }
+    .utility-item h3 {
+      margin: 0 0 7px;
+      color: #d8e9ff;
+      font-size: 0.93rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .utility-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+    .utility-note {
+      margin: 14px 0 0;
+      color: #b6caef;
+      font-size: 0.9rem;
+    }
     .section h2 {
       margin: 0 0 14px;
       font-size: clamp(1.4rem, 2.4vw, 2rem);
@@ -167,6 +225,37 @@
           <p>Customer-facing insights, dashboard links, and recommended optimization actions.</p>
         </article>
       </div>
+    </section>
+    <section class="utility-window" aria-labelledby="utility-profile-title">
+      <p class="utility-kicker">Electric Service Context</p>
+      <h2 id="utility-profile-title">Power Provider for BOA Building: Avista Utilities</h2>
+      <p class="utility-intro">
+        BOA Building electricity service in Spokane is delivered by Avista, an investor-owned utility regulated by
+        the Washington Utilities and Transportation Commission (UTC). This utility context supports tariff and
+        cost-behavior interpretation in Unity Energy studies.
+      </p>
+      <div class="utility-grid">
+        <article class="utility-item">
+          <h3>Utility Type</h3>
+          <p>Investor-owned, state-regulated electric utility serving eastern Washington.</p>
+        </article>
+        <article class="utility-item">
+          <h3>Regulatory Model</h3>
+          <p>Regulated utility territory with oversight through Washington state utility regulation.</p>
+        </article>
+        <article class="utility-item">
+          <h3>Headquarters</h3>
+          <p>1411 E Mission Ave, Spokane, WA 99202</p>
+        </article>
+        <article class="utility-item">
+          <h3>Why This Matters</h3>
+          <p>Provider structure and tariff framework directly shape the cost of recovered vs wasted electricity.</p>
+        </article>
+      </div>
+      <p class="utility-note">
+        Utility profile fields are tracked in BOA datasets to keep source-of-power context tied to each energy
+        behavior analysis window.
+      </p>
     </section>
 
     <section class="section">
