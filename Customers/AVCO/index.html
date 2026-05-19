@@ -40,6 +40,13 @@
         .logo span {
             color: rgba(224, 207, 198, 1);
         }
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
 
         .back-btn {
             display: inline-block;
@@ -353,7 +360,10 @@
 <body>
     <header>
         <div class="logo">⚡ <span>AVCO</span> CENTER</div>
-        <a href="../../UnityEnergy/index.html" class="back-btn">← Return to Unity Home</a>
+        <div class="header-actions">
+            <a href="../../UnityEnergy/customer-portals.html" class="back-btn">Customer Portals</a>
+            <a href="../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
+        </div>
     </header>
 
     <section class="hero">

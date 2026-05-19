@@ -256,6 +256,35 @@
             pointer-events: none;
             overflow: hidden;
         }
+        .hero-wave-label {
+            position: absolute;
+            z-index: 3;
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            text-shadow: 0 1px 3px rgba(32, 34, 25, 0.16);
+        }
+        .hero-wave-label--left {
+            left: clamp(76px, 10.4vw, 190px);
+            top: 60.5%;
+            transform: translateY(-50%);
+            color: rgba(244, 243, 236, 0.92);
+            font-size: clamp(1.05rem, 1.275vw, 1.5rem);
+            white-space: nowrap;
+        }
+        .hero-wave-label--right {
+            right: clamp(72px, 9.8vw, 188px);
+            top: 61%;
+            transform: translateY(-50%);
+            color: rgba(42, 64, 34, 0.9);
+            font-size: clamp(0.98rem, 1.19vw, 1.4rem);
+            line-height: 1.1;
+            text-align: center;
+            white-space: nowrap;
+        }
         .hero-wave {
             position: absolute;
             top: 50%;
@@ -1093,6 +1122,9 @@
             .hero-wave--right-gold {
                 opacity: 0.19;
             }
+            .hero-wave-label {
+                display: none;
+            }
             .causal-arc-pillars::before {
                 display: none;
             }
@@ -1189,6 +1221,8 @@
                 <img src="assets/images/musicWaves.png" alt="" class="hero-wave hero-wave--right hero-wave--right-dark">
                 <img src="assets/images/musicWaves.png" alt="" class="hero-wave hero-wave--right hero-wave--right-green">
                 <img src="assets/images/musicWaves.png" alt="" class="hero-wave hero-wave--right hero-wave--right-gold">
+                <span class="hero-wave-label hero-wave-label--left">UNGOVERNED<br>ENERGY</span>
+                <span class="hero-wave-label hero-wave-label--right">Governed<br>Energy Coherence</span>
             </div>
             <h1 class="about-title-marked">
                 <svg class="about-title-logo" viewBox="0 0 72 72" focusable="false" aria-hidden="true">

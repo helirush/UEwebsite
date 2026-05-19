@@ -30,6 +30,13 @@
             letter-spacing: 1px;
         }
         .logo span { color: rgba(170, 201, 245, 1); }
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
         .back-btn {
             display: inline-block;
             padding: 10px 20px;
@@ -221,7 +228,10 @@
 <body>
     <header>
         <div class="logo">⚡ <span>ARMI</span> PORTAL</div>
-        <a href="../../UnityEnergy/index.html" class="back-btn">← Return to Unity Home</a>
+        <div class="header-actions">
+            <a href="../../UnityEnergy/customer-portals.html" class="back-btn">Customer Portals</a>
+            <a href="../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
+        </div>
     </header>
     <div class="hero">
         <img src="./images/armi-transparent-logo-1-cropped1.webp" alt="ARMI Logo" class="hero-logo">

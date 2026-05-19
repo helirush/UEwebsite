@@ -1,302 +1,453 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BOA Building | Unity Energy</title>
-  <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
-  <script src="../../UnityEnergy/hume_character_config.js"></script>
-  <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
-  <style>
-    :root {
-      --bg: #05070c;
-      --panel: #0b1324;
-      --line: #1e2f52;
-      --text: #e8eeff;
-      --muted: #99abcf;
-      --unity-gold: #ffc54d;
-      --unity-cyan: #63d8ff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-      background: radial-gradient(1100px 700px at 20% -10%, #102142 0%, var(--bg) 50%);
-      color: var(--text);
-      line-height: 1.55;
-    }
-    .wrap { width: min(1100px, 92%); margin: 0 auto; }
-    header {
-      border-bottom: 1px solid var(--line);
-      background: rgba(5, 7, 12, 0.82);
-      backdrop-filter: blur(6px);
-    }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      gap: 16px;
-    }
-    .brand {
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      color: var(--unity-cyan);
-      text-decoration: none;
-    }
-    .nav {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-    .hero {
-      padding: 72px 0 52px;
-    }
-    .kicker {
-      display: inline-block;
-      color: #101826;
-      background: var(--unity-gold);
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      padding: 6px 12px;
-    }
-    h1 {
-      margin: 16px 0 8px;
-      font-size: clamp(2rem, 4.4vw, 3.2rem);
-      line-height: 1.12;
-    }
-    .lead {
-      color: var(--muted);
-      max-width: 760px;
-      font-size: clamp(1rem, 1.5vw, 1.16rem);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin: 30px 0 0;
-    }
-    .card {
-      background: linear-gradient(180deg, rgba(17, 31, 62, 0.74) 0%, var(--panel) 100%);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 18px;
-    }
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 1rem;
-      color: #d7e7ff;
-    }
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .section {
-      padding: 20px 0 56px;
-    }
-    .utility-window {
-      margin: 0 0 26px;
-      padding: 20px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(18, 34, 68, 0.78) 0%, rgba(8, 15, 28, 0.95) 100%);
-    }
-    .utility-kicker {
-      display: inline-block;
-      margin: 0 0 10px;
-      color: #081325;
-      background: var(--unity-cyan);
-      font-weight: 700;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      padding: 5px 11px;
-    }
-    .utility-window h2 {
-      margin: 0 0 10px;
-      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-    }
-    .utility-intro {
-      margin: 0;
-      color: var(--muted);
-      max-width: 920px;
-    }
-    .utility-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .utility-item {
-      border: 1px solid #274170;
-      border-radius: 12px;
-      padding: 12px 13px;
-      background: rgba(9, 17, 34, 0.76);
-    }
-    .utility-item h3 {
-      margin: 0 0 7px;
-      color: #d8e9ff;
-      font-size: 0.93rem;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    .utility-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.45;
-    }
-    .utility-note {
-      margin: 14px 0 0;
-      color: #b6caef;
-      font-size: 0.9rem;
-    }
-    .section h2 {
-      margin: 0 0 14px;
-      font-size: clamp(1.4rem, 2.4vw, 2rem);
-    }
-    ul {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--muted);
-    }
-    li + li { margin-top: 8px; }
-    .cta {
-      margin-top: 24px;
-      display: inline-block;
-      color: #0d1423;
-      background: var(--unity-gold);
-      text-decoration: none;
-      font-weight: 700;
-      padding: 11px 16px;
-      border-radius: 10px;
-    }
-    .study-link {
-      margin-top: 18px;
-      display: inline-block;
-      color: #061022;
-      background: var(--unity-cyan);
-      text-decoration: none;
-      font-weight: 700;
-      padding: 11px 16px;
-      border-radius: 10px;
-    }
-    footer {
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.88rem;
-      padding: 20px 0 32px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOA Building — Electrical Field Transformation Case Study</title>
+    <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg: rgba(244, 248, 253, 1);
+            --text: rgba(28, 43, 65, 1);
+            --accent-dark: rgba(0, 45, 114, 1);
+            --accent-mid: rgba(0, 83, 155, 1);
+            --accent-soft: rgba(196, 214, 238, 1);
+            --surface: rgba(255, 255, 255, 1);
+            --surface-soft: rgba(236, 243, 252, 1);
+            --boa-red: rgba(196, 18, 48, 1);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+        header {
+            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent-mid) 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-soft);
+            gap: 16px;
+        }
+        .logo {
+            font-size: 1.35em;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: var(--accent-soft);
+        }
+        nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: var(--surface);
+            color: var(--accent-dark);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 6px;
+            border: 2px solid var(--accent-dark);
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 0.35px;
+        }
+        .back-btn:hover {
+            background: var(--surface-soft);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 45, 114, 0.22);
+        }
+        .back-btn:focus-visible,
+        .hero-library-ctas a:focus-visible,
+        .library-buttons a:focus-visible {
+            outline: 3px solid rgba(196, 18, 48, 0.35);
+            outline-offset: 2px;
+        }
+        .hero {
+            position: relative;
+            min-height: 450px;
+            border-bottom: 8px solid var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(4, 26, 61, 0.24) 0%, rgba(4, 26, 61, 0.78) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1080px;
+            text-align: center;
+            color: rgba(248, 251, 255, 1);
+            padding: 54px 24px;
+        }
+        .hero-content h1 {
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 1.08;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+        }
+        .hero-content p {
+            font-size: clamp(1.02rem, 1.6vw, 1.42rem);
+            font-weight: 500;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+        }
+        .hero-meta {
+            margin-top: 14px;
+            font-size: clamp(0.92rem, 1.2vw, 1.08rem);
+            opacity: 0.95;
+        }
+        .hero-mpts {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 2px solid var(--boa-red);
+            color: rgba(255, 255, 255, 1);
+            background: var(--boa-red);
+            font-size: 0.86rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .hero-library-ctas {
+            margin-top: 18px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .hero-library-ctas a {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.84rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: all 0.25s ease;
+            border: 2px solid var(--accent-soft);
+            color: var(--accent-dark);
+            background: rgba(241, 247, 255, 0.96);
+        }
+        .hero-library-ctas a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 45, 114, 0.24);
+            background: rgba(255, 255, 255, 1);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 34px 28px 52px;
+        }
+        .intro {
+            background: var(--surface);
+            border: 1px solid rgba(188, 206, 231, 1);
+            border-left: 6px solid var(--accent-mid);
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 22px;
+            font-size: 1.05rem;
+            color: rgba(36, 57, 88, 1);
+        }
+        .value-flow {
+            background: var(--surface-soft);
+            border: 1px solid rgba(188, 206, 231, 1);
+            border-left: 6px solid var(--boa-red);
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 22px;
+            color: rgba(36, 57, 88, 1);
+        }
+        .value-flow h2 {
+            font-size: 1.14rem;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+            letter-spacing: 0.2px;
+        }
+        .value-flow p + p {
+            margin-top: 8px;
+        }
+        .library-gateway {
+            background: var(--surface);
+            border: 1px solid rgba(188, 206, 231, 1);
+            border-left: 6px solid var(--accent-mid);
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 22px;
+            color: rgba(36, 57, 88, 1);
+        }
+        .library-gateway h2 {
+            font-size: 1.14rem;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+            letter-spacing: 0.2px;
+        }
+        .library-buttons {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .library-buttons a {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.45px;
+            color: rgba(255, 255, 255, 1);
+            background: var(--accent-mid);
+            border: 1px solid var(--accent-dark);
+            transition: all 0.25s ease;
+        }
+        .library-buttons a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 45, 114, 0.22);
+            background: var(--accent-dark);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+        .panel {
+            background: var(--surface);
+            border: 1px solid rgba(188, 206, 231, 1);
+            border-radius: 10px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 16px rgba(0, 45, 114, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(0, 45, 114, 0.16);
+        }
+        .panel h2 {
+            font-size: 1.18rem;
+            color: var(--accent-dark);
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+        .panel ul {
+            padding-left: 20px;
+        }
+        .panel li {
+            margin: 7px 0;
+            color: rgba(52, 74, 107, 1);
+        }
+        .translation {
+            background: linear-gradient(135deg, rgba(0, 45, 114, 1) 0%, rgba(0, 83, 155, 1) 100%);
+            color: rgba(251, 246, 243, 1);
+            border-radius: 12px;
+            padding: 24px 26px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(196, 18, 48, 0.35);
+        }
+        .translation h2 {
+            font-size: 1.22rem;
+            margin-bottom: 10px;
+            color: rgba(255, 221, 227, 1);
+        }
+        .translation blockquote {
+            font-family: "Times New Roman", Times, serif;
+            font-style: italic;
+            font-size: clamp(1.14rem, 1.7vw, 1.5rem);
+            line-height: 1.42;
+            margin: 8px 0 12px;
+            color: rgba(255, 255, 255, 1);
+        }
+        .translation p {
+            font-size: 1rem;
+            color: rgba(223, 235, 250, 1);
+        }
+        .data-note {
+            background: var(--surface);
+            border: 1px solid rgba(188, 206, 231, 1);
+            border-left: 6px solid var(--boa-red);
+            border-radius: 10px;
+            padding: 18px 20px;
+            color: rgba(52, 74, 107, 1);
+        }
+        .data-note h3 {
+            font-size: 1rem;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        footer {
+            background: var(--accent-dark);
+            color: white;
+            text-align: center;
+            padding: 28px 16px;
+            border-top: 3px solid var(--boa-red);
+        }
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            nav {
+                justify-content: center;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 24px 16px 38px;
+            }
+            .library-buttons,
+            .hero-library-ctas {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="wrap topbar">
-      <a class="brand" href="/UnityEnergy/index.html">Unity Energy</a>
-      <a class="nav" href="/UnityEnergy/customer-portals.html">Customer Portals</a>
-    </div>
-  </header>
-
-  <main class="wrap">
+    <header>
+        <div class="logo">⚡ <span>BANK OF AMERICA</span> BUILDING</div>
+        <nav>
+            <a href="../../UnityEnergy/customer-portals.html" class="back-btn">Customer Portals</a>
+            <a href="../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
+        </nav>
+    </header>
     <section class="hero">
-      <span class="kicker">Customer Profile</span>
-      <h1>BOA Building</h1>
-      <p class="lead">
-        This page is the new BOA Building customer workspace. It is ready for your content, visual assets,
-        and performance story narrative.
-      </p>
-
-      <div class="grid">
-        <article class="card">
-          <h3>Project Goal</h3>
-          <p>Define the electrical field baseline and identify recoverable energy opportunities.</p>
-        </article>
-        <article class="card">
-          <h3>Operational Focus</h3>
-          <p>Reduce burden from reactive energy, thermal stress, and unnecessary demand cost.</p>
-        </article>
-        <article class="card">
-          <h3>Deliverables</h3>
-          <p>Customer-facing insights, dashboard links, and recommended optimization actions.</p>
-        </article>
-      </div>
+        <img class="hero-image" src="./images/SpokaneBOAtowerPic1.png" alt="Bank of America Building in Spokane, Washington">
+        <div class="hero-content">
+            <h1>BOA Building — Spokane Commercial Corridor</h1>
+            <p>Commercial electrical field reporting with managed transformer behavior for real building operation.</p>
+            <div class="hero-meta">Spokane, Washington • BOA Building electrical field library</div>
+            <div class="hero-mpts">MPTS-managed reporting active: b (baseline), v (voltage/reactive), m (managed condition)</div>
+            <div class="hero-library-ctas">
+                <a href="./03_MAR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260301-260331_31d.html">March 2026 Summaryboard</a>
+                <a href="./04_APR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260401-260430_30d.html">April 2026 Summaryboard</a>
+                <a href="../../UnityEnergy/customer-portals.html">Open Customer Portals</a>
+            </div>
+        </div>
     </section>
-    <section class="utility-window" aria-labelledby="utility-profile-title">
-      <p class="utility-kicker">Electric Service Context</p>
-      <h2 id="utility-profile-title">Power Provider for BOA Building: Avista Utilities</h2>
-      <p class="utility-intro">
-        BOA Building electricity service in Spokane is delivered by Avista, an investor-owned utility regulated by
-        the Washington Utilities and Transportation Commission (UTC). This utility context supports tariff and
-        cost-behavior interpretation in Unity Energy studies.
-      </p>
-      <div class="utility-grid">
-        <article class="utility-item">
-          <h3>Utility Type</h3>
-          <p>Investor-owned, state-regulated electric utility serving eastern Washington.</p>
-        </article>
-        <article class="utility-item">
-          <h3>Regulatory Model</h3>
-          <p>Regulated utility territory with oversight through Washington state utility regulation.</p>
-        </article>
-        <article class="utility-item">
-          <h3>Headquarters</h3>
-          <p>1411 E Mission Ave, Spokane, WA 99202</p>
-        </article>
-        <article class="utility-item">
-          <h3>Why This Matters</h3>
-          <p>Provider structure and tariff framework directly shape the cost of recovered vs wasted electricity.</p>
-        </article>
-      </div>
-      <p class="utility-note">
-        Utility profile fields are tracked in BOA datasets to keep source-of-power context tied to each energy
-        behavior analysis window.
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>Initial Build Checklist</h2>
-      <ul>
-        <li>Add customer branding and BOA Building facility imagery to `Customers/BOA_Building/images`.</li>
-        <li>Insert site profile metrics (transformer, interval span, demand context).</li>
-        <li>Attach dashboard/report links once analysis artifacts are ready.</li>
-        <li>Add contact/next-step call to action for stakeholder review.</li>
-      </ul>
-      <a class="cta" href="/UnityEnergy/customer-portals.html">Return to Customer Portals</a>
-    </section>
-    <section class="section">
-      <h2>Published Energy Fields</h2>
-      <ul>
-        <li>March 2026 study for BOA Building (MSB-1 and MSB-2) is now available.</li>
-      </ul>
-      <a class="study-link" href="./03_MAR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260301-260331_31d.html">Open March 2026 Energy Fields</a>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      BOA Building page scaffold created in eWebmaster for customer-specific content development.
-    </div>
-  </footer>
-  <script>
-    (function () {
-      try {
-        const context = {
-          customer_slug: "boa-building",
-          customer_name: "BOA Building",
-          source_path: window.location.pathname,
-          selected_at: new Date().toISOString()
-        };
-        window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
-        window.maxwellianClerkCustomerContext = context;
-      } catch (_err) {
-        // ignore storage failures
-      }
-    })();
-  </script>
+    <main class="container">
+        <section class="intro">
+            This page tracks BOA Building as a commercial field deployment where MPTS-managed reporting is now the standard workflow. The objective is clear building-level field behavior visibility for ownership, operations, and engineering review.
+        </section>
+        <section class="value-flow">
+            <h2>Why the BOA Story Matters in Avista Territory</h2>
+            <p>At BOA Building, the primary outcome target is improved field stability: cleaner electrical behavior, reduced reactive burden, and better usable performance from existing incoming service.</p>
+            <p>Because this site is served by Avista under Washington utility regulation, tariff context directly impacts how system performance gains are reflected financially at the customer level. This page preserves that utility context alongside measured field behavior.</p>
+        </section>
+        <section class="library-gateway">
+            <h2>BOA Library Access</h2>
+            <p>Use these links to access active BOA studies and customer portal navigation. As additional monthly windows are published, this page remains the primary building gateway.</p>
+            <div class="library-buttons">
+                <a href="./03_MAR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260301-260331_31d.html">March 2026 Summaryboard</a>
+                <a href="./04_APR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260401-260430_30d.html">April 2026 Summaryboard</a>
+                <a href="../../UnityEnergy/customer-portals.html">Customer Portals</a>
+                <a href="../../UnityEnergy/index.html">Unity Home</a>
+            </div>
+        </section>
+        <section class="grid">
+            <article class="panel">
+                <h2>System Snapshot</h2>
+                <ul>
+                    <li>Commercial office building environment in Spokane, Washington</li>
+                    <li>Managed reporting applies to MSB-1 and MSB-2 field behavior</li>
+                    <li>Monthly field views published through Unity summaryboard reporting</li>
+                    <li>MPTS pattern model now standardized to b, v, and m imagery</li>
+                </ul>
+            </article>
+            <article class="panel">
+                <h2>Utility Context</h2>
+                <ul>
+                    <li>Local electricity provider: Avista Utilities</li>
+                    <li>Investor-owned utility regulated under Washington UTC oversight</li>
+                    <li>Utility framework informs tariff and cost-behavior interpretation</li>
+                    <li>Source-of-power context remains attached to BOA study windows</li>
+                </ul>
+            </article>
+            <article class="panel">
+                <h2>Unity Intervention</h2>
+                <ul>
+                    <li>MPTS-managed workflow now active for BOA reporting</li>
+                    <li>Legacy BT/simulator reporting path retired from active BOA flow</li>
+                    <li>Current analysis view prioritizes baseline, reactive, and managed condition states</li>
+                    <li>Monthly publications continue through BOA summaryboard releases</li>
+                </ul>
+            </article>
+            <article class="panel">
+                <h2>Published Reporting Status</h2>
+                <ul>
+                    <li>March 2026 BOA summaryboard is now published and linked from this gateway</li>
+                    <li>April 2026 BOA summaryboard is now published and linked from this gateway</li>
+                    <li>MSB-1 and MSB-2 pattern narratives and Unity voice files are included in both releases</li>
+                    <li>New monthly windows can continue to be dropped in without redesigning this page</li>
+                </ul>
+            </article>
+        </section>
+        <section class="translation">
+            <h2>Translation Layer</h2>
+            <blockquote>“This commercial-building model tracks how well the site uses existing electrical supply under managed field conditions, not just one isolated meter statistic.”</blockquote>
+            <p>Primary claim for this page: commercial-building clarity first, with utility context and managed field behavior presented in one consistent customer-facing view.</p>
+        </section>
+        <section class="data-note">
+            <h3>Media and Data Note</h3>
+            Hero is fixed to SpokaneBOAtowerPic1.png for now, and can be swapped again later without changing page structure.
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>BOA Building commercial case page — AVCO-style hero and MPTS-managed reporting workflow.</p>
+    </footer>
+    <script>
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "boa-building",
+                    customer_name: "BOA Building",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {
+                // ignore storage failures
+            }
+        })();
+    </script>
 </body>
 </html>
