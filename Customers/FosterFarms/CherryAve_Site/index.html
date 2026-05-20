@@ -346,6 +346,94 @@
             font-size: 0.95em;
             line-height: 1.5;
         }
+        .utility-window {
+            margin: 36px 0 26px;
+            padding: 32px;
+            border-radius: 14px;
+            border: 1px solid rgba(204, 0, 0, 0.35);
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.94) 0%, rgba(204, 0, 0, 0.94) 100%);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 28px rgba(139, 0, 0, 0.22);
+        }
+        .utility-kicker {
+            display: inline-block;
+            margin: 0 0 12px;
+            color: rgba(139, 0, 0, 1);
+            background: rgba(255, 215, 0, 1);
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 6px 12px;
+        }
+        .utility-window h3 {
+            margin: 0 0 12px;
+            color: rgba(255, 245, 210, 1);
+            font-size: 1.95em;
+            line-height: 1.25;
+        }
+        .utility-intro {
+            margin: 0;
+            color: rgba(255, 236, 176, 1);
+            max-width: 980px;
+        }
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .utility-item {
+            border: 1px solid rgba(255, 215, 0, 0.42);
+            border-radius: 12px;
+            padding: 12px 13px;
+            background: rgba(92, 0, 0, 0.55);
+        }
+        .utility-item h4 {
+            margin: 0 0 7px;
+            color: rgba(255, 230, 124, 1);
+            font-size: 0.93rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .utility-item p {
+            margin: 0;
+            color: rgba(255, 239, 194, 1);
+            font-size: 0.94rem;
+            line-height: 1.45;
+        }
+        .utility-note {
+            margin: 14px 0 0;
+            color: rgba(255, 236, 176, 1);
+            font-size: 0.93rem;
+            line-height: 1.5;
+        }
+        .utility-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .utility-link-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: rgba(255, 215, 0, 1);
+            color: rgba(139, 0, 0, 1);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            border: 2px solid rgba(88, 0, 0, 1);
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .utility-link-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
 
         .expert-section {
             background: white;
@@ -783,6 +871,12 @@
             .study-month-top {
                 gap: 10px;
             }
+            .utility-window {
+                padding: 26px 20px;
+            }
+            .utility-links {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -810,6 +904,9 @@
             <p class="capacity-subtitle2">Observed inefficiencies across Cherry Avenue’s 480V industrial field</p>
             <p class="capacity-subtitle1">SITE CONNECTED CAPACITY : 10,500 kVA</p>
             <p class="capacity-subtitle1">AVERAGE SITE CONSUMPTION : 3,500 kW</p>
+            <div class="hero-buttons">
+                <a href="#utility-supply" class="hero-btn">How Cherry Gets Power</a>
+            </div>
         </div>
         <video class="hero-chicken-video hero-chicken-left" id="chickenLeft" muted loop autoplay playsinline>
             <source src="../ChickenFootball.mp4" type="video/mp4">
@@ -845,6 +942,40 @@
                     <h3> High-Resolution Monitoring</h3>
                     <div class="tech-detail">4 of 8 Energy Fields (~80% of site)</div>
                 </div>
+            </div>
+        </section>
+        <section id="utility-supply" class="utility-window">
+            <p class="utility-kicker">Electric Service Context</p>
+            <h3>How Cherry Avenue Gets Power: PG&amp;E Delivery + Shell Energy Supply Context</h3>
+            <p class="utility-intro">
+                Cherry Avenue receives site delivery through Pacific Gas and Electric Company (PG&amp;E) in California’s Central Valley utility footprint.
+                Supply-side planning and wholesale procurement context for this site includes Shell Energy Solutions as part of the broader resource stack aligned to operational load planning.
+            </p>
+            <div class="utility-grid">
+                <article class="utility-item">
+                    <h4>Local Utility</h4>
+                    <p>PG&amp;E provides regulated retail distribution and grid delivery service at the Cherry Avenue facility.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Supply Portfolio</h4>
+                    <p>Delivered power reflects a mixed California portfolio that includes contracted generation, renewables, and market resources.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Regional Grid Source</h4>
+                    <p>Power flows through the CAISO-operated transmission and market framework within the Western Interconnection.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Who They Get It From</h4>
+                    <p>PG&amp;E manages delivery while Shell Energy Solutions is part of the site’s supply-side procurement context for wholesale generation access.</p>
+                </article>
+            </div>
+            <p class="utility-note">
+                For Unity analysis context: Cherry receives bundled grid electricity through utility delivery plus supply contracts, not from one dedicated single generation plant.
+            </p>
+            <div class="utility-links">
+                <a href="https://www.pge.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">PG&amp;E Website ↗</a>
+                <a href="https://www.shellenergy.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Shell Energy ↗</a>
+                <a href="https://www.caiso.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">CAISO Context ↗</a>
             </div>
         </section>
 

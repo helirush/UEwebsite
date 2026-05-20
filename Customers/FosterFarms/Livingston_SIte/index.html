@@ -241,6 +241,36 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             font-weight: 600;
         }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 16px 36px;
+            background: rgba(255, 215, 0, 1);
+            color: rgba(98, 0, 0, 1);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.1em;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+            border: 3px solid rgba(98, 0, 0, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255,215,0,0.5);
+            background: rgba(255, 255, 255, 1);
+        }
         
         /* Hero Corner Chicken Videos */
         .hero-chicken-video {
@@ -970,6 +1000,105 @@
             font-size: 0.95em;
             line-height: 1.5;
         }
+        .utility-window {
+            margin: 36px 0 28px;
+            padding: 32px;
+            border-radius: 14px;
+            border: 1px solid rgba(204, 0, 0, 0.35);
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.94) 0%, rgba(204, 0, 0, 0.94) 100%);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 28px rgba(139, 0, 0, 0.22);
+        }
+
+        .utility-kicker {
+            display: inline-block;
+            margin: 0 0 12px;
+            color: rgba(139, 0, 0, 1);
+            background: rgba(255, 215, 0, 1);
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 6px 12px;
+        }
+
+        .utility-window h3 {
+            margin: 0 0 12px;
+            color: rgba(255, 245, 210, 1);
+            font-size: 1.95em;
+            line-height: 1.25;
+        }
+
+        .utility-intro {
+            margin: 0;
+            color: rgba(255, 236, 176, 1);
+            max-width: 980px;
+        }
+
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .utility-item {
+            border: 1px solid rgba(255, 215, 0, 0.42);
+            border-radius: 12px;
+            padding: 12px 13px;
+            background: rgba(92, 0, 0, 0.55);
+        }
+
+        .utility-item h4 {
+            margin: 0 0 7px;
+            color: rgba(255, 230, 124, 1);
+            font-size: 0.93rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .utility-item p {
+            margin: 0;
+            color: rgba(255, 239, 194, 1);
+            font-size: 0.94rem;
+            line-height: 1.45;
+        }
+
+        .utility-note {
+            margin: 14px 0 0;
+            color: rgba(255, 236, 176, 1);
+            font-size: 0.93rem;
+            line-height: 1.5;
+        }
+
+        .utility-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .utility-link-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: rgba(255, 215, 0, 1);
+            color: rgba(139, 0, 0, 1);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            border: 2px solid rgba(88, 0, 0, 1);
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .utility-link-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
 
         .highlights {
             display: grid;
@@ -1070,6 +1199,12 @@
             .hero .capacity-subtitle4 {
                 font-size: 1.35em;
             }
+            .utility-window {
+                padding: 26px 20px;
+            }
+            .utility-links {
+                flex-direction: column;
+            }
 
             .areas-grid {
                 grid-template-columns: 1fr;
@@ -1104,6 +1239,9 @@
             <p class="capacity-subtitle1">AVERAGE SITE CONSUMPTION: 8,000 kW</p>
             <p class="capacity-subtitle4">ACTIVE GROUP STUDIES ONLINE: <span id="livingston-hero-active-groups">0</span></p>
             <p class="capacity-subtitle3">ONGOING SITE AVERAGE EFFICIENCY: <span id="livingston-hero-site-avg-pf">--.-%PF</span></p>
+            <div class="hero-buttons">
+                <a href="#utility-supply" class="hero-btn">How Livingston Gets Power</a>
+            </div>
         </div>
         <video class="hero-chicken-video hero-chicken-left" id="chickenLeft" muted loop autoplay playsinline>
             <source src="../ChickenFootball.mp4" type="video/mp4">
@@ -1136,6 +1274,40 @@
                     <h3>High-Resolution Monitoring</h3>
                     <div class="tech-detail">15 of 31 Energy Fields (current active monitoring set)</div>
                 </div>
+            </div>
+        </section>
+        <section id="utility-supply" class="utility-window">
+            <p class="utility-kicker">Electric Service Context</p>
+            <h3>How Livingston Gets Power: Merced Electric Service Context</h3>
+            <p class="utility-intro">
+                Livingston site delivery is tracked in Unity context as Merced Electric territory for local utility service and industrial distribution planning.
+                Site supply is managed as a blended grid resource profile aligned to California wholesale and regional balancing frameworks.
+            </p>
+            <div class="utility-grid">
+                <article class="utility-item">
+                    <h4>Local Utility</h4>
+                    <p>Merced Electric context governs local retail delivery, feeder reliability, and service conditions for this Livingston campus.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Supply Portfolio</h4>
+                    <p>Delivered energy is a diversified mix that can include hydro, natural gas, renewables, and contracted wholesale purchases.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Regional Grid Source</h4>
+                    <p>Power flow is tied to California balancing operations within the CAISO market footprint and Western Interconnection.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Who They Get It From</h4>
+                    <p>Merced Electric sourcing context reflects utility-owned or contracted resources plus regional market procurement pathways.</p>
+                </article>
+            </div>
+            <p class="utility-note">
+                For Unity analysis context: Livingston receives bundled grid electricity through local utility service and wholesale procurement channels, not from one dedicated single plant.
+            </p>
+            <div class="utility-links">
+                <a href="https://www.mercedid.org/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Merced Utility Context ↗</a>
+                <a href="https://www.caiso.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">CAISO Context ↗</a>
+                <a href="https://www.energy.ca.gov/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California Energy ↗</a>
             </div>
         </section>
 

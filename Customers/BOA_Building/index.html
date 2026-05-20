@@ -129,18 +129,6 @@
             font-size: clamp(0.92rem, 1.2vw, 1.08rem);
             opacity: 0.95;
         }
-        .hero-mpts {
-            margin-top: 10px;
-            display: inline-block;
-            padding: 8px 14px;
-            border-radius: 999px;
-            border: 2px solid var(--boa-red);
-            color: rgba(255, 255, 255, 1);
-            background: var(--boa-red);
-            font-size: 0.86rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
         .hero-library-ctas {
             margin-top: 18px;
             display: flex;
@@ -214,6 +202,94 @@
             color: var(--accent-dark);
             margin-bottom: 8px;
             letter-spacing: 0.2px;
+        }
+        .utility-window {
+            margin-bottom: 22px;
+            padding: 24px 24px 22px;
+            border-radius: 12px;
+            border: 1px solid rgba(188, 206, 231, 0.65);
+            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent-mid) 100%);
+            color: rgba(248, 251, 255, 1);
+            box-shadow: 0 8px 22px rgba(0, 45, 114, 0.2);
+        }
+        .utility-kicker {
+            display: inline-block;
+            margin: 0 0 10px;
+            color: var(--accent-dark);
+            background: rgba(236, 243, 252, 1);
+            font-weight: 800;
+            font-size: 0.74rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 5px 11px;
+        }
+        .utility-window h2 {
+            margin: 0 0 10px;
+            color: rgba(255, 255, 255, 1);
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+        .utility-intro {
+            margin: 0;
+            color: rgba(224, 236, 250, 1);
+            max-width: 980px;
+        }
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .utility-item {
+            border: 1px solid rgba(196, 214, 238, 0.45);
+            border-radius: 10px;
+            padding: 12px 13px;
+            background: rgba(0, 32, 86, 0.48);
+        }
+        .utility-item h3 {
+            margin: 0 0 6px;
+            color: rgba(236, 243, 252, 1);
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .utility-item p {
+            margin: 0;
+            color: rgba(220, 232, 245, 1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+        .utility-note {
+            margin: 13px 0 0;
+            color: rgba(216, 229, 244, 1);
+            font-size: 0.91rem;
+            line-height: 1.5;
+        }
+        .utility-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .utility-link-btn {
+            display: inline-block;
+            padding: 9px 13px;
+            background: rgba(236, 243, 252, 1);
+            color: var(--accent-dark);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.02em;
+            border: 2px solid var(--accent-dark);
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+        }
+        .utility-link-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
         .library-buttons {
             margin-top: 14px;
@@ -334,8 +410,12 @@
                 padding: 24px 16px 38px;
             }
             .library-buttons,
-            .hero-library-ctas {
+            .hero-library-ctas,
+            .utility-links {
                 justify-content: center;
+            }
+            .utility-window {
+                padding: 20px 18px 19px;
             }
         }
     </style>
@@ -354,10 +434,10 @@
             <h1>BOA Building — Spokane Commercial Corridor</h1>
             <p>Commercial electrical field reporting with managed transformer behavior for real building operation.</p>
             <div class="hero-meta">Spokane, Washington • BOA Building electrical field library</div>
-            <div class="hero-mpts">MPTS-managed reporting active: b (baseline), v (voltage/reactive), m (managed condition)</div>
             <div class="hero-library-ctas">
                 <a href="./03_MAR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260301-260331_31d.html">March 2026 Summaryboard</a>
                 <a href="./04_APR26/SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260401-260430_30d.html">April 2026 Summaryboard</a>
+                <a href="#utility-supply">How BOA Gets Power</a>
                 <a href="../../UnityEnergy/customer-portals.html">Open Customer Portals</a>
             </div>
         </div>
@@ -370,6 +450,41 @@
             <h2>Why the BOA Story Matters in Avista Territory</h2>
             <p>At BOA Building, the primary outcome target is improved field stability: cleaner electrical behavior, reduced reactive burden, and better usable performance from existing incoming service.</p>
             <p>Because this site is served by Avista under Washington utility regulation, tariff context directly impacts how system performance gains are reflected financially at the customer level. This page preserves that utility context alongside measured field behavior.</p>
+        </section>
+        <section id="utility-supply" class="utility-window">
+            <p class="utility-kicker">Electric Service Context</p>
+            <h2>How BOA Building Gets Power: Avista Utilities (Spokane)</h2>
+            <p class="utility-intro">
+                BOA Building electric service is delivered by Avista Utilities as part of Avista’s regulated Washington service territory.
+                Avista plans and files long-range power supply strategy through integrated resource planning under Washington utility oversight.
+            </p>
+            <div class="utility-grid">
+                <article class="utility-item">
+                    <h3>Local Utility</h3>
+                    <p>Avista Utilities provides retail electric distribution service for this Spokane commercial corridor site.</p>
+                </article>
+                <article class="utility-item">
+                    <h3>Supply Portfolio</h3>
+                    <p>Avista supply is a diversified mix that includes hydro, natural gas, wind, solar, and purchased market resources.</p>
+                </article>
+                <article class="utility-item">
+                    <h3>Regional Grid Source</h3>
+                    <p>Site power arrives through the Western Interconnection transmission framework serving the Inland Northwest.</p>
+                </article>
+                <article class="utility-item">
+                    <h3>Who They Get It From</h3>
+                    <p>Avista serves customers from utility-owned generation plus contracted and market-acquired wholesale resources.</p>
+                </article>
+            </div>
+            <p class="utility-note">
+                For Unity analysis context: BOA receives bundled grid power through Avista retail service, not from one dedicated single plant.
+                That utility context stays paired with BOA field behavior so tariff and performance interpretation are read together.
+            </p>
+            <div class="utility-links">
+                <a href="https://www.myavista.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Avista Website ↗</a>
+                <a href="https://www.myavista.com/about-us/integrated-resource-planning" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Avista IRP ↗</a>
+                <a href="https://www.utc.wa.gov/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Washington UTC ↗</a>
+            </div>
         </section>
         <section class="library-gateway">
             <h2>BOA Library Access</h2>

@@ -198,6 +198,105 @@
         .value-flow p + p {
             margin-top: 8px;
         }
+        .utility-window {
+            margin-bottom: 22px;
+            padding: 24px 24px 22px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 193, 183, 0.7);
+            background: linear-gradient(135deg, rgba(74, 44, 40, 1) 0%, rgba(103, 62, 56, 1) 100%);
+            color: rgba(252, 247, 243, 1);
+            box-shadow: 0 8px 22px rgba(54, 37, 34, 0.2);
+        }
+
+        .utility-kicker {
+            display: inline-block;
+            margin: 0 0 10px;
+            color: rgba(79, 47, 42, 1);
+            background: rgba(226, 210, 201, 1);
+            font-weight: 800;
+            font-size: 0.74rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 5px 11px;
+        }
+
+        .utility-window h2 {
+            margin: 0 0 10px;
+            color: rgba(255, 255, 255, 1);
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+
+        .utility-intro {
+            margin: 0;
+            color: rgba(244, 232, 225, 1);
+            max-width: 980px;
+        }
+
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .utility-item {
+            border: 1px solid rgba(226, 210, 201, 0.4);
+            border-radius: 10px;
+            padding: 12px 13px;
+            background: rgba(61, 36, 33, 0.52);
+        }
+
+        .utility-item h3 {
+            margin: 0 0 6px;
+            color: rgba(241, 224, 214, 1);
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .utility-item p {
+            margin: 0;
+            color: rgba(236, 223, 215, 1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .utility-note {
+            margin: 13px 0 0;
+            color: rgba(232, 218, 210, 1);
+            font-size: 0.91rem;
+            line-height: 1.5;
+        }
+
+        .utility-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .utility-link-btn {
+            display: inline-block;
+            padding: 9px 13px;
+            background: rgba(226, 210, 201, 1);
+            color: rgba(79, 47, 42, 1);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.02em;
+            border: 2px solid rgba(79, 47, 42, 1);
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+        }
+
+        .utility-link-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
 
         .library-gateway {
             background: rgba(255, 255, 255, 1);
@@ -351,7 +450,8 @@
             }
 
             .library-buttons,
-            .hero-library-ctas {
+            .hero-library-ctas,
+            .utility-links {
                 justify-content: center;
             }
         }
@@ -375,6 +475,7 @@
             <div class="hero-library-ctas">
                 <a href="library/installation/index.html">The Instance Installation Library</a>
                 <a href="library/index.html">Open AVCO Library Hub</a>
+                <a href="#utility-supply">How AVCO Gets Power</a>
             </div>
         </div>
     </section>
@@ -388,6 +489,40 @@
             <h2>Why the AVCO Story Matters in LADWP Territory</h2>
             <p>At AVCO Center, the primary result is field stabilization: cleaner electrical behavior, lower stress across equipment, and more stable power quality for a mixed-load office environment.</p>
             <p>Because this site is served by LADWP as a municipal utility, the financial value of improved electrical performance is not fully translated into the building owner’s bill. Much of the system-level capacity benefit accrues to the grid, while direct bill savings to the customer remain comparatively limited under the current tariff structure.</p>
+        </section>
+        <section id="utility-supply" class="utility-window">
+            <p class="utility-kicker">Electric Service Context</p>
+            <h2>How AVCO Gets Power: Los Angeles Department of Water and Power (LADWP)</h2>
+            <p class="utility-intro">
+                AVCO Center receives electric service through LADWP, the municipal utility serving the City of Los Angeles.
+                LADWP plans and manages generation, transmission, and distribution for this territory under a publicly governed utility structure.
+            </p>
+            <div class="utility-grid">
+                <article class="utility-item">
+                    <h3>Local Utility</h3>
+                    <p>LADWP provides retail distribution service for AVCO Center in the West Los Angeles corridor.</p>
+                </article>
+                <article class="utility-item">
+                    <h3>Supply Portfolio</h3>
+                    <p>LADWP supply is a blended portfolio including natural gas, hydro, solar, wind, geothermal, and contracted power resources.</p>
+                </article>
+                <article class="utility-item">
+                    <h3>Regional Grid Source</h3>
+                    <p>Site power is delivered through the LADWP balancing authority footprint within the Western Interconnection.</p>
+                </article>
+                <article class="utility-item">
+                    <h3>Who They Get It From</h3>
+                    <p>LADWP serves customers from utility-owned generation assets plus contracted and market-acquired wholesale resources.</p>
+                </article>
+            </div>
+            <p class="utility-note">
+                For Unity analysis context: AVCO receives bundled municipal grid power through LADWP service, not from one dedicated single generation plant.
+            </p>
+            <div class="utility-links">
+                <a href="https://www.ladwp.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">LADWP Website ↗</a>
+                <a href="https://www.ladwp.com/who-we-are/our-organization/power-system" class="utility-link-btn" target="_blank" rel="noopener noreferrer">LADWP Power System ↗</a>
+                <a href="https://www.ladwp.com/residents/save-money-and-energy/clean-grid-la" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Clean Grid LA ↗</a>
+            </div>
         </section>
 
         <section class="library-gateway">
