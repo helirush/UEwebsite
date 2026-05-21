@@ -784,7 +784,7 @@
             const inlineImg = document.getElementById('patternImageInline');
             if (!inlineImg) return;
             const src = (inlineImg.getAttribute('src') || '').trim();
-            if (!src || src === '#' || src.includes('Patterns/T12v_apr26.png')) {
+            if (!src || src === '#') {
                 handlePatternMissing();
             }
         })();

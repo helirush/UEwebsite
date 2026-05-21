@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PL1-Proc2 - VOLT Analysis</title>
+    <title>MSB-1 - VOLT Analysis</title>
     <style>
         * {
             margin: 0;
@@ -530,172 +530,539 @@
 </head>
 <body>
     <div class="header">
-        <h1>PL1-Proc2 - VOLT Analysis</h1>
+        <h1>MSB-1 - VOLT Analysis</h1>
         <button class="back-btn" onclick="goBack()">← Back to Summary</button>
     </div>
     
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="Patterns/PL1-Proc2v_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
-            <p>PL1-Proc2 - VOLT Pattern</p>
+            <img id="patternImageInline" src="Patterns/MSB-1v_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
+            <p>MSB-1 - VOLT Pattern</p>
         </div>
         <div class="bottom-section">
             <div class="markdown-pane">
                 <button class="markdown-fullsize-btn" onclick="showMarkdownFullscreen()" title="View markdown full size">🔍 Full Size</button>
                 <div class="markdown-content">
-                    <h1>VOLTAGE &amp; CURRENT HEALTH ANALYSIS</h1>
-<p><em>Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden</em></p>
-<p><strong>Transformer:</strong> PL1-Proc2<br />
-<strong>Generated:</strong> 2026-04-25 17:56:55<br />
-<strong>Data Source:</strong> AN55050338-V-1minRES_26460CLP_260313-260331c.csv  </p>
-<h2>📊 Analysis Period</h2>
+                    <h1>BASELINE ELECTRICAL ENERGY USAGE AND COST</h1>
+<p><strong>Transformer Baseline :</strong>
+- <strong>Consumption Usage:</strong> 192,292.9 kWh (Usage per period)
+- <strong>Consumption Cost per unit:</strong> $0.080/kWh (Cost per kWh)
+- <strong>Consumption Total Cost:</strong> $15,383.43 (Cost per period)
+- <strong>Consumption Total Cost:</strong> $21.37 (Cost per hour)</p>
+<hr />
+<h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
+<p><strong>Transformer Name:</strong> MSB-1<br />
+<strong>Generated:</strong> 2026-05-19 15:11:10<br />
+<strong>Data Source:</strong> AN54022513-V-1minRES_43200CLP_260401-260430c.csv  </p>
+<h2>Time Period</h2>
 <ul>
-<li><strong>Period:</strong> March 13, 2026 thru March 31, 2026</li>
-<li><strong>Number of Days:</strong> 19 Days</li>
+<li><strong>Period:</strong> April 01, 2026 thru April 30, 2026</li>
+<li><strong>Number of Days:</strong> 30 Days</li>
 <li><strong>Data Resolution:</strong> 1-minute</li>
-<li><strong>Total Data Points:</strong> 26,460</li>
+<li>
+<p><strong>Total Data Points:</strong> 43,200</p>
+</li>
+<li>
+<p><strong>Dataset Coverage:</strong> Complete month (100.0% of 30-day month)</p>
+</li>
+<li><strong>Billing Scale Factor:</strong> 1.000x (no normalization needed)</li>
 </ul>
-<h2>🔋 Facility Information</h2>
+<h2>Facility Information</h2>
 <ul>
-<li><strong>Transformer Capacity:</strong> 2,500 kVA</li>
-<li><strong>Nominal Voltage:</strong> 480V (3-Phase)</li>
-<li><strong>Analysis Type:</strong> Voltage &amp; Current Health + Thermal Burden Assessment</li>
-<li><strong>Technology Focus:</strong> Unity Energy MPTS Solutions</li>
+<li><strong>Facility:</strong> Bank of America</li>
+<li><strong>Location:</strong> Tower Complex</li>
+<li><strong>Analysis Type:</strong> Energy Field Performance Assessment</li>
+<li><strong>Technology Focus:</strong> Unity Energy Management Solutions</li>
 </ul>
 <hr />
-<h2>📈 Voltage Statistics</h2>
-<details><summary><strong>Basic Voltage Metrics</strong></summary>
-
+<h2>Executive Summary</h2>
+<p><em>Brief overview of key transformer performance metrics and energy consumption.</em></p>
 <ul>
-<li><strong>Total Voltage Readings Analyzed:</strong> 26,460</li>
-<li><strong>Average Voltage:</strong> 319.7V</li>
-<li><strong>Minimum Voltage:</strong> 0.0V</li>
-<li><strong>Maximum Voltage:</strong> 333.2V</li>
-<li><strong>Standard Deviation:</strong> 4.01V</li>
-</ul></details>
-
-<h3>Operating Mean Voltage vs Nominal (480V)</h3>
-<ul>
-<li><strong>Operating Mean:</strong> 319.7V (160.3V, 33.39% below nominal)</li>
+<li><strong>Transformer:</strong> MSB-1</li>
+<li><strong>Power Factor:</strong> 0.988</li>
+<li><strong>Total Energy (Actual):</strong> 192,292.89 kWh (per period), 267.07 kW (per hour)</li>
+<li><strong>Total Waste (Actual):</strong> 1,945.39 kWh (per period), 2.70 kW (per hour)</li>
 </ul>
-<p><em>📌 Note: Lower mean voltage for the same kW raises current, increasing BTU/hr and contributing to higher VHI.</em></p>
-<h3>Voltage Deviation Analysis</h3>
+<hr />
+<h2>Additional Analysis</h2>
+<p><em>Detailed thermal and voltage analysis available in dedicated reports:</em>
+- <strong>Heat Health Analysis:</strong> FIELDp3-HeatHealth_MSB-1_AN54022513-1minRES_260401-260430.md
+- <strong>Voltage &amp; Current Health:</strong> FIELDp2-VoltAmpHealth_MSB-1_AN54022513-1minRES_260401-260430.md</p>
+<h2>UNITY MANAGEMENT MSB-1 SAVINGS SUMMARY</h2>
+<p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
+<h3>Element 1: Reactive Energy Offset Savings</h3>
+<ul>
+<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 2.70 kW/hr</li>
+<li><strong>Blended Electricity Rate:</strong> $0.0800/kWh (all-inclusive)</li>
+<li><strong>MSB-1 Utility Cost Offset:</strong> $0.22/hour</li>
+<li><strong>Annual Offset Savings:</strong> $1894/year</li>
+</ul>
+<h3>Element 2: Cooling Elimination Savings</h3>
+<ul>
+<li><strong>Total Heat No Longer Generated:</strong> 9,700 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 0.85 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $0.07/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $595/year</li>
+</ul>
+<h3>Element 3: CO2e Emissions Reduction Value</h3>
+<ul>
+<li><strong>Total kW Waste Eliminated:</strong> 3.55 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 11.61 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 0.97 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0013 metric tons/hour</li>
+<li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
+<li><strong>Annual CO2e Value:</strong> $447/year</li>
+</ul>
+<h3>Total MSB-1 Unity Savings</h3>
+<ul>
+<li><strong>Per Hour:</strong> $0.34</li>
+<li><strong>Per Day:</strong> $8.04</li>
+<li><strong>Per Month:</strong> $241.31</li>
+<li><strong>Per Year:</strong> $2936</li>
+</ul>
+<h3>MSB-1 Savings Breakdown</h3>
+<h3>Unity System (MPTS) Installation Considerations</h3>
+<ul>
+<li><strong>Max Reactive Energy:</strong> 195.5 kVAR Max (Avg: 38.1 kVAR/hr ; 27,422 kVAR/mo)</li>
+<li><strong>Max Harmonic Distortion:</strong> 28.3% Max (range: 3.0% - 28.3%)</li>
+<li><strong>Max Amperage:</strong> 1,003A Max (range: 100A - 1003A)</li>
+</ul>
+<hr />
+<h1>MSB-1 DETAILED PERFORMANCE ANALYSIS</h1>
+<h2>Unity Technology Status</h2>
+<ul>
+<li><strong>Unity Technology Configuration:</strong> 0.0% reactive energy target</li>
+<li><strong>Unity Applied:</strong> No (measuring current problem state)</li>
+<li><strong>Analysis Mode:</strong> Pre-Unity baseline analysis</li>
+</ul>
+<h2>Transformer Specifications</h2>
+<ul>
+<li><strong>Capacity:</strong> 2,500 kVA</li>
+<li><strong>Voltage:</strong> 480V, 3-Phase</li>
+</ul>
+<h2>Fundamental Energy Values</h2>
 <table>
 <thead>
 <tr>
-<th>Deviation Band</th>
-<th style="text-align: right;">Readings</th>
-<th style="text-align: right;">Percentage</th>
+<th>Metric</th>
+<th>Average</th>
+<th>MIN</th>
+<th>MAX</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Below 460V</td>
-<td style="text-align: right;">26,460</td>
-<td style="text-align: right;">100.00%</td>
+<td>Line to Neutral Voltage (277v)</td>
+<td>277.70</td>
+<td>275.31</td>
+<td>279.93</td>
 </tr>
 <tr>
-<td>460–470V</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.00%</td>
+<td>Line to Line Voltage (480v)</td>
+<td>480.99</td>
+<td>476.85</td>
+<td>484.85</td>
 </tr>
 <tr>
-<td>470–480V</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.00%</td>
+<td>Current (AMPS)</td>
+<td>323.19</td>
+<td>100.22</td>
+<td>1003.35</td>
 </tr>
 <tr>
-<td>480–490V</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.00%</td>
+<td>Phase Angle (degrees)</td>
+<td>8.45</td>
+<td>3.38</td>
+<td>24.50</td>
 </tr>
 <tr>
-<td>490–500V</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.00%</td>
-</tr>
-<tr>
-<td>500V+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.00%</td>
+<td>Total Harmonic Distortion (PCT)</td>
+<td>13.96</td>
+<td>3.00</td>
+<td>28.26</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Threshold highlights (cumulative):</strong>
-- Below 470V: 26,460 (100.00%)
-- Below 460V: 26,460 (100.00%)
-- Above 490V: 0 (0.00%)
-- Above 500V: 0 (0.00%)</p>
-<hr />
-<h2>⚡ Voltage Drop Group Detection</h2>
-<details><summary><strong>Group Detection Analysis</strong></summary>
+<h2>🔀 Total Harmonic Distortion — Unity Translation</h2>
+<p>In traditional electrical engineering, Total Harmonic Distortion (THD) is calculated per phase, based on the sum of non-fundamental frequency components divided by the fundamental:</p>
+<div class="codehilite"><pre><span></span><code>THD_A = √(V₂² + V₃² + ...) / V₁
+</code></pre></div>
 
-<p><strong>Voltage Drop Groups Detected:</strong> 1</p>
-<h3>PL1-PROC2 Group Index</h3>
+<p>This results in a percentage value for each phase (A, B, and C), and by standard IEEE practice, these percentages are not directly additive because they are non-linear and phase-relative.</p>
+<p>However, at Unity, we take a <strong>field-level view of harmonic behavior</strong> — aligning with Maxwell's electromagnetic theory rather than purely scalar wave math.</p>
+<p>We define:</p>
+<div class="codehilite"><pre><span></span><code>THD_Field_Composite = THD_A + THD_B + THD_C
+</code></pre></div>
+
+<p>This is not a textbook THD, but a <strong>Unity Composite Index</strong> — a metric designed to:
+• Reflect total harmonic stress on the energy field,
+• Enable fast field diagnostics,
+• Map distortion across the 3-phase envelope as a combined entity.</p>
+<p>Think of it as a <strong>harmonic heat index</strong>, not a scalar voltage quantity.</p>
 <table>
 <thead>
 <tr>
-<th>Group ID</th>
-<th style="text-align: right;">Drop Count</th>
-<th>Voltage Range</th>
-<th style="text-align: right;">Amp Range</th>
-<th style="text-align: right;">ΔV</th>
-<th style="text-align: right;">Est. Stall Amps</th>
-<th style="text-align: right;">Estimated HP</th>
-<th>Motor Behavior Classification</th>
-<th style="text-align: right;">Days</th>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>G1</td>
-<td style="text-align: right;">4</td>
-<td>308.1–308.1V</td>
-<td style="text-align: right;">1291.6–1291.6A</td>
-<td style="text-align: right;">-1.2</td>
-<td style="text-align: right;">1291.6</td>
-<td style="text-align: right;">200</td>
-<td>Intermittent</td>
-<td style="text-align: right;">1</td>
+<td>THD Phase A (%)</td>
+<td>4.7%</td>
+<td>IEEE standard per-phase calculation</td>
+</tr>
+<tr>
+<td>THD Phase B (%)</td>
+<td>4.6%</td>
+<td>IEEE standard per-phase calculation</td>
+</tr>
+<tr>
+<td>THD Phase C (%)</td>
+<td>4.7%</td>
+<td>IEEE standard per-phase calculation</td>
+</tr>
+<tr>
+<td>Unity THD Composite (%)</td>
+<td>14.0%</td>
+<td>Field-level stress indicator</td>
+</tr>
+<tr>
+<td>Max Phase THD</td>
+<td>4.7%</td>
+<td>Highest THD among all three phases</td>
+</tr>
+<tr>
+<td>Min Phase THD</td>
+<td>4.6%</td>
+<td>Lowest THD among all three phases</td>
 </tr>
 </tbody>
 </table>
-<h3>PL1-PROC2 Group Nominal Drop Points</h3>
-<p>G1: Center at 308.1V, 4 occurrences</p></details>
-
-<hr />
-<h2>🔍 Device Inference and Stress Analysis</h2>
-<details><summary><strong>VHI Analysis & Device Stress Indicators</strong></summary>
-
-<h3>Voltage Heat Index (VHI) Analysis</h3>
+<h3>Engineering Commentary</h3>
+<p>This composite score is useful when assessing transformer health, load imbalance, or predicting heating and harmonic clustering (G1–G8 groups). It's used in our eBehavior overlays and directly informs Unity's Voltage Health Index (VHI).</p>
+<p>If IEEE compliance is required, individual THD values remain visible and can be cross-checked per phase.</p>
+<p>⚠️ <strong>Note on THD Composite</strong>: Unity's THD Composite is not a scalar addition per IEEE. It is a field-behavior indicator that helps us track total harmonic impact across all three phases — a core component of transformer-level heat modeling.</p>
+<h2>Capacity Utilization</h2>
 <ul>
-<li><strong>Average VHI:</strong> 6.68</li>
-<li><strong>Maximum VHI:</strong> 646.11</li>
-<li><strong>High VHI Events (&gt;5.0):</strong> 15,992</li>
+<li><strong>Maximum UtilityDemand:</strong> 810.71 kW</li>
+<li><strong>Maximum Load:</strong> 833.18 kVA</li>
+<li><strong>Percentage of Capacity (MAX):</strong> 33.3%</li>
+<li><strong>Average Load:</strong> 269.78 kVA</li>
+<li><strong>Percentage of Capacity (Avg):</strong> 10.8%</li>
 </ul>
-<h3>⚠️ Critical Voltage Stress Indicators</h3>
-<p><strong>Critical voltage groups detected:</strong> 1</p>
-<p><em>These voltage levels may indicate:</em></p>
+<h2>kVA and Power Factor Analysis (Measured vs Calculated)</h2>
+<h3>Measured Values (PRIMARY - Used for All Analysis)</h3>
 <ul>
-<li>Motor starting stress events</li>
-<li>Transformer overloading conditions</li>
-<li>Potential device failure precursors</li>
-<li>Power quality degradation</li>
-</ul></details>
-
-<hr />
-<h2>📊 Chart Overlay Data Preparation</h2>
-<details><summary><strong>Prepared Chart Overlay Points</strong></summary>
-
-<p><em>The following data points have been prepared for chart overlays:</em></p>
-<p>Critical voltage drops (below 440V): 26460 events</p>
-<h3>Group Annotation Points</h3>
-<p>G1: Center at 308.1V, 4 occurrences</p></details>
-
-<hr />
-<h2>💡 Voltage Behavior Recommendations</h2>
-<p>• Voltage behavior appears within normal operating parameters during the analysis period.</p>
+<li><strong>Average kVA (Ssum_kVA):</strong> 269.78 kVA</li>
+<li><strong>Average Power Factor (PF):</strong> 0.988</li>
+</ul>
+<p><strong>Source:</strong> Direct meter measurements (instantaneous values averaged over time)</p>
+<h3>Calculated Values (VERIFICATION ONLY)</h3>
+<ul>
+<li><strong>Calculated kVA (V×I×√3/1000):</strong> 269.25 kVA</li>
+</ul>
+<p><strong>Calculation Inputs:</strong>
+- Average Voltage (VIavg_V): 480.99 V
+- Average Current (Iavg_A): 323.19 A
+- Average kW (Psum_kW): 267.07 kW</p>
+<h3>Differences (Measured vs Calculated)</h3>
+<ul>
+<li><strong>kVA Difference:</strong> 0.53 kVA (0.2%)</li>
+<li><strong>Calculated PF (kW/kVA from averages):</strong> 0.992</li>
+<li><strong>Power Factor Difference:</strong> 0.004 (0.4%)</li>
+</ul>
+<h3>Why Measured Values Are More Accurate</h3>
+<p>When voltage and current vary over time (which they always do in real systems):
+- <strong>Average(V × I) ≠ Average(V) × Average(I)</strong> due to the non-linear multiplication
+- <strong>Time-weighted PF ≠ kW/kVA from averages</strong> due to load variation effects</p>
+<p>The meter's instantaneous measurements capture these variations correctly, while
+calculations from averaged values systematically underestimate reactive effects.</p>
+<p><strong>Analysis Method:</strong> All heat calculations, thermal burden, and cost analysis use
+the measured kVA (269.78) and measured PF (0.988) values.
+Calculated values are shown above for verification and engineering transparency.</p>
+<h2>Overall Power Metrics (FPC)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Average</th>
+<th>% of Capacity</th>
+<th>Total Energy</th>
+<th>HEAT (BTU/hr)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kVA</td>
+<td>269.78</td>
+<td>10.8%</td>
+<td>194,238.28 kVA</td>
+<td>911,292.56 TOTAL-HEAT</td>
+</tr>
+<tr>
+<td>kW</td>
+<td>267.07</td>
+<td>10.7%</td>
+<td>192,292.89 kWh</td>
+<td>9,127.05 Load-Heat</td>
+</tr>
+<tr>
+<td>kVAR</td>
+<td>38.09</td>
+<td>1.5%</td>
+<td>27,421.80 kVARh</td>
+<td>-</td>
+</tr>
+<tr>
+<td>WASTE</td>
+<td>2.70</td>
+<td>0.1%</td>
+<td>1,945.39 WASTE</td>
+<td>92.34 Field-Heat</td>
+</tr>
+</tbody>
+</table>
+<h3>Heat Unit Notes</h3>
+<ul>
+<li><strong>TOTAL-HEAT (BTU/hr):</strong> 911,292.56</li>
+<li><strong>Load-Heat (BTU/hr):</strong> 9,127.05</li>
+<li><strong>Field-Heat (BTU/hr):</strong> 92.34</li>
+<li><strong>Load-Heat (BTU, period total):</strong> 6,571,476.96</li>
+<li><strong>Field-Heat (BTU, period total):</strong> 66,482.49</li>
+</ul>
+<h2>Measured Monthly Averages</h2>
+<table>
+<thead>
+<tr>
+<th>Month</th>
+<th>Avg kVA</th>
+<th>Avg kW</th>
+<th>Avg kVAR</th>
+<th>Avg PF</th>
+<th>% Capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>269.78</td>
+<td>267.07</td>
+<td>36.53</td>
+<td>0.99</td>
+<td>10.8%</td>
+</tr>
+</tbody>
+</table>
+<h2>Measured Hourly Averages</h2>
+<table>
+<thead>
+<tr>
+<th>Hour</th>
+<th>Avg kVA</th>
+<th>Avg kW</th>
+<th>Avg kVAR</th>
+<th>Avg PF</th>
+<th>% Capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>130.87</td>
+<td>129.34</td>
+<td>19.67</td>
+<td>0.99</td>
+<td>5.2%</td>
+</tr>
+<tr>
+<td>01</td>
+<td>131.80</td>
+<td>130.27</td>
+<td>19.61</td>
+<td>0.99</td>
+<td>5.3%</td>
+</tr>
+<tr>
+<td>02</td>
+<td>137.42</td>
+<td>135.97</td>
+<td>19.58</td>
+<td>0.99</td>
+<td>5.5%</td>
+</tr>
+<tr>
+<td>03</td>
+<td>166.11</td>
+<td>164.73</td>
+<td>20.88</td>
+<td>0.99</td>
+<td>6.6%</td>
+</tr>
+<tr>
+<td>04</td>
+<td>243.30</td>
+<td>241.93</td>
+<td>25.08</td>
+<td>0.99</td>
+<td>9.7%</td>
+</tr>
+<tr>
+<td>05</td>
+<td>368.19</td>
+<td>366.46</td>
+<td>34.97</td>
+<td>1.00</td>
+<td>14.7%</td>
+</tr>
+<tr>
+<td>06</td>
+<td>402.80</td>
+<td>400.78</td>
+<td>39.74</td>
+<td>0.99</td>
+<td>16.1%</td>
+</tr>
+<tr>
+<td>07</td>
+<td>395.86</td>
+<td>393.65</td>
+<td>41.09</td>
+<td>0.99</td>
+<td>15.8%</td>
+</tr>
+<tr>
+<td>08</td>
+<td>358.76</td>
+<td>356.53</td>
+<td>39.45</td>
+<td>0.99</td>
+<td>14.4%</td>
+</tr>
+<tr>
+<td>09</td>
+<td>349.33</td>
+<td>346.78</td>
+<td>41.48</td>
+<td>0.99</td>
+<td>14.0%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>350.06</td>
+<td>346.90</td>
+<td>45.60</td>
+<td>0.99</td>
+<td>14.0%</td>
+</tr>
+<tr>
+<td>11</td>
+<td>366.64</td>
+<td>362.96</td>
+<td>50.42</td>
+<td>0.99</td>
+<td>14.7%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>356.59</td>
+<td>353.06</td>
+<td>48.90</td>
+<td>0.99</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>13</td>
+<td>345.39</td>
+<td>341.39</td>
+<td>50.51</td>
+<td>0.99</td>
+<td>13.8%</td>
+</tr>
+<tr>
+<td>14</td>
+<td>334.71</td>
+<td>330.98</td>
+<td>48.25</td>
+<td>0.99</td>
+<td>13.4%</td>
+</tr>
+<tr>
+<td>15</td>
+<td>328.92</td>
+<td>325.24</td>
+<td>47.62</td>
+<td>0.99</td>
+<td>13.2%</td>
+</tr>
+<tr>
+<td>16</td>
+<td>325.62</td>
+<td>322.22</td>
+<td>45.81</td>
+<td>0.99</td>
+<td>13.0%</td>
+</tr>
+<tr>
+<td>17</td>
+<td>327.61</td>
+<td>323.52</td>
+<td>49.62</td>
+<td>0.99</td>
+<td>13.1%</td>
+</tr>
+<tr>
+<td>18</td>
+<td>194.41</td>
+<td>190.84</td>
+<td>36.39</td>
+<td>0.98</td>
+<td>7.8%</td>
+</tr>
+<tr>
+<td>19</td>
+<td>192.18</td>
+<td>188.51</td>
+<td>36.41</td>
+<td>0.98</td>
+<td>7.7%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>177.25</td>
+<td>174.27</td>
+<td>31.93</td>
+<td>0.98</td>
+<td>7.1%</td>
+</tr>
+<tr>
+<td>21</td>
+<td>173.57</td>
+<td>170.86</td>
+<td>30.16</td>
+<td>0.98</td>
+<td>6.9%</td>
+</tr>
+<tr>
+<td>22</td>
+<td>170.25</td>
+<td>167.65</td>
+<td>29.15</td>
+<td>0.98</td>
+<td>6.8%</td>
+</tr>
+<tr>
+<td>23</td>
+<td>146.99</td>
+<td>144.93</td>
+<td>24.29</td>
+<td>0.99</td>
+<td>5.9%</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h1>END OF REPORT</h1>
                 </div>
@@ -703,7 +1070,7 @@
             <div class="dashboard-pane">
                 <button class="dashboard-fullsize-btn" onclick="showDashboardFullscreen()" title="View dashboard full size">🔍 Full Size</button>
                 <div class="dashboard-iframe-container">
-                    <iframe src="FIELD-Voltboard_PL1-Proc2_AN55050338_260313-260331.html"></iframe>
+                    <iframe src="FIELD-Voltboard_MSB-1_AN54022513_260401-260430.html"></iframe>
                 </div>
             </div>
         </div>
@@ -713,8 +1080,8 @@
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="Patterns/PL1-Proc2v_mar26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
-            <p>PL1-Proc2 - VOLT Pattern</p>
+            <img id="patternImageFullscreen" src="Patterns/MSB-1v_apr26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
+            <p>MSB-1 - VOLT Pattern</p>
         </div>
     </div>    
     <!-- Markdown Fullscreen Overlay -->
@@ -830,7 +1197,7 @@
 
             // Fallback to injected template value when query param is absent.
             if (!summaryPath) {
-                summaryPath = ('SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260313-260331_19d.html' || '').trim();
+                summaryPath = ('SITE-BankofAmerica-Summaryboard_BankofAmerica-2_1minRES_260401-260430_30d.html' || '').trim();
             }
 
             // Ignore stale placeholder/legacy values; use history as final fallback.

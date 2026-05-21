@@ -1138,7 +1138,7 @@ Calculated values are shown above for verification and engineering transparency.
             const inlineImg = document.getElementById('patternImageInline');
             if (!inlineImg) return;
             const src = (inlineImg.getAttribute('src') || '').trim();
-            if (!src || src === '#' || src.includes('Patterns/T15bt_apr26.png')) {
+            if (!src || src === '#') {
                 handlePatternMissing();
             }
         })();

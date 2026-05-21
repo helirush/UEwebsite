@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="Patterns/PL1bt_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
+            <img id="patternImageInline" src="Patterns/PL1-Proc2bt_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
             <p>PL1-Proc2 - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -1083,7 +1083,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="Patterns/PL1bt_mar26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
+            <img id="patternImageFullscreen" src="Patterns/PL1-Proc2bt_mar26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
             <p>PL1-Proc2 - ENERGY Pattern</p>
         </div>
     </div>    
@@ -1126,13 +1126,13 @@ Calculated values are shown above for verification and engineering transparency.
                 fullsizeBtn.style.display = 'none';
             }
             if (caption) {
-                caption.textContent = 'Pattern image pending upload';
+                caption.textContent = 'Patterns are currently unavailable.';
             }
             if (container && !container.querySelector('.pattern-missing-note')) {
                 const note = document.createElement('p');
                 note.className = 'pattern-missing-note';
                 note.style.cssText = 'margin-top: 14px; color: #f3d67a; font-size: 13px;';
-                note.textContent = 'Pattern image not found yet. Add it to Patterns and regenerate (or refresh if path already matches).';
+                note.textContent = 'Patterns are currently unavailable.';
                 container.appendChild(note);
             }
         }
@@ -1141,7 +1141,7 @@ Calculated values are shown above for verification and engineering transparency.
             const inlineImg = document.getElementById('patternImageInline');
             if (!inlineImg) return;
             const src = (inlineImg.getAttribute('src') || '').trim();
-            if (!src || src === '#' || src.includes('Patterns/PL1bt_mar26.png')) {
+            if (!src || src === '#') {
                 handlePatternMissing();
             }
         })();

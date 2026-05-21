@@ -726,10 +726,8 @@
     </footer>
     <script>
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
-        const UNITY_PORTAL_SESSION_KEY = 'unity_portal_session_v1';
         const UNITY_FOUNDER_SESSION_KEY = 'unity_founder_session_v1';
-        const PORTAL_SWITCH_QUERY_PARAM = 'portalSwitch';
-        const FOUNDER_EMAIL_WHITELIST = new Set(['mike@unityenergy.com']);
+        const FOUNDER_EMAIL_WHITELIST = new Set(['mike@unityenergy.com', 'adil@accentzinc.com']);
         const INVALID_NAME_TOKENS = new Set([
             'x', 'xx', 'xxx', 'xxxx', 'xxxxx', 'xxxxxx', 'test', 'testing', 'asdf', 'qwerty',
             'abc', 'name', 'firstname', 'lastname', 'unknown', 'none', 'null', 'na', 'n/a',
@@ -830,57 +828,6 @@
                 window.localStorage.setItem(UNITY_SITE_ACCESS_STATE_KEY, JSON.stringify(payload));
             } catch (_err) {}
         }
-        function readPortalSessionState() {
-            try {
-                const raw = window.sessionStorage.getItem(UNITY_PORTAL_SESSION_KEY);
-                if (!raw) return null;
-                const parsed = JSON.parse(raw);
-                if (!parsed || typeof parsed !== 'object') return null;
-                const destinationPath = String(parsed.destination_path || '').trim();
-                if (!destinationPath) return null;
-                return {
-                    destinationPath,
-                    customerSlug: String(parsed.customer_slug || '').trim(),
-                    customerName: String(parsed.customer_name || '').trim(),
-                    selectedAt: String(parsed.selected_at || '').trim(),
-                };
-            } catch (_err) {
-                return null;
-            }
-        }
-        function writePortalSessionState(params) {
-            try {
-                const destinationPath = String(params?.destinationPath || '').trim();
-                if (!destinationPath) return;
-                const payload = {
-                    destination_path: destinationPath,
-                    customer_slug: String(params?.customerSlug || ''),
-                    customer_name: String(params?.customerName || ''),
-                    source_path: window.location.pathname,
-                    selected_at: new Date().toISOString(),
-                };
-                window.sessionStorage.setItem(UNITY_PORTAL_SESSION_KEY, JSON.stringify(payload));
-            } catch (_err) {}
-        }
-        function clearPortalSessionState() {
-            try {
-                window.sessionStorage.removeItem(UNITY_PORTAL_SESSION_KEY);
-            } catch (_err) {}
-        }
-        function isPortalSwitchModeEnabled() {
-            try {
-                const params = new URLSearchParams(window.location.search);
-                return params.get(PORTAL_SWITCH_QUERY_PARAM) === '1';
-            } catch (_err) {
-                return false;
-            }
-        }
-        function routeToPortalSessionDestination() {
-            const portalSession = readPortalSessionState();
-            if (!portalSession || !portalSession.destinationPath) return false;
-            window.location.href = portalSession.destinationPath;
-            return true;
-        }
         function getPortalConfigSafe() {
             try {
                 if (typeof portalConfig !== 'undefined' && portalConfig) return portalConfig;
@@ -899,14 +846,6 @@
             }
         }
         function openLoginModal(event) {
-            const ownerSwitchRequested = !!(event && (event.shiftKey || event.altKey || event.metaKey));
-            const founderSession = readFounderSessionState();
-            const founderQuickMode = !!(founderSession && isFounderEmail(founderSession.email));
-            if (ownerSwitchRequested) {
-                clearPortalSessionState();
-            } else if (!founderQuickMode && !isPortalSwitchModeEnabled() && routeToPortalSessionDestination()) {
-                return;
-            }
             const modal = document.getElementById('loginModal');
             const cfg = getPortalConfigSafe();
             modal.classList.add('active');
@@ -1072,23 +1011,55 @@
             const firstNameInput = String(document.getElementById('visitorFirstName')?.value || '').trim();
             const lastNameInput = String(document.getElementById('visitorLastName')?.value || '').trim();
             const emailInput = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const normalizedInputEmail = normalizeEmailAddress(emailInput);
+            const founderFirstLoginDetected = !founderQuickMode && isFounderEmail(normalizedInputEmail);
             const role = String(document.getElementById('visitorRole')?.value || '').trim();
             const objective = String(document.getElementById('visitorObjective')?.value || '').trim();
             const wantsUpdates = !!document.getElementById('visitorUpdates')?.checked;
             clearLoginError();
             if (!founderQuickMode) {
-                if (!firstNameInput || !lastNameInput || !emailInput) {
-                    showLoginError('Please enter your first name, last name, and a valid email address.');
-                    return;
-                }
-                if (!isLikelyValidName(firstNameInput) || !isLikelyValidName(lastNameInput)) {
-                    showLoginError('Please enter your real first and last name (no placeholder names).');
+                if (!emailInput) {
+                    showLoginError('Please enter a valid email address.');
                     return;
                 }
                 if (!isLikelyValidEmail(emailInput)) {
                     showLoginError('Please enter a valid business email address (placeholder emails are not allowed).');
                     return;
                 }
+                if (!founderFirstLoginDetected) {
+                    if (!firstNameInput || !lastNameInput) {
+                        showLoginError('Please enter your first and last name.');
+                        return;
+                    }
+                    if (!isLikelyValidName(firstNameInput) || !isLikelyValidName(lastNameInput)) {
+                        showLoginError('Please enter your real first and last name (no placeholder names).');
+                        return;
+                    }
+                }
+            }
+            const founderAccessActive = founderQuickMode || founderFirstLoginDetected;
+            const passwordEl = document.getElementById('customerPassword');
+            const requiresPassword = !founderQuickMode && (
+                founderFirstLoginDetected ||
+                (!cfg.devMode && selectedCustomerKey && !isGuestSelection)
+            );
+            if (requiresPassword) {
+                const enteredPassword = passwordEl?.value || '';
+                if (enteredPassword !== cfg.password) {
+                    showLoginError('Incorrect password. Please try again.');
+                    return;
+                }
+            }
+            if (founderFirstLoginDetected && !selectedCustomerKey) {
+                writeFounderSessionState({
+                    email: normalizedInputEmail,
+                    firstName: firstNameInput,
+                    lastName: lastNameInput,
+                });
+                populateCustomerDropdown(cfg, false);
+                updatePortalAuthVisibility();
+                document.getElementById('customerName')?.focus();
+                return;
             }
             if (!selectedCustomerKey) {
                 showLoginError(founderQuickMode ? 'Please select a customer portal.' : 'Please select your company or Guest.');
@@ -1103,27 +1074,15 @@
                 showLoginError('Selected company is unavailable. Please refresh and try again.');
                 return;
             }
-            const normalizedInputEmail = normalizeEmailAddress(emailInput);
-            const founderFirstLoginDetected = !founderQuickMode && isFounderEmail(normalizedInputEmail);
-            const founderAccessActive = founderQuickMode || founderFirstLoginDetected;
-            const effectiveFirstName = founderQuickMode ? String(founderSession?.firstName || 'Mike') : firstNameInput;
-            const effectiveLastName = founderQuickMode ? String(founderSession?.lastName || 'Howell') : lastNameInput;
-            const effectiveEmail = founderQuickMode ? String(founderSession?.email || 'mike@unityenergy.com') : normalizedInputEmail;
-            const passwordEl = document.getElementById('customerPassword');
-            if (!isGuestSelection && !founderQuickMode && !cfg.devMode) {
-                const enteredPassword = passwordEl?.value || '';
-                if (enteredPassword !== cfg.password) {
-                    showLoginError('Incorrect password. Please try again.');
-                    return;
-                }
-            }
+            const effectiveFirstName = founderQuickMode ? String(founderSession?.firstName || '') : firstNameInput;
+            const effectiveLastName = founderQuickMode ? String(founderSession?.lastName || '') : lastNameInput;
+            const effectiveEmail = founderQuickMode ? String(founderSession?.email || normalizedInputEmail) : normalizedInputEmail;
             if (founderFirstLoginDetected) {
                 writeFounderSessionState({
                     email: effectiveEmail,
                     firstName: effectiveFirstName,
                     lastName: effectiveLastName,
                 });
-                clearPortalSessionState();
             }
             try {
                 const selectedAt = new Date().toISOString();
@@ -1154,13 +1113,6 @@
                         customerName: 'Guest',
                         customerSlug: 'guest',
                     });
-                    if (!founderAccessActive) {
-                        writePortalSessionState({
-                            destinationPath: guestDestinationPath,
-                            customerSlug: 'guest',
-                            customerName: 'Guest',
-                        });
-                    }
                     window.location.href = guestDestinationPath;
                     return;
                 }
@@ -1199,13 +1151,6 @@
                         customerName,
                         customerSlug,
                     });
-                    if (!founderAccessActive) {
-                        writePortalSessionState({
-                            destinationPath: String(customer.path || ''),
-                            customerSlug,
-                            customerName,
-                        });
-                    }
                 }
             } catch (_err) {}
             window.location.href = customer.path;
@@ -1221,11 +1166,7 @@
             }
         });
         document.addEventListener('DOMContentLoaded', function() {
-            if (isPortalSwitchModeEnabled()) {
-                clearPortalSessionState();
-            } else if (!readFounderSessionState() && routeToPortalSessionDestination()) {
-                return;
-            }
+            try { window.sessionStorage.removeItem('unity_portal_session_v1'); } catch (_err) {}
             populateCustomerDropdown(getPortalConfigSafe(), false);
             ['visitorFirstName', 'visitorLastName', 'visitorEmail', 'visitorRole', 'visitorObjective', 'customerName', 'customerPassword'].forEach(function (id) {
                 const el = document.getElementById(id);

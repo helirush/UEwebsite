@@ -762,7 +762,7 @@
             const inlineImg = document.getElementById('patternImageInline');
             if (!inlineImg) return;
             const src = (inlineImg.getAttribute('src') || '').trim();
-            if (!src || src === '#' || src.includes('Patterns/T16v_apr26.png')) {
+            if (!src || src === '#') {
                 handlePatternMissing();
             }
         })();
