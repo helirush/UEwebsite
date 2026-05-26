@@ -229,6 +229,7 @@
       const stampedImage = `${PUBLIC_SHARE_ORIGIN}${PUBLIC_OG_IMAGE_PATH}?ue_doc=${encodeURIComponent(stampCode)}`;
       const stampedUrl = new URL(PUBLIC_SHARE_PATH, PUBLIC_SHARE_ORIGIN);
       stampedUrl.searchParams.set("ue_doc", stampCode);
+      stampedUrl.searchParams.set("ue_share", String(Date.now()));
 
       const ogTitle = document.getElementById("ogTitle");
       const ogDescription = document.getElementById("ogDescription");
@@ -288,6 +289,7 @@
           const shareOrigin = isLocalHost ? PUBLIC_SHARE_ORIGIN : window.location.origin;
           const shareUrl = new URL(PUBLIC_SHARE_PATH, shareOrigin);
           shareUrl.searchParams.set("ue_doc", stampCode);
+          shareUrl.searchParams.set("ue_share", String(Date.now()));
           const ok = await copyToClipboard(shareUrl.toString());
           copyBtn.textContent = ok ? `Secure link copied · ${stampCode}` : "Copy failed";
           copyBtn.disabled = true;
