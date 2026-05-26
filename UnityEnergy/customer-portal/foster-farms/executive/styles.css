@@ -521,6 +521,34 @@ a {
   gap: 9px;
 }
 
+.footer-actions .share-type-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(130, 115, 77, 0.58);
+  background: linear-gradient(180deg, rgba(247, 241, 223, 0.95) 0%, rgba(232, 222, 194, 0.95) 100%);
+  color: #4b523f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 6px 12px 6px 14px;
+}
+
+.footer-actions .share-type-wrap select {
+  border: 1px solid rgba(132, 116, 76, 0.42);
+  border-radius: 999px;
+  background: #fbf8ec;
+  color: #3f4936;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  outline: none;
+}
+
 .footer-actions button,
 .footer-actions a {
   border-radius: 999px;

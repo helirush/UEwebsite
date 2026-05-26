@@ -151,6 +151,15 @@
           <p style="margin-top:8px;">The next phase may not be additional measurement, but transforming accumulated visibility into operational understanding.</p>
         </div>
         <div class="footer-actions">
+          <label class="share-type-wrap" for="shareTypeSelect">
+            <span>Share card</span>
+            <select id="shareTypeSelect">
+              <option value="update">Update</option>
+              <option value="brief">Brief</option>
+              <option value="memo">Memo</option>
+              <option value="private">Private</option>
+            </select>
+          </label>
           <button type="button" id="downloadPdfBtn">Download PDF</button>
           <button type="button" id="copySecureLinkBtn" class="secondary">Copy secure share link</button>
           <a href="../../../../contact-us.html">Contact Unity</a>
@@ -173,8 +182,36 @@
 
     (function () {
       const PUBLIC_SHARE_ORIGIN = "https://unityenergy.com";
-      const PUBLIC_SHARE_PATH = "/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/";
-      const PUBLIC_OG_IMAGE_PATH = "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg";
+      const SHARE_KIND_CONFIG = {
+        update: {
+          key: "update",
+          label: "Update",
+          title: "Unity Energy Update",
+          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html",
+          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg"
+        },
+        brief: {
+          key: "brief",
+          label: "Brief",
+          title: "Unity Energy Brief",
+          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html",
+          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-brief-logo-preview.jpg"
+        },
+        memo: {
+          key: "memo",
+          label: "Memo",
+          title: "Unity Energy Memo",
+          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html",
+          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg"
+        },
+        private: {
+          key: "private",
+          label: "Private",
+          title: "Unity Energy Private",
+          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html",
+          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-private-logo-preview.jpg"
+        }
+      };
       function pad2(value) {
         return String(value).padStart(2, "0");
       }
@@ -214,6 +251,8 @@
       const stampFromUrl = parseUeStamp(pageUrl.searchParams.get("ue_doc"));
       const stampCode = stampFromUrl || formatUeStamp(now);
       const stampDate = stampToDate(stampCode) || now;
+      const kindFromUrl = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
+      const defaultKindKey = SHARE_KIND_CONFIG[kindFromUrl] ? kindFromUrl : "update";
 
       const reviewDateEl = document.getElementById("reviewDate");
       if (reviewDateEl) {
@@ -224,13 +263,6 @@
         });
       }
 
-      const stampedTitle = "Unity Energy Update";
-      const stampedDescription = `Foster Farms · Electrical Visibility & Intelligence Progress Report · ${stampCode}`;
-      const stampedImage = `${PUBLIC_SHARE_ORIGIN}${PUBLIC_OG_IMAGE_PATH}?ue_doc=${encodeURIComponent(stampCode)}`;
-      const stampedUrl = new URL(PUBLIC_SHARE_PATH, PUBLIC_SHARE_ORIGIN);
-      stampedUrl.searchParams.set("ue_doc", stampCode);
-      stampedUrl.searchParams.set("ue_share", String(Date.now()));
-
       const ogTitle = document.getElementById("ogTitle");
       const ogDescription = document.getElementById("ogDescription");
       const ogUrl = document.getElementById("ogUrl");
@@ -239,15 +271,44 @@
       const twitterDescription = document.getElementById("twitterDescription");
       const twitterUrl = document.getElementById("twitterUrl");
       const twitterImage = document.getElementById("twitterImage");
+      const shareTypeSelect = document.getElementById("shareTypeSelect");
 
-      if (ogTitle) ogTitle.setAttribute("content", stampedTitle);
-      if (ogDescription) ogDescription.setAttribute("content", stampedDescription);
-      if (ogUrl) ogUrl.setAttribute("content", stampedUrl.toString());
-      if (ogImage) ogImage.setAttribute("content", stampedImage);
-      if (twitterTitle) twitterTitle.setAttribute("content", stampedTitle);
-      if (twitterDescription) twitterDescription.setAttribute("content", stampedDescription);
-      if (twitterUrl) twitterUrl.setAttribute("content", stampedUrl.toString());
-      if (twitterImage) twitterImage.setAttribute("content", stampedImage);
+      if (shareTypeSelect) {
+        shareTypeSelect.value = defaultKindKey;
+      }
+
+      function getSelectedKindKey() {
+        if (!shareTypeSelect) return defaultKindKey;
+        const raw = String(shareTypeSelect.value || "").toLowerCase();
+        return SHARE_KIND_CONFIG[raw] ? raw : defaultKindKey;
+      }
+
+      function applyShareMetadata(kindKey) {
+        const config = SHARE_KIND_CONFIG[kindKey] || SHARE_KIND_CONFIG.update;
+        const stampedTitle = config.title;
+        const stampedDescription = `Foster Farms · Electrical Visibility & Intelligence Progress Report · ${stampCode}`;
+        const stampedImage = `${PUBLIC_SHARE_ORIGIN}${config.imagePath}?ue_doc=${encodeURIComponent(stampCode)}`;
+        const stampedUrl = new URL(config.path, PUBLIC_SHARE_ORIGIN);
+        stampedUrl.searchParams.set("ue_doc", stampCode);
+        stampedUrl.searchParams.set("ue_kind", config.key);
+        stampedUrl.searchParams.set("ue_share", String(Date.now()));
+
+        if (ogTitle) ogTitle.setAttribute("content", stampedTitle);
+        if (ogDescription) ogDescription.setAttribute("content", stampedDescription);
+        if (ogUrl) ogUrl.setAttribute("content", stampedUrl.toString());
+        if (ogImage) ogImage.setAttribute("content", stampedImage);
+        if (twitterTitle) twitterTitle.setAttribute("content", stampedTitle);
+        if (twitterDescription) twitterDescription.setAttribute("content", stampedDescription);
+        if (twitterUrl) twitterUrl.setAttribute("content", stampedUrl.toString());
+        if (twitterImage) twitterImage.setAttribute("content", stampedImage);
+      }
+
+      applyShareMetadata(defaultKindKey);
+      if (shareTypeSelect) {
+        shareTypeSelect.addEventListener("change", function () {
+          applyShareMetadata(getSelectedKindKey());
+        });
+      }
 
       const pdfBtn = document.getElementById("downloadPdfBtn");
       if (pdfBtn) {
@@ -284,14 +345,17 @@
       if (copyBtn) {
         const originalLabel = "Copy secure share link";
         copyBtn.addEventListener("click", async function () {
+          const kindKey = getSelectedKindKey();
+          const kindConfig = SHARE_KIND_CONFIG[kindKey] || SHARE_KIND_CONFIG.update;
           const host = String(window.location.hostname || "").toLowerCase();
           const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "::1";
           const shareOrigin = isLocalHost ? PUBLIC_SHARE_ORIGIN : window.location.origin;
-          const shareUrl = new URL(PUBLIC_SHARE_PATH, shareOrigin);
+          const shareUrl = new URL(kindConfig.path, shareOrigin);
           shareUrl.searchParams.set("ue_doc", stampCode);
+          shareUrl.searchParams.set("ue_kind", kindConfig.key);
           shareUrl.searchParams.set("ue_share", String(Date.now()));
           const ok = await copyToClipboard(shareUrl.toString());
-          copyBtn.textContent = ok ? `Secure link copied · ${stampCode}` : "Copy failed";
+          copyBtn.textContent = ok ? `${kindConfig.label} link copied · ${stampCode}` : "Copy failed";
           copyBtn.disabled = true;
           window.setTimeout(function () {
             copyBtn.textContent = originalLabel;

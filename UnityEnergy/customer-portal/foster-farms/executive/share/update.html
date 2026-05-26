@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unity Energy Update</title>
+  <meta name="description" content="Foster Farms executive update from Unity Energy." />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Unity Energy Update" />
+  <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
+  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/update.html" />
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" />
+  <meta property="og:image:alt" content="Unity Energy update share card" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Unity Energy Update" />
+  <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
+  <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" />
+  <script>
+    (function () {
+      function pad2(value) {
+        return String(value).padStart(2, "0");
+      }
+      function formatStamp(dateObj) {
+        const yy = String(dateObj.getFullYear()).slice(-2);
+        const mm = pad2(dateObj.getMonth() + 1);
+        const dd = pad2(dateObj.getDate());
+        return `UE.${yy}.${mm}${dd}`;
+      }
+      function parseStamp(rawValue) {
+        const value = String(rawValue || "").trim().toUpperCase();
+        if (!/^UE\.\d{2}\.\d{4}$/.test(value)) return null;
+        return value;
+      }
+      const pageUrl = new URL(window.location.href);
+      const stampCode = parseStamp(pageUrl.searchParams.get("ue_doc")) || formatStamp(new Date());
+      const target = new URL("../james-richards-progress-report/", window.location.href);
+      target.searchParams.set("ue_doc", stampCode);
+      target.searchParams.set("ue_kind", "update");
+      target.searchParams.set("ue_share", pageUrl.searchParams.get("ue_share") || String(Date.now()));
+      window.location.replace(target.toString());
+    })();
+  </script>
+</head>
+<body>
+  Redirecting to the executive update…
+</body>
+</html>
