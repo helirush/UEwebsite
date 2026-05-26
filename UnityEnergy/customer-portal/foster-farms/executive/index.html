@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foster Farms Executive Vault | Unity Energy</title>
+  <meta name="description" content="Private executive communications vault for Foster Farms briefings, reports, and roadmap updates." />
+  <link rel="icon" type="image/png" href="./ue-icon-192.png" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="gate-overlay" id="vaultGateOverlay">
+    <div class="gate-panel">
+      <img src="./ue-letterhead.png" alt="Unity Energy letterhead" />
+      <p class="gate-kicker">Private Executive Briefing Room</p>
+      <h2>Foster Farms Executive Vault Access</h2>
+      <p>Enter the executive password to access private Foster Farms communications and briefing materials.</p>
+      <form class="gate-form" id="vaultGateForm">
+        <input id="vaultPasswordInput" type="password" autocomplete="off" placeholder="Executive vault password" />
+        <button type="submit">Enter Vault</button>
+      </form>
+      <div class="gate-error" id="vaultGateError"></div>
+    </div>
+  </div>
+
+  <main class="vault-shell is-locked" id="vaultContent">
+    <div class="top-row">
+      <a class="back-link" href="../../../customer-portals.html">← Back to Customer Portals</a>
+      <button class="logout-btn" id="vaultLogoutBtn">Lock Vault</button>
+    </div>
+
+    <div class="letterhead-wrap">
+      <img src="./ue-letterhead.png" alt="Unity Energy letterhead" />
+    </div>
+
+    <section class="vault-intro">
+      <p class="vault-kicker">Private Delivery System — Phase 1</p>
+      <h1>Foster Farms Executive Communications Vault</h1>
+      <p>This environment is the secure delivery room for executive briefings. It is designed for mobile-friendly link sharing, password-protected review, and long-term continuity of private customer intelligence materials.</p>
+    </section>
+
+    <section class="brief-card-grid">
+      <article class="brief-card">
+        <h2>Foster Farms Executive Brief</h2>
+        <p class="subtitle">Electrical Visibility &amp; Intelligence Progress Report</p>
+        <p class="stamp">Review Copy · 2026-05-26 · Prepared for James Richards</p>
+        <a class="action-btn" href="./james-richards-progress-report/">Open Briefing Room</a>
+      </article>
+      <article class="brief-card">
+        <h2>Delivery Notes</h2>
+        <p class="subtitle">Secure link distribution + persistent archive</p>
+        <p class="stamp">Link share model: text/email URL → password gate → responsive HTML brief.</p>
+      </article>
+    </section>
+
+    <section class="folders">
+      <h3>Vault Architecture (Ready for Expansion)</h3>
+      <p>Folders prepared for phased growth of Foster Farms intelligence communications.</p>
+      <div class="folder-grid">
+        <div class="folder-chip">Monthly Reports</div>
+        <div class="folder-chip">Transformer Studies</div>
+        <div class="folder-chip">Cherry Avenue</div>
+        <div class="folder-chip">Livingston</div>
+        <div class="folder-chip">Executive Updates</div>
+        <div class="folder-chip">Anomaly Summaries</div>
+        <div class="folder-chip">Utility Reviews</div>
+        <div class="folder-chip">Site Champions</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./vault-access.js"></script>
+  <script>
+    window.ffExecVaultAccess.attachGate({
+      overlayId: "vaultGateOverlay",
+      contentId: "vaultContent",
+      formId: "vaultGateForm",
+      inputId: "vaultPasswordInput",
+      errorId: "vaultGateError",
+      logoutId: "vaultLogoutBtn"
+    });
+  </script>
+</body>
+</html>
