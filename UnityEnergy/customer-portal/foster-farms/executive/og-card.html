@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OG Card · Foster Farms Executive Brief</title>
+  <title>OG Card · Foster Farms Executive Update</title>
   <style>
     html, body {
       margin: 0;
@@ -93,10 +93,10 @@
       <div class="ring r3"></div>
     </div>
     <img class="letterhead" src="./ue-letterhead.png" alt="Unity Energy letterhead" />
-    <p class="kicker">Private Executive Brief</p>
-    <p class="title">Foster Farms Executive Brief</p>
+    <p class="kicker">Private Executive Update</p>
+    <p class="title">Foster Farms Executive Update</p>
     <p class="subtitle">Electrical Visibility &amp; Intelligence Progress Report</p>
-    <p class="stamp" id="stampLine">Review Copy · A UE Document · UE.26.0526</p>
+    <p class="stamp" id="stampLine">Review Copy · Unity Energy Update · UE.26.0526</p>
   </div>
   <script>
     (function () {
@@ -121,7 +121,7 @@
       const stampCode = parseStamp(pageUrl.searchParams.get("ue_doc")) || formatStamp(new Date());
       const stampLine = document.getElementById("stampLine");
       if (stampLine) {
-        stampLine.textContent = `Review Copy · A UE Document · ${stampCode}`;
+        stampLine.textContent = `Review Copy · Unity Energy Update · ${stampCode}`;
       }
     })();
   </script>
