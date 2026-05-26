@@ -1,0 +1,67 @@
+{
+  "generated_at_utc": "2026-05-25T17:40:40.497670+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eReports/Study260525r2/Patterns",
+  "mode": "scripts-only",
+  "narrative_mode": "post_mpts_operational",
+  "inventory": {
+    "image_count": 5,
+    "all_images": [
+      "HAD2500sb_apr26.png",
+      "HAD2500tb_apr26.png",
+      "HAD2500tbt_apr26.png",
+      "HAD2500tm_apr26.png",
+      "HAD2500tv_apr26.png"
+    ],
+    "transformer_count": 1,
+    "raw_coverage_by_transformer": {
+      "HAD2500": [
+        "sb",
+        "tb",
+        "tbt",
+        "tm",
+        "tv"
+      ]
+    },
+    "coverage_by_transformer": {
+      "HAD2500": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "HAD2500": [
+        "HAD2500sb_apr26.png",
+        "HAD2500tb_apr26.png",
+        "HAD2500tbt_apr26.png",
+        "HAD2500tm_apr26.png",
+        "HAD2500tv_apr26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "HAD2500"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eestream/eReports/Study260525r2/Patterns",
+    "--scripts-only",
+    "--force",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "post_mpts_operational"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-05-25T17:42:30.346168+00:00"
+}

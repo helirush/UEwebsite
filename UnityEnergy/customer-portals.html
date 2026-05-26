@@ -727,7 +727,7 @@
     <script>
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
         const UNITY_FOUNDER_SESSION_KEY = 'unity_founder_session_v1';
-        const FOUNDER_EMAIL_WHITELIST = new Set(['mike@unityenergy.com', 'adil@accentzinc.com']);
+        const FOUNDER_EMAIL_DOMAIN = 'unityenergy.com';
         const INVALID_NAME_TOKENS = new Set([
             'x', 'xx', 'xxx', 'xxxx', 'xxxxx', 'xxxxxx', 'test', 'testing', 'asdf', 'qwerty',
             'abc', 'name', 'firstname', 'lastname', 'unknown', 'none', 'null', 'na', 'n/a',
@@ -746,7 +746,14 @@
             return String(value || '').trim().toLowerCase();
         }
         function isFounderEmail(value) {
-            return FOUNDER_EMAIL_WHITELIST.has(normalizeEmailAddress(value));
+            const email = normalizeEmailAddress(value);
+            if (!email) return false;
+            const parts = email.split('@');
+            if (parts.length !== 2) return false;
+            const localPart = String(parts[0] || '').trim();
+            const domainPart = String(parts[1] || '').trim();
+            if (!localPart || domainPart !== FOUNDER_EMAIL_DOMAIN) return false;
+            return isLikelyValidEmail(email);
         }
         function readFounderSessionState() {
             try {

@@ -250,10 +250,25 @@
             margin-bottom: 12px;
         }
         .page-subtitle {
-            max-width: 920px;
-            margin: 0 auto;
-            font-size: 1.06rem;
-            color: rgba(71, 82, 57, 0.98);
+            max-width: 1080px;
+            margin: 20px auto 0;
+            font-size: clamp(1.2rem, 1.9vw, 1.6rem);
+            color: rgba(64, 77, 40, 0.98);
+            line-height: 1.42;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-shadow: 0 1px 0 rgba(255, 250, 235, 0.24);
+        }
+        .page-subtitle-attribution {
+            width: min(1080px, 92vw);
+            margin: 3px auto 0;
+            text-align: right;
+            font-size: clamp(0.9rem, 1.2vw, 1.0rem);
+            line-height: 1.12;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: rgba(70, 84, 45, 0.92);
         }
 
         .timeline-shell {
@@ -265,50 +280,249 @@
             background: rgba(255, 255, 255, 0.92);
             border: 1px solid rgba(181, 193, 150, 1);
             border-radius: 16px;
-            padding: 20px 22px;
+            padding: 24px 24px 22px;
             margin-bottom: 22px;
             box-shadow: 0 7px 22px rgba(39, 52, 7, 0.08);
         }
+        .timeline-intro-kicker {
+            margin: 0 0 8px;
+            font-size: 0.78rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(121, 83, 17, 0.94);
+            font-weight: 800;
+        }
         .timeline-intro h2 {
             color: rgba(61, 84, 17, 1);
-            font-size: clamp(1.35rem, 3vw, 2rem);
-            margin-bottom: 6px;
+            font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
-        .timeline-intro p {
+        .timeline-intro-subtitle {
+            color: rgba(61, 74, 37, 0.98);
+            font-size: clamp(1.03rem, 1.58vw, 1.27rem);
+            line-height: 1.35;
+            margin: 0 0 9px;
+            font-weight: 600;
+        }
+        .timeline-intro-alt-subtitle {
+            margin: 0 0 4px;
+            font-size: 0.94rem;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+            color: rgba(92, 108, 55, 0.98);
+            font-weight: 800;
+        }
+        .timeline-intro-era-subtitle {
+            margin: 0 0 9px;
+            color: rgba(78, 92, 48, 0.96);
+            font-size: 0.95rem;
+            line-height: 1.42;
+            font-weight: 600;
+        }
+        .timeline-intro-era-sequence {
+            margin: 0 0 14px;
+            font-size: 0.84rem;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+            color: rgba(98, 113, 62, 0.96);
+            font-weight: 700;
+        }
+        .timeline-intro-hook {
             color: rgba(79, 89, 56, 1);
             font-size: 1.03rem;
+            line-height: 1.53;
+            margin: 0 0 8px;
         }
-        .timeline-thesis-lines {
-            margin-top: 12px;
+        .field-intro-controls {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
             padding: 12px 14px;
             border-radius: 12px;
             border: 1px solid rgba(184, 198, 147, 1);
             background: linear-gradient(135deg, rgba(247, 251, 237, 0.95) 0%, rgba(236, 245, 212, 0.95) 100%);
-            color: rgba(58, 72, 28, 1);
+        }
+        .field-intro-guidance-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 12px;
+        }
+        .field-intro-guidance-label {
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(72, 89, 37, 0.95);
+            font-weight: 800;
+        }
+        .field-intro-mode-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .field-intro-mode-btn {
+            border: 1px solid rgba(168, 184, 129, 0.9);
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 0.78rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: rgba(72, 86, 39, 0.96);
+            background: rgba(244, 249, 232, 0.98);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .field-intro-mode-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 11px rgba(52, 69, 21, 0.14);
+        }
+        .field-intro-mode-btn.active {
+            color: rgba(247, 251, 237, 1);
+            background: linear-gradient(135deg, rgba(78, 111, 32, 0.98) 0%, rgba(49, 77, 19, 0.98) 100%);
+            border-color: rgba(122, 156, 44, 0.95);
+            box-shadow: 0 6px 14px rgba(45, 66, 18, 0.24);
+        }
+        .field-intro-audio-status {
+            font-size: 0.9rem;
+            color: rgba(73, 87, 43, 0.95);
+            line-height: 1.4;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        .field-era-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .field-era-button {
+            border: 1px solid rgba(183, 197, 145, 0.98);
+            border-radius: 12px;
+            padding: 11px 10px 10px;
+            background: rgba(251, 252, 248, 0.96);
+            display: grid;
+            align-content: start;
+            gap: 5px;
+            text-align: left;
+            color: rgba(62, 80, 28, 0.96);
+            cursor: pointer;
+            min-height: 118px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .field-era-button:hover,
+        .field-era-button:focus-visible {
+            transform: translateY(-2px);
+            border-color: rgba(145, 171, 86, 0.98);
+            box-shadow: 0 8px 16px rgba(69, 82, 41, 0.18);
+            background: rgba(243, 248, 231, 0.98);
+            outline: none;
+        }
+        .field-era-button.active {
+            border-color: rgba(189, 103, 10, 0.96);
+            background: linear-gradient(135deg, rgba(255, 241, 215, 0.98) 0%, rgba(255, 227, 176, 0.96) 100%);
+            box-shadow: 0 8px 17px rgba(168, 92, 11, 0.18);
+        }
+        .field-era-icon {
+            font-size: 1.32rem;
+            line-height: 1;
+        }
+        .field-era-title {
+            font-size: 0.76rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 800;
+            line-height: 1.18;
+        }
+        .field-era-subtitle {
+            font-size: 0.72rem;
+            line-height: 1.3;
+            color: rgba(75, 89, 42, 0.94);
+        }
+        .field-era-detail {
+            margin-top: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(183, 197, 145, 0.94);
+            background: rgba(247, 251, 237, 0.9);
+            padding: 11px 12px 10px;
+        }
+        .field-era-detail-kicker {
+            margin: 0 0 3px;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(120, 83, 18, 0.92);
+            font-weight: 800;
+        }
+        #fieldEraDetailTitle {
+            margin: 0 0 4px;
+            font-size: 1rem;
+            color: rgba(57, 77, 24, 1);
+        }
+        #fieldEraDetailSummary {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(66, 81, 33, 0.96);
+            line-height: 1.4;
+        }
+        .field-era-guide-hint {
+            margin: 7px 0 0;
+            font-size: 0.83rem;
+            color: rgba(102, 71, 20, 0.95);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .field-era-chapters {
+            margin-top: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(176, 194, 133, 0.9);
+            background: rgba(241, 248, 226, 0.9);
+            padding: 10px 12px 10px;
+        }
+        .field-era-chapters-title {
+            margin: 0 0 6px;
+            font-size: 0.76rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: rgba(70, 87, 33, 0.95);
+        }
+        .field-era-chapters-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
             display: grid;
             gap: 5px;
-            font-size: 0.95rem;
-            line-height: 1.45;
         }
-        .timeline-thesis-lines strong {
-            color: rgba(57, 74, 21, 1);
+        .field-era-chapters-list li {
+            font-size: 0.86rem;
+            color: rgba(64, 80, 29, 0.96);
+            line-height: 1.34;
+            position: relative;
+            padding-left: 16px;
+        }
+        .field-era-chapters-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: rgba(125, 83, 17, 0.95);
             font-weight: 800;
         }
-        .timeline-thesis-lines accent {
-            color: rgba(57, 74, 21, 1);
-            font-weight: 400;
-            font-size: 1.2rem;
+        .field-era-permanent-quote {
+            margin: 11px 0 0;
+            font-size: 0.9rem;
             font-style: italic;
-            padding: 15px;
-
+            font-weight: 700;
+            color: rgba(106, 73, 20, 0.95);
         }
-        .timeline-range {
-            color: rgba(149, 94, 12, 1);
-            font-weight: 800;
-            letter-spacing: 1.2px;
-            margin-top: 10px;
-            font-size: 0.94rem;
-            text-transform: uppercase;
+        .field-intro-scroll-cue {
+            margin: 14px 0 0;
+            font-size: 0.99rem;
+            font-style: italic;
+            font-weight: 700;
+            color: rgba(102, 71, 20, 0.96);
         }
 
         .timeline-zoom-shell {
@@ -1719,7 +1933,7 @@
         }
         .hero-quote {
             width: min(1080px, 92vw);
-            margin: 26px auto 14px;
+            margin: 22px auto 14px;
             color: rgba(114, 80, 20, 0.98);
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
@@ -1734,12 +1948,15 @@
             margin: 0;
         }
         .hero-quote-author {
-            font-size: clamp(1.32rem, 1.72vw, 1.92rem);
+            font-size: clamp(1.52rem, 2.08vw, 2.28rem);
             font-weight: 700;
             line-height: 1.15;
             text-align: right;
-            margin: 8px auto 0;
-            max-width: 960px;
+            width: 100%;
+            margin: 1px 0 0;
+            color: rgba(102, 71, 17, 0.97);
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 0 rgba(255, 250, 235, 0.32);
         }
 
         @media (max-width: 980px) {
@@ -1825,6 +2042,26 @@
                 top: 39px;
                 font-size: 0.58rem;
             }
+            .timeline-intro {
+                padding: 18px 16px 16px;
+            }
+            .timeline-intro-subtitle br {
+                display: none;
+            }
+            .field-intro-controls {
+                align-items: flex-start;
+            }
+            .field-era-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .field-era-button {
+                min-height: 104px;
+            }
+        }
+        @media (max-width: 880px) and (min-width: 581px) {
+            .field-era-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
         }
     </style>
 </head>
@@ -1861,28 +2098,80 @@
             </div>
 
         <p class="page-subtitle">
-            From induction to governance: the industrial electrical field can now be observed, interpreted, and understood.
+            ‘From induction to governance: for the first time, humanity can begin observing the behavior of the industrial electrical field.’
         </p>
+        <p class="page-subtitle-attribution">— Unity Energy, 2026</p>
     </header>
 
     <main class="timeline-shell">
         <section class="timeline-intro">
-            <h2>A Three-Layer Causal Timeline</h2>
-            <p>This page is organized into three layers: a Macro Timeline (defining anchors), Category Bands (theme lanes), and Micro Timelines (supporting milestones).
-            </p>
-            <p>The core arc is simple: discovered field → described field → industrialized field → burdened field → measured and governable field.
-            </p>
-            <div class="timeline-thesis-lines">
-                <div><strong>Faraday revealed</strong> the field.</div>
-                <div><strong>Maxwell described</strong> the field.</div>
-                <div><strong>Heaviside made</strong> the field usable.</div>
-                <div><strong>Hertz proved</strong> the field.</div>
-                <div><strong>Tesla and the AC era industrialized</strong> the field.</div>
-                <div>Industry then lived inside burden: reactive conflict, harmonics, heat, and instability.</div>
-                <div><accent>The grid became one of humanity's most complex real-time physical systems: continuously balanced at the speed of physics.</accent></div>
-                <div>Unity's role is the transition from <strong>reactive correction to governed field intelligence</strong>.</div>
+            <p class="timeline-intro-kicker">Onboarding Experience</p>
+            <h2>The Story of the Field</h2>
+            <p class="timeline-intro-subtitle">How humanity discovered,<br>industrialized,<br>and is only now beginning to understand electricity.</p>
+            <p class="timeline-intro-hook">Most people feel electricity is ancient because every living generation depends on it. It feels permanent. It isn’t.</p>
+            <p class="timeline-intro-hook">For more than a century, industry learned to measure consumption. Only recently have we begun observing behavior — where the field can be measured, interpreted, and intentionally tuned.</p>
+            <div class="field-intro-controls" aria-label="Unity guidance controls">
+                <div class="field-intro-guidance-row">
+                    <span class="field-intro-guidance-label">🎧 Unity Guidance Mode</span>
+                    <div class="field-intro-mode-group" role="group" aria-label="Unity narration mode">
+                        <button class="field-intro-mode-btn active" type="button" data-unity-mode="guided">🟢 Guided Experience</button>
+                        <button class="field-intro-mode-btn" type="button" data-unity-mode="intro-off">🎙 Intro Off</button>
+                        <button class="field-intro-mode-btn" type="button" data-unity-mode="off">🔇 Off</button>
+                    </div>
+                </div>
+                <span id="fieldIntroNarrationStatus" class="field-intro-audio-status" aria-live="polite">🟢 Guided by Unity. Intro will begin automatically in a few seconds.</span>
             </div>
-            <div class="timeline-range">1791 → 2026 · Macro Anchors → Category Bands → Micro Markers</div>
+            <p class="timeline-intro-alt-subtitle">THE EVOLUTION OF THE ELECTRICAL FIELD</p>
+            <p class="timeline-intro-era-subtitle">Humanity’s relationship with electricity evolved through distinct eras.</p>
+            <p class="timeline-intro-era-sequence">Discovery → Understanding → Industrialization → Abstraction → Burden → Governance</p>
+            <div class="field-era-grid" aria-label="Civilizational era selection">
+                <button class="field-era-button active" type="button" data-era-key="discovery">
+                    <span class="field-era-icon">⚡</span>
+                    <span class="field-era-title">Discovery</span>
+                    <span class="field-era-subtitle">Invisible phenomena become observable.</span>
+                </button>
+                <button class="field-era-button" type="button" data-era-key="understanding">
+                    <span class="field-era-icon">∿</span>
+                    <span class="field-era-title">Understanding</span>
+                    <span class="field-era-subtitle">The invisible becomes explainable.</span>
+                </button>
+                <button class="field-era-button" type="button" data-era-key="industrialization">
+                    <span class="field-era-icon">⚙</span>
+                    <span class="field-era-title">Industrialization</span>
+                    <span class="field-era-subtitle">Electricity becomes infrastructure.</span>
+                </button>
+                <button class="field-era-button" type="button" data-era-key="abstraction">
+                    <span class="field-era-icon">🏢</span>
+                    <span class="field-era-title">Abstraction</span>
+                    <span class="field-era-subtitle">Electricity becomes familiar and hidden.</span>
+                </button>
+                <button class="field-era-button" type="button" data-era-key="burden">
+                    <span class="field-era-icon">🔥</span>
+                    <span class="field-era-title">Burden</span>
+                    <span class="field-era-subtitle">Complexity creates hidden losses.</span>
+                </button>
+                <button class="field-era-button" type="button" data-era-key="governance">
+                    <span class="field-era-icon">🟢</span>
+                    <span class="field-era-title">Governance</span>
+                    <span class="field-era-subtitle">Observation returns to operations.</span>
+                </button>
+            </div>
+            <div class="field-era-detail" id="fieldEraDetail" aria-live="polite">
+                <p class="field-era-detail-kicker">Current Civilizational Era</p>
+                <h3 id="fieldEraDetailTitle">⚡ Discovery</h3>
+                <p id="fieldEraDetailSummary">Invisible phenomena become observable.</p>
+                <p class="field-era-guide-hint" id="fieldEraGuideHint">Most visitors overlook how quickly this era moved from curiosity to proof.</p>
+            </div>
+            <div class="field-era-chapters" id="fieldEraChapters" aria-live="polite">
+                <p class="field-era-chapters-title">Expanded chapter bands</p>
+                <ul class="field-era-chapters-list" id="fieldEraChaptersList">
+                    <li>Faraday apprenticeship and scientific access</li>
+                    <li>Royal Institution lab entry and method formation</li>
+                    <li>Electromagnetic rotation and induction threshold</li>
+                </ul>
+            </div>
+            <p class="field-era-permanent-quote">“Electricity became familiar… and eventually invisible.”</p>
+            <p class="field-intro-scroll-cue">Scroll when you’re ready.</p>
         </section>
 
         <section class="timeline-zoom-shell" aria-label="Electrical history timeline selector">
@@ -1890,7 +2179,7 @@
                 <div class="timeline-overview-header">
                     <div>
                         <h3>Macro Timeline</h3>
-                        <p>Top-rail spine only: defining milestones that move from induction and field theory to industrial burden and Unity-era field governance.</p>
+                        <p id="macroTimelineSummary">Top-rail spine only: defining milestones that move from induction and field theory to industrial burden and Unity-era field governance.</p>
                     </div>
                 </div>
                 <div class="timeline-scale-shell" aria-hidden="true">
@@ -1968,17 +2257,17 @@
             <div class="timeline-detail-panel">
                 <div class="timeline-detail-header">
                     <div>
-                        <h3 id="zoomBandTitle">Pre-Electromagnetic Induction Discovery · 1791 → 1831</h3>
-                        <p>Category bands organize the story by theme; each band contains micro markers with deeper context.</p>
+                        <h3 id="zoomBandTitle">⚡ Age of Discovery · Chapter Bands · 1791 → 1831</h3>
+                        <p id="timelineDetailSummary">Category bands organize the story by era; each band contains supporting chapter markers and micro events.</p>
                     </div>
                     <div class="focus-chip-group" aria-label="Timeline zoom selectors">
-                        <button class="focus-chip active" type="button" data-focus-panel="pre-emi-discovery">Pre-Induction Discovery</button>
-                        <button class="focus-chip" type="button" data-focus-panel="pre-ac">Induction to Light Bulb</button>
-                        <button class="focus-chip" type="button" data-focus-panel="ac-accel">Industrial AC Buildout</button>
-                        <button class="focus-chip" type="button" data-focus-panel="reactive-era">Field Burden</button>
-                        <button class="focus-chip" type="button" data-focus-panel="utility-billing">Utility Abstraction</button>
-                        <button class="focus-chip" type="button" data-focus-panel="mpts-dev-testing">MPTS Dev + Field Testing</button>
-                        <button class="focus-chip" type="button" data-focus-panel="mpts-history">Measured Field Intelligence</button>
+                        <button class="focus-chip active" type="button" data-focus-panel="pre-emi-discovery">Discovery Chapters</button>
+                        <button class="focus-chip" type="button" data-focus-panel="pre-ac">Understanding Chapters</button>
+                        <button class="focus-chip" type="button" data-focus-panel="ac-accel">Industrialization Chapters</button>
+                        <button class="focus-chip" type="button" data-focus-panel="utility-billing">Abstraction Chapters</button>
+                        <button class="focus-chip" type="button" data-focus-panel="reactive-era">Burden Chapters</button>
+                        <button class="focus-chip" type="button" data-focus-panel="mpts-dev-testing">Governance Buildout</button>
+                        <button class="focus-chip" type="button" data-focus-panel="mpts-history">Governance Live</button>
                     </div>
                 </div>
                 <p class="micro-marker-rule">Each micro marker follows one pattern: Scene → Field Insight → Industrial Consequence → Unity Relevance.</p>
@@ -3318,6 +3607,8 @@
                 <figcaption id="timelineImageCaption"></figcaption>
             </figure>
             <audio id="timelineImageNarration" preload="none"></audio>
+            <audio id="fieldIntroNarrationAudio" preload="auto" src="assets/audio/unity-field-intro-approved.mp3"></audio>
+            <audio id="fieldEraGuidanceAudio" preload="none"></audio>
         </div>
     </div>
 
@@ -3357,33 +3648,700 @@
         let timelineImageZoomed = false;
         let timelineImageGallery = [];
         let timelineImageGalleryIndex = 0;
+        const fieldIntroNarrationStatus = document.getElementById('fieldIntroNarrationStatus');
+        const unityModeButtons = Array.from(document.querySelectorAll('.field-intro-mode-btn'));
+        const eraButtons = Array.from(document.querySelectorAll('.field-era-button'));
+        const fieldEraDetailTitle = document.getElementById('fieldEraDetailTitle');
+        const fieldEraDetailSummary = document.getElementById('fieldEraDetailSummary');
+        const fieldEraGuideHint = document.getElementById('fieldEraGuideHint');
+        const fieldEraChaptersList = document.getElementById('fieldEraChaptersList');
+        const macroTimelineSummary = document.getElementById('macroTimelineSummary');
+        const timelineDetailSummary = document.getElementById('timelineDetailSummary');
+        const FIELD_INTRO_AUTO_START_DELAY_MS = 2600;
+        const UNITY_MODE = {
+            OFF: 'off',
+            INTRO_OFF: 'intro-off',
+            GUIDED: 'guided'
+        };
+        const supportsSpeechSynthesis = 'speechSynthesis' in window;
+        const fieldIntroNarrationAudio = document.getElementById('fieldIntroNarrationAudio');
+        const fieldEraGuidanceAudio = document.getElementById('fieldEraGuidanceAudio');
+        const hasIntroNarrationAudio = Boolean(fieldIntroNarrationAudio);
+        const UNITY_FIELD_STORY_ERA_AUDIO_ROOT = 'assets/audio/story-of-the-field/era-intros';
+        const ERA_GUIDANCE_AUDIO_SOURCES = {
+            discovery: `${UNITY_FIELD_STORY_ERA_AUDIO_ROOT}/unity-era-discovery-intro.mp3`,
+            understanding: `${UNITY_FIELD_STORY_ERA_AUDIO_ROOT}/unity-era-understanding-intro.mp3`,
+            industrialization: `${UNITY_FIELD_STORY_ERA_AUDIO_ROOT}/unity-era-industrialization-intro.mp3`,
+            abstraction: `${UNITY_FIELD_STORY_ERA_AUDIO_ROOT}/unity-era-abstraction-intro.mp3`,
+            burden: `${UNITY_FIELD_STORY_ERA_AUDIO_ROOT}/unity-era-burden-intro.mp3`,
+            governance: `${UNITY_FIELD_STORY_ERA_AUDIO_ROOT}/unity-era-governance-intro.mp3`
+        };
+        const FIELD_INTRO_NARRATION_SEGMENTS = [
+            { text: 'Welcome.', pauseAfterMs: 760 },
+            { text: 'Before you continue, consider something surprising:', pauseAfterMs: 900 },
+            { text: 'Most people think electricity has always been part of human life — something permanent… something ancient.', pauseAfterMs: 1000 },
+            { text: 'It isn’t.', pauseAfterMs: 1200 },
+            { text: 'For most of human history there were no illuminated cities, no motors, no refrigeration, no communication networks, no computers, and no artificial intelligence.', pauseAfterMs: 900 },
+            { text: 'The electrical world surrounding you today emerged within only a few generations.', pauseAfterMs: 920 },
+            { text: 'In civilizational time, modern electricity is young.', pauseAfterMs: 900 },
+            { text: 'And while humanity learned to generate electricity, transmit it, and industrialize it… we are still learning how the field itself behaves.', pauseAfterMs: 920 },
+            { text: 'That matters because electricity is not merely a utility.', pauseAfterMs: 860 },
+            { text: 'It is the invisible operating system beneath modern civilization.', pauseAfterMs: 880 },
+            { text: 'Hospitals. Manufacturing. Water systems. Transportation. Data centers. Communication.', pauseAfterMs: 940 },
+            { text: 'Almost everything around you depends on an electrical field few people ever see.', pauseAfterMs: 940 },
+            { text: 'For more than a century, industry learned to measure consumption.', pauseAfterMs: 900 },
+            { text: 'Only recently have we begun learning to observe behavior.', pauseAfterMs: 900 },
+            { text: 'And there is a difference.', pauseAfterMs: 900 },
+            { text: 'Because once electrical behavior becomes observable, the field can no longer only be consumed — it can be measured… interpreted… and intentionally tuned.', pauseAfterMs: 1020 },
+            { text: 'Behavior influences efficiency. Behavior influences stress. Behavior influences heat, loss, longevity… and in many cases, available capacity itself.', pauseAfterMs: 1060 },
+            { text: 'This page follows that journey: from discovery… to understanding… to industrial dependence… to hidden burden… and toward a new possibility.', pauseAfterMs: 980 },
+            { text: 'What changes when the electrical field becomes measurable? What changes when invisible behavior becomes visible?', pauseAfterMs: 980 },
+            { text: 'Because the future may depend less on producing more electricity — …and more on understanding the electricity we already have.', pauseAfterMs: 1100 },
+            { text: 'Scroll when you’re ready.', pauseAfterMs: 0 }
+        ];
+        const ERA_DEFINITIONS = {
+            discovery: {
+                title: '⚡ Discovery',
+                summary: 'Invisible phenomena become observable.',
+                hint: 'Most visitors overlook how quickly this era moved from curiosity to proof.',
+                chapters: [
+                    'Faraday apprenticeship and scientific access',
+                    'Royal Institution lab entry and method formation',
+                    'Electromagnetic rotation and induction threshold'
+                ],
+                focusPanel: 'pre-emi-discovery',
+                defaultTarget: 'event-1831',
+                macroSummary: 'Discovery era emphasis: early apprenticeship, scientific access, and induction proof begin the electrical civilizational arc.',
+                detailSummary: 'Chapter bands in this era show how observation formed before industrial power existed.',
+                guidedAudioSrc: ERA_GUIDANCE_AUDIO_SOURCES.discovery,
+                guidedPrompt: 'You’ve entered the Age of Discovery — when electricity was mysterious and mostly invisible to human understanding.'
+            },
+            understanding: {
+                title: '∿ Understanding',
+                summary: 'The invisible becomes explainable.',
+                hint: 'This is where observed effects became mathematical field language.',
+                chapters: [
+                    'Induction translated into field theory',
+                    'Maxwellian equations and publication milestones',
+                    'Bridge from scientific model to engineering method'
+                ],
+                focusPanel: 'pre-ac',
+                defaultTarget: 'event-1861',
+                macroSummary: 'Understanding era emphasis: induction matures into field equations and formal language that engineers can apply.',
+                detailSummary: 'Chapter bands in this era trace the move from laboratory observation to explanatory field structure.',
+                guidedAudioSrc: ERA_GUIDANCE_AUDIO_SOURCES.understanding,
+                guidedPrompt: 'You’ve entered the Age of Understanding — where invisible effects became explainable through field theory.'
+            },
+            industrialization: {
+                title: '⚙ Industrialization',
+                summary: 'Electricity becomes infrastructure.',
+                hint: 'This chapter feels like a room change: prototypes become civic and industrial systems.',
+                chapters: [
+                    'Transformer architecture and AC rights decisions',
+                    'Stanley, Tesla, and three-phase execution milestones',
+                    'Chicago, Folsom, and Niagara scale lock-in'
+                ],
+                focusPanel: 'ac-accel',
+                defaultTarget: 'event-1893',
+                macroSummary: 'Industrialization era emphasis: AC architecture moves from demonstrations to durable public and industrial infrastructure.',
+                detailSummary: 'Chapter bands in this era show how AC scaled from engineering proof to social dependence.',
+                guidedAudioSrc: ERA_GUIDANCE_AUDIO_SOURCES.industrialization,
+                guidedPrompt: 'You’ve entered the Age of Industrialization — where electricity stopped being experimental and became infrastructure.'
+            },
+            abstraction: {
+                title: '🏢 Abstraction',
+                summary: 'Electricity becomes billing, commodity, and assumption.',
+                hint: 'Electricity became familiar here… and eventually invisible behind invoices and aggregates.',
+                chapters: [
+                    'Watt-hour meter standardization',
+                    'Insull-era pricing, demand logic, and utility economics',
+                    'Policy and oversight layers replacing direct field awareness'
+                ],
+                focusPanel: 'utility-billing',
+                defaultTarget: 'event-1897-insull',
+                macroSummary: 'Abstraction era emphasis: electricity becomes financially legible through metering and tariffs while field behavior fades from view.',
+                detailSummary: 'Chapter bands in this era organize how billing models scaled faster than field-state observability.',
+                guidedAudioSrc: ERA_GUIDANCE_AUDIO_SOURCES.abstraction,
+                guidedPrompt: 'You’ve entered the Age of Abstraction — where electricity became familiar, billable, and increasingly invisible.'
+            },
+            burden: {
+                title: '🔥 Burden',
+                summary: 'Modern complexity creates hidden losses.',
+                hint: 'Capability increased, but hidden heat, distortion, and reactive burden compounded inside operations.',
+                chapters: [
+                    'Reactive correction era and symptom management',
+                    'Instrumentation improvements without full-system interpretation',
+                    'Burden accumulation before measured governance'
+                ],
+                focusPanel: 'reactive-era',
+                defaultTarget: 'event-1905',
+                macroSummary: 'Burden era emphasis: industrial systems scale faster than behavioral observability, producing hidden penalties and instability.',
+                detailSummary: 'Chapter bands in this era trace reactive burden, distortion, and correction-first operational patterns.',
+                guidedAudioSrc: ERA_GUIDANCE_AUDIO_SOURCES.burden,
+                guidedPrompt: 'You’ve entered the Age of Burden — when modern electrical capability came with hidden losses and distortion.'
+            },
+            governance: {
+                title: '🟢 Governance',
+                summary: 'Observation returns to operations.',
+                hint: 'For the first time, field behavior can be observed continuously rather than inferred from billing outcomes.',
+                chapters: [
+                    'MPTS development and validation lineage',
+                    'Measured-intelligence handoff and deployment evidence',
+                    'Unity-era interpretation, education, and live governance'
+                ],
+                focusPanel: 'mpts-history',
+                defaultTarget: 'event-2018-handoff-to-measured',
+                macroSummary: 'Governance era emphasis: measured field intelligence enables interpretation, stewardship, and deliberate operational response.',
+                detailSummary: 'Chapter bands in this era show the transition from development to live field governance and educational deployment.',
+                guidedAudioSrc: ERA_GUIDANCE_AUDIO_SOURCES.governance,
+                guidedPrompt: 'You’ve entered the Age of Governance — where field behavior becomes measurable, interpretable, and governable.'
+            }
+        };
+        const PANEL_TO_ERA_MAP = {
+            'pre-emi-discovery': 'discovery',
+            'pre-ac': 'understanding',
+            'ac-accel': 'industrialization',
+            'utility-billing': 'abstraction',
+            'reactive-era': 'burden',
+            'mpts-dev-testing': 'governance',
+            'mpts-history': 'governance'
+        };
+        let activeEraKey = 'discovery';
+        let unityMode = (unityModeButtons.find(button => button.classList.contains('active')) || {}).dataset?.unityMode || UNITY_MODE.GUIDED;
+        let unityIntroStarted = false;
+        let unityIntroComplete = false;
+        let unityIntroPlaying = false;
+        let unityPromptPlaying = false;
+        let queuedEraPromptKey = null;
+        let unityIntroAutoStartTimer = null;
+        let unityNarrationSegmentTimer = null;
+        let unityIntroPendingUserGesture = false;
+        let eraGuidancePlaybackToken = 0;
+        const unavailableEraGuidanceAudio = new Set();
+
+        function setFieldIntroNarrationStatus(message) {
+            if (!fieldIntroNarrationStatus) {
+                return;
+            }
+            fieldIntroNarrationStatus.textContent = message;
+        }
+        function setUnityModeButtonState(mode) {
+            unityModeButtons.forEach(button => {
+                button.classList.toggle('active', button.dataset.unityMode === mode);
+            });
+        }
+        function clearUnityNarrationTimers() {
+            if (unityIntroAutoStartTimer) {
+                window.clearTimeout(unityIntroAutoStartTimer);
+                unityIntroAutoStartTimer = null;
+            }
+            if (unityNarrationSegmentTimer) {
+                window.clearTimeout(unityNarrationSegmentTimer);
+                unityNarrationSegmentTimer = null;
+            }
+        }
+        function stopEraGuidanceAudio(options = {}) {
+            if (!fieldEraGuidanceAudio) {
+                return;
+            }
+            eraGuidancePlaybackToken += 1;
+            fieldEraGuidanceAudio.onended = null;
+            fieldEraGuidanceAudio.onerror = null;
+            fieldEraGuidanceAudio.pause();
+            if (options.resetTime !== false) {
+                try {
+                    fieldEraGuidanceAudio.currentTime = 0;
+                } catch (_) {}
+            }
+            if (options.clearSource === true) {
+                fieldEraGuidanceAudio.removeAttribute('src');
+            }
+        }
+        function cancelUnityGuidancePromptPlayback() {
+            if (supportsSpeechSynthesis) {
+                try {
+                    window.speechSynthesis.cancel();
+                } catch (_) {}
+            }
+            stopEraGuidanceAudio({ resetTime: true, clearSource: false });
+            unityPromptPlaying = false;
+        }
+        function cancelUnityIntroNarrationPlayback() {
+            if (fieldIntroNarrationAudio) {
+                fieldIntroNarrationAudio.pause();
+                try {
+                    fieldIntroNarrationAudio.currentTime = 0;
+                } catch (_) {}
+            }
+            if (supportsSpeechSynthesis && unityIntroPlaying) {
+                try {
+                    window.speechSynthesis.cancel();
+                } catch (_) {}
+            }
+            unityIntroPlaying = false;
+            unityIntroStarted = false;
+            unityIntroPendingUserGesture = false;
+        }
+        function cancelUnitySpeech() {
+            cancelUnityGuidancePromptPlayback();
+            cancelUnityIntroNarrationPlayback();
+            unityPromptPlaying = false;
+        }
+        function isUnityGuidanceActiveMode() {
+            return unityMode === UNITY_MODE.GUIDED || unityMode === UNITY_MODE.INTRO_OFF;
+        }
+        function canPlayAnyUnityNarration() {
+            return hasIntroNarrationAudio || supportsSpeechSynthesis;
+        }
+        function handleUnityIntroCompletion() {
+            unityIntroPlaying = false;
+            unityIntroComplete = true;
+            unityIntroPendingUserGesture = false;
+            if (unityMode === UNITY_MODE.GUIDED) {
+                setFieldIntroNarrationStatus('🟢 Guided by Unity. Select any era for short contextual guidance.');
+            } else if (unityMode === UNITY_MODE.INTRO_OFF) {
+                setFieldIntroNarrationStatus('🎙 Intro narration is off. Era guidance remains active.');
+            } else {
+                setFieldIntroNarrationStatus('🔇 Unity guidance is off.');
+            }
+            if (queuedEraPromptKey && isUnityGuidanceActiveMode()) {
+                const queuedKey = queuedEraPromptKey;
+                queuedEraPromptKey = null;
+                speakEraGuidance(queuedKey);
+            }
+        }
+        function attemptUnityIntroAudioPlayback(forceRestart = false) {
+            if (!fieldIntroNarrationAudio) {
+                return false;
+            }
+            if (forceRestart) {
+                fieldIntroNarrationAudio.pause();
+                fieldIntroNarrationAudio.currentTime = 0;
+                unityIntroComplete = false;
+            }
+            let playResult = null;
+            try {
+                playResult = fieldIntroNarrationAudio.play();
+            } catch (error) {
+                unityIntroPlaying = false;
+                unityIntroStarted = false;
+                unityIntroPendingUserGesture = false;
+                setFieldIntroNarrationStatus('Unity intro audio is unavailable right now.');
+                return true;
+            }
+            if (playResult && typeof playResult.then === 'function') {
+                playResult.then(() => {
+                    if (unityMode !== UNITY_MODE.GUIDED) {
+                        fieldIntroNarrationAudio.pause();
+                        fieldIntroNarrationAudio.currentTime = 0;
+                        return;
+                    }
+                    unityIntroStarted = true;
+                    unityIntroPlaying = true;
+                    unityIntroPendingUserGesture = false;
+                    setFieldIntroNarrationStatus('🎙 Unity intro narration is playing.');
+                }).catch(error => {
+                    unityIntroPlaying = false;
+                    unityIntroStarted = false;
+                    if (error && error.name === 'NotAllowedError') {
+                        unityIntroPendingUserGesture = true;
+                        setFieldIntroNarrationStatus('🎙 Intro is ready — tap any mode or era button to start Unity voice.');
+                        return;
+                    }
+                    unityIntroPendingUserGesture = false;
+                    setFieldIntroNarrationStatus('Unity intro audio is unavailable right now.');
+                });
+                return true;
+            }
+            unityIntroStarted = true;
+            unityIntroPlaying = true;
+            unityIntroPendingUserGesture = false;
+            setFieldIntroNarrationStatus('🎙 Unity intro narration is playing.');
+            return true;
+        }
+        if (fieldIntroNarrationAudio) {
+            fieldIntroNarrationAudio.addEventListener('ended', () => {
+                handleUnityIntroCompletion();
+            });
+            fieldIntroNarrationAudio.addEventListener('error', () => {
+                unityIntroPlaying = false;
+                unityIntroPendingUserGesture = false;
+                setFieldIntroNarrationStatus('Unity intro audio is unavailable right now.');
+            });
+        }
+        function updateEraDetailPanel(eraKey) {
+            const era = ERA_DEFINITIONS[eraKey];
+            if (!era) {
+                return;
+            }
+            if (fieldEraDetailTitle) {
+                fieldEraDetailTitle.textContent = era.title;
+            }
+            if (fieldEraDetailSummary) {
+                fieldEraDetailSummary.textContent = era.summary;
+            }
+            if (fieldEraGuideHint) {
+                fieldEraGuideHint.textContent = era.hint;
+            }
+            if (macroTimelineSummary) {
+                macroTimelineSummary.textContent = era.macroSummary;
+            }
+            if (timelineDetailSummary) {
+                timelineDetailSummary.textContent = era.detailSummary;
+            }
+            if (fieldEraChaptersList) {
+                fieldEraChaptersList.innerHTML = '';
+                era.chapters.forEach(chapter => {
+                    const chapterNode = document.createElement('li');
+                    chapterNode.textContent = chapter;
+                    fieldEraChaptersList.appendChild(chapterNode);
+                });
+            }
+        }
+        function setEraButtonState(eraKey) {
+            eraButtons.forEach(button => {
+                button.classList.toggle('active', button.dataset.eraKey === eraKey);
+            });
+        }
+        function speakUnityPrompt(text, callbacks = {}) {
+            if (!supportsSpeechSynthesis || !text) {
+                if (callbacks.onUnavailable) {
+                    callbacks.onUnavailable();
+                }
+                return;
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.96;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            utterance.onstart = function () {
+                if (callbacks.onStart) {
+                    callbacks.onStart();
+                }
+            };
+            utterance.onend = function () {
+                if (callbacks.onEnd) {
+                    callbacks.onEnd();
+                }
+            };
+            utterance.onerror = function () {
+                if (callbacks.onError) {
+                    callbacks.onError();
+                }
+            };
+            try {
+                window.speechSynthesis.speak(utterance);
+            } catch (_) {
+                if (callbacks.onError) {
+                    callbacks.onError();
+                }
+            }
+        }
+        function speakIntroSegment(segmentIndex) {
+            if (unityMode !== UNITY_MODE.GUIDED || !supportsSpeechSynthesis) {
+                return;
+            }
+            const segment = FIELD_INTRO_NARRATION_SEGMENTS[segmentIndex];
+            if (!segment) {
+                handleUnityIntroCompletion();
+                return;
+            }
+            speakUnityPrompt(segment.text, {
+                onStart: () => {
+                    unityIntroStarted = true;
+                    unityIntroPendingUserGesture = false;
+                    unityIntroPlaying = true;
+                    setFieldIntroNarrationStatus('🎙 Unity intro narration is playing.');
+                },
+                onEnd: () => {
+                    const nextIndex = segmentIndex + 1;
+                    if (nextIndex >= FIELD_INTRO_NARRATION_SEGMENTS.length) {
+                        speakIntroSegment(nextIndex);
+                        return;
+                    }
+                    const pauseAfterMs = Number(segment.pauseAfterMs) || 0;
+                    unityNarrationSegmentTimer = window.setTimeout(() => {
+                        speakIntroSegment(nextIndex);
+                    }, pauseAfterMs);
+                },
+                onError: () => {
+                    unityIntroPlaying = false;
+                    unityIntroStarted = false;
+                    setFieldIntroNarrationStatus('Unity narration is unavailable in this browser session.');
+                }
+            });
+        }
+        function startUnityIntroNarration(options = {}) {
+            const forceRestart = options.forceRestart === true;
+            if (unityMode !== UNITY_MODE.GUIDED) {
+                return;
+            }
+            if (unityIntroPlaying && !forceRestart) {
+                return;
+            }
+            clearUnityNarrationTimers();
+            if (forceRestart) {
+                cancelUnitySpeech();
+                unityIntroComplete = false;
+                queuedEraPromptKey = null;
+            }
+            if (attemptUnityIntroAudioPlayback(forceRestart)) {
+                return;
+            }
+            if (!supportsSpeechSynthesis) {
+                setFieldIntroNarrationStatus('Unity narration is unavailable in this browser session.');
+                return;
+            }
+            unityIntroStarted = true;
+            unityIntroPendingUserGesture = false;
+            speakIntroSegment(0);
+        }
+        function scheduleUnityIntroAutoStart() {
+            clearUnityNarrationTimers();
+            if (unityMode !== UNITY_MODE.GUIDED || unityIntroStarted || unityIntroComplete || !canPlayAnyUnityNarration()) {
+                return;
+            }
+            unityIntroAutoStartTimer = window.setTimeout(() => {
+                if (unityMode !== UNITY_MODE.GUIDED || unityIntroStarted || unityIntroComplete) {
+                    return;
+                }
+                startUnityIntroNarration({ forceRestart: true });
+            }, FIELD_INTRO_AUTO_START_DELAY_MS);
+        }
+        function speakEraGuidanceWithSpeechFallback(era, usedAudioFallback = false) {
+            if (!supportsSpeechSynthesis) {
+                setFieldIntroNarrationStatus(usedAudioFallback
+                    ? '🟢 Guided mode enabled, but era audio is unavailable and speech fallback is not supported in this browser session.'
+                    : '🟢 Guided mode enabled. Intro voice is active, but era prompt voice is unavailable in this browser session.');
+                return;
+            }
+            speakUnityPrompt(era.guidedPrompt, {
+                onStart: () => {
+                    unityPromptPlaying = true;
+                    setFieldIntroNarrationStatus(`🟢 Guided by Unity: ${era.title}`);
+                },
+                onEnd: () => {
+                    unityPromptPlaying = false;
+                    setFieldIntroNarrationStatus('🟢 Guided by Unity. Select another era for additional context.');
+                },
+                onError: () => {
+                    unityPromptPlaying = false;
+                    setFieldIntroNarrationStatus('Guided era narration is unavailable right now.');
+                }
+            });
+        }
+        function speakEraGuidance(eraKey) {
+            if (!isUnityGuidanceActiveMode()) {
+                return;
+            }
+            const era = ERA_DEFINITIONS[eraKey];
+            if (!era) {
+                return;
+            }
+            if (unityMode === UNITY_MODE.GUIDED && !unityIntroComplete && canPlayAnyUnityNarration()) {
+                queuedEraPromptKey = eraKey;
+                if (unityIntroPlaying) {
+                    setFieldIntroNarrationStatus('🎙 Unity intro is still playing. Era guidance will follow when intro completes.');
+                    return;
+                }
+                startUnityIntroNarration({ forceRestart: false });
+                return;
+            }
+            cancelUnityGuidancePromptPlayback();
+            const eraAudioSrc = (era.guidedAudioSrc || '').trim();
+            const canAttemptEraAudio = Boolean(fieldEraGuidanceAudio && eraAudioSrc && !unavailableEraGuidanceAudio.has(eraAudioSrc));
+            if (!canAttemptEraAudio) {
+                speakEraGuidanceWithSpeechFallback(era, false);
+                return;
+            }
+            const playbackToken = eraGuidancePlaybackToken + 1;
+            eraGuidancePlaybackToken = playbackToken;
+            const handleAudioStart = () => {
+                if (eraGuidancePlaybackToken !== playbackToken) {
+                    return;
+                }
+                unityPromptPlaying = true;
+                setFieldIntroNarrationStatus(`🟢 Guided by Unity: ${era.title}`);
+            };
+            const handleAudioFailure = (error) => {
+                if (eraGuidancePlaybackToken !== playbackToken) {
+                    return;
+                }
+                if (!error || error.name !== 'NotAllowedError') {
+                    unavailableEraGuidanceAudio.add(eraAudioSrc);
+                }
+                stopEraGuidanceAudio({ resetTime: true, clearSource: true });
+                speakEraGuidanceWithSpeechFallback(era, true);
+            };
+            fieldEraGuidanceAudio.onended = () => {
+                if (eraGuidancePlaybackToken !== playbackToken) {
+                    return;
+                }
+                unityPromptPlaying = false;
+                setFieldIntroNarrationStatus('🟢 Guided by Unity. Select another era for additional context.');
+            };
+            fieldEraGuidanceAudio.onerror = () => {
+                handleAudioFailure(new Error('era-audio-error'));
+            };
+            fieldEraGuidanceAudio.src = eraAudioSrc;
+            try {
+                fieldEraGuidanceAudio.currentTime = 0;
+            } catch (_) {}
+            let playResult = null;
+            try {
+                playResult = fieldEraGuidanceAudio.play();
+            } catch (error) {
+                handleAudioFailure(error);
+                return;
+            }
+            if (playResult && typeof playResult.then === 'function') {
+                playResult.then(() => {
+                    handleAudioStart();
+                }).catch(error => {
+                    handleAudioFailure(error);
+                });
+                return;
+            }
+            handleAudioStart();
+        }
+        function setUnityMode(mode, options = {}) {
+            const requestedMode = mode || UNITY_MODE.GUIDED;
+            if (![UNITY_MODE.OFF, UNITY_MODE.INTRO_OFF, UNITY_MODE.GUIDED].includes(requestedMode)) {
+                return;
+            }
+            unityMode = requestedMode;
+            setUnityModeButtonState(unityMode);
+            clearUnityNarrationTimers();
+            if (unityMode === UNITY_MODE.OFF) {
+                cancelUnitySpeech();
+                queuedEraPromptKey = null;
+                setFieldIntroNarrationStatus('🔇 Unity guidance is off.');
+                return;
+            }
+            if (!canPlayAnyUnityNarration()) {
+                setFieldIntroNarrationStatus(unityMode === UNITY_MODE.GUIDED
+                    ? '🟢 Guided mode enabled. Voice playback is unavailable in this browser session.'
+                    : '🎙 Intro narration is off. Era guidance voice is unavailable in this browser session.');
+                return;
+            }
+            if (unityMode === UNITY_MODE.INTRO_OFF) {
+                const queuedKey = queuedEraPromptKey;
+                queuedEraPromptKey = null;
+                if (unityIntroPlaying || unityIntroStarted || unityIntroPendingUserGesture) {
+                    cancelUnityIntroNarrationPlayback();
+                }
+                setFieldIntroNarrationStatus('🎙 Intro narration is off. Era guidance remains active.');
+                if (queuedKey) {
+                    speakEraGuidance(queuedKey);
+                }
+                return;
+            }
+            const shouldRestartIntro = options.forceRestart === true || (!unityIntroComplete && !unityIntroPlaying && !unityIntroStarted);
+            if (shouldRestartIntro) {
+                if (options.userInitiated === true) {
+                    startUnityIntroNarration({ forceRestart: options.forceRestart === true });
+                } else {
+                    setFieldIntroNarrationStatus('🟢 Guided by Unity. Intro will begin automatically in a few seconds.');
+                    scheduleUnityIntroAutoStart();
+                }
+                return;
+            }
+            setFieldIntroNarrationStatus('🟢 Guided by Unity. Select any era for short contextual guidance.');
+        }
+        function resumeUnityIntroFromUserGesture() {
+            if (unityMode !== UNITY_MODE.GUIDED || !unityIntroPendingUserGesture || unityIntroPlaying || unityIntroComplete) {
+                return;
+            }
+            startUnityIntroNarration({ forceRestart: false });
+        }
+        function setActiveEra(eraKey, options = {}) {
+            const era = ERA_DEFINITIONS[eraKey];
+            if (!era) {
+                return;
+            }
+            activeEraKey = eraKey;
+            setEraButtonState(activeEraKey);
+            updateEraDetailPanel(activeEraKey);
+            if (options.syncPanel !== false) {
+                setActiveFocusPanel(era.focusPanel, { suppressEraSync: true });
+            }
+            if (options.syncTimeline !== false) {
+                const eraNode = document.querySelector(`.timeline-node[data-focus-panel="${era.focusPanel}"][data-target="${era.defaultTarget}"]`)
+                    || document.querySelector(`.timeline-focus-panel[data-focus-panel="${era.focusPanel}"] .timeline-node`);
+                if (eraNode) {
+                    setActiveTimeline(eraNode.dataset.target);
+                }
+            }
+            if (options.playGuidance === true) {
+                speakEraGuidance(activeEraKey);
+            }
+        }
+        function syncEraFromPanel(panelKey) {
+            const eraKey = PANEL_TO_ERA_MAP[panelKey];
+            if (!eraKey || !ERA_DEFINITIONS[eraKey]) {
+                return;
+            }
+            if (eraKey === activeEraKey) {
+                updateEraDetailPanel(activeEraKey);
+                return;
+            }
+            setActiveEra(eraKey, {
+                syncPanel: false,
+                syncTimeline: false,
+                playGuidance: false
+            });
+        }
+        unityModeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const requestedMode = button.dataset.unityMode || UNITY_MODE.GUIDED;
+                resumeUnityIntroFromUserGesture();
+                setUnityMode(requestedMode, { forceRestart: false, userInitiated: true });
+            });
+        });
+        eraButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const eraKey = button.dataset.eraKey;
+                resumeUnityIntroFromUserGesture();
+                setActiveEra(eraKey, {
+                    syncPanel: true,
+                    syncTimeline: true,
+                    playGuidance: true
+                });
+            });
+        });
+        setActiveEra(activeEraKey, {
+            syncPanel: false,
+            syncTimeline: false,
+            playGuidance: false
+        });
+        setUnityMode(unityMode, { forceRestart: true });
 
         const focusPanelTitles = {
-            'pre-emi-discovery': 'Pre-Electromagnetic Induction Discovery · 1791 → 1831',
-            'pre-ac': 'Induction to Light Bulb · 1831 → 1879',
-            'ac-accel': 'Industrial AC Buildout · 1882 → 1895',
-            'utility-billing': 'Utility Formation · 1890s → Present',
-            'reactive-era': 'Field Burden Era · 1891 → 2001',
-            'mpts-dev-testing': 'MPTS Development & Field Testing · Late 1990s → 2018',
-            'mpts-history': 'Measured Field Intelligence · 2018 → 2026'
+            'pre-emi-discovery': '⚡ Age of Discovery · Chapter Bands · 1791 → 1831',
+            'pre-ac': '∿ Age of Understanding · Chapter Bands · 1831 → 1879',
+            'ac-accel': '⚙ Age of Industrialization · Chapter Bands · 1882 → 1895',
+            'utility-billing': '🏢 Age of Abstraction · Chapter Bands · 1890s → Present',
+            'reactive-era': '🔥 Age of Burden · Chapter Bands · 1891 → 2001',
+            'mpts-dev-testing': '🟢 Age of Governance · Buildout Chapters · Late 1990s → 2018',
+            'mpts-history': '🟢 Age of Governance · Live Chapters · 2018 → 2026'
         };
         const focusScaleLabels = {
-            'pre-emi-discovery': '1791–1831 Pre-Induction Discovery',
-            'pre-ac': '1831–1879 Induction to Light Bulb',
-            'ac-accel': '1882–1895 Industrial AC Buildout',
-            'utility-billing': '1890s–Present Utility Formation',
-            'reactive-era': '1891–2001 Field Burden',
-            'mpts-dev-testing': 'Late 1990s–2018 MPTS Development + Field Testing',
-            'mpts-history': '2018–2026 Measured Field Intelligence'
+            'pre-emi-discovery': '⚡ Discovery · 1791–1831',
+            'pre-ac': '∿ Understanding · 1831–1879',
+            'ac-accel': '⚙ Industrialization · 1882–1895',
+            'utility-billing': '🏢 Abstraction · 1890s–Present',
+            'reactive-era': '🔥 Burden · 1891–2001',
+            'mpts-dev-testing': '🟢 Governance Buildout · Late 1990s–2018',
+            'mpts-history': '🟢 Governance Live · 2018–2026'
         };
         const focusPanelContext = {
-            'pre-emi-discovery': 'Selected milestone belongs to: Pre-Electromagnetic Induction Discovery → Apprenticeship, access, mentorship, and early experiments leading to induction.',
-            'pre-ac': 'Selected milestone belongs to: Induction to Light Bulb → Induction matures into field language and public lighting thresholds.',
-            'ac-accel': 'Selected milestone belongs to: Industrial AC Buildout → Architecture moves from concept to public-scale infrastructure.',
-            'reactive-era': 'Selected milestone belongs to: Field Burden → Industrial side effects accumulate as systems scale.',
-            'utility-billing': 'Selected milestone belongs to: Utility Abstraction → Field behavior is reduced to billing-era proxies.',
-            'mpts-dev-testing': 'Selected milestone belongs to: MPTS Development and Field Testing → Build, test, and prove period before measured-field-intelligence operations.',
-            'mpts-history': 'Selected milestone belongs to: Measured Field Intelligence → Field behavior becomes observable and governable.'
+            'pre-emi-discovery': 'Selected milestone belongs to: Age of Discovery → Apprenticeship, access, mentorship, and early experiments leading to induction.',
+            'pre-ac': 'Selected milestone belongs to: Age of Understanding → Induction matures into field language and public-lighting thresholds.',
+            'ac-accel': 'Selected milestone belongs to: Age of Industrialization → Architecture moves from concept to public-scale infrastructure.',
+            'reactive-era': 'Selected milestone belongs to: Age of Burden → Industrial side effects accumulate as systems scale.',
+            'utility-billing': 'Selected milestone belongs to: Age of Abstraction → Field behavior is reduced to billing-era proxies.',
+            'mpts-dev-testing': 'Selected milestone belongs to: Age of Governance (Buildout) → Development, testing, and validation before measured operations.',
+            'mpts-history': 'Selected milestone belongs to: Age of Governance (Live) → Field behavior becomes continuously observable and governable.'
         };
         const interpretationOverrides = {
             'event-1831': {
@@ -3732,7 +4690,7 @@
             });
             updateInterpretationPanel(targetId);
         }
-        function setActiveFocusPanel(panelKey) {
+        function setActiveFocusPanel(panelKey, options = {}) {
             if (!panelKey) {
                 return;
             }
@@ -3751,13 +4709,16 @@
             if (timelineScaleLabel && focusScaleLabels[panelKey]) {
                 timelineScaleLabel.textContent = focusScaleLabels[panelKey];
             }
+            if (options.suppressEraSync !== true) {
+                syncEraFromPanel(panelKey);
+            }
         }
 
         function activateTimelineNode(node) {
             if (!node || !node.dataset.target) {
                 return;
             }
-            setActiveFocusPanel(node.dataset.focusPanel);
+            setActiveFocusPanel(node.dataset.focusPanel, { suppressEraSync: false });
             setActiveTimeline(node.dataset.target);
         }
 
@@ -3770,7 +4731,7 @@
         focusChips.forEach(chip => {
             chip.addEventListener('click', () => {
                 const panelKey = chip.dataset.focusPanel;
-                setActiveFocusPanel(panelKey);
+                setActiveFocusPanel(panelKey, { suppressEraSync: false });
                 const firstNodeInPanel = document.querySelector(`.timeline-focus-panel[data-focus-panel="${panelKey}"] .timeline-node`);
                 if (firstNodeInPanel) {
                     setActiveTimeline(firstNodeInPanel.dataset.target);
@@ -3790,7 +4751,7 @@
 
         const initiallyActiveNode = document.querySelector('.timeline-node.active');
         if (initiallyActiveNode) {
-            setActiveFocusPanel(initiallyActiveNode.dataset.focusPanel);
+            setActiveFocusPanel(initiallyActiveNode.dataset.focusPanel, { suppressEraSync: false });
             setActiveTimeline(initiallyActiveNode.dataset.target);
         }
 

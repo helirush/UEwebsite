@@ -76,6 +76,18 @@ window.portalConfig = {
         'mobbuilding': {
             name: 'BOA Building',
             path: '../Customers/BOA_Building/index.html'
+        },
+        'tysonfoods': {
+            name: 'Tyson Foods',
+            path: '../Customers/TysonFoods/index.html'
+        },
+        'tyson': {
+            name: 'Tyson Foods',
+            path: '../Customers/TysonFoods/index.html'
+        },
+        'tysonfoodsinc': {
+            name: 'Tyson Foods',
+            path: '../Customers/TysonFoods/index.html'
         }
     }
 };

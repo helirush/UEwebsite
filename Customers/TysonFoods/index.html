@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyson Foods - Unity Energy Portal</title>
+    <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+            color: #4A5157;
+            background: linear-gradient(180deg, #FBF9F4 0%, #F3EDE0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(200, 16, 46, 0.22) 0%, rgba(251, 249, 244, 0) 70%);
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero-chicken-video {
+            position: absolute;
+            bottom: 20px;
+            width: 220px;
+            z-index: 2;
+            border: 4px solid #FED34C;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.45);
+        }
+        .hero-chicken-left { left: 30px; }
+        .hero-chicken-right { right: 30px; }
+        header {
+            background: linear-gradient(135deg, #7F091C 0%, #C8102E 100%);
+            color: #FFFFFF;
+            padding: 18px 34px;
+            border-bottom: 4px solid #FED34C;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 1.7em;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .logo span { color: #FED34C; }
+        nav {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.88em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: 2px solid #FFFFFF;
+            color: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            background: #FFFFFF;
+            color: #7F091C;
+            transform: translateY(-1px);
+        }
+        .hero {
+            position: relative;
+            padding: 88px 24px 84px;
+            min-height: 650px;
+            text-align: center;
+            background:
+                linear-gradient(180deg, rgba(29, 37, 45, 0.55) 0%, rgba(29, 37, 45, 0.45) 100%),
+                url('../FosterFarms/foster-farms-hero.png') calc(50% - 50px) calc(50% + 50px) / cover no-repeat;
+        }
+        .hero h1 {
+            font-size: 2.4em;
+            color: #FED34C;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.55);
+        }
+        .hero p {
+            max-width: 860px;
+            margin: 0 auto;
+            font-size: 1.06em;
+            color: #FBF9F4;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.55);
+        }
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1 0 auto;
+            padding: 52px 22px 72px;
+        }
+        .section-title {
+            font-size: 1.9em;
+            color: #7F091C;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .group-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 18px;
+        }
+        .group-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(127, 9, 28, 0.22);
+            border-top: 6px solid #C8102E;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(29, 37, 45, 0.08);
+            text-decoration: none;
+            color: inherit;
+            padding: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: block;
+        }
+        .group-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(29, 37, 45, 0.14);
+        }
+        .group-card.coming-soon {
+            opacity: 0.46;
+            filter: saturate(0.65) grayscale(0.2);
+            border-top-color: #A88A90;
+            cursor: default;
+            pointer-events: none;
+        }
+        .group-name {
+            font-size: 1.36em;
+            color: #7F091C;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .group-meta {
+            color: #4A5157;
+            font-size: 0.96em;
+            margin-bottom: 14px;
+        }
+        .group-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(127, 9, 28, 0.3);
+            background: rgba(200, 16, 46, 0.08);
+            color: #7F091C;
+            font-size: 0.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        footer {
+            text-align: center;
+            padding: 24px 22px 20px;
+            background: #1D252D;
+            color: #FBF9F4;
+            border-top: 3px solid #C8102E;
+        }
+        .footer-slogan {
+            margin-top: 6px;
+            font-size: 0.92em;
+            color: rgba(251, 249, 244, 0.9);
+        }
+        @media (max-width: 768px) {
+            header { padding: 16px 16px; flex-direction: column; align-items: flex-start; }
+            .hero { padding: 68px 16px 62px; min-height: 340px; }
+            .container { padding: 38px 16px 56px; }
+            .hero h1 { font-size: 2em; }
+            .hero-chicken-video { width: 120px; bottom: 12px; }
+            .hero-chicken-left { left: 12px; }
+            .hero-chicken-right { right: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><span>TYSON</span> FOODS</div>
+        <nav>
+            <a href="../../UnityEnergy/customer-portals.html" class="btn">Customer Portals</a>
+            <a href="../../UnityEnergy/index.html" class="btn">Unity Home</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Tyson Foods Energy Field Portals</h1>
+        <p>Customer-level landing page for Tyson Foods. Select a Tyson operating group to enter facility-specific electrical field analysis and reports.</p>
+        <video id="heroChickenLeft" class="hero-chicken-video hero-chicken-left" muted loop autoplay playsinline>
+            <source src="../FosterFarms/ChickenFootball.mp4" type="video/mp4">
+        </video>
+        <video id="heroChickenRight" class="hero-chicken-video hero-chicken-right" muted loop autoplay playsinline>
+            <source src="../FosterFarms/ChickenFootball.mp4" type="video/mp4">
+        </video>
+    </section>
+
+    <main class="container">
+        <h2 class="section-title">Operating Groups</h2>
+        <div class="group-grid">
+            <a href="./Rendering/index.html" class="group-card">
+                <div class="group-name">Rendering Group</div>
+                <div class="group-meta">1 active facility • Scranton, Arkansas</div>
+                <span class="group-status">Active</span>
+            </a>
+
+            <div class="group-card coming-soon">
+                <div class="group-name">Processing Group</div>
+                <div class="group-meta">Future Tyson group slot</div>
+                <span class="group-status">Pending</span>
+            </div>
+
+            <div class="group-card coming-soon">
+                <div class="group-name">ParFry Group</div>
+                <div class="group-meta">Future Tyson group slot</div>
+                <span class="group-status">Pending</span>
+            </div>
+
+            <div class="group-card coming-soon">
+                <div class="group-name">FeedMeal Group</div>
+                <div class="group-meta">Future Tyson group slot</div>
+                <span class="group-status">Pending</span>
+            </div>
+
+            <div class="group-card coming-soon">
+                <div class="group-name">Hatchery Group</div>
+                <div class="group-meta">Future Tyson group slot</div>
+                <span class="group-status">Pending</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unity Energy · Tyson Foods Portal</p>
+        <p class="footer-slogan">Transforming how facilities understand their electrical systems.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rightVideo = document.getElementById('heroChickenRight');
+            if (!rightVideo) return;
+
+            const applyOffset = function () {
+                const duration = Number(rightVideo.duration);
+                if (!Number.isFinite(duration) || duration <= 0) return;
+                try {
+                    rightVideo.currentTime = Math.max(0, Math.min(duration * 0.5, duration - 0.1));
+                } catch (_err) {}
+            };
+
+            if (rightVideo.readyState >= 1) applyOffset();
+            rightVideo.addEventListener('loadedmetadata', applyOffset, { once: true });
+        });
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "tysonfoods",
+                    customer_name: "Tyson Foods",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {}
+        })();
+    </script>
+</body>
+</html>

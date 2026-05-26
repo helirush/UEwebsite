@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyson Foods - Rendering Group</title>
+    <script src="../../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../../UnityEnergy/hume_character_config.js"></script>
+    <script src="../../../UnityEnergy/clerk_voice_widget.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+            color: #4A5157;
+            background: linear-gradient(180deg, #FBF9F4 0%, #F3EDE0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: linear-gradient(135deg, #7F091C 0%, #C8102E 100%);
+            color: #FFFFFF;
+            padding: 18px 30px;
+            border-bottom: 4px solid #FED34C;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+        }
+        .logo { font-size: 1.5em; font-weight: 800; letter-spacing: 0.8px; }
+        .logo span { color: #FED34C; }
+        nav { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.82em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 2px solid #FFFFFF;
+            color: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .btn:hover { background: #FFFFFF; color: #7F091C; transform: translateY(-1px); }
+        .hero {
+            position: relative;
+            padding: 86px 20px 80px;
+            min-height: 650px;
+            text-align: center;
+            background:
+                linear-gradient(180deg, rgba(29, 37, 45, 0.58) 0%, rgba(29, 37, 45, 0.48) 100%),
+                url('./Scranton_Site/images/scranton_site.png') calc(50% - 50px) calc(50% + 50px) / cover no-repeat;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(200, 16, 46, 0.22) 0%, rgba(251, 249, 244, 0) 70%);
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero-chicken-video {
+            position: absolute;
+            bottom: 20px;
+            width: 220px;
+            z-index: 2;
+            border: 4px solid #FED34C;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.45);
+        }
+        .hero-chicken-left { left: 30px; }
+        .hero-chicken-right { right: 30px; }
+        .hero h1 {
+            font-size: 2.2em;
+            color: #FED34C;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.55);
+        }
+        .hero p {
+            max-width: 820px;
+            margin: 0 auto;
+            font-size: 1.04em;
+            color: #FBF9F4;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.55);
+        }
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1 0 auto;
+            padding: 48px 20px 68px;
+        }
+        .facility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .facility-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(127, 9, 28, 0.22);
+            border-top: 6px solid #C8102E;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(29, 37, 45, 0.08);
+            text-decoration: none;
+            color: inherit;
+            padding: 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: block;
+        }
+        .facility-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(29, 37, 45, 0.14);
+        }
+        .facility-card.coming-soon {
+            opacity: 0.64;
+            pointer-events: none;
+            cursor: default;
+        }
+        .facility-name {
+            font-size: 1.24em;
+            color: #7F091C;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .facility-meta { font-size: 0.95em; margin-bottom: 12px; }
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.78em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(127, 9, 28, 0.3);
+            background: rgba(200, 16, 46, 0.08);
+            color: #7F091C;
+        }
+        footer {
+            text-align: center;
+            padding: 24px 20px 20px;
+            background: #1D252D;
+            color: #FBF9F4;
+            border-top: 3px solid #C8102E;
+        }
+        .footer-slogan {
+            margin-top: 6px;
+            font-size: 0.92em;
+            color: rgba(251, 249, 244, 0.9);
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 66px 14px 56px; min-height: 330px; }
+            .container { padding: 34px 14px 52px; }
+            .hero-chicken-video { width: 120px; bottom: 12px; }
+            .hero-chicken-left { left: 12px; }
+            .hero-chicken-right { right: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><span>TYSON</span> FOODS · Rendering Group</div>
+        <nav>
+            <a href="../index.html" class="btn">Tyson Home</a>
+            <a href="../../../UnityEnergy/customer-portals.html" class="btn">Customer Portals</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Rendering Group</h1>
+        <p>Group-level view for Tyson Rendering operations. Select a facility to access its electrical field dashboards and reports.</p>
+        <video id="heroChickenLeft" class="hero-chicken-video hero-chicken-left" muted loop autoplay playsinline>
+            <source src="../../FosterFarms/ChickenFootball.mp4" type="video/mp4">
+        </video>
+        <video id="heroChickenRight" class="hero-chicken-video hero-chicken-right" muted loop autoplay playsinline>
+            <source src="../../FosterFarms/ChickenFootball.mp4" type="video/mp4">
+        </video>
+    </section>
+
+    <main class="container">
+        <div class="facility-grid">
+            <a href="./Scranton_Site/index.html" class="facility-card">
+                <div class="facility-name">Scranton Rendering Facility</div>
+                <div class="facility-meta">Scranton, Arkansas · 1 published monthly study</div>
+                <span class="status">Active</span>
+            </a>
+
+            <div class="facility-card coming-soon">
+                <div class="facility-name">Future Rendering Facility</div>
+                <div class="facility-meta">Placeholder for additional Tyson rendering sites</div>
+                <span class="status">Pending</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unity Energy · Tyson Foods Rendering Group</p>
+        <p class="footer-slogan">Transforming how facilities understand their electrical systems.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rightVideo = document.getElementById('heroChickenRight');
+            if (!rightVideo) return;
+
+            const applyOffset = function () {
+                const duration = Number(rightVideo.duration);
+                if (!Number.isFinite(duration) || duration <= 0) return;
+                try {
+                    rightVideo.currentTime = Math.max(0, Math.min(duration * 0.5, duration - 0.1));
+                } catch (_err) {}
+            };
+
+            if (rightVideo.readyState >= 1) applyOffset();
+            rightVideo.addEventListener('loadedmetadata', applyOffset, { once: true });
+        });
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "tysonfoods",
+                    customer_name: "Tyson Foods",
+                    group_slug: "rendering",
+                    group_name: "Rendering Group",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {}
+        })();
+    </script>
+</body>
+</html>
