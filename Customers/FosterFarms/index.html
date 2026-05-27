@@ -120,6 +120,46 @@
             letter-spacing: 0.2px;
         }
 
+        .hero-exec-access {
+            position: absolute;
+            top: 28px;
+            right: 40px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .hero-exec-label {
+            font-size: 0.74em;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.95);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+        }
+
+        .hero-exec-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            border: 2px solid rgba(255, 215, 0, 1);
+            font-size: 0.88em;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .hero-exec-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.33);
+        }
+
         .hero-content {
             position: relative;
             z-index: 1;
@@ -517,6 +557,18 @@
                 font-size: 1.1em;
             }
 
+            .hero-exec-access {
+                top: auto;
+                right: 14px;
+                left: 14px;
+                bottom: 14px;
+                align-items: center;
+            }
+
+            .hero-exec-label {
+                text-align: center;
+            }
+
             section {
                 margin: 40px 0;
             }
@@ -547,6 +599,10 @@
                 <div>Corporate Headquarters</div>
                 <div>Livingston, California</div>
             </div>
+        </div>
+        <div class="hero-exec-access">
+            <div class="hero-exec-label">Private Executive Communications</div>
+            <a href="../../UnityEnergy/customer-portal/foster-farms/executive/" class="hero-exec-btn">Enter Unity Intelligence Center →</a>
         </div>
         <div class="hero-content">
             <p>Industrial 480v Electrical Behavior</p>
@@ -675,6 +731,16 @@
                 is being delivered, where instability or burden may be developing, and which sites present the strongest 
                 opportunities for operational improvement.  
                 </p>
+            </div>
+        </section>
+        <section>
+            <div class="info-section">
+                <h3>Private Executive Communications</h3>
+                <p>
+                Executive review briefs are now delivered through a private web-based briefing room inside the Foster Farms
+                communications vault. This supports secure link sharing, mobile review, and long-term continuity of executive updates.
+                </p>
+                <a href="../../UnityEnergy/customer-portal/foster-farms/executive/" class="site-btn" style="max-width: 420px; margin-top: 22px;">Open Private Executive Vault →</a>
             </div>
         </section>
     </div>
