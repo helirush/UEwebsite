@@ -2,6 +2,15 @@
   const ACCESS_KEY = "ue_ff_exec_vault_access_v1";
   const ACCESS_HASH = "1833f14bb64967ab765e85ad65b649d034f33e42e89d1a38378a46ce55850a1b";
   const SESSION_TTL_HOURS = 12;
+  const FOUNDER_PROMPT_EVENT = "ffExecVaultRequestFounderAccessPrompt";
+  const FOUNDER_ACCESS_IDS = new Set([
+    "mike",
+    "dan",
+    "unity",
+    "accents",
+    "accentsinc",
+    "831829"
+  ]);
 
   function nowMs() {
     return Date.now();
@@ -16,6 +25,14 @@
     }
   }
 
+  function normalizeAccessId(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function hasFounderAccessId(value) {
+    return FOUNDER_ACCESS_IDS.has(normalizeAccessId(value));
+  }
+
   function isAuthorized() {
     const payload = safeRead();
     if (!payload || payload.authorized !== true) return false;
@@ -23,10 +40,17 @@
     return payload.expiresAt > nowMs();
   }
 
-  function writeAuthorizedSession() {
+  function canShareSecureLinks() {
+    if (!isAuthorized()) return false;
+    const payload = safeRead();
+    return !!(payload && payload.canShareSecureLinks === true);
+  }
+
+  function writeAuthorizedSession(canShare) {
     try {
       const payload = {
         authorized: true,
+        canShareSecureLinks: canShare === true,
         grantedAt: new Date().toISOString(),
         expiresAt: nowMs() + (SESSION_TTL_HOURS * 60 * 60 * 1000)
       };
@@ -41,12 +65,13 @@
     return arr.map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
-  async function authorizePassword(passwordInput) {
+  async function authorizePassword(passwordInput, options) {
     const entered = String(passwordInput || "").trim();
     if (!entered) return false;
     const hash = await sha256Hex(entered);
     if (hash !== ACCESS_HASH) return false;
-    writeAuthorizedSession();
+    const founderAccess = !!(options && options.founderAccess === true);
+    writeAuthorizedSession(founderAccess);
     return true;
   }
 
@@ -54,6 +79,11 @@
     try {
       window.sessionStorage.removeItem(ACCESS_KEY);
     } catch (_err) {}
+  }
+
+  function requestFounderAccessPrompt(options) {
+    const detail = options && typeof options === "object" ? options : {};
+    window.dispatchEvent(new CustomEvent(FOUNDER_PROMPT_EVENT, { detail }));
   }
 
   function lockBody() {
@@ -64,30 +94,66 @@
     document.body.classList.remove("locked");
   }
 
+  function notifyAccessChange() {
+    window.dispatchEvent(new CustomEvent("ffExecVaultAccessChange", {
+      detail: {
+        authorized: isAuthorized(),
+        canShareSecureLinks: canShareSecureLinks()
+      }
+    }));
+  }
+
   function attachGate(config) {
     const overlay = document.getElementById(config.overlayId);
     const content = document.getElementById(config.contentId);
     const form = document.getElementById(config.formId);
     const input = document.getElementById(config.inputId);
+    const founderIdInput = config.founderIdInputId ? document.getElementById(config.founderIdInputId) : null;
     const error = document.getElementById(config.errorId);
     const logoutBtn = config.logoutId ? document.getElementById(config.logoutId) : null;
 
     if (!overlay || !content || !form || !input || !error) return;
+    let founderPromptActive = false;
 
     function unlockView() {
+      founderPromptActive = false;
       overlay.classList.remove("active");
       content.classList.remove("is-locked");
       unlockBody();
+      notifyAccessChange();
     }
 
-    function lockView() {
+    function lockView(options) {
+      const founderPrompt = !!(options && options.founderPrompt === true && founderIdInput);
+      founderPromptActive = founderPrompt;
       overlay.classList.add("active");
       content.classList.add("is-locked");
       lockBody();
-      error.textContent = "";
+      error.textContent = founderPrompt ? "Enter your Unity Access ID to unlock secure link sharing." : "";
       input.value = "";
-      window.setTimeout(() => input.focus(), 20);
+      if (founderIdInput) founderIdInput.value = "";
+      notifyAccessChange();
+      window.setTimeout(() => {
+        if (founderPrompt && founderIdInput) {
+          founderIdInput.focus();
+        } else {
+          input.focus();
+        }
+      }, 20);
     }
+
+    function handleFounderPromptRequest(event) {
+      const detail = event && event.detail ? event.detail : null;
+      const targetOverlayId = detail && typeof detail.overlayId === "string" ? detail.overlayId : "";
+      if (targetOverlayId && targetOverlayId !== config.overlayId) return;
+      if (!isAuthorized()) {
+        lockView();
+        return;
+      }
+      lockView({ founderPrompt: true });
+    }
+
+    window.addEventListener(FOUNDER_PROMPT_EVENT, handleFounderPromptRequest);
 
     if (isAuthorized()) {
       unlockView();
@@ -97,7 +163,17 @@
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
-      const ok = await authorizePassword(input.value);
+      const founderAccess = founderIdInput ? hasFounderAccessId(founderIdInput.value) : false;
+      if (founderPromptActive && isAuthorized()) {
+        if (!founderAccess) {
+          error.textContent = "Unity Access ID not recognized. Please try again.";
+          return;
+        }
+        writeAuthorizedSession(true);
+        unlockView();
+        return;
+      }
+      const ok = await authorizePassword(input.value, { founderAccess });
       if (!ok) {
         error.textContent = "Password not recognized. Please try again.";
         return;
@@ -115,8 +191,11 @@
 
   window.ffExecVaultAccess = {
     isAuthorized,
+    canShareSecureLinks,
+    hasFounderAccessId,
     authorizePassword,
     clearAuthorization,
+    requestFounderAccessPrompt,
     attachGate
   };
 })();

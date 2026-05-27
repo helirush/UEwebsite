@@ -14,18 +14,22 @@
       <img src="./ue-letterhead.png" alt="Unity Energy letterhead" />
       <p class="gate-kicker">Private Executive Briefing Room</p>
       <h2>Foster Farms Executive Vault Access</h2>
-      <p>Enter the executive password to access private Foster Farms communications and briefing materials.</p>
+      <p>Enter the executive password to access Foster Farms communications, this area includes Knowledge Memos, Briefing Materials, Field Alerts, etc.</p>
       <form class="gate-form" id="vaultGateForm">
         <input id="vaultPasswordInput" type="password" autocomplete="off" placeholder="Executive vault password" />
         <button type="submit">Enter Vault</button>
       </form>
+      <div class="founder-access-row">
+        <label for="vaultFounderIdInput">Unity Access ID</label>
+        <input id="vaultFounderIdInput" type="text" autocomplete="off" placeholder="Use your Unity ID to enable secure resharing tools" />
+      </div>
       <div class="gate-error" id="vaultGateError"></div>
     </div>
   </div>
 
   <main class="vault-shell is-locked" id="vaultContent">
     <div class="top-row">
-      <a class="back-link" href="../../../customer-portals.html">← Back to Customer Portals</a>
+      <a class="back-link" href="../../../../../Customers/FosterFarms/index.html">Return to Foster Farms</a>
       <button class="logout-btn" id="vaultLogoutBtn">Lock Vault</button>
     </div>
 
@@ -35,8 +39,8 @@
 
     <section class="vault-intro">
       <p class="vault-kicker">Private Delivery System — Phase 1</p>
-      <h1>Foster Farms Executive Communications Vault</h1>
-      <p>This environment is the secure delivery room for executive briefings. It is designed for mobile-friendly link sharing, password-protected review, and long-term continuity of private customer intelligence materials.</p>
+      <h1>Foster Farms Executive Intelligence Center</h1>
+      <p>This secure delivery room provides Foster Farms leadership with direct access to private Unity briefings, executive updates, and long-term electrical intelligence materials. It is designed for simple mobile access, password-protected review, and persistent archival continuity.</p>
     </section>
 
     <section class="brief-card-grid">
@@ -47,24 +51,27 @@
         <a class="action-btn" href="./james-richards-progress-report/">Open Briefing Room</a>
       </article>
       <article class="brief-card">
-        <h2>Delivery Notes</h2>
-        <p class="subtitle">Secure link distribution + persistent archive</p>
-        <p class="stamp">Link share model: text/email URL → password gate → responsive HTML brief.</p>
+        <h2>Current Enterprise Coverage</h2>
+        <p class="subtitle">Livingston HQ - (7)Groups(19)EnergyFields: c.Apr2026</p>
+        <p class="subtitle">CherryAve Site - (1)Group(4)EnergyFields: c.May2024</p>
+        <p class="subtitle">Belgravia Site - (4)EnergyFields</p>
+
+
       </article>
     </section>
 
     <section class="folders">
-      <h3>Vault Architecture (Ready for Expansion)</h3>
-      <p>Folders prepared for phased growth of Foster Farms intelligence communications.</p>
+      <h3>UNITY  INTELLIGENCE  RECORDS</h3>
+      <p>Access previous studies, executive briefings, transformer analyses, and historical operational records.</p>
       <div class="folder-grid">
-        <div class="folder-chip">Monthly Reports</div>
+        <div class="folder-chip">Monthly Intelligence</div>
         <div class="folder-chip">Transformer Studies</div>
         <div class="folder-chip">Cherry Avenue</div>
         <div class="folder-chip">Livingston</div>
-        <div class="folder-chip">Executive Updates</div>
-        <div class="folder-chip">Anomaly Summaries</div>
-        <div class="folder-chip">Utility Reviews</div>
-        <div class="folder-chip">Site Champions</div>
+        <div class="folder-chip">Leadership Briefings</div>
+        <div class="folder-chip">Event & Exception Reports</div>
+        <div class="folder-chip">Utility Intelligence</div>
+        <div class="folder-chip">Operational Contacts</div>
       </div>
     </section>
   </main>
@@ -76,6 +83,7 @@
       contentId: "vaultContent",
       formId: "vaultGateForm",
       inputId: "vaultPasswordInput",
+      founderIdInputId: "vaultFounderIdInput",
       errorId: "vaultGateError",
       logoutId: "vaultLogoutBtn"
     });

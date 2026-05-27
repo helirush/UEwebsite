@@ -31,6 +31,10 @@
         <input id="briefPasswordInput" type="password" autocomplete="off" placeholder="Executive brief password" />
         <button type="submit">View Brief</button>
       </form>
+      <div class="founder-access-row">
+        <label for="briefFounderIdInput">Founder Access ID (Unity / Accents)</label>
+        <input id="briefFounderIdInput" type="text" autocomplete="off" placeholder="Use your founder ID to enable secure resharing" />
+      </div>
       <div class="gate-error" id="briefGateError"></div>
     </div>
   </div>
@@ -157,213 +161,41 @@
               <option value="update">Update</option>
               <option value="brief">Brief</option>
               <option value="memo">Memo</option>
+              <option value="report">Report</option>
+              <option value="monthly">Monthly</option>
+              <option value="maxwellian">Maxwellians</option>
               <option value="private">Private</option>
+              <option value="alert">Alert</option>
             </select>
           </label>
+          <button type="button" id="copySecureLinkBtn" class="secondary">Copy Secure Link</button>
           <button type="button" id="downloadPdfBtn">Download PDF</button>
-          <button type="button" id="copySecureLinkBtn" class="secondary">Copy secure share link</button>
+          <a id="openInNotionBtn" href="https://www.notion.so/" target="_blank" rel="noopener noreferrer">Open in Notion</a>
           <a href="../../../../contact-us.html">Contact Unity</a>
-          <a class="secondary" href="../../../../../Customers/FosterFarms/index.html">Return to Foster Farms Portal</a>
+          <a href="../../../../../Customers/FosterFarms/index.html">Return to Foster Farms</a>
         </div>
       </section>
     </div>
   </main>
 
   <script src="../vault-access.js"></script>
+  <script src="../share-controls.js"></script>
   <script>
     window.ffExecVaultAccess.attachGate({
       overlayId: "briefGateOverlay",
       contentId: "briefContent",
       formId: "briefGateForm",
       inputId: "briefPasswordInput",
+      founderIdInputId: "briefFounderIdInput",
       errorId: "briefGateError",
       logoutId: "briefLogoutBtn"
     });
 
-    (function () {
-      const PUBLIC_SHARE_ORIGIN = "https://unityenergy.com";
-      const SHARE_KIND_CONFIG = {
-        update: {
-          key: "update",
-          label: "Update",
-          title: "Unity Energy Update",
-          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html",
-          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg"
-        },
-        brief: {
-          key: "brief",
-          label: "Brief",
-          title: "Unity Energy Brief",
-          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html",
-          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-brief-logo-preview.jpg"
-        },
-        memo: {
-          key: "memo",
-          label: "Memo",
-          title: "Unity Energy Memo",
-          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html",
-          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg"
-        },
-        private: {
-          key: "private",
-          label: "Private",
-          title: "Unity Energy Private",
-          path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html",
-          imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-private-logo-preview.jpg"
-        }
-      };
-      function pad2(value) {
-        return String(value).padStart(2, "0");
-      }
-
-      function formatUeStamp(dateObj) {
-        const yy = String(dateObj.getFullYear()).slice(-2);
-        const mm = pad2(dateObj.getMonth() + 1);
-        const dd = pad2(dateObj.getDate());
-        return `UE.${yy}.${mm}${dd}`;
-      }
-
-      function parseUeStamp(rawValue) {
-        const value = String(rawValue || "").trim().toUpperCase();
-        if (!/^UE\.\d{2}\.\d{4}$/.test(value)) return null;
-        return value;
-      }
-
-      function stampToDate(stampCode) {
-        const match = /^UE\.(\d{2})\.(\d{2})(\d{2})$/.exec(stampCode || "");
-        if (!match) return null;
-        const year = Number(`20${match[1]}`);
-        const month = Number(match[2]);
-        const day = Number(match[3]);
-        const dateObj = new Date(year, month - 1, day);
-        if (
-          dateObj.getFullYear() !== year ||
-          dateObj.getMonth() !== month - 1 ||
-          dateObj.getDate() !== day
-        ) {
-          return null;
-        }
-        return dateObj;
-      }
-
-      const pageUrl = new URL(window.location.href);
-      const now = new Date();
-      const stampFromUrl = parseUeStamp(pageUrl.searchParams.get("ue_doc"));
-      const stampCode = stampFromUrl || formatUeStamp(now);
-      const stampDate = stampToDate(stampCode) || now;
-      const kindFromUrl = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
-      const defaultKindKey = SHARE_KIND_CONFIG[kindFromUrl] ? kindFromUrl : "update";
-
-      const reviewDateEl = document.getElementById("reviewDate");
-      if (reviewDateEl) {
-        reviewDateEl.textContent = stampDate.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        });
-      }
-
-      const ogTitle = document.getElementById("ogTitle");
-      const ogDescription = document.getElementById("ogDescription");
-      const ogUrl = document.getElementById("ogUrl");
-      const ogImage = document.getElementById("ogImage");
-      const twitterTitle = document.getElementById("twitterTitle");
-      const twitterDescription = document.getElementById("twitterDescription");
-      const twitterUrl = document.getElementById("twitterUrl");
-      const twitterImage = document.getElementById("twitterImage");
-      const shareTypeSelect = document.getElementById("shareTypeSelect");
-
-      if (shareTypeSelect) {
-        shareTypeSelect.value = defaultKindKey;
-      }
-
-      function getSelectedKindKey() {
-        if (!shareTypeSelect) return defaultKindKey;
-        const raw = String(shareTypeSelect.value || "").toLowerCase();
-        return SHARE_KIND_CONFIG[raw] ? raw : defaultKindKey;
-      }
-
-      function applyShareMetadata(kindKey) {
-        const config = SHARE_KIND_CONFIG[kindKey] || SHARE_KIND_CONFIG.update;
-        const stampedTitle = config.title;
-        const stampedDescription = `Foster Farms · Electrical Visibility & Intelligence Progress Report · ${stampCode}`;
-        const stampedImage = `${PUBLIC_SHARE_ORIGIN}${config.imagePath}?ue_doc=${encodeURIComponent(stampCode)}`;
-        const stampedUrl = new URL(config.path, PUBLIC_SHARE_ORIGIN);
-        stampedUrl.searchParams.set("ue_doc", stampCode);
-        stampedUrl.searchParams.set("ue_kind", config.key);
-        stampedUrl.searchParams.set("ue_share", String(Date.now()));
-
-        if (ogTitle) ogTitle.setAttribute("content", stampedTitle);
-        if (ogDescription) ogDescription.setAttribute("content", stampedDescription);
-        if (ogUrl) ogUrl.setAttribute("content", stampedUrl.toString());
-        if (ogImage) ogImage.setAttribute("content", stampedImage);
-        if (twitterTitle) twitterTitle.setAttribute("content", stampedTitle);
-        if (twitterDescription) twitterDescription.setAttribute("content", stampedDescription);
-        if (twitterUrl) twitterUrl.setAttribute("content", stampedUrl.toString());
-        if (twitterImage) twitterImage.setAttribute("content", stampedImage);
-      }
-
-      applyShareMetadata(defaultKindKey);
-      if (shareTypeSelect) {
-        shareTypeSelect.addEventListener("change", function () {
-          applyShareMetadata(getSelectedKindKey());
-        });
-      }
-
-      const pdfBtn = document.getElementById("downloadPdfBtn");
-      if (pdfBtn) {
-        pdfBtn.addEventListener("click", function () {
-          window.print();
-        });
-      }
-
-      async function copyToClipboard(text) {
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(text);
-            return true;
-          }
-        } catch (_err) {}
-
-        try {
-          const temp = document.createElement("textarea");
-          temp.value = text;
-          temp.setAttribute("readonly", "");
-          temp.style.position = "absolute";
-          temp.style.left = "-9999px";
-          document.body.appendChild(temp);
-          temp.select();
-          const copied = document.execCommand("copy");
-          document.body.removeChild(temp);
-          return !!copied;
-        } catch (_err) {
-          return false;
-        }
-      }
-
-      const copyBtn = document.getElementById("copySecureLinkBtn");
-      if (copyBtn) {
-        const originalLabel = "Copy secure share link";
-        copyBtn.addEventListener("click", async function () {
-          const kindKey = getSelectedKindKey();
-          const kindConfig = SHARE_KIND_CONFIG[kindKey] || SHARE_KIND_CONFIG.update;
-          const host = String(window.location.hostname || "").toLowerCase();
-          const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "::1";
-          const shareOrigin = isLocalHost ? PUBLIC_SHARE_ORIGIN : window.location.origin;
-          const shareUrl = new URL(kindConfig.path, shareOrigin);
-          shareUrl.searchParams.set("ue_doc", stampCode);
-          shareUrl.searchParams.set("ue_kind", kindConfig.key);
-          shareUrl.searchParams.set("ue_share", String(Date.now()));
-          const ok = await copyToClipboard(shareUrl.toString());
-          copyBtn.textContent = ok ? `${kindConfig.label} link copied · ${stampCode}` : "Copy failed";
-          copyBtn.disabled = true;
-          window.setTimeout(function () {
-            copyBtn.textContent = originalLabel;
-            copyBtn.disabled = false;
-          }, 1500);
-        });
-      }
-    })();
+    window.ffExecShareControls.init({
+      gateOverlayId: "briefGateOverlay",
+      reviewDateElementId: "reviewDate",
+      shareDescriptionPrefix: "Foster Farms · Electrical Visibility & Intelligence Progress Report"
+    });
   </script>
 </body>
 </html>
