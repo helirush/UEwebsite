@@ -3,13 +3,13 @@
   const ACCESS_HASH = "1833f14bb64967ab765e85ad65b649d034f33e42e89d1a38378a46ce55850a1b";
   const SESSION_TTL_HOURS = 12;
   const FOUNDER_PROMPT_EVENT = "ffExecVaultRequestFounderAccessPrompt";
-  const FOUNDER_ACCESS_IDS = new Set([
-    "mike",
-    "dan",
-    "unity",
-    "accents",
-    "accentsinc",
-    "831829"
+  const FOUNDER_ACCESS_ID_HASHES = new Set([
+    "64b4d0f47c93ce23d157e68a58767356283dc9b63c459d45d0e0e39b3a64b9b9",
+    "ec4f2dbb3b140095550c9afbbb69b5d6fd9e814b9da82fad0b34e9fcbe56f1cb",
+    "a5790b06f63b7c1646f0de34b44fc108377a02fb07aa60b83aaff44deed06398",
+    "1d9f88d73499fc756000e175df064a2b5bdd07bc23618126ad53a7d9ba23148b",
+    "a9f9b8651f70c7a1b0c3e8ac702b67c5b12bf6b29f0bfe5364b3c725ffc0016e",
+    "b3c21cef87a8720d12c1014cc5f4fff4c070361b7ba3d056418a189d7891e41c"
   ]);
 
   function nowMs() {
@@ -26,11 +26,16 @@
   }
 
   function normalizeAccessId(value) {
-    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+    const raw = String(value || "").trim().toLowerCase();
+    const localPart = raw.includes("@") ? raw.split("@")[0] : raw;
+    return localPart.replace(/[^a-z0-9]/g, "");
   }
 
-  function hasFounderAccessId(value) {
-    return FOUNDER_ACCESS_IDS.has(normalizeAccessId(value));
+  async function hasFounderAccessId(value) {
+    const normalized = normalizeAccessId(value);
+    if (!normalized) return false;
+    const hash = await sha256Hex(normalized);
+    return FOUNDER_ACCESS_ID_HASHES.has(hash);
   }
 
   function isAuthorized() {
@@ -177,14 +182,14 @@
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
-      const founderAccess = founderIdInput ? hasFounderAccessId(founderIdInput.value) : false;
-      if (founderPromptActive && isAuthorized()) {
-        if (!founderAccess) {
-          error.textContent = "Unity Access ID not recognized. Please try again.";
-          return;
-        }
+      const founderAccess = founderIdInput ? await hasFounderAccessId(founderIdInput.value) : false;
+      if (founderAccess) {
         writeAuthorizedSession(true);
         unlockView();
+        return;
+      }
+      if (founderPromptActive && isAuthorized()) {
+        error.textContent = "Unity Access ID not recognized. Please try again.";
         return;
       }
       const ok = await authorizePassword(input.value, { founderAccess });
