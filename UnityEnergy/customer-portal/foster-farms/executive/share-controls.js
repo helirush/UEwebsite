@@ -1,6 +1,9 @@
 (function () {
   const DEFAULT_PUBLIC_SHARE_ORIGIN = "https://unityenergy.com";
   const DEFAULT_DESCRIPTION_PREFIX = "Foster Farms · Electrical Visibility & Intelligence Progress Report";
+  const SHARE_KIND_ALIASES = Object.freeze({
+    report: "memo"
+  });
   const DEFAULT_SHARE_KIND_CONFIG = Object.freeze({
     update: {
       key: "update",
@@ -24,14 +27,6 @@
       title: "Unity Energy Memo",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg",
-      theme: "default"
-    },
-    report: {
-      key: "report",
-      label: "Report",
-      title: "Unity Energy Report",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/report.html",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-report-logo-preview.jpg",
       theme: "default"
     },
     monthly: {
@@ -156,7 +151,8 @@
     const stampFromUrl = parseUeStamp(pageUrl.searchParams.get("ue_doc"));
     const stampCode = stampFromUrl || formatUeStamp(now);
     const stampDate = stampToDate(stampCode) || now;
-    const kindFromUrl = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
+    const kindFromUrlRaw = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
+    const kindFromUrl = SHARE_KIND_ALIASES[kindFromUrlRaw] || kindFromUrlRaw;
     const defaultKindKey = shareKindConfig[kindFromUrl] ? kindFromUrl : defaultKind;
     let founderShareAccess = !!(
       window.ffExecVaultAccess &&
@@ -254,7 +250,8 @@
     function getSelectedKindKey() {
       if (!shareTypeSelect) return defaultKindKey;
       const raw = String(shareTypeSelect.value || "").toLowerCase();
-      return shareKindConfig[raw] ? raw : defaultKindKey;
+      const normalized = SHARE_KIND_ALIASES[raw] || raw;
+      return shareKindConfig[normalized] ? normalized : defaultKindKey;
     }
 
     function applyShareMetadata(kindKey) {

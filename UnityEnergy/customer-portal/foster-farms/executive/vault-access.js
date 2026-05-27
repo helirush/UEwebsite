@@ -120,6 +120,10 @@
 
     if (!overlay || !content || !form || !input || !error) return;
     let founderPromptActive = false;
+    input.setAttribute("type", "password");
+    if (founderIdInput) {
+      founderIdInput.setAttribute("type", "password");
+    }
 
     function unlockView() {
       founderPromptActive = false;
