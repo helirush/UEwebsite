@@ -111,6 +111,7 @@
     const founderIdInput = config.founderIdInputId ? document.getElementById(config.founderIdInputId) : null;
     const error = document.getElementById(config.errorId);
     const logoutBtn = config.logoutId ? document.getElementById(config.logoutId) : null;
+    const cancelBtn = config.cancelId ? document.getElementById(config.cancelId) : null;
 
     if (!overlay || !content || !form || !input || !error) return;
     let founderPromptActive = false;
@@ -140,6 +141,19 @@
           input.focus();
         }
       }, 20);
+    }
+
+    function handleCancelAction() {
+      const cancelHref = typeof config.cancelHref === "string" ? config.cancelHref.trim() : "";
+      if (cancelHref) {
+        window.location.href = cancelHref;
+        return;
+      }
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+      window.location.href = "/";
     }
 
     function handleFounderPromptRequest(event) {
@@ -185,6 +199,13 @@
       logoutBtn.addEventListener("click", function () {
         clearAuthorization();
         lockView();
+      });
+    }
+
+    if (cancelBtn) {
+      cancelBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        handleCancelAction();
       });
     }
   }

@@ -13,11 +13,12 @@
     <div class="gate-panel">
       <img src="./ue-letterhead.png" alt="Unity Energy letterhead" />
       <p class="gate-kicker">Private Executive Briefing Room</p>
-      <h2>Foster Farms Executive Vault Access</h2>
+      <h2>Foster Farms Energy Library Access</h2>
       <p>Enter the executive password to access Foster Farms communications, this area includes Knowledge Memos, Briefing Materials, Field Alerts, etc.</p>
       <form class="gate-form" id="vaultGateForm">
         <input id="vaultPasswordInput" type="password" autocomplete="off" placeholder="Executive vault password" />
         <button type="submit">Enter Vault</button>
+        <button type="button" class="gate-cancel-btn" id="vaultGateCancelBtn">Cancel</button>
       </form>
       <div class="founder-access-row">
         <label for="vaultFounderIdInput">Unity Access ID</label>
@@ -85,7 +86,9 @@
       inputId: "vaultPasswordInput",
       founderIdInputId: "vaultFounderIdInput",
       errorId: "vaultGateError",
-      logoutId: "vaultLogoutBtn"
+      logoutId: "vaultLogoutBtn",
+      cancelId: "vaultGateCancelBtn",
+      cancelHref: "../../../../../Customers/FosterFarms/index.html"
     });
   </script>
 </body>
