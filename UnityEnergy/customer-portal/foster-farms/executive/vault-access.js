@@ -1,6 +1,6 @@
 (function () {
   const ACCESS_KEY = "ue_ff_exec_vault_access_v1";
-  const ACCESS_HASH = "1833f14bb64967ab765e85ad65b649d034f33e42e89d1a38378a46ce55850a1b";
+  const DEFAULT_ACCESS_PASSWORD = "FFE2026!";
   const SESSION_TTL_HOURS = 12;
   const FOUNDER_PROMPT_EVENT = "ffExecVaultRequestFounderAccessPrompt";
   const FOUNDER_ACCESS_ID_HASHES = new Set([
@@ -73,8 +73,8 @@
   async function authorizePassword(passwordInput, options) {
     const entered = String(passwordInput || "").trim();
     if (!entered) return false;
-    const hash = await sha256Hex(entered);
-    if (hash !== ACCESS_HASH) return false;
+    const requiredPassword = String((options && options.accessPassword) || DEFAULT_ACCESS_PASSWORD).trim();
+    if (!requiredPassword || entered !== requiredPassword) return false;
     const founderAccess = !!(options && options.founderAccess === true);
     writeAuthorizedSession(founderAccess);
     return true;
@@ -117,9 +117,11 @@
     const error = document.getElementById(config.errorId);
     const logoutBtn = config.logoutId ? document.getElementById(config.logoutId) : null;
     const cancelBtn = config.cancelId ? document.getElementById(config.cancelId) : null;
+    const clearAccessSelector = String((config && config.clearAccessSelector) || "").trim();
 
     if (!overlay || !content || !form || !input || !error) return;
     let founderPromptActive = false;
+    const accessPassword = String(config && config.accessPassword ? config.accessPassword : DEFAULT_ACCESS_PASSWORD).trim();
     input.setAttribute("type", "password");
     if (founderIdInput) {
       founderIdInput.setAttribute("type", "password");
@@ -153,6 +155,8 @@
     }
 
     function handleCancelAction() {
+      clearAuthorization();
+      notifyAccessChange();
       const cancelHref = typeof config.cancelHref === "string" ? config.cancelHref.trim() : "";
       if (cancelHref) {
         window.location.href = cancelHref;
@@ -163,6 +167,11 @@
         return;
       }
       window.location.href = "/";
+    }
+
+    function handleClearAccessNavigation() {
+      clearAuthorization();
+      notifyAccessChange();
     }
 
     function handleFounderPromptRequest(event) {
@@ -186,17 +195,35 @@
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
-      const founderAccess = founderIdInput ? await hasFounderAccessId(founderIdInput.value) : false;
-      if (founderAccess) {
-        writeAuthorizedSession(true);
-        unlockView();
-        return;
+      const enteredPassword = String(input.value || "").trim();
+      const enteredFounderId = founderIdInput ? String(founderIdInput.value || "").trim() : "";
+      const shouldAttemptFounderAccess =
+        !!founderIdInput &&
+        !!enteredFounderId &&
+        (founderPromptActive || !enteredPassword);
+
+      if (shouldAttemptFounderAccess) {
+        const founderAccess = await hasFounderAccessId(enteredFounderId);
+        if (founderAccess) {
+          writeAuthorizedSession(true);
+          unlockView();
+          return;
+        }
+        if (founderPromptActive || !enteredPassword) {
+          error.textContent = "Unity Access ID not recognized. Please try again.";
+          return;
+        }
       }
+
       if (founderPromptActive && isAuthorized()) {
-        error.textContent = "Unity Access ID not recognized. Please try again.";
+        error.textContent = "Enter your Unity Access ID to unlock secure link sharing.";
         return;
       }
-      const ok = await authorizePassword(input.value, { founderAccess });
+
+      const ok = await authorizePassword(enteredPassword, {
+        founderAccess: false,
+        accessPassword
+      });
       if (!ok) {
         error.textContent = "Password not recognized. Please try again.";
         return;
@@ -215,6 +242,14 @@
       cancelBtn.addEventListener("click", function (event) {
         event.preventDefault();
         handleCancelAction();
+      });
+    }
+
+    if (clearAccessSelector) {
+      const clearAccessNodes = document.querySelectorAll(clearAccessSelector);
+      clearAccessNodes.forEach(function (node) {
+        if (!node) return;
+        node.addEventListener("click", handleClearAccessNavigation);
       });
     }
   }

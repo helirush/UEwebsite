@@ -1,6 +1,11 @@
 (function () {
   const DEFAULT_PUBLIC_SHARE_ORIGIN = "https://unityenergy.com";
   const DEFAULT_DESCRIPTION_PREFIX = "Foster Farms · Electrical Visibility & Intelligence Progress Report";
+  const DOCUMENT_STATUS = Object.freeze({
+    REVIEW: "review",
+    TEST: "test",
+    PUBLISHED: "published"
+  });
   const SHARE_KIND_ALIASES = Object.freeze({
     report: "memo"
   });
@@ -9,7 +14,7 @@
       key: "update",
       label: "Update",
       title: "Unity Energy Update",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg",
       theme: "default"
     },
@@ -17,7 +22,7 @@
       key: "brief",
       label: "Brief",
       title: "Unity Energy Brief",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-brief-logo-preview.jpg",
       theme: "default"
     },
@@ -25,7 +30,7 @@
       key: "memo",
       label: "Memo",
       title: "Unity Energy Memo",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg",
       theme: "default"
     },
@@ -33,7 +38,7 @@
       key: "monthly",
       label: "Monthly",
       title: "Unity Energy Monthly",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-monthly-logo-preview.jpg",
       theme: "monthly"
     },
@@ -41,7 +46,7 @@
       key: "maxwellian",
       label: "Maxwellians",
       title: "Unity Energy Maxwellians",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/maxwellian.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/maxwellian.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-maxwellian-logo-preview.jpg",
       theme: "maxwellian"
     },
@@ -49,7 +54,7 @@
       key: "private",
       label: "Private",
       title: "Unity Energy Private",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-private-logo-preview.jpg",
       theme: "default"
     },
@@ -57,7 +62,7 @@
       key: "alert",
       label: "Alert",
       title: "Unity Energy Alert",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/alert.html",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/alert.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-alert-logo-preview.jpg",
       isAlert: true,
       theme: "alert"
@@ -68,25 +73,46 @@
     return String(value).padStart(2, "0");
   }
 
-  function formatUeStamp(dateObj) {
-    const yy = String(dateObj.getFullYear()).slice(-2);
+  function formatUeStamp(dateObj, revisionCounter) {
     const mm = pad2(dateObj.getMonth() + 1);
     const dd = pad2(dateObj.getDate());
-    return `UE.${yy}.${mm}${dd}`;
+    const parsedRevision = Number.parseInt(revisionCounter, 10);
+    const normalizedRevision =
+      Number.isFinite(parsedRevision) && parsedRevision > 0 ? parsedRevision : 1;
+    const rr = pad2(normalizedRevision);
+    return `UE.${mm}${dd}.${rr}`;
   }
 
   function parseUeStamp(rawValue) {
     const value = String(rawValue || "").trim().toUpperCase();
-    if (!/^UE\.\d{2}\.\d{4}$/.test(value)) return null;
-    return value;
+    if (/^UE\.\d{2}\.\d{4}$/.test(value)) return value;
+    if (/^UE\.\d{4}\.\d{2}$/.test(value)) return value;
+    return null;
+  }
+  function extractRevisionFromStamp(stampCode) {
+    const revisionedMatch = /^UE\.\d{4}\.(\d{2})$/.exec(String(stampCode || ""));
+    if (!revisionedMatch) return 1;
+    const parsedRevision = Number.parseInt(revisionedMatch[1], 10);
+    return Number.isFinite(parsedRevision) && parsedRevision > 0 ? parsedRevision : 1;
   }
 
   function stampToDate(stampCode) {
-    const match = /^UE\.(\d{2})\.(\d{2})(\d{2})$/.exec(stampCode || "");
-    if (!match) return null;
-    const year = Number(`20${match[1]}`);
-    const month = Number(match[2]);
-    const day = Number(match[3]);
+    const legacyMatch = /^UE\.(\d{2})\.(\d{2})(\d{2})$/.exec(stampCode || "");
+    const revisionedMatch = /^UE\.(\d{2})(\d{2})\.(\d{2})$/.exec(stampCode || "");
+    let year;
+    let month;
+    let day;
+    if (legacyMatch) {
+      year = Number(`20${legacyMatch[1]}`);
+      month = Number(legacyMatch[2]);
+      day = Number(legacyMatch[3]);
+    } else if (revisionedMatch) {
+      year = new Date().getFullYear();
+      month = Number(revisionedMatch[1]);
+      day = Number(revisionedMatch[2]);
+    } else {
+      return null;
+    }
     const dateObj = new Date(year, month - 1, day);
     if (
       dateObj.getFullYear() !== year ||
@@ -112,6 +138,13 @@
       }
     });
     return merged;
+  }
+
+  function normalizeDocumentStatus(rawValue) {
+    const value = String(rawValue || "").trim().toLowerCase();
+    if (value === DOCUMENT_STATUS.PUBLISHED) return DOCUMENT_STATUS.PUBLISHED;
+    if (value === DOCUMENT_STATUS.TEST) return DOCUMENT_STATUS.TEST;
+    return DOCUMENT_STATUS.REVIEW;
   }
 
   function copyToClipboard(text) {
@@ -140,6 +173,123 @@
     })();
   }
 
+  function normalizeExportText(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+  }
+
+  function collectPlainTextLines(rootNode) {
+    if (!rootNode) return "";
+    const blockNodes = rootNode.querySelectorAll("h1, h2, h3, h4, h5, h6, p, li");
+    const lines = [];
+    Array.prototype.forEach.call(blockNodes, function (node) {
+      const text = normalizeExportText(node.textContent);
+      if (!text) return;
+      const tag = String(node.tagName || "").toLowerCase();
+      if (tag === "li") {
+        lines.push(`• ${text}`);
+        return;
+      }
+      if (tag === "h1") {
+        lines.push(`# ${text}`);
+        return;
+      }
+      if (tag === "h2") {
+        lines.push(`## ${text}`);
+        return;
+      }
+      if (tag === "h3") {
+        lines.push(`### ${text}`);
+        return;
+      }
+      lines.push(text);
+    });
+    return lines.join("\n").trim();
+  }
+
+  function buildNotionExportPayload(options) {
+    const opts = options && typeof options === "object" ? options : {};
+    const sourceRoot = document.querySelector(opts.rootSelector || ".brief-frame");
+    if (!sourceRoot) return null;
+    const clonedRoot = sourceRoot.cloneNode(true);
+    const exclusionSelector = String(
+      opts.exclusionSelector ||
+        ".executive-audio-row, .footer-actions, .field-behavior-card, .letterhead-wrap, [hidden]"
+    );
+    if (exclusionSelector) {
+      clonedRoot.querySelectorAll(exclusionSelector).forEach(function (node) {
+        if (node && node.remove) node.remove();
+      });
+    }
+    clonedRoot.querySelectorAll("button, input, select, textarea, script, style, form").forEach(function (node) {
+      if (node && node.remove) node.remove();
+    });
+    clonedRoot.querySelectorAll("a[href]").forEach(function (link) {
+      const rawHref = link.getAttribute("href");
+      if (!rawHref) return;
+      try {
+        const resolvedHref = new URL(rawHref, window.location.href).toString();
+        link.setAttribute("href", resolvedHref);
+      } catch (_err) {}
+    });
+    clonedRoot.querySelectorAll("img[src]").forEach(function (image) {
+      const rawSrc = image.getAttribute("src");
+      if (!rawSrc) return;
+      try {
+        const resolvedSrc = new URL(rawSrc, window.location.href).toString();
+        image.setAttribute("src", resolvedSrc);
+      } catch (_err) {}
+    });
+
+    const documentTitleNode = document.querySelector(opts.titleSelector || ".exec-header h1");
+    const exportTitle = normalizeExportText(
+      documentTitleNode ? documentTitleNode.textContent : document.title
+    );
+    const exportShell = document.createElement("article");
+    if (exportTitle) {
+      const titleNode = document.createElement("h1");
+      titleNode.textContent = exportTitle;
+      exportShell.appendChild(titleNode);
+    }
+    const exportMeta = document.createElement("p");
+    exportMeta.innerHTML = `<em>Exported from Unity Energy on ${new Date().toLocaleString("en-US", {
+      dateStyle: "long",
+      timeStyle: "short"
+    })}</em>`;
+    exportShell.appendChild(exportMeta);
+    Array.prototype.forEach.call(clonedRoot.children, function (child) {
+      exportShell.appendChild(child);
+    });
+
+    const htmlPayload = exportShell.outerHTML;
+    const textPayload = collectPlainTextLines(exportShell);
+    return {
+      html: htmlPayload,
+      text: textPayload
+    };
+  }
+
+  async function copyRichContentToClipboard(payload) {
+    if (!payload || !payload.text) return false;
+    const htmlPayload = String(payload.html || "").trim();
+    const textPayload = String(payload.text || "").trim();
+    try {
+      if (
+        htmlPayload &&
+        navigator.clipboard &&
+        typeof navigator.clipboard.write === "function" &&
+        typeof window.ClipboardItem === "function"
+      ) {
+        const item = new window.ClipboardItem({
+          "text/html": new Blob([htmlPayload], { type: "text/html" }),
+          "text/plain": new Blob([textPayload], { type: "text/plain" })
+        });
+        await navigator.clipboard.write([item]);
+        return true;
+      }
+    } catch (_err) {}
+    return copyToClipboard(textPayload);
+  }
+
   function init(options) {
     const opts = options && typeof options === "object" ? options : {};
     const publicShareOrigin = String(opts.publicShareOrigin || DEFAULT_PUBLIC_SHARE_ORIGIN);
@@ -148,9 +298,16 @@
     const defaultKind = shareKindConfig.update ? "update" : Object.keys(shareKindConfig)[0];
     const pageUrl = new URL(window.location.href);
     const now = new Date();
+    const configuredStamp = parseUeStamp(opts.shareStampCode || opts.publishedStampCode);
     const stampFromUrl = parseUeStamp(pageUrl.searchParams.get("ue_doc"));
-    const stampCode = stampFromUrl || formatUeStamp(now);
+    const configuredRevision = extractRevisionFromStamp(configuredStamp);
+    const stampCode = stampFromUrl || formatUeStamp(now, configuredRevision);
     const stampDate = stampToDate(stampCode) || now;
+    const documentStatus = normalizeDocumentStatus(opts.documentStatus || pageUrl.searchParams.get("ue_status"));
+    const documentRevision = String(opts.documentRevision || stampCode).trim() || stampCode;
+    const currentShareTargetPath = String(opts.currentShareTargetPath || window.location.pathname);
+    const publishedShareTargetPath = String(opts.publishedShareTargetPath || currentShareTargetPath);
+    const sharingDisabledStatusLabel = String(opts.sharingDisabledStatusLabel || "Sharing Disabled (Review/Test)");
     const kindFromUrlRaw = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
     const kindFromUrl = SHARE_KIND_ALIASES[kindFromUrlRaw] || kindFromUrlRaw;
     const defaultKindKey = shareKindConfig[kindFromUrl] ? kindFromUrl : defaultKind;
@@ -174,8 +331,34 @@
     const shareTypeSelect = document.getElementById(opts.shareTypeSelectId || "shareTypeSelect");
     const copyBtn = document.getElementById(opts.copyButtonId || "copySecureLinkBtn");
     const pdfBtn = document.getElementById(opts.pdfButtonId || "downloadPdfBtn");
+    const notionBtn = document.getElementById(opts.notionButtonId || "openInNotionBtn");
+    const notionBtnDefaultLabel = String(
+      opts.notionButtonLabel || (notionBtn ? notionBtn.textContent : "Open in Notion")
+    ).trim() || "Open in Notion";
+    const notionWorkspaceUrl = String(
+      opts.notionWorkspaceUrl || (notionBtn ? notionBtn.getAttribute("href") : "") || "https://www.notion.so/new"
+    );
     const sharedLinkNotice = document.getElementById(opts.sharedLinkNoticeId || "sharedLinkNotice");
+    const founderRequiredActions = Array.from(
+      document.querySelectorAll(opts.founderRequiredActionSelector || "[data-founder-access='required']")
+    );
     const copyBtnDefaultLabel = opts.copyButtonLabel || "Copy Secure Link";
+    let notionBtnCooldown = false;
+    function isPublishedDocument() {
+      return documentStatus === DOCUMENT_STATUS.PUBLISHED;
+    }
+
+    function resolveShareTargetPath() {
+      return isPublishedDocument() ? publishedShareTargetPath : currentShareTargetPath;
+    }
+
+    function appendDocumentShareParams(urlObj) {
+      if (!urlObj || !(urlObj instanceof URL)) return;
+      const targetPath = resolveShareTargetPath();
+      urlObj.searchParams.set("ue_status", documentStatus);
+      urlObj.searchParams.set("ue_rev", documentRevision);
+      urlObj.searchParams.set("ue_target", targetPath);
+    }
 
     if (reviewDateEl) {
       reviewDateEl.textContent = stampDate.toLocaleDateString("en-US", {
@@ -209,11 +392,23 @@
       }
     }
 
+    function setFounderRequiredActionsVisible(isVisible) {
+      founderRequiredActions.forEach(function (node) {
+        if (!node) return;
+        node.hidden = !isVisible;
+        node.setAttribute("aria-hidden", isVisible ? "false" : "true");
+      });
+    }
+
     function setShareControlsLocked(isLocked) {
+      const lockedByStatus = !isPublishedDocument();
+      const lockTitle = lockedByStatus
+        ? "Sharing is disabled while this document is in Review/Test status."
+        : "Double-click to add your Unity Access ID and unlock sharing.";
       if (shareTypeWrap) {
         shareTypeWrap.classList.toggle("is-disabled", isLocked);
         if (isLocked) {
-          shareTypeWrap.title = "Double-click to add your Unity Access ID and unlock sharing.";
+          shareTypeWrap.title = lockTitle;
         } else {
           shareTypeWrap.removeAttribute("title");
         }
@@ -223,7 +418,7 @@
         shareTypeSelect.classList.toggle("is-disabled", isLocked);
         shareTypeSelect.setAttribute("aria-disabled", isLocked ? "true" : "false");
         if (isLocked) {
-          shareTypeSelect.title = "Double-click to add your Unity Access ID and unlock sharing.";
+          shareTypeSelect.title = lockTitle;
         } else {
           shareTypeSelect.removeAttribute("title");
         }
@@ -234,9 +429,13 @@
         copyBtn.disabled = false;
         copyBtn.classList.toggle("is-disabled", shouldAppearDisabled);
         copyBtn.setAttribute("aria-disabled", shouldAppearDisabled ? "true" : "false");
-        copyBtn.textContent = isLocked ? "Link Sharing Disabled" : copyBtnDefaultLabel;
+        if (lockedByStatus) {
+          copyBtn.textContent = sharingDisabledStatusLabel;
+        } else {
+          copyBtn.textContent = isLocked ? "Link Sharing Disabled" : copyBtnDefaultLabel;
+        }
         if (isLocked) {
-          copyBtn.title = "Double-click to add your Unity Access ID and unlock sharing.";
+          copyBtn.title = lockTitle;
         } else {
           copyBtn.removeAttribute("title");
         }
@@ -254,6 +453,21 @@
       return shareKindConfig[normalized] ? normalized : defaultKindKey;
     }
 
+    function setNotionButtonState(options) {
+      if (!notionBtn) return;
+      const state = options && typeof options === "object" ? options : {};
+      const label = String(state.label || notionBtnDefaultLabel).trim() || notionBtnDefaultLabel;
+      const isBusy = !!state.isBusy;
+      notionBtn.textContent = label;
+      notionBtn.classList.toggle("is-disabled", isBusy);
+      notionBtn.setAttribute("aria-disabled", isBusy ? "true" : "false");
+      if (isBusy) {
+        notionBtn.setAttribute("tabindex", "-1");
+      } else {
+        notionBtn.removeAttribute("tabindex");
+      }
+    }
+
     function applyShareMetadata(kindKey) {
       const config = shareKindConfig[kindKey] || shareKindConfig[defaultKindKey];
       if (!config) return;
@@ -264,6 +478,7 @@
       stampedUrl.searchParams.set("ue_doc", stampCode);
       stampedUrl.searchParams.set("ue_kind", config.key);
       stampedUrl.searchParams.set("ue_share", String(Date.now()));
+      appendDocumentShareParams(stampedUrl);
 
       if (ogTitle) ogTitle.setAttribute("content", stampedTitle);
       if (ogDescription) ogDescription.setAttribute("content", stampedDescription);
@@ -277,7 +492,8 @@
 
     applyShareMetadata(defaultKindKey);
     syncShareTypeVisualState(defaultKindKey);
-    setShareControlsLocked(!founderShareAccess);
+    setFounderRequiredActionsVisible(founderShareAccess);
+    setShareControlsLocked(!founderShareAccess || !isPublishedDocument());
 
     if (shareTypeSelect) {
       shareTypeSelect.addEventListener("mousedown", function (event) {
@@ -285,7 +501,7 @@
         event.preventDefault();
       });
       shareTypeSelect.addEventListener("change", function () {
-        if (!founderShareAccess) return;
+        if (!founderShareAccess || !isPublishedDocument()) return;
         const selectedKindKey = getSelectedKindKey();
         applyShareMetadata(selectedKindKey);
         syncShareTypeVisualState(selectedKindKey);
@@ -294,7 +510,7 @@
 
     if (shareTypeWrap) {
       shareTypeWrap.addEventListener("dblclick", function (event) {
-        if (founderShareAccess) return;
+        if (founderShareAccess || !isPublishedDocument()) return;
         event.preventDefault();
         requestFounderAccessPrompt();
       });
@@ -303,7 +519,8 @@
     window.addEventListener("ffExecVaultAccessChange", function (event) {
       const detail = event && event.detail ? event.detail : null;
       founderShareAccess = !!(detail && detail.canShareSecureLinks === true);
-      setShareControlsLocked(!founderShareAccess);
+      setFounderRequiredActionsVisible(founderShareAccess);
+      setShareControlsLocked(!founderShareAccess || !isPublishedDocument());
     });
 
     if (pdfBtn) {
@@ -312,8 +529,79 @@
       });
     }
 
+    if (notionBtn) {
+      setNotionButtonState();
+      notionBtn.addEventListener("click", async function (event) {
+        if (event) {
+          event.preventDefault();
+        }
+        if (!founderShareAccess) {
+          if (event && event.detail >= 2) {
+            requestFounderAccessPrompt();
+          }
+          return;
+        }
+        if (notionBtnCooldown) return;
+        notionBtnCooldown = true;
+        setNotionButtonState({
+          label: "Preparing Notion export…",
+          isBusy: true
+        });
+
+        const payload = buildNotionExportPayload({
+          rootSelector: opts.notionExportRootSelector,
+          titleSelector: opts.notionExportTitleSelector,
+          exclusionSelector: opts.notionExportExcludeSelector
+        });
+        if (!payload || !payload.text) {
+          setNotionButtonState({
+            label: "Export unavailable",
+            isBusy: true
+          });
+          window.setTimeout(function () {
+            notionBtnCooldown = false;
+            setNotionButtonState();
+          }, 1800);
+          return;
+        }
+
+        try {
+          window.open(notionWorkspaceUrl, "_blank", "noopener,noreferrer");
+        } catch (_err) {}
+
+        const copied = await Promise.race([
+          copyRichContentToClipboard(payload),
+          new Promise(function (resolve) {
+            window.setTimeout(function () {
+              resolve(false);
+            }, 1500);
+          })
+        ]);
+        setNotionButtonState({
+          label: copied ? "Ready for Notion Paste" : "Opened Notion",
+          isBusy: true
+        });
+        window.setTimeout(function () {
+          notionBtnCooldown = false;
+          setNotionButtonState();
+        }, 2200);
+      });
+    }
+
     if (copyBtn) {
       copyBtn.addEventListener("click", async function (event) {
+        if (!isPublishedDocument()) {
+          if (copyBtnCooldown) return;
+          copyBtnCooldown = true;
+          copyBtn.classList.add("is-disabled");
+          copyBtn.setAttribute("aria-disabled", "true");
+          copyBtn.textContent = sharingDisabledStatusLabel;
+          window.setTimeout(function () {
+            copyBtnCooldown = false;
+            setShareControlsLocked(!founderShareAccess || !isPublishedDocument());
+          }, 1300);
+          return;
+        }
         if (!founderShareAccess) {
           if (event && event.detail >= 2) {
             requestFounderAccessPrompt();
@@ -331,6 +619,7 @@
         shareUrl.searchParams.set("ue_doc", stampCode);
         shareUrl.searchParams.set("ue_kind", kindConfig.key);
         shareUrl.searchParams.set("ue_share", String(Date.now()));
+        appendDocumentShareParams(shareUrl);
         const ok = await copyToClipboard(shareUrl.toString());
         copyBtnCooldown = true;
         copyBtn.classList.add("is-disabled");
@@ -354,7 +643,9 @@
       stampCode,
       stampDate,
       defaultKindKey,
-      shareKindConfig
+      shareKindConfig,
+      documentStatus,
+      documentRevision
     };
   }
 

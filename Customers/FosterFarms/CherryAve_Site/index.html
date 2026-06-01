@@ -901,7 +901,7 @@
         <div class="hero-content">
             <p class="capacity-subtitle">480v Industrial Electricity Data</p>
             <h1>ELECTRICAL FIELD PERFORMANCE</h1>
-            <p class="capacity-subtitle2">Observed inefficiencies across Cherry Avenue’s 480V industrial field</p>
+            <p class="capacity-subtitle2">System losses caused from the Poor Transfer of Electricity into Power</p>
             <p class="capacity-subtitle1">SITE CONNECTED CAPACITY : 10,500 kVA</p>
             <p class="capacity-subtitle1">AVERAGE SITE CONSUMPTION : 3,500 kW</p>
             <div class="hero-buttons">
@@ -1182,6 +1182,7 @@
             }
         });
 
+
         // Offset the right chicken video so they're not synchronized
         const CHERRY_RETURN_MODE_KEY = 'cherry_return_mode';
         const CHERRY_RETURN_MODE_SECONDARY_HOME = 'secondary-home';
@@ -1217,7 +1218,6 @@
                     chickenRight.currentTime = 10;
                 });
             }
-
             // Full-study links return to Cherry's secondary home position.
             document.querySelectorAll('#libraries .library-section:first-child a.study-btn[href]:not(.disabled)').forEach((link) => {
                 link.addEventListener('click', () => {

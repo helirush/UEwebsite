@@ -9,7 +9,8 @@ from PIL import Image, ImageDraw, ImageFont
 BASE_DIR = Path(__file__).resolve().parent
 ASSETS_DIR = BASE_DIR.parents[2] / "assets" / "images"
 BASE_CARD_DIR = ASSETS_DIR / "share-card-bases"
-STAMP_REGEX = re.compile(r"^UE\.\d{2}\.\d{4}$")
+LEGACY_STAMP_REGEX = re.compile(r"^UE\.\d{2}\.\d{4}$")
+REVISIONED_STAMP_REGEX = re.compile(r"^UE\.\d{4}\.\d{2}$")
 
 CARD_OUTPUTS = {
     "update": "ue-update-logo-preview.jpg",
@@ -72,13 +73,15 @@ def pick_date_font(size: int):
 def resolve_stamp() -> str:
     env_stamp = os.environ.get("UE_DOC_STAMP", "").strip().upper()
     if env_stamp:
-        if not STAMP_REGEX.match(env_stamp):
+        if not (LEGACY_STAMP_REGEX.match(env_stamp) or REVISIONED_STAMP_REGEX.match(env_stamp)):
             raise ValueError(
-                f"UE_DOC_STAMP must match UE.YY.MMDD (received: {env_stamp})"
+                f"UE_DOC_STAMP must match UE.YY.MMDD or UE.MMDD.RR (received: {env_stamp})"
             )
         return env_stamp
     now = datetime.now()
-    return f"UE.{now:%y.%m%d}"
+    env_revision = os.environ.get("UE_DOC_REV", "01").strip()
+    parsed_revision = int(env_revision) if env_revision.isdigit() and int(env_revision) > 0 else 1
+    return f"UE.{now:%m%d}.{parsed_revision:02d}"
 
 
 def resolve_base_card_path(kind: str) -> Path:
@@ -134,6 +137,7 @@ def repaint_date_stamp_on_all(stamp: str):
 
 def refresh_share_endpoint_meta(stamp: str):
     base_url = "https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/"
+    image_cache_bust = stamp.replace(".", "")
     for rel_path, share_key, image_name in SHARE_META_TARGETS:
         html_path = BASE_DIR / rel_path
         text = html_path.read_text(encoding="utf-8")
@@ -141,7 +145,7 @@ def refresh_share_endpoint_meta(stamp: str):
         og_url_pattern = (
             r'(<meta property="og:url" content="'
             + re.escape(base_url + f"share/{share_key}.html")
-            + r')(?:\?ue_doc=UE\.\d{2}\.\d{4})?(" />)'
+            + r')(?:\?ue_doc=UE\.(?:\d{2}\.\d{4}|\d{4}\.\d{2}))?(" />)'
         )
         text = re.sub(
             og_url_pattern,
@@ -155,11 +159,11 @@ def refresh_share_endpoint_meta(stamp: str):
                 + re.escape(prop)
                 + r'" content="'
                 + re.escape(base_url + image_name)
-                + r')(?:\?ue_doc=UE\.\d{2}\.\d{4})?(" />)'
+                + r')(?:\?[^"]*)?(" />)'
             )
             text = re.sub(
                 img_pattern,
-                lambda m: f'{m.group(1)}?ue_doc={stamp}{m.group(2)}',
+                lambda m: f'{m.group(1)}?ue_doc={stamp}&ue_img={image_cache_bust}{m.group(2)}',
                 text,
             )
 
@@ -205,7 +209,6 @@ def build_proof_sheet():
 def main():
     stamp = resolve_stamp()
     rebuild_cards_from_bases()
-    repaint_date_stamp_on_all(stamp)
     refresh_share_endpoint_meta(stamp)
     proof = build_proof_sheet()
     print("Share card base profile applied.")

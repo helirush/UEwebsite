@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foster Farms Executive Brief | Electrical Visibility &amp; Intelligence Progress Report</title>
-  <meta name="description" content="Foster Farms Executive Brief — Electrical Visibility &amp; Intelligence Progress Report. Private executive review copy focused on financial and operational intelligence for James Richards." />
+  <title>Foster Farms Executive Brief | Executive Findings &amp; Recommended Action Report</title>
+  <meta name="description" content="Foster Farms Executive Brief — Executive Findings &amp; Recommended Action Report for James Richards and leadership, based on multi-year electrical measurement and analysis." />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Unity Energy Update" id="ogTitle" />
-  <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report · UE.26.0526" id="ogDescription" />
+  <meta property="og:description" content="Foster Farms · Executive Findings &amp; Recommended Action Report · UE.26.0526" id="ogDescription" />
   <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/" id="ogUrl" />
   <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" id="ogImage" />
   <meta property="og:image:alt" content="Unity Energy update badge with date stamp" />
   <meta property="og:site_name" content="Unity Energy" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Unity Energy Update" id="twitterTitle" />
-  <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report · UE.26.0526" id="twitterDescription" />
+  <meta property="twitter:description" content="Foster Farms · Executive Findings &amp; Recommended Action Report · UE.26.0526" id="twitterDescription" />
   <meta property="twitter:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/" id="twitterUrl" />
   <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" id="twitterImage" />
   <link rel="icon" type="image/png" href="../ue-icon-192.png?ue_icon=20260527" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../styles.css?ue_css=20260601j" />
 </head>
 <body>
   <div class="gate-overlay" id="briefGateOverlay">
@@ -47,58 +47,292 @@
     </div>
 
     <div class="brief-frame">
-      <div class="letterhead-wrap">
-        <img src="../ue-letterhead.png" alt="Unity Energy letterhead" />
+      <div class="letterhead-wrap letterhead-wrap-logo-draft">
+        <div class="letterhead-html-draft">
+          <div class="letterhead-html-layout">
+            <img class="letterhead-html-logo" src="../../../../assets/images/UElogo_60524.png" alt="Unity Energy circular logo draft" />
+            <div class="letterhead-html-content">
+              <div class="letterhead-html-row">
+                <span class="letterhead-html-word">U N I T Y&nbsp;&nbsp;E N E R G Y</span>
+                <span class="letterhead-html-word letterhead-html-word-systems">&nbsp;SYSTEMS</span>
+              </div>
+              <div class="letterhead-html-rule" aria-hidden="true"></div>
+              <div class="letterhead-html-tagline">R E S T O R I N G&nbsp;&nbsp;&nbsp;I N D U S T R I A L&nbsp;&nbsp;&nbsp;E L E C T R I C I T Y</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="executive-audio-row" aria-label="Unity executive narration controls">
+        <p class="executive-audio-label">Unity Narration Controls</p>
+        <div class="executive-audio-grid">
+          <section class="executive-audio-track" aria-label="Executive intro controls">
+            <p class="executive-audio-track-title">Executive Intro</p>
+            <div class="executive-audio-controls">
+              <button type="button" class="executive-audio-btn executive-audio-btn-start" id="toggleExecutiveIntroBtn">▶ Start Intro</button>
+              <button type="button" class="executive-audio-btn executive-audio-btn-readalong" id="toggleIntroReadAlongBtn" aria-expanded="false" aria-label="Open executive intro read-along window">Read Along</button>
+            </div>
+            <div class="executive-audio-indicator" id="executiveIntroActivityIndicator" aria-hidden="true">
+              <span class="executive-audio-indicator-dot"></span>
+              <span class="executive-audio-indicator-bar"></span>
+              <span class="executive-audio-indicator-eq">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </span>
+            </div>
+            <span class="executive-audio-status" id="executiveIntroStatus">Unity intro will start automatically after secure access.</span>
+          </section>
+          <section class="executive-audio-track" aria-label="Executive overview brief controls">
+            <p class="executive-audio-track-title">Executive Overview Brief</p>
+            <div class="executive-audio-controls">
+              <button type="button" class="executive-audio-btn executive-audio-btn-start" id="toggleExecutiveOverviewBtn">▶ Start Brief</button>
+              <button type="button" class="executive-audio-btn executive-audio-btn-readalong" id="toggleOverviewReadAlongBtn" aria-expanded="false" aria-label="Open executive overview read-along window">Read Along</button>
+            </div>
+            <div class="executive-audio-indicator" id="executiveOverviewActivityIndicator" aria-hidden="true">
+              <span class="executive-audio-indicator-dot"></span>
+              <span class="executive-audio-indicator-bar"></span>
+              <span class="executive-audio-indicator-eq">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </span>
+            </div>
+            <span class="executive-audio-status" id="executiveOverviewStatus">Press Start Brief to play the executive overview after approval.</span>
+          </section>
+        </div>
       </div>
 
       <section class="exec-header">
         <p class="eyebrow">Private Executive Brief</p>
-        <h1>Foster Farms<br/>Electrical Visibility &amp; Intelligence Progress Report</h1>
+        <h1>Foster Farms<br/>Executive Findings &amp; Recommended Action Report</h1>
         <div class="prepared-for">
           <strong>Prepared for:</strong><span>James Richards</span>
           <strong>Title:</strong><span>Chief Financial Officer, Foster Farms</span>
-          <strong>Status:</strong><span>Review Copy</span>
+          <strong>Status:</strong><span id="documentStatusValue">Published Copy</span>
           <strong>Date:</strong><span id="reviewDate"></span>
         </div>
       </section>
-
-      <section class="report-page">
-        <p class="page-num">Page 1 · Cover / Purpose</p>
-        <h2>What began as electrical measurement is becoming operational and financial intelligence.</h2>
-        <p>Unity Energy and Foster Farms have built a long-duration electrical visibility environment that now supports executive interpretation across operations, finance, and reliability.</p>
-        <div class="cover-statement">
-          <p>This brief summarizes how Foster Farms’ long-duration electrical visibility environment may now support:</p>
-          <ul>
-            <li>Operational awareness</li>
-            <li>Cost control</li>
-            <li>Asset protection</li>
-            <li>Demand visibility</li>
-            <li>Selective energy recovery opportunity</li>
-            <li>Future strategic utility engagement</li>
-          </ul>
-          <p style="margin-top:8px;">Unity’s role has evolved beyond monitoring toward operational intelligence infrastructure.</p>
+      <section class="executive-impact-strip" aria-label="Executive impact summary">
+        <article class="impact-card">
+          <p class="impact-label">Annual Opportunity Exposure</p>
+          <p class="impact-value">$6.4M</p>
+          <p class="impact-sub">Cherry + Livingston (TOTAL WASTED, thermal-inclusive)</p>
+        </article>
+        <article class="impact-card">
+          <p class="impact-label">UnConsumed Energy (kW Equiv)</p>
+          <p class="impact-value">2,167 kW (~2.2 MW)</p>
+          <p class="impact-sub">Conservative electrical-only comparison anchor</p>
+        </article>
+        <article class="impact-card">
+          <p class="impact-label">Currently Evaluated</p>
+          <p class="impact-value">2 Facilities</p>
+          <p class="impact-sub">Cherry Avenue and Livingston</p>
+        </article>
+        <article class="impact-card impact-card-cta">
+          <p class="impact-label">Recommended Next Step</p>
+          <p class="impact-value impact-value-cta">Controlled Validation + Calibration</p>
+          <p class="impact-sub">Highest-opportunity location first, Livingston tuning in parallel</p>
+        </article>
+      </section>
+      <section class="outcome-groups" aria-label="Outcome category summary">
+        <div class="outcome-groups-head">
+          <p class="outcome-groups-kicker">Outcome Categories</p>
+          <p class="outcome-groups-lead">These eight focus areas clarify what the measured opportunity is expected to deliver.</p>
+        </div>
+        <div class="outcome-group-grid">
+          <article class="outcome-group-card">
+            <h3>Primary Benefits</h3>
+            <p>Immediate value areas expected from targeted optimization.</p>
+            <div class="outcome-pill-row" aria-label="Primary benefits">
+              <span class="outcome-pill">Capacity Recovery</span>
+              <span class="outcome-pill">Financial Impact</span>
+              <span class="outcome-pill">Asset Protection</span>
+              <span class="outcome-pill">Thermal Reduction</span>
+            </div>
+          </article>
+          <article class="outcome-group-card">
+            <h3>Operational Confidence</h3>
+            <p>System-level outcomes that support sustained execution and validation.</p>
+            <div class="outcome-pill-row" aria-label="Operational confidence outcomes">
+              <span class="outcome-pill">Infrastructure Optimization</span>
+              <span class="outcome-pill">Operational Stability</span>
+              <span class="outcome-pill">Demand Visibility</span>
+              <span class="outcome-pill">Deployment Validation</span>
+            </div>
+          </article>
         </div>
       </section>
 
       <section class="report-page">
-        <p class="page-num">Page 2 · What Has Been Established</p>
-        <h2>Foster Farms now possesses a historical electrical intelligence layer.</h2>
-        <p>Over multiple years, sustained transformer-level observation across Foster Farms facilities has established persistent, archived electrical intelligence that supports continuity, historical comparison, and accumulated operational understanding.</p>
+        <p class="page-num">Page 1 · Executive Purpose</p>
+        <h2>What began as electrical measurement now supports executive findings and recommended action.</h2>
+        <p>Unity Energy and Foster Farms have completed multiple years of transformer-level measurement and analysis. This brief focuses on what has been learned, why it matters financially, and what action should be evaluated next.</p>
+        <div class="cover-statement">
+          <div class="cover-statement-layout">
+            <div class="cover-statement-copy">
+              <p>This report is intended to support executive decision-making around:</p>
+              <ul>
+                <li>Financial impact and cost-recovery potential</li>
+                <li>Infrastructure planning and capacity utilization</li>
+                <li>Asset performance and operational reliability</li>
+                <li>Demand visibility by facility and utility territory</li>
+                <li>Potential deferral of future capital expenditure</li>
+                <li>Evaluation of a controlled MPTS deployment</li>
+              </ul>
+              <p style="margin-top:8px;">The objective is not to restate what was measured; it is to convert measured evidence into a practical next-step recommendation.</p>
+            </div>
+            <aside id="example-energy-field-behavior" class="field-behavior-card" aria-label="Example energy field behavior quick look">
+              <p class="field-behavior-title">Example Energy Field Behavior</p>
+              <p class="field-behavior-subtitle">Livingston - Rendering-2 Transformer</p>
+              <div class="field-behavior-actions">
+                <button type="button" class="field-behavior-btn" id="openRendering2BaselineBtn">Baseline</button>
+                <button type="button" class="field-behavior-btn" id="openRendering2MptsBtn">MPTS Tuned</button>
+              </div>
+              <p class="field-behavior-hint" id="fieldBehaviorQuickViewStatus">Quick look only — open/close/expand</p>
+              <div class="field-behavior-preview" id="fieldBehaviorQuickViewPanel" hidden>
+                <div class="field-behavior-preview-head">
+                  <p id="fieldBehaviorQuickViewLabel">Rendering-2 Baseline — April 2026</p>
+                  <button type="button" class="field-behavior-close-btn" id="closeFieldBehaviorQuickViewBtn">Close</button>
+                </div>
+                <a id="fieldBehaviorQuickViewLink" href="#" target="_blank" rel="noopener noreferrer">
+                  <img id="fieldBehaviorQuickViewImage" src="" alt="Rendering-2 field behavior quick look image" loading="lazy" />
+                </a>
+                <p class="field-behavior-preview-note">Click image to open guided full view.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="report-page">
+        <p class="page-num">Page 2 · Observed Opportunity Exposure</p>
+        <h2>Observed Opportunity Exposure</h2>
+        <p>Derived from transformer-level summary boards, historical analysis datasets, and archived electrical behavior studies available within the Foster Farms private portal archive, now using TOTAL WASTED annual-baseline interpretation (thermal and cooling inclusive).</p>
         <div class="metric-grid">
           <article class="metric-card">
-            <h3>Infrastructure &amp; Continuity</h3>
+            <h3>Cherry Avenue</h3>
+            <p><strong>Current calibrated exposure:</strong></p>
             <ul>
-              <li>Cherry Avenue and Livingston historical observation baselines</li>
-              <li>One-second and one-minute streaming infrastructure with continuity</li>
-              <li>Transformer and voltage behavior visibility for cross-period comparison</li>
+              <li>~$325 / hour</li>
+              <li>~$237k / month</li>
+              <li>~$2.85M annually (TOTAL WASTED)</li>
+              <li>Environmental calibration depth is currently stronger here</li>
             </ul>
           </article>
           <article class="metric-card">
-            <h3>Reporting &amp; Anomaly Awareness</h3>
+            <h3>Livingston</h3>
+            <p><strong>Current calibrated exposure:</strong></p>
             <ul>
-              <li>Monthly reporting and historical trend interpretation over time</li>
-              <li>Anomaly-awareness examples, including T15 behavior reviews</li>
-              <li>Persistent reporting infrastructure for executive continuity</li>
+              <li>~$406 / hour</li>
+              <li>~$296k / month</li>
+              <li>~$3.56M annually (TOTAL WASTED)</li>
+              <li>Still conservative pending field-level environmental calibration</li>
+            </ul>
+          </article>
+        </div>
+        <div class="executive-visual-grid" aria-label="Executive comparison visuals">
+          <article class="visual-card">
+            <h3>Facility Exposure Share</h3>
+            <div class="donut-compare">
+              <div class="donut-item">
+                <div class="donut-chart" style="--pct:44.5;">
+                  <span>44.5%</span>
+                </div>
+                <p>Cherry Annual Share (calibrated)</p>
+              </div>
+              <div class="donut-item">
+                <div class="donut-chart" style="--pct:55.5;">
+                  <span>55.5%</span>
+                </div>
+                <p>Livingston Annual Share (calibrated)</p>
+              </div>
+            </div>
+          </article>
+          <article class="visual-card">
+            <h3>Opportunity Comparison</h3>
+            <div class="mini-bar-item">
+              <div class="mini-bar-head"><span>Annual Exposure — Cherry</span><strong>$2.85M</strong></div>
+              <div class="mini-bar"><span style="width:44.5%;"></span></div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-head"><span>Annual Exposure — Livingston</span><strong>$3.56M</strong></div>
+              <div class="mini-bar"><span style="width:55.5%;"></span></div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-head"><span>Reactive Baseline Equivalent — Cherry</span><strong>555 kW</strong></div>
+              <div class="mini-bar"><span style="width:25.6%;"></span></div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-head"><span>Reactive Baseline Equivalent — Livingston</span><strong>1,613 kW</strong></div>
+              <div class="mini-bar"><span style="width:74.4%;"></span></div>
+            </div>
+          </article>
+          <article class="visual-card visual-card-wide">
+            <h3>Executive Decision Flow</h3>
+            <div class="flow-row">
+              <div class="flow-step">Measured Signal</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-step">Financial Consequence</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-step">Controlled Validation</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-step">Deployment Roadmap</div>
+            </div>
+          </article>
+        </div>
+        <div class="panel-grid" style="margin-top:10px;">
+          <article class="panel">
+            <h3>Why Unity Believes The Opportunity Is Real</h3>
+            <ul>
+              <li>TOTAL WASTED values combine direct electrical waste with thermal and cooling burden</li>
+              <li>The same signatures appear repeatedly across production cycles, not one-time events</li>
+              <li>Transformer-level behavior has been observed long enough to support comparison confidence</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>What Supports Increasing Confidence</h3>
+            <ul>
+              <li>Baselines are stable across multiple years of monitoring</li>
+              <li>Environmental factors now include AC-space exposure and local temperature/humidity</li>
+              <li>Voltage/current behavior is now being tied more directly to thermal burden scoring</li>
+            </ul>
+          </article>
+        </div>
+        <p style="margin-top:10px; font-size:13px; color:#626d56;">These observations are derived from archived transformer-level analysis boards and observed electrical field behavior patterns presently accessible within the Foster Farms portal archive; annual values shown here are treated as annual baselines and then normalized to month/day/hour for comparison.</p>
+        <div class="value-callout">
+          <p><strong>Full Thermal Burden Method (current context):</strong> TOTAL WASTED now reflects direct electrical waste plus thermal burden plus cooling energy required in conditioned space.</p>
+          <p style="margin-top:8px;"><strong>Calibration status:</strong> Cherry is more refined today; Livingston remains partially defaulted in some fields and is therefore treated conservatively until calibration is complete.</p>
+        </div>
+        <div class="panel-grid" style="margin-top:10px;">
+          <article class="panel">
+            <h3>Livingston / MID Territory (Board-Implied)</h3>
+            <p style="margin-bottom:0;"><strong>Approximate blended exposure economics:</strong><br/>~22¢ / kWh equivalent</p>
+          </article>
+          <article class="panel">
+            <h3>Cherry / PG&amp;E Territory (Board-Implied)</h3>
+            <p style="margin-bottom:0;"><strong>Approximate blended exposure economics:</strong><br/>~35¢ / kWh equivalent</p>
+          </article>
+        </div>
+        <div class="value-callout">
+          <p><strong>The operational value of recovered electrical efficiency varies materially by utility economics and load behavior.</strong></p>
+          <p style="margin-top:8px;">As electrical behavior becomes increasingly measurable and predictable, Foster Farms may eventually be positioned to evaluate utility and supply-side options supported by empirical operating data.</p>
+        </div>
+      </section>
+      <section class="report-page">
+        <p class="page-num">Page 3 · Historical Findings Base</p>
+        <h2>Multiple years of site-level electrical baselines are now established.</h2>
+        <p>Sustained transformer-level observation across Foster Farms facilities has created a reliable historical baseline archive. This allows electrical behavior to be compared across periods with increasing confidence.</p>
+        <div class="metric-grid">
+          <article class="metric-card">
+            <h3>Coverage &amp; Baseline Maturity</h3>
+            <ul>
+              <li>Cherry Avenue and Livingston baselines are established</li>
+              <li>One-second and one-minute streams preserved in historical archives</li>
+              <li>Transformer-level behavior available for repeatable comparison</li>
+            </ul>
+          </article>
+          <article class="metric-card">
+            <h3>Repeatability &amp; Findings Confidence</h3>
+            <ul>
+              <li>Monthly trend reporting across multiple operating cycles</li>
+              <li>Repeated anomaly capture and review (including T15 behavior events)</li>
+              <li>Evidence quality sufficient for targeted infrastructure evaluation</li>
             </ul>
           </article>
         </div>
@@ -108,85 +342,57 @@
       </section>
 
       <section class="report-page">
-        <p class="page-num">Page 3 · Observed Opportunity Exposure</p>
-        <h2>Observed Opportunity Exposure</h2>
-        <p>Derived from transformer-level summary boards, historical analysis datasets, and continuously archived electrical behavior studies currently available within the Foster Farms operational intelligence environment.</p>
-        <div class="metric-grid">
-          <article class="metric-card">
-            <h3>Cherry Avenue</h3>
-            <p><strong>Estimated recoverable electrical exposure:</strong></p>
+        <p class="page-num">Page 4 · Executive Findings &amp; Recommended Action</p>
+        <h2>Executive Findings &amp; Recommended Action</h2>
+        <p>Based on multiple years of measurement and analysis, Unity believes Foster Farms has identifiable infrastructure optimization opportunities that now justify evaluation of a controlled MPTS deployment.</p>
+        <div class="panel-grid" style="margin-top:12px;">
+          <article class="panel">
+            <h3>What We Have Learned</h3>
             <ul>
-              <li>~$194 / hour</li>
-              <li>~$1.70M annually</li>
-              <li>~555 kW/hr recoverable equivalent</li>
-              <li>~1,900 metric tons CO₂ offset opportunity</li>
+              <li>Multiple years of operational electrical data have now been collected</li>
+              <li>Baselines have been established across monitored facilities</li>
+              <li>Site-level electrical behavior can now be compared with confidence</li>
+              <li>Significant infrastructure optimization opportunities have been identified</li>
             </ul>
           </article>
-          <article class="metric-card">
-            <h3>Livingston</h3>
-            <p><strong>Estimated recoverable electrical exposure:</strong></p>
+          <article class="panel">
+            <h3>What The Data Indicates</h3>
             <ul>
-              <li>~$335 / hour</li>
-              <li>~$2.9M annually</li>
-              <li>~1540 kW/h recoverable equivalent</li>
-              <li>~5,100 metric tons CO₂ offset opportunity</li>
+              <li>Capacity recovery opportunities exist</li>
+              <li>Thermal burden reduction opportunities exist</li>
+              <li>Reactive energy management opportunities exist</li>
+              <li>Operational efficiency opportunities exist</li>
             </ul>
           </article>
-        </div>
-        <p style="margin-top:10px; font-size:13px; color:#626d56;">These observations are derived from archived transformer-level analysis boards and observed electrical field behavior patterns presently accessible within the Foster Farms portal environment; annual values shown are annualized equivalents from board-level hourly exposure metrics.</p>
-        <div class="panel-grid" style="margin-top:10px;">
-          <article class="panel">
-            <h3>Livingston / MID Territory</h3>
-            <p style="margin-bottom:0;"><strong>Approximate blended electrical economics:</strong><br/>~17–18¢ / kWh</p>
-          </article>
-          <article class="panel">
-            <h3>Cherry &amp; Belgravia / PG&amp;E Territory</h3>
-            <p style="margin-bottom:0;"><strong>Approximate blended electrical economics:</strong><br/>~33¢ / kWh</p>
-          </article>
-        </div>
-        <div class="value-callout">
-          <p><strong>The operational value of recovered electrical efficiency may vary substantially between utility territories.</strong></p>
-          <p style="margin-top:8px;">As electrical behavior becomes increasingly measurable and predictable, Foster Farms may eventually be positioned to explore more advanced utility and supply-side discussions supported by empirical operational data.</p>
-        </div>
-      </section>
-
-      <section class="report-page">
-        <p class="page-num">Page 4 · Next Phase / Executive Strategy</p>
-        <h2>The next phase is where accumulated electrical visibility begins converting into operational and financial value.</h2>
-        <p>Foster Farms now has the opportunity to operationalize the intelligence environment already in place through collaboration, maintenance integration, and disciplined executive governance.</p>
-        <div class="roadmap-row">
-          <div class="roadmap-pill">Visibility</div>
-          <div class="roadmap-pill">Interpretation</div>
-          <div class="roadmap-pill">Selective Optimization</div>
-          <div class="roadmap-pill">Operational Adoption</div>
-          <div class="roadmap-pill">Measured Outcomes</div>
         </div>
         <div class="panel-grid" style="margin-top:12px;">
           <article class="panel">
-            <h3>Next-Phase Operational Integration</h3>
+            <h3>Business Implications</h3>
             <ul>
-              <li>SAP history, maintenance records, and work-order context</li>
-              <li>Utility interpretation, tariff understanding, and demand behavior</li>
-              <li>Anomaly awareness linked to historical comparison and plant operations</li>
-              <li>Operational outcomes mapped to electrical observations and response timelines</li>
+              <li>Potential reduction in electrical stress on existing assets</li>
+              <li>Improved utilization of existing infrastructure capacity</li>
+              <li>Potential avoidance or deferral of future capital expenditure</li>
+              <li>Measurable operational and financial value if validated in-field</li>
             </ul>
           </article>
           <article class="panel">
-            <h3>Operational Liaisons</h3>
+            <h3>Recommended Next Step</h3>
             <ul>
-              <li>Connect electrical findings to plant context and maintenance integration</li>
-              <li>Coordinate rapid communication of unusual events and operating conditions</li>
-              <li>Support Clerk interpretation loops and executive operational governance</li>
-              <li>Preserve continuity between field awareness, operations, and leadership review</li>
+              <li>Initiate a controlled MPTS deployment at the highest-opportunity location</li>
+              <li>Measure results against current transformer baseline behavior</li>
+              <li>Validate operational impact and financial outcomes</li>
+              <li>Complete Livingston field-level environmental calibration in parallel</li>
+              <li>Develop a broader deployment roadmap based on measured results</li>
             </ul>
           </article>
         </div>
         <div class="closing">
-          <p><strong>Foster Farms already has the intelligence foundation. The next phase is disciplined operationalization across maintenance, operations, and leadership governance.</strong></p>
-          <p style="margin-top:8px;">Additional transformer-level studies, narrated field summaries, historical reporting archives, and operational intelligence tools are presently accessible within the private Foster Farms environment.</p>
+          <p><strong>After multiple years of measurement, analysis, and operational observation, Unity believes Foster Farms now possesses sufficient visibility to move from measurement to targeted infrastructure optimization.</strong></p>
+          <p style="margin-top:8px;">The recommended next step is a controlled deployment and calibration pass designed to validate measurable operational and financial outcomes while preserving conservative commitments.</p>
+          <p style="margin-top:8px;">Additional transformer-level studies, narrated field summaries, and historical reporting archives are presently accessible within the private Foster Farms environment.</p>
         </div>
         <div class="footer-actions">
-          <label class="share-type-wrap" for="shareTypeSelect">
+          <label class="share-type-wrap" for="shareTypeSelect" data-founder-access="required">
             <span>Share card</span>
             <select id="shareTypeSelect">
               <option value="update">Update</option>
@@ -198,36 +404,1175 @@
               <option value="alert">Alert</option>
             </select>
           </label>
-          <button type="button" id="copySecureLinkBtn" class="secondary">Copy Secure Link</button>
+          <button type="button" id="copySecureLinkBtn" class="secondary" data-founder-access="required">Copy Secure Link</button>
           <button type="button" id="downloadPdfBtn">Download PDF</button>
-          <a id="openInNotionBtn" href="https://www.notion.so/" target="_blank" rel="noopener noreferrer">Open in Notion</a>
-          <a href="../../../../contact-us.html">Contact Unity</a>
-          <a href="../../../../../Customers/FosterFarms/index.html">Return to Foster Farms</a>
+          <a id="openInNotionBtn" href="https://www.notion.so/new" target="_blank" rel="noopener noreferrer" data-founder-access="required">Open in Notion</a>
+          <a id="contactUnityBtn" href="../../../../contact-us.html">Contact Unity</a>
+          <a id="returnToFosterFarmsBtn" href="../../../../../Customers/FosterFarms/index.html">Return to Foster Farms</a>
         </div>
       </section>
     </div>
   </main>
 
-  <script src="../vault-access.js"></script>
-  <script src="../share-controls.js"></script>
+  <script src="../vault-access.js?ue_access=20260601c"></script>
+  <script src="../share-controls.js?ue_share=20260601d"></script>
   <script>
-    window.ffExecVaultAccess.attachGate({
-      overlayId: "briefGateOverlay",
-      contentId: "briefContent",
-      formId: "briefGateForm",
-      inputId: "briefPasswordInput",
-      founderIdInputId: "briefFounderIdInput",
-      errorId: "briefGateError",
-      logoutId: "briefLogoutBtn",
-      cancelId: "briefGateCancelBtn",
-      cancelHref: "../"
+    function resolveExecutiveDocumentStatus() {
+      const statusNode = document.getElementById("documentStatusValue");
+      const rawValue = statusNode ? String(statusNode.textContent || "").trim().toLowerCase() : "";
+      if (rawValue.includes("published")) return "published";
+      if (rawValue.includes("test")) return "test";
+      return "review";
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function renderExecutiveNoticeScreen(options = {}) {
+      const kicker = escapeHtml(options.kicker || "Unity Energy Executive Brief");
+      const title = escapeHtml(options.title || "Brief Unavailable");
+      const message = escapeHtml(options.message || "This document link is currently unavailable.");
+      const primaryAction =
+        options.primaryAction &&
+        typeof options.primaryAction === "object" &&
+        options.primaryAction.href &&
+        options.primaryAction.label
+          ? options.primaryAction
+          : null;
+      const secondaryAction =
+        options.secondaryAction &&
+        typeof options.secondaryAction === "object" &&
+        options.secondaryAction.href &&
+        options.secondaryAction.label
+          ? options.secondaryAction
+          : null;
+
+      const actionLinks = [primaryAction, secondaryAction]
+        .filter(Boolean)
+        .map((action, index) => {
+          const href = escapeHtml(action.href);
+          const label = escapeHtml(action.label);
+          const style =
+            index === 0
+              ? "display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(63,90,39,.62);background:linear-gradient(180deg,rgba(88,123,48,.97) 0%,rgba(53,79,32,.97) 100%);color:#f7f2e5;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.02em;padding:10px 14px;"
+              : "display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(130,115,77,.58);background:linear-gradient(180deg,rgba(247,241,223,.95) 0%,rgba(232,222,194,.95) 100%);color:#4b523f;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.02em;padding:10px 14px;";
+          return `<a href="${href}" style="${style}">${label}</a>`;
+        })
+        .join("");
+
+      const actionsMarkup = actionLinks
+        ? `<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">${actionLinks}</div>`
+        : "";
+      document.body.innerHTML = `
+        <main style="min-height:100vh;display:grid;place-items:center;padding:32px;background:#f6f8f2;color:#1f2a1f;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+          <section style="max-width:720px;background:#ffffff;border:1px solid #d8decd;border-radius:16px;padding:28px 24px;box-shadow:0 16px 40px rgba(24,39,16,.10);">
+            <p style="margin:0 0 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5f6c55;">${kicker}</p>
+            <h1 style="margin:0 0 12px;font-size:26px;line-height:1.2;color:#1f2a1f;">${title}</h1>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:#33412f;">${message}</p>
+            ${actionsMarkup}
+          </section>
+        </main>
+      `;
+    }
+
+    function renderShareUnavailableScreen(message) {
+      renderExecutiveNoticeScreen({
+        title: "Share Link Unavailable",
+        message: message || "This document link is currently unavailable.",
+        primaryAction: {
+          href: "../",
+          label: "Return to Executive Intelligence Center"
+        }
+      });
+    }
+
+    function enforceExecutiveSharePolicy(documentStatus) {
+      const pageUrl = new URL(window.location.href);
+      const params = pageUrl.searchParams;
+      const hasShareSignal =
+        params.has("ue_share") ||
+        params.has("ue_kind") ||
+        params.has("ue_doc") ||
+        params.has("ue_status") ||
+        params.has("ue_rev") ||
+        params.has("ue_target");
+
+      if (documentStatus !== "published" && hasShareSignal) {
+        renderShareUnavailableScreen("This review/test copy has sharing disabled and cannot be redistributed.");
+        return true;
+      }
+
+      return false;
+    }
+
+    const EXEC_DOCUMENT_STATUS = resolveExecutiveDocumentStatus();
+    const EXEC_DOCUMENT_REVISION = "FF-JR-EXEC-26-0530-RC1";
+    const EXEC_PUBLISHED_TARGET_PATH = "/UnityEnergy/customer-portal/foster-farms/executive/published/james-richards-progress-report/";
+    const EXEC_RELEASE_LIFECYCLE = Object.freeze({
+      discontinuedReleases: Object.freeze({
+        "2026-05-28": "Published May 28, 2026"
+      }),
+      latestReleasePath: "./",
+      latestReleaseLabel: "Open Published June 1, 2026",
+      fallbackPath: "../",
+      fallbackLabel: "Return to Executive Brief Center"
     });
 
-    window.ffExecShareControls.init({
-      gateOverlayId: "briefGateOverlay",
-      reviewDateElementId: "reviewDate",
-      shareDescriptionPrefix: "Foster Farms · Electrical Visibility & Intelligence Progress Report"
-    });
+    function enforceExecutiveLifecyclePolicy(lifecyclePolicy) {
+      if (!lifecyclePolicy || typeof lifecyclePolicy !== "object") return false;
+      const pageUrl = new URL(window.location.href);
+      const selectedRelease = String(pageUrl.searchParams.get("release") || "").trim();
+      if (!selectedRelease) return false;
+
+      const discontinuedReleases =
+        lifecyclePolicy.discontinuedReleases && typeof lifecyclePolicy.discontinuedReleases === "object"
+          ? lifecyclePolicy.discontinuedReleases
+          : {};
+      const isDiscontinuedRelease = Object.prototype.hasOwnProperty.call(discontinuedReleases, selectedRelease);
+      if (!isDiscontinuedRelease) return false;
+
+      const configuredLabel = String(discontinuedReleases[selectedRelease] || "").trim();
+      const releaseReference = configuredLabel || `Published release ${selectedRelease}`;
+      const latestReleasePath = String(lifecyclePolicy.latestReleasePath || "./").trim() || "./";
+      const fallbackPath = String(lifecyclePolicy.fallbackPath || "../").trim() || "../";
+
+      renderExecutiveNoticeScreen({
+        title: "Brief Discontinued",
+        message: `${releaseReference} is discontinued and no longer available. Please refer to the next active release.`,
+        primaryAction: {
+          href: latestReleasePath,
+          label: lifecyclePolicy.latestReleaseLabel || "Open Current Working Brief"
+        },
+        secondaryAction: {
+          href: fallbackPath,
+          label: lifecyclePolicy.fallbackLabel || "Return to Executive Brief Center"
+        }
+      });
+      return true;
+    }
+    function setupExecutiveIntroAudio() {
+      const toggleButton = document.getElementById("toggleExecutiveIntroBtn");
+      const readAlongButton = document.getElementById("toggleIntroReadAlongBtn");
+      const activityIndicator = document.getElementById("executiveIntroActivityIndicator");
+      const reviewScriptLink = document.getElementById("reviewExecutiveIntroScriptLink");
+      const status = document.getElementById("executiveIntroStatus");
+      if (!toggleButton || !status) return;
+      const audio = new Audio("./audio/unity-executive-intro-shimmer.mp3?ue_audio=20260601c");
+      audio.preload = "auto";
+      let hasAudioError = false;
+      let isSpeechFallbackPlaying = false;
+      let speechFallbackStopRequested = false;
+      let readAlongWindow = null;
+      let introEditorWindow = null;
+      let readAlongWindowMonitorId = null;
+      let introFallbackSourceText = "";
+      const READ_ALONG_WINDOW_URL = "./unity-intro-read-along.html";
+      const READ_ALONG_WINDOW_NAME = "unityExecutiveReadAlongWindow";
+      const READ_ALONG_WINDOW_FEATURES = "width=1040,height=900,resizable=yes,scrollbars=yes";
+      const INTRO_APPROVAL_STORAGE_KEY = "ffExecScriptApproval_unity_intro_v1";
+      const INTRO_SOURCE_SCRIPT_URL = "./audio/unity-executive-intro-script-approved.txt?ue_voice=20260601a";
+      const INTRO_EDITOR_WINDOW_URL = "./unity-intro-script-review.html";
+      const INTRO_EDITOR_WINDOW_NAME = "unityExecutiveIntroScriptEditor";
+      const INTRO_EDITOR_WINDOW_FEATURES = "width=1040,height=900,resizable=yes,scrollbars=yes";
+
+      function getIntroApprovalPayload() {
+        try {
+          const raw = window.localStorage.getItem(INTRO_APPROVAL_STORAGE_KEY);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (_err) {
+          return null;
+        }
+      }
+
+      function hasIntroApproval() {
+        const approval = getIntroApprovalPayload();
+        return !!(
+          approval &&
+          typeof approval.text === "string" &&
+          approval.text.trim()
+        );
+      }
+      function hasFounderShareAccess() {
+        return !!(
+          window.ffExecVaultAccess &&
+          typeof window.ffExecVaultAccess.canShareSecureLinks === "function" &&
+          window.ffExecVaultAccess.canShareSecureLinks()
+        );
+      }
+
+      function getApprovedIntroText() {
+        const approval = getIntroApprovalPayload();
+        if (!approval || typeof approval.text !== "string") return "";
+        return approval.text.trim();
+      }
+
+      async function loadIntroFallbackSourceText() {
+        if (introFallbackSourceText) return introFallbackSourceText;
+        try {
+          const response = await fetch(INTRO_SOURCE_SCRIPT_URL, { cache: "no-store" });
+          if (!response.ok) return "";
+          introFallbackSourceText = (await response.text()).trim();
+          return introFallbackSourceText;
+        } catch (_err) {
+          return "";
+        }
+      }
+
+      function canUseSpeechFallback() {
+        return typeof window.SpeechSynthesisUtterance === "function" && !!window.speechSynthesis;
+      }
+
+      function stopSpeechFallbackPlayback() {
+        if (!window.speechSynthesis) return;
+        if (!isSpeechFallbackPlaying && !window.speechSynthesis.speaking && !window.speechSynthesis.pending) return;
+        speechFallbackStopRequested = true;
+        try {
+          window.speechSynthesis.cancel();
+        } catch (_err) {}
+        isSpeechFallbackPlaying = false;
+      }
+
+      async function startSpeechFallbackPlayback() {
+        if (!canUseSpeechFallback()) return false;
+        speechFallbackStopRequested = false;
+        const sourceText = await loadIntroFallbackSourceText();
+        const approvedText = getApprovedIntroText();
+        const narrationSource = sourceText || approvedText;
+        const speechText = String(narrationSource || "").replace(/\s+/g, " ").trim();
+        if (!speechText) return false;
+
+        return new Promise((resolve) => {
+          let started = false;
+          const utterance = new window.SpeechSynthesisUtterance(speechText);
+          utterance.rate = 0.94;
+          utterance.pitch = 1;
+          utterance.onstart = () => {
+            started = true;
+            speechFallbackStopRequested = false;
+            isSpeechFallbackPlaying = true;
+            updateControls(true);
+            status.textContent = "Unity intro is playing.";
+            resolve(true);
+          };
+          utterance.onend = () => {
+            isSpeechFallbackPlaying = false;
+            if (speechFallbackStopRequested) {
+              speechFallbackStopRequested = false;
+              return;
+            }
+            closeReadAlongWindow();
+            updateControls(false);
+            status.textContent = "Unity intro complete — press Start to replay.";
+          };
+          utterance.onerror = (event) => {
+            isSpeechFallbackPlaying = false;
+            const wasCancelled =
+              speechFallbackStopRequested ||
+              (event && (event.error === "canceled" || event.error === "interrupted"));
+            if (wasCancelled) {
+              speechFallbackStopRequested = false;
+              if (!started) {
+                resolve(false);
+              }
+              return;
+            }
+            updateControls(false);
+            status.textContent = "Audio unavailable — unable to load Unity intro file.";
+            if (!started) {
+              resolve(false);
+            }
+          };
+          try {
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+          } catch (_err) {
+            resolve(false);
+          }
+          window.setTimeout(() => {
+            if (!started) {
+              resolve(false);
+            }
+          }, 900);
+        });
+      }
+
+      function syncReviewLinkVisibility() {
+        if (!reviewScriptLink) return;
+        const canViewReviewLink = hasFounderShareAccess();
+        reviewScriptLink.hidden = !canViewReviewLink;
+        reviewScriptLink.setAttribute("aria-hidden", canViewReviewLink ? "false" : "true");
+      }
+
+      function isIntroEditorWindowOpen() {
+        return !!(introEditorWindow && !introEditorWindow.closed);
+      }
+
+      function openIntroEditorWindow() {
+        if (isIntroEditorWindowOpen()) {
+          try {
+            introEditorWindow.focus();
+          } catch (_err) {}
+          status.textContent = "Intro script approval required — complete Save + Approve, then press Start Unity Intro.";
+          return;
+        }
+
+        const popup = window.open(
+          INTRO_EDITOR_WINDOW_URL,
+          INTRO_EDITOR_WINDOW_NAME,
+          INTRO_EDITOR_WINDOW_FEATURES
+        );
+
+        if (!popup) {
+          status.textContent = "Intro script approval required — popup blocked. Allow popups and press Start again.";
+          return;
+        }
+
+        introEditorWindow = popup;
+        try {
+          introEditorWindow.focus();
+        } catch (_err) {}
+        status.textContent = "Intro script approval required — review, edit, and Save + Approve, then press Start Unity Intro.";
+      }
+
+      function ensureIntroApprovedForPlayback(options = {}) {
+        syncReviewLinkVisibility();
+        if (!hasFounderShareAccess()) return true;
+        if (hasIntroApproval()) return true;
+        updateControls(false);
+        if (options.openEditor === false) {
+          status.textContent = "Intro script is waiting for approval. Press Start Unity Intro to review and approve.";
+          return false;
+        }
+        openIntroEditorWindow();
+        return false;
+      }
+
+      function isReadAlongWindowOpen() {
+        return !!(readAlongWindow && !readAlongWindow.closed);
+      }
+
+      function syncReadAlongButtonState() {
+        if (!readAlongButton) return;
+        const isOpen = isReadAlongWindowOpen();
+        readAlongButton.textContent = isOpen ? "Close Read Along" : "Read Along";
+        readAlongButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        readAlongButton.setAttribute("aria-label", isOpen ? "Close Unity read-along window" : "Open Unity read-along window");
+      }
+
+      function startReadAlongWindowMonitor() {
+        if (readAlongWindowMonitorId) return;
+        readAlongWindowMonitorId = window.setInterval(() => {
+          if (!readAlongWindow) return;
+          if (!readAlongWindow.closed) return;
+          readAlongWindow = null;
+          syncReadAlongButtonState();
+        }, 700);
+      }
+
+      function stopReadAlongWindowMonitor() {
+        if (!readAlongWindowMonitorId) return;
+        window.clearInterval(readAlongWindowMonitorId);
+        readAlongWindowMonitorId = null;
+      }
+
+      function closeReadAlongWindow() {
+        if (isReadAlongWindowOpen()) {
+          try {
+            readAlongWindow.close();
+          } catch (_err) {}
+        }
+        readAlongWindow = null;
+        syncReadAlongButtonState();
+      }
+
+      function openReadAlongWindow() {
+        const popup = window.open(
+          READ_ALONG_WINDOW_URL,
+          READ_ALONG_WINDOW_NAME,
+          READ_ALONG_WINDOW_FEATURES
+        );
+        if (!popup) {
+          status.textContent = "Read Along popup blocked — allow popups and try again.";
+          return;
+        }
+        readAlongWindow = popup;
+        try {
+          readAlongWindow.focus();
+        } catch (_err) {}
+        syncReadAlongButtonState();
+      }
+
+      function toggleReadAlongWindow(event) {
+        if (event) {
+          event.preventDefault();
+        }
+        if (isReadAlongWindowOpen()) {
+          closeReadAlongWindow();
+          return;
+        }
+        openReadAlongWindow();
+      }
+      function setActivityIndicatorState(isActive) {
+        if (!activityIndicator) return;
+        activityIndicator.classList.toggle("is-active", !!isActive);
+      }
+
+      function updateControls(isPlaying) {
+        if (hasAudioError && !canUseSpeechFallback()) {
+          setActivityIndicatorState(false);
+          toggleButton.disabled = true;
+          toggleButton.textContent = "Audio Unavailable";
+          toggleButton.setAttribute("aria-label", "Executive intro audio unavailable");
+          return;
+        }
+        toggleButton.disabled = false;
+        if (isPlaying) {
+          setActivityIndicatorState(true);
+          toggleButton.textContent = "■ Stop Intro";
+          toggleButton.setAttribute("aria-label", "Stop executive intro playback");
+          return;
+        }
+        setActivityIndicatorState(false);
+        toggleButton.textContent = "▶ Start Intro";
+        toggleButton.setAttribute("aria-label", "Start executive intro playback");
+      }
+
+      function stopPlayback(options = {}) {
+        stopSpeechFallbackPlayback();
+        audio.pause();
+        try {
+          audio.currentTime = 0;
+        } catch (_err) {}
+        closeReadAlongWindow();
+        updateControls(false);
+        if (!options.silent) {
+          status.textContent = options.message || "Unity intro stopped.";
+        }
+      }
+
+      async function startPlayback(options = {}) {
+        if (!ensureIntroApprovedForPlayback({ openEditor: true })) return;
+        const restart = options.restart === true;
+        if (!audio.paused && !isSpeechFallbackPlaying && !restart) return;
+        if (restart) {
+          stopSpeechFallbackPlayback();
+          audio.pause();
+          try {
+            audio.currentTime = 0;
+          } catch (_err) {}
+        }
+        if (hasAudioError) {
+          const speechStarted = await startSpeechFallbackPlayback();
+          if (!speechStarted) {
+            updateControls(false);
+            status.textContent = "Audio unavailable — unable to load Unity intro file.";
+          }
+          return;
+        }
+        status.textContent = "Starting Unity intro...";
+        try {
+          await audio.play();
+        } catch (error) {
+          if (error && error.name === "NotAllowedError") {
+            updateControls(false);
+            status.textContent = "Press Start Unity Intro to begin audio.";
+            return;
+          }
+          hasAudioError = true;
+          const speechStarted = await startSpeechFallbackPlayback();
+          if (!speechStarted) {
+            updateControls(false);
+            status.textContent = "Audio unavailable — unable to play Unity intro file.";
+          }
+        }
+      }
+
+      audio.addEventListener("play", () => {
+        updateControls(true);
+        status.textContent = "Unity intro is playing.";
+      });
+
+      audio.addEventListener("ended", () => {
+        try {
+          audio.currentTime = 0;
+        } catch (_err) {}
+        closeReadAlongWindow();
+        updateControls(false);
+        status.textContent = "Unity intro complete — press Start to replay.";
+      });
+
+      audio.addEventListener("error", () => {
+        hasAudioError = true;
+        updateControls(false);
+        if (canUseSpeechFallback()) {
+          status.textContent = "Intro MP3 unavailable — press Start Intro to play approved narration text.";
+          return;
+        }
+        status.textContent = "Audio unavailable — unable to load Unity intro file.";
+      });
+
+      updateControls(false);
+      syncReviewLinkVisibility();
+      syncReadAlongButtonState();
+      startReadAlongWindowMonitor();
+      toggleButton.addEventListener("click", () => {
+        if (audio.paused && !isSpeechFallbackPlaying) {
+          startPlayback({ restart: true });
+          return;
+        }
+        stopPlayback({ message: "Unity intro stopped." });
+      });
+      if (readAlongButton) {
+        readAlongButton.addEventListener("click", toggleReadAlongWindow);
+      }
+      window.addEventListener("focus", () => {
+        syncReviewLinkVisibility();
+        syncReadAlongButtonState();
+        if (hasFounderShareAccess() && !hasIntroApproval() && audio.paused && !isSpeechFallbackPlaying) {
+          status.textContent = "Intro script is waiting for approval. Press Start Unity Intro to review and approve.";
+        }
+      });
+
+      window.addEventListener("storage", (event) => {
+        if (event.key !== INTRO_APPROVAL_STORAGE_KEY) return;
+        syncReviewLinkVisibility();
+        if (!hasFounderShareAccess()) return;
+        if (hasIntroApproval()) {
+          status.textContent = "Intro script approved — press Start Unity Intro to play.";
+          return;
+        }
+        if (audio.paused && !isSpeechFallbackPlaying) {
+          status.textContent = "Intro script is waiting for approval. Press Start Unity Intro to review and approve.";
+        }
+      });
+
+      window.addEventListener("ffExecVaultAccessChange", (event) => {
+        const detail = event && event.detail ? event.detail : {};
+        if (detail.authorized) {
+          if (!ensureIntroApprovedForPlayback({ openEditor: false })) {
+            return;
+          }
+          if (hasAudioError) {
+            status.textContent = "Press Start Intro to play approved narration text.";
+            return;
+          }
+          window.setTimeout(() => {
+            startPlayback({ restart: true });
+          }, 160);
+          return;
+        }
+        stopPlayback({ silent: true });
+        status.textContent = "Unity intro will start automatically after secure access.";
+      });
+
+      window.addEventListener("beforeunload", () => {
+        stopPlayback({ silent: true });
+        stopReadAlongWindowMonitor();
+      });
+    }
+
+    function setupRenderingTwoQuickView() {
+      const baselineBtn = document.getElementById("openRendering2BaselineBtn");
+      const mptsBtn = document.getElementById("openRendering2MptsBtn");
+      const closeBtn = document.getElementById("closeFieldBehaviorQuickViewBtn");
+      const panel = document.getElementById("fieldBehaviorQuickViewPanel");
+      const image = document.getElementById("fieldBehaviorQuickViewImage");
+      const label = document.getElementById("fieldBehaviorQuickViewLabel");
+      const status = document.getElementById("fieldBehaviorQuickViewStatus");
+      const imageLink = document.getElementById("fieldBehaviorQuickViewLink");
+      if (!baselineBtn || !mptsBtn || !closeBtn || !panel || !image || !label || !status || !imageLink) return;
+
+      const quickViewAssets = {
+        baseline: {
+          label: "Rendering-2 Baseline — April 2026",
+          src: "../../../../../Customers/FosterFarms/Livingston_SIte/Rendering/04_APR26/Patterns/Rend2bt_apr26.png",
+          viewerHref:
+            "../../../../../Customers/FosterFarms/Livingston_SIte/Rendering/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html?ue_focus=xfmr2&ue_pattern=baseline",
+          idleButtonLabel: "Baseline",
+          activeButtonLabel: "Close Baseline"
+        },
+        mpts: {
+          label: "Rendering-2 MPTS Tuned — April 2026",
+          src: "../../../../../Customers/FosterFarms/Livingston_SIte/Rendering/04_APR26/Patterns/Rend2s_apr26.png",
+          viewerHref:
+            "../../../../../Customers/FosterFarms/Livingston_SIte/Rendering/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html?ue_focus=xfmr2&ue_pattern=mpts",
+          idleButtonLabel: "MPTS Tuned",
+          activeButtonLabel: "Close MPTS"
+        }
+      };
+      let activeView = "";
+
+      function getMemoReturnHref() {
+        try {
+          const currentUrl = new URL(window.location.href);
+          currentUrl.hash = "example-energy-field-behavior";
+          return currentUrl.href;
+        } catch (_err) {
+          return `${window.location.pathname}#example-energy-field-behavior`;
+        }
+      }
+
+      function buildInteractiveViewerHref(asset) {
+        const baseHref = String(asset && asset.viewerHref ? asset.viewerHref : "").trim();
+        if (!baseHref) return "";
+        const memoReturnHref = getMemoReturnHref();
+        try {
+          const viewerUrl = new URL(baseHref, window.location.href);
+          viewerUrl.searchParams.set("ue_return", memoReturnHref);
+          viewerUrl.searchParams.set("ue_source", "james_memo");
+          return viewerUrl.href;
+        } catch (_err) {
+          const joiner = baseHref.includes("?") ? "&" : "?";
+          return `${baseHref}${joiner}ue_return=${encodeURIComponent(memoReturnHref)}&ue_source=james_memo`;
+        }
+      }
+
+      function setButtonStates() {
+        baselineBtn.textContent = activeView === "baseline" ? quickViewAssets.baseline.activeButtonLabel : quickViewAssets.baseline.idleButtonLabel;
+        mptsBtn.textContent = activeView === "mpts" ? quickViewAssets.mpts.activeButtonLabel : quickViewAssets.mpts.idleButtonLabel;
+        baselineBtn.setAttribute("aria-pressed", activeView === "baseline" ? "true" : "false");
+        mptsBtn.setAttribute("aria-pressed", activeView === "mpts" ? "true" : "false");
+      }
+
+      function closeQuickView(options = {}) {
+        activeView = "";
+        panel.hidden = true;
+        image.removeAttribute("src");
+        image.alt = "Rendering-2 field behavior quick look image";
+        imageLink.removeAttribute("href");
+        imageLink.target = "_blank";
+        imageLink.rel = "noopener noreferrer";
+        setButtonStates();
+        if (!options.silent) {
+          status.textContent = "Quick look only — open/close from either button.";
+        }
+      }
+
+      function openQuickView(viewKey) {
+        const asset = quickViewAssets[viewKey];
+        if (!asset) return;
+        activeView = viewKey;
+        const srcWithVersion = `${asset.src}?ue_quicklook=20260531a`;
+        const interactiveViewerHref = buildInteractiveViewerHref(asset);
+        label.textContent = asset.label;
+        image.src = srcWithVersion;
+        image.alt = asset.label;
+        if (interactiveViewerHref) {
+          imageLink.href = interactiveViewerHref;
+          imageLink.target = "_self";
+          imageLink.removeAttribute("rel");
+        } else {
+          imageLink.href = srcWithVersion;
+          imageLink.target = "_blank";
+          imageLink.rel = "noopener noreferrer";
+        }
+        panel.hidden = false;
+        setButtonStates();
+        status.textContent = `${asset.label} open`;
+      }
+
+      function toggleQuickView(viewKey) {
+        if (activeView === viewKey) {
+          closeQuickView();
+          return;
+        }
+        openQuickView(viewKey);
+      }
+
+      image.addEventListener("error", () => {
+        closeQuickView({ silent: true });
+        status.textContent = "Quick look image unavailable for April 2026 Rendering-2.";
+      });
+
+      baselineBtn.addEventListener("click", () => {
+        toggleQuickView("baseline");
+      });
+      mptsBtn.addEventListener("click", () => {
+        toggleQuickView("mpts");
+      });
+      closeBtn.addEventListener("click", () => {
+        closeQuickView();
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (!event || event.key !== "Escape") return;
+        if (panel.hidden) return;
+        event.preventDefault();
+        closeQuickView({ silent: true });
+      });
+
+      window.addEventListener("ffExecVaultAccessChange", (event) => {
+        const detail = event && event.detail ? event.detail : {};
+        if (detail.authorized) return;
+        closeQuickView({ silent: true });
+      });
+
+      setButtonStates();
+    }
+
+    function setupExecutiveOverviewAudio() {
+      const toggleButton = document.getElementById("toggleExecutiveOverviewBtn");
+      const readAlongButton = document.getElementById("toggleOverviewReadAlongBtn");
+      const activityIndicator = document.getElementById("executiveOverviewActivityIndicator");
+      const reviewScriptLink = document.getElementById("reviewExecutiveOverviewScriptLink");
+      const status = document.getElementById("executiveOverviewStatus");
+      if (!toggleButton || !status) return;
+      const audio = new Audio("./audio/unity-brief-overview.mp3?ue_audio=20260601c");
+      audio.preload = "auto";
+      let hasAudioError = false;
+      let isSpeechFallbackPlaying = false;
+      let speechFallbackStopRequested = false;
+      let readAlongWindow = null;
+      let overviewEditorWindow = null;
+      let readAlongWindowMonitorId = null;
+      let overviewFallbackSourceText = "";
+      const READ_ALONG_WINDOW_URL = "./unity-brief-overview-read-along.html";
+      const READ_ALONG_WINDOW_NAME = "unityExecutiveOverviewReadAlongWindow";
+      const READ_ALONG_WINDOW_FEATURES = "width=1040,height=900,resizable=yes,scrollbars=yes";
+      const OVERVIEW_APPROVAL_STORAGE_KEY = "ffExecScriptApproval_unity_overview_v1";
+      const OVERVIEW_SOURCE_SCRIPT_URL = "./audio/unity-brief-overview-script-draft.txt?ue_voice=20260601a";
+      const OVERVIEW_EDITOR_WINDOW_URL = "./unity-brief-overview-script-review.html";
+      const OVERVIEW_EDITOR_WINDOW_NAME = "unityExecutiveOverviewScriptEditor";
+      const OVERVIEW_EDITOR_WINDOW_FEATURES = "width=1040,height=900,resizable=yes,scrollbars=yes";
+
+      function getOverviewApprovalPayload() {
+        try {
+          const raw = window.localStorage.getItem(OVERVIEW_APPROVAL_STORAGE_KEY);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (_err) {
+          return null;
+        }
+      }
+
+      function hasOverviewApproval() {
+        const approval = getOverviewApprovalPayload();
+        return !!(
+          approval &&
+          typeof approval.text === "string" &&
+          approval.text.trim()
+        );
+      }
+      function hasFounderShareAccess() {
+        return !!(
+          window.ffExecVaultAccess &&
+          typeof window.ffExecVaultAccess.canShareSecureLinks === "function" &&
+          window.ffExecVaultAccess.canShareSecureLinks()
+        );
+      }
+
+      function getApprovedOverviewText() {
+        const approval = getOverviewApprovalPayload();
+        if (!approval || typeof approval.text !== "string") return "";
+        return approval.text.trim();
+      }
+
+      async function loadOverviewFallbackSourceText() {
+        if (overviewFallbackSourceText) return overviewFallbackSourceText;
+        try {
+          const response = await fetch(OVERVIEW_SOURCE_SCRIPT_URL, { cache: "no-store" });
+          if (!response.ok) return "";
+          overviewFallbackSourceText = (await response.text()).trim();
+          return overviewFallbackSourceText;
+        } catch (_err) {
+          return "";
+        }
+      }
+
+      function canUseSpeechFallback() {
+        return typeof window.SpeechSynthesisUtterance === "function" && !!window.speechSynthesis;
+      }
+
+      function stopSpeechFallbackPlayback() {
+        if (!window.speechSynthesis) return;
+        if (!isSpeechFallbackPlaying && !window.speechSynthesis.speaking && !window.speechSynthesis.pending) return;
+        speechFallbackStopRequested = true;
+        try {
+          window.speechSynthesis.cancel();
+        } catch (_err) {}
+        isSpeechFallbackPlaying = false;
+      }
+
+      async function startSpeechFallbackPlayback() {
+        if (!canUseSpeechFallback()) return false;
+        speechFallbackStopRequested = false;
+        const sourceText = await loadOverviewFallbackSourceText();
+        const approvedText = getApprovedOverviewText();
+        const narrationSource = sourceText || approvedText;
+        const speechText = String(narrationSource || "").replace(/\s+/g, " ").trim();
+        if (!speechText) return false;
+
+        return new Promise((resolve) => {
+          let started = false;
+          const utterance = new window.SpeechSynthesisUtterance(speechText);
+          utterance.rate = 0.94;
+          utterance.pitch = 1;
+          utterance.onstart = () => {
+            started = true;
+            speechFallbackStopRequested = false;
+            isSpeechFallbackPlaying = true;
+            updateControls(true);
+            status.textContent = "Executive overview brief is playing.";
+            resolve(true);
+          };
+          utterance.onend = () => {
+            isSpeechFallbackPlaying = false;
+            if (speechFallbackStopRequested) {
+              speechFallbackStopRequested = false;
+              return;
+            }
+            closeReadAlongWindow();
+            updateControls(false);
+            status.textContent = "Executive overview brief complete — press Start Brief to replay.";
+          };
+          utterance.onerror = (event) => {
+            isSpeechFallbackPlaying = false;
+            const wasCancelled =
+              speechFallbackStopRequested ||
+              (event && (event.error === "canceled" || event.error === "interrupted"));
+            if (wasCancelled) {
+              speechFallbackStopRequested = false;
+              if (!started) {
+                resolve(false);
+              }
+              return;
+            }
+            updateControls(false);
+            status.textContent = "Audio unavailable — unable to load executive overview brief file.";
+            if (!started) {
+              resolve(false);
+            }
+          };
+          try {
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+          } catch (_err) {
+            resolve(false);
+          }
+          window.setTimeout(() => {
+            if (!started) {
+              resolve(false);
+            }
+          }, 900);
+        });
+      }
+
+      function syncReviewLinkVisibility() {
+        if (!reviewScriptLink) return;
+        const canViewReviewLink = hasFounderShareAccess();
+        reviewScriptLink.hidden = !canViewReviewLink;
+        reviewScriptLink.setAttribute("aria-hidden", canViewReviewLink ? "false" : "true");
+      }
+
+      function isOverviewEditorWindowOpen() {
+        return !!(overviewEditorWindow && !overviewEditorWindow.closed);
+      }
+
+      function openOverviewEditorWindow() {
+        if (isOverviewEditorWindowOpen()) {
+          try {
+            overviewEditorWindow.focus();
+          } catch (_err) {}
+          status.textContent = "Overview script approval required — complete Save + Approve, then press Start Brief.";
+          return;
+        }
+
+        const popup = window.open(
+          OVERVIEW_EDITOR_WINDOW_URL,
+          OVERVIEW_EDITOR_WINDOW_NAME,
+          OVERVIEW_EDITOR_WINDOW_FEATURES
+        );
+
+        if (!popup) {
+          status.textContent = "Overview script approval required — popup blocked. Allow popups and press Start Brief again.";
+          return;
+        }
+
+        overviewEditorWindow = popup;
+        try {
+          overviewEditorWindow.focus();
+        } catch (_err) {}
+        status.textContent = "Overview script approval required — review, edit, and Save + Approve, then press Start Brief.";
+      }
+
+      function ensureOverviewApprovedForPlayback(options = {}) {
+        syncReviewLinkVisibility();
+        if (!hasFounderShareAccess()) return true;
+        if (hasOverviewApproval()) return true;
+        updateControls(false);
+        if (options.openEditor === false) {
+          status.textContent = "Executive overview brief is waiting for approval. Press Start Brief to review and approve.";
+          return false;
+        }
+        openOverviewEditorWindow();
+        return false;
+      }
+
+      function isReadAlongWindowOpen() {
+        return !!(readAlongWindow && !readAlongWindow.closed);
+      }
+
+      function syncReadAlongButtonState() {
+        if (!readAlongButton) return;
+        const isOpen = isReadAlongWindowOpen();
+        readAlongButton.textContent = isOpen ? "Close Read Along" : "Read Along";
+        readAlongButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        readAlongButton.setAttribute("aria-label", isOpen ? "Close executive overview read-along window" : "Open executive overview read-along window");
+      }
+
+      function startReadAlongWindowMonitor() {
+        if (readAlongWindowMonitorId) return;
+        readAlongWindowMonitorId = window.setInterval(() => {
+          if (!readAlongWindow) return;
+          if (!readAlongWindow.closed) return;
+          readAlongWindow = null;
+          syncReadAlongButtonState();
+        }, 700);
+      }
+
+      function stopReadAlongWindowMonitor() {
+        if (!readAlongWindowMonitorId) return;
+        window.clearInterval(readAlongWindowMonitorId);
+        readAlongWindowMonitorId = null;
+      }
+
+      function closeReadAlongWindow() {
+        if (isReadAlongWindowOpen()) {
+          try {
+            readAlongWindow.close();
+          } catch (_err) {}
+        }
+        readAlongWindow = null;
+        syncReadAlongButtonState();
+      }
+
+      function openReadAlongWindow() {
+        const popup = window.open(
+          READ_ALONG_WINDOW_URL,
+          READ_ALONG_WINDOW_NAME,
+          READ_ALONG_WINDOW_FEATURES
+        );
+        if (!popup) {
+          status.textContent = "Read Along popup blocked — allow popups and try again.";
+          return;
+        }
+        readAlongWindow = popup;
+        try {
+          readAlongWindow.focus();
+        } catch (_err) {}
+        syncReadAlongButtonState();
+      }
+
+      function toggleReadAlongWindow(event) {
+        if (event) {
+          event.preventDefault();
+        }
+        if (isReadAlongWindowOpen()) {
+          closeReadAlongWindow();
+          return;
+        }
+        openReadAlongWindow();
+      }
+      function setActivityIndicatorState(isActive) {
+        if (!activityIndicator) return;
+        activityIndicator.classList.toggle("is-active", !!isActive);
+      }
+
+      function updateControls(isPlaying) {
+        if (hasAudioError && !canUseSpeechFallback()) {
+          setActivityIndicatorState(false);
+          toggleButton.disabled = true;
+          toggleButton.textContent = "Audio Unavailable";
+          toggleButton.setAttribute("aria-label", "Executive overview audio unavailable");
+          return;
+        }
+        toggleButton.disabled = false;
+        if (isPlaying) {
+          setActivityIndicatorState(true);
+          toggleButton.textContent = "■ Stop Brief";
+          toggleButton.setAttribute("aria-label", "Stop executive overview playback");
+          return;
+        }
+        setActivityIndicatorState(false);
+        toggleButton.textContent = "▶ Start Brief";
+        toggleButton.setAttribute("aria-label", "Start executive overview playback");
+      }
+
+      function stopPlayback(options = {}) {
+        stopSpeechFallbackPlayback();
+        audio.pause();
+        try {
+          audio.currentTime = 0;
+        } catch (_err) {}
+        closeReadAlongWindow();
+        updateControls(false);
+        if (!options.silent) {
+          status.textContent = options.message || "Executive overview brief stopped.";
+        }
+      }
+
+      async function startPlayback(options = {}) {
+        if (!ensureOverviewApprovedForPlayback({ openEditor: options.openEditor !== false })) return;
+        const restart = options.restart === true;
+        if (!audio.paused && !isSpeechFallbackPlaying && !restart) return;
+        if (restart) {
+          stopSpeechFallbackPlayback();
+          audio.pause();
+          try {
+            audio.currentTime = 0;
+          } catch (_err) {}
+        }
+        if (hasAudioError) {
+          const speechStarted = await startSpeechFallbackPlayback();
+          if (!speechStarted) {
+            updateControls(false);
+            status.textContent = "Audio unavailable — unable to load executive overview brief file.";
+          }
+          return;
+        }
+        status.textContent = "Starting executive overview brief...";
+        try {
+          await audio.play();
+        } catch (error) {
+          if (error && error.name === "NotAllowedError") {
+            updateControls(false);
+            status.textContent = "Press Start Brief to begin audio.";
+            return;
+          }
+          hasAudioError = true;
+          const speechStarted = await startSpeechFallbackPlayback();
+          if (!speechStarted) {
+            updateControls(false);
+            status.textContent = "Audio unavailable — unable to load executive overview brief file.";
+          }
+        }
+      }
+
+      audio.addEventListener("play", () => {
+        updateControls(true);
+        status.textContent = "Executive overview brief is playing.";
+      });
+
+      audio.addEventListener("ended", () => {
+        try {
+          audio.currentTime = 0;
+        } catch (_err) {}
+        closeReadAlongWindow();
+        updateControls(false);
+        status.textContent = "Executive overview brief complete — press Start Brief to replay.";
+      });
+
+      audio.addEventListener("error", () => {
+        hasAudioError = true;
+        updateControls(false);
+        if (canUseSpeechFallback()) {
+          status.textContent = "Overview MP3 unavailable — press Start Brief to play approved narration text.";
+          return;
+        }
+        status.textContent = "Audio unavailable — unable to load executive overview brief file.";
+      });
+
+      updateControls(false);
+      syncReviewLinkVisibility();
+      syncReadAlongButtonState();
+      startReadAlongWindowMonitor();
+      toggleButton.addEventListener("click", () => {
+        if (audio.paused && !isSpeechFallbackPlaying) {
+          startPlayback({ restart: true, openEditor: true });
+          return;
+        }
+        stopPlayback({ message: "Executive overview brief stopped." });
+      });
+      if (readAlongButton) {
+        readAlongButton.addEventListener("click", toggleReadAlongWindow);
+      }
+      window.addEventListener("focus", () => {
+        syncReviewLinkVisibility();
+        syncReadAlongButtonState();
+        if (hasFounderShareAccess() && !hasOverviewApproval() && audio.paused && !isSpeechFallbackPlaying) {
+          status.textContent = "Executive overview brief is waiting for approval. Press Start Brief to review and approve.";
+        }
+      });
+
+      window.addEventListener("storage", (event) => {
+        if (event.key !== OVERVIEW_APPROVAL_STORAGE_KEY) return;
+        syncReviewLinkVisibility();
+        if (!hasFounderShareAccess()) return;
+        if (hasOverviewApproval()) {
+          status.textContent = "Executive overview brief approved — press Start Brief to play.";
+          return;
+        }
+        if (audio.paused && !isSpeechFallbackPlaying) {
+          status.textContent = "Executive overview brief is waiting for approval. Press Start Brief to review and approve.";
+        }
+      });
+
+      window.addEventListener("ffExecVaultAccessChange", (event) => {
+        const detail = event && event.detail ? event.detail : {};
+        if (detail.authorized) {
+          if (hasFounderShareAccess() && !hasOverviewApproval()) {
+            status.textContent = "Executive overview brief is waiting for approval. Press Start Brief to review and approve.";
+            return;
+          }
+          if (hasAudioError && canUseSpeechFallback()) {
+            status.textContent = "Press Start Brief to play approved narration text.";
+            return;
+          }
+          if (audio.paused && !isSpeechFallbackPlaying) {
+            status.textContent = "Press Start Brief to play the executive overview.";
+          }
+          return;
+        }
+        stopPlayback({ silent: true });
+        status.textContent = "Press Start Brief to play the executive overview after approval.";
+      });
+
+      window.addEventListener("beforeunload", () => {
+        stopPlayback({ silent: true });
+        stopReadAlongWindowMonitor();
+      });
+    }
+    if (!enforceExecutiveLifecyclePolicy(EXEC_RELEASE_LIFECYCLE) && !enforceExecutiveSharePolicy(EXEC_DOCUMENT_STATUS)) {
+      setupExecutiveIntroAudio();
+      setupExecutiveOverviewAudio();
+      setupRenderingTwoQuickView();
+      window.ffExecVaultAccess.attachGate({
+        overlayId: "briefGateOverlay",
+        contentId: "briefContent",
+        formId: "briefGateForm",
+        inputId: "briefPasswordInput",
+        accessPassword: "FFE2026!",
+        founderIdInputId: "briefFounderIdInput",
+        clearAccessSelector: "#returnToFosterFarmsBtn",
+        errorId: "briefGateError",
+        logoutId: "briefLogoutBtn",
+        cancelId: "briefGateCancelBtn",
+        cancelHref: "../"
+      });
+
+      window.ffExecShareControls.init({
+        gateOverlayId: "briefGateOverlay",
+        reviewDateElementId: "reviewDate",
+        shareDescriptionPrefix: "Foster Farms · Executive Findings & Recommended Action Report",
+        shareStampCode: "UE.0601.01",
+        documentStatus: EXEC_DOCUMENT_STATUS,
+        documentRevision: EXEC_DOCUMENT_REVISION,
+        currentShareTargetPath: window.location.pathname,
+        publishedShareTargetPath: EXEC_PUBLISHED_TARGET_PATH,
+        notionButtonId: "openInNotionBtn",
+        notionWorkspaceUrl: "https://www.notion.so/new",
+        notionExportRootSelector: "#briefContent .brief-frame",
+        notionExportTitleSelector: ".exec-header h1",
+        notionExportExcludeSelector: ".executive-audio-row, .footer-actions, .field-behavior-card, .letterhead-wrap, [hidden]"
+      });
+    }
   </script>
 </body>
 </html>

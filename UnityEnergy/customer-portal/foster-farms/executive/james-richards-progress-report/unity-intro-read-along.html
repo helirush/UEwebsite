@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unity Intro Read Along</title>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    body {
+      margin: 0;
+      background: #f5f8f2;
+      color: #1f2a1d;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .readalong-shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px 18px 30px;
+    }
+    .readalong-card {
+      border: 1px solid rgba(102, 119, 79, 0.28);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 14px 30px rgba(20, 36, 14, 0.08);
+      padding: 18px 18px 20px;
+    }
+    .readalong-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .readalong-kicker {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5b6a4d;
+    }
+    .readalong-title {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.4vw, 40px);
+      line-height: 1.2;
+      color: #21311e;
+    }
+    .readalong-note {
+      margin: 0 0 14px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #394837;
+    }
+    .readalong-close {
+      border-radius: 999px;
+      border: 1px solid rgba(64, 89, 40, 0.62);
+      background: linear-gradient(180deg, rgba(88, 123, 48, 0.97) 0%, rgba(53, 79, 32, 0.97) 100%);
+      color: #f7f2e5;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 9px 13px;
+      cursor: pointer;
+    }
+    .readalong-text {
+      border: 1px solid rgba(120, 136, 95, 0.3);
+      border-radius: 12px;
+      background: rgba(248, 251, 244, 0.95);
+      padding: 18px 16px;
+    }
+    .readalong-text p {
+      margin: 0 0 16px;
+      font-size: clamp(21px, 2.1vw, 29px);
+      line-height: 2;
+      color: #223421;
+      letter-spacing: 0.004em;
+    }
+    .readalong-text p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="readalong-shell">
+    <section class="readalong-card">
+      <div class="readalong-top">
+        <p class="readalong-kicker">Unity Executive Intro</p>
+        <button type="button" class="readalong-close" id="closeReadAlongBtn">Close Window</button>
+      </div>
+      <h1 class="readalong-title">Read Along Text</h1>
+      <p class="readalong-note">
+        Follow Unity’s narration here. You can close this window any time. It will also close automatically when narration stops or completes.
+      </p>
+      <article class="readalong-text" id="readAlongText">
+        <p>Loading read-along script…</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const textContainer = document.getElementById("readAlongText");
+      const closeButton = document.getElementById("closeReadAlongBtn");
+      const APPROVAL_STORAGE_KEY = "ffExecScriptApproval_unity_intro_v1";
+      const FALLBACK_SOURCE_URL = "./audio/unity-executive-intro-script-approved.txt";
+
+      if (closeButton) {
+        closeButton.addEventListener("click", function () {
+          window.close();
+        });
+      }
+
+      window.addEventListener("keydown", function (event) {
+        if (!event || event.key !== "Escape") return;
+        event.preventDefault();
+        window.close();
+      });
+
+      function normalizeParagraphs(rawText) {
+        return String(rawText || "")
+          .split(/\n\s*\n/g)
+          .map((line) => line.replace(/\s+/g, " ").trim())
+          .filter(Boolean);
+      }
+
+      function renderParagraphs(paragraphs) {
+        if (!textContainer) return;
+        textContainer.innerHTML = "";
+        if (!paragraphs.length) {
+          const emptyP = document.createElement("p");
+          emptyP.textContent = "No read-along text found in the approved narration file.";
+          textContainer.appendChild(emptyP);
+          return;
+        }
+        paragraphs.forEach((line) => {
+          const p = document.createElement("p");
+          p.textContent = line;
+          textContainer.appendChild(p);
+        });
+      }
+      function readApprovedIntroText() {
+        try {
+          const raw = window.localStorage.getItem(APPROVAL_STORAGE_KEY);
+          if (!raw) return "";
+          const payload = JSON.parse(raw);
+          if (!payload || typeof payload.text !== "string") return "";
+          return payload.text.trim();
+        } catch (_err) {
+          return "";
+        }
+      }
+
+      const approvedText = readApprovedIntroText();
+      if (approvedText) {
+        renderParagraphs(normalizeParagraphs(approvedText));
+        return;
+      }
+
+      fetch(`${FALLBACK_SOURCE_URL}?ue_readalong=20260601a`, {
+        cache: "no-store"
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Unable to load read-along text.");
+          return response.text();
+        })
+        .then((text) => {
+          renderParagraphs(normalizeParagraphs(text));
+        })
+        .catch(() => {
+          renderParagraphs([
+            "Unable to load read-along text. Confirm ./audio/unity-executive-intro-script-approved.txt is available."
+          ]);
+        });
+    })();
+  </script>
+</body>
+</html>

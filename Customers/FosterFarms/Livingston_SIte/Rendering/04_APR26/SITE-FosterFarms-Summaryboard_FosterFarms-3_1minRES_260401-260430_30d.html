@@ -2242,6 +2242,23 @@
     }
     return '';
   }
+
+  function normalizeQueryReturnUrl(rawValue) {
+    const value = String(rawValue || '').trim();
+    if (!value) return '';
+    try {
+      const parsed = new URL(value, window.location.href);
+      const isHttp = /^https?:$/i.test(parsed.protocol);
+      const isFile = /^file:$/i.test(parsed.protocol);
+      if (!isHttp && !isFile) return '';
+      const allowedRelativePath = /\/UnityEnergy\/customer-portal\/foster-farms\/executive\/james-richards-progress-report\/index\.html$/i.test(parsed.pathname);
+      if (!allowedRelativePath) return '';
+      if (isFile) return parsed.href;
+      const sameOrigin = parsed.origin === window.location.origin;
+      if (sameOrigin) return parsed.href;
+    } catch (e) {}
+    return '';
+  }
   
   // Call tick drawing after DOM loads
   document.addEventListener('DOMContentLoaded', drawGaugeTicks);
@@ -2454,6 +2471,7 @@
   const PATTERN_VIEW_MIN_SCALE = 1;
   const PATTERN_VIEW_MAX_SCALE = 5;
   let patternViewState = null;
+  let queryPatternLaunchContext = null;
 
   function clearPatternImageView() {
     patternViewState = null;
@@ -3211,7 +3229,7 @@
     if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
     showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
   }
-  function playHowToAudio() {
+  function playHowToAudio(options = {}) {
     if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
@@ -3221,7 +3239,10 @@
       alert('How to Read audio not available for this view.');
       return;
     }
-    openHowToFullscreenFromCurrentView();
+    const shouldOpenFullscreen = !(options && options.openFullscreen === false);
+    if (shouldOpenFullscreen) {
+      openHowToFullscreenFromCurrentView();
+    }
     const mp3File = currentHowToPath;
     const startHowToTTS = () => {
       const text = `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
@@ -3272,7 +3293,7 @@
 
     if (selectionType === 'baseline' || selectionType === 'mpts') {
       if (!currentHowToPath) return;
-      playHowToAudio();
+      playHowToAudio({ openFullscreen: false });
       lastAutoSelectionType = selectionType;
       lastAutoSelectionContext = context;
       return;
@@ -3637,6 +3658,8 @@
 
   // Close pattern modal
   function closePatternModal() {
+    const launchContext = queryPatternLaunchContext;
+    queryPatternLaunchContext = null;
     // Stop any active speech or audio
     if (isPlaybackActive()) stopCurrentPlayback();
     currentNarrativeText = '';
@@ -3657,6 +3680,9 @@
       modalBody.style.removeProperty('--unity-field-backdrop');
     } catch (e) {}
     document.getElementById('patternModal').style.display = 'none';
+    if (launchContext && launchContext.returnUrl) {
+      window.location.href = launchContext.returnUrl;
+    }
   }
 
   // Show Site Summary Modal
@@ -4067,6 +4093,50 @@
       closeContactDetailsModal();
     }
   }
+
+  function normalizeQueryPatternType(rawValue) {
+    const value = String(rawValue || '').trim().toLowerCase();
+    if (value === 'baseline') return 'baseline';
+    if (value === 'mpts') return 'mpts';
+    return '';
+  }
+
+  function normalizeQueryTransformerId(rawValue) {
+    const value = String(rawValue || '').trim().toLowerCase();
+    if (/^xfmr[1-4]$/.test(value)) return value;
+    if (value === '2' || value === 'xfmr2' || value === 'rend2' || value === 'rendering-2' || value === 'rendering2') return 'xfmr2';
+    if (value === '1' || value === 'xfmr1' || value === 'rend1' || value === 'rendering-1' || value === 'rendering1') return 'xfmr1';
+    if (value === '3' || value === 'xfmr3' || value === 'rend3' || value === 'rendering-3' || value === 'rendering3') return 'xfmr3';
+    if (value === '4' || value === 'xfmr4' || value === 'rend4' || value === 'rendering-4' || value === 'rendering4') return 'xfmr4';
+    return '';
+  }
+
+  function openPatternFromQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const transformerId = normalizeQueryTransformerId(params.get('ue_focus') || params.get('xfmr') || params.get('transformer'));
+    const patternType = normalizeQueryPatternType(params.get('ue_pattern') || params.get('pattern') || params.get('view'));
+    const returnUrl = normalizeQueryReturnUrl(params.get('ue_return'));
+    if (!transformerId || !patternType) return;
+
+    const attemptOpen = function () {
+      const nameElement = document.getElementById(`${transformerId}-name`);
+      if (!nameElement || !String(nameElement.textContent || '').trim()) return false;
+      viewPattern(transformerId, patternType);
+      queryPatternLaunchContext = returnUrl ? { returnUrl } : null;
+      return true;
+    };
+
+    if (attemptOpen()) return;
+    let attempts = 0;
+    const retryTimer = window.setInterval(function () {
+      attempts += 1;
+      if (attemptOpen() || attempts >= 20) {
+        window.clearInterval(retryTimer);
+      }
+    }, 250);
+  }
+
+  window.addEventListener('load', openPatternFromQueryParams);
 </script>
 
 <!-- Pattern Analysis Modal -->

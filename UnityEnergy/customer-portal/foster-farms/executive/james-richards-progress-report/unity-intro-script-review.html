@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unity Intro Script Editor | Foster Farms Executive Brief</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body {
+      margin: 0;
+      background: #f4f8f1;
+      color: #1f2a1e;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .script-review-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 18px 44px;
+    }
+    .script-review-card {
+      border: 1px solid rgba(103, 122, 72, 0.26);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 16px 36px rgba(24, 39, 16, 0.09);
+      padding: 22px 20px;
+    }
+    .script-review-kicker {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5d6d50;
+    }
+    .script-review-title {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.2;
+      color: #20331b;
+    }
+    .script-review-status {
+      margin: 0 0 16px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(51, 97, 46, 0.45);
+      background: rgba(227, 243, 214, 0.92);
+      color: #2b5a25;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 8px 12px;
+      text-transform: uppercase;
+    }
+    .script-review-lead {
+      margin: 0 0 16px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #2f3f2a;
+    }
+    .script-source {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: #4f5f45;
+    }
+    .script-editor-meta {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: #47563e;
+      font-weight: 600;
+    }
+    .script-editor {
+      display: grid;
+      gap: 12px;
+    }
+    .script-editor-textarea {
+      width: 100%;
+      min-height: 320px;
+      border-radius: 12px;
+      border: 1px solid rgba(119, 136, 95, 0.42);
+      background: rgba(252, 253, 249, 0.98);
+      color: #1f2f1d;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 15px;
+      line-height: 1.65;
+      padding: 14px;
+      resize: vertical;
+    }
+    .script-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .script-toolbar button,
+    .script-toolbar a {
+      border-radius: 999px;
+      border: 1px solid rgba(63, 90, 39, 0.62);
+      background: linear-gradient(180deg, rgba(88, 123, 48, 0.97) 0%, rgba(53, 79, 32, 0.97) 100%);
+      color: #f7f2e5;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+    .script-toolbar button.secondary {
+      border-color: rgba(130, 115, 77, 0.58);
+      background: linear-gradient(180deg, rgba(247, 241, 223, 0.95) 0%, rgba(232, 222, 194, 0.95) 100%);
+      color: #4b523f;
+    }
+    .script-toolbar button.ghost {
+      border-color: rgba(122, 132, 106, 0.58);
+      background: rgba(246, 249, 241, 0.94);
+      color: #45523c;
+    }
+    .script-toolbar button:disabled {
+      opacity: 0.72;
+      cursor: not-allowed;
+    }
+    .script-approval-badge {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #47563e;
+      border-radius: 10px;
+      border: 1px solid rgba(121, 139, 97, 0.35);
+      background: rgba(243, 249, 236, 0.92);
+      padding: 10px 12px;
+      font-weight: 600;
+    }
+    .script-preview-wrap {
+      margin-top: 4px;
+      border-top: 1px solid rgba(130, 146, 103, 0.28);
+      padding-top: 14px;
+    }
+    .script-preview-title {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5f704f;
+    }
+    .script-preview {
+      border: 1px solid rgba(119, 136, 95, 0.32);
+      border-radius: 14px;
+      background: rgba(249, 252, 247, 0.95);
+      padding: 20px 18px;
+    }
+    .script-preview p {
+      margin: 0 0 18px;
+      font-size: clamp(21px, 2.2vw, 29px);
+      line-height: 2;
+      letter-spacing: 0.005em;
+      color: #20311e;
+    }
+    .script-preview p:last-child {
+      margin-bottom: 0;
+    }
+    .script-review-actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .script-review-actions a {
+      border-radius: 999px;
+      border: 1px solid rgba(130, 115, 77, 0.58);
+      background: linear-gradient(180deg, rgba(247, 241, 223, 0.95) 0%, rgba(232, 222, 194, 0.95) 100%);
+      color: #4b523f;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 10px 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="script-review-shell">
+    <section class="script-review-card">
+      <p class="script-review-kicker">Unity Voice Pre-Flight</p>
+      <h1 class="script-review-title">Unity Intro Script — Edit, Save, Approve</h1>
+      <p class="script-review-status">Editable Approval Workspace</p>
+      <p class="script-review-lead">
+        Edit the script directly here, save your draft, and approve in one step before audio production.
+      </p>
+      <p class="script-source">
+        Source file: <code>./audio/unity-executive-intro-script-approved.txt</code>
+      </p>
+      <div class="script-editor">
+        <p class="script-editor-meta" id="scriptEditorMeta">Loading source file...</p>
+        <textarea id="scriptEditorText" class="script-editor-textarea" spellcheck="true" aria-label="Unity intro script editor"></textarea>
+        <div class="script-toolbar">
+          <button type="button" id="saveDraftBtn">Save Draft</button>
+          <button type="button" id="saveApproveBtn">Save + Approve</button>
+          <button type="button" class="secondary" id="saveToFileBtn">Save to File</button>
+          <button type="button" class="secondary" id="copyScriptBtn">Copy Text</button>
+          <button type="button" class="ghost" id="resetToSourceBtn">Reset to Source</button>
+          <button type="button" class="ghost" id="clearDraftBtn">Clear Draft</button>
+        </div>
+        <p class="script-approval-badge" id="scriptApprovalBadge">Approval status: not approved yet.</p>
+      </div>
+      <div class="script-preview-wrap">
+        <p class="script-preview-title">Live Read Preview</p>
+        <article class="script-preview" id="scriptPreview" aria-label="Unity intro script read preview">
+          <p>Loading script preview…</p>
+        </article>
+      </div>
+      <div class="script-review-actions">
+        <a href="./">Back to Executive Brief</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../vault-access.js?ue_access=20260601c"></script>
+  <script>
+    (function () {
+      function hasFounderReviewAccess() {
+        return !!(
+          window.ffExecVaultAccess &&
+          typeof window.ffExecVaultAccess.isAuthorized === "function" &&
+          typeof window.ffExecVaultAccess.canShareSecureLinks === "function" &&
+          window.ffExecVaultAccess.isAuthorized() &&
+          window.ffExecVaultAccess.canShareSecureLinks()
+        );
+      }
+
+      function renderFounderAccessRequired() {
+        document.body.innerHTML = `
+          <main style="min-height:100vh;display:grid;place-items:center;padding:32px;background:#f4f8f1;color:#1f2a1e;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+            <section style="max-width:760px;border:1px solid rgba(103,122,72,.26);border-radius:18px;background:rgba(255,255,255,.97);box-shadow:0 16px 36px rgba(24,39,16,.09);padding:24px 22px;">
+              <p style="margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5d6d50;">Unity Voice Pre-Flight</p>
+              <h1 style="margin:0 0 12px;font-size:30px;line-height:1.2;color:#20331b;">Unity Access ID Required</h1>
+              <p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#2f3f2a;">Script review tools are available only in Unity ID mode. Customer-password sessions can view the brief but cannot open review workspaces.</p>
+              <a href="./" style="display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(130,115,77,.58);background:linear-gradient(180deg,rgba(247,241,223,.95) 0%,rgba(232,222,194,.95) 100%);color:#4b523f;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.02em;padding:10px 14px;">Back to Executive Brief</a>
+            </section>
+          </main>
+        `;
+      }
+
+      if (!hasFounderReviewAccess()) {
+        renderFounderAccessRequired();
+        return;
+      }
+      const SOURCE_FILE_URL = "./audio/unity-executive-intro-script-approved.txt";
+      const SOURCE_FILE_LABEL = "./audio/unity-executive-intro-script-approved.txt";
+      const SUGGESTED_FILE_NAME = "unity-executive-intro-script-approved.txt";
+      const SOURCE_CACHE_KEY = "20260531c";
+      const DRAFT_STORAGE_KEY = "ffExecScriptDraft_unity_intro_v1";
+      const APPROVAL_STORAGE_KEY = "ffExecScriptApproval_unity_intro_v1";
+
+      const editor = document.getElementById("scriptEditorText");
+      const previewEl = document.getElementById("scriptPreview");
+      const metaEl = document.getElementById("scriptEditorMeta");
+      const approvalBadgeEl = document.getElementById("scriptApprovalBadge");
+      const saveDraftBtn = document.getElementById("saveDraftBtn");
+      const saveApproveBtn = document.getElementById("saveApproveBtn");
+      const saveToFileBtn = document.getElementById("saveToFileBtn");
+      const copyScriptBtn = document.getElementById("copyScriptBtn");
+      const resetToSourceBtn = document.getElementById("resetToSourceBtn");
+      const clearDraftBtn = document.getElementById("clearDraftBtn");
+
+      if (!editor || !previewEl || !metaEl || !approvalBadgeEl) return;
+
+      let sourceText = "";
+
+      function normalizeParagraphs(rawText) {
+        return String(rawText || "")
+          .split(/\n\s*\n/g)
+          .map((line) => line.replace(/\s+/g, " ").trim())
+          .filter(Boolean);
+      }
+
+      function renderPreview(rawText) {
+        const paragraphs = normalizeParagraphs(rawText);
+        previewEl.innerHTML = "";
+        if (!paragraphs.length) {
+          const emptyLine = document.createElement("p");
+          emptyLine.textContent = "No script text to preview.";
+          previewEl.appendChild(emptyLine);
+          return;
+        }
+        paragraphs.forEach((line) => {
+          const p = document.createElement("p");
+          p.textContent = line;
+          previewEl.appendChild(p);
+        });
+      }
+
+      function humanTimestamp(iso) {
+        if (!iso) return "unknown time";
+        const dt = new Date(iso);
+        if (Number.isNaN(dt.getTime())) return "unknown time";
+        return dt.toLocaleString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit"
+        });
+      }
+
+      function readJsonStorage(key) {
+        try {
+          const raw = window.localStorage.getItem(key);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (_err) {
+          return null;
+        }
+      }
+
+      function writeJsonStorage(key, value) {
+        try {
+          window.localStorage.setItem(key, JSON.stringify(value));
+        } catch (_err) {}
+      }
+
+      function removeStorage(key) {
+        try {
+          window.localStorage.removeItem(key);
+        } catch (_err) {}
+      }
+
+      function getDraftPayload() {
+        const payload = readJsonStorage(DRAFT_STORAGE_KEY);
+        if (!payload || typeof payload.text !== "string") return null;
+        return payload;
+      }
+
+      function getApprovalPayload() {
+        return readJsonStorage(APPROVAL_STORAGE_KEY);
+      }
+
+      function setMeta(message) {
+        metaEl.textContent = message;
+      }
+
+      function updateApprovalBadge() {
+        const approval = getApprovalPayload();
+        if (!approval || typeof approval.text !== "string") {
+          approvalBadgeEl.textContent = "Approval status: not approved yet.";
+          return;
+        }
+        if (editor.value !== approval.text) {
+          approvalBadgeEl.textContent = `Approval status: last approved ${humanTimestamp(approval.approvedAt)} · edits detected, re-approval needed.`;
+          return;
+        }
+        approvalBadgeEl.textContent = `Approval status: approved ${humanTimestamp(approval.approvedAt)}.`;
+      }
+
+      function writeDraft(isApproved) {
+        const payload = {
+          text: editor.value,
+          savedAt: new Date().toISOString()
+        };
+        writeJsonStorage(DRAFT_STORAGE_KEY, payload);
+        if (isApproved) {
+          writeJsonStorage(APPROVAL_STORAGE_KEY, {
+            text: editor.value,
+            approvedAt: new Date().toISOString(),
+            source: SOURCE_FILE_LABEL
+          });
+        } else {
+          removeStorage(APPROVAL_STORAGE_KEY);
+        }
+        updateApprovalBadge();
+      }
+
+      async function copyToClipboard(text) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+        } catch (_err) {}
+        try {
+          const tmp = document.createElement("textarea");
+          tmp.value = text;
+          tmp.setAttribute("readonly", "");
+          tmp.style.position = "absolute";
+          tmp.style.left = "-9999px";
+          document.body.appendChild(tmp);
+          tmp.select();
+          const copied = document.execCommand("copy");
+          document.body.removeChild(tmp);
+          return !!copied;
+        } catch (_err) {
+          return false;
+        }
+      }
+
+      function downloadTextFile(text, fileName) {
+        const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = fileName;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+        URL.revokeObjectURL(url);
+      }
+
+      async function saveToFile() {
+        const text = editor.value;
+        if (!text.trim()) {
+          setMeta("Nothing to save. Add script text first.");
+          return;
+        }
+        try {
+          if (window.showSaveFilePicker) {
+            const handle = await window.showSaveFilePicker({
+              suggestedName: SUGGESTED_FILE_NAME,
+              types: [{
+                description: "Text Files",
+                accept: { "text/plain": [".txt"] }
+              }]
+            });
+            const writable = await handle.createWritable();
+            await writable.write(text);
+            await writable.close();
+            setMeta(`Saved to file: ${handle.name}`);
+            return;
+          }
+        } catch (error) {
+          if (error && error.name === "AbortError") {
+            return;
+          }
+        }
+        downloadTextFile(text, SUGGESTED_FILE_NAME);
+        setMeta(`Downloaded ${SUGGESTED_FILE_NAME}`);
+      }
+
+      async function loadSource() {
+        setMeta("Loading source file...");
+        try {
+          const response = await fetch(`${SOURCE_FILE_URL}?ue_text_editor=${SOURCE_CACHE_KEY}`, {
+            cache: "no-store"
+          });
+          if (!response.ok) throw new Error("Source load failed");
+          sourceText = await response.text();
+          const draft = getDraftPayload();
+          if (draft) {
+            editor.value = draft.text;
+            setMeta(`Loaded saved draft from ${humanTimestamp(draft.savedAt)}.`);
+          } else {
+            editor.value = sourceText;
+            setMeta("Source file loaded. You can now edit, save, and approve.");
+          }
+          renderPreview(editor.value);
+          updateApprovalBadge();
+        } catch (_err) {
+          editor.value = "";
+          renderPreview("");
+          setMeta("Unable to load source file. You can still paste/edit text and save a draft.");
+          updateApprovalBadge();
+        }
+      }
+
+      editor.addEventListener("input", function () {
+        renderPreview(editor.value);
+        updateApprovalBadge();
+      });
+
+      if (saveDraftBtn) {
+        saveDraftBtn.addEventListener("click", function () {
+          writeDraft(false);
+          setMeta(`Draft saved ${humanTimestamp(new Date().toISOString())}.`);
+        });
+      }
+
+      if (saveApproveBtn) {
+        saveApproveBtn.addEventListener("click", function () {
+          writeDraft(true);
+          setMeta(`Saved and approved ${humanTimestamp(new Date().toISOString())}.`);
+        });
+      }
+
+      if (saveToFileBtn) {
+        saveToFileBtn.addEventListener("click", function () {
+          saveToFile();
+        });
+      }
+
+      if (copyScriptBtn) {
+        copyScriptBtn.addEventListener("click", async function () {
+          const ok = await copyToClipboard(editor.value);
+          setMeta(ok ? "Script text copied to clipboard." : "Copy failed. Please copy manually.");
+        });
+      }
+
+      if (resetToSourceBtn) {
+        resetToSourceBtn.addEventListener("click", function () {
+          editor.value = sourceText;
+          renderPreview(editor.value);
+          updateApprovalBadge();
+          setMeta("Editor reset to source file text.");
+        });
+      }
+
+      if (clearDraftBtn) {
+        clearDraftBtn.addEventListener("click", function () {
+          removeStorage(DRAFT_STORAGE_KEY);
+          removeStorage(APPROVAL_STORAGE_KEY);
+          updateApprovalBadge();
+          setMeta("Saved draft and approval state cleared.");
+        });
+      }
+
+      loadSource();
+    })();
+  </script>
+</body>
+</html>
