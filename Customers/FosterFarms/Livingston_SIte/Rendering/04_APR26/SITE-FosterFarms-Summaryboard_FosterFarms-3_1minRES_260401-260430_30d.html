@@ -2251,12 +2251,18 @@
       const isHttp = /^https?:$/i.test(parsed.protocol);
       const isFile = /^file:$/i.test(parsed.protocol);
       if (!isHttp && !isFile) return '';
-      const allowedRelativePath = /\/UnityEnergy\/customer-portal\/foster-farms\/executive\/james-richards-progress-report\/index\.html$/i.test(parsed.pathname);
+      const allowedRelativePath = /\/UnityEnergy\/customer-portal\/foster-farms\/executive\/james-richards-progress-report(?:\/index\.html|\/)?$/i.test(parsed.pathname);
       if (!allowedRelativePath) return '';
       if (isFile) return parsed.href;
       const sameOrigin = parsed.origin === window.location.origin;
       if (sameOrigin) return parsed.href;
     } catch (e) {}
+    return '';
+  }
+
+  function normalizeQueryLaunchSource(rawValue) {
+    const value = String(rawValue || '').trim().toLowerCase();
+    if (value === 'james_memo' || value === 'executive' || value === 'exec') return 'james_memo';
     return '';
   }
   
@@ -3139,6 +3145,7 @@
       window.speechSynthesis.speak(currentSpeech);
     };
 
+
     currentAudioElement = new Audio(mp3File);
     currentAudioElement.onended = function() {
       currentExplainsPartIndex++;
@@ -3243,6 +3250,8 @@
     if (shouldOpenFullscreen) {
       openHowToFullscreenFromCurrentView();
     }
+    const autoTriggered = !!(options && options.autoTriggered === true);
+    const suppressUnavailableTTS = !!(options && options.suppressUnavailableTTS === true);
     const mp3File = currentHowToPath;
     const startHowToTTS = () => {
       const text = `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
@@ -3262,20 +3271,40 @@
       window.speechSynthesis.speak(currentSpeech);
     };
 
+    const handleHowToUnavailable = (reason, error) => {
+      if (autoTriggered && suppressUnavailableTTS) {
+        console.info('How-to audio auto-start skipped fallback TTS:', reason, error && error.name ? error.name : '');
+        isSpeaking = false;
+        return;
+      }
+      startHowToTTS();
+    };
+
     currentAudioElement = new Audio(mp3File);
     currentAudioElement.onended = function() { isSpeaking = false; };
     currentAudioElement.onerror = function() {
       console.warn('How-to MP3 not available, using TTS:', mp3File);
       isSpeaking = false;
-      startHowToTTS();
+      handleHowToUnavailable('audio-error');
     };
 
     isSpeaking = true;
-    currentAudioElement.play().catch(() => {
-      console.warn('How-to playback failed, using TTS.');
+    currentAudioElement.play().catch((error) => {
+      const blockedAutoplay = !!(error && error.name === 'NotAllowedError');
+      if (blockedAutoplay && autoTriggered) {
+        console.info('How-to auto-play blocked by browser policy; waiting for user button click.');
+        isSpeaking = false;
+        return;
+      }
+      console.warn('How-to playback failed, using TTS.', error);
       isSpeaking = false;
-      startHowToTTS();
+      handleHowToUnavailable('play-catch', error);
     });
+  }
+
+  function shouldSuppressAutoHowToStart() {
+    if (!queryPatternLaunchContext) return false;
+    return !!queryPatternLaunchContext.disableAutoHowTo;
   }
 
   function autoStartVoiceForSelection(selectionType) {
@@ -3293,7 +3322,8 @@
 
     if (selectionType === 'baseline' || selectionType === 'mpts') {
       if (!currentHowToPath) return;
-      playHowToAudio({ openFullscreen: false });
+      if (shouldSuppressAutoHowToStart()) return;
+      playHowToAudio({ openFullscreen: false, autoTriggered: true, suppressUnavailableTTS: true });
       lastAutoSelectionType = selectionType;
       lastAutoSelectionContext = context;
       return;
@@ -4116,13 +4146,19 @@
     const transformerId = normalizeQueryTransformerId(params.get('ue_focus') || params.get('xfmr') || params.get('transformer'));
     const patternType = normalizeQueryPatternType(params.get('ue_pattern') || params.get('pattern') || params.get('view'));
     const returnUrl = normalizeQueryReturnUrl(params.get('ue_return'));
+    const launchSource = normalizeQueryLaunchSource(params.get('ue_source') || params.get('source'));
+    const launchContext = (returnUrl || launchSource) ? {
+      returnUrl: returnUrl || '',
+      source: launchSource,
+      disableAutoHowTo: launchSource === 'james_memo'
+    } : null;
     if (!transformerId || !patternType) return;
 
     const attemptOpen = function () {
       const nameElement = document.getElementById(`${transformerId}-name`);
       if (!nameElement || !String(nameElement.textContent || '').trim()) return false;
+      queryPatternLaunchContext = launchContext;
       viewPattern(transformerId, patternType);
-      queryPatternLaunchContext = returnUrl ? { returnUrl } : null;
       return true;
     };
 
