@@ -61,7 +61,7 @@
         return;
       }
       const stampCode = parseStamp(pageUrl.searchParams.get("ue_doc")) || formatStamp(new Date());
-      const targetPath = String(pageUrl.searchParams.get("ue_target") || "../james-richards-progress-report/");
+      const targetPath = String(pageUrl.searchParams.get("ue_target") || "../executive-update/");
       const target = new URL(targetPath, window.location.href);
       target.searchParams.set("ue_doc", stampCode);
       target.searchParams.set("ue_kind", SHARE_KIND);

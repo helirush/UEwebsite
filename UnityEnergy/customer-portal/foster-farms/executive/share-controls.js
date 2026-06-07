@@ -360,12 +360,17 @@
       urlObj.searchParams.set("ue_target", targetPath);
     }
 
+    const fixedReviewDate = String(opts.fixedReviewDate || "").trim();
     if (reviewDateEl) {
-      reviewDateEl.textContent = stampDate.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+      if (fixedReviewDate) {
+        reviewDateEl.textContent = fixedReviewDate;
+      } else {
+        reviewDateEl.textContent = stampDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+      }
     }
 
     if (shareTypeSelect) {

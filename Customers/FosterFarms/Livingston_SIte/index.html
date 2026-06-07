@@ -147,7 +147,7 @@
         }
 
         .hero h1 {
-            font-size: 5em;
+            font-size: 4em;
             margin-bottom: 0px;
             font-weight: 900;
             color: rgb(255, 255, 255);
@@ -162,7 +162,7 @@
         }
 
         .hero .capacity-subtitle {
-            font-size: 3.2em;
+            font-size: 2.2em;
             font-weight: 600;
             color: rgb(255, 230, 80);
             margin: 15px 0 0 0;
@@ -235,6 +235,79 @@
         .hero .capacity-subtitle3 span {
             color: rgb(255, 255, 255);
         }
+        .hero-key-metrics {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 64px;
+            margin: 10px 0 20px 0;
+            flex-wrap: wrap;
+        }
+        .hero-key-metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 280px;
+        }
+        .hero-key-metric-label {
+            font-size: 1.28em;
+            font-weight: 700;
+            color: rgb(255, 232, 128);
+            letter-spacing: 0.6px;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+        }
+        .hero-secondary-metrics span {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .hero-key-metric-value {
+            font-size: 1.83em;
+            font-weight: 700;
+            color: rgb(253, 240, 168);
+            letter-spacing: 0.8px;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero-secondary-metrics {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 50px;
+            flex-wrap: wrap;
+            font-size: 1.62em;
+            font-weight: 600;
+            color: rgb(255, 233, 155);
+            letter-spacing: 0.3px;
+            margin: 30px 0 10px 0;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+        }
+        .hero-secondary-metrics strong {
+            color: rgb(255, 255, 255);
+            font-size: 1.61em;
+            font-weight: 700;
+            margin-left: 0;
+        }
         .hero p {
             font-size: 1.5em;
             margin-bottom: 15px;
@@ -243,33 +316,90 @@
         }
         .hero-buttons {
             display: flex;
-            gap: 20px;
+            gap: 28px;
             justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 28px;
+            flex-wrap: nowrap;
+            margin-top: 46px;
+            max-width: 840px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-btn {
-            display: inline-block;
-            padding: 16px 36px;
+            display: inline-grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
             background: rgba(255, 215, 0, 1);
-            color: rgba(98, 0, 0, 1);
+            color: rgba(0, 0, 0, 1);
             border-radius: 8px;
             text-decoration: none;
-            font-weight: 900;
-            font-size: 1.1em;
-            text-align: center;
+            font-weight: 500;
+            font-size: 1.08em;
+            text-align: left;
             transition: all 0.3s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-            border: 3px solid rgba(98, 0, 0, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 2px solid rgba(0, 0, 0, 1);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.3px;
+        }
+        .hero-btn-text {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            line-height: 1.04;
+            gap: 2px;
+        }
+        .hero-btn-line1 {
+            display: block;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.4px;
+        }
+        .hero-btn-line2 {
+            display: block;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 1);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+        .hero-btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.95);
+            color: rgba(13, 37, 92, 1);
+            font-size: 1.22em;
+            line-height: 1;
+            text-shadow: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+        .hero-btn--supply {
+            background: linear-gradient(135deg, rgba(21, 58, 143, 1) 0%, rgba(9, 34, 89, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(255, 215, 0, 0.95);
+        }
+        .hero-btn--supply:hover {
+            background: linear-gradient(135deg, rgba(31, 77, 182, 1) 0%, rgba(13, 44, 116, 1) 100%);
+        }
+        .hero-btn--consumption {
+            background: linear-gradient(135deg, rgba(90, 176, 244, 1) 0%, rgba(34, 121, 199, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(224, 244, 255, 0.95);
+        }
+        .hero-btn--consumption:hover {
+            background: linear-gradient(135deg, rgba(108, 190, 255, 1) 0%, rgba(46, 139, 222, 1) 100%);
         }
 
         .hero-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(255,215,0,0.5);
-            background: rgba(255, 255, 255, 1);
         }
         
         /* Hero Corner Chicken Videos */
@@ -464,6 +594,7 @@
         .library-title-row {
             display: flex;
             align-items: flex-end;
+            justify-content: center;
             justify-content: space-between;
             gap: 26px;
             margin-bottom: 30px;
@@ -616,7 +747,7 @@
 
         details summary {
             cursor: pointer;
-            padding: 15px 20px;
+            padding: 14px 22px 16px 42px;
             background: linear-gradient(90deg, rgba(255, 230, 150, 0.5) 0%, rgba(248, 249, 250, 1) 25%, rgba(248, 249, 250, 1) 100%);
             border-radius: 10px;
             border-left: 5px solid rgba(204, 170, 0, 1); /* stronger gold accent */
@@ -628,22 +759,28 @@
             color: rgba(60, 60, 60, 1); /* darker gray for better contrast */
             transition: all 0.3s;
             list-style: none;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+                'summary-name'
+                'summary-metrics';
+            align-items: start;
+            row-gap: 10px;
             letter-spacing: 0.3px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
         }
 
         .group-summary-name {
+            grid-area: summary-name;
             font-size: 1.05em;
             font-weight: 800;
             color: rgba(50, 50, 50, 1);
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            white-space: nowrap;
-            order: 1;
+            white-space: normal;
+            text-align: left;
+            line-height: 1.15;
         }
 
         .group-summary-eff {
@@ -711,17 +848,73 @@
             text-align: right;
         }
         .group-summary-metrics {
-            margin-left: auto;
+            grid-area: summary-metrics;
+            margin-left: 0;
             display: flex;
             align-items: flex-end;
-            gap: 8px;
-            order: 2;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            --metric-gap: 12px;
+            --metric-block-gap: 34px;
+            padding-top: 44px;
+            padding-right: 0;
+            width: 100%;
         }
         .group-pill-stack {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 3px;
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(3) {
+            margin-left: var(--metric-block-gap);
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(1),
+        .group-summary-metrics .group-pill-stack:nth-child(2),
+        .group-summary-metrics .group-pill-stack:nth-child(3) {
+            position: relative;
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(1)::before,
+        .group-summary-metrics .group-pill-stack:nth-child(3)::before {
+            position: absolute;
+            top: -39px;
+            left: 0;
+            width: calc(200% + var(--metric-gap));
+            text-align: center;
+            font-size: 0.8em;
+            font-weight: 900;
+            letter-spacing: 0.85px;
+            line-height: 1;
+            text-transform: uppercase;
+            color: rgba(25, 25, 25, 0.96);
+            white-space: nowrap;
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(1)::before {
+            content: 'Untuned Consequences';
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(3)::before {
+            content: 'Field Efficiency';
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(1)::after,
+        .group-summary-metrics .group-pill-stack:nth-child(3)::after {
+            content: '';
+            position: absolute;
+            top: -22px;
+            left: 0;
+            width: calc(200% + var(--metric-gap));
+            border-top: 1px solid rgba(72, 118, 205, 0.55);
+            pointer-events: none;
+        }
+        .group-summary-metrics .group-pill-stack:nth-child(2)::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            bottom: -8px;
+            right: calc(-1 * ((var(--metric-block-gap) / 2) + (var(--metric-gap) / 2)));
+            width: 1px;
+            background: linear-gradient(180deg, rgba(72, 118, 205, 0.55) 0%, rgba(72, 118, 205, 0.32) 100%);
+            pointer-events: none;
         }
         .group-pill-month {
             font-size: 0.64em;
@@ -733,9 +926,9 @@
             white-space: nowrap;
         }
         .group-pill {
-            width: 98px;
-            min-width: 98px;
-            max-width: 98px;
+            width: 132px;
+            min-width: 132px;
+            max-width: 132px;
             text-align: center;
             padding: 4px 10px;
             border-radius: 14px;
@@ -749,7 +942,9 @@
             white-space: nowrap;
         }
         .group-pill-mini {
-            min-width: 62px;
+            width: 160px;
+            min-width: 160px;
+            max-width: 160px;
             font-size: 0.74em;
             padding: 3px 8px;
             border-color: rgba(168, 176, 172, 0.72);
@@ -760,14 +955,17 @@
         .group-pill-stack .group-summary-eff {
             margin-left: 0;
             order: initial;
-            width: 139px;
-            min-width: 139px;
-            max-width: 139px;
+            width: 210px;
+            min-width: 210px;
+            max-width: 210px;
             font-size: 1.15em;
             padding: 5px 10px;
         }
         .group-pill-stack .group-summary-eff.group-summary-eff-cost {
             font-style: normal;
+            width: 252px;
+            min-width: 252px;
+            max-width: 252px;
         }
         .group-section .group-summary-meta {
             display: none;
@@ -781,11 +979,15 @@
             content: '▶';
             font-size: 0.8em;
             transition: transform 0.3s;
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             display: inline-block;
         }
 
         details[open] summary::before {
-            transform: rotate(90deg);
+            transform: translateY(-50%) rotate(90deg);
         }
 
         details summary:hover {
@@ -816,7 +1018,7 @@
         }
 
         .pending-group-section .group-summary-metrics {
-            margin-left: auto;
+            margin-left: 0;
         }
 
         .pending-group-section .group-pill,
@@ -1148,19 +1350,37 @@
             .group-summary-metrics {
                 width: 100%;
                 margin-left: 0;
-                order: 3;
-                justify-content: flex-start;
+                justify-content: center;
                 flex-wrap: wrap;
-                padding-left: 6px;
+                padding-top: 18px;
+                gap: 8px;
+                --metric-block-gap: 10px;
+            }
+            .group-summary-metrics .group-pill-stack:nth-child(1)::before,
+            .group-summary-metrics .group-pill-stack:nth-child(3)::before,
+            .group-summary-metrics .group-pill-stack:nth-child(1)::after,
+            .group-summary-metrics .group-pill-stack:nth-child(3)::after,
+            .group-summary-metrics .group-pill-stack:nth-child(2)::after {
+                content: none;
             }
             .group-pill-stack {
-                align-items: flex-start;
+                align-items: center;
             }
             .group-pill,
             .group-pill-stack .group-summary-eff {
-                width: 59px;
-                min-width: 59px;
-                max-width: 59px;
+                width: 124px;
+                min-width: 124px;
+                max-width: 124px;
+            }
+            .group-pill-mini {
+                width: 124px;
+                min-width: 124px;
+                max-width: 124px;
+            }
+            .group-pill-stack .group-summary-eff.group-summary-eff-cost {
+                width: 168px;
+                min-width: 168px;
+                max-width: 168px;
             }
             .group-pill-month {
                 font-size: 0.61em;
@@ -1187,6 +1407,23 @@
             .hero h1 {
                 font-size: 2.5em;
             }
+            .hero-key-metrics {
+                gap: 22px;
+                margin-bottom: 18px;
+            }
+            .hero-key-metric-label {
+                font-size: 0.82em;
+            }
+            .hero-key-metric-value {
+                font-size: 1.2em;
+            }
+            .hero-secondary-metrics {
+                gap: 25px;
+                font-size: 0.9em;
+            }
+            .hero-secondary-metrics strong {
+                font-size: 1.1em;
+            }
             .hero-status-chip {
                 top: 14px;
                 right: 14px;
@@ -1198,6 +1435,17 @@
             }
             .hero .capacity-subtitle4 {
                 font-size: 1.35em;
+            }
+            .hero-buttons {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .hero-btn {
+                font-size: 0.92em;
+                padding: 10px 18px;
+            }
+            .hero-btn-line2 {
+                font-size: 1.45em;
             }
             .utility-window {
                 padding: 26px 20px;
@@ -1230,19 +1478,26 @@
     </header>
 
     <div class="hero">
-        <div class="hero-status-chip" id="livingston-hero-latest-chip">Latest Livingston report: pending</div>
         <div class="hero-content">
             <p class="capacity-subtitle">480v Industrial Electricity Data</p>
             <h1>ELECTRICAL FIELD PERFORMANCE</h1>
-            <p class="capacity-subtitle2" id="livingston-hero-latest-period">Latest reporting window: pending</p>
-            <p class="capacity-subtitle1">SITE CONNECTED CAPACITY: 56,975 kVA</p>
-            <p class="capacity-subtitle1">AVERAGE SITE CONSUMPTION: 8,000 kW</p>
-            <p class="capacity-subtitle4">ACTIVE GROUP STUDIES ONLINE: <span id="livingston-hero-active-groups">0</span></p>
-            <p class="capacity-subtitle3">ONGOING SITE AVERAGE EFFICIENCY: <span id="livingston-hero-site-avg-pf">--.-%PF</span></p>
-            <p class="capacity-subtitle3">ESTIMATED FIELD WASTE EXPOSURE: <span id="livingston-hero-waste-hourly">$--.--/hr</span></p>
-            <p class="capacity-subtitle4">ESTIMATED SAVABLE VALUE (ANNUALIZED): <span id="livingston-hero-savable-yearly">$--/yr</span></p>
+            <div class="hero-key-metrics">
+                <div class="hero-key-metric">
+                    <span class="hero-key-metric-label">Site Connected Capacity</span>
+                    <span class="hero-key-metric-value" id="livingston-hero-connected-capacity">56,975 kVA</span>
+                </div>
+                <div class="hero-key-metric">
+                    <span class="hero-key-metric-label">Average Site Consumption</span>
+                    <span class="hero-key-metric-value" id="livingston-hero-average-consumption">8,000 kW</span>
+                </div>
+            </div>
+            <div class="hero-secondary-metrics">
+                <span>Untuned Energy Consequence<strong id="livingston-hero-site-consequence">$3.65M</strong></span>
+                <span>Site Efficiency<strong id="livingston-hero-site-efficiency">85.9% PF</strong></span>
+            </div>
             <div class="hero-buttons">
-                <a href="#utility-supply" class="hero-btn">How Livingston Gets Power</a>
+                <a href="#libraries" class="hero-btn hero-btn--consumption" data-scroll-target="libraries"><span class="hero-btn-icon">📈</span><span class="hero-btn-text"><span class="hero-btn-line1">How Livingston</span><span class="hero-btn-line2">Consumes Energy</span></span></a>
+                <a href="#utility-supply" class="hero-btn hero-btn--supply" data-scroll-target="utility-supply"><span class="hero-btn-icon">🔌</span><span class="hero-btn-text"><span class="hero-btn-line1">How Livingston</span><span class="hero-btn-line2">Is Supplied Energy</span></span></a>
             </div>
         </div>
         <video class="hero-chicken-video hero-chicken-left" id="chickenLeft" muted loop autoplay playsinline>
@@ -1278,40 +1533,6 @@
                 </div>
             </div>
         </section>
-        <section id="utility-supply" class="utility-window">
-            <p class="utility-kicker">Electric Service Context</p>
-            <h3>How Livingston Gets Power: Merced Electric Service Context</h3>
-            <p class="utility-intro">
-                Livingston site delivery is tracked in Unity context as Merced Electric territory for local utility service and industrial distribution planning.
-                Site supply is managed as a blended grid resource profile aligned to California wholesale and regional balancing frameworks.
-            </p>
-            <div class="utility-grid">
-                <article class="utility-item">
-                    <h4>Local Utility</h4>
-                    <p>Merced Electric context governs local retail delivery, feeder reliability, and service conditions for this Livingston campus.</p>
-                </article>
-                <article class="utility-item">
-                    <h4>Supply Portfolio</h4>
-                    <p>Delivered energy is a diversified mix that can include hydro, natural gas, renewables, and contracted wholesale purchases.</p>
-                </article>
-                <article class="utility-item">
-                    <h4>Regional Grid Source</h4>
-                    <p>Power flow is tied to California balancing operations within the CAISO market footprint and Western Interconnection.</p>
-                </article>
-                <article class="utility-item">
-                    <h4>Who They Get It From</h4>
-                    <p>Merced Electric sourcing context reflects utility-owned or contracted resources plus regional market procurement pathways.</p>
-                </article>
-            </div>
-            <p class="utility-note">
-                For Unity analysis context: Livingston receives bundled grid electricity through local utility service and wholesale procurement channels, not from one dedicated single plant.
-            </p>
-            <div class="utility-links">
-                <a href="https://www.mercedid.org/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Merced Utility Context ↗</a>
-                <a href="https://www.caiso.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">CAISO Context ↗</a>
-                <a href="https://www.energy.ca.gov/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California Energy ↗</a>
-            </div>
-        </section>
 
         <!-- Single-Column Library Layout -->
         <section id="libraries">
@@ -1320,7 +1541,7 @@
                     <div class="library-title-row">
                         <h2 class="library-title">📊 Livingston Site Transformer Groups</h2>
                         <div class="library-composite-wrap">
-                            <span class="library-composite-label">Site Waste Exposure • Savable Value Lens ($/kWh)</span>
+                            <span class="library-composite-label">Composite Cost of Consummed Electrical Energy ($/kWh)</span>
                             <div class="library-composite">
                                 <span class="library-composite-pill-stack">
                                     <span class="library-composite-month" id="livingston-composite-past-month">MAR 2026</span>
@@ -1349,11 +1570,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-pf-prev-month>---</span>
@@ -1364,7 +1585,7 @@
                                     <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Waste $/hr</span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -1405,11 +1626,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-pf-prev-month>---</span>
@@ -1420,7 +1641,7 @@
                                     <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -1461,11 +1682,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-pf-prev-month>---</span>
@@ -1476,7 +1697,7 @@
                                     <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -1517,11 +1738,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-pf-prev-month>---</span>
@@ -1532,7 +1753,7 @@
                                     <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -1558,11 +1779,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-pf-prev-month>---</span>
@@ -1573,7 +1794,7 @@
                                     <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -1599,11 +1820,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-pf-prev-month>---</span>
@@ -1614,7 +1835,7 @@
                                     <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Cost/hr</span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item">
@@ -1640,11 +1861,11 @@
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month">MAR 2026</span>
-                                    <span class="group-pill group-pill-mini">$--.--/hr</span>
+                                    <span class="group-pill group-pill-mini">$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month">APR 2026</span>
-                                    <span class="group-summary-eff group-summary-eff-cost">$--.--/hr</span>
+                                    <span class="group-summary-eff group-summary-eff-cost">$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
                                     <span class="group-pill-month">MAR 2026</span>
@@ -1677,6 +1898,40 @@
                 </div>
             </div>
         </section>
+        <section id="utility-supply" class="utility-window">
+            <p class="utility-kicker">Electrical Energy Service Overview</p>
+            <h3>How Livingston Gets Power: Merced Electric Service Context</h3>
+            <p class="utility-intro">
+                Livingston site delivery is tracked in Unity context as Merced Electric territory for local utility service and industrial distribution planning.
+                Site supply is managed as a blended grid resource profile aligned to California wholesale and regional balancing frameworks.
+            </p>
+            <div class="utility-grid">
+                <article class="utility-item">
+                    <h4>Local Utility</h4>
+                    <p>Merced Electric context governs local retail delivery, feeder reliability, and service conditions for this Livingston campus.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Supply Portfolio</h4>
+                    <p>Delivered energy is a diversified mix that can include hydro, natural gas, renewables, and contracted wholesale purchases.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Regional Grid Source</h4>
+                    <p>Power flow is tied to California balancing operations within the CAISO market footprint and Western Interconnection.</p>
+                </article>
+                <article class="utility-item">
+                    <h4>Who They Get It From</h4>
+                    <p>Merced Electric sourcing context reflects utility-owned or contracted resources plus regional market procurement pathways.</p>
+                </article>
+            </div>
+            <p class="utility-note">
+                For Unity analysis context: Livingston receives bundled grid electricity through local utility service and wholesale procurement channels, not from one dedicated single plant.
+            </p>
+            <div class="utility-links">
+                <a href="https://www.mercedid.org/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Merced Irrigation District Utility ↗</a>
+                <a href="https://www.caiso.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California ISO (Grid) ↗</a>
+                <a href="https://www.energy.ca.gov/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California Energy ↗</a>
+            </div>
+        </section>
 
         <!-- What You'll Discover -->
         <section id="analysis">
@@ -1704,6 +1959,18 @@
     </footer>
 
     <script>
+        document.querySelectorAll('.hero-btn[data-scroll-target]').forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const targetId = button.dataset.scrollTarget;
+                const targetElement = document.getElementById(targetId);
+                if (!targetElement) {
+                    return;
+                }
+                event.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', `#${targetId}`);
+            });
+        });
         const MONTH_INDEX = {
             jan: 0,
             feb: 1,
@@ -1878,33 +2145,196 @@
             const numeric = Number(match[0].replace(/,/g, ''));
             return Number.isFinite(numeric) ? numeric : null;
         }
-        function parseCostPerHourValuesFromHtml(htmlText) {
-            const costValues = [];
+        function parseCurrencyValue(text) {
+            const match = String(text || '').match(/\$?\s*([0-9]+(?:,[0-9]{3})*(?:\.[0-9]+)?)/);
+            if (!match) return null;
+            const numeric = Number(match[1].replace(/,/g, ''));
+            return Number.isFinite(numeric) ? numeric : null;
+        }
+        function parseAnnualWastedValuesFromFieldHtml(htmlText) {
+            const annualValues = [];
 
             try {
                 const doc = new DOMParser().parseFromString(String(htmlText || ''), 'text/html');
-                const costNodes = doc.querySelectorAll('[id$="-xfmr-cost-hour"]');
-                costNodes.forEach((node) => {
-                    const numeric = parseNumericValue(node.textContent);
-                    if (numeric !== null) costValues.push(numeric);
+                const wasteNodes = doc.querySelectorAll('.waste-value');
+                wasteNodes.forEach((node) => {
+                    const text = String(node.textContent || '');
+                    if (!/(per\s*year|\/\s*yr|\/yr|yr)/i.test(text)) return;
+                    const numeric = parseCurrencyValue(text);
+                    if (numeric !== null) annualValues.push(numeric);
                 });
 
-                if (costValues.length > 0) return costValues;
+                if (annualValues.length > 0) return annualValues;
             } catch (e) {}
 
-            const costIdRegex = /id\s*=\s*["'][^"']*-xfmr-cost-hour["'][^>]*>\s*\$?\s*([0-9,]+(?:\.[0-9]+)?)/ig;
-            let costMatch;
-            while ((costMatch = costIdRegex.exec(String(htmlText || ''))) !== null) {
-                const numeric = Number(String(costMatch[1] || '').replace(/,/g, ''));
-                if (Number.isFinite(numeric)) costValues.push(numeric);
+            const wasteClassRegex = /class\s*=\s*["'][^"']*waste-value[^"']*["'][^>]*>\s*(?:VALUE\s*:)?\s*\$?\s*([0-9][0-9,]*(?:\.[0-9]+)?)[^<]*(?:per\s*year|\/\s*yr|\/yr|yr)/ig;
+            let classMatch;
+            while ((classMatch = wasteClassRegex.exec(String(htmlText || ''))) !== null) {
+                const numeric = Number(String(classMatch[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(numeric)) annualValues.push(numeric);
             }
 
-            return costValues;
+            return annualValues;
         }
-        function formatCostPerHour(value) {
+        function extractStudyPeriodTokenFromSummaryboard(doc, studyUrl) {
+            const periodText = String(doc?.getElementById('param-period')?.textContent || '');
+            const periodMatch = periodText.match(/c\.(\d{6}-\d{6})/i);
+            if (periodMatch) return periodMatch[1];
+
+            const fileMatch = String(studyUrl || '').match(/_(\d{6}-\d{6})_/);
+            return fileMatch ? fileMatch[1] : '';
+        }
+        function extractTransformerNamesFromSummaryboard(doc) {
+            if (!doc) return [];
+            const seen = new Set();
+            const names = [];
+            doc.querySelectorAll('[id^="xfmr"][id$="-name"]').forEach((el) => {
+                const name = String(el.textContent || '').trim();
+                if (!name || seen.has(name)) return;
+                seen.add(name);
+                names.push(name);
+            });
+            return names;
+        }
+        function formatTransformerNameForSplitView(transformerName) {
+            const rawName = String(transformerName || '').trim();
+            if (!rawName) return '';
+            const tidMatch = rawName.match(/^(T\d+)/i);
+            if (tidMatch) {
+                return rawName.replace(/\s+/g, '').replace(/^(T\d+)/i, '$1.');
+            }
+            return rawName.replace(/\s+/g, '-');
+        }
+        function parseFieldEnergyboardHrefFromSplitViewHtml(splitViewHtmlText) {
+            try {
+                const doc = new DOMParser().parseFromString(String(splitViewHtmlText || ''), 'text/html');
+                const iframes = doc.querySelectorAll('iframe[src]');
+                for (const iframe of iframes) {
+                    const src = String(iframe.getAttribute('src') || '').trim();
+                    if (!src || src === '#') continue;
+                    if (/FIELD-Energyboard/i.test(src)) return src;
+                }
+            } catch (e) {}
+
+            const iframeMatch = String(splitViewHtmlText || '').match(/<iframe[^>]+src=["']([^"']*FIELD-Energyboard[^"']+)["']/i);
+            return iframeMatch ? iframeMatch[1] : '';
+        }
+        const STUDY_TEXT_CACHE = new Map();
+        async function fetchStudyText(url) {
+            const key = String(url || '');
+            if (!key) throw new Error('Missing URL');
+            if (!STUDY_TEXT_CACHE.has(key)) {
+                const pending = (async () => {
+                    const response = await fetch(key, { cache: 'no-store' });
+                    if (!response.ok) {
+                        throw new Error(`Failed to read study (${response.status})`);
+                    }
+                    return response.text();
+                })();
+                STUDY_TEXT_CACHE.set(key, pending);
+            }
+            try {
+                return await STUDY_TEXT_CACHE.get(key);
+            } catch (error) {
+                STUDY_TEXT_CACHE.delete(key);
+                throw error;
+            }
+        }
+        function parseAnnualWasteFromPatternTransformer(transformerData) {
+            if (!transformerData || typeof transformerData !== 'object') return null;
+            const textSources = [
+                transformerData.field_condition_summary,
+                transformerData.executive_summary_short,
+                transformerData.pattern_part2,
+                transformerData.voltage_baseline_notes,
+                transformerData.pattern_text
+            ];
+            const regexes = [
+                /cost(?:ing|s)?\s+(?:approximately|about)?\s*\$([0-9][0-9,]*(?:\.[0-9]+)?)\s+annually/i,
+                /\$([0-9][0-9,]*(?:\.[0-9]+)?)\s+annually[^.]{0,120}\b(?:waste|loss(?:es)?|cost)\b/i,
+                /\b(?:waste|loss(?:es)?|cost)\b[^.]{0,120}\$([0-9][0-9,]*(?:\.[0-9]+)?)\s+annually/i
+            ];
+
+            for (const source of textSources) {
+                const text = String(source || '');
+                if (!text) continue;
+                for (const regex of regexes) {
+                    const match = text.match(regex);
+                    if (!match) continue;
+                    const numeric = Number(String(match[1] || '').replace(/,/g, ''));
+                    if (Number.isFinite(numeric)) return numeric;
+                }
+            }
+            return null;
+        }
+        function parseAnnualWastedTotalFromPatternRollup(patternData) {
+            if (!patternData || typeof patternData !== 'object') return null;
+            const groupedRaw = patternData?.group_overview?.totals?.annual_waste;
+            const groupedTotal = groupedRaw == null ? null : Number(groupedRaw);
+            if (Number.isFinite(groupedTotal) && groupedTotal > 0) return groupedTotal;
+
+            const transformers = patternData.transformers;
+            if (!transformers || typeof transformers !== 'object') return null;
+            const totals = Object.values(transformers)
+                .map(parseAnnualWasteFromPatternTransformer)
+                .filter((value) => Number.isFinite(value));
+            if (!totals.length) return null;
+            return totals.reduce((sum, value) => sum + value, 0);
+        }
+        const STUDY_ANNUAL_WASTED_CACHE = new Map();
+        async function fetchStudyAnnualWastedTotal(studyUrl, summaryboardHtmlText) {
+            const cacheKey = String(studyUrl || '');
+            if (!cacheKey) return null;
+            if (!STUDY_ANNUAL_WASTED_CACHE.has(cacheKey)) {
+                const pending = (async () => {
+                    try {
+                        const patternRollupUrl = new URL('SET1_PatternAnalysisData.json', studyUrl).toString();
+                        const patternRollupText = await fetchStudyText(patternRollupUrl);
+                        const patternRollupData = JSON.parse(String(patternRollupText || '{}'));
+                        const rollupAnnual = parseAnnualWastedTotalFromPatternRollup(patternRollupData);
+                        if (Number.isFinite(rollupAnnual)) return rollupAnnual;
+                    } catch (e) {}
+                    const doc = new DOMParser().parseFromString(String(summaryboardHtmlText || ''), 'text/html');
+                    const transformerNames = extractTransformerNamesFromSummaryboard(doc);
+                    const periodToken = extractStudyPeriodTokenFromSummaryboard(doc, studyUrl);
+                    if (!transformerNames.length || !periodToken) return null;
+
+                    const annualValues = await Promise.all(transformerNames.map(async (transformerName) => {
+                        try {
+                            const splitName = formatTransformerNameForSplitView(transformerName);
+                            if (!splitName) return null;
+                            const splitViewHref = `SplitView-energy-${splitName}-${periodToken}.html`;
+                            const splitViewUrl = new URL(splitViewHref, studyUrl).toString();
+                            const splitViewHtmlText = await fetchStudyText(splitViewUrl);
+                            const fieldHref = parseFieldEnergyboardHrefFromSplitViewHtml(splitViewHtmlText);
+                            if (!fieldHref) return null;
+                            const fieldUrl = new URL(fieldHref, splitViewUrl).toString();
+                            const fieldHtmlText = await fetchStudyText(fieldUrl);
+                            const fieldAnnualValues = parseAnnualWastedValuesFromFieldHtml(fieldHtmlText);
+                            if (!fieldAnnualValues.length) return null;
+                            return fieldAnnualValues[0];
+                        } catch (e) {
+                            return null;
+                        }
+                    }));
+
+                    const numericValues = annualValues.filter((value) => Number.isFinite(value));
+                    if (!numericValues.length) return null;
+                    return numericValues.reduce((sum, value) => sum + value, 0);
+                })();
+                STUDY_ANNUAL_WASTED_CACHE.set(cacheKey, pending);
+            }
+            try {
+                return await STUDY_ANNUAL_WASTED_CACHE.get(cacheKey);
+            } catch (error) {
+                STUDY_ANNUAL_WASTED_CACHE.delete(cacheKey);
+                return null;
+            }
+        }
+        function formatAnnualConsequence(value) {
             const numeric = Number(value);
-            if (!Number.isFinite(numeric)) return '$--.--/hr';
-            return `$${numeric.toFixed(2)}/hr`;
+            if (!Number.isFinite(numeric)) return '$---/yr';
+            return `$${Math.round(numeric).toLocaleString('en-US')}/yr`;
         }
         function formatPf(value) {
             const numeric = Number(value);
@@ -2023,7 +2453,7 @@
             const previousMonthLabel = previousStudy?.monthLabel || '---';
             if (costCurrentMonthEl) costCurrentMonthEl.textContent = latestMonthLabel;
             if (pfCurrentMonthEl) pfCurrentMonthEl.textContent = latestMonthLabel;
-            if (costCurrentEl) costCurrentEl.textContent = formatCostPerHour(latestMetrics?.totalCostPerHour);
+            if (costCurrentEl) costCurrentEl.textContent = formatAnnualConsequence(latestMetrics?.totalAnnualWasted);
 
             const hasPreviousStudy = Boolean(previousStudy);
             if (costPrevWrap) costPrevWrap.hidden = !hasPreviousStudy;
@@ -2032,32 +2462,24 @@
             if (hasPreviousStudy) {
                 if (costPrevMonthEl) costPrevMonthEl.textContent = previousMonthLabel;
                 if (pfPrevMonthEl) pfPrevMonthEl.textContent = previousMonthLabel;
-                if (costPrevEl) costPrevEl.textContent = formatCostPerHour(previousMetrics?.totalCostPerHour);
+                if (costPrevEl) costPrevEl.textContent = formatAnnualConsequence(previousMetrics?.totalAnnualWasted);
                 if (pfPrevEl) pfPrevEl.textContent = formatPf(previousMetrics?.pfPercent);
             }
         }
         async function fetchGroupStudyMetrics(studyHref) {
             const resolvedUrl = new URL(studyHref, window.location.href).toString();
-            const response = await fetch(resolvedUrl, { cache: 'no-store' });
-            if (!response.ok) {
-                throw new Error(`Failed to read study (${response.status})`);
-            }
-
-            const htmlText = await response.text();
+            const htmlText = await fetchStudyText(resolvedUrl);
             const pfValues = parsePfValuesFromHtml(htmlText);
             if (!pfValues.length) {
                 throw new Error('No PF values found in study');
             }
 
             const avgPf = pfValues.reduce((sum, n) => sum + n, 0) / pfValues.length;
-            const costValues = parseCostPerHourValuesFromHtml(htmlText);
-            const totalCostPerHour = costValues.length
-                ? costValues.reduce((sum, n) => sum + n, 0)
-                : null;
+            const totalAnnualWasted = await fetchStudyAnnualWastedTotal(resolvedUrl, htmlText);
 
             return {
                 pfPercent: avgPf,
-                totalCostPerHour,
+                totalAnnualWasted,
                 pfValues
             };
         }
@@ -2092,6 +2514,7 @@
             const groupName = String(summary.dataset.groupName || '').trim();
             const transformerSpec = String(summary.dataset.transformerSpec || '').trim();
             const groupDisplayName = groupName || groupCode || 'GROUP';
+            const consequenceMetaLabel = 'Monthly PF + Total Wasted /yr';
             if (nameEl && groupName) {
                 nameEl.textContent = transformerSpec ? `${groupName} (${transformerSpec})` : groupName;
             }
@@ -2106,7 +2529,7 @@
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
                 setGroupEfficiencyStateClass(costCurrentEl, 'unavailable');
                 updateDeliMonthPills(summary, null, null, null, null);
-                if (metaEl) metaEl.textContent = '';
+                if (metaEl) metaEl.textContent = consequenceMetaLabel;
                 return {
                     groupCode,
                     groupName: groupDisplayName,
@@ -2133,7 +2556,7 @@
                     } catch (e) {}
                 }
                 updateDeliMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics);
-                if (metaEl) metaEl.textContent = '';
+                if (metaEl) metaEl.textContent = consequenceMetaLabel;
                 return {
                     groupCode,
                     groupName: groupDisplayName,
@@ -2145,7 +2568,7 @@
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
                 setGroupEfficiencyStateClass(costCurrentEl, 'unavailable');
                 updateDeliMonthPills(summary, latestStudy, previousStudy, null, null);
-                if (metaEl) metaEl.textContent = '';
+                if (metaEl) metaEl.textContent = consequenceMetaLabel;
                 return {
                     groupCode,
                     groupName: groupDisplayName,

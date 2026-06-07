@@ -8,14 +8,14 @@
   <script>
     (function () {
       const current = new URL(window.location.href);
-      const target = new URL("../../james-richards-progress-report/", current);
+      const target = new URL("../../executive-update/", current);
       current.searchParams.forEach(function (value, key) {
         target.searchParams.set(key, value);
       });
       if (!target.searchParams.has("ue_target")) {
         target.searchParams.set(
           "ue_target",
-          "/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/"
+          "/UnityEnergy/customer-portal/foster-farms/executive/executive-update/"
         );
       }
       window.location.replace(target.toString());

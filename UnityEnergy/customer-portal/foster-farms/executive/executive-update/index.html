@@ -4,20 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Foster Farms Executive Brief | Executive Findings &amp; Recommended Action Report</title>
-  <meta name="description" content="Foster Farms Executive Brief — Executive Findings &amp; Recommended Action Report for James Richards and leadership, based on multi-year electrical measurement and analysis." />
+  <meta name="description" content="Foster Farms Executive Brief — Executive Findings &amp; Recommended Action Report for Foster Farms leadership, based on multi-year electrical measurement and analysis." />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Unity Energy Update" id="ogTitle" />
   <meta property="og:description" content="Foster Farms · Executive Findings &amp; Recommended Action Report · UE.26.0526" id="ogDescription" />
-  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/" id="ogUrl" />
+  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/executive-update/" id="ogUrl" />
   <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" id="ogImage" />
   <meta property="og:image:alt" content="Unity Energy update badge with date stamp" />
   <meta property="og:site_name" content="Unity Energy" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Unity Energy Update" id="twitterTitle" />
   <meta property="twitter:description" content="Foster Farms · Executive Findings &amp; Recommended Action Report · UE.26.0526" id="twitterDescription" />
-  <meta property="twitter:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/" id="twitterUrl" />
+  <meta property="twitter:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/executive-update/" id="twitterUrl" />
   <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" id="twitterImage" />
-  <base href="/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/" />
+  <base href="/UnityEnergy/customer-portal/foster-farms/executive/executive-update/" />
   <link rel="icon" type="image/png" href="../ue-icon-192.png?ue_icon=20260527" />
   <link rel="stylesheet" href="../styles.css?ue_css=20260601k" />
 </head>
@@ -103,9 +103,9 @@
         <p class="eyebrow">Private Executive Brief</p>
         <h1>Foster Farms<br/>Executive Findings &amp; Recommended Action Report</h1>
         <div class="prepared-for">
-          <strong>Prepared for:</strong><span>James Richards</span>
+          <strong>Prepared for:</strong><span>Foster Farms Leadership</span>
           <strong>Title:</strong><span>Chief Financial Officer, Foster Farms</span>
-          <strong>Status:</strong><span id="documentStatusValue">Published June 1, 2026</span>
+          <strong>Status:</strong><span id="documentStatusValue">Published</span>
           <strong>Date:</strong><span id="reviewDate"></span>
         </div>
       </section>
@@ -117,7 +117,7 @@
         </article>
         <article class="impact-card">
           <p class="impact-label">UnConsumed Energy (kW Equiv)</p>
-          <p class="impact-value">2,167 kW/hr</p>
+          <p class="impact-value">2,167 kW (~2.2 MW)</p>
           <p class="impact-sub">Conservative electrical-only comparison anchor</p>
         </article>
         <article class="impact-card">
@@ -416,7 +416,7 @@
   </main>
 
   <script src="../vault-access.js?ue_access=20260601c"></script>
-  <script src="../share-controls.js?ue_share=20260601d"></script>
+  <script src="../share-controls.js?ue_share=20260605a"></script>
   <script>
     function resolveExecutiveDocumentStatus() {
       const statusNode = document.getElementById("documentStatusValue");
@@ -492,17 +492,21 @@
         }
       });
     }
-
-    function enforceExecutiveSharePolicy(documentStatus) {
-      const pageUrl = new URL(window.location.href);
-      const params = pageUrl.searchParams;
-      const hasShareSignal =
+    function hasExecutiveShareSignal(params) {
+      return (
         params.has("ue_share") ||
         params.has("ue_kind") ||
         params.has("ue_doc") ||
         params.has("ue_status") ||
         params.has("ue_rev") ||
-        params.has("ue_target");
+        params.has("ue_target")
+      );
+    }
+
+    function enforceExecutiveSharePolicy(documentStatus) {
+      const pageUrl = new URL(window.location.href);
+      const params = pageUrl.searchParams;
+      const hasShareSignal = hasExecutiveShareSignal(params);
 
       if (documentStatus !== "published" && hasShareSignal) {
         renderShareUnavailableScreen("This review/test copy has sharing disabled and cannot be redistributed.");
@@ -512,9 +516,29 @@
       return false;
     }
 
+    function enforceSupersededJuneFirstSharePolicy() {
+      const pageUrl = new URL(window.location.href);
+      const params = pageUrl.searchParams;
+      if (!hasExecutiveShareSignal(params)) return false;
+
+      renderExecutiveNoticeScreen({
+        title: "Document Expired",
+        message: "This document has expired and has been replaced by the June 5, 2026 publishing. Please request an updated link from your sender.",
+        primaryAction: {
+          href: "../executive-update-2026-06-05/",
+          label: "Open Published June 5, 2026"
+        },
+        secondaryAction: {
+          href: "../",
+          label: "Return to Executive Brief Center"
+        }
+      });
+      return true;
+    }
+
     const EXEC_DOCUMENT_STATUS = resolveExecutiveDocumentStatus();
     const EXEC_DOCUMENT_REVISION = "FF-JR-EXEC-26-0530-RC1";
-    const EXEC_PUBLISHED_TARGET_PATH = "/UnityEnergy/customer-portal/foster-farms/executive/james-richards-progress-report/";
+    const EXEC_PUBLISHED_TARGET_PATH = "/UnityEnergy/customer-portal/foster-farms/executive/executive-update/";
     const EXEC_RELEASE_LIFECYCLE = Object.freeze({
       discontinuedReleases: Object.freeze({
         "2026-05-28": "Published May 28, 2026"
@@ -1540,7 +1564,7 @@
         stopReadAlongWindowMonitor();
       });
     }
-    if (!enforceExecutiveLifecyclePolicy(EXEC_RELEASE_LIFECYCLE) && !enforceExecutiveSharePolicy(EXEC_DOCUMENT_STATUS)) {
+    if (!enforceExecutiveLifecyclePolicy(EXEC_RELEASE_LIFECYCLE) && !enforceSupersededJuneFirstSharePolicy() && !enforceExecutiveSharePolicy(EXEC_DOCUMENT_STATUS)) {
       setupExecutiveIntroAudio();
       setupExecutiveOverviewAudio();
       setupRenderingTwoQuickView();
@@ -1561,6 +1585,7 @@
       window.ffExecShareControls.init({
         gateOverlayId: "briefGateOverlay",
         reviewDateElementId: "reviewDate",
+        fixedReviewDate: "June 1, 2026",
         shareDescriptionPrefix: "Foster Farms · Executive Findings & Recommended Action Report",
         shareStampCode: "UE.0601.01",
         documentStatus: EXEC_DOCUMENT_STATUS,
