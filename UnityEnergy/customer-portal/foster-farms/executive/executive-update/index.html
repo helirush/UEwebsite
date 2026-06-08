@@ -417,6 +417,7 @@
 
   <script src="../vault-access.js?ue_access=20260601c"></script>
   <script src="../share-controls.js?ue_share=20260605a"></script>
+  <script src="../../../../founder_share_panel.js?v=20260608a"></script>
   <script>
     function resolveExecutiveDocumentStatus() {
       const statusNode = document.getElementById("documentStatusValue");
@@ -517,13 +518,10 @@
     }
 
     function enforceSupersededJuneFirstSharePolicy() {
-      const pageUrl = new URL(window.location.href);
-      const params = pageUrl.searchParams;
-      if (!hasExecutiveShareSignal(params)) return false;
 
       renderExecutiveNoticeScreen({
-        title: "Document Expired",
-        message: "This document has expired and has been replaced by the June 5, 2026 publishing. Please request an updated link from your sender.",
+        title: "Document Deactivated",
+        message: "The June 1, 2026 publishing has been deactivated and replaced by the June 5, 2026 publishing. Please request an updated link from your sender.",
         primaryAction: {
           href: "../executive-update-2026-06-05/",
           label: "Open Published June 5, 2026"
@@ -543,8 +541,8 @@
       discontinuedReleases: Object.freeze({
         "2026-05-28": "Published May 28, 2026"
       }),
-      latestReleasePath: "./",
-      latestReleaseLabel: "Open Published June 1, 2026",
+      latestReleasePath: "../executive-update-2026-06-05/",
+      latestReleaseLabel: "Open Published June 5, 2026",
       fallbackPath: "../",
       fallbackLabel: "Return to Executive Brief Center"
     });
