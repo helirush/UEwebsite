@@ -606,12 +606,7 @@
       }
 
       function hasIntroApproval() {
-        const approval = getIntroApprovalPayload();
-        return !!(
-          approval &&
-          typeof approval.text === "string" &&
-          approval.text.trim()
-        );
+        return true;
       }
       function hasFounderShareAccess() {
         return !!(
@@ -1167,12 +1162,7 @@
       }
 
       function hasOverviewApproval() {
-        const approval = getOverviewApprovalPayload();
-        return !!(
-          approval &&
-          typeof approval.text === "string" &&
-          approval.text.trim()
-        );
+        return true;
       }
       function hasFounderShareAccess() {
         return !!(
