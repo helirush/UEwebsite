@@ -10,6 +10,7 @@ zARCHIVE/
 **/*.log
 **/*.tmp
 **/*.swp
+.cache.sqlite
 .env
 *.env
 UnityEnergy/hume_runtime_auth.local.js
@@ -24,3 +25,5 @@ UnityEnergy/openai_renderer/
 UnityEnergy/vendor/
 UnityEnergy/index.html.bak_*
 **/william_unity_handoff.py
+Customers/TysonFoods/Rendering/Scranton_Site/05_MAY26
+Customers/TysonFoods/Scranton_Site/May_2026
