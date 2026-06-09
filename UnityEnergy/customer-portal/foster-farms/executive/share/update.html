@@ -55,24 +55,70 @@
           document.body.textContent = message;
         });
       }
-      function openTargetLink(url) {
-        let openedWindow = null;
-        try {
-          openedWindow = window.open(url, "_blank", "noopener,noreferrer");
-          if (openedWindow) {
-            try { openedWindow.opener = null; } catch (_err) {}
-          }
-        } catch (_err) {
-          openedWindow = null;
+      function buildPreviewImageUrl(stampCode) {
+        const previewUrl = new URL("../ue-update-logo-preview.jpg", window.location.href);
+        if (stampCode) {
+          previewUrl.searchParams.set("ue_doc", stampCode);
         }
-        if (!openedWindow) {
-          window.location.replace(url);
+        return previewUrl.toString();
+      }
+      function renderTapAnywhereCard(url, stampCode) {
+        const mountCard = function () {
+          if (!document.body) return;
+          document.body.innerHTML = "";
+          document.body.style.margin = "0";
+          document.body.style.minHeight = "100vh";
+          document.body.style.display = "grid";
+          document.body.style.placeItems = "center";
+          document.body.style.background = "#f3f4ef";
+          const cardLink = document.createElement("a");
+          cardLink.href = url;
+          cardLink.style.display = "grid";
+          cardLink.style.gap = "10px";
+          cardLink.style.width = "min(94vw, 820px)";
+          cardLink.style.textDecoration = "none";
+          cardLink.style.color = "#22311d";
+          cardLink.style.fontFamily = "Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
+          cardLink.style.fontWeight = "600";
+          cardLink.style.fontSize = "14px";
+          cardLink.style.textAlign = "center";
+          cardLink.setAttribute("aria-label", "Open Unity Energy Update");
+          const cardImage = document.createElement("img");
+          cardImage.src = buildPreviewImageUrl(stampCode);
+          cardImage.alt = "Unity Energy Update share card";
+          cardImage.style.width = "100%";
+          cardImage.style.height = "auto";
+          cardImage.style.display = "block";
+          cardImage.style.borderRadius = "14px";
+          cardImage.style.boxShadow = "0 12px 34px rgba(20,31,12,.20)";
+          const cardLabel = document.createElement("span");
+          cardLabel.textContent = "Tap anywhere on this share card to open the update.";
+          cardLink.appendChild(cardImage);
+          cardLink.appendChild(cardLabel);
+          document.body.appendChild(cardLink);
+        };
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", mountCard, { once: true });
           return;
         }
-        document.addEventListener("DOMContentLoaded", function () {
-          if (!document.body) return;
-          document.body.textContent = "Opened in a new window. You can close this tab.";
-        });
+        mountCard();
+      }
+      function openTargetLink(url, stampCode) {
+        renderTapAnywhereCard(url, stampCode);
+        const navigate = function () {
+          try {
+            window.location.replace(url);
+          } catch (_err) {
+            window.location.href = url;
+          }
+        };
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", function () {
+            window.setTimeout(navigate, 80);
+          }, { once: true });
+          return;
+        }
+        window.setTimeout(navigate, 80);
       }
       const pageUrl = new URL(window.location.href);
       const incomingStamp = parseStamp(pageUrl.searchParams.get("ue_doc"));
@@ -113,7 +159,7 @@
         target.searchParams.set("ue_to", recipientAddress);
       }
       target.searchParams.set("ue_target", targetPath);
-      openTargetLink(target.toString());
+      openTargetLink(target.toString(), stampCode);
     })();
   </script>
 </head>
