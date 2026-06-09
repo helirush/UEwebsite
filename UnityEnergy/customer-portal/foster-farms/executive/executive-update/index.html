@@ -585,6 +585,7 @@
       const activityIndicator = document.getElementById("executiveIntroActivityIndicator");
       const reviewScriptLink = document.getElementById("reviewExecutiveIntroScriptLink");
       const status = document.getElementById("executiveIntroStatus");
+      const autoPlayFromShare = new URL(window.location.href).searchParams.get("ue_autoplay") === "1";
       if (!toggleButton || !status) return;
       const audio = new Audio("./audio/unity-executive-intro-shimmer.mp3?ue_audio=20260601c");
       audio.preload = "auto";
@@ -904,6 +905,12 @@
           await audio.play();
         } catch (error) {
           if (error && error.name === "NotAllowedError") {
+            if (autoPlayFromShare && canUseSpeechFallback()) {
+              const speechStarted = await startSpeechFallbackPlayback();
+              if (speechStarted) {
+                return;
+              }
+            }
             updateControls(false);
             status.textContent = "Press Start Unity Intro to begin audio.";
             return;

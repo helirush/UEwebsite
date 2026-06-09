@@ -138,6 +138,7 @@
       target.searchParams.set("ue_kind", SHARE_KIND);
       target.searchParams.set("ue_share", pageUrl.searchParams.get("ue_share") || String(Date.now()));
       target.searchParams.set("ue_status", "published");
+      target.searchParams.set("ue_autoplay", "1");
       const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
       if (incomingRevision) {
         target.searchParams.set("ue_rev", incomingRevision);
