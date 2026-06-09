@@ -905,10 +905,21 @@
           await audio.play();
         } catch (error) {
           if (error && error.name === "NotAllowedError") {
-            if (autoPlayFromShare && canUseSpeechFallback()) {
-              const speechStarted = await startSpeechFallbackPlayback();
-              if (speechStarted) {
+            if (autoPlayFromShare) {
+              const previousMutedState = !!audio.muted;
+              try {
+                audio.muted = true;
+                await audio.play();
+                audio.muted = previousMutedState;
                 return;
+              } catch (_retryErr) {
+                audio.muted = previousMutedState;
+                try {
+                  audio.pause();
+                } catch (_pauseErr) {}
+                try {
+                  audio.currentTime = 0;
+                } catch (_seekErr) {}
               }
             }
             updateControls(false);
