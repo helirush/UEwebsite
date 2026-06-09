@@ -8,13 +8,13 @@
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Unity Energy Update" />
   <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
-  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_doc=UE.0609.01" />
-  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg?ue_doc=UE.0609.01&ue_img=UE060901" />
+  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_doc=UE.0609.02" />
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg?ue_doc=UE.0609.02&ue_img=UE060902" />
   <meta property="og:image:alt" content="Unity Energy update share card" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Unity Energy Update" />
   <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
-  <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg?ue_doc=UE.0609.01&ue_img=UE060901" />
+  <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg?ue_doc=UE.0609.02&ue_img=UE060902" />
   <script>
     (function () {
       const SHARE_KIND = "update";
@@ -49,6 +49,25 @@
           document.body.textContent = message;
         });
       }
+      function openTargetLink(url) {
+        let openedWindow = null;
+        try {
+          openedWindow = window.open(url, "_blank", "noopener,noreferrer");
+          if (openedWindow) {
+            try { openedWindow.opener = null; } catch (_err) {}
+          }
+        } catch (_err) {
+          openedWindow = null;
+        }
+        if (!openedWindow) {
+          window.location.replace(url);
+          return;
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+          if (!document.body) return;
+          document.body.textContent = "Opened in a new window. You can close this tab.";
+        });
+      }
       const pageUrl = new URL(window.location.href);
       const incomingStamp = parseStamp(pageUrl.searchParams.get("ue_doc"));
       if (incomingStamp && RETIRED_TEST_STAMPS.indexOf(incomingStamp) !== -1) {
@@ -72,7 +91,7 @@
         target.searchParams.set("ue_rev", incomingRevision);
       }
       target.searchParams.set("ue_target", targetPath);
-      window.location.replace(target.toString());
+      openTargetLink(target.toString());
     })();
   </script>
 </head>
