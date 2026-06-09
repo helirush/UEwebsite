@@ -43,6 +43,12 @@
         if (value === "test") return "test";
         return "review";
       }
+      function normalizeRecipientKey(rawValue) {
+        return String(rawValue || "").trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+      }
+      function normalizeRouteAddress(rawValue) {
+        return String(rawValue || "").trim().toLowerCase().replace(/[^a-z0-9@._+-]/g, "");
+      }
       function renderUnavailable(message) {
         document.addEventListener("DOMContentLoaded", function () {
           if (!document.body) return;
@@ -89,6 +95,22 @@
       const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
       if (incomingRevision) {
         target.searchParams.set("ue_rev", incomingRevision);
+      }
+      const recipientKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_recipient"));
+      if (recipientKey) {
+        target.searchParams.set("ue_recipient", recipientKey);
+      }
+      const customerKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_customer"));
+      if (customerKey) {
+        target.searchParams.set("ue_customer", customerKey);
+      }
+      const senderAddress = normalizeRouteAddress(pageUrl.searchParams.get("ue_from"));
+      if (senderAddress) {
+        target.searchParams.set("ue_from", senderAddress);
+      }
+      const recipientAddress = normalizeRouteAddress(pageUrl.searchParams.get("ue_to"));
+      if (recipientAddress) {
+        target.searchParams.set("ue_to", recipientAddress);
       }
       target.searchParams.set("ue_target", targetPath);
       openTargetLink(target.toString());

@@ -428,8 +428,8 @@
     </div>
   </main>
 
-  <script src="../vault-access.js?ue_access=20260609a"></script>
-  <script src="../share-controls.js?ue_share=20260605a"></script>
+  <script src="../vault-access.js?ue_access=20260609c"></script>
+  <script src="../share-controls.js?ue_share=20260609b"></script>
   <script>
     function resolveExecutiveDocumentStatus() {
       const statusNode = document.getElementById("documentStatusValue");
@@ -1552,7 +1552,15 @@
         contentId: "briefContent",
         formId: "briefGateForm",
         inputId: "briefPasswordInput",
-        requirePassword: false,
+        requirePassword: true,
+        recipientParam: "ue_recipient",
+        recipientAllowlist: ["team", "qa", "internal", "testing"],
+        customerParam: "ue_customer",
+        requiredCustomerKey: "foster-farms",
+        senderParam: "ue_from",
+        senderDomainAllowlist: ["unityenergy.com"],
+        recipientEmailParam: "ue_to",
+        recipientDomainAllowlist: ["fosterfarms.com"],
         accessPassword: "FosterFarms!",
         founderIdInputId: "briefFounderIdInput",
         clearAccessSelector: "#returnToFosterFarmsBtn",
@@ -1570,6 +1578,14 @@
         shareStampCode: "UE.0605.01",
         documentStatus: EXEC_DOCUMENT_STATUS,
         documentRevision: EXEC_DOCUMENT_REVISION,
+        recipientParam: "ue_recipient",
+        recipientAllowlistKey: "team",
+        customerParam: "ue_customer",
+        customerKey: "foster-farms",
+        mailSenderParam: "ue_from",
+        mailSenderAddress: "sharemail@unityenergy.com",
+        mailRecipientParam: "ue_to",
+        mailRecipientAddress: "team@fosterfarms.com",
         currentShareTargetPath: window.location.pathname,
         publishedShareTargetPath: EXEC_PUBLISHED_TARGET_PATH,
         notionButtonId: "openInNotionBtn",

@@ -30,6 +30,42 @@
     const localPart = raw.includes("@") ? raw.split("@")[0] : raw;
     return localPart.replace(/[^a-z0-9]/g, "");
   }
+  function normalizeRecipientKey(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+  }
+  function normalizeRouteAddress(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9@._+-]/g, "");
+  }
+  function extractDomainValue(value) {
+    const normalized = normalizeRouteAddress(value);
+    if (!normalized) return "";
+    if (normalized.includes("@")) {
+      return normalized.split("@").pop().replace(/[^a-z0-9.-]/g, "");
+    }
+    return normalized.replace(/^@+/, "").replace(/[^a-z0-9.-]/g, "");
+  }
+  function buildRecipientAllowlist(values) {
+    const allowlist = new Set();
+    if (!Array.isArray(values)) return allowlist;
+    values.forEach((value) => {
+      const normalized = normalizeRecipientKey(value);
+      if (normalized) {
+        allowlist.add(normalized);
+      }
+    });
+    return allowlist;
+  }
+  function buildDomainAllowlist(values) {
+    const allowlist = new Set();
+    if (!Array.isArray(values)) return allowlist;
+    values.forEach((value) => {
+      const normalized = extractDomainValue(value);
+      if (normalized) {
+        allowlist.add(normalized);
+      }
+    });
+    return allowlist;
+  }
 
   async function hasFounderAccessId(value) {
     const normalized = normalizeAccessId(value);
@@ -123,6 +159,29 @@
     let founderPromptActive = false;
     const accessPassword = String(config && config.accessPassword ? config.accessPassword : DEFAULT_ACCESS_PASSWORD).trim();
     const requirePassword = !!(config && config.requirePassword === true);
+    const recipientParam = String((config && config.recipientParam) || "ue_recipient").trim() || "ue_recipient";
+    const recipientAllowlist = buildRecipientAllowlist(config && config.recipientAllowlist);
+    const customerParam = String((config && config.customerParam) || "ue_customer").trim() || "ue_customer";
+    const requiredCustomerKey = normalizeRecipientKey(config && config.requiredCustomerKey);
+    const senderParam = String((config && config.senderParam) || "ue_from").trim() || "ue_from";
+    const senderDomainAllowlist = buildDomainAllowlist(config && config.senderDomainAllowlist);
+    const recipientEmailParam = String((config && config.recipientEmailParam) || "ue_to").trim() || "ue_to";
+    const recipientDomainAllowlist = buildDomainAllowlist(config && config.recipientDomainAllowlist);
+    const currentUrl = new URL(window.location.href);
+    const customerKey = normalizeRecipientKey(currentUrl.searchParams.get(customerParam));
+    const recipientCandidate = normalizeRecipientKey(currentUrl.searchParams.get(recipientParam));
+    const senderDomain = extractDomainValue(currentUrl.searchParams.get(senderParam));
+    const recipientDomain = extractDomainValue(currentUrl.searchParams.get(recipientEmailParam));
+    const hasAllowlistedRecipientAccess = !!(recipientCandidate && recipientAllowlist.has(recipientCandidate));
+    const hasTrustedEmailRouteAccess = !!(
+      senderDomain &&
+      recipientDomain &&
+      senderDomainAllowlist.size > 0 &&
+      recipientDomainAllowlist.size > 0 &&
+      senderDomainAllowlist.has(senderDomain) &&
+      recipientDomainAllowlist.has(recipientDomain) &&
+      (!requiredCustomerKey || customerKey === requiredCustomerKey)
+    );
     input.setAttribute("type", "password");
     if (founderIdInput) {
       founderIdInput.setAttribute("type", "password");
@@ -180,7 +239,10 @@
       const targetOverlayId = detail && typeof detail.overlayId === "string" ? detail.overlayId : "";
       if (targetOverlayId && targetOverlayId !== config.overlayId) return;
       if (!isAuthorized()) {
-        if (requirePassword) {
+        if (hasAllowlistedRecipientAccess || hasTrustedEmailRouteAccess) {
+          writeAuthorizedSession(false);
+        }
+        if (requirePassword && !isAuthorized()) {
           lockView();
           return;
         }
@@ -191,6 +253,9 @@
     window.addEventListener(FOUNDER_PROMPT_EVENT, handleFounderPromptRequest);
 
     if (isAuthorized()) {
+      unlockView();
+    } else if (hasAllowlistedRecipientAccess || hasTrustedEmailRouteAccess) {
+      writeAuthorizedSession(false);
       unlockView();
     } else if (requirePassword) {
       lockView();

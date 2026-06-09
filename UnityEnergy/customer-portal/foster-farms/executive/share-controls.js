@@ -146,6 +146,12 @@
     if (value === DOCUMENT_STATUS.TEST) return DOCUMENT_STATUS.TEST;
     return DOCUMENT_STATUS.REVIEW;
   }
+  function normalizeRecipientKey(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+  }
+  function normalizeRouteAddress(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9@._+-]/g, "");
+  }
 
   function copyToClipboard(text) {
     return (async function () {
@@ -311,6 +317,22 @@
     const kindFromUrlRaw = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
     const kindFromUrl = SHARE_KIND_ALIASES[kindFromUrlRaw] || kindFromUrlRaw;
     const defaultKindKey = shareKindConfig[kindFromUrl] ? kindFromUrl : defaultKind;
+    const recipientParam = String(opts.recipientParam || "ue_recipient").trim() || "ue_recipient";
+    const recipientAllowlistKey = normalizeRecipientKey(
+      opts.recipientAllowlistKey || pageUrl.searchParams.get(recipientParam)
+    );
+    const customerParam = String(opts.customerParam || "ue_customer").trim() || "ue_customer";
+    const customerKey = normalizeRecipientKey(
+      opts.customerKey || pageUrl.searchParams.get(customerParam)
+    );
+    const mailSenderParam = String(opts.mailSenderParam || "ue_from").trim() || "ue_from";
+    const mailSenderAddress = normalizeRouteAddress(
+      opts.mailSenderAddress || pageUrl.searchParams.get(mailSenderParam)
+    );
+    const mailRecipientParam = String(opts.mailRecipientParam || "ue_to").trim() || "ue_to";
+    const mailRecipientAddress = normalizeRouteAddress(
+      opts.mailRecipientAddress || pageUrl.searchParams.get(mailRecipientParam)
+    );
     let founderShareAccess = !!(
       window.ffExecVaultAccess &&
       typeof window.ffExecVaultAccess.canShareSecureLinks === "function" &&
@@ -358,6 +380,18 @@
       urlObj.searchParams.set("ue_status", documentStatus);
       urlObj.searchParams.set("ue_rev", documentRevision);
       urlObj.searchParams.set("ue_target", targetPath);
+      if (recipientAllowlistKey) {
+        urlObj.searchParams.set(recipientParam, recipientAllowlistKey);
+      }
+      if (customerKey) {
+        urlObj.searchParams.set(customerParam, customerKey);
+      }
+      if (mailSenderAddress) {
+        urlObj.searchParams.set(mailSenderParam, mailSenderAddress);
+      }
+      if (mailRecipientAddress) {
+        urlObj.searchParams.set(mailRecipientParam, mailRecipientAddress);
+      }
     }
 
     const fixedReviewDate = String(opts.fixedReviewDate || "").trim();
