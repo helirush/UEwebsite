@@ -1,6 +1,6 @@
 (function () {
   const ACCESS_KEY = "ue_ff_exec_vault_access_v1";
-  const DEFAULT_ACCESS_PASSWORD = "FFE2026!";
+  const DEFAULT_ACCESS_PASSWORD = "FosterFarms!";
   const SESSION_TTL_HOURS = 12;
   const FOUNDER_PROMPT_EVENT = "ffExecVaultRequestFounderAccessPrompt";
   const FOUNDER_ACCESS_ID_HASHES = new Set([
@@ -122,6 +122,7 @@
     if (!overlay || !content || !form || !input || !error) return;
     let founderPromptActive = false;
     const accessPassword = String(config && config.accessPassword ? config.accessPassword : DEFAULT_ACCESS_PASSWORD).trim();
+    const requirePassword = !!(config && config.requirePassword === true);
     input.setAttribute("type", "password");
     if (founderIdInput) {
       founderIdInput.setAttribute("type", "password");
@@ -179,8 +180,10 @@
       const targetOverlayId = detail && typeof detail.overlayId === "string" ? detail.overlayId : "";
       if (targetOverlayId && targetOverlayId !== config.overlayId) return;
       if (!isAuthorized()) {
-        lockView();
-        return;
+        if (requirePassword) {
+          lockView();
+          return;
+        }
       }
       lockView({ founderPrompt: true });
     }
@@ -189,8 +192,11 @@
 
     if (isAuthorized()) {
       unlockView();
-    } else {
+    } else if (requirePassword) {
       lockView();
+    } else {
+      writeAuthorizedSession(false);
+      unlockView();
     }
 
     form.addEventListener("submit", async function (event) {
@@ -219,6 +225,10 @@
         error.textContent = "Enter your Unity Access ID to unlock secure link sharing.";
         return;
       }
+      if (!requirePassword) {
+        error.textContent = "Password entry is disabled for this development release.";
+        return;
+      }
 
       const ok = await authorizePassword(enteredPassword, {
         founderAccess: false,
@@ -234,7 +244,12 @@
     if (logoutBtn) {
       logoutBtn.addEventListener("click", function () {
         clearAuthorization();
-        lockView();
+        if (requirePassword) {
+          lockView();
+          return;
+        }
+        writeAuthorizedSession(false);
+        unlockView();
       });
     }
 
