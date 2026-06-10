@@ -48,6 +48,15 @@
     { key: "private", label: "Private" },
     { key: "alert", label: "Alert" }
   ];
+  var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";
+  var HOMEPAGE_HOTSPOT_SELECTOR = ".hero.hero-raster-rebuild";
+  var HOMEPAGE_HOTSPOT_ID = "ueFounderShareDotHotspot";
+  var HOMEPAGE_HOTSPOT = Object.freeze({
+    left: "52.5%",
+    top: "22.5%",
+    sizeDesktopPx: 34,
+    sizeMobilePx: 44
+  });
 
   function nowMs() {
     return Date.now();
@@ -396,9 +405,59 @@
     return toneLabel + ": " + title + "\n" + shareUrl;
   }
 
+  function normalizePathname(pathname) {
+    var raw = String(pathname || "/").trim().toLowerCase();
+    return raw || "/";
+  }
+
+  function isCustomerPortalPage(pathname) {
+    return normalizePathname(pathname).indexOf(CUSTOMER_PORTAL_PATH_SEGMENT) !== -1;
+  }
+
+  function createHomepageFounderHotspot() {
+    var existing = document.getElementById(HOMEPAGE_HOTSPOT_ID);
+    if (existing) return existing;
+    var hero = document.querySelector(HOMEPAGE_HOTSPOT_SELECTOR);
+    if (!hero) return null;
+    try {
+      var computed = window.getComputedStyle(hero);
+      if (computed && computed.position === "static") {
+        hero.style.position = "relative";
+      }
+    } catch (_err) {}
+    var hotspot = document.createElement("button");
+    hotspot.type = "button";
+    hotspot.id = HOMEPAGE_HOTSPOT_ID;
+    hotspot.setAttribute("aria-label", "Founder access hotspot");
+    hotspot.style.position = "absolute";
+    hotspot.style.left = HOMEPAGE_HOTSPOT.left;
+    hotspot.style.top = HOMEPAGE_HOTSPOT.top;
+    hotspot.style.width = HOMEPAGE_HOTSPOT.sizeDesktopPx + "px";
+    hotspot.style.height = HOMEPAGE_HOTSPOT.sizeDesktopPx + "px";
+    hotspot.style.transform = "translate(-50%, -50%)";
+    hotspot.style.borderRadius = "999px";
+    hotspot.style.border = "0";
+    hotspot.style.padding = "0";
+    hotspot.style.margin = "0";
+    hotspot.style.background = "transparent";
+    hotspot.style.opacity = "0";
+    hotspot.style.cursor = "pointer";
+    hotspot.style.zIndex = "40";
+    hotspot.style.outline = "none";
+    hotspot.style.webkitTapHighlightColor = "transparent";
+    if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
+      hotspot.style.width = HOMEPAGE_HOTSPOT.sizeMobilePx + "px";
+      hotspot.style.height = HOMEPAGE_HOTSPOT.sizeMobilePx + "px";
+    }
+    hero.appendChild(hotspot);
+    return hotspot;
+  }
+
   function mountPanel() {
     if (document.getElementById("ueFounderSharePanel")) return;
     injectStyles();
+    var requireStealthUnlock = !isCustomerPortalPage(window.location.pathname);
+    var hotspotActivated = !requireStealthUnlock;
 
     var launcher = document.createElement("button");
     launcher.type = "button";
@@ -544,8 +603,32 @@
       statusNode.textContent = message;
     }
 
+    function setLauncherVisibility(unlocked) {
+      if (!requireStealthUnlock) {
+        launcher.style.display = "inline-flex";
+        return;
+      }
+      if (!hotspotActivated) {
+        launcher.style.display = "none";
+        return;
+      }
+      launcher.style.display = unlocked ? "inline-flex" : "none";
+    }
+
+    function openPanelFromHiddenHotspot() {
+      hotspotActivated = true;
+      panel.classList.add("is-open");
+      seedDailyCounterFromCurrentPage();
+      refreshUiState();
+      if (!isAuthorized()) {
+        setStatus("Founder access point detected. Enter your Unity Access ID.");
+        window.setTimeout(function () { accessInput.focus(); }, 30);
+      }
+    }
+
     function refreshUiState() {
       var unlocked = isAuthorized();
+      setLauncherVisibility(unlocked);
       accessRow.style.display = unlocked ? "none" : "grid";
       unlockBtn.style.display = unlocked ? "none" : "inline-flex";
       lockBtn.style.display = unlocked ? "inline-flex" : "none";
@@ -567,6 +650,9 @@
     function closePanelAndLock() {
       panel.classList.remove("is-open");
       clearSession();
+      if (requireStealthUnlock) {
+        hotspotActivated = false;
+      }
       accessInput.value = "";
       refreshUiState();
     }
@@ -676,6 +762,22 @@
       var ok = await copyToClipboard(smsMessage);
       setStatus(ok ? ("SMS message + " + payload.type.label + " link copied.") : "Copy failed.");
     });
+
+    if (requireStealthUnlock) {
+      var homepageHotspot = createHomepageFounderHotspot();
+      if (homepageHotspot) {
+        homepageHotspot.addEventListener("click", function (event) {
+          if (event) event.preventDefault();
+          openPanelFromHiddenHotspot();
+        });
+        homepageHotspot.addEventListener("keydown", function (event) {
+          if (!event) return;
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          openPanelFromHiddenHotspot();
+        });
+      }
+    }
 
     refreshUiState();
   }
