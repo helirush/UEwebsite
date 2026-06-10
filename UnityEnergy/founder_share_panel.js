@@ -57,11 +57,7 @@
     { key: "update", label: "Update" },
     { key: "brief", label: "Brief" },
     { key: "memo", label: "Memo" },
-    { key: "report", label: "Report" },
-    { key: "monthly", label: "Monthly" },
-    { key: "maxwellian", label: "Maxwellian" },
-    { key: "private", label: "Private" },
-    { key: "alert", label: "Alert" }
+    { key: "report", label: "Report" }
   ];
   var SHARE_TEMPLATE_SLUG_BY_KEY = Object.freeze({
     update: "update",
