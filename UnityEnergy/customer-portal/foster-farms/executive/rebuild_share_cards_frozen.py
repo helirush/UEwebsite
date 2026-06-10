@@ -21,6 +21,10 @@ CARD_OUTPUTS = {
     "private": "ue-private-logo-preview.jpg",
     "alert": "ue-alert-logo-preview.jpg",
 }
+BASE_CARD_SOURCE_KEYS = {
+    "update": "project-update",
+    "memo": "project-memo",
+}
 REPORT_ALIAS_TARGET = "ue-report-logo-preview.jpg"
 REPORT_ALIAS_SOURCE = "memo"
 
@@ -85,13 +89,14 @@ def resolve_stamp() -> str:
 
 
 def resolve_base_card_path(kind: str) -> Path:
+    source_key = BASE_CARD_SOURCE_KEYS.get(kind, kind)
     for ext in (".png", ".jpg", ".jpeg", ".webp"):
-        path = BASE_CARD_DIR / f"{kind}{ext}"
+        path = BASE_CARD_DIR / f"{source_key}{ext}"
         if path.exists():
             return path
     raise FileNotFoundError(
-        f"Missing base share card for '{kind}' in {BASE_CARD_DIR}. "
-        f"Expected one of: {kind}.png/.jpg/.jpeg/.webp"
+        f"Missing base share card for '{kind}' (resolved key: '{source_key}') in {BASE_CARD_DIR}. "
+        f"Expected one of: {source_key}.png/.jpg/.jpeg/.webp"
     )
 
 

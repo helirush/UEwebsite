@@ -1400,6 +1400,12 @@ a {
   color: #68604a !important;
   box-shadow: none !important;
 }
+.footer-actions .share-type-wrap.is-locked-view {
+  cursor: pointer;
+}
+.footer-actions .share-type-wrap.is-locked-view select {
+  display: none;
+}
 
 .footer-actions .share-type-wrap select {
   border: 1px solid rgba(132, 116, 76, 0.42);
