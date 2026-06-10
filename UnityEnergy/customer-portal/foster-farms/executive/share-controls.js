@@ -1,6 +1,7 @@
 (function () {
   const DEFAULT_PUBLIC_SHARE_ORIGIN = "https://unityenergy.com";
   const DEFAULT_DESCRIPTION_PREFIX = "Foster Farms · Electrical Visibility & Intelligence Progress Report";
+  const DAILY_STAMP_COUNTER_KEY = "ue_exec_share_daily_counter_v1";
   const DOCUMENT_STATUS = Object.freeze({
     REVIEW: "review",
     TEST: "test",
@@ -13,7 +14,7 @@
     update: {
       key: "update",
       label: "Update",
-      title: "Foster Farms Executive Communications",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg",
       theme: "default"
@@ -21,7 +22,7 @@
     brief: {
       key: "brief",
       label: "Brief",
-      title: "Foster Farms Executive Brief",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-brief-logo-preview.jpg",
       theme: "default"
@@ -29,7 +30,7 @@
     memo: {
       key: "memo",
       label: "Memo",
-      title: "Foster Farms Executive Memo",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg",
       theme: "default"
@@ -37,7 +38,7 @@
     monthly: {
       key: "monthly",
       label: "Monthly",
-      title: "Unity Energy Monthly",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-monthly-logo-preview.jpg",
       theme: "monthly"
@@ -45,7 +46,7 @@
     maxwellian: {
       key: "maxwellian",
       label: "Maxwellians",
-      title: "Unity Energy Maxwellians",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/maxwellian.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-maxwellian-logo-preview.jpg",
       theme: "maxwellian"
@@ -53,7 +54,7 @@
     private: {
       key: "private",
       label: "Private",
-      title: "Unity Energy Private",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-private-logo-preview.jpg",
       theme: "default"
@@ -61,7 +62,7 @@
     alert: {
       key: "alert",
       label: "Alert",
-      title: "Unity Energy Alert",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/alert.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-alert-logo-preview.jpg",
       isAlert: true,
@@ -122,6 +123,72 @@
       return null;
     }
     return dateObj;
+  }
+
+  function buildDailyStampKey(dateObj) {
+    if (!(dateObj instanceof Date) || Number.isNaN(dateObj.getTime())) return "";
+    const yyyy = String(dateObj.getFullYear());
+    const mm = pad2(dateObj.getMonth() + 1);
+    const dd = pad2(dateObj.getDate());
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function readDailyStampCounterState() {
+    try {
+      const raw = window.localStorage.getItem(DAILY_STAMP_COUNTER_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      const dayKey = String(parsed?.dayKey || "").trim();
+      const lastRevision = Number.parseInt(parsed?.lastRevision, 10);
+      if (!dayKey) return null;
+      if (!Number.isFinite(lastRevision) || lastRevision < 1) return null;
+      return { dayKey, lastRevision };
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function writeDailyStampCounterState(dayKey, lastRevision) {
+    if (!dayKey) return;
+    const parsedRevision = Number.parseInt(lastRevision, 10);
+    if (!Number.isFinite(parsedRevision) || parsedRevision < 1) return;
+    try {
+      window.localStorage.setItem(
+        DAILY_STAMP_COUNTER_KEY,
+        JSON.stringify({
+          dayKey,
+          lastRevision: parsedRevision,
+          updatedAt: new Date().toISOString()
+        })
+      );
+    } catch (_err) {}
+  }
+
+  function seedDailyStampCounterFromStamp(stampCode) {
+    const normalizedStamp = parseUeStamp(stampCode);
+    if (!normalizedStamp) return;
+    const stampDate = stampToDate(normalizedStamp);
+    if (!stampDate) return;
+    const dayKey = buildDailyStampKey(stampDate);
+    if (!dayKey) return;
+    const stampRevision = extractRevisionFromStamp(normalizedStamp);
+    const state = readDailyStampCounterState();
+    if (state && state.dayKey === dayKey && state.lastRevision >= stampRevision) return;
+    writeDailyStampCounterState(dayKey, stampRevision);
+  }
+
+  function allocateNextDailyStampCode(dateObj, minimumRevision) {
+    const safeDate = dateObj instanceof Date && !Number.isNaN(dateObj.getTime()) ? dateObj : new Date();
+    const dayKey = buildDailyStampKey(safeDate);
+    const parsedMinimum = Number.parseInt(minimumRevision, 10);
+    const minRevision = Number.isFinite(parsedMinimum) && parsedMinimum > 0 ? parsedMinimum : 1;
+    const state = readDailyStampCounterState();
+    let nextRevision = minRevision;
+    if (state && state.dayKey === dayKey) {
+      nextRevision = Math.max(minRevision, state.lastRevision + 1);
+    }
+    writeDailyStampCounterState(dayKey, nextRevision);
+    return formatUeStamp(safeDate, nextRevision);
   }
 
   function cloneKindConfig(config) {
@@ -308,6 +375,9 @@
     const stampFromUrl = parseUeStamp(pageUrl.searchParams.get("ue_doc"));
     const configuredRevision = extractRevisionFromStamp(configuredStamp);
     const stampCode = stampFromUrl || formatUeStamp(now, configuredRevision);
+    if (stampFromUrl) {
+      seedDailyStampCounterFromStamp(stampFromUrl);
+    }
     const stampDate = stampToDate(stampCode) || now;
     const documentStatus = normalizeDocumentStatus(opts.documentStatus || pageUrl.searchParams.get("ue_status"));
     const documentRevision = String(opts.documentRevision || stampCode).trim() || stampCode;
@@ -317,6 +387,7 @@
     const kindFromUrlRaw = String(pageUrl.searchParams.get("ue_kind") || "").toLowerCase();
     const kindFromUrl = SHARE_KIND_ALIASES[kindFromUrlRaw] || kindFromUrlRaw;
     const defaultKindKey = shareKindConfig[kindFromUrl] ? kindFromUrl : defaultKind;
+    const requestedShareTitle = String(opts.shareTitle || pageUrl.searchParams.get("ue_title") || "").trim();
     const recipientParam = String(opts.recipientParam || "ue_recipient").trim() || "ue_recipient";
     const recipientAllowlistKey = normalizeRecipientKey(
       opts.recipientAllowlistKey || pageUrl.searchParams.get(recipientParam)
@@ -510,16 +581,24 @@
       }
     }
 
+    function getEffectiveShareTitle(config) {
+      const configuredTitle = String((config && config.title) || "").trim();
+      return requestedShareTitle || configuredTitle;
+    }
+
     function applyShareMetadata(kindKey) {
       const config = shareKindConfig[kindKey] || shareKindConfig[defaultKindKey];
       if (!config) return;
-      const stampedTitle = config.title;
+      const stampedTitle = getEffectiveShareTitle(config);
       const stampedDescription = `${descriptionPrefix} · ${stampCode}`;
       const stampedImage = `${publicShareOrigin}${config.imagePath}?ue_doc=${encodeURIComponent(stampCode)}`;
       const stampedUrl = new URL(config.path, publicShareOrigin);
       stampedUrl.searchParams.set("ue_doc", stampCode);
       stampedUrl.searchParams.set("ue_kind", config.key);
       stampedUrl.searchParams.set("ue_share", String(Date.now()));
+      if (stampedTitle) {
+        stampedUrl.searchParams.set("ue_title", stampedTitle);
+      }
       appendDocumentShareParams(stampedUrl);
 
       if (ogTitle) ogTitle.setAttribute("content", stampedTitle);
@@ -657,16 +736,23 @@
         const host = String(window.location.hostname || "").toLowerCase();
         const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "::1";
         const shareOrigin = isLocalHost ? publicShareOrigin : window.location.origin;
+        const issuedStampCode = allocateNextDailyStampCode(new Date(), configuredRevision);
         const shareUrl = new URL(kindConfig.path, shareOrigin);
-        shareUrl.searchParams.set("ue_doc", stampCode);
+        shareUrl.searchParams.set("ue_doc", issuedStampCode);
         shareUrl.searchParams.set("ue_kind", kindConfig.key);
         shareUrl.searchParams.set("ue_share", String(Date.now()));
+        const effectiveShareTitle = getEffectiveShareTitle(kindConfig);
+        if (effectiveShareTitle) {
+          shareUrl.searchParams.set("ue_title", effectiveShareTitle);
+        }
         appendDocumentShareParams(shareUrl);
         const ok = await copyToClipboard(shareUrl.toString());
         copyBtnCooldown = true;
         copyBtn.classList.add("is-disabled");
         copyBtn.setAttribute("aria-disabled", "true");
-        copyBtn.textContent = ok ? `${kindConfig.label} link copied · ${stampCode}` : "Copy failed";
+        copyBtn.textContent = ok
+          ? `${kindConfig.label} link copied · ${issuedStampCode}${effectiveShareTitle ? ` · ${effectiveShareTitle}` : ""}`
+          : "Copy failed";
         window.setTimeout(function () {
           copyBtnCooldown = false;
           if (founderShareAccess) {

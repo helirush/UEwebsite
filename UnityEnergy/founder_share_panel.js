@@ -6,6 +6,7 @@
   var ACCESS_KEY = "ue_founder_share_panel_access_v1";
   var SESSION_TTL_HOURS = 12;
   var DEFAULT_PUBLIC_ORIGIN = "https://unityenergy.com";
+  var DAILY_STAMP_COUNTER_KEY = "ue_exec_share_daily_counter_v1";
   var FOUNDER_ACCESS_ID_HASHES = new Set([
     "64b4d0f47c93ce23d157e68a58767356283dc9b63c459d45d0e0e39b3a64b9b9",
     "ec4f2dbb3b140095550c9afbbb69b5d6fd9e814b9da82fad0b34e9fcbe56f1cb",
@@ -14,21 +15,39 @@
     "a9f9b8651f70c7a1b0c3e8ac702b67c5b12bf6b29f0bfe5364b3c725ffc0016e",
     "b3c21cef87a8720d12c1014cc5f4fff4c070361b7ba3d056418a189d7891e41c"
   ]);
-  var SHARE_TYPES = [
-    { key: "update", label: "Update", defaultTitle: "Foster Farms Executive Communications" },
-    { key: "brief", label: "Brief", defaultTitle: "Foster Farms Executive Brief" },
-    { key: "memo", label: "Memo", defaultTitle: "Foster Farms Executive Memo" },
-    { key: "monthly", label: "Monthly", defaultTitle: "Foster Farms Monthly Update" },
-    { key: "maxwellian", label: "Maxwellian", defaultTitle: "Foster Farms Maxwellian Brief" },
-    { key: "private", label: "Private", defaultTitle: "Foster Farms Private Executive Brief" },
-    { key: "alert", label: "Alert", defaultTitle: "Foster Farms Executive Alert" }
+  var DEFAULT_PROVIDER_NAME = "Unity Energy";
+  var ELECTRICAL_TITLE_VARIANTS = [
+    "Electrical Intelligence",
+    "Electrical Visibility",
+    "Electrical Condition",
+    "Electrical Behavior",
+    "Electrical Exposure",
+    "Electrical Consequence",
+    "Electrical Optimization",
+    "Energy Field Intelligence",
+    "Electrical Infrastructure Review",
+    "Operational Energy Review"
   ];
-  var TITLE_TO_TYPE_KEY = SHARE_TYPES.reduce(function (map, entry) {
-    if (entry && entry.defaultTitle) {
-      map[String(entry.defaultTitle).trim()] = entry.key;
-    }
-    return map;
-  }, {});
+  var CUSTOMER_NAME_OVERRIDES = Object.freeze({
+    "foster-farms": "Foster Farms",
+    "fosterfarms": "Foster Farms",
+    "tyson": "Tyson",
+    "tyson-foods": "Tyson",
+    "tysonfoods": "Tyson",
+    "mid": "MID",
+    "aep": "AEP",
+    "unity-energy": "Unity Energy",
+    "unityenergy": "Unity Energy"
+  });
+  var SHARE_TYPES = [
+    { key: "update", label: "Update" },
+    { key: "brief", label: "Brief" },
+    { key: "memo", label: "Memo" },
+    { key: "monthly", label: "Monthly" },
+    { key: "maxwellian", label: "Maxwellian" },
+    { key: "private", label: "Private" },
+    { key: "alert", label: "Alert" }
+  ];
 
   function nowMs() {
     return Date.now();
@@ -45,6 +64,168 @@
     var normalizedRevision = Number.isFinite(parsedRevision) && parsedRevision > 0 ? parsedRevision : 1;
     var rr = pad2(normalizedRevision);
     return "UE." + mm + dd + "." + rr;
+  }
+
+  function parseUeStamp(rawValue) {
+    var value = String(rawValue || "").trim().toUpperCase();
+    if (/^UE\.\d{2}\.\d{4}$/.test(value)) return value;
+    if (/^UE\.\d{4}\.\d{2}$/.test(value)) return value;
+    return null;
+  }
+
+  function extractRevisionFromStamp(stampCode) {
+    var revisionedMatch = /^UE\.\d{4}\.(\d{2})$/.exec(String(stampCode || ""));
+    if (!revisionedMatch) return 1;
+    var parsedRevision = Number.parseInt(revisionedMatch[1], 10);
+    return Number.isFinite(parsedRevision) && parsedRevision > 0 ? parsedRevision : 1;
+  }
+
+  function stampToDate(stampCode) {
+    var legacyMatch = /^UE\.(\d{2})\.(\d{2})(\d{2})$/.exec(stampCode || "");
+    var revisionedMatch = /^UE\.(\d{2})(\d{2})\.(\d{2})$/.exec(stampCode || "");
+    var year;
+    var month;
+    var day;
+    if (legacyMatch) {
+      year = Number("20" + legacyMatch[1]);
+      month = Number(legacyMatch[2]);
+      day = Number(legacyMatch[3]);
+    } else if (revisionedMatch) {
+      year = new Date().getFullYear();
+      month = Number(revisionedMatch[1]);
+      day = Number(revisionedMatch[2]);
+    } else {
+      return null;
+    }
+    var dateObj = new Date(year, month - 1, day);
+    if (
+      dateObj.getFullYear() !== year ||
+      dateObj.getMonth() !== month - 1 ||
+      dateObj.getDate() !== day
+    ) {
+      return null;
+    }
+    return dateObj;
+  }
+
+  function buildDailyStampKey(dateObj) {
+    if (!(dateObj instanceof Date) || Number.isNaN(dateObj.getTime())) return "";
+    var yyyy = String(dateObj.getFullYear());
+    var mm = pad2(dateObj.getMonth() + 1);
+    var dd = pad2(dateObj.getDate());
+    return yyyy + "-" + mm + "-" + dd;
+  }
+
+  function readDailyStampCounterState() {
+    try {
+      var raw = window.localStorage.getItem(DAILY_STAMP_COUNTER_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      var dayKey = String((parsed && parsed.dayKey) || "").trim();
+      var lastRevision = Number.parseInt(parsed && parsed.lastRevision, 10);
+      if (!dayKey) return null;
+      if (!Number.isFinite(lastRevision) || lastRevision < 1) return null;
+      return { dayKey: dayKey, lastRevision: lastRevision };
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function writeDailyStampCounterState(dayKey, lastRevision) {
+    if (!dayKey) return;
+    var parsedRevision = Number.parseInt(lastRevision, 10);
+    if (!Number.isFinite(parsedRevision) || parsedRevision < 1) return;
+    try {
+      window.localStorage.setItem(DAILY_STAMP_COUNTER_KEY, JSON.stringify({
+        dayKey: dayKey,
+        lastRevision: parsedRevision,
+        updatedAt: new Date().toISOString()
+      }));
+    } catch (_err) {}
+  }
+
+  function seedDailyStampCounterFromStamp(stampCode) {
+    var normalizedStamp = parseUeStamp(stampCode);
+    if (!normalizedStamp) return;
+    var stampDate = stampToDate(normalizedStamp);
+    if (!stampDate) return;
+    var dayKey = buildDailyStampKey(stampDate);
+    if (!dayKey) return;
+    var stampRevision = extractRevisionFromStamp(normalizedStamp);
+    var state = readDailyStampCounterState();
+    if (state && state.dayKey === dayKey && state.lastRevision >= stampRevision) return;
+    writeDailyStampCounterState(dayKey, stampRevision);
+  }
+
+  function allocateNextDailyStampCode(dateObj, minimumRevision) {
+    var safeDate = (dateObj instanceof Date && !Number.isNaN(dateObj.getTime())) ? dateObj : new Date();
+    var dayKey = buildDailyStampKey(safeDate);
+    var parsedMinimum = Number.parseInt(minimumRevision, 10);
+    var minRevision = Number.isFinite(parsedMinimum) && parsedMinimum > 0 ? parsedMinimum : 1;
+    var state = readDailyStampCounterState();
+    var nextRevision = minRevision;
+    if (state && state.dayKey === dayKey) {
+      nextRevision = Math.max(minRevision, state.lastRevision + 1);
+    }
+    writeDailyStampCounterState(dayKey, nextRevision);
+    return formatUeStamp(safeDate, nextRevision);
+  }
+
+  function seedDailyCounterFromCurrentPage() {
+    try {
+      var pageUrl = new URL(window.location.href);
+      seedDailyStampCounterFromStamp(pageUrl.searchParams.get("ue_doc"));
+    } catch (_err) {}
+  }
+
+  function normalizeCustomerToken(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function formatCustomerDisplayNameFromToken(token) {
+    var normalized = normalizeCustomerToken(token);
+    if (!normalized) return "";
+    if (CUSTOMER_NAME_OVERRIDES[normalized]) return CUSTOMER_NAME_OVERRIDES[normalized];
+    return normalized
+      .split("-")
+      .filter(Boolean)
+      .map(function (part) {
+        if (part.length <= 3) return part.toUpperCase();
+        return part.charAt(0).toUpperCase() + part.slice(1);
+      })
+      .join(" ");
+  }
+
+  function resolveCustomerDisplayName(rawTargetValue) {
+    var sourceValue = String(rawTargetValue || "").trim();
+    var candidates = [];
+    try {
+      var parsed = new URL(sourceValue || window.location.href, window.location.href);
+      candidates.push(parsed.searchParams.get("ue_customer"));
+      var customerPortalMatch = /\/customer-portal\/([^\/?#]+)/i.exec(parsed.pathname);
+      if (customerPortalMatch && customerPortalMatch[1]) {
+        candidates.push(customerPortalMatch[1]);
+      }
+      var customerDirectoryMatch = /\/Customers\/([^\/?#]+)/i.exec(parsed.pathname);
+      if (customerDirectoryMatch && customerDirectoryMatch[1]) {
+        candidates.push(customerDirectoryMatch[1]);
+      }
+    } catch (_err) {}
+    for (var i = 0; i < candidates.length; i += 1) {
+      var displayName = formatCustomerDisplayNameFromToken(candidates[i]);
+      if (displayName) return displayName;
+    }
+    return "";
+  }
+
+  function buildElectricalCategoryTitle(customerName, categoryLabel) {
+    var normalizedCustomerName = String(customerName || "").trim() || DEFAULT_PROVIDER_NAME;
+    var normalizedCategory = String(categoryLabel || "").trim() || ELECTRICAL_TITLE_VARIANTS[0];
+    return normalizedCustomerName + " " + normalizedCategory;
   }
 
   function normalizeAccessId(value) {
@@ -131,8 +312,13 @@
 
   function buildShareUrl(typeKey, targetValue, titleOverride) {
     var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeKey; }) || SHARE_TYPES[0];
-    var selectedTitle = String(titleOverride || "").trim() || selected.defaultTitle;
-    var stampCode = formatUeStamp(new Date(), 1);
+    var resolvedCustomerName =
+      resolveCustomerDisplayName(targetValue) ||
+      resolveCustomerDisplayName(window.location.href) ||
+      DEFAULT_PROVIDER_NAME;
+    var fallbackTitle = buildElectricalCategoryTitle(resolvedCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
+    var selectedTitle = String(titleOverride || "").trim() || fallbackTitle;
+    var stampCode = allocateNextDailyStampCode(new Date(), 1);
     var shareUrl = new URL("/UnityEnergy/customer-portal/foster-farms/executive/share/" + selected.key + ".html", getShareOrigin());
     shareUrl.searchParams.set("ue_doc", stampCode);
     shareUrl.searchParams.set("ue_kind", selected.key);
@@ -206,7 +392,7 @@
       custom: String(customLabel || "").trim() || "Share Update"
     };
     var toneLabel = labelMap[toneValue] || "Share Update";
-    var title = String(titleText || "").trim() || document.title || "Foster Farms Executive Communications";
+    var title = String(titleText || "").trim() || document.title || "Foster Farms Electrical Intelligence";
     return toneLabel + ": " + title + "\n" + shareUrl;
   }
 
@@ -301,6 +487,7 @@
       typeSelect.appendChild(opt);
     });
     var titlePresetOptions = [];
+    var activeCustomerName = DEFAULT_PROVIDER_NAME;
     function appendTitlePreset(value) {
       var normalized = String(value || "").trim();
       if (!normalized || titlePresetOptions.indexOf(normalized) !== -1) return;
@@ -310,19 +497,48 @@
       opt.textContent = normalized;
       titlePresetSelect.appendChild(opt);
     }
-    var customTitlePresetOpt = document.createElement("option");
-    customTitlePresetOpt.value = "__custom__";
-    customTitlePresetOpt.textContent = "Custom (editable)";
-    titlePresetSelect.appendChild(customTitlePresetOpt);
-    SHARE_TYPES.forEach(function (entry) {
-      appendTitlePreset(entry.defaultTitle);
-    });
-    appendTitlePreset("Foster Farms Project Update");
+
+    function rebuildTitlePresetOptions(customerName, preferredTitle) {
+      var normalizedCustomerName = String(customerName || "").trim() || DEFAULT_PROVIDER_NAME;
+      activeCustomerName = normalizedCustomerName;
+      titlePresetOptions = [];
+      titlePresetSelect.innerHTML = "";
+      var customTitlePresetOpt = document.createElement("option");
+      customTitlePresetOpt.value = "__custom__";
+      customTitlePresetOpt.textContent = "Custom (editable)";
+      titlePresetSelect.appendChild(customTitlePresetOpt);
+      ELECTRICAL_TITLE_VARIANTS.forEach(function (variantLabel) {
+        appendTitlePreset(buildElectricalCategoryTitle(normalizedCustomerName, variantLabel));
+      });
+      var preferred = String(preferredTitle || "").trim();
+      if (preferred && titlePresetOptions.indexOf(preferred) === -1) {
+        appendTitlePreset(preferred);
+      }
+      return buildElectricalCategoryTitle(normalizedCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
+    }
+
+    function syncPresetStateFromTarget(options) {
+      var opts = options && typeof options === "object" ? options : {};
+      var preserveCurrentTitle = opts.preserveCurrentTitle !== false;
+      var currentTitle = String(titleInput.value || "").trim();
+      var resolvedCustomerName = resolveCustomerDisplayName(targetInput.value) || DEFAULT_PROVIDER_NAME;
+      var defaultTitle = rebuildTitlePresetOptions(resolvedCustomerName, currentTitle);
+      if (!preserveCurrentTitle || !currentTitle) {
+        titleInput.value = defaultTitle;
+        titlePresetSelect.value = defaultTitle;
+        return;
+      }
+      if (titlePresetOptions.indexOf(currentTitle) !== -1) {
+        titlePresetSelect.value = currentTitle;
+        return;
+      }
+      titlePresetSelect.value = "__custom__";
+    }
 
     targetInput.value = window.location.href;
     typeSelect.value = "update";
-    titlePresetSelect.value = "Foster Farms Executive Communications";
-    titleInput.value = "Foster Farms Executive Communications";
+    syncPresetStateFromTarget({ preserveCurrentTitle: false });
+    seedDailyCounterFromCurrentPage();
 
     function setStatus(message) {
       statusNode.textContent = message;
@@ -358,6 +574,7 @@
     launcher.addEventListener("click", function () {
       panel.classList.toggle("is-open");
       if (panel.classList.contains("is-open")) {
+        seedDailyCounterFromCurrentPage();
         refreshUiState();
         if (!isAuthorized()) {
           window.setTimeout(function () { accessInput.focus(); }, 30);
@@ -401,25 +618,28 @@
 
     useCurrentBtn.addEventListener("click", function () {
       targetInput.value = window.location.href;
+      seedDailyCounterFromCurrentPage();
+      syncPresetStateFromTarget({ preserveCurrentTitle: false });
       setStatus("Target set to current page.");
+    });
+
+    targetInput.addEventListener("change", function () {
+      syncPresetStateFromTarget({ preserveCurrentTitle: false });
     });
     typeSelect.addEventListener("change", function () {
       var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeSelect.value; });
-      if (!selected || !selected.defaultTitle) return;
-      titleInput.value = selected.defaultTitle;
-      if (titlePresetSelect) {
-        titlePresetSelect.value = selected.defaultTitle;
+      if (!selected) return;
+      if (!String(titleInput.value || "").trim()) {
+        var fallbackTitle = buildElectricalCategoryTitle(activeCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
+        titleInput.value = fallbackTitle;
+        titlePresetSelect.value = fallbackTitle;
       }
-      setStatus("Title preset applied for " + selected.label + ".");
+      setStatus("Share card type set to " + selected.label + ".");
     });
     titlePresetSelect.addEventListener("change", function () {
       var selectedValue = String(titlePresetSelect.value || "");
       if (!selectedValue || selectedValue === "__custom__") return;
       titleInput.value = selectedValue;
-      var matchedType = TITLE_TO_TYPE_KEY[selectedValue];
-      if (matchedType && typeSelect.value !== matchedType) {
-        typeSelect.value = matchedType;
-      }
       setStatus("Preset title loaded. You can still edit it before copying.");
     });
     titleInput.addEventListener("input", function () {
@@ -428,10 +648,6 @@
         titlePresetSelect.value = "__custom__";
       } else {
         titlePresetSelect.value = rawTitle;
-      }
-      var matchedType = TITLE_TO_TYPE_KEY[rawTitle];
-      if (matchedType) {
-        typeSelect.value = matchedType;
       }
     });
 

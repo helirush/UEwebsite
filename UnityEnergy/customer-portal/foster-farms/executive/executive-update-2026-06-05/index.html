@@ -406,21 +406,7 @@
           <p style="margin-top:8px;">Additional transformer-level studies, narrated field summaries, and historical reporting archives are presently accessible within the private Foster Farms environment.</p>
         </div>
         <div class="footer-actions">
-          <label class="share-type-wrap" for="shareTypeSelect">
-            <span>Share card</span>
-            <select id="shareTypeSelect">
-              <option value="update">Update</option>
-              <option value="brief">Brief</option>
-              <option value="memo">Memo</option>
-              <option value="monthly">Monthly</option>
-              <option value="maxwellian">Maxwellians</option>
-              <option value="private">Private</option>
-              <option value="alert">Alert</option>
-            </select>
-          </label>
-          <button type="button" id="copySecureLinkBtn" class="secondary" data-founder-access="required">Copy Secure Link</button>
           <button type="button" id="downloadPdfBtn">Download PDF</button>
-          <a id="openInNotionBtn" href="https://www.notion.so/new" target="_blank" rel="noopener noreferrer" data-founder-access="required">Open in Notion</a>
           <a id="contactUnityBtn" href="../../../../contact-us.html">Contact Unity</a>
           <a id="returnToFosterFarmsBtn" href="../../../../../Customers/FosterFarms/index.html">Return to Foster Farms</a>
         </div>
@@ -1616,12 +1602,7 @@
         mailRecipientParam: "ue_to",
         mailRecipientAddress: "team@fosterfarms.com",
         currentShareTargetPath: window.location.pathname,
-        publishedShareTargetPath: EXEC_PUBLISHED_TARGET_PATH,
-        notionButtonId: "openInNotionBtn",
-        notionWorkspaceUrl: "https://www.notion.so/new",
-        notionExportRootSelector: "#briefContent .brief-frame",
-        notionExportTitleSelector: ".exec-header h1",
-        notionExportExcludeSelector: ".executive-audio-row, .footer-actions, .field-behavior-card, .letterhead-wrap, [hidden]"
+        publishedShareTargetPath: EXEC_PUBLISHED_TARGET_PATH
       });
     }
   </script>

@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Unity Energy Report</title>
-  <meta name="description" content="Foster Farms executive report from Unity Energy." />
+  <title>Foster Farms Electrical Intelligence</title>
+  <meta name="description" content="Foster Farms electrical intelligence from Unity Energy." />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Unity Energy Report" />
+  <meta property="og:title" content="Foster Farms Electrical Intelligence" />
   <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
   <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/report.html?ue_doc=UE.0601.01" />
   <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-report-logo-preview.jpg?ue_doc=UE.0601.01&ue_img=UE060101" />
-  <meta property="og:image:alt" content="Unity Energy report share card" />
+  <meta property="og:image:alt" content="Foster Farms Electrical Intelligence share card" />
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Unity Energy Report" />
+  <meta property="twitter:title" content="Foster Farms Electrical Intelligence" />
   <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
   <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-report-logo-preview.jpg?ue_doc=UE.0601.01&ue_img=UE060101" />
   <script>
@@ -70,6 +70,10 @@
       const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
       if (incomingRevision) {
         target.searchParams.set("ue_rev", incomingRevision);
+      }
+      const incomingTitle = String(pageUrl.searchParams.get("ue_title") || "").trim();
+      if (incomingTitle) {
+        target.searchParams.set("ue_title", incomingTitle);
       }
       target.searchParams.set("ue_target", targetPath);
       window.location.replace(target.toString());

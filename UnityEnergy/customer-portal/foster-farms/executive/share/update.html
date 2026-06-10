@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foster Farms Executive Communications</title>
-  <meta name="description" content="Foster Farms executive communications from Unity Energy." />
+  <title>Foster Farms Electrical Intelligence</title>
+  <meta name="description" content="Foster Farms electrical intelligence from Unity Energy." />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Foster Farms Executive Communications" />
+  <meta property="og:title" content="Foster Farms Electrical Intelligence" />
   <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
   <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_doc=UE.0609.04" />
   <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg?ue_doc=UE.0609.04&ue_img=UE060904" />
-  <meta property="og:image:alt" content="Foster Farms Executive Communications share card" />
+  <meta property="og:image:alt" content="Foster Farms Electrical Intelligence share card" />
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Foster Farms Executive Communications" />
+  <meta property="twitter:title" content="Foster Farms Electrical Intelligence" />
   <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
   <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg?ue_doc=UE.0609.04&ue_img=UE060904" />
   <script>
@@ -82,17 +82,17 @@
           cardLink.style.fontWeight = "600";
           cardLink.style.fontSize = "14px";
           cardLink.style.textAlign = "center";
-          cardLink.setAttribute("aria-label", "Open Foster Farms Executive Communications");
+          cardLink.setAttribute("aria-label", "Open Foster Farms Electrical Intelligence");
           const cardImage = document.createElement("img");
           cardImage.src = buildPreviewImageUrl(stampCode);
-          cardImage.alt = "Foster Farms Executive Communications share card";
+          cardImage.alt = "Foster Farms Electrical Intelligence share card";
           cardImage.style.width = "100%";
           cardImage.style.height = "auto";
           cardImage.style.display = "block";
           cardImage.style.borderRadius = "14px";
           cardImage.style.boxShadow = "0 12px 34px rgba(20,31,12,.20)";
           const cardLabel = document.createElement("span");
-          cardLabel.textContent = "Tap anywhere on this share card to open executive communications.";
+          cardLabel.textContent = "Tap anywhere on this share card to open electrical intelligence.";
           cardLink.appendChild(cardImage);
           cardLink.appendChild(cardLabel);
           document.body.appendChild(cardLink);
@@ -142,6 +142,10 @@
       const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
       if (incomingRevision) {
         target.searchParams.set("ue_rev", incomingRevision);
+      }
+      const incomingTitle = String(pageUrl.searchParams.get("ue_title") || "").trim();
+      if (incomingTitle) {
+        target.searchParams.set("ue_title", incomingTitle);
       }
       const recipientKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_recipient"));
       if (recipientKey) {
