@@ -6,14 +6,14 @@
   <title>Foster Farms Executive Brief | Executive Findings &amp; Recommended Action Report</title>
   <meta name="description" content="Foster Farms Executive Brief — Executive Findings &amp; Recommended Action Report for Foster Farms leadership, based on multi-year electrical measurement and analysis." />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Unity Energy Update" id="ogTitle" />
+  <meta property="og:title" content="Foster Farms Executive Communications" id="ogTitle" />
   <meta property="og:description" content="Foster Farms · Executive Findings &amp; Recommended Action Report · UE.0605.01" id="ogDescription" />
   <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/executive-update-2026-06-05/" id="ogUrl" />
   <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" id="ogImage" />
-  <meta property="og:image:alt" content="Unity Energy update badge with date stamp" />
+  <meta property="og:image:alt" content="Foster Farms Executive Communications badge with date stamp" />
   <meta property="og:site_name" content="Unity Energy" />
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Unity Energy Update" id="twitterTitle" />
+  <meta property="twitter:title" content="Foster Farms Executive Communications" id="twitterTitle" />
   <meta property="twitter:description" content="Foster Farms · Executive Findings &amp; Recommended Action Report · UE.0605.01" id="twitterDescription" />
   <meta property="twitter:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/executive-update-2026-06-05/" id="twitterUrl" />
   <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg" id="twitterImage" />
@@ -406,7 +406,7 @@
           <p style="margin-top:8px;">Additional transformer-level studies, narrated field summaries, and historical reporting archives are presently accessible within the private Foster Farms environment.</p>
         </div>
         <div class="footer-actions">
-          <label class="share-type-wrap" for="shareTypeSelect" data-founder-access="required">
+          <label class="share-type-wrap" for="shareTypeSelect">
             <span>Share card</span>
             <select id="shareTypeSelect">
               <option value="update">Update</option>
@@ -429,7 +429,8 @@
   </main>
 
   <script src="../vault-access.js?ue_access=20260609c"></script>
-  <script src="../share-controls.js?ue_share=20260609b"></script>
+  <script src="../share-controls.js?ue_share=20260609c"></script>
+  <script src="../../../../founder_share_panel.js?v=20260610d"></script>
   <script>
     function resolveExecutiveDocumentStatus() {
       const statusNode = document.getElementById("documentStatusValue");
@@ -607,7 +608,12 @@
       }
 
       function hasIntroApproval() {
-        return true;
+        const approval = getIntroApprovalPayload();
+        return !!(
+          approval &&
+          typeof approval.text === "string" &&
+          approval.text.trim()
+        );
       }
       function hasFounderShareAccess() {
         return !!(
@@ -1180,7 +1186,12 @@
       }
 
       function hasOverviewApproval() {
-        return true;
+        const approval = getOverviewApprovalPayload();
+        return !!(
+          approval &&
+          typeof approval.text === "string" &&
+          approval.text.trim()
+        );
       }
       function hasFounderShareAccess() {
         return !!(

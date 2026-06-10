@@ -13,7 +13,7 @@
     update: {
       key: "update",
       label: "Update",
-      title: "Unity Energy Update",
+      title: "Foster Farms Executive Communications",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg",
       theme: "default"
@@ -21,7 +21,7 @@
     brief: {
       key: "brief",
       label: "Brief",
-      title: "Unity Energy Brief",
+      title: "Foster Farms Executive Brief",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-brief-logo-preview.jpg",
       theme: "default"
@@ -29,7 +29,7 @@
     memo: {
       key: "memo",
       label: "Memo",
-      title: "Unity Energy Memo",
+      title: "Foster Farms Executive Memo",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html?ue_card=clean1",
       imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg",
       theme: "default"
@@ -365,6 +365,7 @@
       document.querySelectorAll(opts.founderRequiredActionSelector || "[data-founder-access='required']")
     );
     const copyBtnDefaultLabel = opts.copyButtonLabel || "Copy Secure Link";
+    const SHARE_TYPE_LOCKED_CLASS = "is-locked-view";
     let notionBtnCooldown = false;
     function isPublishedDocument() {
       return documentStatus === DOCUMENT_STATUS.PUBLISHED;
@@ -446,6 +447,8 @@
         : "Double-click to add your Unity Access ID and unlock sharing.";
       if (shareTypeWrap) {
         shareTypeWrap.classList.toggle("is-disabled", isLocked);
+        shareTypeWrap.classList.toggle(SHARE_TYPE_LOCKED_CLASS, isLocked);
+        shareTypeWrap.setAttribute("aria-disabled", isLocked ? "true" : "false");
         if (isLocked) {
           shareTypeWrap.title = lockTitle;
         } else {

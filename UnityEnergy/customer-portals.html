@@ -727,7 +727,25 @@
     <script>
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
         const UNITY_FOUNDER_SESSION_KEY = 'unity_founder_session_v1';
-        const FOUNDER_EMAIL_DOMAIN = 'unityenergy.com';
+        const UNITY_VISITOR_PROFILE_SESSION_KEY = 'unity_portal_returning_visitor_v1';
+        const ALL_ACCESS_EMAIL_DOMAINS = new Set(['unityenergy.com', 'accentzinc.com', 'accentsinc.com']);
+        const CUSTOMER_EMAIL_DOMAIN_ALLOWLIST = {
+            fosterfarms: ['fosterfarms.com'],
+            norfolkiron: ['norfolkiron.com', 'norfolkironmetal.com'],
+            norfolkironmetal: ['norfolkiron.com', 'norfolkironmetal.com'],
+            armi: ['armi.com', 'army.com', 'arkansasmyriad.com'],
+            arkansasmyriad: ['arkansasmyriad.com', 'armi.com', 'army.com'],
+            avco: ['avco.com', 'avcocenter.com'],
+            avcocenter: ['avco.com', 'avcocenter.com'],
+            avcobuilding: ['avco.com', 'avcocenter.com'],
+            boa: ['boa.com', 'bankofamerica.com'],
+            boabuilding: ['boa.com', 'bankofamerica.com'],
+            bankofamerica: ['bankofamerica.com', 'boa.com'],
+            mobbuilding: ['bankofamerica.com', 'boa.com'],
+            tysonfoods: ['tyson.com', 'tysonfoods.com'],
+            tyson: ['tyson.com', 'tysonfoods.com'],
+            tysonfoodsinc: ['tyson.com', 'tysonfoods.com'],
+        };
         const INVALID_NAME_TOKENS = new Set([
             'x', 'xx', 'xxx', 'xxxx', 'xxxxx', 'xxxxxx', 'test', 'testing', 'asdf', 'qwerty',
             'abc', 'name', 'firstname', 'lastname', 'unknown', 'none', 'null', 'na', 'n/a',
@@ -742,17 +760,21 @@
             'domain.com', 'invalid.com', 'none.com'
         ]);
         let visitorEmailManuallyEdited = false;
+        let allAccessSelectorUnlocked = false;
         function normalizeEmailAddress(value) {
             return String(value || '').trim().toLowerCase();
         }
+        function getEmailDomain(value) {
+            const email = normalizeEmailAddress(value);
+            if (!email || !email.includes('@')) return '';
+            const parts = email.split('@');
+            if (parts.length !== 2) return '';
+            return String(parts[1] || '').trim().toLowerCase();
+        }
         function isFounderEmail(value) {
             const email = normalizeEmailAddress(value);
-            if (!email) return false;
-            const parts = email.split('@');
-            if (parts.length !== 2) return false;
-            const localPart = String(parts[0] || '').trim();
-            const domainPart = String(parts[1] || '').trim();
-            if (!localPart || domainPart !== FOUNDER_EMAIL_DOMAIN) return false;
+            const domainPart = getEmailDomain(email);
+            if (!domainPart || !ALL_ACCESS_EMAIL_DOMAINS.has(domainPart)) return false;
             return isLikelyValidEmail(email);
         }
         function readFounderSessionState() {
@@ -786,8 +808,83 @@
                 window.sessionStorage.setItem(UNITY_FOUNDER_SESSION_KEY, JSON.stringify(payload));
             } catch (_err) {}
         }
+        function readReturningVisitorSessionState() {
+            try {
+                const raw = window.sessionStorage.getItem(UNITY_VISITOR_PROFILE_SESSION_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                const email = normalizeEmailAddress(parsed?.email);
+                const firstName = String(parsed?.first_name || '').trim();
+                const lastName = String(parsed?.last_name || '').trim();
+                if (!email || !isLikelyValidEmail(email)) return null;
+                if (!firstName || !lastName) return null;
+                return {
+                    email,
+                    firstName,
+                    lastName,
+                    loginAt: String(parsed?.login_at || '').trim(),
+                };
+            } catch (_err) {
+                return null;
+            }
+        }
+        function writeReturningVisitorSessionState(params) {
+            try {
+                const email = normalizeEmailAddress(params?.email);
+                const firstName = String(params?.firstName || '').trim();
+                const lastName = String(params?.lastName || '').trim();
+                if (!email || !isLikelyValidEmail(email)) return;
+                if (!isLikelyValidName(firstName) || !isLikelyValidName(lastName)) return;
+                const payload = {
+                    email,
+                    first_name: firstName,
+                    last_name: lastName,
+                    login_at: new Date().toISOString(),
+                    source_path: window.location.pathname,
+                };
+                window.sessionStorage.setItem(UNITY_VISITOR_PROFILE_SESSION_KEY, JSON.stringify(payload));
+            } catch (_err) {}
+        }
         function normalizeAlphaToken(value) {
             return String(value || '').toLowerCase().replace(/[^a-z]/g, '');
+        }
+        function normalizeDomainToken(value) {
+            return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+        function normalizeDomainCandidate(value) {
+            const candidate = String(value || '')
+                .trim()
+                .toLowerCase()
+                .replace(/^@+/, '')
+                .replace(/^www\./, '')
+                .replace(/[^a-z0-9.-]/g, '')
+                .replace(/\.+$/g, '');
+            return candidate;
+        }
+        function resolveCustomerAllowedDomains(customerKey, customer) {
+            const normalizedKey = normalizeDomainToken(customerKey);
+            const domains = new Set();
+            const staticDomains = CUSTOMER_EMAIL_DOMAIN_ALLOWLIST[normalizedKey] || [];
+            for (const domain of staticDomains) {
+                const normalized = normalizeDomainCandidate(domain);
+                if (normalized) domains.add(normalized);
+            }
+            const configuredDomains = Array.isArray(customer?.allowedDomains) ? customer.allowedDomains : [];
+            for (const domain of configuredDomains) {
+                const normalized = normalizeDomainCandidate(domain);
+                if (normalized) domains.add(normalized);
+            }
+            const pathMatch = String(customer?.path || '').match(/\/Customers\/([^/]+)/i);
+            const pathToken = normalizeDomainToken(pathMatch && pathMatch[1] ? pathMatch[1] : '');
+            const nameToken = normalizeDomainToken(customer?.name || '');
+            for (const token of [normalizedKey, pathToken, nameToken]) {
+                if (!token || token.length < 3) continue;
+                domains.add(`${token}.com`);
+                if (token.endsWith('foods') && token.length > 5) {
+                    domains.add(`${token.slice(0, -5)}.com`);
+                }
+            }
+            return Array.from(domains);
         }
         function hasMeaningfulNameDiversity(nameToken) {
             return new Set(nameToken.split('')).size >= 2;
@@ -855,11 +952,24 @@
         function openLoginModal(event) {
             const modal = document.getElementById('loginModal');
             const cfg = getPortalConfigSafe();
+            const founderSession = readFounderSessionState();
             modal.classList.add('active');
             resetPortalFormState();
             populateCustomerDropdown(cfg, false);
-            document.getElementById('visitorFirstName')?.focus();
+            if (founderSession && founderSession.email) {
+                const emailEl = document.getElementById('visitorEmail');
+                if (emailEl) {
+                    emailEl.value = founderSession.email;
+                    visitorEmailManuallyEdited = true;
+                }
+                allAccessSelectorUnlocked = true;
+            }
             updatePortalAuthVisibility();
+            if (founderSession && founderSession.email) {
+                document.getElementById('customerName')?.focus();
+            } else {
+                document.getElementById('visitorFirstName')?.focus();
+            }
             window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 50);
             window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 220);
         }
@@ -878,7 +988,6 @@
         function populateCustomerDropdown(cfg, preserveSelection) {
             const selectEl = document.getElementById('customerName');
             if (!selectEl) return;
-            const founderQuickMode = !!readFounderSessionState();
             const customers = cfg?.customers || {};
             const seen = new Set();
             const options = [];
@@ -896,20 +1005,18 @@
             selectEl.innerHTML = '';
             const placeholder = document.createElement('option');
             placeholder.value = '';
-            placeholder.textContent = founderQuickMode ? 'Select Customer Portal' : 'Select Company or Guest';
+            placeholder.textContent = 'Select Company or Guest';
             placeholder.disabled = true;
             placeholder.selected = true;
             selectEl.appendChild(placeholder);
-            if (!founderQuickMode) {
-                const guestOpt = document.createElement('option');
-                guestOpt.value = '__guest__';
-                guestOpt.textContent = 'Guest';
-                if (previousValue && previousValue === '__guest__') {
-                    guestOpt.selected = true;
-                    placeholder.selected = false;
-                }
-                selectEl.appendChild(guestOpt);
+            const guestOpt = document.createElement('option');
+            guestOpt.value = '__guest__';
+            guestOpt.textContent = 'Guest';
+            if (previousValue && previousValue === '__guest__') {
+                guestOpt.selected = true;
+                placeholder.selected = false;
             }
+            selectEl.appendChild(guestOpt);
             for (const option of options) {
                 const opt = document.createElement('option');
                 opt.value = option.key;
@@ -940,66 +1047,96 @@
             if (updatesEl) updatesEl.checked = false;
             const pwEl = document.getElementById('customerPassword');
             if (pwEl) pwEl.value = '';
+            allAccessSelectorUnlocked = false;
             const devNotice = document.getElementById('devModeNotice');
-            if (devNotice) devNotice.textContent = 'No password required';
+            if (devNotice) devNotice.textContent = 'Portal password required for all access.';
             clearLoginError();
         }
         function updatePortalAuthVisibility() {
-            const cfg = getPortalConfigSafe();
-            const founderSession = readFounderSessionState();
-            const founderQuickMode = !!(founderSession && isFounderEmail(founderSession.email));
             const selectedCustomerKey = document.getElementById('customerName')?.value || '';
             const isGuestSelection = selectedCustomerKey === '__guest__';
+            const enteredEmail = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const allAccessEmail = isFounderEmail(enteredEmail);
+            const founderSession = allAccessEmail ? readFounderSessionState() : null;
+            const founderSessionActive = !!(
+                founderSession &&
+                founderSession.email &&
+                founderSession.email === normalizeEmailAddress(enteredEmail)
+            );
+            if (!allAccessEmail) {
+                allAccessSelectorUnlocked = false;
+            } else if (founderSessionActive) {
+                allAccessSelectorUnlocked = true;
+            }
             const devNotice = document.getElementById('devModeNotice');
             const pwField = document.getElementById('customerPassword');
+            const customerNameField = document.getElementById('customerName');
             const visitorProfileSection = document.getElementById('visitorProfileSection');
             const portalCredentialsTitle = document.getElementById('portalCredentialsTitle');
             const portalCredentialsHelperText = document.getElementById('portalCredentialsHelperText');
             const portalAccessButton = document.getElementById('portalAccessButton');
-            if (founderQuickMode) {
-                if (visitorProfileSection) visitorProfileSection.style.display = 'none';
-                if (portalCredentialsTitle) portalCredentialsTitle.textContent = 'Founder Quick Access';
-                if (portalCredentialsHelperText) {
-                    portalCredentialsHelperText.textContent = `Founder session active (${founderSession.email}) — select customer and continue.`;
+            const guestOption = customerNameField ? customerNameField.querySelector('option[value="__guest__"]') : null;
+            const placeholderOption = customerNameField ? customerNameField.querySelector('option[value=""]') : null;
+            if (visitorProfileSection) visitorProfileSection.style.display = allAccessEmail ? 'none' : '';
+            if (portalCredentialsTitle) {
+                if (allAccessEmail && !allAccessSelectorUnlocked) {
+                    portalCredentialsTitle.textContent = 'Founder Access';
+                } else if (allAccessEmail && allAccessSelectorUnlocked) {
+                    portalCredentialsTitle.textContent = 'Customer Selector';
+                } else {
+                    portalCredentialsTitle.textContent = 'Portal Credentials';
                 }
-                if (portalAccessButton) portalAccessButton.textContent = 'Open Selected Customer Portal →';
-                if (pwField) {
-                    pwField.style.display = 'none';
-                    pwField.value = '';
-                }
-                if (devNotice) {
-                    devNotice.textContent = 'Founder quick access active for this browser session.';
-                    devNotice.style.display = 'block';
-                }
-                return;
             }
-            if (visitorProfileSection) visitorProfileSection.style.display = '';
-            if (portalCredentialsTitle) portalCredentialsTitle.textContent = 'Portal Credentials';
-            if (portalCredentialsHelperText) portalCredentialsHelperText.textContent = 'Select your company (or choose Guest) and continue to portal access.';
-            if (portalAccessButton) portalAccessButton.textContent = 'Access Unity Portal →';
-            if (isGuestSelection) {
-                if (pwField) {
-                    pwField.style.display = 'none';
-                    pwField.value = '';
+            if (portalCredentialsHelperText) {
+                if (allAccessEmail && !allAccessSelectorUnlocked) {
+                    portalCredentialsHelperText.textContent = 'Founder email detected — enter portal password to unlock the customer selector.';
+                } else if (allAccessEmail && allAccessSelectorUnlocked) {
+                    portalCredentialsHelperText.textContent = 'Founder verified — select the customer portal you want to open.';
+                } else {
+                    portalCredentialsHelperText.textContent = isGuestSelection
+                        ? 'Guest access selected — enter your email and portal password to continue.'
+                        : 'Enter your business email, select your company (or Guest), and enter the portal password.';
                 }
-                if (devNotice) {
-                    devNotice.textContent = 'Guest access selected — no password required. You will be routed to Unity Home.';
-                    devNotice.style.display = 'block';
-                }
-                return;
             }
-            if (cfg.devMode) {
-                if (devNotice) {
-                    devNotice.textContent = 'No password required';
-                    devNotice.style.display = 'block';
+            if (portalAccessButton) {
+                if (allAccessEmail && !allAccessSelectorUnlocked) {
+                    portalAccessButton.textContent = 'Unlock Customer Selector →';
+                } else if (allAccessEmail && allAccessSelectorUnlocked) {
+                    portalAccessButton.textContent = 'Open Selected Customer Portal →';
+                } else {
+                    portalAccessButton.textContent = 'Access Unity Portal →';
                 }
-                if (pwField) {
-                    pwField.style.display = 'none';
-                    pwField.value = '';
+            }
+            if (pwField) {
+                const hidePasswordForSessionFounder = allAccessEmail && allAccessSelectorUnlocked && founderSessionActive;
+                pwField.style.display = hidePasswordForSessionFounder ? 'none' : 'block';
+            }
+            if (placeholderOption) {
+                placeholderOption.textContent = allAccessEmail ? 'Select Customer Portal' : 'Select Company or Guest';
+            }
+            if (guestOption) {
+                guestOption.hidden = !!allAccessEmail;
+                guestOption.disabled = !!allAccessEmail;
+                if (!allAccessEmail) {
+                    guestOption.disabled = false;
+                } else if (customerNameField && customerNameField.value === '__guest__') {
+                    customerNameField.selectedIndex = 0;
                 }
-            } else {
-                if (devNotice) devNotice.style.display = 'none';
-                if (pwField) pwField.style.display = 'block';
+            }
+            if (customerNameField) {
+                customerNameField.style.display = allAccessEmail && !allAccessSelectorUnlocked ? 'none' : 'block';
+            }
+            if (devNotice) {
+                if (allAccessEmail && !allAccessSelectorUnlocked) {
+                    devNotice.textContent = 'Founder mode active — email and password only.';
+                } else if (allAccessEmail && allAccessSelectorUnlocked) {
+                    devNotice.textContent = 'Founder unlocked — select a customer portal to continue.';
+                } else {
+                    devNotice.textContent = isGuestSelection
+                        ? 'Portal password required — Guest routes to Unity Home after verification.'
+                        : 'Portal password required for all access.';
+                }
+                devNotice.style.display = 'block';
             }
             window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 50);
             window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 220);
@@ -1011,65 +1148,69 @@
         }
         function attemptLogin() {
             const cfg = getPortalConfigSafe();
-            const founderSession = readFounderSessionState();
-            const founderQuickMode = !!(founderSession && isFounderEmail(founderSession.email));
             const selectedCustomerKey = document.getElementById('customerName')?.value || '';
             const isGuestSelection = selectedCustomerKey === '__guest__';
             const firstNameInput = String(document.getElementById('visitorFirstName')?.value || '').trim();
             const lastNameInput = String(document.getElementById('visitorLastName')?.value || '').trim();
             const emailInput = String(document.getElementById('visitorEmail')?.value || '').trim();
             const normalizedInputEmail = normalizeEmailAddress(emailInput);
-            const founderFirstLoginDetected = !founderQuickMode && isFounderEmail(normalizedInputEmail);
+            const allAccessEmail = isFounderEmail(normalizedInputEmail);
+            const founderSession = allAccessEmail ? readFounderSessionState() : null;
+            const founderSessionActive = !!(
+                founderSession &&
+                founderSession.email &&
+                founderSession.email === normalizedInputEmail
+            );
+            const returningVisitorSession = readReturningVisitorSessionState();
+            const hasReturningVisitorForEmail = !!(
+                !allAccessEmail &&
+                returningVisitorSession &&
+                returningVisitorSession.email === normalizedInputEmail &&
+                returningVisitorSession.firstName &&
+                returningVisitorSession.lastName
+            );
             const role = String(document.getElementById('visitorRole')?.value || '').trim();
             const objective = String(document.getElementById('visitorObjective')?.value || '').trim();
             const wantsUpdates = !!document.getElementById('visitorUpdates')?.checked;
             clearLoginError();
-            if (!founderQuickMode) {
-                if (!emailInput) {
-                    showLoginError('Please enter a valid email address.');
+            if (!emailInput) {
+                showLoginError('Please enter a valid email address.');
+                return;
+            }
+            if (!isLikelyValidEmail(emailInput)) {
+                showLoginError('Please enter a valid business email address (placeholder emails are not allowed).');
+                return;
+            }
+            if (!allAccessEmail) {
+                const hasProvidedFullName = !!(firstNameInput && lastNameInput);
+                if (!hasProvidedFullName && !hasReturningVisitorForEmail) {
+                    showLoginError('Please enter your first and last name.');
                     return;
                 }
-                if (!isLikelyValidEmail(emailInput)) {
-                    showLoginError('Please enter a valid business email address (placeholder emails are not allowed).');
+                if (hasProvidedFullName && (!isLikelyValidName(firstNameInput) || !isLikelyValidName(lastNameInput))) {
+                    showLoginError('Please enter your real first and last name (no placeholder names).');
                     return;
-                }
-                if (!founderFirstLoginDetected) {
-                    if (!firstNameInput || !lastNameInput) {
-                        showLoginError('Please enter your first and last name.');
-                        return;
-                    }
-                    if (!isLikelyValidName(firstNameInput) || !isLikelyValidName(lastNameInput)) {
-                        showLoginError('Please enter your real first and last name (no placeholder names).');
-                        return;
-                    }
                 }
             }
-            const founderAccessActive = founderQuickMode || founderFirstLoginDetected;
             const passwordEl = document.getElementById('customerPassword');
-            const requiresPassword = !founderQuickMode && (
-                founderFirstLoginDetected ||
-                (!cfg.devMode && selectedCustomerKey && !isGuestSelection)
-            );
-            if (requiresPassword) {
-                const enteredPassword = passwordEl?.value || '';
-                if (enteredPassword !== cfg.password) {
-                    showLoginError('Incorrect password. Please try again.');
-                    return;
-                }
+            const enteredPassword = passwordEl?.value || '';
+            const founderSessionBypass = allAccessEmail && allAccessSelectorUnlocked && founderSessionActive;
+            if (!founderSessionBypass && enteredPassword !== cfg.password) {
+                showLoginError('Incorrect password. Please try again.');
+                return;
             }
-            if (founderFirstLoginDetected && !selectedCustomerKey) {
-                writeFounderSessionState({
-                    email: normalizedInputEmail,
-                    firstName: firstNameInput,
-                    lastName: lastNameInput,
-                });
-                populateCustomerDropdown(cfg, false);
+            const effectiveFirstName = firstNameInput || (hasReturningVisitorForEmail ? String(returningVisitorSession?.firstName || '').trim() : '');
+            const effectiveLastName = lastNameInput || (hasReturningVisitorForEmail ? String(returningVisitorSession?.lastName || '').trim() : '');
+            const effectiveEmail = normalizedInputEmail;
+            if (allAccessEmail && !allAccessSelectorUnlocked) {
+                allAccessSelectorUnlocked = true;
                 updatePortalAuthVisibility();
+                clearLoginError();
                 document.getElementById('customerName')?.focus();
                 return;
             }
             if (!selectedCustomerKey) {
-                showLoginError(founderQuickMode ? 'Please select a customer portal.' : 'Please select your company or Guest.');
+                showLoginError(allAccessEmail ? 'Please select a customer portal.' : 'Please select your company or Guest.');
                 return;
             }
             if (!isGuestSelection && !cfg.customers) {
@@ -1081,20 +1222,33 @@
                 showLoginError('Selected company is unavailable. Please refresh and try again.');
                 return;
             }
-            const effectiveFirstName = founderQuickMode ? String(founderSession?.firstName || '') : firstNameInput;
-            const effectiveLastName = founderQuickMode ? String(founderSession?.lastName || '') : lastNameInput;
-            const effectiveEmail = founderQuickMode ? String(founderSession?.email || normalizedInputEmail) : normalizedInputEmail;
-            if (founderFirstLoginDetected) {
+            if (!isGuestSelection && !allAccessEmail) {
+                const emailDomain = getEmailDomain(normalizedInputEmail);
+                const allowedDomains = resolveCustomerAllowedDomains(selectedCustomerKey, customer);
+                if (allowedDomains.length && (!emailDomain || !allowedDomains.includes(emailDomain))) {
+                    const readableDomains = allowedDomains.join(' or ');
+                    const customerName = String(customer?.name || 'selected company').trim();
+                    showLoginError(`Email domain mismatch. Please use your ${customerName} business email (${readableDomains}).`);
+                    return;
+                }
+            }
+            if (allAccessEmail) {
                 writeFounderSessionState({
                     email: effectiveEmail,
                     firstName: effectiveFirstName,
                     lastName: effectiveLastName,
                 });
+            } else if (effectiveFirstName && effectiveLastName) {
+                writeReturningVisitorSessionState({
+                    email: effectiveEmail,
+                    firstName: effectiveFirstName,
+                    lastName: effectiveLastName,
+                });
             }
+            const destinationPath = isGuestSelection ? 'index.html?siteUnlocked=1' : customer.path;
             try {
                 const selectedAt = new Date().toISOString();
                 if (isGuestSelection) {
-                    const guestDestinationPath = 'index.html?siteUnlocked=1';
                     const payload = {
                         customer_slug: 'guest',
                         customer_name: 'Guest',
@@ -1116,51 +1270,51 @@
                     };
                     window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
                     setUnitySiteAccessUnlocked({
-                        visitorType: founderAccessActive ? 'founder' : 'guest',
+                        visitorType: allAccessEmail ? 'all-access' : 'guest',
                         customerName: 'Guest',
                         customerSlug: 'guest',
                     });
-                    window.location.href = guestDestinationPath;
-                    return;
                 }
-                const pathMatch = String(customer.path || '').match(/\/Customers\/([^/]+)/i);
-                const rawCustomerSegment = pathMatch && pathMatch[1] ? pathMatch[1] : selectedCustomerKey;
-                const customerSlug = String(rawCustomerSegment || '')
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '-')
-                    .replace(/^-+|-+$/g, '');
-                if (customerSlug) {
-                    const customerName = String(customer.name || rawCustomerSegment || customerSlug)
-                        .replace(/[_-]+/g, ' ')
-                        .replace(/\b\w/g, function (m) { return m.toUpperCase(); });
-                    const payload = {
-                        customer_slug: customerSlug,
-                        customer_name: customerName,
-                        source_path: window.location.pathname,
-                        selected_at: selectedAt,
-                    };
-                    window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify(payload));
-                    const visitorProfile = {
-                        first_name: effectiveFirstName,
-                        last_name: effectiveLastName,
-                        email: effectiveEmail,
-                        role,
-                        objective,
-                        wants_updates: wantsUpdates,
-                        selected_company: customerName,
-                        selected_company_slug: customerSlug,
-                        source_path: window.location.pathname,
-                        submitted_at: selectedAt,
-                    };
-                    window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
-                    setUnitySiteAccessUnlocked({
-                        visitorType: founderAccessActive ? 'founder' : 'customer',
-                        customerName,
-                        customerSlug,
-                    });
+                if (!isGuestSelection) {
+                    const pathMatch = String(customer.path || '').match(/\/Customers\/([^/]+)/i);
+                    const rawCustomerSegment = pathMatch && pathMatch[1] ? pathMatch[1] : selectedCustomerKey;
+                    const customerSlug = String(rawCustomerSegment || '')
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '');
+                    if (customerSlug) {
+                        const customerName = String(customer.name || rawCustomerSegment || customerSlug)
+                            .replace(/[_-]+/g, ' ')
+                            .replace(/\b\w/g, function (m) { return m.toUpperCase(); });
+                        const payload = {
+                            customer_slug: customerSlug,
+                            customer_name: customerName,
+                            source_path: window.location.pathname,
+                            selected_at: selectedAt,
+                        };
+                        window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify(payload));
+                        const visitorProfile = {
+                            first_name: effectiveFirstName,
+                            last_name: effectiveLastName,
+                            email: effectiveEmail,
+                            role,
+                            objective,
+                            wants_updates: wantsUpdates,
+                            selected_company: customerName,
+                            selected_company_slug: customerSlug,
+                            source_path: window.location.pathname,
+                            submitted_at: selectedAt,
+                        };
+                        window.localStorage.setItem('unity_portal_visitor_profile_v1', JSON.stringify(visitorProfile));
+                        setUnitySiteAccessUnlocked({
+                            visitorType: allAccessEmail ? 'all-access' : 'customer',
+                            customerName,
+                            customerSlug,
+                        });
+                    }
                 }
             } catch (_err) {}
-            window.location.href = customer.path;
+            window.location.href = destinationPath;
         }
         document.addEventListener('keydown', function(e) {
             const modal = document.getElementById('loginModal');
@@ -1185,12 +1339,19 @@
             if (emailEl) {
                 emailEl.addEventListener('input', function () {
                     visitorEmailManuallyEdited = true;
+                    updatePortalAuthVisibility();
                 });
                 emailEl.addEventListener('change', function () {
                     visitorEmailManuallyEdited = true;
+                    updatePortalAuthVisibility();
                 });
             }
             document.getElementById('customerName')?.addEventListener('change', updatePortalAuthVisibility);
+            const founderSession = readFounderSessionState();
+            if (founderSession && founderSession.email) {
+                openLoginModal();
+                return;
+            }
             updatePortalAuthVisibility();
         });
     </script>

@@ -1,9 +1,11 @@
 (function () {
+    var currentScriptSrc = (document.currentScript && document.currentScript.src) ? document.currentScript.src : '';
     var existing = window.UNITY_PUBLIC_RELEASE_FLAGS || {};
     var mergedFeatures = Object.assign(
         {
             clerk_voice: true,
-            maxwellian_access: true
+            maxwellian_access: true,
+            founder_share_panel: true
         },
         existing.features || {}
     );
@@ -55,14 +57,35 @@
         });
     }
 
+    function loadFounderSharePanelScript() {
+        if (!isFeatureEnabled('founder_share_panel')) return;
+        if (window.__ueFounderSharePanelInitialized) return;
+        if (document.getElementById('ueFounderSharePanelScript')) return;
+
+        var src = 'founder_share_panel.js?v=20260610d';
+        if (currentScriptSrc) {
+            try {
+                src = new URL(src, currentScriptSrc).toString();
+            } catch (_err) {}
+        }
+
+        var script = document.createElement('script');
+        script.id = 'ueFounderSharePanelScript';
+        script.src = src;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+
     window.isUnityFeatureEnabled = isFeatureEnabled;
     window.applyUnityPublicReleaseGates = applyUnityPublicReleaseGates;
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {
             applyUnityPublicReleaseGates(document);
+            loadFounderSharePanelScript();
         });
     } else {
         applyUnityPublicReleaseGates(document);
+        loadFounderSharePanelScript();
     }
 })();
