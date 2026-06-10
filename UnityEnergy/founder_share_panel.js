@@ -39,21 +39,50 @@
     "unity-energy": "Unity Energy",
     "unityenergy": "Unity Energy"
   });
+  var CUSTOMER_ROUTE_DEFAULTS = Object.freeze({
+    "foster-farms": Object.freeze({
+      customerKey: "foster-farms",
+      recipientKey: "team",
+      senderAddress: "sharemail@unityenergy.com",
+      recipientAddress: "team@fosterfarms.com"
+    }),
+    "fosterfarms": Object.freeze({
+      customerKey: "foster-farms",
+      recipientKey: "team",
+      senderAddress: "sharemail@unityenergy.com",
+      recipientAddress: "team@fosterfarms.com"
+    })
+  });
   var SHARE_TYPES = [
     { key: "update", label: "Update" },
     { key: "brief", label: "Brief" },
     { key: "memo", label: "Memo" },
+    { key: "report", label: "Report" },
     { key: "monthly", label: "Monthly" },
     { key: "maxwellian", label: "Maxwellian" },
     { key: "private", label: "Private" },
     { key: "alert", label: "Alert" }
   ];
+  var SHARE_TEMPLATE_SLUG_BY_KEY = Object.freeze({
+    update: "update",
+    brief: "brief",
+    memo: "memo",
+    report: "report",
+    monthly: "monthly",
+    maxwellian: "maxwellian",
+    private: "private",
+    alert: "alert",
+    website: "alert",
+    "project-update": "update",
+    "project-memo": "memo",
+    "monthly-report": "monthly"
+  });
   var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";
   var HOMEPAGE_HOTSPOT_SELECTOR = ".hero.hero-raster-rebuild";
   var HOMEPAGE_HOTSPOT_ID = "ueFounderShareDotHotspot";
   var HOMEPAGE_HOTSPOT = Object.freeze({
-    left: "52.5%",
-    top: "22.5%",
+    left: "calc(52.5% + 200px)",
+    top: "calc(22.5% - 25px)",
     sizeDesktopPx: 34,
     sizeMobilePx: 44
   });
@@ -195,6 +224,90 @@
       .replace(/^-+|-+$/g, "");
   }
 
+  function canonicalizeCustomerKey(value) {
+    var normalized = normalizeCustomerToken(value);
+    if (normalized === "fosterfarms") return "foster-farms";
+    return normalized;
+  }
+
+  function normalizeRecipientKey(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+  }
+
+  function normalizeRouteAddress(value) {
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9@._+-]/g, "");
+  }
+
+  function extractCustomerKeyFromPathname(pathname) {
+    var customerPortalMatch = /\/customer-portal\/([^\/?#]+)/i.exec(pathname || "");
+    if (customerPortalMatch && customerPortalMatch[1]) {
+      return canonicalizeCustomerKey(customerPortalMatch[1]);
+    }
+    var customerDirectoryMatch = /\/Customers\/([^\/?#]+)/i.exec(pathname || "");
+    if (customerDirectoryMatch && customerDirectoryMatch[1]) {
+      return canonicalizeCustomerKey(customerDirectoryMatch[1]);
+    }
+    return "";
+  }
+
+  function parseRouteContextFromUrl(urlObj) {
+    if (!urlObj) {
+      return {
+        recipientKey: "",
+        customerKey: "",
+        senderAddress: "",
+        recipientAddress: ""
+      };
+    }
+    var customerKeyFromQuery = canonicalizeCustomerKey(urlObj.searchParams.get("ue_customer"));
+    return {
+      recipientKey: normalizeRecipientKey(urlObj.searchParams.get("ue_recipient")),
+      customerKey: customerKeyFromQuery || extractCustomerKeyFromPathname(urlObj.pathname),
+      senderAddress: normalizeRouteAddress(urlObj.searchParams.get("ue_from")),
+      recipientAddress: normalizeRouteAddress(urlObj.searchParams.get("ue_to"))
+    };
+  }
+
+  function resolveRouteDefaults(customerKey) {
+    var normalized = canonicalizeCustomerKey(customerKey);
+    if (!normalized) return null;
+    return CUSTOMER_ROUTE_DEFAULTS[normalized] || null;
+  }
+
+  function extractShareRouteContext(rawTargetValue) {
+    var targetUrl = null;
+    var currentUrl = null;
+    try {
+      targetUrl = new URL(String(rawTargetValue || "").trim() || window.location.href, window.location.href);
+    } catch (_err) {}
+    try {
+      currentUrl = new URL(window.location.href);
+    } catch (_err2) {}
+    var targetContext = parseRouteContextFromUrl(targetUrl);
+    var currentContext = parseRouteContextFromUrl(currentUrl);
+    var customerKey =
+      canonicalizeCustomerKey(targetContext.customerKey) ||
+      canonicalizeCustomerKey(currentContext.customerKey) ||
+      "foster-farms";
+    var defaults = resolveRouteDefaults(customerKey);
+    var defaultCustomerKey = defaults ? canonicalizeCustomerKey(defaults.customerKey) : "";
+    return {
+      recipientKey:
+        targetContext.recipientKey ||
+        currentContext.recipientKey ||
+        (defaults ? normalizeRecipientKey(defaults.recipientKey) : ""),
+      customerKey: customerKey || defaultCustomerKey,
+      senderAddress:
+        targetContext.senderAddress ||
+        currentContext.senderAddress ||
+        (defaults ? normalizeRouteAddress(defaults.senderAddress) : ""),
+      recipientAddress:
+        targetContext.recipientAddress ||
+        currentContext.recipientAddress ||
+        (defaults ? normalizeRouteAddress(defaults.recipientAddress) : "")
+    };
+  }
+
   function formatCustomerDisplayNameFromToken(token) {
     var normalized = normalizeCustomerToken(token);
     if (!normalized) return "";
@@ -321,6 +434,8 @@
 
   function buildShareUrl(typeKey, targetValue, titleOverride) {
     var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeKey; }) || SHARE_TYPES[0];
+    var templateSlug = SHARE_TEMPLATE_SLUG_BY_KEY[selected.key] || selected.key;
+    var routeContext = extractShareRouteContext(targetValue);
     var resolvedCustomerName =
       resolveCustomerDisplayName(targetValue) ||
       resolveCustomerDisplayName(window.location.href) ||
@@ -328,13 +443,25 @@
     var fallbackTitle = buildElectricalCategoryTitle(resolvedCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
     var selectedTitle = String(titleOverride || "").trim() || fallbackTitle;
     var stampCode = allocateNextDailyStampCode(new Date(), 1);
-    var shareUrl = new URL("/UnityEnergy/customer-portal/foster-farms/executive/share/" + selected.key + ".html", getShareOrigin());
+    var shareUrl = new URL("/UnityEnergy/customer-portal/foster-farms/executive/share/" + templateSlug + ".html", getShareOrigin());
     shareUrl.searchParams.set("ue_doc", stampCode);
     shareUrl.searchParams.set("ue_kind", selected.key);
     shareUrl.searchParams.set("ue_share", String(nowMs()));
     shareUrl.searchParams.set("ue_status", "published");
     shareUrl.searchParams.set("ue_rev", "UE-PANEL-" + stampCode);
     shareUrl.searchParams.set("ue_target", resolveShareTarget(targetValue));
+    if (routeContext.recipientKey) {
+      shareUrl.searchParams.set("ue_recipient", routeContext.recipientKey);
+    }
+    if (routeContext.customerKey) {
+      shareUrl.searchParams.set("ue_customer", routeContext.customerKey);
+    }
+    if (routeContext.senderAddress) {
+      shareUrl.searchParams.set("ue_from", routeContext.senderAddress);
+    }
+    if (routeContext.recipientAddress) {
+      shareUrl.searchParams.set("ue_to", routeContext.recipientAddress);
+    }
     if (selectedTitle) {
       shareUrl.searchParams.set("ue_title", selectedTitle);
     }
