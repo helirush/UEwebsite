@@ -54,24 +54,24 @@
     })
   });
   var SHARE_TYPES = [
-    { key: "update", label: "Update" },
-    { key: "brief", label: "Brief" },
-    { key: "memo", label: "Memo" },
-    { key: "report", label: "Report" }
+    { key: "website", label: "Website" },
+    { key: "project-update", label: "Project-Update" },
+    { key: "project-memo", label: "Project-Memo" },
+    { key: "monthly-report", label: "Monthly-Report" }
   ];
   var SHARE_TEMPLATE_SLUG_BY_KEY = Object.freeze({
-    update: "update",
-    brief: "brief",
-    memo: "memo",
-    report: "report",
-    monthly: "monthly",
-    maxwellian: "maxwellian",
-    private: "private",
-    alert: "alert",
-    website: "alert",
-    "project-update": "update",
-    "project-memo": "memo",
-    "monthly-report": "monthly"
+    website: "website",
+    "project-update": "project-update",
+    "project-memo": "project-memo",
+    "monthly-report": "monthly-report",
+    update: "project-update",
+    brief: "project-update",
+    memo: "project-memo",
+    report: "project-memo",
+    monthly: "monthly-report",
+    maxwellian: "website",
+    private: "website",
+    alert: "website"
   });
   var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";
   var HOMEPAGE_HOTSPOT_SELECTOR = ".hero.hero-raster-rebuild";
@@ -718,7 +718,7 @@
     }
 
     targetInput.value = window.location.href;
-    typeSelect.value = "update";
+    typeSelect.value = "project-update";
     syncPresetStateFromTarget({ preserveCurrentTitle: false });
     seedDailyCounterFromCurrentPage();
 
