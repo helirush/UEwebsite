@@ -23,7 +23,7 @@
       label: "Website",
       title: "Website",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/website.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/assets/images/share-card-bases/website.png",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/WelcomeWebsite.png",
       theme: "default"
     },
     "project-update": {
@@ -31,7 +31,7 @@
       label: "Project-Update",
       title: "Project-Update",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/project-update.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/assets/images/share-card-bases/project-update.png",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/ProjectUpdate.png",
       theme: "default"
     },
     "project-memo": {
@@ -39,7 +39,7 @@
       label: "Project-Memo",
       title: "Project-Memo",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/project-memo.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/assets/images/share-card-bases/project-memo.png",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/ProjectMemo.png",
       theme: "default"
     },
     "monthly-report": {
@@ -47,7 +47,7 @@
       label: "Monthly-Report",
       title: "Monthly-Report",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly-report.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/assets/images/share-card-bases/monthly-report.png",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/MonthlyReport.png",
       theme: "monthly"
     }
   });
