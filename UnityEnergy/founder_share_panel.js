@@ -79,6 +79,15 @@
     private: "private",
     alert: "website"
   });
+  var SHARE_CARD_IMAGE_FILENAME_BY_KEY = Object.freeze({
+    website: "WelcomeWebsite.png",
+    "project-update": "ProjectUpdate.png",
+    "project-memo": "ProjectMemo.png",
+    "project-report": "ProjectReport.png",
+    "monthly-report": "MonthlyReport.png",
+    "maxwellian-news": "MaxwellianNews.png",
+    "private-confidential": "PrivateConfidential.png"
+  });
   var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";
   var HOMEPAGE_HOTSPOT_SELECTOR = ".hero.hero-raster-rebuild";
   var HOMEPAGE_HOTSPOT_ID = "ueFounderShareDotHotspot";
@@ -437,6 +446,7 @@
   function buildShareUrl(typeKey, targetValue, titleOverride) {
     var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeKey; }) || SHARE_TYPES[0];
     var templateSlug = SHARE_TEMPLATE_SLUG_BY_KEY[selected.key] || selected.key;
+    var cardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
     var routeContext = extractShareRouteContext(targetValue);
     var resolvedCustomerName =
       resolveCustomerDisplayName(targetValue) ||
@@ -452,6 +462,9 @@
     shareUrl.searchParams.set("ue_status", "published");
     shareUrl.searchParams.set("ue_rev", "UE-PANEL-" + stampCode);
     shareUrl.searchParams.set("ue_target", resolveShareTarget(targetValue));
+    if (cardImageFilename) {
+      shareUrl.searchParams.set("ue_card_image", cardImageFilename);
+    }
     if (routeContext.recipientKey) {
       shareUrl.searchParams.set("ue_recipient", routeContext.recipientKey);
     }
@@ -471,6 +484,7 @@
       type: selected,
       stampCode: stampCode,
       title: selectedTitle,
+      cardImageFilename: cardImageFilename,
       url: shareUrl.toString()
     };
   }
@@ -844,12 +858,17 @@
     typeSelect.addEventListener("change", function () {
       var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeSelect.value; });
       if (!selected) return;
+      var selectedCardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
       if (!String(titleInput.value || "").trim()) {
         var fallbackTitle = buildElectricalCategoryTitle(activeCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
         titleInput.value = fallbackTitle;
         titlePresetSelect.value = fallbackTitle;
       }
-      setStatus("Share card type set to " + selected.label + ".");
+      setStatus(
+        "Share card type set to " + selected.label +
+        (selectedCardImageFilename ? (" · " + selectedCardImageFilename) : "") +
+        "."
+      );
     });
     titlePresetSelect.addEventListener("change", function () {
       var selectedValue = String(titlePresetSelect.value || "");
