@@ -8,65 +8,47 @@
     PUBLISHED: "published"
   });
   const SHARE_KIND_ALIASES = Object.freeze({
-    report: "memo"
+    update: "project-update",
+    brief: "project-update",
+    memo: "project-memo",
+    report: "project-memo",
+    monthly: "monthly-report",
+    maxwellian: "website",
+    private: "website",
+    alert: "website"
   });
   const DEFAULT_SHARE_KIND_CONFIG = Object.freeze({
-    update: {
-      key: "update",
-      label: "Update",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-update-logo-preview.jpg",
+    website: {
+      key: "website",
+      label: "Website",
+      title: "Website",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/website.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/website.png",
       theme: "default"
     },
-    brief: {
-      key: "brief",
-      label: "Brief",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/brief.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-brief-logo-preview.jpg",
+    "project-update": {
+      key: "project-update",
+      label: "Project-Update",
+      title: "Project-Update",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/project-update.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/project-update.png",
       theme: "default"
     },
-    memo: {
-      key: "memo",
-      label: "Memo",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg",
+    "project-memo": {
+      key: "project-memo",
+      label: "Project-Memo",
+      title: "Project-Memo",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/project-memo.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/project-memo.png",
       theme: "default"
     },
-    monthly: {
-      key: "monthly",
-      label: "Monthly",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-monthly-logo-preview.jpg",
+    "monthly-report": {
+      key: "monthly-report",
+      label: "Monthly-Report",
+      title: "Monthly-Report",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly-report.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/monthly-report.png",
       theme: "monthly"
-    },
-    maxwellian: {
-      key: "maxwellian",
-      label: "Maxwellians",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/maxwellian.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-maxwellian-logo-preview.jpg",
-      theme: "maxwellian"
-    },
-    private: {
-      key: "private",
-      label: "Private",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-private-logo-preview.jpg",
-      theme: "default"
-    },
-    alert: {
-      key: "alert",
-      label: "Alert",
-      title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/alert.html?ue_card=clean1",
-      imagePath: "/UnityEnergy/customer-portal/foster-farms/executive/ue-alert-logo-preview.jpg",
-      isAlert: true,
-      theme: "alert"
     }
   });
 
@@ -368,7 +350,7 @@
     const publicShareOrigin = String(opts.publicShareOrigin || DEFAULT_PUBLIC_SHARE_ORIGIN);
     const descriptionPrefix = String(opts.shareDescriptionPrefix || DEFAULT_DESCRIPTION_PREFIX);
     const shareKindConfig = cloneKindConfig(opts.shareKindConfig);
-    const defaultKind = shareKindConfig.update ? "update" : Object.keys(shareKindConfig)[0];
+    const defaultKind = shareKindConfig.website ? "website" : Object.keys(shareKindConfig)[0];
     const pageUrl = new URL(window.location.href);
     const now = new Date();
     const configuredStamp = parseUeStamp(opts.shareStampCode || opts.publishedStampCode);

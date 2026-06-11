@@ -54,23 +54,29 @@
     })
   });
   var SHARE_TYPES = [
-    { key: "website", label: "Website" },
-    { key: "project-update", label: "Project-Update" },
-    { key: "project-memo", label: "Project-Memo" },
-    { key: "monthly-report", label: "Monthly-Report" }
+    { key: "website", label: "WelcomeWebsite" },
+    { key: "project-update", label: "ProjectUpdate" },
+    { key: "project-memo", label: "ProjectMemo" },
+    { key: "project-report", label: "ProjectReport" },
+    { key: "monthly-report", label: "MonthlyReport" },
+    { key: "maxwellian-news", label: "MaxwellianNews" },
+    { key: "private-confidential", label: "PrivateConfidential" }
   ];
   var SHARE_TEMPLATE_SLUG_BY_KEY = Object.freeze({
     website: "website",
     "project-update": "project-update",
     "project-memo": "project-memo",
+    "project-report": "report",
     "monthly-report": "monthly-report",
+    "maxwellian-news": "maxwellian",
+    "private-confidential": "private",
     update: "project-update",
-    brief: "project-update",
+    brief: "brief",
     memo: "project-memo",
-    report: "project-memo",
+    report: "report",
     monthly: "monthly-report",
-    maxwellian: "website",
-    private: "website",
+    maxwellian: "maxwellian",
+    private: "private",
     alert: "website"
   });
   var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";

@@ -11,7 +11,7 @@
 //
 // To prepare for GitHub deployment:
 //   1. Set devMode = false
-//   2. Ensure password is set (default: "oHeaviside")
+//   2. Verify accessPolicy passwords are set as needed
 //   3. Push to GitHub
 
 window.portalConfig = {
@@ -19,8 +19,23 @@ window.portalConfig = {
     // SET TO false BEFORE PUSHING TO GITHUB
     devMode: false,
     
-    // Production password - all customers use this
+    // Legacy fallback password for older scripts/pages.
+    // New portal logic should use accessPolicy below.
     password: "oHeaviside",
+    accessPolicy: {
+        // Founder / all-access domains only.
+        allAccessPassword: "oHeaviside",
+        // Default password for standard customer and guest access.
+        defaultPassword: "Default",
+        // Per-customer overrides.
+        customerPasswordOverrides: {
+            fosterfarms: "FosterFarms!"
+        },
+        // Domain-based auto-routing (domain -> customer key).
+        domainCustomerOverrides: {
+            "fosterfarms.com": "fosterfarms"
+        }
+    },
     
     // Customer accounts - add new customers here
     customers: {
@@ -88,6 +103,16 @@ window.portalConfig = {
         'tysonfoodsinc': {
             name: 'Tyson Foods',
             path: '../Customers/TysonFoods/index.html'
+        },
+        'investor': {
+            name: 'Investor Center',
+            path: './customer-portal/investor-center/index.html',
+            allowAnyDomain: true
+        },
+        'investorcenter': {
+            name: 'Investor Center',
+            path: './customer-portal/investor-center/index.html',
+            allowAnyDomain: true
         }
     }
 };

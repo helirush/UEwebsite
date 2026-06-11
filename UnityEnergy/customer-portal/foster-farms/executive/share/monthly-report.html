@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foster Farms Electrical Intelligence</title>
-  <meta name="description" content="Foster Farms electrical intelligence from Unity Energy." />
+  <title>Monthly-Report</title>
+  <meta name="description" content="Monthly-Report share card from Unity Energy." />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Foster Farms Electrical Intelligence" />
-  <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
-  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html?ue_doc=UE.0601.01" />
-  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg?ue_doc=UE.0601.01&ue_img=UE060101" />
-  <meta property="og:image:alt" content="Foster Farms Electrical Intelligence share card" />
+  <meta property="og:title" content="Monthly-Report" />
+  <meta property="og:description" content="Monthly-Report" />
+  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/monthly-report.html?ue_doc=UE.0609.04" />
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/share-card-bases/monthly-report.png?ue_doc=UE.0609.04&ue_img=UEMONTHLYREPORT" />
+  <meta property="og:image:alt" content="Monthly-Report share card" />
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Foster Farms Electrical Intelligence" />
-  <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
-  <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/ue-memo-logo-preview.jpg?ue_doc=UE.0601.01&ue_img=UE060101" />
+  <meta property="twitter:title" content="Monthly-Report" />
+  <meta property="twitter:description" content="Monthly-Report" />
+  <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/assets/images/share-card-bases/monthly-report.png?ue_doc=UE.0609.04&ue_img=UEMONTHLYREPORT" />
   <script>
     (function () {
-      const SHARE_KIND = "memo";
+      const SHARE_KIND = "monthly-report";
       const RETIRED_TEST_STAMPS = Object.freeze(["UE.26.0528"]);
       const RETIRED_TEST_MESSAGE = "This was used for testing purposes. Please contact Unity for the updated link.";
       function pad2(value) {
@@ -55,6 +55,71 @@
           document.body.textContent = message;
         });
       }
+      function buildPreviewImageUrl(stampCode) {
+        const previewUrl = new URL("/UnityEnergy/assets/images/share-card-bases/monthly-report.png", window.location.origin);
+        if (stampCode) {
+          previewUrl.searchParams.set("ue_doc", stampCode);
+        }
+        return previewUrl.toString();
+      }
+      function renderTapAnywhereCard(url, stampCode) {
+        const mountCard = function () {
+          if (!document.body) return;
+          document.body.innerHTML = "";
+          document.body.style.margin = "0";
+          document.body.style.minHeight = "100vh";
+          document.body.style.display = "grid";
+          document.body.style.placeItems = "center";
+          document.body.style.background = "#f3f4ef";
+          const cardLink = document.createElement("a");
+          cardLink.href = url;
+          cardLink.style.display = "grid";
+          cardLink.style.gap = "10px";
+          cardLink.style.width = "min(94vw, 820px)";
+          cardLink.style.textDecoration = "none";
+          cardLink.style.color = "#22311d";
+          cardLink.style.fontFamily = "Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
+          cardLink.style.fontWeight = "600";
+          cardLink.style.fontSize = "14px";
+          cardLink.style.textAlign = "center";
+          cardLink.setAttribute("aria-label", "Open Monthly-Report");
+          const cardImage = document.createElement("img");
+          cardImage.src = buildPreviewImageUrl(stampCode);
+          cardImage.alt = "Monthly-Report share card";
+          cardImage.style.width = "100%";
+          cardImage.style.height = "auto";
+          cardImage.style.display = "block";
+          cardImage.style.borderRadius = "14px";
+          cardImage.style.boxShadow = "0 12px 34px rgba(20,31,12,.20)";
+          const cardLabel = document.createElement("span");
+          cardLabel.textContent = "Tap anywhere on this share card to open monthly report link.";
+          cardLink.appendChild(cardImage);
+          cardLink.appendChild(cardLabel);
+          document.body.appendChild(cardLink);
+        };
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", mountCard, { once: true });
+          return;
+        }
+        mountCard();
+      }
+      function openTargetLink(url, stampCode) {
+        renderTapAnywhereCard(url, stampCode);
+        const navigate = function () {
+          try {
+            window.location.replace(url);
+          } catch (_err) {
+            window.location.href = url;
+          }
+        };
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", function () {
+            window.setTimeout(navigate, 80);
+          }, { once: true });
+          return;
+        }
+        window.setTimeout(navigate, 80);
+      }
       const pageUrl = new URL(window.location.href);
       const incomingStamp = parseStamp(pageUrl.searchParams.get("ue_doc"));
       if (incomingStamp && RETIRED_TEST_STAMPS.indexOf(incomingStamp) !== -1) {
@@ -73,6 +138,7 @@
       target.searchParams.set("ue_kind", SHARE_KIND);
       target.searchParams.set("ue_share", pageUrl.searchParams.get("ue_share") || String(Date.now()));
       target.searchParams.set("ue_status", "published");
+      target.searchParams.set("ue_autoplay", "1");
       const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
       if (incomingRevision) {
         target.searchParams.set("ue_rev", incomingRevision);
@@ -98,11 +164,11 @@
         target.searchParams.set("ue_to", recipientAddress);
       }
       target.searchParams.set("ue_target", targetPath);
-      window.location.replace(target.toString());
+      openTargetLink(target.toString(), stampCode);
     })();
   </script>
 </head>
 <body>
-  Redirecting to the executive memo…
+  Redirecting to the monthly report…
 </body>
 </html>

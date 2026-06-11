@@ -43,7 +43,7 @@
         .btn:hover { background: #FFFFFF; color: #7F091C; transform: translateY(-1px); }
         .hero {
             position: relative;
-            padding: 96px 20px 84px;
+            padding: 92px 20px 84px;
             min-height: 500px;
             text-align: center;
             background:
@@ -69,19 +69,117 @@
         }
         .hero-chicken-left { left: 30px; }
         .hero-chicken-right { right: 30px; }
+        .hero-status-chip {
+            position: absolute;
+            top: 22px;
+            right: 24px;
+            z-index: 3;
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 215, 0, 0.95);
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.92) 0%, rgba(114, 0, 0, 0.92) 100%);
+            color: rgba(255, 247, 214, 1);
+            font-size: 0.84em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+            max-width: min(78vw, 560px);
+            text-align: right;
+        }
         .hero h1 {
-            font-size: 5em;
+            font-size: 4.2em;
             font-weight: 900;
             letter-spacing: 2px;
             color: #FED34C;
             margin-bottom: 8px;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.55);
         }
+        .hero .capacity-subtitle {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #FFE680;
+            margin: 10px 0 8px 0;
+            letter-spacing: 0.8px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            text-transform: uppercase;
+        }
+        .hero-key-metrics {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 48px;
+            margin: 10px 0 14px 0;
+            flex-wrap: wrap;
+        }
+        .hero-key-metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 250px;
+        }
+        .hero-key-metric-label {
+            font-size: 1em;
+            font-weight: 700;
+            color: #FFE99B;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .hero-key-metric-value {
+            font-size: 1.44em;
+            font-weight: 700;
+            color: #FFF6D9;
+            letter-spacing: 0.8px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .hero-secondary-metrics {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 42px;
+            flex-wrap: wrap;
+            font-size: 1.28em;
+            font-weight: 600;
+            color: #FFE99B;
+            letter-spacing: 0.2px;
+            margin: 16px 0 10px 0;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+        }
+        .hero-secondary-metrics span {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .hero-secondary-metrics strong {
+            color: #FFFFFF;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+        .hero .capacity-subtitle4 {
+            font-size: 1.22em;
+            font-weight: 700;
+            color: #FFE680;
+            margin: 10px 0 0 0;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.72);
+            text-transform: uppercase;
+        }
         .hero p {
             max-width: 860px;
             margin: 0 auto;
-            font-size: 1.5em;
-            font-weight: 600;
+            font-size: 1.06em;
+            font-weight: 500;
             color: #FBF9F4;
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.55);
         }
@@ -147,8 +245,24 @@
         }
         @media (max-width: 768px) {
             .hero { padding: 66px 14px 56px; min-height: 330px; }
-            .hero h1 { font-size: 2.4em; letter-spacing: 1px; }
-            .hero p { font-size: 1.05em; font-weight: 500; }
+            .hero-status-chip {
+                top: 12px;
+                right: 12px;
+                left: 12px;
+                max-width: none;
+                text-align: center;
+                font-size: 0.7em;
+                padding: 8px 10px;
+            }
+            .hero h1 { font-size: 2.3em; letter-spacing: 1px; }
+            .hero .capacity-subtitle { font-size: 1.05em; margin-bottom: 6px; }
+            .hero-key-metrics { gap: 20px; }
+            .hero-key-metric-label { font-size: 0.8em; }
+            .hero-key-metric-value { font-size: 1.12em; }
+            .hero-secondary-metrics { font-size: 0.84em; gap: 18px; }
+            .hero-secondary-metrics strong { font-size: 1.22em; }
+            .hero .capacity-subtitle4 { font-size: 0.88em; margin-top: 6px; }
+            .hero p { font-size: 0.92em; font-weight: 500; }
             .hero-chicken-video { width: 120px; bottom: 12px; }
             .hero-chicken-left { left: 12px; }
             .hero-chicken-right { right: 12px; }
@@ -166,7 +280,24 @@
     </header>
 
     <section class="hero">
+        <span class="hero-status-chip">Placeholder Mode · Consequence &amp; Efficiency Values Pending Tyson Calibration</span>
+        <p class="capacity-subtitle">480v Industrial Electricity Data</p>
         <h1>Scranton Rendering Facility</h1>
+        <div class="hero-key-metrics">
+            <div class="hero-key-metric">
+                <span class="hero-key-metric-label">Site Connected Capacity</span>
+                <span class="hero-key-metric-value">-- kVA</span>
+            </div>
+            <div class="hero-key-metric">
+                <span class="hero-key-metric-label">Average Site Consumption</span>
+                <span class="hero-key-metric-value">-- kW</span>
+            </div>
+        </div>
+        <div class="hero-secondary-metrics">
+            <span>Untuned Energy Consequence<strong>$--</strong></span>
+            <span>Site Efficiency<strong>--% PF</strong></span>
+        </div>
+        <p class="capacity-subtitle4">Placeholder values pending Tyson calibration input.</p>
         <p>Facility-level entry page for Scranton, Arkansas. Use the links below to enter the latest published energy field analysis bundle.</p>
         <video id="heroChickenLeft" class="hero-chicken-video hero-chicken-left" muted loop autoplay playsinline>
             <source src="../../../FosterFarms/ChickenFootball.mp4" type="video/mp4">

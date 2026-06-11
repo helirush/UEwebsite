@@ -77,26 +77,94 @@
         }
         .hero {
             position: relative;
-            padding: 188px 24px 84px;
-            min-height: 650px;
+            padding: 134px 24px 84px;
+            min-height: 560px;
             text-align: center;
             background:
                 linear-gradient(180deg, rgba(29, 37, 45, 0.55) 0%, rgba(29, 37, 45, 0.45) 100%),
                 url('../FosterFarms/foster-farms-hero.png') calc(50% - 0px) calc(50% + 350px) / cover no-repeat;
         }
+        .hero-status-chip {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 3;
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 215, 0, 0.95);
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.92) 0%, rgba(114, 0, 0, 0.92) 100%);
+            color: rgba(255, 247, 214, 1);
+            font-size: 0.88em;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+            max-width: min(78vw, 540px);
+            text-align: right;
+        }
+        .hero-kicker {
+            max-width: 860px;
+            margin: 0 auto 10px;
+            font-size: 1.35em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #FFE680;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.62);
+        }
         .hero h1 {
-            font-size: 3.4em;
+            font-size: 3.2em;
             color: #FED34C;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.55);
         }
+        .hero h2 {
+            font-size: 2.25em;
+            font-weight: 700;
+            color: #FFF6D9;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.55);
+        }
         .hero p {
             max-width: 860px;
             margin: 0 auto;
-            font-size: 1.06em;
+            font-size: 1.04em;
             color: #FBF9F4;
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.55);
+        }
+        .hero-secondary-metrics {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 38px;
+            flex-wrap: wrap;
+            margin: 18px 0 16px 0;
+            color: #FFE99B;
+            font-size: 1.22em;
+            font-weight: 600;
+            letter-spacing: 0.25px;
+            text-shadow:
+                2px 2px 0px rgba(139, 0, 0, 1),
+                -1px -1px 0px rgba(139, 0, 0, 1),
+                1px -1px 0px rgba(139, 0, 0, 1),
+                -1px 1px 0px rgba(139, 0, 0, 1),
+                1px 1px 0px rgba(139, 0, 0, 1),
+                3px 3px 6px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+        }
+        .hero-secondary-metrics span {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .hero-secondary-metrics strong {
+            color: #FFFFFF;
+            font-size: 1.34em;
+            font-weight: 700;
         }
         .container {
             max-width: 1120px;
@@ -162,6 +230,36 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+        .group-impact-panel {
+            margin: 14px 0;
+            border-radius: 12px;
+            border: 1px solid rgba(127, 9, 28, 0.24);
+            background: linear-gradient(180deg, rgba(252, 244, 223, 0.95) 0%, rgba(250, 239, 212, 0.95) 100%);
+            padding: 10px;
+        }
+        .group-impact-label {
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #7F091C;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .group-impact-pill {
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid rgba(145, 17, 17, 0.45);
+            background: linear-gradient(135deg, rgba(204, 0, 0, 0.95) 0%, rgba(139, 0, 0, 0.95) 100%);
+            color: #FFF5D4;
+            font-size: 1em;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+        }
         footer {
             text-align: center;
             padding: 24px 22px 20px;
@@ -176,9 +274,22 @@
         }
         @media (max-width: 768px) {
             header { padding: 16px 16px; flex-direction: column; align-items: flex-start; }
-            .hero { padding: 68px 16px 62px; min-height: 340px; }
+            .hero { padding: 86px 16px 62px; min-height: 360px; }
             .container { padding: 38px 16px 56px; }
-            .hero h1 { font-size: 2em; }
+            .hero-status-chip {
+                top: 14px;
+                right: 14px;
+                left: 14px;
+                max-width: none;
+                text-align: center;
+                font-size: 0.74em;
+                padding: 8px 12px;
+            }
+            .hero-kicker { font-size: 0.96em; margin-bottom: 8px; }
+            .hero h1 { font-size: 2.15em; }
+            .hero h2 { font-size: 1.5em; margin-bottom: 10px; }
+            .hero-secondary-metrics { font-size: 0.9em; gap: 20px; }
+            .hero-secondary-metrics strong { font-size: 1.18em; }
             .hero-chicken-video { width: 120px; bottom: 12px; }
             .hero-chicken-left { left: 12px; }
             .hero-chicken-right { right: 12px; }
@@ -195,7 +306,14 @@
     </header>
 
     <section class="hero">
-        <h1>Tyson Foods Energy Field Portals</h1>
+        <span class="hero-status-chip">Placeholder Mode · Consequence &amp; Efficiency Values Pending Tyson Calibration</span>
+        <p class="hero-kicker">Industrial 480v Electrical Behavior</p>
+        <h1>Unity Energy Field Intelligence</h1>
+        <h2>Tyson Facility Monitoring Portals</h2>
+        <div class="hero-secondary-metrics">
+            <span>Untuned Group Consequence<strong>$--</strong></span>
+            <span>Group Efficiency<strong>--% PF</strong></span>
+        </div>
         <p>Customer-level landing page for Tyson Foods. Select a Tyson operating group to enter facility-specific electrical field analysis and reports.</p>
         <video id="heroChickenLeft" class="hero-chicken-video hero-chicken-left" muted loop autoplay playsinline>
             <source src="../FosterFarms/ChickenFootball.mp4" type="video/mp4">
@@ -211,6 +329,12 @@
             <a href="./Rendering/index.html" class="group-card">
                 <div class="group-name">Rendering Group</div>
                 <div class="group-meta">1 active facility • Scranton, Arkansas</div>
+                <div class="group-impact-panel">
+                    <div class="group-impact-label">UN-TUNED CONSEQUENCES</div>
+                    <span class="group-impact-pill">$-- Annually</span>
+                    <div class="group-impact-label">UN-TUNED EFFICIENCY</div>
+                    <span class="group-impact-pill">--% PF</span>
+                </div>
                 <span class="group-status">Active</span>
             </a>
 

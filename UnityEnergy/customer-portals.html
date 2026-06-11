@@ -728,7 +728,7 @@
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
         const UNITY_FOUNDER_SESSION_KEY = 'unity_founder_session_v1';
         const UNITY_VISITOR_PROFILE_SESSION_KEY = 'unity_portal_returning_visitor_v1';
-        const ALL_ACCESS_EMAIL_DOMAINS = new Set(['unityenergy.com', 'accentzinc.com', 'accentsinc.com']);
+        const ALL_ACCESS_EMAIL_DOMAINS = new Set(['unityenergy.com', 'accentzinc.com']);
         const CUSTOMER_EMAIL_DOMAIN_ALLOWLIST = {
             fosterfarms: ['fosterfarms.com'],
             norfolkiron: ['norfolkiron.com', 'norfolkironmetal.com'],
@@ -862,6 +862,9 @@
             return candidate;
         }
         function resolveCustomerAllowedDomains(customerKey, customer) {
+            if (customer?.allowAnyDomain === true) {
+                return [];
+            }
             const normalizedKey = normalizeDomainToken(customerKey);
             const domains = new Set();
             const staticDomains = CUSTOMER_EMAIL_DOMAIN_ALLOWLIST[normalizedKey] || [];
@@ -933,11 +936,124 @@
             } catch (_err) {}
         }
         function getPortalConfigSafe() {
+            const investorEntry = {
+                name: 'Investor Center',
+                path: './customer-portal/investor-center/index.html',
+                allowAnyDomain: true
+            };
+            function ensureInvestorCustomer(cfg) {
+                if (!cfg || typeof cfg !== 'object') return { customers: { investor: investorEntry, investorcenter: investorEntry } };
+                if (!cfg.customers || typeof cfg.customers !== 'object') cfg.customers = {};
+                if (!cfg.customers.investor) cfg.customers.investor = { ...investorEntry };
+                if (!cfg.customers.investorcenter) cfg.customers.investorcenter = { ...investorEntry };
+                cfg.customers.investor.allowAnyDomain = true;
+                cfg.customers.investorcenter.allowAnyDomain = true;
+                return cfg;
+            }
             try {
-                if (typeof portalConfig !== 'undefined' && portalConfig) return portalConfig;
+                if (typeof portalConfig !== 'undefined' && portalConfig) return ensureInvestorCustomer(portalConfig);
             } catch (e) {}
-            if (window.portalConfig) return window.portalConfig;
-            return { customers: {} };
+            if (window.portalConfig) return ensureInvestorCustomer(window.portalConfig);
+            return ensureInvestorCustomer({ customers: {} });
+        }
+        function resolvePortalAccessPolicy(cfg) {
+            const policy = cfg?.accessPolicy && typeof cfg.accessPolicy === 'object' ? cfg.accessPolicy : {};
+            const customerPasswordOverrides = policy.customerPasswordOverrides && typeof policy.customerPasswordOverrides === 'object'
+                ? policy.customerPasswordOverrides
+                : {};
+            const domainCustomerOverrides = policy.domainCustomerOverrides && typeof policy.domainCustomerOverrides === 'object'
+                ? policy.domainCustomerOverrides
+                : {};
+            return {
+                allAccessPassword: String(policy.allAccessPassword || cfg?.password || 'oHeaviside'),
+                defaultPassword: String(policy.defaultPassword || 'Default'),
+                customerPasswordOverrides,
+                domainCustomerOverrides,
+            };
+        }
+        function resolveCustomerKeyInConfig(cfg, customerKeyCandidate) {
+            const customers = cfg?.customers || {};
+            const rawCandidate = String(customerKeyCandidate || '').trim();
+            if (!rawCandidate) return '';
+            if (customers[rawCandidate]) return rawCandidate;
+            const normalizedCandidate = normalizeDomainToken(rawCandidate);
+            if (!normalizedCandidate) return '';
+            for (const key of Object.keys(customers)) {
+                if (normalizeDomainToken(key) === normalizedCandidate) return key;
+            }
+            return '';
+        }
+        function resolveCustomerPasswordOverride(policy, customerKey) {
+            const normalizedCustomerKey = normalizeDomainToken(customerKey);
+            if (!normalizedCustomerKey) return '';
+            for (const [configuredKey, configuredPassword] of Object.entries(policy.customerPasswordOverrides || {})) {
+                if (normalizeDomainToken(configuredKey) !== normalizedCustomerKey) continue;
+                const password = String(configuredPassword || '');
+                if (password) return password;
+            }
+            return '';
+        }
+        function resolveExpectedPortalPassword(cfg, params) {
+            const policy = resolvePortalAccessPolicy(cfg);
+            if (params?.allAccessEmail) {
+                return policy.allAccessPassword;
+            }
+            const customerOverride = resolveCustomerPasswordOverride(policy, params?.selectedCustomerKey || '');
+            if (customerOverride) {
+                return customerOverride;
+            }
+            return policy.defaultPassword;
+        }
+        function resolveDomainMappedCustomerKey(cfg, emailDomain) {
+            const normalizedDomain = normalizeDomainCandidate(emailDomain);
+            if (!normalizedDomain) return '';
+            const policy = resolvePortalAccessPolicy(cfg);
+            for (const [configuredDomain, configuredCustomerKey] of Object.entries(policy.domainCustomerOverrides || {})) {
+                if (normalizeDomainCandidate(configuredDomain) !== normalizedDomain) continue;
+                const resolvedCustomerKey = resolveCustomerKeyInConfig(cfg, configuredCustomerKey);
+                if (resolvedCustomerKey) return resolvedCustomerKey;
+            }
+            return '';
+        }
+        function resolveSingleDomainMatchedCustomerKey(cfg, emailDomain) {
+            const normalizedDomain = normalizeDomainCandidate(emailDomain);
+            if (!normalizedDomain) return '';
+            const customers = cfg?.customers || {};
+            const matchingCustomers = [];
+            const seen = new Set();
+            for (const [customerKey, customer] of Object.entries(customers)) {
+                const allowedDomains = resolveCustomerAllowedDomains(customerKey, customer);
+                if (!allowedDomains.includes(normalizedDomain)) continue;
+                const dedupeKey = `${String(customer?.name || '').trim()}::${String(customer?.path || '').trim()}`;
+                if (seen.has(dedupeKey)) continue;
+                seen.add(dedupeKey);
+                matchingCustomers.push(customerKey);
+            }
+            return matchingCustomers.length === 1 ? matchingCustomers[0] : '';
+        }
+        function resolveAutoCustomerKeyForEmail(cfg, email) {
+            const emailDomain = getEmailDomain(email);
+            if (!emailDomain) return '';
+            const mappedCustomerKey = resolveDomainMappedCustomerKey(cfg, emailDomain);
+            if (mappedCustomerKey) return mappedCustomerKey;
+            return resolveSingleDomainMatchedCustomerKey(cfg, emailDomain);
+        }
+        function maybeAutoSelectCustomerForEmail(cfg, email, options) {
+            const customerSelectEl = document.getElementById('customerName');
+            if (!customerSelectEl) return '';
+            const autoCustomerKey = resolveAutoCustomerKeyForEmail(cfg, email);
+            if (!autoCustomerKey) return '';
+            const currentSelection = String(customerSelectEl.value || '');
+            const shouldApply = !!options?.force || !currentSelection || currentSelection === '__guest__';
+            if (!shouldApply) return '';
+            const optionExists = Array.from(customerSelectEl.options || []).some(function (option) {
+                return option.value === autoCustomerKey;
+            });
+            if (!optionExists) return '';
+            if (currentSelection !== autoCustomerKey) {
+                customerSelectEl.value = autoCustomerKey;
+            }
+            return autoCustomerKey;
         }
         function clearAutoFilledVisitorEmailIfNeeded() {
             if (visitorEmailManuallyEdited) return;
@@ -1000,7 +1116,13 @@
                 seen.add(dedupeKey);
                 options.push({ key, name });
             }
-            options.sort((a, b) => a.name.localeCompare(b.name));
+            options.sort((a, b) => {
+                const aIsInvestor = String(a.name || '').toLowerCase().includes('investor');
+                const bIsInvestor = String(b.name || '').toLowerCase().includes('investor');
+                if (aIsInvestor && !bIsInvestor) return -1;
+                if (!aIsInvestor && bIsInvestor) return 1;
+                return a.name.localeCompare(b.name);
+            });
             const previousValue = preserveSelection ? selectEl.value : '';
             selectEl.innerHTML = '';
             const placeholder = document.createElement('option');
@@ -1049,14 +1171,19 @@
             if (pwEl) pwEl.value = '';
             allAccessSelectorUnlocked = false;
             const devNotice = document.getElementById('devModeNotice');
-            if (devNotice) devNotice.textContent = 'Portal password required for all access.';
+            if (devNotice) devNotice.textContent = 'Portal password required for portal access.';
             clearLoginError();
         }
         function updatePortalAuthVisibility() {
-            const selectedCustomerKey = document.getElementById('customerName')?.value || '';
-            const isGuestSelection = selectedCustomerKey === '__guest__';
+            const cfg = getPortalConfigSafe();
+            const customerNameField = document.getElementById('customerName');
             const enteredEmail = String(document.getElementById('visitorEmail')?.value || '').trim();
             const allAccessEmail = isFounderEmail(enteredEmail);
+            if (!allAccessEmail) {
+                maybeAutoSelectCustomerForEmail(cfg, enteredEmail);
+            }
+            const selectedCustomerKey = customerNameField?.value || '';
+            const isGuestSelection = selectedCustomerKey === '__guest__';
             const founderSession = allAccessEmail ? readFounderSessionState() : null;
             const founderSessionActive = !!(
                 founderSession &&
@@ -1070,7 +1197,6 @@
             }
             const devNotice = document.getElementById('devModeNotice');
             const pwField = document.getElementById('customerPassword');
-            const customerNameField = document.getElementById('customerName');
             const visitorProfileSection = document.getElementById('visitorProfileSection');
             const portalCredentialsTitle = document.getElementById('portalCredentialsTitle');
             const portalCredentialsHelperText = document.getElementById('portalCredentialsHelperText');
@@ -1134,7 +1260,7 @@
                 } else {
                     devNotice.textContent = isGuestSelection
                         ? 'Portal password required — Guest routes to Unity Home after verification.'
-                        : 'Portal password required for all access.';
+                        : 'Portal password required for portal access.';
                 }
                 devNotice.style.display = 'block';
             }
@@ -1148,8 +1274,8 @@
         }
         function attemptLogin() {
             const cfg = getPortalConfigSafe();
-            const selectedCustomerKey = document.getElementById('customerName')?.value || '';
-            const isGuestSelection = selectedCustomerKey === '__guest__';
+            let selectedCustomerKey = document.getElementById('customerName')?.value || '';
+            let isGuestSelection = selectedCustomerKey === '__guest__';
             const firstNameInput = String(document.getElementById('visitorFirstName')?.value || '').trim();
             const lastNameInput = String(document.getElementById('visitorLastName')?.value || '').trim();
             const emailInput = String(document.getElementById('visitorEmail')?.value || '').trim();
@@ -1192,10 +1318,22 @@
                     return;
                 }
             }
+            if (!allAccessEmail) {
+                const autoSelectedCustomerKey = maybeAutoSelectCustomerForEmail(cfg, normalizedInputEmail);
+                if (autoSelectedCustomerKey) {
+                    selectedCustomerKey = document.getElementById('customerName')?.value || autoSelectedCustomerKey;
+                    isGuestSelection = selectedCustomerKey === '__guest__';
+                    updatePortalAuthVisibility();
+                }
+            }
             const passwordEl = document.getElementById('customerPassword');
             const enteredPassword = passwordEl?.value || '';
             const founderSessionBypass = allAccessEmail && allAccessSelectorUnlocked && founderSessionActive;
-            if (!founderSessionBypass && enteredPassword !== cfg.password) {
+            const expectedPassword = resolveExpectedPortalPassword(cfg, {
+                allAccessEmail,
+                selectedCustomerKey,
+            });
+            if (!founderSessionBypass && enteredPassword !== expectedPassword) {
                 showLoginError('Incorrect password. Please try again.');
                 return;
             }
@@ -1223,13 +1361,16 @@
                 return;
             }
             if (!isGuestSelection && !allAccessEmail) {
-                const emailDomain = getEmailDomain(normalizedInputEmail);
-                const allowedDomains = resolveCustomerAllowedDomains(selectedCustomerKey, customer);
-                if (allowedDomains.length && (!emailDomain || !allowedDomains.includes(emailDomain))) {
-                    const readableDomains = allowedDomains.join(' or ');
-                    const customerName = String(customer?.name || 'selected company').trim();
-                    showLoginError(`Email domain mismatch. Please use your ${customerName} business email (${readableDomains}).`);
-                    return;
+                const bypassDomainValidation = customer?.allowAnyDomain === true;
+                if (!bypassDomainValidation) {
+                    const emailDomain = getEmailDomain(normalizedInputEmail);
+                    const allowedDomains = resolveCustomerAllowedDomains(selectedCustomerKey, customer);
+                    if (allowedDomains.length && (!emailDomain || !allowedDomains.includes(emailDomain))) {
+                        const readableDomains = allowedDomains.join(' or ');
+                        const customerName = String(customer?.name || 'selected company').trim();
+                        showLoginError(`Email domain mismatch. Please use your ${customerName} business email (${readableDomains}).`);
+                        return;
+                    }
                 }
             }
             if (allAccessEmail) {
