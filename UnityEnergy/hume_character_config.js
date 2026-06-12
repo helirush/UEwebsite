@@ -1030,6 +1030,8 @@ window.MAXWELLIAN_HUME = {
   preflight_microphone_on_launch: true,
   // OpenAI cognition defaults (used as text-generation guidance).
   // Keep false unless a production OpenAI realtime session backend is available.
+  // Emergency public fallback: allow direct Hume connect attempts when runtime auth bootstrap is unavailable.
+  allow_hume_authless_connect: true,
   allow_openai_fallback: false,
   openai_session_endpoint: "/api/openai/realtime/session",
   openai_realtime_model: "gpt-4o-realtime-preview",

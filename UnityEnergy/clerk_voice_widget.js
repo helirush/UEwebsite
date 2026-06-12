@@ -1234,6 +1234,13 @@
   function getVoiceEngineLabel(cfg) {
     return detectVoiceEngine(cfg) === "hume" ? "Hume voice engine" : "OpenAI realtime voice";
   }
+  function allowsHumeAuthlessConnect(cfg) {
+    return Boolean(
+      cfg &&
+        (cfg.allow_hume_authless_connect === true ||
+          cfg.allow_hume_authless_connect === "true")
+    );
+  }
 
   function getVoiceEngineMissingConfigMessage(cfg) {
     if (detectVoiceEngine(cfg) === "hume") {
@@ -1246,7 +1253,7 @@
     const engine = detectVoiceEngine(cfg);
     if (engine === "hume") {
       const auth = normalizeAuthConfig(cfg);
-      if (!auth) {
+      if (!auth && !allowsHumeAuthlessConnect(cfg)) {
         return {
           ok: false,
           message:
@@ -1321,15 +1328,18 @@
   function buildHumeConnectConfig(cfg, launchSession) {
     if (!cfg || typeof cfg !== "object") return null;
     const auth = normalizeAuthConfig(cfg);
-    if (!auth) return null;
+    const allowAuthless = allowsHumeAuthlessConnect(cfg);
+    if (!auth && !allowAuthless) return null;
     const connectConfig = {
       hostname: coerceText(cfg.hume_hostname || cfg.hostname) || "api.hume.ai",
       reconnectAttempts: Number.isFinite(Number(cfg.hume_reconnect_attempts || cfg.reconnectAttempts))
         ? Math.max(0, Math.min(80, Math.floor(Number(cfg.hume_reconnect_attempts || cfg.reconnectAttempts))))
         : 30,
       debug: Boolean(cfg.hume_debug || cfg.debug),
-      auth: auth,
     };
+    if (auth) {
+      connectConfig.auth = auth;
+    }
     const configId = coerceText(cfg.hume_config_id || cfg.config_id);
     if (configId) connectConfig.configId = configId;
     const configVersion = Number(cfg.config_version);
