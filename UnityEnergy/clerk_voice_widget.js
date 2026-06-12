@@ -9520,7 +9520,11 @@
       setStatus(waitingMessage, true, true);
     };
 
-    if (detectVoiceEngine(cfg) !== "hume" || normalizeAuthConfig(cfg)) {
+    if (
+      detectVoiceEngine(cfg) !== "hume" ||
+      normalizeAuthConfig(cfg) ||
+      allowsHumeAuthlessConnect(cfg)
+    ) {
       showRetryPrompt();
       return;
     }
