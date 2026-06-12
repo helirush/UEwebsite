@@ -45,6 +45,8 @@
   let unityStartGateStallTimer = null;
   let unityStartGateStallRetryCount = 0;
   let unityStartGateStallSequence = 0;
+  let unityStartGateLastProgressAt = 0;
+  let unityStartGateRecentProgressEvents = [];
   let navigationRoamingBound = false;
   let pageTransitionInProgress = false;
   let customerExitSweepCaptured = false;
@@ -69,7 +71,16 @@
   const SIGNAL_SPEAKING_DECAY_MS = 780;
   const SIGNAL_FORMATION_DURATION_MS = 2300;
   const START_BUTTON_WAITING_LABEL = "Waiting on Clerk";
-  const UNITY_START_GATE_MAX_STALL_RETRIES = 1;
+  const UNITY_START_GATE_MAX_STALL_RETRIES = 2;
+  const UNITY_START_GATE_MOBILE_MAX_STALL_RETRIES = 4;
+  const UNITY_START_GATE_STALL_TIMEOUT_MS = 5000;
+  const UNITY_START_GATE_STALL_TIMEOUT_MOBILE_MS = 9000;
+  const UNITY_START_GATE_PROGRESS_GRACE_MS = 2800;
+  const UNITY_START_GATE_PROGRESS_GRACE_MOBILE_MS = 6200;
+  const UNITY_START_GATE_POST_READY_PROMPT_DELAY_MS = 2800;
+  const UNITY_START_GATE_POST_READY_PROMPT_DELAY_MOBILE_MS = 5200;
+  const UNITY_START_GATE_RETRY_RESEND_DELAY_MS = 1500;
+  const UNITY_START_GATE_RETRY_RESEND_DELAY_MOBILE_MS = 2200;
   const CROSS_PAGE_ROAMING_STORAGE_KEY_PREFIX = "maxwellian_clerk_roaming_state_v2";
   const CUSTOMER_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_customer_memory_v1";
   const PAGE_CONTEXT_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_page_context_memory_v1";
@@ -7019,6 +7030,135 @@
     }
     return false;
   }
+  function getUnityStartGateStallRetryLimit(cfg) {
+    const configured = Number(cfg && cfg.unity_start_gate_max_stall_retries);
+    if (Number.isFinite(configured)) {
+      return Math.max(1, Math.min(8, Math.floor(configured)));
+    }
+    return isAppleMobileWebKitBrowser()
+      ? UNITY_START_GATE_MOBILE_MAX_STALL_RETRIES
+      : UNITY_START_GATE_MAX_STALL_RETRIES;
+  }
+
+  function getUnityStartGateStallTimeoutMs(cfg) {
+    const configured = Number(cfg && cfg.unity_start_gate_stall_timeout_ms);
+    if (Number.isFinite(configured)) {
+      return Math.max(1800, Math.min(24000, Math.floor(configured)));
+    }
+    return isAppleMobileWebKitBrowser()
+      ? UNITY_START_GATE_STALL_TIMEOUT_MOBILE_MS
+      : UNITY_START_GATE_STALL_TIMEOUT_MS;
+  }
+
+  function getUnityStartGateProgressGraceMs(cfg) {
+    const configured = Number(cfg && cfg.unity_start_gate_progress_grace_ms);
+    if (Number.isFinite(configured)) {
+      return Math.max(1000, Math.min(24000, Math.floor(configured)));
+    }
+    return isAppleMobileWebKitBrowser()
+      ? UNITY_START_GATE_PROGRESS_GRACE_MOBILE_MS
+      : UNITY_START_GATE_PROGRESS_GRACE_MS;
+  }
+
+  function getUnityStartGatePostReadyPromptDelayMs(cfg) {
+    const configured = Number(cfg && cfg.unity_start_gate_post_ready_prompt_delay_ms);
+    if (Number.isFinite(configured)) {
+      return Math.max(1200, Math.min(16000, Math.floor(configured)));
+    }
+    return isAppleMobileWebKitBrowser()
+      ? UNITY_START_GATE_POST_READY_PROMPT_DELAY_MOBILE_MS
+      : UNITY_START_GATE_POST_READY_PROMPT_DELAY_MS;
+  }
+
+  function getUnityStartGateResendDelayMs(cfg) {
+    const configured = Number(cfg && cfg.unity_start_gate_resend_delay_ms);
+    if (Number.isFinite(configured)) {
+      return Math.max(500, Math.min(10000, Math.floor(configured)));
+    }
+    return isAppleMobileWebKitBrowser()
+      ? UNITY_START_GATE_RETRY_RESEND_DELAY_MOBILE_MS
+      : UNITY_START_GATE_RETRY_RESEND_DELAY_MS;
+  }
+
+  function getUnityStartGateRetrySchedule(cfg, phase) {
+    const isAppleMobile = shouldUseUnityStartGate(cfg) && isAppleMobileWebKitBrowser();
+    if (phase === "ready") {
+      return isAppleMobile ? { maxAttempts: 42, delayMs: 210 } : { maxAttempts: 28, delayMs: 170 };
+    }
+    if (phase === "tap") {
+      return isAppleMobile ? { maxAttempts: 52, delayMs: 220 } : { maxAttempts: 34, delayMs: 170 };
+    }
+    if (phase === "resend") {
+      return isAppleMobile ? { maxAttempts: 26, delayMs: 240 } : { maxAttempts: 14, delayMs: 190 };
+    }
+    return { maxAttempts: 24, delayMs: 180 };
+  }
+
+  function noteUnityStartGateProgress(eventType) {
+    unityStartGateLastProgressAt = Date.now();
+    const normalizedType = coerceText(eventType).toLowerCase();
+    if (!normalizedType) return;
+    if (
+      unityStartGateRecentProgressEvents.length > 0 &&
+      unityStartGateRecentProgressEvents[unityStartGateRecentProgressEvents.length - 1] === normalizedType
+    ) {
+      return;
+    }
+    unityStartGateRecentProgressEvents.push(normalizedType);
+    if (unityStartGateRecentProgressEvents.length > 6) {
+      unityStartGateRecentProgressEvents.shift();
+    }
+  }
+
+  function resetUnityStartGateProgressLog() {
+    unityStartGateLastProgressAt = 0;
+    unityStartGateRecentProgressEvents = [];
+  }
+
+  function getUnityStartGateProgressSummary() {
+    if (!Array.isArray(unityStartGateRecentProgressEvents) || unityStartGateRecentProgressEvents.length === 0) {
+      return "";
+    }
+    return unityStartGateRecentProgressEvents.slice(-3).join(", ");
+  }
+
+  function shouldTrackUnityStartGateProgressEvent(eventType) {
+    const normalized = coerceText(eventType).toLowerCase();
+    if (!normalized) return false;
+    if (
+      normalized === "resize_frame" ||
+      normalized === "expand_widget" ||
+      normalized === "collapse_widget" ||
+      normalized === "minimize_widget" ||
+      normalized === "error"
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  function isLikelyUnityConversationStartedEventType(eventType) {
+    const normalized = coerceText(eventType).toLowerCase();
+    if (!normalized) return false;
+    if (
+      normalized === "widget_iframe_is_ready" ||
+      normalized === "resize_frame" ||
+      normalized === "expand_widget" ||
+      normalized === "collapse_widget" ||
+      normalized === "minimize_widget" ||
+      normalized === "transcript_message" ||
+      normalized === "audio_output" ||
+      normalized === "error"
+    ) {
+      return false;
+    }
+    if (/(conversation|session|voice|call)[_-]?(started|start|ready|active|open|connected)/.test(normalized)) {
+      return true;
+    }
+    return /(assistant_ready|connection_open|socket_open|joined_room|joined_call|agent_connected)/.test(
+      normalized
+    );
+  }
 
   function isClerkVoiceFeatureEnabled() {
     const flags = window.UNITY_PUBLIC_RELEASE_FLAGS;
@@ -7786,6 +7926,9 @@
     postToWidgetFrame({ type: "update_config", payload: payload });
     postToWidgetFrame({ type: "send_window_size", payload: dims });
     postToWidgetFrame({ type: "expand_widget_from_client", payload: dims });
+    if (!hasConversationStarted) {
+      noteUnityStartGateProgress("config-dispatched");
+    }
     return true;
   }
   function clickIframeStartConversationButton() {
@@ -7953,9 +8096,20 @@
       if (!activeFrameOrigin || event.origin !== activeFrameOrigin) return;
       const data = event.data;
       if (!data || typeof data !== "object" || typeof data.type !== "string") return;
+      const eventType = coerceText(data.type).toLowerCase();
+      if (!eventType) return;
+      if (!hasConversationStarted && shouldTrackUnityStartGateProgressEvent(eventType)) {
+        noteUnityStartGateProgress(eventType);
+        if (isLikelyUnityConversationStartedEventType(eventType)) {
+          markConversationStartedFromWidgetSignal();
+        } else if (unityStartGatePending && unityStartGateStallTimer) {
+          scheduleUnityStartGateStallTimer(getRuntimeVoiceConfig());
+        }
+      }
 
-      if (data.type === "widget_iframe_is_ready") {
+      if (eventType === "widget_iframe_is_ready") {
         widgetReady = true;
+        noteUnityStartGateProgress("widget-iframe-ready");
         clearFrameLoadTimer();
         const cfg = getRuntimeVoiceConfig();
         if (unityStartGatePending) {
@@ -7994,7 +8148,11 @@
         setLaunchEmblemVisible(true);
         setCompactSquareFrameSize();
         setPanelMode("centered");
-        scheduleIframeStartConversationRetry(28, 170);
+        const readyRetrySchedule = getUnityStartGateRetrySchedule(cfg, "ready");
+        scheduleIframeStartConversationRetry(
+          readyRetrySchedule.maxAttempts,
+          readyRetrySchedule.delayMs
+        );
         window.setTimeout(function () {
           const modalEl = document.getElementById("clerkVoiceModal");
           if (!modalEl || !modalEl.classList.contains("active")) return;
@@ -8007,7 +8165,7 @@
           setStartButtonVisible(true);
           setLaunchEmblemVisible(true);
           setStatus("Tap Waiting on Clerk to begin speaking with Clerk.", false, true);
-        }, 2800);
+        }, getUnityStartGatePostReadyPromptDelayMs(cfg));
         setSessionDiagnostics(
           buildSessionDiagnostics(
             pendingLaunchSession,
@@ -8019,11 +8177,11 @@
         );
         return;
       }
-      if (data.type === "resize_frame" && data.payload) {
+      if (eventType === "resize_frame" && data.payload) {
         setWidgetFrameSize(data.payload.width, data.payload.height);
         return;
       }
-      if (data.type === "expand_widget") {
+      if (eventType === "expand_widget") {
         if (!hasConversationStarted) {
           setWidgetFrameVisible(false);
           setStartButtonVisible(Boolean(unityStartGatePending));
@@ -8037,7 +8195,7 @@
         setPanelMode("centered");
         return;
       }
-      if (data.type === "collapse_widget" || data.type === "minimize_widget") {
+      if (eventType === "collapse_widget" || eventType === "minimize_widget") {
         if (!hasConversationStarted) {
           setWidgetFrameVisible(false);
           setStartButtonVisible(Boolean(unityStartGatePending));
@@ -8051,12 +8209,8 @@
         return;
       }
 
-      if (data.type === "transcript_message") {
-        clearUnityStartGateLaunchTimers();
-        unityStartGateStallRetryCount = 0;
-        hasConversationStarted = true;
-        syncSignalStageForConversation();
-        setWidgetFrameVisible(true);
+      if (eventType === "transcript_message") {
+        markConversationStartedFromWidgetSignal();
         const transcriptPayload = data && data.payload ? data.payload : null;
         if (transcriptPayload && typeof transcriptPayload === "object") {
           const transcriptType = coerceText(transcriptPayload.type).toLowerCase();
@@ -8201,12 +8355,9 @@
         setPanelMode("centered");
         return;
       }
-      if (data.type === "audio_output") {
-        clearUnityStartGateLaunchTimers();
-        unityStartGateStallRetryCount = 0;
-        hasConversationStarted = true;
+      if (eventType === "audio_output") {
+        markConversationStartedFromWidgetSignal();
         pulseSignalSpeaking();
-        setWidgetFrameVisible(true);
         const cfg = getRuntimeVoiceConfig();
         const guardrailSettings = getGuardrailSettings(cfg);
         markGuardrailActivity();
@@ -8221,7 +8372,7 @@
         setPanelMode("centered");
         return;
       }
-      if (data.type === "error") {
+      if (eventType === "error") {
         const payload = data && data.payload && typeof data.payload === "object" ? data.payload : {};
         const detail = typeof payload.message === "string" ? payload.message : "Unknown voice session error.";
         const cfg = getRuntimeVoiceConfig();
@@ -9194,6 +9345,7 @@
     document.getElementById("clerkVoiceStartBtn").addEventListener("click", async function () {
       const cfg = getRuntimeVoiceConfig();
       clearUnityStartGateLaunchTimers();
+      noteUnityStartGateProgress("start-button-tap");
       setLaunchEmblemVisible(true);
       setWidgetFrameVisible(false);
       setStatus("Requesting microphone access…", false, true);
@@ -9233,29 +9385,34 @@
       setWidgetFrameVisible(false);
       setLaunchEmblemVisible(true);
       expandWidgetFromClient();
-      scheduleIframeStartConversationRetry(34, 170);
+      const tapRetrySchedule = getUnityStartGateRetrySchedule(cfg, "tap");
+      scheduleIframeStartConversationRetry(
+        tapRetrySchedule.maxAttempts,
+        tapRetrySchedule.delayMs
+      );
       setStatus(
         `${cfg.character_name} is starting your voice session…`,
         false,
         true
       );
       setStartButtonVisible(false);
+      const resendDelayMs = getUnityStartGateResendDelayMs(cfg);
       unityStartGateResendTimer = window.setTimeout(function () {
         unityStartGateResendTimer = null;
         const modalEl = document.getElementById("clerkVoiceModal");
         if (!modalEl || !modalEl.classList.contains("active")) return;
         if (hasConversationStarted) return;
+        noteUnityStartGateProgress("config-resend");
         sendWidgetConfig(cfg, pendingLaunchSession);
         expandWidgetFromClient();
-        scheduleIframeStartConversationRetry(14, 190);
-      }, 1500);
-      unityStartGateStallTimer = window.setTimeout(function () {
-        unityStartGateStallTimer = null;
-        const modalEl = document.getElementById("clerkVoiceModal");
-        if (!modalEl || !modalEl.classList.contains("active")) return;
-        if (hasConversationStarted) return;
-        handleUnityStartGateLaunchStall(cfg);
-      }, 5000);
+        const resendRetrySchedule = getUnityStartGateRetrySchedule(cfg, "resend");
+        scheduleIframeStartConversationRetry(
+          resendRetrySchedule.maxAttempts,
+          resendRetrySchedule.delayMs
+        );
+        scheduleUnityStartGateStallTimer(cfg);
+      }, resendDelayMs);
+      scheduleUnityStartGateStallTimer(cfg);
     });
     document.getElementById("clerkVoiceCharacterSelect").addEventListener("change", function (event) {
       const selectedCharacterId =
@@ -9455,6 +9612,36 @@
     }
   }
 
+  function markConversationStartedFromWidgetSignal() {
+    clearUnityStartGateLaunchTimers();
+    unityStartGateStallRetryCount = 0;
+    unityStartGatePending = false;
+    unityStartGatePendingRequiresRecovery = false;
+    unityStartGatePreflightStatusMessage = "";
+    hasConversationStarted = true;
+    noteUnityStartGateProgress("conversation-started");
+    syncSignalStageForConversation();
+    setWidgetFrameVisible(true);
+    setStartButtonVisible(false);
+    setLaunchEmblemVisible(false);
+    setPanelMode("centered");
+  }
+
+  function scheduleUnityStartGateStallTimer(cfg) {
+    if (unityStartGateStallTimer) {
+      window.clearTimeout(unityStartGateStallTimer);
+      unityStartGateStallTimer = null;
+    }
+    const timeoutMs = getUnityStartGateStallTimeoutMs(cfg);
+    unityStartGateStallTimer = window.setTimeout(function () {
+      unityStartGateStallTimer = null;
+      const modalEl = document.getElementById("clerkVoiceModal");
+      if (!modalEl || !modalEl.classList.contains("active")) return;
+      if (hasConversationStarted) return;
+      handleUnityStartGateLaunchStall(cfg);
+    }, timeoutMs);
+  }
+
   function probeRuntimeAuthEndpointStatus() {
     if (typeof window === "undefined" || typeof window.fetch !== "function") {
       return Promise.resolve({ ok: false, status: 0 });
@@ -9494,30 +9681,56 @@
     const modalEl = document.getElementById("clerkVoiceModal");
     if (!modalEl || !modalEl.classList.contains("active")) return;
     if (hasConversationStarted) return;
+    const progressGraceMs = getUnityStartGateProgressGraceMs(cfg);
+    const progressAgeMs =
+      unityStartGateLastProgressAt > 0
+        ? Date.now() - unityStartGateLastProgressAt
+        : Number.POSITIVE_INFINITY;
+    if (progressAgeMs <= progressGraceMs) {
+      const progressSummary = getUnityStartGateProgressSummary();
+      const holdMessage = progressSummary
+        ? `Clerk is still connecting (${progressSummary}). Please hold a moment…`
+        : "Clerk is still connecting. Please hold a moment…";
+      setStatus(holdMessage, false, true);
+      scheduleUnityStartGateStallTimer(cfg);
+      return;
+    }
     unityStartGateStallRetryCount += 1;
     unityStartGateStallSequence += 1;
     const stallSequence = unityStartGateStallSequence;
     const frameSrc = document.getElementById("clerkVoiceFrame")?.src || "";
     const waitingMessage = "Still waiting on Clerk. Tap Waiting on Clerk again if needed.";
-    const exceededRetryLimit = unityStartGateStallRetryCount > UNITY_START_GATE_MAX_STALL_RETRIES;
+    const retryLimit = getUnityStartGateStallRetryLimit(cfg);
+    const authlessHumeMode =
+      detectVoiceEngine(cfg) === "hume" && allowsHumeAuthlessConnect(cfg);
+    const exceededRetryLimit = unityStartGateStallRetryCount > retryLimit;
+    const shouldHardFail = exceededRetryLimit && !authlessHumeMode;
 
     const showRetryPrompt = function () {
-      if (exceededRetryLimit) {
-        const finalMessage =
+      if (shouldHardFail) {
+        const progressSummary = getUnityStartGateProgressSummary();
+        const finalMessageBase =
           detectVoiceEngine(cfg) === "hume"
             ? "Clerk could not start a Hume voice session after multiple attempts. Restore runtime auth/connectivity, then relaunch."
             : "Clerk could not start the voice session after multiple attempts. Check realtime session connectivity, then relaunch.";
+        const finalMessage = progressSummary
+          ? `${finalMessageBase} Recent widget activity: ${progressSummary}.`
+          : finalMessageBase;
         showUnityStartGateLaunchFailure(cfg, frameSrc, finalMessage);
         return;
       }
+      const retryMessage =
+        exceededRetryLimit && authlessHumeMode
+          ? "Clerk is still connecting on this device. Tap Waiting on Clerk again in a moment."
+          : waitingMessage;
       const retryBtn = document.getElementById("clerkVoiceStartBtn");
       if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
       unityStartGatePending = true;
       unityStartGatePendingRequiresRecovery = false;
-      unityStartGatePreflightStatusMessage = waitingMessage;
+      unityStartGatePreflightStatusMessage = retryMessage;
       setStartButtonVisible(true);
       setLaunchEmblemVisible(true);
-      setStatus(waitingMessage, true, true);
+      setStatus(retryMessage, false, true);
     };
 
     if (
@@ -9568,6 +9781,8 @@
       return;
     }
     clearUnityStartGateLaunchTimers();
+    resetUnityStartGateProgressLog();
+    noteUnityStartGateProgress("launch-opened");
     unityStartGateStallRetryCount = 0;
     clearQuestionNotesStatusTimer();
     clearLeadCaptureStatusTimer();
@@ -9852,6 +10067,7 @@
     unityStartGatePreflightFailed = false;
     unityStartGatePreflightStatusMessage = "";
     unityStartGateStallRetryCount = 0;
+    resetUnityStartGateProgressLog();
     customerExitSweepCaptured = false;
     setHelpLink("", false);
     setSessionDiagnostics("", false);
