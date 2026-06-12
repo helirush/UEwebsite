@@ -784,6 +784,51 @@
     return true;
   }
 
+  function getRuntimeAuthEndpoint(cfgOrOptions) {
+    const source = cfgOrOptions && typeof cfgOrOptions === "object" ? cfgOrOptions : {};
+    const cfg =
+      source.cfg && typeof source.cfg === "object"
+        ? source.cfg
+        : source;
+    const explicit = coerceText(
+      source.endpoint ||
+        source.runtime_auth_endpoint ||
+        source.hume_runtime_auth_endpoint ||
+        (cfg &&
+          (cfg.runtime_auth_endpoint ||
+            cfg.hume_runtime_auth_endpoint ||
+            cfg.runtime_auth_url ||
+            cfg.hume_runtime_auth_url))
+    );
+    const globalOverride =
+      typeof window !== "undefined"
+        ? coerceText(
+            window.MAXWELLIAN_HUME_RUNTIME_AUTH_ENDPOINT ||
+              window.MAXWELLIAN_RUNTIME_AUTH_ENDPOINT
+          )
+        : "";
+    const candidate = explicit || globalOverride || "/api/hume/runtime-auth";
+    try {
+      const baseHref = typeof window !== "undefined" && window.location ? window.location.href : "";
+      return new URL(candidate, baseHref || undefined).toString();
+    } catch (_err) {
+      return candidate || "/api/hume/runtime-auth";
+    }
+  }
+
+  function getRuntimeAuthEndpointDisplayLabel(cfgOrOptions) {
+    const endpoint = getRuntimeAuthEndpoint(cfgOrOptions);
+    if (!endpoint) return "/api/hume/runtime-auth";
+    if (typeof window === "undefined" || !window.location) return endpoint;
+    try {
+      const parsed = new URL(endpoint, window.location.href);
+      if (parsed.origin === window.location.origin) {
+        return `${parsed.pathname}${parsed.search}`;
+      }
+    } catch (_err) {}
+    return endpoint;
+  }
+
   function extractRuntimeAuthFromServerPayload(payload) {
     if (!payload || typeof payload !== "object") return null;
     return normalizeRuntimeAuthCandidate(
@@ -801,8 +846,9 @@
       return Promise.resolve(null);
     }
     const shouldPersist = opts.persist !== false;
+    const endpoint = getRuntimeAuthEndpoint(opts);
     return window
-      .fetch("/api/hume/runtime-auth", {
+      .fetch(endpoint, {
         method: "GET",
         credentials: "same-origin",
         headers: { Accept: "application/json" },
@@ -9642,12 +9688,13 @@
     }, timeoutMs);
   }
 
-  function probeRuntimeAuthEndpointStatus() {
+  function probeRuntimeAuthEndpointStatus(cfgOrOptions) {
     if (typeof window === "undefined" || typeof window.fetch !== "function") {
       return Promise.resolve({ ok: false, status: 0 });
     }
+    const endpoint = getRuntimeAuthEndpoint(cfgOrOptions);
     return window
-      .fetch("/api/hume/runtime-auth", {
+      .fetch(endpoint, {
         method: "GET",
         credentials: "same-origin",
         headers: { Accept: "application/json" },
@@ -9656,10 +9703,11 @@
         return {
           ok: Boolean(response && response.ok),
           status: response && Number.isFinite(Number(response.status)) ? Number(response.status) : 0,
+          endpoint: endpoint,
         };
       })
       .catch(function () {
-        return { ok: false, status: 0 };
+        return { ok: false, status: 0, endpoint: endpoint };
       });
   }
 
@@ -9733,26 +9781,43 @@
       setStatus(retryMessage, false, true);
     };
 
-    if (
-      detectVoiceEngine(cfg) !== "hume" ||
-      normalizeAuthConfig(cfg) ||
-      allowsHumeAuthlessConnect(cfg)
-    ) {
+    if (detectVoiceEngine(cfg) !== "hume" || normalizeAuthConfig(cfg)) {
+      showRetryPrompt();
+      return;
+    }
+    if (!shouldFetchServerRuntimeAuth()) {
       showRetryPrompt();
       return;
     }
 
+    const runtimeAuthEndpointLabel = getRuntimeAuthEndpointDisplayLabel(cfg);
+
     setStatus("Still waiting on Clerk. Checking runtime auth bridge…", false, true);
-    probeRuntimeAuthEndpointStatus().then(function (probeResult) {
+    probeRuntimeAuthEndpointStatus(cfg).then(function (probeResult) {
       if (stallSequence !== unityStartGateStallSequence) return;
       const activeModal = document.getElementById("clerkVoiceModal");
       if (!activeModal || !activeModal.classList.contains("active")) return;
       if (hasConversationStarted) return;
       if (probeResult.status === 404) {
+        const shouldFailForMissingBridge =
+          !authlessHumeMode ||
+          unityStartGateStallRetryCount >= Math.max(1, Math.min(3, retryLimit));
+        if (shouldFailForMissingBridge) {
+          showUnityStartGateLaunchFailure(
+            cfg,
+            frameSrc,
+            `Clerk runtime auth endpoint is missing on this site (${runtimeAuthEndpointLabel} returned 404). Voice cannot start until that bridge is restored.`
+          );
+          return;
+        }
+        showRetryPrompt();
+        return;
+      }
+      if (probeResult.status === 401 || probeResult.status === 403) {
         showUnityStartGateLaunchFailure(
           cfg,
           frameSrc,
-          "Clerk runtime auth endpoint is missing on this site (/api/hume/runtime-auth returned 404). Voice cannot start until that bridge is restored."
+          `Clerk runtime auth endpoint rejected authorization (${runtimeAuthEndpointLabel} returned ${probeResult.status}). Voice cannot start until valid runtime auth is provided.`
         );
         return;
       }
@@ -9914,7 +9979,7 @@
         frame.removeAttribute("src");
         setLaunchEmblemVisible(true);
         setStatus("Checking secure runtime auth for Clerk…", false, true);
-        fetchRuntimeAuthFromServer({ force: true }).then(function (runtimeAuth) {
+        fetchRuntimeAuthFromServer({ force: true, cfg: cfg }).then(function (runtimeAuth) {
           modal.dataset.humeAuthRetryAttempted = "";
           if (runtimeAuth) {
             openClerkVoiceModal(launchInput);
@@ -9935,8 +10000,9 @@
             return;
           }
           setLaunchEmblemVisible(false);
+          const runtimeAuthEndpointLabel = getRuntimeAuthEndpointDisplayLabel(cfg);
           setStatus(
-            "Clerk runtime auth is unavailable on this device. Configure /api/hume/runtime-auth or inject runtime auth before launching.",
+            `Clerk runtime auth is unavailable on this device. Configure ${runtimeAuthEndpointLabel} or inject runtime auth before launching.`,
             true
           );
         });

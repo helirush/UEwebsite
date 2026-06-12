@@ -244,11 +244,28 @@
     return Boolean(coerceText(locationRef.hostname));
   }
 
+  function resolveRuntimeAuthEndpoint() {
+    var endpointCandidate = coerceText(
+      window.MAXWELLIAN_HUME_RUNTIME_AUTH_ENDPOINT ||
+      window.MAXWELLIAN_RUNTIME_AUTH_ENDPOINT
+    );
+    if (!endpointCandidate) {
+      endpointCandidate = "/api/hume/runtime-auth";
+    }
+    try {
+      var baseHref = window.location && window.location.href ? window.location.href : "";
+      return new URL(endpointCandidate, baseHref || undefined).toString();
+    } catch (_err) {
+      return endpointCandidate || "/api/hume/runtime-auth";
+    }
+  }
+
   function fetchServerRuntimeAuth() {
     if (typeof window.fetch !== "function") return;
     if (!shouldFetchServerRuntimeAuth()) return;
+    var endpoint = resolveRuntimeAuthEndpoint();
     window
-      .fetch("/api/hume/runtime-auth", {
+      .fetch(endpoint, {
         method: "GET",
         credentials: "same-origin",
         headers: { Accept: "application/json" },
