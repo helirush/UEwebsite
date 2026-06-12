@@ -21,7 +21,7 @@
     website: {
       key: "website",
       label: "Website",
-      title: "Website",
+      title: "Foster Farms Electrical Intelligence",
       path: "/UnityEnergy/customer-portal/foster-farms/executive/share/website.html?ue_card=clean1",
       imagePath: "/UnityEnergy/assets/images/share-card-bases/WelcomeWebsite.png",
       theme: "default"

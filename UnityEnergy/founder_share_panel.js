@@ -79,6 +79,18 @@
     private: "private",
     alert: "website"
   });
+  var WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT = Object.freeze({
+    "Electrical Intelligence": "website",
+    "Electrical Visibility": "website-electrical-visibility",
+    "Electrical Condition": "website-electrical-condition",
+    "Electrical Behavior": "website-electrical-behavior",
+    "Electrical Exposure": "website-electrical-exposure",
+    "Electrical Consequence": "website-electrical-consequence",
+    "Electrical Optimization": "website-electrical-optimization",
+    "Energy Field Intelligence": "website-energy-field-intelligence",
+    "Electrical Infrastructure Review": "website-electrical-infrastructure-review",
+    "Operational Energy Review": "website-operational-energy-review"
+  });
   var SHARE_CARD_IMAGE_FILENAME_BY_KEY = Object.freeze({
     website: "WelcomeWebsite.png",
     "project-update": "ProjectUpdate.png",
@@ -361,6 +373,20 @@
     return normalizedCustomerName + " " + normalizedCategory;
   }
 
+  function resolveWebsiteTemplateSlugForTitle(titleText) {
+    var rawTitle = String(titleText || "").trim().toLowerCase();
+    if (!rawTitle) return "website";
+    for (var i = 0; i < ELECTRICAL_TITLE_VARIANTS.length; i += 1) {
+      var variant = String(ELECTRICAL_TITLE_VARIANTS[i] || "").trim();
+      if (!variant) continue;
+      var normalizedVariant = variant.toLowerCase();
+      if (rawTitle === normalizedVariant || rawTitle.endsWith(" " + normalizedVariant)) {
+        return WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "website";
+      }
+    }
+    return "website";
+  }
+
   function normalizeAccessId(value) {
     var raw = String(value || "").trim().toLowerCase();
     var localPart = raw.includes("@") ? raw.split("@")[0] : raw;
@@ -445,8 +471,6 @@
 
   function buildShareUrl(typeKey, targetValue, titleOverride) {
     var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeKey; }) || SHARE_TYPES[0];
-    var templateSlug = SHARE_TEMPLATE_SLUG_BY_KEY[selected.key] || selected.key;
-    var cardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
     var routeContext = extractShareRouteContext(targetValue);
     var resolvedCustomerName =
       resolveCustomerDisplayName(targetValue) ||
@@ -454,6 +478,11 @@
       DEFAULT_PROVIDER_NAME;
     var fallbackTitle = buildElectricalCategoryTitle(resolvedCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
     var selectedTitle = String(titleOverride || "").trim() || fallbackTitle;
+    var templateSlug = SHARE_TEMPLATE_SLUG_BY_KEY[selected.key] || selected.key;
+    if (selected.key === "website") {
+      templateSlug = resolveWebsiteTemplateSlugForTitle(selectedTitle);
+    }
+    var cardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
     var stampCode = allocateNextDailyStampCode(new Date(), 1);
     var shareUrl = new URL("/UnityEnergy/customer-portal/foster-farms/executive/share/" + templateSlug + ".html", getShareOrigin());
     shareUrl.searchParams.set("ue_doc", stampCode);
