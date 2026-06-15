@@ -42,75 +42,75 @@ window.portalConfig = {
         // NOTE: keys should match the normalization rule in UnityEnergy/index.html
         // (lowercase + strip all non-alphanumeric characters).
         'fosterfarms': {
-            name: 'Foster Farms',
+            name: 'Foster Farms (23 Energy Fields - Measured)',
             path: '../Customers/FosterFarms/index.html'
         },
 
         // Norfolk Iron & Metal
         // Accept both "norfolkiron" and "Norfolk Iron & Metal" (=> norfolkironmetal)
         'norfolkiron': {
-            name: 'Norfolk Iron & Metal',
+            name: 'Norfolk Iron & Metal (5 EnergyFields - Measured+MPTS)',
             path: '../Customers/NorfolkIron/index.html'
         },
         'norfolkironmetal': {
-            name: 'Norfolk Iron & Metal',
+            name: 'Norfolk Iron & Metal (5 EnergyFields - Measured+MPTS)',
             path: '../Customers/NorfolkIron/index.html'
         },
         'armi': {
-            name: 'ARMI',
+            name: 'ARMI (500kVA : 1xH240)',
             path: '../Customers/ARMI/index.html'
         },
         'arkansasmyriad': {
-            name: 'ARMI',
+            name: 'ARMI (500kVA : 1xH240)',
             path: '../Customers/ARMI/index.html'
         },
         'avco': {
-            name: 'AVCO Center',
+            name: 'AVCO Center (2000kVA : 3xH240)',
             path: '../Customers/AVCO/index.html'
         },
         'avcocenter': {
-            name: 'AVCO Center',
+            name: 'AVCO Center (2000kVA : 3xH240)',
             path: '../Customers/AVCO/index.html'
         },
         'avcobuilding': {
-            name: 'AVCO Center',
+            name: 'AVCO Center (2000kVA : 3xH240)',
             path: '../Customers/AVCO/index.html'
         },
         'boa': {
-            name: 'BOA Building',
+            name: 'BOA Building (2 EnergyFields - Measured+MPTS)',
             path: '../Customers/BOA_Building/index.html'
         },
         'boabuilding': {
-            name: 'BOA Building',
+            name: 'BOA Building (2 EnergyFields - Measured+MPTS)',
             path: '../Customers/BOA_Building/index.html'
         },
         'bankofamerica': {
-            name: 'BOA Building',
+            name: 'BOA Building (2 EnergyFields - Measured+MPTS)',
             path: '../Customers/BOA_Building/index.html'
         },
         'mobbuilding': {
-            name: 'BOA Building',
+            name: 'BOA Building (2 EnergyFields - Measured+MPTS)',
             path: '../Customers/BOA_Building/index.html'
         },
         'tysonfoods': {
-            name: 'Tyson Foods',
+            name: 'Tyson Foods (2500kVA : 2xH240, 3xH490)',
             path: '../Customers/TysonFoods/index.html'
         },
         'tyson': {
-            name: 'Tyson Foods',
+            name: 'Tyson Foods (2500kVA : 2xH240, 3xH490)',
             path: '../Customers/TysonFoods/index.html'
         },
         'tysonfoodsinc': {
-            name: 'Tyson Foods',
+            name: 'Tyson Foods (2500kVA : 2xH240, 3xH490)',
             path: '../Customers/TysonFoods/index.html'
         },
         'investor': {
-            name: 'Investor Center',
+            name: 'Investor Center (Private and Confidential)',
             path: './customer-portal/investor-center/index.html',
             allowAnyDomain: true
         },
         'investorcenter': {
-            name: 'Investor Center',
+            name: 'Investor Center (Private and Confidential)',
             path: './customer-portal/investor-center/index.html',
             allowAnyDomain: true
         }

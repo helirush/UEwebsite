@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
-    <script src="hume_character_config.js?v=20260612r21"></script>
-    <script src="clerk_voice_widget.js?v=20260612r24"></script>
+    <script src="hume_character_config.js?v=20260614r22"></script>
+    <script src="clerk_voice_widget.js?v=20260614r26"></script>
     <script src="public_release_flags.js?v=20260411c"></script>
     <title>Contact Us - Unity Energy</title>
     <style>
@@ -193,35 +193,36 @@
             position: relative;
             top: 0;
             left: 0;
-            min-height: calc(100vh - 92px);
+            min-height: calc(100vh - 186px);
+            padding: 8px 10px 8px;
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
-            background: linear-gradient(180deg, rgba(246, 250, 236, 0.96) 0%, rgba(224, 236, 194, 0.96) 58%, rgba(191, 210, 142, 0.96) 100%);
+            background: linear-gradient(180deg, rgba(224, 238, 190, 0.96) 0%, rgba(199, 220, 150, 0.96) 100%);
             overflow: hidden;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: -38px;
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('UnityPortalButton.png');
-            background-size: cover;
-            background-position: center 46%;
+            background-image: none;
+            background-size: auto;
+            background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.5;
+            opacity: 0;
             z-index: 0;
-            transform: scale(1.16);
-            filter: saturate(1.08) contrast(1.02) brightness(1.03);
+            transform: none;
+            filter: none;
         }
         .hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 42%, rgba(255, 245, 190, 0.16) 0%, rgba(132, 158, 72, 0.14) 64%, rgba(73, 95, 32, 0.2) 100%);
+            background: linear-gradient(180deg, rgba(78, 106, 38, 0.08) 0%, rgba(58, 82, 25, 0.18) 100%);
             z-index: 1;
         }
         .contact-pill {
@@ -288,43 +289,50 @@
             position: relative;
             z-index: 5;
             background: linear-gradient(160deg, rgba(252, 253, 245, 0.98) 0%, rgba(238, 246, 221, 0.96) 100%);
-            border-radius: 24px;
+            border-radius: 20px;
             border: 1px solid rgba(96, 126, 40, 0.46);
             box-shadow: 0 24px 58px rgba(26, 38, 12, 0.28), inset 0 0 0 1px rgba(250, 240, 160, 0.3);
-            max-width: 1120px;
-            width: min(94vw, 1120px);
+            max-width: none;
+            width: min(99vw, 2200px);
+            min-height: calc(100vh - 230px);
+            display: flex;
             overflow: hidden;
         }
         .contact-panel-content {
             padding: 0;
+            width: 100%;
         }
         .contact-panel-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+            grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+            min-height: 100%;
         }
         .contact-main {
-            padding: 36px 42px 34px 42px;
+            padding: 30px 36px 28px 36px;
             text-align: left;
         }
         .contact-aside {
-            padding: 30px 28px;
+            padding: 24px 22px;
             border-left: 1px solid rgba(96, 126, 40, 0.28);
             background: linear-gradient(150deg, rgba(228, 239, 203, 0.9) 0%, rgba(200, 219, 160, 0.88) 100%);
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            justify-content: center;
+            gap: 10px;
+            justify-content: flex-start;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
         }
         .contact-brand-row {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             margin-bottom: 12px;
             color: rgba(49, 72, 48, 0.98);
         }
         .contact-brand-logo-wrap {
-            width: 62px;
-            height: 62px;
+            width: 84px;
+            height: 84px;
             border-radius: 16px;
             border: 1px solid rgba(96, 126, 40, 0.38);
             background: linear-gradient(180deg, rgba(248, 238, 208, 0.75) 0%, rgba(236, 219, 176, 0.65) 100%);
@@ -338,7 +346,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            padding: 8px;
+            padding: 6px;
             display: block;
         }
         .contact-brand-logo {
@@ -369,79 +377,74 @@
         .contact-brand-copy {
             display: flex;
             flex-direction: column;
-            gap: 2px;
-        }
-        .contact-eyebrow {
-            margin: 0;
-            font-size: 0.76rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: rgba(78, 103, 46, 0.92);
-            font-weight: 700;
+            gap: 0;
         }
         .contact-brand-kicker {
-            font-size: 1rem;
-            font-weight: 800;
-            letter-spacing: 0.14em;
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(1.08rem, 1.5vw, 1.5rem);
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            line-height: 1.02;
             text-transform: uppercase;
-            color: rgba(118, 88, 24, 0.98);
+            color: rgba(36, 63, 40, 1);
         }
         .contact-main h1 {
-            font-size: clamp(2rem, 3vw, 2.6rem);
+            font-size: clamp(1.8rem, 2.7vw, 2.3rem);
             color: rgba(49, 65, 0, 1);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 760;
             line-height: 1.08;
         }
         .contact-intro {
-            font-size: 1.04em;
+            font-size: 0.98em;
             color: rgba(54, 72, 30, 0.96);
-            line-height: 1.56;
-            margin-bottom: 18px;
-            max-width: 700px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            max-width: 640px;
         }
         .contact-badges {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 18px;
+            gap: 7px;
+            margin-bottom: 12px;
         }
         .contact-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             border-radius: 999px;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border: 1px solid rgba(96, 126, 40, 0.34);
             background: rgba(241, 247, 228, 0.86);
             color: rgba(57, 77, 31, 0.95);
-            font-size: 0.84rem;
+            font-size: 0.78rem;
             font-weight: 600;
             letter-spacing: 0.02em;
         }
         .contact-cta {
             background: linear-gradient(145deg, rgba(227, 238, 199, 0.94) 0%, rgba(205, 224, 167, 0.95) 100%);
             border-radius: 16px;
-            padding: 24px 22px;
-            margin-bottom: 16px;
+            padding: 16px 16px 14px;
+            margin-bottom: 10px;
             border: 1px solid rgba(96, 126, 40, 0.46);
             box-shadow: inset 0 1px 0 rgba(250, 240, 160, 0.3);
         }
         .contact-cta h2 {
-            font-size: 1.3em;
+            font-size: 1.14em;
             color: rgba(49, 65, 0, 1);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 700;
         }
         .contact-cta p {
-            font-size: 1em;
+            font-size: 0.92em;
             color: rgba(53, 74, 27, 0.95);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
         .contact-cta-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         .email-link,
         .contact-secondary-link,
@@ -450,13 +453,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 20px;
+            padding: 10px 16px;
             border-radius: 16px;
             border: 1px solid rgba(201, 166, 72, 0.58);
             background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.96) 0%, rgba(236, 219, 176, 0.96) 100%);
             color: rgba(48, 71, 35, 0.98);
             text-decoration: none;
-            font-size: 0.92em;
+            font-size: 0.86em;
             font-weight: 700;
             transition: all 0.3s;
             box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62);
@@ -473,90 +476,85 @@
             transform: translateY(-1px);
         }
         .newsletter-cta {
-            margin-top: 14px;
+            margin-top: 10px;
             background: linear-gradient(145deg, rgba(225, 236, 196, 0.92) 0%, rgba(205, 222, 165, 0.95) 100%);
             border: 1px solid rgba(96, 126, 40, 0.4);
             border-radius: 12px;
-            padding: 16px 16px 15px 16px;
+            padding: 13px 13px 12px 13px;
             text-align: left;
         }
         .newsletter-cta h3 {
             margin: 0 0 8px 0;
-            font-size: 1.03em;
+            font-size: 0.98em;
             color: rgba(53, 73, 35, 1);
             font-weight: 700;
         }
         .newsletter-cta p {
-            margin: 0 0 11px 0;
-            font-size: 0.94em;
+            margin: 0 0 9px 0;
+            font-size: 0.86em;
             color: rgba(68, 83, 46, 0.9);
-            line-height: 1.5;
+            line-height: 1.42;
         }
         .location-info {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 14px;
-            padding-top: 14px;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid rgba(96, 126, 40, 0.34);
         }
         .location-item {
             text-align: left;
-            padding: 10px 10px 9px;
-            border-radius: 12px;
+            padding: 8px 8px 7px;
+            border-radius: 10px;
             background: rgba(238, 245, 220, 0.72);
             border: 1px solid rgba(96, 126, 40, 0.2);
         }
         .location-item .icon {
-            font-size: 1.25em;
-            margin-bottom: 4px;
+            font-size: 1.05em;
+            margin-bottom: 2px;
         }
         .location-item h3 {
-            font-size: 0.98em;
+            font-size: 0.83em;
             color: rgba(53, 73, 35, 1);
             margin-bottom: 2px;
             font-weight: 700;
         }
         .location-item p {
-            font-size: 0.86em;
+            font-size: 0.77em;
             color: rgba(74, 89, 52, 0.9);
-            line-height: 1.35;
+            line-height: 1.28;
         }
         .location-item p a {
             color: rgba(96, 126, 40, 1) !important;
         }
-        .clerk-portrait-shell {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 3px solid rgba(96, 126, 40, 0.46);
-            background: radial-gradient(circle at 30% 30%, rgba(248, 238, 208, 0.95) 0%, rgba(221, 234, 189, 0.92) 100%);
-            box-shadow: 0 12px 24px rgba(33, 51, 15, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-            overflow: hidden;
+        .clerk-ghost-image {
+            position: absolute;
+            right: calc(-170px + 1in);
+            top: calc(63% - 2.25in);
+            width: 390px;
+            max-width: none;
+            transform: translateY(-50%) scale(2.08);
+            transform-origin: center center;
+            opacity: 0.31;
+            filter: saturate(0.78) contrast(1.08) brightness(0.8);
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+        }
+        .contact-aside > :not(.clerk-ghost-image) {
+            position: relative;
+            z-index: 1;
+        }
+        .contact-aside-content {
+            margin-top: 4.2in;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2px;
-        }
-        .clerk-portrait {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        .clerk-portrait-fallback {
-            display: none;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.1rem;
-            letter-spacing: 0.08em;
-            font-weight: 800;
-            color: rgba(63, 84, 39, 0.92);
+            flex-direction: column;
+            gap: 10px;
+            padding-bottom: clamp(160px, 20vh, 240px);
         }
         .clerk-panel-title {
-            font-size: 1.3rem;
+            font-size: 1.26rem;
             line-height: 1.15;
             color: rgba(49, 65, 0, 1);
             font-weight: 760;
@@ -564,7 +562,7 @@
         }
         .clerk-panel-subtitle {
             margin: 0;
-            font-size: 0.84rem;
+            font-size: 0.94rem;
             letter-spacing: 0.09em;
             text-transform: uppercase;
             color: rgba(86, 108, 53, 0.92);
@@ -572,54 +570,91 @@
         }
         .clerk-panel-text {
             margin: 0;
-            font-size: 0.95rem;
-            line-height: 1.52;
+            font-size: 0.98rem;
+            line-height: 1.45;
             color: rgba(55, 73, 31, 0.94);
         }
-        .clerk-panel-points {
+        .guidance-methods {
             display: flex;
             flex-direction: column;
-            gap: 7px;
-            font-size: 0.89rem;
-            color: rgba(58, 76, 35, 0.94);
-            line-height: 1.42;
-            margin-top: 2px;
-        }
-        .clerk-panel-points p {
-            margin: 0;
-        }
-        .clerk-panel-points strong {
-            color: rgba(48, 69, 27, 0.98);
-        }
-        .clerk-quick-link {
+            gap: 10px;
             margin-top: 4px;
-            width: fit-content;
+        }
+        .guidance-method {
+            border: 1px solid rgba(96, 126, 40, 0.28);
+            border-radius: 12px;
+            padding: 11px 11px 10px;
+            background: rgba(233, 243, 206, 0.74);
+        }
+        .guidance-method--concierge {
+            background: rgba(225, 238, 192, 0.76);
+        }
+        .guidance-method h4 {
+            margin: 0 0 6px 0;
+            font-size: 1.02rem;
+            line-height: 1.25;
+            color: rgba(45, 64, 22, 0.98);
+            font-weight: 760;
+        }
+        .guidance-method p {
+            margin: 0 0 9px 0;
+            font-size: 0.92rem;
+            line-height: 1.42;
+            color: rgba(56, 73, 32, 0.96);
+        }
+        .clerk-quick-link,
+        .clerk-meet-link {
+            width: 100%;
+            min-height: 42px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 10px 12px;
+        }
+        .clerk-meet-link {
+            cursor: pointer;
+            border-color: rgba(104, 136, 46, 0.76);
+            background-image: linear-gradient(180deg, rgba(228, 242, 190, 0.97) 0%, rgba(190, 218, 130, 0.95) 100%);
+            color: rgba(41, 61, 18, 0.98);
         }
         @media (max-width: 980px) {
+            .contact-panel {
+                width: min(98vw, 1240px);
+                min-height: auto;
+                display: block;
+            }
             .contact-panel-grid {
                 grid-template-columns: 1fr;
+                min-height: auto;
             }
             .contact-aside {
                 border-left: none;
                 border-top: 1px solid rgba(96, 126, 40, 0.28);
                 align-items: flex-start;
             }
-            .clerk-portrait-shell {
-                width: 114px;
-                height: 114px;
+            .contact-aside-content {
+                margin-top: 0;
+                padding-bottom: 0;
+            }
+            .clerk-ghost-image {
+                right: -132px;
+                top: 58%;
+                transform: translateY(-50%) scale(1.58);
+                opacity: 0.26;
             }
         }
 
         /* Footer */
         footer {
             position: relative;
-            background: transparent;
-            color: rgba(45, 63, 26, 0.86);
+            width: 100%;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%);
+            color: rgba(250, 240, 160, 1);
             text-align: center;
-            padding: 12px;
-            margin-top: 16px;
+            padding: 12px 20px;
+            margin-top: 0;
             font-size: 0.82em;
             z-index: 6;
+            border-top: 1px solid rgba(250, 240, 160, 0.16);
         }
 
         footer a {
@@ -642,6 +677,7 @@
             }
             .hero {
                 min-height: auto;
+                padding: 8px 10px 0;
             }
             .meet-team-hero-cta {
                 left: 50%;
@@ -655,15 +691,15 @@
                 transform: translateX(-50%) translateY(-1px);
             }
             .contact-main {
-                padding: 24px 20px 20px 20px;
+                padding: 18px 16px 14px 16px;
             }
             .contact-aside {
-                padding: 20px;
+                padding: 14px 16px 16px;
                 align-items: center;
                 text-align: center;
             }
             .contact-main h1 {
-                font-size: 1.9em;
+                font-size: 1.65em;
             }
 
             .location-info {
@@ -678,8 +714,11 @@
             .contact-secondary-link {
                 width: 100%;
             }
-            .clerk-quick-link {
-                width: 100%;
+            .clerk-ghost-image {
+                right: -96px;
+                top: 52%;
+                transform: translateY(-50%) scale(1.34);
+                opacity: 0.22;
             }
         }
     </style>
@@ -723,7 +762,7 @@
                             <div class="contact-brand-logo-wrap">
                                 <img
                                     class="contact-brand-logo-image"
-                                    src="assets/unity-energy-logo.png"
+                                    src="assets/images/UElogo_60614.png"
                                     alt="Unity Energy logo"
                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                                 >
@@ -736,21 +775,18 @@
                                 </svg>
                             </div>
                             <div class="contact-brand-copy">
-                                <p class="contact-eyebrow">Unity Energy Concierge</p>
                                 <span class="contact-brand-kicker">Unity Energy</span>
                             </div>
                         </div>
                         <h1>Contact Details</h1>
 
                         <p class="contact-intro">
-                            Curious how Unity Energy can transform your facility electrical system? We’d love to hear from you.
-                            Whether you’re exploring harmonization for the first time or ready to optimize existing power quality,
-                            our team will help you map the fastest path forward.
+                            Exploring harmonization for the first time, or ready to optimize what you already have?
+                            Share your site challenge and we’ll guide your next best step.
                         </p>
 
                         <div class="contact-badges">
                             <span class="contact-badge">⚡ 480V Industrial Focus</span>
-                            <span class="contact-badge">📈 Monitoring + Harmonization</span>
                             <span class="contact-badge">🧠 Guided by Clerk + Team</span>
                         </div>
 
@@ -794,39 +830,100 @@
                         </div>
                     </section>
                     <aside class="contact-aside">
-                        <div class="clerk-portrait-shell">
-                            <img
-                                class="clerk-portrait"
-                                src="assets/clerk-portrait.png"
-                                alt="Clerk portrait"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                            >
-                            <div class="clerk-portrait-fallback">CM</div>
+                        <img
+                            class="clerk-ghost-image"
+                            src="assets/images/ClerkMaxwell_60423t.png"
+                            alt=""
+                            aria-hidden="true"
+                            onerror="this.style.display='none';"
+                        >
+                        <div class="contact-aside-content">
+                            <p class="clerk-panel-subtitle">Personal Guidance</p>
+                            <h3 class="clerk-panel-title">Work with Clerk Concierge</h3>
+                            <p class="clerk-panel-text">
+                                Choose the guidance path that fits how you want to start.
+                            </p>
+                            <div class="guidance-methods">
+                                <section class="guidance-method guidance-method--email">
+                                    <h4>Fast Start — Send an Email to the Office</h4>
+                                    <p>Use Start a Guide to send your facility details and your top power-quality challenge. Our team will review your note and respond with practical next steps.</p>
+                                    <a
+                                        href="mailto:info@UnityEnergy.com?subject=Unity%20Energy%20Guided%20Intake&body=Company:%0ALocation:%0ABiggest%20power-quality%20challenge:%0ATimeline:%0A"
+                                        class="clerk-quick-link contact-pill"
+                                    >Start a Guide</a>
+                                </section>
+                                <section class="guidance-method guidance-method--concierge">
+                                    <h4>Clerk Concierge — Talk Before You Fill Out Forms</h4>
+                                    <p>Use Meet with Clerk to talk through what you need first. Clerk helps you clarify priorities, then guides you into the right intake details with concierge support.</p>
+                                    <button
+                                        type="button"
+                                        class="clerk-meet-link contact-pill"
+                                        onclick="return openClerkFromContact(event)"
+                                        aria-label="Meet with Clerk concierge"
+                                    >Meet with Clerk</button>
+                                </section>
+                            </div>
                         </div>
-                        <p class="clerk-panel-subtitle">Personal Guidance</p>
-                        <h3 class="clerk-panel-title">Work with Clerk Concierge</h3>
-                        <p class="clerk-panel-text">
-                            Bring your current challenge and we’ll shape a tailored electrical-field game plan with clear priorities.
-                        </p>
-                        <div class="clerk-panel-points">
-                            <p><strong>Fast start:</strong> Facility name, monthly kWh, and your biggest power-quality pain point.</p>
-                            <p><strong>Typical outcomes:</strong> Better power factor, lower thermal burden, and cleaner operations.</p>
-                        </div>
-                        <a
-                            href="mailto:info@UnityEnergy.com?subject=Unity%20Energy%20Guided%20Intake&body=Company:%0ALocation:%0ABiggest%20power-quality%20challenge:%0ATimeline:%0A"
-                            class="clerk-quick-link contact-pill"
-                        >Start a Guided Intake</a>
                     </aside>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 Unity Energy. All rights reserved.</p>
-        </footer>
     </div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+    </footer>
     <script>
+        function openClerkFromContact(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
+                openTeamWindow();
+                return false;
+            }
+            const launchOptions = {
+                contextSource: 'contact-us',
+                context: 'contact-concierge',
+                mode: 'contact-concierge',
+                conversationMode: 'guided-intake',
+                sourcePage: 'contact-us',
+                entryPoint: 'contact-us-meet-with-clerk-button',
+                likelyUserIntent: 'Visitor requested concierge support from the contact details page and wants guided help.',
+                sessionContext: 'User selected Meet with Clerk from the contact details concierge panel.',
+                responseStyleHint: 'guided intake with concise practical questions',
+                uiMode: 'modal'
+            };
+            if (typeof window.launchClerkWithPageContext === 'function') {
+                window.launchClerkWithPageContext(launchOptions);
+                return false;
+            }
+            if (typeof window.openClerkWithPageContext === 'function') {
+                const opened = window.openClerkWithPageContext(launchOptions);
+                if (opened !== false) {
+                    return false;
+                }
+            }
+            if (typeof window.openClerkVoiceModal === 'function') {
+                const launchPayload = typeof window.buildClerkPageLaunchPayload === 'function'
+                    ? window.buildClerkPageLaunchPayload(launchOptions)
+                    : {
+                        contextSource: 'contact-us',
+                        contextPayload: {
+                            context: 'contact-concierge',
+                            source_page: 'contact-us',
+                            entry_point: 'contact-us-meet-with-clerk-button'
+                        },
+                        uiMode: 'modal'
+                    };
+                window.openClerkVoiceModal(launchPayload);
+                return false;
+            }
+            openTeamWindow();
+            return false;
+        }
         function openTeamWindow(event) {
             if (event) event.preventDefault();
             const teamWindow = window.open(

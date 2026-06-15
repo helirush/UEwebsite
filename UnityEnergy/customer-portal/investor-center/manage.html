@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Investor Module — Manage</title>
+  <meta name="description" content="Investor slide module for Manage, including tuning and managed-performance revenue models." />
+  <style>
+    :root { --ue-bg:#f5f2e9; --ue-text:#3f4638; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif; color:var(--ue-text); background:linear-gradient(180deg,#ece6d8 0%,var(--ue-bg) 100%); }
+    .shell { max-width:1120px; margin:0 auto; padding:20px 16px 38px; }
+    .top-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; }
+    .link { text-decoration:none; font-weight:700; font-size:14px; color:#314726; }
+    .home-link { text-decoration:none; padding:8px 12px; border-radius:999px; border:1px solid rgba(63,90,39,.62); background:linear-gradient(180deg,rgba(88,123,48,.97) 0%,rgba(53,79,32,.97) 100%); color:#f7f2e5; font-size:13px; font-weight:700; }
+    .module-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:12px; }
+    .module-nav a { text-decoration:none; text-align:center; padding:9px 8px; border-radius:10px; border:1px solid rgba(127,141,101,.45); background:rgba(250,248,241,.9); color:#495740; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+    .module-nav a.active { border-color:rgba(63,90,39,.75); background:linear-gradient(180deg,rgba(87,123,49,.98) 0%,rgba(53,79,33,.98) 100%); color:#f7f2e5; }
+    .hero { border:1px solid rgba(123,136,96,.48); border-radius:14px; background:linear-gradient(180deg,rgba(20,34,16,.08) 0%,rgba(20,34,16,.58) 66%,rgba(20,34,16,.9) 100%),url("../../assets/images/Investor_Glance.png") center/cover no-repeat; min-height:200px; padding:14px; color:#f8f4e7; display:grid; align-content:end; gap:6px; margin-bottom:12px; }
+    .hero-kicker { margin:0; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .hero h1 { margin:0; font-size:clamp(1.45rem,2.8vw,2.2rem); line-height:1.06; }
+    .hero p { margin:0; font-size:13px; font-weight:600; color:rgba(245,238,218,.95); }
+    .slide-grid { display:grid; gap:10px; }
+    .slide { border:1px solid rgba(126,139,100,.45); border-radius:12px; background:rgba(255,255,255,.96); padding:13px; }
+    .slide h2 { margin:0 0 7px; font-size:19px; color:#2f4825; }
+    .slide p { margin:0 0 8px; color:#55624a; font-size:14px; line-height:1.4; }
+    .slide ul { margin:6px 0 0 18px; color:#4d5b41; font-size:13px; line-height:1.4; padding:0; }
+    .model { border:1px dashed rgba(139,124,76,.48); border-radius:10px; background:rgba(250,247,238,.96); padding:10px; margin-top:8px; }
+    .model strong { display:block; margin-bottom:4px; color:#4b5c38; font-size:12px; letter-spacing:.07em; text-transform:uppercase; }
+    .model code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; color:#394b2c; }
+    .footer-nav { margin-top:12px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+    .footer-nav a { text-decoration:none; font-size:13px; font-weight:700; color:#355027; }
+    @media (max-width:900px) { .module-nav { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="top-row">
+      <a class="link" href="./index.html">← Back to Investor Center</a>
+      <a class="home-link" href="../../index.html">Unity Home</a>
+    </div>
+    <nav class="module-nav" aria-label="Investor modules">
+      <a href="./measure.html">1. Measure</a>
+      <a class="active" href="./manage.html">2. Manage</a>
+      <a href="./exchange.html">3. Exchange</a>
+      <a href="./optimize.html">4. Optimize</a>
+    </nav>
+    <section class="hero">
+      <p class="hero-kicker">Investor Module Slide</p>
+      <h1>Manage</h1>
+      <p>Manage transforms measured insight into tuned, repeatable operational performance.</p>
+    </section>
+    <section class="slide-grid">
+      <article class="slide">
+        <h2>Slide A — Managed Performance Story</h2>
+        <p>Manage is the service layer where Unity operations, tuning cadence, and customer governance create durable value beyond reporting alone.</p>
+        <ul>
+          <li>Continuous tuning and intervention framework</li>
+          <li>Operational reliability targets tied to monthly governance</li>
+          <li>Higher retention through active performance ownership</li>
+        </ul>
+      </article>
+      <article class="slide">
+        <h2>Slide B — Manage Financial Model</h2>
+        <p>Manage can combine fixed service revenue with outcome-linked upside.</p>
+        <div class="model">
+          <strong>Service Layer ARR (Placeholder)</strong>
+          <code>Manage ARR = (# Managed Sites × Monthly Management Fee) × 12</code>
+        </div>
+        <div class="model">
+          <strong>Outcome Participation (Optional)</strong>
+          <code>Outcome Revenue = (Verified Annual Savings × Participation Rate)</code>
+        </div>
+      </article>
+      <article class="slide">
+        <h2>Slide C — Investor Metrics</h2>
+        <p>Key indicators for the Manage module:</p>
+        <ul>
+          <li>Managed-site count and monthly expansion rate</li>
+          <li>Average gross margin per managed site</li>
+          <li>Savings verification cycle time and realized participation</li>
+        </ul>
+      </article>
+    </section>
+    <div class="footer-nav">
+      <a href="./measure.html">← Previous: Measure</a>
+      <a href="./exchange.html">Next Module: Exchange →</a>
+    </div>
+  </main>
+</body>
+</html>

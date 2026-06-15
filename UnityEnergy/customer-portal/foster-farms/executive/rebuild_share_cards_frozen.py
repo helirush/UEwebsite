@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import re
-import shutil
 from datetime import datetime
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -16,17 +15,24 @@ CARD_OUTPUTS = {
     "update": "ue-update-logo-preview.jpg",
     "brief": "ue-brief-logo-preview.jpg",
     "memo": "ue-memo-logo-preview.jpg",
+    "report": "ue-report-logo-preview.jpg",
     "monthly": "ue-monthly-logo-preview.jpg",
     "maxwellian": "ue-maxwellian-logo-preview.jpg",
     "private": "ue-private-logo-preview.jpg",
     "alert": "ue-alert-logo-preview.jpg",
+    "special-alert": "ue-special-alert-logo-preview.jpg",
 }
 BASE_CARD_SOURCE_KEYS = {
-    "update": "project-update",
-    "memo": "project-memo",
+    "update": "ProjectUpdate",
+    "brief": "ProjectUpdate",
+    "memo": "ProjectMemo",
+    "report": "ProjectReport",
+    "monthly": "MonthlyReport",
+    "maxwellian": "MaxwellianNews",
+    "private": "PrivateConfidential",
+    "alert": "SpecialAlert",
+    "special-alert": "SpecialAlert",
 }
-REPORT_ALIAS_TARGET = "ue-report-logo-preview.jpg"
-REPORT_ALIAS_SOURCE = "memo"
 
 SHARE_META_TARGETS = [
     ("share/update.html", "update", "ue-update-logo-preview.jpg"),
@@ -43,10 +49,12 @@ PROOF_CARD_DEFS = [
     ("Update", "ue-update-logo-preview.jpg"),
     ("Brief", "ue-brief-logo-preview.jpg"),
     ("Memo", "ue-memo-logo-preview.jpg"),
+    ("Report", "ue-report-logo-preview.jpg"),
     ("Monthly", "ue-monthly-logo-preview.jpg"),
     ("Maxwellian", "ue-maxwellian-logo-preview.jpg"),
     ("Private", "ue-private-logo-preview.jpg"),
     ("Alert", "ue-alert-logo-preview.jpg"),
+    ("Special Alert", "ue-special-alert-logo-preview.jpg"),
 ]
 
 DATE_FONT_SIZE = 30
@@ -106,11 +114,6 @@ def rebuild_cards_from_bases():
         output_path = BASE_DIR / output_name
         with Image.open(source_path).convert("RGBA") as source_img:
             source_img.convert("RGB").save(output_path, quality=95)
-
-    shutil.copy2(
-        BASE_DIR / CARD_OUTPUTS[REPORT_ALIAS_SOURCE],
-        BASE_DIR / REPORT_ALIAS_TARGET,
-    )
 
 
 def paint_date_stamp(card_path: Path, stamp: str):

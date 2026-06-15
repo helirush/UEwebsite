@@ -33,6 +33,7 @@ window.MAXWELLIAN_HUME = {
   ],
   unity_footer_rotate_seconds: 15,
   floating_launcher_enabled: true,
+  floating_launcher_blocked_pages: ["contact-us"],
   floating_launcher_tooltip: "Meet with Clerk",
   floating_launcher_icon_url: "assets/images/ClerkMaxwell_60423t.png",
   floating_launcher_context_mode: "technical-follow-up",
@@ -44,6 +45,7 @@ window.MAXWELLIAN_HUME = {
     "unity-story",
     "products-services",
     "our-systems",
+    "contact-us",
     "electrical-energy-story",
   ],
   clerk_voice_blocked_pages: [
@@ -239,6 +241,8 @@ window.MAXWELLIAN_HUME = {
         "eestream/eWebmaster/UnityEnergy/unity-story.html",
         "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
       ],
+      session_context:
+        "Page-aware greeting: acknowledge the Unity Home page and ask what they want to understand first. Bridge high-level narrative into Measure-Manage-Exchange before diving deeper.",
       key_points: [
         "Frame answers in Measure-Manage-Exchange language.",
         "Help visitor choose the next learning path from high-level pages into technical detail.",
@@ -289,6 +293,12 @@ window.MAXWELLIAN_HUME = {
         "eestream/eWebmaster/UnityEnergy/founder-message.html",
         "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
       ],
+      session_context:
+        "Page-aware greeting: acknowledge the Founder Message page, then connect founder narrative to Measure-Manage-Exchange operating doctrine with practical field implications.",
+      key_points: [
+        "Translate mission narrative into practical Measure-Manage-Exchange actions.",
+        "Keep explanations grounded in reactive burden, harmonics, and thermal burden realities.",
+      ],
     },
     "products-services": {
       title: "Products and Services",
@@ -302,6 +312,10 @@ window.MAXWELLIAN_HUME = {
       ],
       session_context:
         "Page-aware greeting: acknowledge the Products & Services page, then ask which offering or workflow the visitor wants clarified.",
+      key_points: [
+        "Map each offering to Measure, Manage, Exchange contribution.",
+        "Explain implementation path in plain operational language first.",
+      ],
     },
     "our-systems": {
       title: "Our Systems",
@@ -315,6 +329,10 @@ window.MAXWELLIAN_HUME = {
       ],
       session_context:
         "Page-aware greeting: acknowledge the Our Systems page and ask which system layer (Measure, Manage, Exchange) they want to explore.",
+      key_points: [
+        "Start with requested layer, then connect to full Measure-Manage-Exchange sequence.",
+        "Tie architecture explanations to practical implementation workflow.",
+      ],
     },
     "customer-portals": {
       title: "Customer Portals",
@@ -437,6 +455,10 @@ window.MAXWELLIAN_HUME = {
       ],
       session_context:
         "Page-aware greeting: acknowledge the Electrical Energy Story page and ask which part of the field story they want unpacked. For history-focused questions on this page, collect at least visitor name and company before deeper historical Q&A. Keep Electrical Energy Story history responses bounded to a short sequence, then transition back to Unity guidance with a courteous wrap line.",
+      key_points: [
+        "Connect field history to why Measure-Manage-Exchange matters in current operations.",
+        "Transition from narrative explanation to practical Unity guidance.",
+      ],
     },
     maxwellian: {
       title: "Maxwellian Intelligence Hub",
@@ -449,6 +471,12 @@ window.MAXWELLIAN_HUME = {
         "eestream/eWebmaster/UnityEnergy/maxwellian_library.json",
         "eestream/eWebmaster/UnityEnergy/einsights_library.json",
         "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
+      ],
+      session_context:
+        "Page-aware greeting: acknowledge the Maxwellian library page, ask which brief or eInsights story is in focus, then connect discussion back to Measure-Manage-Exchange operational implications.",
+      key_points: [
+        "Start from selected story context before broad doctrine expansion.",
+        "Tie story insights to practical Measure-Manage-Exchange guidance.",
       ],
     },
   },
@@ -1063,7 +1091,7 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "/UnityEnergy/hume_renderer/index.html?v=20260424r12",
+  embed_url: "./hume_renderer/index.html?v=20260424r12",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "ClerkMaxwell_251207.png",
   // Primary background visual for Speak-with-Clerk modal.

@@ -8,47 +8,89 @@
     PUBLISHED: "published"
   });
   const SHARE_KIND_ALIASES = Object.freeze({
+    website: "website",
+    "welcome-website": "website",
     update: "project-update",
     brief: "project-update",
     memo: "project-memo",
-    report: "project-memo",
+    report: "project-report",
     monthly: "monthly-report",
-    maxwellian: "website",
-    private: "website",
-    alert: "website"
+    maxwellian: "maxwellian-news",
+    private: "private-confidential",
+    alert: "website",
+    "project-update": "project-update",
+    "project-memo": "project-memo",
+    "project-report": "project-report",
+    "monthly-report": "monthly-report",
+    "maxwellian-news": "maxwellian-news",
+    "private-confidential": "private-confidential",
+    "special-alert": "special-alert",
+    specialalert: "special-alert"
   });
   const DEFAULT_SHARE_KIND_CONFIG = Object.freeze({
     website: {
       key: "website",
-      label: "Website",
+      label: "WelcomeWebsite",
       title: "Foster Farms Electrical Intelligence",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/website.html?ue_card=clean1",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/alert.html?ue_card=clean1",
       imagePath: "/UnityEnergy/assets/images/share-card-bases/WelcomeWebsite.png",
       theme: "default"
     },
     "project-update": {
       key: "project-update",
-      label: "Project-Update",
-      title: "Project-Update",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/project-update.html?ue_card=clean1",
+      label: "ProjectUpdate",
+      title: "ProjectUpdate",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/update.html?ue_card=clean1",
       imagePath: "/UnityEnergy/assets/images/share-card-bases/ProjectUpdate.png",
       theme: "default"
     },
     "project-memo": {
       key: "project-memo",
-      label: "Project-Memo",
-      title: "Project-Memo",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/project-memo.html?ue_card=clean1",
+      label: "ProjectMemo",
+      title: "ProjectMemo",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/memo.html?ue_card=clean1",
       imagePath: "/UnityEnergy/assets/images/share-card-bases/ProjectMemo.png",
+      theme: "default"
+    },
+    "project-report": {
+      key: "project-report",
+      label: "ProjectReport",
+      title: "ProjectReport",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/report.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/ProjectReport.png",
       theme: "default"
     },
     "monthly-report": {
       key: "monthly-report",
-      label: "Monthly-Report",
-      title: "Monthly-Report",
-      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly-report.html?ue_card=clean1",
+      label: "MonthlyReport",
+      title: "MonthlyReport",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/monthly.html?ue_card=clean1",
       imagePath: "/UnityEnergy/assets/images/share-card-bases/MonthlyReport.png",
       theme: "monthly"
+    },
+    "maxwellian-news": {
+      key: "maxwellian-news",
+      label: "MaxwellianNews",
+      title: "MaxwellianNews",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/maxwellian.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/MaxwellianNews.png",
+      theme: "maxwellian"
+    },
+    "private-confidential": {
+      key: "private-confidential",
+      label: "PrivateConfidential",
+      title: "PrivateConfidential",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/private.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/PrivateConfidential.png",
+      theme: "default"
+    },
+    "special-alert": {
+      key: "special-alert",
+      label: "SpecialAlert",
+      title: "SpecialAlert",
+      path: "/UnityEnergy/customer-portal/foster-farms/executive/share/special-alert.html?ue_card=clean1",
+      imagePath: "/UnityEnergy/assets/images/share-card-bases/SpecialAlert.png",
+      theme: "alert"
     }
   });
 

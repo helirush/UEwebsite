@@ -62,6 +62,16 @@
       padding: 18px 18px 20px;
       margin-bottom: 16px;
     }
+    .intro-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .intro-title-wrap {
+      min-width: 0;
+    }
     .kicker {
       margin: 0 0 6px;
       text-transform: uppercase;
@@ -69,6 +79,24 @@
       font-size: 12px;
       color: #6e7c57;
       font-weight: 800;
+    }
+    .value-view-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(63, 90, 39, 0.65);
+      background: linear-gradient(180deg, rgba(88, 123, 48, 0.97) 0%, rgba(53, 79, 32, 0.97) 100%);
+      color: #f7f2e5;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 10px 15px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+    .value-view-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(40, 56, 28, 0.2);
     }
     h1 {
       margin: 0 0 8px;
@@ -105,6 +133,93 @@
       margin: 0 0 8px;
       color: #55604a;
       font-size: 14px;
+    }
+    .investor-hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 10px;
+      min-height: 290px;
+      margin: 2px 0 12px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(92, 108, 67, 0.62);
+      color: #f8f5e9;
+      background-image:
+        linear-gradient(180deg, rgba(20, 34, 16, 0.06) 0%, rgba(20, 34, 16, 0.55) 62%, rgba(20, 34, 16, 0.9) 100%),
+        url("../../assets/images/Investor_Glance.png");
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 8px 20px rgba(24, 38, 16, 0.2);
+      overflow: hidden;
+    }
+    .investor-hero-copy {
+      display: grid;
+      gap: 4px;
+      max-width: 560px;
+    }
+    .investor-hero-kicker {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(237, 234, 214, 0.95);
+    }
+    .investor-hero-title {
+      font-size: 23px;
+      line-height: 1.05;
+      font-weight: 800;
+      color: #fffdf5;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.34);
+    }
+    .investor-hero-subtitle {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(242, 238, 220, 0.94);
+    }
+    .hero-cta-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 2px;
+    }
+    .hero-cta {
+      text-decoration: none;
+      border-radius: 10px;
+      border: 1px solid rgba(202, 194, 163, 0.42);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0.08) 100%);
+      color: #f6f2de;
+      padding: 8px 7px 9px;
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      transition: transform 0.16s ease, background-color 0.16s ease, border-color 0.16s ease;
+    }
+    .hero-cta:hover {
+      transform: translateY(-1px);
+      border-color: rgba(227, 213, 166, 0.8);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.12) 100%);
+    }
+    .hero-cta-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(241, 231, 195, 0.97) 0%, rgba(214, 193, 132, 0.97) 100%);
+      color: #364928;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+    }
+    .hero-cta-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.05;
     }
     .pill-row {
       display: grid;
@@ -155,6 +270,172 @@
       color: #4e5d41;
       text-align: center;
     }
+    .value-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(17, 24, 14, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .value-modal.active {
+      display: flex;
+    }
+    body.value-modal-open {
+      overflow: hidden;
+    }
+    .value-modal-shell {
+      width: min(96vw, 1380px);
+      max-height: 94vh;
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(150, 160, 122, 0.52);
+      background: linear-gradient(180deg, rgba(248, 246, 238, 0.98) 0%, rgba(238, 234, 220, 0.98) 100%);
+      padding: 14px;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.36);
+    }
+    .value-modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .value-modal-title {
+      margin: 0;
+      color: #2f4825;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      line-height: 1.1;
+    }
+    .value-modal-close {
+      border: 1px solid rgba(118, 129, 93, 0.6);
+      background: rgba(247, 245, 236, 0.95);
+      color: #38482d;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .value-modal-lead {
+      margin: 0 0 10px;
+      color: #4d5a42;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .value-media-wrap {
+      border-radius: 12px;
+      border: 1px solid rgba(124, 135, 99, 0.55);
+      background: rgba(16, 24, 13, 0.92);
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    .value-media-wrap img {
+      width: 100%;
+      max-height: 74vh;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+    }
+    .value-script-block {
+      border: 1px solid rgba(140, 127, 82, 0.45);
+      border-radius: 12px;
+      background: rgba(251, 248, 239, 0.98);
+      padding: 12px;
+    }
+    .value-script-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .value-script-title {
+      margin: 0;
+      color: #2f4825;
+      font-size: 18px;
+      line-height: 1.15;
+    }
+    .copy-script-btn {
+      border: 1px solid rgba(118, 129, 93, 0.6);
+      background: linear-gradient(180deg, rgba(235, 241, 223, 0.96) 0%, rgba(206, 220, 183, 0.96) 100%);
+      color: #304726;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+    .value-script-text {
+      margin: 0;
+      color: #4d5a42;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+    .value-audio-controls {
+      border: 1px solid rgba(116, 127, 90, 0.42);
+      border-radius: 12px;
+      background: rgba(244, 248, 235, 0.95);
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .value-audio-head {
+      margin: 0 0 8px;
+      color: #2f4825;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+    .value-audio-btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .voice-control-btn {
+      border: 1px solid rgba(69, 96, 45, 0.62);
+      background: linear-gradient(180deg, rgba(97, 132, 56, 0.96) 0%, rgba(56, 82, 33, 0.96) 100%);
+      color: #f8f3e7;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .voice-control-btn.stop {
+      border-color: rgba(128, 92, 49, 0.62);
+      background: linear-gradient(180deg, rgba(168, 123, 68, 0.96) 0%, rgba(129, 87, 36, 0.96) 100%);
+    }
+    .value-audio-status {
+      margin: 8px 0 0;
+      color: #4d5a42;
+      font-size: 12px;
+      line-height: 1.35;
+      min-height: 1.2em;
+    }
+    .value-script-note {
+      margin: 10px 0 0;
+      color: #5f6b53;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .value-copy-status {
+      margin: 8px 0 0;
+      color: #3f522f;
+      font-size: 12px;
+      font-weight: 700;
+      min-height: 1.2em;
+    }
     @media (max-width: 900px) {
       .grid,
       .pill-row {
@@ -162,6 +443,16 @@
       }
       .folder-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .hero-cta-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .intro-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .value-view-btn {
+        align-self: flex-start;
       }
     }
   </style>
@@ -174,8 +465,15 @@
     </div>
 
     <section class="intro">
-      <p class="kicker">Private Delivery System — Investor Track</p>
-      <h1>Unity Energy Investor Center</h1>
+      <div class="intro-head">
+        <div class="intro-title-wrap">
+          <p class="kicker">Private Delivery System — Investor Track</p>
+          <h1>Unity Energy Investor Center</h1>
+        </div>
+        <button type="button" class="value-view-btn" id="openValueModalBtn" aria-label="Open full-screen investor value image">
+          See the Value
+        </button>
+      </div>
       <p>
         This center establishes the investor communication framework for Unity Energy. It is designed to deliver
         clear, recurring investor updates, project milestones, and strategic development summaries from one secure
@@ -186,12 +484,35 @@
     <section class="grid">
       <article class="card">
         <h2>Investor Communications Framework</h2>
-        <p>Use this room to stage and publish recurring investor-facing updates.</p>
+        <div class="investor-hero" id="investor-main-panel" aria-label="Investor hero panel">
+          <div class="investor-hero-copy">
+            <span class="investor-hero-kicker">Investor Hero</span>
+            <span class="investor-hero-title">Investor_Glance</span>
+            <span class="investor-hero-subtitle">Select a track below to open the investor module slides.</span>
+          </div>
+          <nav class="hero-cta-row" aria-label="Investor track navigation">
+            <a class="hero-cta" href="./measure.html" aria-label="Open Measure investor module slide">
+              <span class="hero-cta-dot">1</span>
+              <span class="hero-cta-label">Measure</span>
+            </a>
+            <a class="hero-cta" href="./manage.html" aria-label="Open Manage investor module slide">
+              <span class="hero-cta-dot">2</span>
+              <span class="hero-cta-label">Manage</span>
+            </a>
+            <a class="hero-cta" href="./exchange.html" aria-label="Open Exchange investor module slide">
+              <span class="hero-cta-dot">3</span>
+              <span class="hero-cta-label">Exchange</span>
+            </a>
+            <a class="hero-cta" href="./optimize.html" aria-label="Open Optimize investor module slide">
+              <span class="hero-cta-dot">4</span>
+              <span class="hero-cta-label">Optimize</span>
+            </a>
+          </nav>
+        </div>
+        <p>Use the hero CTAs to walk investors through each operating module with dedicated financial-model slides.</p>
         <div class="pill-row">
           <div class="pill">Monthly Investor Brief</div>
           <div class="pill">Quarterly Strategy Memo</div>
-          <div class="pill">Project Update Release</div>
-          <div class="pill">Capital Narrative Deck</div>
         </div>
       </article>
       <article class="card">
@@ -200,8 +521,6 @@
         <div class="pill-row">
           <div class="pill">Secure Access</div>
           <div class="pill">Release Registry</div>
-          <div class="pill">Communication Cadence</div>
-          <div class="pill">Archive Continuity</div>
         </div>
       </article>
     </section>
@@ -221,5 +540,131 @@
       </div>
     </section>
   </main>
+  <section class="value-modal" id="investorValueModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="valueModalTitle">
+    <div class="value-modal-shell">
+      <div class="value-modal-top">
+        <h2 class="value-modal-title" id="valueModalTitle">Unity Investor Value Map</h2>
+        <button type="button" class="value-modal-close" id="closeValueModalBtn" aria-label="Close investor value modal">Close</button>
+      </div>
+      <p class="value-modal-lead">Review the full process image, then continue through the module slides. This is the high-level operating and value narrative for investors.</p>
+      <div class="value-media-wrap">
+        <img src="../../assets/images/Investor_Glance.png" alt="Unity Energy investor process and value map" />
+      </div>
+      <section class="value-audio-controls" aria-label="Unity investor narration controls">
+        <p class="value-audio-head">Unity voice narration (Shimmer)</p>
+        <div class="value-audio-btn-row">
+          <button type="button" class="voice-control-btn" id="playUnityVoiceBtn">Start Voice</button>
+          <button type="button" class="voice-control-btn stop" id="stopUnityVoiceBtn">Stop Voice</button>
+        </div>
+        <audio id="unityNarrationAudio" preload="none" src="./audio/unity-investor-welcome.mp3"></audio>
+        <p class="value-audio-status" id="unityVoiceStatus">Press Start Voice to play Unity's welcome narration.</p>
+      </section>
+      <article class="value-script-block" aria-label="Unity investor welcome narration script">
+        <div class="value-script-head">
+          <h3 class="value-script-title">Unity Welcome Narration Script (for MP3)</h3>
+          <button type="button" class="copy-script-btn" id="copyValueScriptBtn">Copy Script</button>
+        </div>
+        <p class="value-script-text" id="valueScriptText">Welcome to the Unity Energy Investor Center.
+
+What you are viewing is our value map: Measure. Manage. Exchange. Optimize.
+
+We begin by measuring the electrical field with precision, converting invisible behavior into trustworthy operating intelligence.
+We then manage that intelligence through tuning, governance, and repeatable execution, so performance is not accidental, but designed.
+Next, we exchange value through aligned customer economics, where verified outcomes create shared financial return.
+Finally, we optimize across sites, scaling the model into a portfolio system that compounds margin, retention, and enterprise growth.
+
+As you move through this site, we invite you to evaluate not only this image, but the full module story behind it.
+Each section is built to explain how Unity turns industrial electrical complexity into measurable, investable outcomes.
+
+Thank you for taking the time to examine our work and our vision for the future of industrial energy intelligence.</p>
+        <p class="value-script-note">When you generate the MP3, place it at `UnityEnergy/customer-portal/investor-center/audio/unity-investor-welcome.mp3`, and I can wire autoplay on modal open.</p>
+        <p class="value-copy-status" id="valueCopyStatus"></p>
+      </article>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var openBtn = document.getElementById('openValueModalBtn');
+      var closeBtn = document.getElementById('closeValueModalBtn');
+      var modal = document.getElementById('investorValueModal');
+      var copyBtn = document.getElementById('copyValueScriptBtn');
+      var scriptText = document.getElementById('valueScriptText');
+      var copyStatus = document.getElementById('valueCopyStatus');
+      var voiceAudio = document.getElementById('unityNarrationAudio');
+      var playVoiceBtn = document.getElementById('playUnityVoiceBtn');
+      var stopVoiceBtn = document.getElementById('stopUnityVoiceBtn');
+      var voiceStatus = document.getElementById('unityVoiceStatus');
+      if (!openBtn || !closeBtn || !modal) return;
+
+      function setVoiceStatus(message) {
+        if (voiceStatus) {
+          voiceStatus.textContent = message;
+        }
+      }
+      function openModal() {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('value-modal-open');
+      }
+      function closeModal() {
+        if (voiceAudio) {
+          voiceAudio.pause();
+          voiceAudio.currentTime = 0;
+        }
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('value-modal-open');
+        setVoiceStatus("Press Start Voice to play Unity's welcome narration.");
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+      window.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      if (copyBtn && scriptText && copyStatus) {
+        copyBtn.addEventListener('click', async function () {
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(scriptText.textContent || '');
+              copyStatus.textContent = 'Script copied. Ready for Unity voice MP3 generation.';
+              return;
+            }
+          } catch (_err) {}
+          copyStatus.textContent = 'Copy failed in this browser. You can still select and copy the script text manually.';
+        });
+      }
+
+      if (voiceAudio && playVoiceBtn && stopVoiceBtn) {
+        playVoiceBtn.addEventListener('click', async function () {
+          try {
+            await voiceAudio.play();
+            setVoiceStatus('Unity narration is now playing.');
+          } catch (_err) {
+            setVoiceStatus('Audio file not available yet. Generate unity-investor-welcome.mp3 first.');
+          }
+        });
+        stopVoiceBtn.addEventListener('click', function () {
+          voiceAudio.pause();
+          voiceAudio.currentTime = 0;
+          setVoiceStatus('Unity narration stopped.');
+        });
+        voiceAudio.addEventListener('ended', function () {
+          setVoiceStatus('Unity narration complete. Press Start Voice to replay.');
+        });
+        voiceAudio.addEventListener('error', function () {
+          setVoiceStatus('Audio load error. Confirm ./audio/unity-investor-welcome.mp3 exists.');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

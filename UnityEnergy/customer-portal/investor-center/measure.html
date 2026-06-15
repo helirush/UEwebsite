@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Investor Module — Measure</title>
+  <meta name="description" content="Investor slide module for Measure, including recurring measurement revenue model structure." />
+  <style>
+    :root {
+      --ue-bg: #f5f2e9;
+      --ue-bg-soft: #f2efe5;
+      --ue-forest: #2e4a1f;
+      --ue-olive: #6a7b32;
+      --ue-gold: #c79a35;
+      --ue-text: #3f4638;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ue-text);
+      background: linear-gradient(180deg, #ece6d8 0%, var(--ue-bg) 100%);
+    }
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 16px 38px;
+    }
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .link {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      color: #314726;
+    }
+    .home-link {
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(63, 90, 39, 0.62);
+      background: linear-gradient(180deg, rgba(88, 123, 48, 0.97) 0%, rgba(53, 79, 32, 0.97) 100%);
+      color: #f7f2e5;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .module-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .module-nav a {
+      text-decoration: none;
+      text-align: center;
+      padding: 9px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(127, 141, 101, 0.45);
+      background: rgba(250, 248, 241, 0.9);
+      color: #495740;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .module-nav a.active {
+      border-color: rgba(63, 90, 39, 0.75);
+      background: linear-gradient(180deg, rgba(87, 123, 49, 0.98) 0%, rgba(53, 79, 33, 0.98) 100%);
+      color: #f7f2e5;
+    }
+    .hero {
+      border: 1px solid rgba(123, 136, 96, 0.48);
+      border-radius: 14px;
+      background:
+        linear-gradient(180deg, rgba(20, 34, 16, 0.08) 0%, rgba(20, 34, 16, 0.58) 66%, rgba(20, 34, 16, 0.9) 100%),
+        url("../../assets/images/Investor_Glance.png") center/cover no-repeat;
+      min-height: 200px;
+      padding: 14px;
+      color: #f8f4e7;
+      display: grid;
+      align-content: end;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .hero-kicker {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.8vw, 2.2rem);
+      line-height: 1.06;
+    }
+    .hero p {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(245, 238, 218, 0.95);
+    }
+    .slide-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .slide {
+      border: 1px solid rgba(126, 139, 100, 0.45);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 13px;
+    }
+    .slide h2 {
+      margin: 0 0 7px;
+      font-size: 19px;
+      color: #2f4825;
+    }
+    .slide p {
+      margin: 0 0 8px;
+      color: #55624a;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .slide ul {
+      margin: 6px 0 0 18px;
+      color: #4d5b41;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 0;
+    }
+    .model {
+      border: 1px dashed rgba(139, 124, 76, 0.48);
+      border-radius: 10px;
+      background: rgba(250, 247, 238, 0.96);
+      padding: 10px;
+      margin-top: 8px;
+    }
+    .model strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #4b5c38;
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .model code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      color: #394b2c;
+    }
+    .footer-nav {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .footer-nav a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      color: #355027;
+    }
+    @media (max-width: 900px) {
+      .module-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="top-row">
+      <a class="link" href="./index.html">← Back to Investor Center</a>
+      <a class="home-link" href="../../index.html">Unity Home</a>
+    </div>
+    <nav class="module-nav" aria-label="Investor modules">
+      <a class="active" href="./measure.html">1. Measure</a>
+      <a href="./manage.html">2. Manage</a>
+      <a href="./exchange.html">3. Exchange</a>
+      <a href="./optimize.html">4. Optimize</a>
+    </nav>
+    <section class="hero">
+      <p class="hero-kicker">Investor Module Slide</p>
+      <h1>Measure</h1>
+      <p>Measurement turns invisible field behavior into bankable operating intelligence.</p>
+    </section>
+    <section class="slide-grid">
+      <article class="slide">
+        <h2>Slide A — Measurement Product Story</h2>
+        <p>We monetize recurring access to high-frequency electrical intelligence. The core value is reliable baseline visibility and investor-grade performance reporting.</p>
+        <ul>
+          <li>Data acquisition + validation + historical continuity</li>
+          <li>Monthly intelligence delivery to operations and leadership</li>
+          <li>Foundation layer for all downstream optimization revenue</li>
+        </ul>
+      </article>
+      <article class="slide">
+        <h2>Slide B — Measure Revenue Model</h2>
+        <p>The Measure module is designed as recurring revenue with implementation uplift in early phases.</p>
+        <div class="model">
+          <strong>Core Model (Placeholder)</strong>
+          <code>Measure ARR = (# Sites × # Metered Nodes per Site × Monthly Measurement Fee) × 12</code>
+        </div>
+        <div class="model">
+          <strong>Implementation Revenue (Optional)</strong>
+          <code>Implementation Revenue = # New Sites × Deployment Fee per Site</code>
+        </div>
+      </article>
+      <article class="slide">
+        <h2>Slide C — Investor Metrics</h2>
+        <p>Key investor indicators for the Measure module:</p>
+        <ul>
+          <li>Active metered nodes and site activation velocity</li>
+          <li>ARR per site and gross margin by service tier</li>
+          <li>Retention period and conversion into Manage module</li>
+        </ul>
+      </article>
+    </section>
+    <div class="footer-nav">
+      <a href="./index.html">← Investor Center</a>
+      <a href="./manage.html">Next Module: Manage →</a>
+    </div>
+  </main>
+</body>
+</html>

@@ -64,6 +64,9 @@
   let electricalStoryExitPromptActive = false;
   let electricalStoryExitPromptSent = false;
   let electricalStoryExitTimer = null;
+  let contentRetrievalInFlight = false;
+  let lastContentRetrievalFingerprint = "";
+  let lastContentRetrievalAtMs = 0;
   const COMPACT_SQUARE_FRAME_SIZE = 236;
   const SIGNAL_MODE_IDLE = "idle";
   const SIGNAL_MODE_LISTENING = "listening";
@@ -89,6 +92,41 @@
   const CROSS_PAGE_ROAMING_STATE_TTL_MS = 1000 * 60 * 45;
   const CROSS_PAGE_ROAMING_RESUME_DELAY_MS = 180;
   const TOUR_GUIDE_PENDING_TTL_MS = 1000 * 60 * 5;
+  const CONTENT_RETRIEVAL_DEDUP_WINDOW_MS = 1000 * 18;
+  const CONTENT_RETRIEVAL_CONTEXT_CHAR_LIMIT = 2600;
+  const CONTENT_RETRIEVAL_STOP_WORDS = {
+    a: true,
+    about: true,
+    an: true,
+    and: true,
+    are: true,
+    can: true,
+    explain: true,
+    for: true,
+    from: true,
+    get: true,
+    help: true,
+    i: true,
+    in: true,
+    is: true,
+    looking: true,
+    me: true,
+    on: true,
+    our: true,
+    page: true,
+    section: true,
+    tab: true,
+    card: true,
+    that: true,
+    the: true,
+    this: true,
+    to: true,
+    we: true,
+    website: true,
+    with: true,
+    you: true,
+    your: true,
+  };
   const runtimeAuthStorageKeys = [
     "MAXWELLIAN_OPENAI_RUNTIME_AUTH",
     "MAXWELLIAN_HUME_RUNTIME_AUTH",
@@ -954,6 +992,7 @@
       floating_launcher_enabled: true,
       floating_launcher_tooltip: "Meet with Clerk",
       floating_launcher_icon_url: "assets/images/unity-maxwell-button.png",
+      floating_launcher_blocked_pages: [],
       floating_launcher_context_mode: "technical-follow-up",
       floating_launcher_response_style_hint: "",
       clerk_page_access_control_enabled: false,
@@ -1160,6 +1199,12 @@
     if (typeof merged.floating_launcher_icon_url !== "string") {
       merged.floating_launcher_icon_url = defaults.floating_launcher_icon_url;
     }
+    if (!Array.isArray(merged.floating_launcher_blocked_pages)) {
+      merged.floating_launcher_blocked_pages = defaults.floating_launcher_blocked_pages.slice();
+    }
+    merged.floating_launcher_blocked_pages = normalizeClerkPageSlugList(
+      merged.floating_launcher_blocked_pages
+    );
     if (typeof merged.floating_launcher_context_mode !== "string") {
       merged.floating_launcher_context_mode = defaults.floating_launcher_context_mode;
     }
@@ -2211,6 +2256,145 @@
     return profiles;
   }
 
+  function resolvePageContextProfileId(profile, payload) {
+    return (
+      normalizePageSlugToken(profile && profile.id) ||
+      normalizePageSlugToken(payload && payload.source_page) ||
+      normalizePageSlugToken(payload && payload.page_slug) ||
+      normalizePageSlugToken(payload && payload.active_page_slug) ||
+      normalizePageSlugToken(getCurrentPageSlug()) ||
+      "index"
+    );
+  }
+
+  function buildPageAwareOpeningLine(profile, payload) {
+    const profileId = resolvePageContextProfileId(profile, payload);
+    const explicit = coerceText(payload && payload.page_context_opening_line);
+    if (explicit) return explicit;
+    const profileTitle =
+      coerceText(payload && payload.page_context_title) ||
+      coerceText(profile && profile.title) ||
+      humanizeSlugToken(profileId) ||
+      "this page";
+    const pageLabel = /page$/i.test(profileTitle) ? profileTitle : `${profileTitle} page`;
+    if (profileId === "about-unity") {
+      return "I see you're on the About Unity page. What would you like to clarify about Unity's mission or operating model?";
+    }
+    if (profileId === "unity-story") {
+      return "I see you're on the Unity Introduction page. What from the story would you like to explore further?";
+    }
+    if (profileId === "our-systems") {
+      return "I see you're on the Our Systems page. Which layer should we unpack first—Measure, Manage, or Exchange?";
+    }
+    if (profileId === "products-services") {
+      return "I see you're on the Products and Services page. Which offering or workflow would you like to clarify?";
+    }
+    if (profileId === "customer-portals") {
+      return "I see you're on the Customer Portals page. Which portal section would you like help interpreting?";
+    }
+    if (profileId === "electrical-energy-story") {
+      return "I see you're on the Electrical Energy Story page. Which part of the field story should we break down first?";
+    }
+    if (profileId === "contact-us") {
+      return "Oh, I see you've reached the Clerk concierge. How can I help you?";
+    }
+    if (profileId === "maxwellian") {
+      return "I see you're in the Maxwellian library. Which brief or eInsights story would you like to discuss?";
+    }
+    if (profileId.startsWith("customer-")) {
+      const customerName =
+        coerceText(payload && payload.customer_name) ||
+        humanizeSlugToken(profileId.replace(/^customer-/, ""));
+      if (customerName) {
+        return `I see you're on the ${customerName} customer page. What would you like help interpreting here?`;
+      }
+    }
+    return `I see you're on the ${pageLabel}. What would you like to understand from this page?`;
+  }
+
+  function buildPageAwareFollowupPrompt(profile, payload) {
+    const explicit = coerceText(payload && payload.page_context_followup_prompt);
+    if (explicit) return explicit;
+    const keyPoints = Array.isArray(profile && profile.keyPoints)
+      ? profile.keyPoints.map(function (point) { return coerceText(point); }).filter(Boolean)
+      : [];
+    if (keyPoints.length > 0) {
+      return `After answering, ask one concise follow-up tied to this page focus: ${keyPoints[0]}`;
+    }
+    const profileId = resolvePageContextProfileId(profile, payload);
+    if (profileId === "our-systems") {
+      return "After answering, ask which Measure, Manage, or Exchange layer they want to go deeper on next.";
+    }
+    if (profileId === "products-services") {
+      return "After answering, ask which specific service path or deployment workflow they want clarified next.";
+    }
+    if (profileId === "electrical-energy-story") {
+      return "After answering, ask which field-era transition or operational implication they want unpacked next.";
+    }
+    if (profileId === "contact-us") {
+      return "After answering, ask one concise closeout question before contact handoff.";
+    }
+    if (profileId.startsWith("customer-")) {
+      return "After answering, ask which current customer chart signal or transformer pattern they want to review next.";
+    }
+    return "After answering, ask one concise follow-up question tied to the active page context.";
+  }
+
+  function buildMeasureManageExchangeGuidance(profile, payload) {
+    const profileId = resolvePageContextProfileId(profile, payload);
+    const guidance = {
+      mode: "balanced",
+      pageFocus:
+        "Tie this page conversation to Unity's Measure-Manage-Exchange sequence in practical operating terms.",
+      measureFocus:
+        "Measure focus: identify what should be observed first (reactive burden, harmonics, thermal stress, and field stability) before prescribing action.",
+      manageFocus:
+        "Manage focus: explain how M P T S and field harmonization reduce reactive/harmonic burden at the load and improve usable capacity.",
+      exchangeFocus:
+        "Exchange focus: explain how stabilized field behavior supports demand timing, storage coordination, and lower demand-charge exposure.",
+    };
+    if (profileId === "our-systems") {
+      guidance.mode = "systems-breakdown";
+      guidance.pageFocus =
+        "Use a systems breakdown: define Measure, then Manage, then Exchange, and map each layer to implementation workflow.";
+    } else if (profileId === "products-services") {
+      guidance.mode = "services-mapping";
+      guidance.pageFocus =
+        "Map each offering to the layer it serves in Measure-Manage-Exchange, and connect the layer mapping to practical outcomes.";
+    } else if (profileId === "about-unity" || profileId === "unity-story" || profileId === "founder-message" || profileId === "index") {
+      guidance.mode = "doctrine-framing";
+      guidance.pageFocus =
+        "Translate Unity narrative into operating doctrine: Measure reveals field behavior, Manage harmonizes it, and Exchange coordinates stabilized capacity.";
+    } else if (profileId === "electrical-energy-story") {
+      guidance.mode = "causal-story";
+      guidance.pageFocus =
+        "Connect historical field behavior to modern doctrine: explain why Measure comes first, how Manage corrects burden, and where Exchange adds coordination.";
+    } else if (profileId === "customer-portals" || profileId.startsWith("customer-")) {
+      guidance.mode = "customer-operations";
+      guidance.pageFocus =
+        "Anchor answers to live customer evidence: what this page measures now, what should be managed next, and which exchange coordination actions follow.";
+    } else if (profileId === "contact-us") {
+      guidance.mode = "closeout";
+      guidance.pageFocus =
+        "Use a concise closeout recap of Measure-Manage-Exchange before handoff to contact workflow.";
+    }
+    return guidance;
+  }
+
+  function buildMeasureManageExchangeContextBlock(guidance) {
+    if (!guidance || typeof guidance !== "object") return "";
+    return combineContextBlocks(
+      [
+        `Measure-Manage-Exchange mode: ${coerceText(guidance.mode) || "balanced"}.`,
+        coerceText(guidance.pageFocus),
+        coerceText(guidance.measureFocus),
+        coerceText(guidance.manageFocus),
+        coerceText(guidance.exchangeFocus),
+      ],
+      2200
+    );
+  }
+
   function normalizePageSourceFileMap(cfg) {
     const source =
       cfg &&
@@ -2362,6 +2546,555 @@
     return normalizeStringArray(value, 64)
       .map(function (entry) { return normalizePageSlugToken(entry); })
       .filter(Boolean);
+  }
+
+  function normalizeContentRetrievalText(value) {
+    return coerceText(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildContentRetrievalTokens(value, maxTokens) {
+    const normalized = normalizeContentRetrievalText(value);
+    if (!normalized) return [];
+    const limit = Number.isFinite(Number(maxTokens))
+      ? Math.max(3, Math.floor(Number(maxTokens)))
+      : 18;
+    const tokens = [];
+    normalized.split(" ").forEach(function (token) {
+      if (!token || token.length < 3) return;
+      if (CONTENT_RETRIEVAL_STOP_WORDS[token]) return;
+      if (tokens.includes(token)) return;
+      tokens.push(token);
+    });
+    return tokens.slice(0, limit);
+  }
+
+  function sanitizeContentRetrievalQuery(value) {
+    const normalized = coerceText(value)
+      .replace(/[\r\n]+/g, " ")
+      .replace(/\s+/g, " ")
+      .replace(/^[,.:;!?'"`\-\s]+/, "")
+      .replace(/[,.:;!?'"`\-\s]+$/, "")
+      .replace(/\b(?:tab|card|section|page|panel)\b$/i, "")
+      .replace(/[,.:;!?'"`\-\s]+$/, "")
+      .trim();
+    if (!normalized) return "";
+    if (normalized.length > 140) {
+      return `${normalized.slice(0, 140).trim()}…`;
+    }
+    return normalized;
+  }
+
+  function isLikelyContentRetrievalIntent(text) {
+    const sample = normalizeContentRetrievalText(text);
+    if (!sample) return false;
+    if (
+      /\b(go get|pull|retrieve|fetch|look up|read it|read that|go find)\b/.test(sample)
+    ) {
+      return true;
+    }
+    if (
+      /\b(website|page|tab|card|section|story)\b/.test(sample) &&
+      /\b(explain|clarify|review|summarize|elaborate|help)\b/.test(sample)
+    ) {
+      return true;
+    }
+    if (
+      /\b(looking at|look at|i am on|i m on|on the)\b/.test(sample) &&
+      /\b(tab|card|section|page|story)\b/.test(sample)
+    ) {
+      return true;
+    }
+    if (
+      /\b(hold on|well hold on)\b/.test(sample) &&
+      /\b(get|fetch|retrieve)\b/.test(sample)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  function extractContentRetrievalQuery(text) {
+    const sample = coerceText(text).replace(/\s+/g, " ").trim();
+    if (!sample) return "";
+    const quotedMatch = sample.match(/[\"“”'‘’]([^\"“”'‘’]{4,140})[\"“”'‘’]/);
+    if (quotedMatch && quotedMatch[1]) {
+      return sanitizeContentRetrievalQuery(quotedMatch[1]);
+    }
+    const patterns = [
+      /\b(?:looking at|look at|viewing)\s+(.{4,140}?)(?:\s+\b(?:tab|card|section|page|story)\b|[?.!,]|$)/i,
+      /\b(?:explain|review|summarize|clarify|elaborate on|help me with|help me talk about)\s+(.{4,140}?)(?:[?.!,]|$)/i,
+      /\b(?:about)\s+(.{4,140}?)(?:\s+\b(?:tab|card|section|page|story)\b|[?.!,]|$)/i,
+      /\b(?:on)\s+(.{4,140}?)(?:\s+\b(?:page|story)\b|[?.!,]|$)/i,
+    ];
+    for (let i = 0; i < patterns.length; i += 1) {
+      const match = sample.match(patterns[i]);
+      if (!match || !match[1]) continue;
+      const cleaned = sanitizeContentRetrievalQuery(
+        coerceText(match[1]).replace(/^(?:the|a|an)\s+/i, "")
+      );
+      if (cleaned.length >= 4) return cleaned;
+    }
+    return "";
+  }
+
+  function inferWebsitePathFromSourceFile(sourceFile) {
+    const normalized = coerceText(sourceFile).replace(/\\/g, "/");
+    if (!normalized) return "";
+    let match = normalized.match(/(?:^|\/)(UnityEnergy\/[^?#]+\.html)$/i);
+    if (match && match[1]) return `/${match[1]}`;
+    match = normalized.match(/(?:^|\/)(Customers\/[^?#]+\.html)$/i);
+    if (match && match[1]) return `/${match[1]}`;
+    return "";
+  }
+
+  function inferWebsitePathFromSlug(pageSlug) {
+    const slug = normalizePageSlugToken(pageSlug);
+    if (!slug) return "";
+    if (slug === "index" || slug === "home") return "/UnityEnergy/index.html";
+    return `/UnityEnergy/${slug}.html`;
+  }
+
+  function buildContentRetrievalPageCandidates(cfg) {
+    const bySlug = {};
+    const addCandidate = function (candidateInput) {
+      if (!candidateInput || typeof candidateInput !== "object") return;
+      const slug = normalizePageSlugToken(candidateInput.slug || candidateInput.pageSlug);
+      if (!slug) return;
+      const aliases = normalizeStringArray(candidateInput.aliases, 24);
+      const nextValue = {
+        slug: slug,
+        title:
+          coerceText(candidateInput.title) ||
+          humanizeSlugToken(slug) ||
+          slug,
+        path:
+          coerceText(candidateInput.path) ||
+          inferWebsitePathFromSlug(slug),
+        aliases: aliases,
+        isCurrent: Boolean(candidateInput.isCurrent),
+      };
+      const existing = bySlug[slug];
+      if (!existing) {
+        bySlug[slug] = nextValue;
+        return;
+      }
+      if (!existing.path && nextValue.path) existing.path = nextValue.path;
+      if (!existing.title && nextValue.title) existing.title = nextValue.title;
+      existing.isCurrent = existing.isCurrent || nextValue.isCurrent;
+      nextValue.aliases.forEach(function (alias) {
+        if (!alias || existing.aliases.includes(alias)) return;
+        existing.aliases.push(alias);
+      });
+    };
+
+    const currentPageSlug = normalizePageSlugToken(getCurrentPageSlug()) || "index";
+    addCandidate({
+      slug: currentPageSlug,
+      title: coerceText(document && document.title) || humanizeSlugToken(currentPageSlug),
+      path: getCurrentPagePathname(),
+      aliases: [
+        currentPageSlug,
+        humanizeSlugToken(currentPageSlug),
+        coerceText(document && document.title),
+      ],
+      isCurrent: true,
+    });
+
+    const profiles = normalizePageContextProfiles(cfg);
+    Object.values(profiles).forEach(function (profile) {
+      if (!profile || typeof profile !== "object") return;
+      const profilePath = Array.isArray(profile.sourceFiles)
+        ? profile.sourceFiles
+            .map(function (sourceFile) { return inferWebsitePathFromSourceFile(sourceFile); })
+            .find(Boolean)
+        : "";
+      const aliases = []
+        .concat(profile.id || [])
+        .concat(profile.title || [])
+        .concat(profile.contextSources || [])
+        .concat(humanizeSlugToken(profile.id) || []);
+      if (profile.id === "electrical-energy-story") {
+        aliases.push("energy field story");
+        aliases.push("electrical energy story");
+      }
+      if (profile.id === "products-services") {
+        aliases.push("products and services");
+      }
+      if (profile.id === "our-systems") {
+        aliases.push("our systems");
+      }
+      if (profile.id === "maxwellian") {
+        aliases.push("maxwellian library");
+      }
+      if (profile.id === "customer-portals") {
+        aliases.push("customer portal");
+        aliases.push("customer portals");
+      }
+      addCandidate({
+        slug: profile.id,
+        title: profile.title,
+        path: profilePath || inferWebsitePathFromSlug(profile.id),
+        aliases: aliases,
+      });
+    });
+
+    const tourGuide = getTourGuideConfig(cfg);
+    if (tourGuide && Array.isArray(tourGuide.routes)) {
+      tourGuide.routes.forEach(function (route) {
+        if (!route || typeof route !== "object") return;
+        addCandidate({
+          slug: route.pageSlug || route.id || route.contextSource,
+          title: route.title,
+          path: coerceText(route.path),
+          aliases: []
+            .concat(route.referenceTokens || [])
+            .concat(route.keywords || [])
+            .concat(route.contextSource || [])
+            .concat(route.id || []),
+        });
+      });
+    }
+
+    return Object.values(bySlug);
+  }
+
+  function scoreContentRetrievalPageCandidate(candidate, transcriptText) {
+    if (!candidate || typeof candidate !== "object") return 0;
+    const sample = normalizeContentRetrievalText(transcriptText);
+    if (!sample) return 0;
+    let score = 0;
+    const slugToken = normalizeContentRetrievalText(
+      coerceText(candidate.slug).replace(/-/g, " ")
+    );
+    if (slugToken && sample.includes(slugToken)) score += 4;
+    const titleToken = normalizeContentRetrievalText(candidate.title);
+    if (titleToken && sample.includes(titleToken)) score += 6;
+    (Array.isArray(candidate.aliases) ? candidate.aliases : []).forEach(function (alias) {
+      const normalizedAlias = normalizeContentRetrievalText(alias);
+      if (!normalizedAlias || normalizedAlias.length < 3) return;
+      if (!sample.includes(normalizedAlias)) return;
+      score += normalizedAlias.includes(" ") ? 6 : 2;
+    });
+    return score;
+  }
+
+  function resolveContentRetrievalTargetPage(transcriptText, cfg) {
+    const candidates = buildContentRetrievalPageCandidates(cfg);
+    if (!Array.isArray(candidates) || candidates.length === 0) {
+      return {
+        slug: normalizePageSlugToken(getCurrentPageSlug()) || "index",
+        title: coerceText(document && document.title) || "Current page",
+        path: getCurrentPagePathname(),
+        aliases: [],
+        isCurrent: true,
+      };
+    }
+    let best = candidates.find(function (candidate) { return candidate.isCurrent; }) || candidates[0];
+    let bestScore = -1;
+    candidates.forEach(function (candidate) {
+      const score = scoreContentRetrievalPageCandidate(candidate, transcriptText);
+      if (score > bestScore) {
+        best = candidate;
+        bestScore = score;
+        return;
+      }
+      if (score === bestScore && candidate.isCurrent && !best.isCurrent) {
+        best = candidate;
+      }
+    });
+    if (bestScore <= 0) {
+      const current = candidates.find(function (candidate) { return candidate.isCurrent; });
+      if (current) best = current;
+    }
+    return best;
+  }
+
+  async function fetchContentRetrievalDocument(targetPage) {
+    const currentPath = coerceText(getCurrentPagePathname());
+    const targetPath = coerceText(targetPage && targetPage.path);
+    if (!targetPath || targetPath === currentPath) {
+      return {
+        doc: document,
+        sourcePath: currentPath,
+        sourceUrl: getCurrentPageHref(),
+        sourceTitle: coerceText(document && document.title),
+        isCurrentPage: true,
+      };
+    }
+    if (typeof window.fetch !== "function" || typeof DOMParser === "undefined") {
+      throw new Error("Browser cannot fetch or parse external page content in this context.");
+    }
+    const response = await window.fetch(targetPath, { credentials: "same-origin" });
+    if (!response || !response.ok) {
+      throw new Error(`Page fetch failed (${targetPath}) with status ${response ? response.status : "unknown"}.`);
+    }
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const sourceUrl = new URL(targetPath, window.location.href).toString();
+    return {
+      doc: doc,
+      sourcePath: targetPath,
+      sourceUrl: sourceUrl,
+      sourceTitle: coerceText(doc && doc.title),
+      isCurrentPage: false,
+    };
+  }
+
+  function collectContentRetrievalTextLines(doc) {
+    if (!doc || typeof doc !== "object") return [];
+    const root = doc.querySelector("main") || doc.body;
+    if (!root) return [];
+    const rawText = coerceText(root.innerText || root.textContent).replace(/\r/g, "\n");
+    if (!rawText) return [];
+    const lines = [];
+    rawText.split(/\n+/).forEach(function (line) {
+      const normalized = coerceText(line).replace(/\s+/g, " ").trim();
+      if (!normalized || normalized.length < 20) return;
+      if (lines.includes(normalized)) return;
+      lines.push(normalized);
+    });
+    return lines.slice(0, 420);
+  }
+
+  function scoreContentRetrievalLine(line, normalizedQuery, tokens) {
+    const normalizedLine = normalizeContentRetrievalText(line);
+    if (!normalizedLine) return 0;
+    let score = 0;
+    if (normalizedQuery && normalizedLine.includes(normalizedQuery)) {
+      score += 12;
+    }
+    (Array.isArray(tokens) ? tokens : []).forEach(function (token) {
+      if (!token || token.length < 3) return;
+      if (normalizedLine.includes(token)) score += 1;
+    });
+    return score;
+  }
+
+  function buildContentRetrievalExcerpt(bodyText, query) {
+    const source = coerceText(bodyText).replace(/\s+/g, " ").trim();
+    const target = coerceText(query).replace(/\s+/g, " ").trim();
+    if (!source || !target) return "";
+    const idx = source.toLowerCase().indexOf(target.toLowerCase());
+    if (idx < 0) return "";
+    const start = Math.max(0, idx - 230);
+    const end = Math.min(source.length, idx + target.length + 290);
+    const prefix = start > 0 ? "…" : "";
+    const suffix = end < source.length ? "…" : "";
+    return `${prefix}${source.slice(start, end).trim()}${suffix}`;
+  }
+
+  function extractContentRetrievalEvidence(doc, query, transcriptText) {
+    const root = doc && (doc.querySelector("main") || doc.body);
+    const bodyText = coerceText(root && (root.innerText || root.textContent))
+      .replace(/\s+/g, " ")
+      .trim();
+    const normalizedQuery = normalizeContentRetrievalText(query);
+    const queryTokens = buildContentRetrievalTokens(query, 16);
+    const transcriptTokens = buildContentRetrievalTokens(transcriptText, 20);
+    const activeTokens = queryTokens.length > 0 ? queryTokens : transcriptTokens;
+    let excerpt = buildContentRetrievalExcerpt(bodyText, query);
+    let score = excerpt ? 14 : 0;
+
+    const lines = collectContentRetrievalTextLines(doc);
+    let bestLine = "";
+    let bestLineScore = 0;
+    lines.forEach(function (line) {
+      const lineScore = scoreContentRetrievalLine(line, normalizedQuery, activeTokens);
+      if (lineScore > bestLineScore) {
+        bestLine = line;
+        bestLineScore = lineScore;
+      }
+    });
+    if (!excerpt && bestLine) {
+      excerpt = bestLine;
+      score = bestLineScore;
+    }
+    if (excerpt && excerpt.length > 780) {
+      excerpt = `${excerpt.slice(0, 780).trim()}…`;
+    }
+
+    const headingCandidates = Array.from(
+      doc.querySelectorAll("h1, h2, h3, [role='tab'], button[role='tab'], button[data-tab]")
+    )
+      .map(function (node) {
+        return coerceText(node && (node.innerText || node.textContent)).replace(/\s+/g, " ").trim();
+      })
+      .filter(Boolean)
+      .slice(0, 120);
+    let matchedHeading = "";
+    let matchedHeadingScore = 0;
+    headingCandidates.forEach(function (heading) {
+      const headingScore = scoreContentRetrievalLine(
+        heading,
+        normalizedQuery,
+        activeTokens
+      );
+      if (headingScore > matchedHeadingScore) {
+        matchedHeading = heading;
+        matchedHeadingScore = headingScore;
+      }
+    });
+
+    return {
+      query: sanitizeContentRetrievalQuery(query),
+      excerpt: excerpt,
+      heading: matchedHeading,
+      score: Math.max(score, matchedHeadingScore),
+      tokens: activeTokens,
+      matchFound: Boolean(excerpt) && Math.max(score, matchedHeadingScore) > 0,
+    };
+  }
+
+  function buildContentRetrievalContextBlock(result) {
+    if (!result || typeof result !== "object") return "";
+    return combineContextBlocks(
+      [
+        result.requestText ? `Website retrieval request: ${result.requestText}` : "",
+        result.targetPageTitle
+          ? `Target page: ${result.targetPageTitle} (${result.targetPageSlug || "unknown"}).`
+          : "",
+        result.query ? `Requested section/topic: ${result.query}` : "",
+        result.heading ? `Matched heading/tab: ${result.heading}` : "",
+        result.excerpt ? `Retrieved website excerpt:\n${result.excerpt}` : "",
+        "Response rule: acknowledge retrieval briefly, answer from retrieved website context first, then add concise practical elaboration. If details are still ambiguous, ask for the exact tab/card title before asserting specifics.",
+      ],
+      CONTENT_RETRIEVAL_CONTEXT_CHAR_LIMIT
+    );
+  }
+
+  function applyContentRetrievalContextToSession(result, cfg) {
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return;
+    if (!pendingLaunchSession.contextPayload || typeof pendingLaunchSession.contextPayload !== "object") {
+      pendingLaunchSession.contextPayload = {};
+    }
+    const payload = pendingLaunchSession.contextPayload;
+    payload.content_retrieval_active = true;
+    payload.content_retrieval_request_text = coerceText(result && result.requestText);
+    payload.content_retrieval_query = coerceText(result && result.query);
+    payload.content_retrieval_match_found = Boolean(result && result.matchFound);
+    payload.content_retrieval_match_score = Number.isFinite(Number(result && result.score))
+      ? Math.floor(Number(result.score))
+      : 0;
+    payload.content_retrieval_excerpt = coerceText(result && result.excerpt);
+    payload.content_retrieval_heading = coerceText(result && result.heading);
+    payload.content_retrieval_target_page_slug = coerceText(result && result.targetPageSlug);
+    payload.content_retrieval_target_page_title = coerceText(result && result.targetPageTitle);
+    payload.content_retrieval_source_page_path = coerceText(result && result.sourcePath);
+    payload.content_retrieval_source_page_url = coerceText(result && result.sourceUrl);
+    payload.content_retrieval_source_page_title = coerceText(result && result.sourceTitle);
+    payload.content_retrieval_retrieved_at = new Date().toISOString();
+    payload.content_retrieval_response_rule =
+      "Acknowledge retrieval in one line, answer from retrieved page evidence first, then provide concise elaboration.";
+    if (coerceText(result && result.query)) {
+      payload.likely_user_intent = `explain website section: ${coerceText(result.query)}`;
+    }
+    const retrievalContextBlock = buildContentRetrievalContextBlock(result);
+    if (retrievalContextBlock) {
+      const sessionContextCharLimitRaw =
+        payload.session_context_char_limit !== undefined
+          ? payload.session_context_char_limit
+          : cfg && cfg.session_context_char_limit;
+      payload.session_context = combineContextBlocks(
+        [coerceText(payload.session_context), retrievalContextBlock],
+        clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
+      );
+      payload.content_scope_instructions = combineContextBlocks(
+        [
+          coerceText(payload.content_scope_instructions),
+          "Website retrieval mode is active: prioritize retrieved excerpt and heading context for immediate response.",
+        ],
+        2200
+      );
+    }
+    appendSessionDecision(pendingLaunchSession, "website-content-retrieved", {
+      target_page: payload.content_retrieval_target_page_slug,
+      query: payload.content_retrieval_query,
+      match_found: payload.content_retrieval_match_found,
+      match_score: payload.content_retrieval_match_score,
+    });
+    postToWidgetFrame({ type: "maxwellian_session_launch", payload: pendingLaunchSession });
+  }
+
+  async function triggerContentRetrievalFromTranscript(transcriptText, cfg) {
+    const requestText = coerceText(transcriptText);
+    if (!requestText) return null;
+    if (!isLikelyContentRetrievalIntent(requestText)) return null;
+    if (!pendingLaunchSession || typeof pendingLaunchSession !== "object") return null;
+    if (contentRetrievalInFlight) return null;
+
+    const targetPage = resolveContentRetrievalTargetPage(requestText, cfg);
+    const query = extractContentRetrievalQuery(requestText);
+    const dedupFingerprint = normalizeContentRetrievalText(
+      `${coerceText(targetPage && targetPage.slug)}|${query || requestText}`
+    ).slice(0, 220);
+    const now = Date.now();
+    if (
+      dedupFingerprint &&
+      dedupFingerprint === lastContentRetrievalFingerprint &&
+      now - lastContentRetrievalAtMs < CONTENT_RETRIEVAL_DEDUP_WINDOW_MS
+    ) {
+      return null;
+    }
+    lastContentRetrievalFingerprint = dedupFingerprint;
+    lastContentRetrievalAtMs = now;
+    contentRetrievalInFlight = true;
+
+    const targetTitle =
+      coerceText(targetPage && targetPage.title) ||
+      humanizeSlugToken(targetPage && targetPage.slug) ||
+      "this page";
+    setStatus(`Got it—pulling ${targetTitle} context now…`, false, true);
+    try {
+      const fetched = await fetchContentRetrievalDocument(targetPage);
+      const evidence = extractContentRetrievalEvidence(
+        fetched.doc,
+        query,
+        requestText
+      );
+      const result = {
+        requestText: cleanReinterpretationText(requestText, 320),
+        query: sanitizeContentRetrievalQuery(query),
+        matchFound: evidence.matchFound,
+        score: evidence.score,
+        heading: coerceText(evidence.heading),
+        excerpt: coerceText(evidence.excerpt),
+        targetPageSlug: coerceText(targetPage && targetPage.slug),
+        targetPageTitle: targetTitle,
+        sourcePath: coerceText(fetched && fetched.sourcePath),
+        sourceUrl: coerceText(fetched && fetched.sourceUrl),
+        sourceTitle: coerceText(fetched && fetched.sourceTitle) || targetTitle,
+      };
+      applyContentRetrievalContextToSession(result, cfg);
+      if (result.matchFound) {
+        const headingHint = result.heading ? ` (${result.heading})` : "";
+        setStatus(
+          `Pulled ${targetTitle}${headingHint}. Ask your follow-up and Clerk will stay grounded to that section.`,
+          false,
+          true
+        );
+      } else {
+        setStatus(
+          `I pulled ${targetTitle}, but I still need the exact tab/card title to lock onto the right section.`,
+          false,
+          true
+        );
+      }
+      return result;
+    } catch (_err) {
+      setStatus(
+        "I couldn't retrieve that page section right now. Share the exact page or tab title and I will retry immediately.",
+        true,
+        true
+      );
+      return null;
+    } finally {
+      contentRetrievalInFlight = false;
+    }
   }
   function normalizeTourGuideRoutePath(pathValue) {
     const raw = coerceText(pathValue);
@@ -3947,13 +4680,36 @@
     const launchOptions = buildPageAwareLaunchOptions(rawInput, fallbackInput);
     return openClerkWithPageContext(launchOptions);
   }
+
+  async function launchClerkWithPageContext(rawInput, fallbackInput) {
+    if (!isClerkVoiceFeatureEnabled()) return false;
+    const cfg = getVoiceConfig();
+    try {
+      await runUnityStartGatePreflight(cfg);
+    } catch (_err) {}
+    try {
+      await prefetchActivePagePatternContext();
+    } catch (_err) {}
+    return openClerkFromLaunchInput(rawInput, fallbackInput);
+  }
   function isHomePageClerkDisabled() {
     return !isClerkVoiceAllowedOnCurrentPage(getVoiceConfig());
+  }
+
+  function isFloatingLauncherBlockedOnCurrentPage(cfg) {
+    const blockedPages = normalizeClerkPageSlugList(
+      cfg && cfg.floating_launcher_blocked_pages
+    );
+    if (blockedPages.length === 0) return false;
+    const currentPage = normalizePageSlugToken(getCurrentPageSlug());
+    if (!currentPage) return false;
+    return blockedPages.includes(currentPage);
   }
 
   function isFloatingLauncherEnabled(cfg) {
     if (!cfg || cfg.floating_launcher_enabled === false) return false;
     if (!isClerkVoiceAllowedOnCurrentPage(cfg)) return false;
+    if (isFloatingLauncherBlockedOnCurrentPage(cfg)) return false;
     return isClerkVoiceFeatureEnabled();
   }
 
@@ -4048,7 +4804,7 @@
       conversationMode: "followup",
       sourcePage: pageSlug,
       entryPoint: `${pageSlug}-floating-clerk-bubble`,
-      likelyUserIntent: "visitor initiated Clerk from the persistent floating launcher",
+      likelyUserIntent: `visitor initiated Clerk from the persistent floating launcher on ${humanizeSlugToken(pageSlug) || pageSlug}`,
       responseStyleHint: coerceText(cfg && cfg.floating_launcher_response_style_hint),
       uiMode: "modal",
     };
@@ -4228,8 +4984,14 @@
           .join(", ")}.`
       : "";
     const profile = resolvePageContextProfile(launchSession, cfg);
+    const measureManageExchangeGuidance = buildMeasureManageExchangeGuidance(profile, payload);
+    const measureManageExchangeContextBlock = buildMeasureManageExchangeContextBlock(
+      measureManageExchangeGuidance
+    );
 
     let pageContextBlock = "";
+    let pageAwareOpeningLine = "";
+    let pageAwareFollowupPrompt = "";
     if (profile) {
       assignContextValueIfMissing(payload, "source_page", profile.id);
       assignContextValueIfMissing(payload, "page_context_title", profile.title);
@@ -4244,6 +5006,15 @@
         Array.isArray(profile.keyPoints) && profile.keyPoints.length > 0
           ? `Active page points:\n- ${profile.keyPoints.join("\n- ")}`
           : "";
+      pageAwareOpeningLine = buildPageAwareOpeningLine(profile, payload);
+      pageAwareFollowupPrompt = buildPageAwareFollowupPrompt(profile, payload);
+      if (pageAwareOpeningLine) {
+        assignContextValueIfMissing(payload, "page_context_opening_line", pageAwareOpeningLine);
+        assignContextValueIfMissing(payload, "opening_line", pageAwareOpeningLine);
+      }
+      if (pageAwareFollowupPrompt) {
+        assignContextValueIfMissing(payload, "page_context_followup_prompt", pageAwareFollowupPrompt);
+      }
       pageContextBlock = combineContextBlocks(
         [
           profile.sessionContext,
@@ -4259,12 +5030,26 @@
           "I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?";
         assignContextValueIfMissing(payload, "openai_auto_greeting_text", contactGreeting);
       }
+      if (pageAwareOpeningLine) {
+        assignContextValueIfMissing(payload, "openai_auto_greeting_text", pageAwareOpeningLine);
+      }
       appendSessionDecision(launchSession, "page-context-applied", {
         profile_id: profile.id,
         skill_pack_ids: profile.skillPackIds || [],
+        page_opening_line: pageAwareOpeningLine || "",
       });
     } else {
       assignContextValueIfMissing(payload, "source_page", getCurrentPageSlug());
+      pageAwareOpeningLine = buildPageAwareOpeningLine(null, payload);
+      pageAwareFollowupPrompt = buildPageAwareFollowupPrompt(null, payload);
+      if (pageAwareOpeningLine) {
+        assignContextValueIfMissing(payload, "page_context_opening_line", pageAwareOpeningLine);
+        assignContextValueIfMissing(payload, "opening_line", pageAwareOpeningLine);
+        assignContextValueIfMissing(payload, "openai_auto_greeting_text", pageAwareOpeningLine);
+      }
+      if (pageAwareFollowupPrompt) {
+        assignContextValueIfMissing(payload, "page_context_followup_prompt", pageAwareFollowupPrompt);
+      }
     }
     if (responsePrecedenceGuidance) {
       assignContextValueIfMissing(payload, "response_precedence_guidance", responsePrecedenceGuidance);
@@ -4278,6 +5063,33 @@
     }
     if (unknownAnswerFallback) {
       assignContextValueIfMissing(payload, "unknown_answer_fallback", unknownAnswerFallback);
+    }
+    if (measureManageExchangeGuidance && typeof measureManageExchangeGuidance === "object") {
+      assignContextValueIfMissing(
+        payload,
+        "measure_manage_exchange_mode",
+        coerceText(measureManageExchangeGuidance.mode)
+      );
+      assignContextValueIfMissing(
+        payload,
+        "measure_manage_exchange_page_focus",
+        coerceText(measureManageExchangeGuidance.pageFocus)
+      );
+      assignContextValueIfMissing(
+        payload,
+        "measure_focus_guidance",
+        coerceText(measureManageExchangeGuidance.measureFocus)
+      );
+      assignContextValueIfMissing(
+        payload,
+        "manage_focus_guidance",
+        coerceText(measureManageExchangeGuidance.manageFocus)
+      );
+      assignContextValueIfMissing(
+        payload,
+        "exchange_focus_guidance",
+        coerceText(measureManageExchangeGuidance.exchangeFocus)
+      );
     }
 
     const sessionContextCharLimitRaw =
@@ -4294,6 +5106,9 @@
         tokenBudgetHint,
         syntaxContext,
         pageContextBlock,
+        pageAwareOpeningLine ? `Page-aware opening line: ${pageAwareOpeningLine}` : "",
+        pageAwareFollowupPrompt ? `Page-aware follow-up prompt: ${pageAwareFollowupPrompt}` : "",
+        measureManageExchangeContextBlock,
         contentAwarenessMode
           ? "Content awareness mode is active: only provide Unity claims grounded in launch, page, and selected skill-pack context. If context is incomplete, explicitly state uncertainty before proceeding."
           : "",
@@ -8396,6 +9211,9 @@
         } else {
           setStatus("", false);
         }
+        if (canCaptureName) {
+          triggerContentRetrievalFromTranscript(transcriptText, cfg);
+        }
         setStartButtonVisible(false);
         setLaunchEmblemVisible(false);
         setPanelMode("centered");
@@ -10216,6 +11034,7 @@
   window.buildClerkReinterpretationLaunch = buildReinterpretationLaunch;
   window.buildClerkPageLaunchPayload = buildClerkPageLaunchPayload;
   window.openClerkWithPageContext = openClerkWithPageContext;
+  window.launchClerkWithPageContext = launchClerkWithPageContext;
 
   document.addEventListener("DOMContentLoaded", function () {
     ensureModal();

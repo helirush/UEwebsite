@@ -60,24 +60,27 @@
     { key: "project-report", label: "ProjectReport" },
     { key: "monthly-report", label: "MonthlyReport" },
     { key: "maxwellian-news", label: "MaxwellianNews" },
-    { key: "private-confidential", label: "PrivateConfidential" }
+    { key: "private-confidential", label: "PrivateConfidential" },
+    { key: "special-alert", label: "SpecialAlert" }
   ];
   var SHARE_TEMPLATE_SLUG_BY_KEY = Object.freeze({
-    website: "website",
-    "project-update": "project-update",
-    "project-memo": "project-memo",
+    website: "alert",
+    "project-update": "update",
+    "project-memo": "memo",
     "project-report": "report",
-    "monthly-report": "monthly-report",
+    "monthly-report": "monthly",
     "maxwellian-news": "maxwellian",
     "private-confidential": "private",
-    update: "project-update",
+    "special-alert": "special-alert",
+    update: "update",
     brief: "brief",
-    memo: "project-memo",
+    memo: "memo",
     report: "report",
-    monthly: "monthly-report",
+    monthly: "monthly",
     maxwellian: "maxwellian",
     private: "private",
-    alert: "website"
+    specialalert: "special-alert",
+    alert: "alert"
   });
   var WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT = Object.freeze({
     "Electrical Intelligence": "website",
@@ -98,16 +101,17 @@
     "project-report": "ProjectReport.png",
     "monthly-report": "MonthlyReport.png",
     "maxwellian-news": "MaxwellianNews.png",
-    "private-confidential": "PrivateConfidential.png"
+    "private-confidential": "PrivateConfidential.png",
+    "special-alert": "SpecialAlert.png"
   });
   var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";
   var HOMEPAGE_HOTSPOT_SELECTOR = ".hero.hero-raster-rebuild";
   var HOMEPAGE_HOTSPOT_ID = "ueFounderShareDotHotspot";
   var HOMEPAGE_HOTSPOT = Object.freeze({
-    left: "calc(52.5% + 200px)",
-    top: "calc(22.5% - 25px)",
-    sizeDesktopPx: 34,
-    sizeMobilePx: 44
+    left: "calc(52.5% + 400px)",
+    top: "calc(22.5% - 0px)",
+    sizeDesktopPx: 25,
+    sizeMobilePx: 40
   });
 
   function nowMs() {
@@ -373,18 +377,26 @@
     return normalizedCustomerName + " " + normalizedCategory;
   }
 
+  function isUnityWebsiteTitle(rawTitle) {
+    return String(rawTitle || "").trim().toLowerCase().startsWith("unity energy ");
+  }
+
   function resolveWebsiteTemplateSlugForTitle(titleText) {
-    var rawTitle = String(titleText || "").trim().toLowerCase();
-    if (!rawTitle) return "website";
+    var normalizedTitle = String(titleText || "").trim().toLowerCase();
+    if (!normalizedTitle) return "alert";
+    var unityWebsiteTitle = isUnityWebsiteTitle(normalizedTitle);
     for (var i = 0; i < ELECTRICAL_TITLE_VARIANTS.length; i += 1) {
       var variant = String(ELECTRICAL_TITLE_VARIANTS[i] || "").trim();
       if (!variant) continue;
       var normalizedVariant = variant.toLowerCase();
-      if (rawTitle === normalizedVariant || rawTitle.endsWith(" " + normalizedVariant)) {
-        return WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "website";
+      if (normalizedTitle === normalizedVariant || normalizedTitle.endsWith(" " + normalizedVariant)) {
+        if (unityWebsiteTitle) {
+          return WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "website";
+        }
+        return "alert";
       }
     }
-    return "website";
+    return unityWebsiteTitle ? "website" : "alert";
   }
 
   function normalizeAccessId(value) {
