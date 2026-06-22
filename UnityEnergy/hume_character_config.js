@@ -1053,7 +1053,7 @@ window.MAXWELLIAN_HUME = {
   lock_character_to_default: true,
   // Use branded launch gate so the renderer pre-session card stays hidden behind Clerk UI.
   use_unity_start_gate: true,
-  unity_launch_ring_image_url: "assets/images/Clerk-LineARTr2.png",
+  unity_launch_ring_image_url: "assets/images/ClerkMaxwell_60423t.png",
   // Keep desktop launch simple: let the realtime renderer request mic directly.
   preflight_microphone_on_launch: true,
   // OpenAI cognition defaults (used as text-generation guidance).
@@ -1069,7 +1069,7 @@ window.MAXWELLIAN_HUME = {
     "Cognition-text mode only. Produce clear speech-ready text for downstream voice rendering. Do not include performance directions, pseudo-voice punctuation, or accent instructions in generated responses.",
   openai_voice_style_hint:
     "Generate clean, calm, instructional response text suitable for spoken delivery by the voice layer.",
-  openai_center_visual_url: "/UnityEnergy/assets/images/Clerk-LineARTr2.png",
+  openai_center_visual_url: "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
   contact_page_auto_greeting_text:
     "I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?",
   openai_auto_greeting_enabled: true,
@@ -1093,9 +1093,11 @@ window.MAXWELLIAN_HUME = {
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
   embed_url: "./hume_renderer/index.html?v=20260424r12",
   // Small avatar image used for header/presence chip.
-  character_avatar_url: "ClerkMaxwell_251207.png",
+  character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
+  // Signal-stage portrait (must stay transparent Clerk asset).
+  signal_portrait_url: "assets/images/ClerkMaxwell_60423t.png",
   // Primary background visual for Speak-with-Clerk modal.
-  character_background_url: "assets/images/Clerk-LineARTr2.png",
+  character_background_url: "assets/images/ClerkMaxwell_60423t.png",
 
   // Legacy placeholders retained for backward compatibility with the widget config schema.
   config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
@@ -1108,8 +1110,8 @@ window.MAXWELLIAN_HUME = {
     "clerk-maxwell": {
       label: "Clerk Maxwell",
       character_name: "Clerk Maxwell",
-      character_avatar_url: "ClerkMaxwell_251207.png",
-      character_background_url: "assets/images/Clerk-LineARTr2.png",
+      character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
+      character_background_url: "assets/images/ClerkMaxwell_60423t.png",
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
       voice_id: "316eb863-97d3-4708-9dba-ccd6e3d21265",
 
@@ -1121,7 +1123,7 @@ window.MAXWELLIAN_HUME = {
     "unity-faraday": {
       label: "Unity Faraday",
       character_name: "Unity Faraday",
-      character_avatar_url: "ClerkMaxwell_251207.png",
+      character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "JamesClerkMaxwell.gif",
       config_id: "",
       voice_id: "shimmer",
@@ -1133,7 +1135,7 @@ window.MAXWELLIAN_HUME = {
     "cove-faraday": {
       label: "Cove Faraday",
       character_name: "Cove Faraday",
-      character_avatar_url: "ClerkMaxwell_251207.png",
+      character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "JamesClerkMaxwell.gif",
       config_id: "",
       voice_id: "sage",

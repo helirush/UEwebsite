@@ -53,6 +53,9 @@
       recipientAddress: "team@fosterfarms.com"
     })
   });
+  // Master share-card set (authoritative, 8 cards):
+  // WelcomeWebsite, ProjectUpdate, ProjectMemo, ProjectReport,
+  // MonthlyReport, MaxwellianNews, PrivateConfidential, SpecialAlert.
   var SHARE_TYPES = [
     { key: "website", label: "WelcomeWebsite" },
     { key: "project-update", label: "ProjectUpdate" },
@@ -94,6 +97,8 @@
     "Electrical Infrastructure Review": "website-electrical-infrastructure-review",
     "Operational Energy Review": "website-operational-energy-review"
   });
+  // Maps runtime kind keys to master base-card assets in:
+  // UnityEnergy/assets/images/share-card-bases/
   var SHARE_CARD_IMAGE_FILENAME_BY_KEY = Object.freeze({
     website: "WelcomeWebsite.png",
     "project-update": "ProjectUpdate.png",

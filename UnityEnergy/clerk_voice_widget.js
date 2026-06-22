@@ -991,7 +991,7 @@
       unity_footer_rotate_seconds: 15,
       floating_launcher_enabled: true,
       floating_launcher_tooltip: "Meet with Clerk",
-      floating_launcher_icon_url: "assets/images/unity-maxwell-button.png",
+      floating_launcher_icon_url: "assets/images/ClerkMaxwell_60423t.png",
       floating_launcher_blocked_pages: [],
       floating_launcher_context_mode: "technical-follow-up",
       floating_launcher_response_style_hint: "",
@@ -1125,7 +1125,7 @@
         "manage",
         "exchange",
       ],
-      character_avatar_url: "JamesClerkMaxwell.gif",
+      character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "",
       embed_url: "/UnityEnergy/openai_renderer/index.html?v=20260423r5",
       openai_session_endpoint: "/api/openai/realtime/session",
@@ -1133,7 +1133,7 @@
       openai_voice: "ash",
       allow_openai_fallback: false,
       allow_openai_voice_fallback: false,
-      openai_center_visual_url: "/UnityEnergy/assets/images/Clerk-LineART-accent-composite-3layer.png",
+      openai_center_visual_url: "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
       signal_wave_bar_count: 30,
       signal_wave_bar_min_width: 3,
       signal_wave_bar_max_width: 6,
@@ -4717,6 +4717,31 @@
     const configured = coerceText(cfg && cfg.floating_launcher_tooltip);
     return configured || "Meet with Clerk";
   }
+  let unityEnergyAssetBaseHrefCache = null;
+  function getUnityEnergyAssetBaseHref() {
+    if (unityEnergyAssetBaseHrefCache !== null) return unityEnergyAssetBaseHrefCache;
+    unityEnergyAssetBaseHrefCache = "";
+    if (typeof document === "undefined") return unityEnergyAssetBaseHrefCache;
+    const scriptNodes = Array.from(document.querySelectorAll("script[src]"));
+    for (let i = scriptNodes.length - 1; i >= 0; i -= 1) {
+      const node = scriptNodes[i];
+      const src = coerceText(
+        node && typeof node.getAttribute === "function"
+          ? node.getAttribute("src")
+          : ""
+      ) || coerceText(node && node.src);
+      if (!src) continue;
+      if (!/clerk_voice_widget\.js(?:[?#].*)?$/i.test(src)) continue;
+      try {
+        const resolvedSrc = new URL(src, window.location.href).toString();
+        const baseHref = resolvedSrc.replace(/clerk_voice_widget\.js(?:[?#].*)?$/i, "");
+        if (!baseHref) continue;
+        unityEnergyAssetBaseHrefCache = baseHref;
+        return unityEnergyAssetBaseHrefCache;
+      } catch (_err) {}
+    }
+    return unityEnergyAssetBaseHrefCache;
+  }
   function buildFloatingLauncherAssetCandidateVariants(value) {
     const raw = coerceText(value);
     if (!raw) return [];
@@ -4731,6 +4756,17 @@
       if (normalized && !normalized.startsWith("../")) {
         variants.push(`/UnityEnergy/${normalized}`);
       }
+      const unityEnergyBaseHref = getUnityEnergyAssetBaseHref();
+      if (unityEnergyBaseHref) {
+        try {
+          variants.push(new URL(raw, unityEnergyBaseHref).toString());
+        } catch (_err) {}
+        if (normalized) {
+          try {
+            variants.push(new URL(normalized, unityEnergyBaseHref).toString());
+          } catch (_err) {}
+        }
+      }
     }
     return Array.from(new Set(variants));
   }
@@ -4738,14 +4774,13 @@
   function getFloatingLauncherIconCandidates(cfg) {
     const seeds = [
       coerceText(cfg && cfg.floating_launcher_icon_url),
-      "assets/images/unity-maxwell-button.png",
-      "assets/images/Maxwell_lineARTr01.png",
+      coerceText(cfg && cfg.signal_portrait_url),
+      coerceText(cfg && cfg.character_avatar_url),
+      "assets/images/ClerkMaxwell_60423t.png",
+      "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
       "unity-icon-circle-512.png",
       "unity-icon-circle-192.png",
       "apple-touch-icon.png",
-      coerceText(cfg && cfg.character_avatar_url),
-      coerceText(cfg && cfg.unity_launch_ring_image_url),
-      "ClerkMaxwell_251207.png",
       "unity-icon-ring-white-512.png",
     ].filter(Boolean);
     const candidates = [];
@@ -8189,10 +8224,8 @@
       configured,
       coerceText(cfg && cfg.openai_center_visual_url),
       coerceText(cfg && cfg.character_avatar_url),
-      "/UnityEnergy/assets/images/Clerk-LineARTr2.png",
-      "assets/images/Clerk-LineARTr2.png",
-      "/UnityEnergy/ClerkMaxwell_251207.png",
-      "ClerkMaxwell_251207.png",
+      "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
+      "assets/images/ClerkMaxwell_60423t.png",
       "assets/images/unity-icon-ring-white-2048.png",
       "unity-icon-ring-white-2048.png",
       "assets/images/unity-icon-ring-white-512.png",
@@ -8200,7 +8233,14 @@
       "assets/images/unity-icon-ring-white-192.png",
       "unity-icon-ring-white-192.png",
     ].filter(Boolean);
-    return Array.from(new Set(options));
+    const candidates = [];
+    options.forEach(function (option) {
+      buildFloatingLauncherAssetCandidateVariants(option).forEach(function (variant) {
+        if (!variant || candidates.includes(variant)) return;
+        candidates.push(variant);
+      });
+    });
+    return candidates;
   }
 
   function syncUnityLaunchEmblem(cfg) {
@@ -8313,21 +8353,22 @@
     }
   }
 
-  function resolveSignalPortraitUrl(cfg) {
-    const preferredTransparentLineArt = "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png";
-    const centerVisualUrl =
-      typeof cfg?.openai_center_visual_url === "string" ? cfg.openai_center_visual_url.trim() : "";
-    const backgroundUrl =
-      typeof cfg?.character_background_url === "string" ? cfg.character_background_url.trim() : "";
-    const avatarUrl =
-      typeof cfg?.character_avatar_url === "string" ? cfg.character_avatar_url.trim() : "";
-    return (
-      preferredTransparentLineArt ||
-      centerVisualUrl ||
-      backgroundUrl ||
-      avatarUrl ||
-      ""
-    );
+  function getSignalPortraitCandidates(cfg) {
+    const seeds = [
+      coerceText(cfg && cfg.signal_portrait_url),
+      coerceText(cfg && cfg.character_avatar_url),
+      "assets/images/ClerkMaxwell_60423t.png",
+      "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
+      coerceText(cfg && cfg.openai_center_visual_url),
+    ].filter(Boolean);
+    const candidates = [];
+    seeds.forEach(function (seed) {
+      buildFloatingLauncherAssetCandidateVariants(seed).forEach(function (variant) {
+        if (!variant || candidates.includes(variant)) return;
+        candidates.push(variant);
+      });
+    });
+    return candidates;
   }
 
   function parseRgbaChannels(colorText) {
@@ -8434,14 +8475,27 @@
   function setSignalPortraitSource(cfg) {
     const portrait = document.getElementById("clerkVoiceSignalPortrait");
     if (!portrait) return;
-    const src = resolveSignalPortraitUrl(cfg);
-    if (!src) {
+    const candidates = getSignalPortraitCandidates(cfg);
+    if (!Array.isArray(candidates) || candidates.length === 0) {
       portrait.removeAttribute("src");
       portrait.hidden = true;
       return;
     }
-    portrait.src = src;
+    portrait.hidden = false;
+    portrait.dataset.fallbackIndex = "0";
     portrait.onload = syncSignalPortraitContrastMode;
+    portrait.onerror = function () {
+      const currentIndex = Number(portrait.dataset.fallbackIndex || "0");
+      const nextIndex = currentIndex + 1;
+      if (nextIndex >= candidates.length) {
+        portrait.onerror = null;
+        portrait.hidden = true;
+        return;
+      }
+      portrait.dataset.fallbackIndex = String(nextIndex);
+      portrait.src = candidates[nextIndex];
+    };
+    portrait.src = candidates[0];
     portrait.hidden = false;
     syncSignalPortraitContrastMode();
   }
@@ -9612,7 +9666,7 @@
         object-position: center;
         opacity: 0.78;
         filter:
-          brightness(0.68)
+          brightness(0.34)
           contrast(1.38)
           saturate(0.96)
           drop-shadow(0 12px 24px rgba(0, 0, 0, 0.48));
@@ -9620,7 +9674,7 @@
       .clerk-voice-signal-stage.contrast-light-bg .clerk-voice-signal-portrait {
         opacity: 0.82;
         filter:
-          brightness(0.54)
+          brightness(0.27)
           contrast(1.52)
           saturate(0.92)
           drop-shadow(0 13px 26px rgba(0, 0, 0, 0.52));
@@ -9628,7 +9682,7 @@
       .clerk-voice-signal-stage.contrast-dark-bg .clerk-voice-signal-portrait {
         opacity: 0.76;
         filter:
-          brightness(0.9)
+          brightness(0.45)
           contrast(1.22)
           saturate(0.8)
           drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
@@ -9726,7 +9780,7 @@
           transform: translate(-50%, -50%) scale(0.72);
           filter:
             blur(16px)
-            brightness(2.4)
+            brightness(1.2)
             contrast(0.24)
             saturate(0.78)
             drop-shadow(0 3px 10px rgba(0, 0, 0, 0.16));
@@ -9736,7 +9790,7 @@
           transform: translate(-50%, -50%) scale(0.9);
           filter:
             blur(5px)
-            brightness(1.1)
+            brightness(0.55)
             contrast(0.82)
             saturate(0.9)
             drop-shadow(0 8px 20px rgba(0, 0, 0, 0.28));
@@ -9746,7 +9800,7 @@
           transform: translate(-50%, -50%) scale(1);
           filter:
             blur(0)
-            brightness(0.62)
+            brightness(0.31)
             contrast(1.46)
             saturate(0.94)
             drop-shadow(0 14px 28px rgba(0, 0, 0, 0.56));
@@ -9885,7 +9939,7 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.35));
+        filter: brightness(0.5) drop-shadow(0 14px 34px rgba(0, 0, 0, 0.35));
       }
       .clerk-voice-launch-title {
         display: none;
@@ -9941,14 +9995,14 @@
         object-position: center 57%;
         border: none;
         background: transparent;
-        filter: brightness(0.65) contrast(1.08);
+        filter: brightness(0.5) contrast(1.05);
         transition: transform 180ms ease, filter 180ms ease;
         transform-origin: center center;
       }
       .clerk-floating-launcher-btn:hover .clerk-floating-launcher-img,
       .clerk-floating-launcher-btn:focus-visible .clerk-floating-launcher-img {
         transform: scale(1.25);
-        filter: brightness(0.65) contrast(1.42);
+        filter: brightness(0.51) contrast(1.18);
       }
       .clerk-floating-launcher-pulse {
         display: none;

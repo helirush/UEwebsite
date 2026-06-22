@@ -694,6 +694,41 @@
         .hero-bottom-cta-button:active {
             transform: translateY(0);
         }
+        .hero-visibility-principle-cta.unity-post-narration-pulse {
+            animation: unityVisibilityPrincipleFlash 4s ease-in-out infinite;
+        }
+        @keyframes unityVisibilityPrincipleFlash {
+            0% {
+                background: rgba(236, 224, 188, 0.8);
+                border-color: rgba(31, 75, 37, 0.95);
+                box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+            }
+            25% {
+                background: rgba(247, 239, 220, 1);
+                border-color: rgba(46, 96, 54, 0.95);
+                box-shadow: 0 0 0 2px rgba(82, 125, 77, 0.24), 0 0 24px rgba(87, 134, 82, 0.44), 0 9px 22px rgba(43, 56, 35, 0.24);
+            }
+            50% {
+                background: rgba(247, 239, 220, 1);
+                border-color: rgba(46, 96, 54, 0.95);
+                box-shadow: 0 0 0 2px rgba(82, 125, 77, 0.24), 0 0 24px rgba(87, 134, 82, 0.44), 0 9px 22px rgba(43, 56, 35, 0.24);
+            }
+            75% {
+                background: rgba(236, 224, 188, 0.8);
+                border-color: rgba(31, 75, 37, 0.95);
+                box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+            }
+            100% {
+                background: rgba(236, 224, 188, 0.8);
+                border-color: rgba(31, 75, 37, 0.95);
+                box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-visibility-principle-cta.unity-post-narration-pulse {
+                animation: none;
+            }
+        }
         .hero-bottom-cta-icon {
             flex: 0 0 auto;
             width: clamp(47px, 3.56vw, 68px);
@@ -1356,6 +1391,51 @@
             padding-top: 20px;
             padding-bottom: 20px;
             margin-top: 0px;
+            position: relative;
+        }
+        .footer-unity-intro-controls {
+            position: absolute;
+            right: clamp(12px, 2vw, 22px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-unity-intro-label {
+            font-size: clamp(0.68rem, 0.82vw, 0.84rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(228, 238, 210, 0.92);
+            line-height: 1;
+        }
+        .footer-unity-intro-toggle-btn {
+            border: 1px solid rgba(206, 219, 181, 0.5);
+            border-radius: 999px;
+            background: rgba(236, 241, 224, 0.16);
+            color: rgba(242, 248, 227, 0.98);
+            font-size: clamp(0.72rem, 0.9vw, 0.9rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 9px 14px;
+            cursor: pointer;
+            transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .footer-unity-intro-toggle-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(236, 241, 224, 0.28);
+            box-shadow: 0 6px 14px rgba(21, 35, 11, 0.24);
+        }
+        .footer-unity-intro-toggle-btn:focus-visible {
+            outline: 2px solid rgba(226, 236, 210, 0.92);
+            outline-offset: 2px;
+        }
+        .footer-unity-intro-toggle-btn.is-active {
+            background: rgba(84, 53, 42, 0.9);
+            border-color: rgba(232, 206, 165, 0.76);
+            color: rgba(255, 239, 212, 0.98);
         }
         /* ===== Hero (current preserved layout) ===== */
         .hero {
@@ -2565,6 +2645,91 @@
             font-size: clamp(0.94rem, 1.18vw, 1.3rem);
             font-weight: 600;
         }
+        .hero-visibility-principle-group {
+            position: absolute;
+            left: 91%;
+            top: 45%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+        .hero-visibility-principle-cta {
+            min-width: clamp(190px, 18.5vw, 300px);
+            min-height: clamp(82px, 6.4vw, 118px);
+            border-radius: clamp(10px, 1.05vw, 14px);
+            border: clamp(2px, 0.18vw, 3px) solid rgba(31, 75, 37, 0.95);
+            background: rgba(236, 224, 188, 0.80);
+            color: rgba(37, 84, 34, 0.98);
+            box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+            font-weight: 700;
+            padding: clamp(5px, 0.58vw, 8px) clamp(12px, 1.2vw, 18px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 3px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+        }
+        .hero-visibility-principle-title {
+            display: block;
+            font-size: clamp(1rem, 1.34vw, 1.68rem);
+            letter-spacing: 0.035em;
+            line-height: 1.02;
+            text-transform: uppercase;
+        }
+        .hero-visibility-principle-divider {
+            width: 84%;
+            height: 1px;
+            background: rgba(37, 84, 34, 0.32);
+            display: block;
+            margin: 1px 0 0;
+        }
+        .hero-visibility-principle-inline-controls {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1px;
+        }
+        .hero-visibility-principle-inline-control {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: clamp(58px, 5.3vw, 92px);
+            min-height: clamp(24px, 1.8vw, 30px);
+            border-radius: 999px;
+            border: 1px solid rgba(37, 84, 34, 0.35);
+            background: rgba(255, 255, 255, 0.18);
+            color: rgba(37, 84, 34, 0.96);
+            font-size: clamp(0.62rem, 0.72vw, 0.88rem);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            line-height: 1;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            user-select: none;
+        }
+        .hero-visibility-principle-inline-control.is-active {
+            background: rgba(37, 84, 34, 0.88);
+            color: rgba(245, 247, 235, 0.98);
+            border-color: rgba(215, 228, 194, 0.7);
+            box-shadow: 0 3px 9px rgba(30, 48, 27, 0.24);
+        }
+        .hero-visibility-principle-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 26px rgba(41, 55, 32, 0.24);
+            background: rgba(255, 245, 230, 1);
+        }
+        .hero-visibility-principle-cta.is-selected {
+            box-shadow: 0 12px 26px rgba(41, 55, 32, 0.24);
+            background: rgba(255, 245, 230, 1);
+        }
+        .hero-visibility-principle-cta:focus-visible {
+            outline: 3px solid rgba(194, 145, 47, 0.85);
+            outline-offset: 2px;
+        }
         .hero-rebuild-actions {
             position: absolute;
             left: 50%;
@@ -2715,6 +2880,32 @@
                 width: 100%;
                 margin-top: 12px;
             }
+            .hero-visibility-principle-group {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin-top: 12px;
+                width: min(100%, 300px);
+            }
+            .hero-visibility-principle-cta {
+                min-width: min(100%, 300px);
+                width: min(100%, 300px);
+                min-height: clamp(74px, 19vw, 104px);
+            }
+            .hero-visibility-principle-cta:hover {
+                transform: translateY(-1px);
+            }
+            .hero-visibility-principle-title {
+                font-size: clamp(0.94rem, 4.15vw, 1.28rem);
+            }
+            .hero-visibility-principle-inline-controls {
+                gap: 8px;
+            }
+            .hero-visibility-principle-inline-control {
+                min-width: clamp(54px, 19vw, 78px);
+                font-size: clamp(0.58rem, 2.6vw, 0.82rem);
+            }
             .hero-rebuild-action {
                 border: 1px solid rgba(147, 131, 84, 0.5);
                 background: rgba(249, 244, 231, 0.68);
@@ -2731,6 +2922,16 @@
             }
             .hero-rebuild-action-primary {
                 color: rgba(33, 77, 44, 0.98);
+            }
+            .footer-unity-intro-controls {
+                position: static;
+                transform: none;
+                margin: 10px auto 0;
+                display: inline-flex;
+                justify-content: center;
+            }
+            .footer-unity-intro-toggle-btn:hover {
+                transform: none;
             }
         }
 
@@ -2828,6 +3029,15 @@
                 <p>“The field reveals its behavior only when it is properly observed and measured.”</p>
                 <cite>— inspired by the work of James Clerk Maxwell</cite>
             </blockquote>
+            <div class="hero-visibility-principle-group">
+                <button type="button" class="hero-visibility-principle-cta" id="heroVisibilityPrincipleBtn" aria-label="Visibility Principle narration controls">
+                    <span class="hero-visibility-principle-title">The Visibility Principle</span>
+                    <span class="hero-visibility-principle-divider" aria-hidden="true"></span>
+                    <span class="hero-visibility-principle-inline-controls">
+                        <span class="hero-visibility-principle-inline-control" id="heroVisibilityAudioToggleBtn" data-visibility-audio-action="toggle">START</span>
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
     <div class="video-modal" id="videoModal" onclick="closeVideoModal()">
@@ -2982,6 +3192,8 @@
         </div>
 
     </div>
+    <audio id="unityHomeIntroAudio" preload="metadata" src="assets/audio/unity-home-intro.mp3"></audio>
+    <audio id="unityVisibilityPrincipleAudio" preload="metadata" src="assets/audio/unity-visibility-principle.mp3"></audio>
 
     <script>
         function openVideoModal() {
@@ -3188,6 +3400,142 @@
         const SITE_UNLOCK_CONFIRMATION_MESSAGE = 'Access to the Maxwellian Library and Energy Field Story has been unlocked.';
         const SITE_LOCKED_GUIDANCE_MESSAGE = 'Please complete the Customer Access Portal profile to unlock this area.';
         let siteAccessBannerHideTimer = null;
+        let unityHomeIntroPrimed = false;
+        let unityVisibilityPlaybackTimer = null;
+        let unityVisibilityPlaybackActive = false;
+        let unityPostNarrationPulseActive = false;
+        const UNITY_POST_NARRATION_PULSE_SELECTORS = Object.freeze([
+            '#heroVisibilityPrincipleBtn'
+        ]);
+        function setVisibilityAudioToggleState(isActive) {
+            const toggleBtn = document.getElementById('heroVisibilityAudioToggleBtn');
+            const visibilityBtn = document.getElementById('heroVisibilityPrincipleBtn');
+            unityVisibilityPlaybackActive = isActive;
+            if (!toggleBtn) return;
+            toggleBtn.textContent = isActive ? 'STOP' : 'START';
+            toggleBtn.classList.toggle('is-active', isActive);
+            toggleBtn.setAttribute('data-control-state', isActive ? 'stop' : 'start');
+            if (visibilityBtn) {
+                visibilityBtn.classList.toggle('is-selected', isActive);
+                visibilityBtn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            }
+        }
+        function clearVisibilityPlaybackTimer() {
+            if (!unityVisibilityPlaybackTimer) return;
+            window.clearTimeout(unityVisibilityPlaybackTimer);
+            unityVisibilityPlaybackTimer = null;
+        }
+        function stopVisibilityPrincipleAudio(resetPosition) {
+            const visibilityAudio = document.getElementById('unityVisibilityPrincipleAudio');
+            clearVisibilityPlaybackTimer();
+            if (visibilityAudio) {
+                visibilityAudio.pause();
+                if (resetPosition) visibilityAudio.currentTime = 0;
+            }
+            setVisibilityAudioToggleState(false);
+        }
+        function setUnityPostNarrationPulseState(isActive) {
+            UNITY_POST_NARRATION_PULSE_SELECTORS.forEach(function (selector) {
+                const target = document.querySelector(selector);
+                if (!target) return;
+                target.classList.toggle('unity-post-narration-pulse', isActive);
+            });
+            unityPostNarrationPulseActive = isActive;
+        }
+        function startUnityPostNarrationPulse() {
+            setUnityPostNarrationPulseState(true);
+        }
+        function stopUnityPostNarrationPulse() {
+            if (!unityPostNarrationPulseActive) return;
+            setUnityPostNarrationPulseState(false);
+        }
+        function playUnityHomeIntro() {
+            const introAudio = document.getElementById('unityHomeIntroAudio');
+            if (!introAudio || unityHomeIntroPrimed) return;
+            unityHomeIntroPrimed = true;
+            stopUnityPostNarrationPulse();
+            const playPromise = introAudio.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(function () {
+                    showSiteAccessBanner('Tap anywhere to hear Unity’s welcome overview.', 'warn');
+                    const fallbackPlay = function () {
+                        stopUnityPostNarrationPulse();
+                        introAudio.play().catch(function () {});
+                    };
+                    document.addEventListener('pointerdown', fallbackPlay, { once: true });
+                });
+            }
+        }
+        function queueUnityHomeIntroPlayback() {
+            window.setTimeout(playUnityHomeIntro, 3000);
+        }
+        function setUnityIntroToggleState(isPlaying) {
+            const introToggleBtn = document.getElementById('unityIntroToggleBtn');
+            if (!introToggleBtn) return;
+            introToggleBtn.textContent = isPlaying ? 'STOP' : 'START';
+            introToggleBtn.classList.toggle('is-active', isPlaying);
+            introToggleBtn.setAttribute('aria-label', isPlaying ? 'Stop Unity Intro' : 'Start Unity Intro');
+        }
+        function toggleUnityHomeIntroPlayback() {
+            const introAudio = document.getElementById('unityHomeIntroAudio');
+            if (!introAudio) return;
+            if (!introAudio.paused && !introAudio.ended) {
+                introAudio.pause();
+                return;
+            }
+            stopVisibilityPrincipleAudio(false);
+            stopUnityPostNarrationPulse();
+            unityHomeIntroPrimed = true;
+            if (introAudio.ended) {
+                introAudio.currentTime = 0;
+            }
+            const playPromise = introAudio.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(function () {
+                    setUnityIntroToggleState(false);
+                    showSiteAccessBanner('Tap once to start Unity’s welcome overview.', 'warn');
+                    const fallbackPlay = function () {
+                        introAudio.play().then(function () {
+                            setUnityIntroToggleState(true);
+                        }).catch(function () {});
+                    };
+                    document.addEventListener('pointerdown', fallbackPlay, { once: true });
+                });
+            }
+        }
+        function triggerVisibilityPrincipleAudio() {
+            const introAudio = document.getElementById('unityHomeIntroAudio');
+            const visibilityAudio = document.getElementById('unityVisibilityPrincipleAudio');
+            stopUnityPostNarrationPulse();
+            if (!visibilityAudio) {
+                showSiteAccessBanner('Visibility Principle audio is not ready yet.', 'warn');
+                setVisibilityAudioToggleState(false);
+                return;
+            }
+            clearVisibilityPlaybackTimer();
+            if (introAudio && !introAudio.paused) {
+                introAudio.pause();
+            }
+            visibilityAudio.pause();
+            visibilityAudio.currentTime = 0;
+            setVisibilityAudioToggleState(true);
+            unityVisibilityPlaybackTimer = window.setTimeout(function () {
+                unityVisibilityPlaybackTimer = null;
+                const playPromise = visibilityAudio.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(function () {
+                        setVisibilityAudioToggleState(false);
+                        showSiteAccessBanner('Tap once more to hear Unity’s Visibility Principle overview.', 'warn');
+                        const fallbackPlay = function () {
+                            visibilityAudio.play().then(function () {
+                                setVisibilityAudioToggleState(true);
+                            }).catch(function () {});
+                        };
+                        document.addEventListener('pointerdown', fallbackPlay, { once: true });
+                    });
+                }
+            }, 1500);
+        }
         function getRelativePathname(href) {
             try {
                 const url = new URL(String(href || ''), window.location.href);
@@ -3364,6 +3712,73 @@
         document.addEventListener('DOMContentLoaded', function () {
             const isUnlocked = applyHomeNavAccessState();
             showUnlockConfirmationIfNeeded(isUnlocked);
+            queueUnityHomeIntroPlayback();
+            const visibilityBtn = document.getElementById('heroVisibilityPrincipleBtn');
+            const visibilityAudio = document.getElementById('unityVisibilityPrincipleAudio');
+            const introAudio = document.getElementById('unityHomeIntroAudio');
+            const unityIntroToggleBtn = document.getElementById('unityIntroToggleBtn');
+            if (visibilityBtn) {
+                visibilityBtn.addEventListener('click', function (event) {
+                    const actionNode = event.target.closest('[data-visibility-audio-action]');
+                    if (actionNode) {
+                        const action = actionNode.getAttribute('data-visibility-audio-action');
+                        if (action === 'reset') {
+                            stopVisibilityPrincipleAudio(true);
+                            return;
+                        }
+                        if (action === 'toggle') {
+                            if (unityVisibilityPlaybackActive) {
+                                stopVisibilityPrincipleAudio(false);
+                            } else {
+                                triggerVisibilityPrincipleAudio();
+                            }
+                            return;
+                        }
+                    }
+                    if (unityVisibilityPlaybackActive) {
+                        stopVisibilityPrincipleAudio(false);
+                        return;
+                    }
+                    triggerVisibilityPrincipleAudio();
+                });
+            }
+            if (visibilityAudio) {
+                visibilityAudio.addEventListener('ended', function () {
+                    setVisibilityAudioToggleState(false);
+                });
+            }
+            if (unityIntroToggleBtn) {
+                unityIntroToggleBtn.addEventListener('click', toggleUnityHomeIntroPlayback);
+            }
+            if (introAudio) {
+                introAudio.addEventListener('play', function () {
+                    stopUnityPostNarrationPulse();
+                    setUnityIntroToggleState(true);
+                });
+                introAudio.addEventListener('pause', function () {
+                    if (!introAudio.ended) setUnityIntroToggleState(false);
+                });
+                introAudio.addEventListener('ended', function () {
+                    startUnityPostNarrationPulse();
+                    setUnityIntroToggleState(false);
+                });
+                setUnityIntroToggleState(!introAudio.paused && !introAudio.ended);
+            }
+            document.addEventListener('click', function (event) {
+                if (!unityPostNarrationPulseActive) return;
+                if (event.target.closest('button, a')) {
+                    stopUnityPostNarrationPulse();
+                }
+            });
+            document.addEventListener('keydown', function (event) {
+                if (!unityPostNarrationPulseActive) return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                    stopUnityPostNarrationPulse();
+                }
+            });
+            if (introAudio && introAudio.ended) {
+                startUnityPostNarrationPulse();
+            }
         });
     </script>
 
@@ -3371,6 +3786,10 @@
     <footer>
         <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
+        <div class="footer-unity-intro-controls" role="group" aria-label="Unity Intro controls">
+            <span class="footer-unity-intro-label">Unity Intro</span>
+            <button id="unityIntroToggleBtn" class="footer-unity-intro-toggle-btn" type="button" aria-label="Start Unity Intro">START</button>
+        </div>
     </footer>
 </body>
 </html>
