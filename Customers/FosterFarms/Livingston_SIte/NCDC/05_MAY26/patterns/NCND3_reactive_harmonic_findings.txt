@@ -1,0 +1,9 @@
+**Transformer: NCND3 — Reactive and Harmonic Findings | May 2026**
+
+The reactive profile on NCND3 is the defining inefficiency of this field. The kVAR average is running at 296.8 kVAR with a peak reaching 379.4 kVAR — and critically, that reactive burden is present every single day of the month. There are no weekend valleys, no overnight recovery periods, no intervals where the reactive drag releases. Cold storage and continuous processing loads don't go home. The compressors run, the refrigeration systems cycle, and the reactive demand sits on this transformer around the clock.
+
+At 84.6% average power factor, the field is operating well below the 95% threshold that represents efficient industrial operation. The gap between where the field sits and where it should be is not trivial — it represents a continuous tax on transformer capacity, conductor current, and utility relationship that accumulates every hour of every day. The minimum power factor annotation from the M view confirms the field dips to approximately 81.6% during stress intervals, meaning the worst moments are pushing into the low-80s — a range that triggers demand penalty exposure with most utility rate structures.
+
+On the harmonic side, the iTHD average of 5.7% sits at a manageable level — below the IEEE 519 threshold of concern for most industrial systems — but the 11.2% maximum during peak events is worth monitoring. Variable frequency drives on compressor and refrigeration systems are the likely harmonic contributors, and while the current harmonic floor doesn't present an acute risk, it does add to the overall electromagnetic burden on the transformer and downstream wiring. The reactive and harmonic burden together define a field that is working significantly harder than it needs to for every kilowatt of production output delivered.
+
+---

@@ -1,0 +1,11 @@
+**PL2C — Reactive and Harmonic Behavior | March 13–31, 2026**
+
+The reactive layer on PL2C is the defining characteristic of this field's inefficiency profile. An average of 150.5 kVAR of reactive demand, peaking at 311.0 kVAR maximum, is running continuously through this transformer — and the visual evidence makes "continuously" the operative word. In the M view (Active-Reactive-Harmonic chart), the reactive band never disappears. Not during overnight hours, not during weekends, not during any reduced-load interval across the 18-day dataset. The inductive load base of this facility — refrigeration compressors, HVAC systems, production motors — maintains a persistent reactive grip on the transformer around the clock.
+
+This persistent reactive burden has a direct, calculable thermal consequence. The transformer is carrying 158,890 BTU per hour of thermal burden as a result of this reactive loading — heat that the facility then has to mechanically remove at a cost of $4.78 per hour, consuming 23.2 kilowatts of cooling capacity. Annualized, the cooling overhead alone runs to approximately $41,867 per year. That's money being spent not to make product, but to manage the thermal consequence of an uncompensated reactive field.
+
+The harmonic layer visible in the M view runs as a consistent, dense band at the base of the chart throughout the entire dataset without significant amplitude variation. This steady-state harmonic signature is characteristic of variable-frequency drives and switching power supplies operating in a continuous production environment. The harmonics are not spiking dramatically — they're a constant background contributor to field degradation. They compound the reactive stress without dominating it. In an untuned field, this combination of sustained reactive burden and steady harmonic loading is exactly the condition that progressive transformer insulation wear and premature equipment aging emerge from.
+
+The power factor of 83.9 percent average confirms the scale of the reactive problem. A well-compensated field runs at 97 to 99.5 percent. PL2C is operating at a 13 to 15 percentage point gap below that standard.
+
+---

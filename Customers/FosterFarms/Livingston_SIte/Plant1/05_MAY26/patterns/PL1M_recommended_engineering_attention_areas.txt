@@ -1,0 +1,11 @@
+**Transformer: PL1M — Recommended Engineering Attention Areas**
+
+Given that no numeric field data has been returned for PL1M, the primary engineering action at this moment is straightforward: data recovery and validation. Before any field refinement, tuning adjustment, or incremental asset decision can be responsibly recommended, the measurement data for this transformer must be confirmed, corrected, and resubmitted.
+
+Specifically, the engineering team should verify that the PL1M data export from the Mercury analysis platform completed successfully and that no channel mapping error caused the transformer's readings to be zeroed out or attributed to a different asset. It is also worth confirming that the monitoring interval for PL1M aligns with the dataset window being analyzed — a mismatched time range can produce apparent zeros even when the physical meter is logging correctly.
+
+Once valid data is in hand, the engineering attention areas for a tuned-field transformer at this stage of optimization would typically include: confirming that installed MPTS assets are operating within their rated compensation range and have not drifted since commissioning; reviewing the TB-to-TBT gap for any reactive demand that remains above target and warrants incremental correction; assessing voltage stability at PL1M for any recurring dip patterns that suggest the field has not fully stabilized; and evaluating whether the thermal burden reduction achieved so far is consistent with the expected output of the installed equipment.
+
+If any of those diagnostics reveals a meaningful gap, the recommended path is targeted refinement — not a ground-up redesign. The investment already made at this site has value, and the goal of any engineering work at this stage is to protect and extend that value.
+
+---

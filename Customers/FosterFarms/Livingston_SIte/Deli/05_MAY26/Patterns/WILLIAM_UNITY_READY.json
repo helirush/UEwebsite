@@ -1,0 +1,93 @@
+{
+  "generated_at_utc": "2026-06-16T20:43:03.896461+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Deli/patterns",
+  "mode": "full",
+  "narrative_mode": "pre_mpts_sales",
+  "inventory": {
+    "image_count": 10,
+    "all_images": [
+      "DeliFb_may26.png",
+      "DeliFbt_may26.png",
+      "DeliFm_may26.png",
+      "DeliFs_may26.png",
+      "DeliFv_may26.png",
+      "DeliGb_may26.png",
+      "DeliGbt_may26.png",
+      "DeliGm_may26.png",
+      "DeliGs_may26.png",
+      "DeliGv_may26.png"
+    ],
+    "transformer_count": 2,
+    "raw_coverage_by_transformer": {
+      "DELIF": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "DELIG": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "DELIF": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "DELIG": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "DELIF": [
+        "DeliFb_may26.png",
+        "DeliFbt_may26.png",
+        "DeliFm_may26.png",
+        "DeliFs_may26.png",
+        "DeliFv_may26.png"
+      ],
+      "DELIG": [
+        "DeliGb_may26.png",
+        "DeliGbt_may26.png",
+        "DeliGm_may26.png",
+        "DeliGs_may26.png",
+        "DeliGv_may26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "DELIF",
+      "DELIG"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Deli/patterns",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-06-16T20:54:38.082301+00:00"
+}

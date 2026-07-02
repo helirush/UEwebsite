@@ -1,0 +1,13 @@
+**PL2-1South — Operational Stress Interpretation**
+
+Reading the full 442-hour dataset across all three views, PL2-1South is operating under a stress profile that I'd characterize as high and chronic. This isn't a transformer that spikes into stress occasionally — it's one that runs in a stressed state as its normal operating condition during every production shift. Let me walk through what that means operationally.
+
+Your production pattern shows strong, tall weekday demand blocks rising well above the 1,584 kVA supply target, with deep overnight and weekend valleys. Approximately 60% of active production hours appear to run above the target supply threshold — meaning for more than half of every production shift, your transformer is being asked to deliver more apparent power than the supply target was designed around. That's not a comfortable operating margin. That's a transformer running at or near its performance ceiling on a routine basis.
+
+During those above-target production windows, three stressors converge simultaneously: high reactive burden pushing the reactive current component above 900 kVAR at peak, harmonic distortion at 15.6% iTHD amplifying core and winding heating, and voltage sag pulling below the 480-volt nominal reference and stressing motor loads. When all three run together — as they clearly are during your peak production periods — the aging mechanisms compound. Reactive heating ages insulation. Harmonic heating ages insulation. Voltage sag forces motors to draw higher current, which ages motor windings. These aren't separate problems; they're reinforcing each other on every shift.
+
+The two outage events observed in this dataset add a reliability dimension to what is otherwise an efficiency story. Each interruption on a food processing line carries potential food safety consequences, product loss exposure, equipment restart costs, and the labor overhead of bringing a shutdown production line back to steady-state operation. Even at 20 to 30 minutes of combined downtime in 19 days, the pattern of interruptions on an untuned, reactively burdened transformer suggests elevated risk of recurrence and potentially longer events as the field remains uncorrected.
+
+The annual total waste estimate of approximately $424,031 — combining reactive losses, thermal burden carrying cost, and cooling overhead — is a meaningful figure. But the number that deserves equal attention is the hidden cost embedded in accelerated transformer aging and device degradation. A 2,500 kVA industrial transformer costs substantially more to replace than to protect. The stress signature on PL2-1South is not yet at a critical failure threshold, but the trajectory is clear.
+
+---

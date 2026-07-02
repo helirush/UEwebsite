@@ -1,0 +1,13 @@
+How to read the baseline view: first orient to the chart layout and operating window, next focus on trend direction and drift from stable behavior, then connect those shifts to operational strain before planning corrective action. **PL1MS — Voltage and Baseline Waste Notes for Clerk** Use these points when describing the current waste condition on PL1MS to a facility manager or executive audience. **Voltage context:**
+- The PL1MS voltage field runs from a confirmed low of 454.1 volts to a high of 507.8 volts in May 2026 — against a nominal reference of 480 volts.
+- The 54-volt swing is an 11.2% range, which is significant for motor-driven loads.
+- The floor at 454.1 V sits 5.4% below nominal — confirmed dip events cluster in the 260520–260526 window and are consistent with large inductive load start sequences.
+- Ceiling voltage at 508 V during light-load periods adds symmetric insulation stress.
+- Device health risk is assessed as moderate to elevated; these are not catastrophic individual events, but repeated cycling accelerates motor winding and insulation aging. **Baseline waste framing:**
+- Monthly waste in the dataset: approximately $5,964.
+- Annual direct energy waste projection: roughly $70,217 per year.
+- Total annual wasted cost including thermal burden and cooling overhead: approximately $112,820 per year.
+- Thermal burden: 147,430 BTU per hour — continuous heat load on transformer and switchgear.
+- Cooling overhead: 21.5 kW of active cooling at approximately $4.25 per hour — the facility is paying to fight heat the field creates.
+- Power factor: 86.2% average, dropping to 77.32% at worst-case moments.
+- The field is untuned. Without correction, thermal burden and waste tend to drift upward month over month as equipment ages under reactive stress. ---

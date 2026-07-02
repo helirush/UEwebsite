@@ -1,0 +1,13 @@
+**PL2C — Operational Stress Interpretation | March 13–31, 2026**
+
+Taking the voltage, reactive, and harmonic findings together, the operational picture for PL2C is one of a transformer doing its job — but doing it harder than it needs to. The 2,500 kVA nameplate means there's substantial headroom between the 434 kVA operating target and the transformer's rated capacity. PL2C is not being overloaded in a traditional sense. But the quality of the energy being processed through it is substandard, and that quality gap has real costs.
+
+The peak demand of 551.3 kilowatts — running against a power factor of 83.9 percent — means the transformer is actually handling a higher apparent power demand than the kilowatt number alone suggests. When power factor is depressed, the transformer current required to deliver a given real power load is elevated proportionally. That elevated current drives the thermal burden. The 158,890 BTU per hour of heat generation is the direct physical consequence of pushing reactive current through transformer windings that produce heat proportional to the square of that current.
+
+The production pattern across the 18-day window shows approximately 70 to 75 percent of dataset hours in active production mode — the elevated plateau bands in the energy view confirm consistent daytime and weekday operation with visible weekend valley behavior. That means this reactive burden and thermal loading is sustained across the majority of operational hours, not just during peak events.
+
+The disturbance event around March 24th — the voltage collapse to 0.0 volts with simultaneous amperage spike to 520.7 amps — represents an acute stress event superimposed on the chronic stress baseline. Whether that event was a utility disturbance, a large motor fault, or a momentary switching event, it placed every connected device on this transformer under significant instantaneous stress. For equipment already experiencing repeated triangular voltage dips from inductive load cycling, an acute event of that magnitude compounds the cumulative wear picture considerably.
+
+The total annualized waste figure of approximately $123,026 per year, including reactive losses, thermal burden recovery costs, and cooling overhead, represents the measurable financial expression of this chronic operational stress condition. It's correctable.
+
+---

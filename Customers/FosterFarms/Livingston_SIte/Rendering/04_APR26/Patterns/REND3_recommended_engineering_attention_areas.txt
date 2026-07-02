@@ -1,1 +1,15 @@
-Immediate engineering attention should focus on REND3's voltage stability issues and reactive power correction requirements. The systematic voltage drops during production cycles indicate the electrical infrastructure is operating near capacity limits under reactive burden, requiring assessment of transformer loading margins and conductor sizing adequacy. Priority should be given to MPTS installation planning, with preliminary estimates suggesting 3 H490 units (approximately $600,000 installed investment) to address the 909 kVAR maximum reactive demand. Engineering should evaluate the correlation between thermal processing load schedules and voltage instability patterns to optimize production sequencing while MPTS correction is implemented. The moderate harmonic content warrants harmonic analysis to ensure MPTS deployment doesn't create resonance conditions. Additionally, the substantial thermal burden of 635,000 BTU per hour suggests cooling system capacity and efficiency should be reassessed once reactive losses are eliminated through proper power factor correction.
+**REND3 — Recommended Engineering Attention Areas | April 2026**
+
+Several engineering attention areas emerge from this analysis and warrant follow-up before or alongside any MPTS tuning assignment.
+
+**Voltage envelope management:** The persistent overvoltage band — running 484 to 511 volts against a 480-volt nominal — should be reviewed at the utility interconnect and transformer tap level. If the primary tap is set for a higher voltage range than the load equipment was specified for, a tap adjustment could bring the operating band back toward nominal and reduce the chronic insulation stress being applied to every motor and device on this transformer.
+
+**The 444.1-volt sag event:** The mid-April undervoltage excursion warrants root-cause investigation. Sag events of this magnitude on a continuous-production facility suggest either a fault event, a large motor starting event without soft-start mitigation, or a utility supply disturbance. Understanding the cause determines whether mitigation is a site-side or utility-side action.
+
+**Outage event review:** Three estimated outage events totaling three to five hours of downtime in a single month on a food processing and rendering facility deserve operational review. Each outage carries food safety, production yield, and equipment restart implications beyond the energy cost calculation.
+
+**Harmonic mitigation review:** With iTHD averaging 5.8 percent and peaking at 10.7 percent, harmonic filtering deserves evaluation alongside reactive compensation. Variable frequency drives, switching power supplies, and rectifier loads commonly present in industrial food processing environments are likely harmonic contributors. MPTS correction addresses reactive burden; harmonic filtering is a complementary action that may be warranted given the 10.7 percent peak.
+
+**Transformer thermal monitoring:** At 634,722 BTU per hour continuous thermal burden on a transformer regularly approaching its 850 kVA operational target, a thermal monitoring program for the REND3 transformer and associated switchgear is a prudent addition to the engineering scope.
+
+---

@@ -1,1585 +1,2157 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foster Farms - Energy Field Analysis Portal</title>
-    <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
-    <script src="../../UnityEnergy/hume_character_config.js"></script>
-    <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .site-card:hover .site-header {
-            filter: brightness(1.08) saturate(1.08);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            line-height: 1.5;
-            color: rgba(44, 62, 80, 1);
-            background: linear-gradient(180deg, rgba(245, 246, 248, 1) 0%, rgba(236, 239, 242, 1) 100%);
-            background-color: rgba(236, 239, 242, 1);
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid rgba(255, 215, 0, 1);
-        }
-
-        .logo {
-            font-size: 1.8em;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: rgba(255, 215, 0, 1);
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .back-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: rgba(255, 215, 0, 1);
-            color: rgba(0, 0, 0, 1);
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 6px;
-            border: 2px solid rgba(0, 0, 0, 1);
-            transition: all 0.3s;
-            text-transform: uppercase;
-            font-size: 0.9em;
-        }
-
-        .back-btn:hover {
-            background: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
-        }
-
-        .hero {
-            background: url('foster-farms-hero.png') center top / cover no-repeat;
-            position: relative;
-            background-position: 0% 5%;
-            color: white;
-            padding: 0;
-            min-height: 350px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 8px solid rgba(255, 215, 0, 1);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
-        }
-
-        .hero-logo-block {
-            position: absolute;
-            top: 30px;
-            left: 40px;
-            z-index: 2;
-            width: 250px;
-        }
-
-        .hero-logo {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .hero-logo-caption {
-            margin-top: 8px;
-            max-width: 100%;
-            text-align: center;
-            font-size: 0.78em;
-            line-height: 1.35;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-            letter-spacing: 0.2px;
-        }
-
-        .hero-exec-access {
-            position: absolute;
-            top: 28px;
-            right: 40px;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .hero-exec-label {
-            font-size: 0.74em;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: rgba(255, 215, 0, 0.95);
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-        }
-
-        .hero-exec-btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
-            color: rgba(255, 255, 255, 1);
-            border: 2px solid rgba(255, 215, 0, 1);
-            font-size: 0.88em;
-            font-weight: 700;
-            letter-spacing: 0.4px;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
-            transition: transform 0.25s, box-shadow 0.25s;
-        }
-
-        .hero-exec-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.33);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            font-family: 'Times New Roman', Times, serif;
-            max-width: 900px;
-            padding: 0px 0px;
-        }
-        .hero-content1 {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            font-family: 'Times New Roman', Times, serif;
-            max-width: 900px;
-            padding: 0px 0px;
-        }
-
-        .hero h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            color: rgba(255, 215, 0, 1);
-            letter-spacing: 2px;
-        }
-        .hero h2 {
-            font-size: 4em;
-            margin-bottom: 0px;
-            font-weight: 900;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            color: rgba(255, 215, 0, 1);
-            letter-spacing: 2px;
-            white-space: nowrap;
-        }
-        
-        .hero p {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            font-weight: 400;
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 0px;
-        }
-
-        section {
-            margin: 30px 0;
-        }
-
-        .section-title {
-            font-size: 2.2em;
-            color: rgba(204, 0, 0, 1);
-            margin-bottom: 0px;
-            text-align: center;
-            font-weight: 700;
-            line-height: 1.1;
-        }
-        .section-subtitle {
-            font-size: 1.45em;
-            color: rgba(204, 0, 0, 1);
-            letter-spacing: 2px;
-            margin-top: 4px;
-            margin-bottom: 6px;
-            text-align: center;
-            font-weight: 500;
-            line-height: 1.05;
-        }
-        .sites-section {
-            position: relative;
-            overflow: visible;
-            border-radius: 16px;
-            padding: 24px;
-            background: linear-gradient(180deg, rgba(246, 247, 249, 0.96) 0%, rgba(237, 240, 243, 0.96) 100%);
-            border: 1px solid rgba(205, 212, 218, 0.9);
-            box-shadow: 0 8px 24px rgba(44, 62, 80, 0.08);
-            margin-bottom: 18px;
-        }
-
-        .sites-section + section {
-            margin-top: 14px;
-        }
-
-        .sites-section::before {
-            content: none;
-            position: absolute;
-            inset: 0;
-            background: transparent;
-            z-index: 0;
-        }
-
-        .sites-section > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .sites-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 28px;
-            margin: 12px 0 6px;
-            overflow: visible;
-        }
-
-        .cards-hero-panel {
-            background: transparent;
-            backdrop-filter: none;
-            border-radius: 16px;
-            padding: 8px 0 0;
-            border: none;
-            box-shadow: none;
-        }
-
-        .site-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-            border-top: 5px solid rgba(255, 215, 0, 1);
-            border: 2px solid transparent;
-            position: relative;
-            z-index: 1;
-        }
-
-        .site-card:hover {
-            transform: translateY(-10px) scale(1.015);
-            box-shadow:
-                0 0 0 2px rgba(255, 215, 0, 0.95),
-                0 0 20px rgba(255, 230, 120, 0.75),
-                0 20px 55px rgba(120, 0, 0, 0.35);
-            border-color: rgba(255, 230, 120, 0.95);
-            z-index: 20;
-        }
-
-        .site-header {
-            background: linear-gradient(135deg, rgba(139, 0, 0, 1) 0%, rgba(102, 0, 0, 1) 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .site-name {
-            font-size: 1.9em;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .site-location {
-            font-size: 1.4em;
-            color: rgba(255, 215, 0, 1);
-            opacity: 0.95;
-            margin-bottom: 2px;
-        }
-        .site-card--hero-updated .site-header {
-            padding: 18px 18px 12px 18px;
-            background: linear-gradient(180deg, rgba(147, 12, 0, 1) 0%, rgba(123, 9, 0, 1) 100%);
-            min-height: 386px;
-            justify-content: flex-start;
-        }
-        .site-card--hero-updated .site-name {
-            font-size: 2.05em;
-            line-height: 1;
-            font-weight: 500;
-            margin-bottom: 6px;
-            letter-spacing: 0.2px;
-        }
-        .site-card--hero-updated .site-name-divider {
-            width: 92%;
-            border-bottom: 2px solid rgba(255, 245, 230, 0.9);
-            margin: 0 auto 6px auto;
-        }
-        .site-card--hero-updated .site-location {
-            font-size: 1.1em;
-            line-height: 1;
-            font-style: italic;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: rgba(245, 209, 32, 1);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
-        }
-        .site-consequence-panel {
-            width: 100%;
-            border-radius: 20px;
-            border: 2px solid rgba(255, 245, 230, 0.9);
-            background: rgba(165, 46, 33, 1);
-            padding: 12px 12px 10px 12px;
-            box-shadow: none;
-        }
-        .site-consequence-title {
-            font-size: 1.02em;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: rgba(255, 246, 240, 1);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-        .site-consequence-pill {
-            border-radius: 10px;
-            border-top: 2px solid rgba(255, 247, 230, 0.95);
-            border-left: 2px solid rgba(255, 247, 230, 0.95);
-            border-right: 2px solid rgba(255, 247, 230, 0.95);
-            border-bottom: 1px solid rgba(188, 151, 20, 0.85);
-            background: rgba(242, 202, 21, 1);
-            color: rgba(122, 16, 0, 1);
-            font-size: 1.12em;
-            line-height: 1;
-            font-weight: 800;
-            letter-spacing: 0.2px;
-            padding: 8px 8px 7px 8px;
-            margin: 0 auto 8px auto;
-            width: 100%;
-            display: block;
-            text-transform: uppercase;
-        }
-        .site-consequence-pill-annual {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            gap: 8px;
-            font-size: 1em;
-            letter-spacing: 0;
-            line-height: 1;
-        }
-        .site-annual-value {
-            font-size: 1.66em;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: 0.2px;
-            text-transform: uppercase;
-        }
-        .site-annual-unit {
-            font-size: 0.87em;
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: 0.2px;
-            text-transform: uppercase;
-        }
-        .site-consequence-subtitle {
-            font-size: 0.98em;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: rgba(255, 246, 240, 1);
-            margin: 30px 0 8px 0;
-            text-transform: uppercase;
-        }
-        .site-consequence-pill-pf {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 8px 8px 9px 8px;
-        }
-        .site-pf-primary {
-            display: block;
-            font-size: 1.46em;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: 0.2px;
-            text-transform: uppercase;
-        }
-        .site-pf-range {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            width: 100%;
-            color: rgba(111, 12, 0, 0.96);
-            font-size: 0.78em;
-            font-weight: 500;
-            line-height: 1.1;
-            letter-spacing: 0.2px;
-            text-transform: uppercase;
-        }
-        .site-pf-range span {
-            white-space: nowrap;
-        }
-        .site-card--hero-updated .site-efficiency-badge {
-            width: 100%;
-            margin-top: 20px;
-            gap: 0;
-        }
-
-        .site-efficiency-badge {
-            margin-top: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .efficiency-circle {
-            width: 160px;
-            height: 60px;
-            border-radius: 999px;
-            background: rgba(255, 215, 0, 1);
-            border: 4px solid rgba(255, 255, 255, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(139, 0, 0, 1);
-            font-size: 1.75em;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: 0.5px;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
-        }
-
-        .efficiency-label {
-            color: rgba(255, 255, 255, 0.96);
-            font-size: 1.02em;
-            font-style: normal;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-        }
-
-        .efficiency-range {
-            display: flex;
-            justify-content: space-between;
-            gap: 35px;
-            width: 270px;
-            color: rgba(255, 255, 255, 0.80);
-            font-size: 1.2em;
-            font-style: italic;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-            margin-bottom: -12px;
-        }
-
-        .site-content {
-            padding: 30px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(233, 236, 239, 1) 50%, rgba(222, 226, 230, 1) 100%);
-        }
-
-        .site-description {
-            color: rgba(102, 102, 102, 1);
-            font-size: 1.05em;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            flex: 1;
-        }
-
-        .site-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 20px 0;
-            border-top: 1px solid rgba(238, 238, 238, 1);
-            border-bottom: 1px solid rgba(238, 238, 238, 1);
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: rgba(204, 0, 0, 1);
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: rgba(153, 153, 153, 1);
-        }
-
-        .site-btn {
-            display: block;
-            width: 100%;
-            padding: 14px 28px;
-            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2em;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid rgba(255, 215, 0, 1);
-        }
-
-        /* Disable navigation for not-yet-live sites */
-        .site-card.coming-soon {
-            opacity: 0.6;
-            cursor: default;
-            pointer-events: none;
-        }
-
-        .site-card.coming-soon:hover {
-            transform: none;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .site-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(204, 0, 0, 0.4);
-        }
-
-        /* Latest Report Section */
-        .fields-measured {
-            padding: 0px 30px 0 30px; /* reduce top gap */
-            text-align: center;
-            color: rgba(139, 0, 0, 1);
-            letter-spacing: 0.5px;
-            line-height: 1.15;
-        }
-
-        .fields-measured .count {
-            font-size: 2.55em;
-            font-weight: 700; /* not as bold */
-            font-style: normal; /* count should NOT be italic */
-            margin-bottom: 6px;
-            margin-top: -15px;
-        }
-
-        .fields-measured .label,
-        .fields-measured .status {
-            font-size: 1.25em;
-            font-weight: 600; /* not as bold */
-            font-style: italic;
-        }
-
-        .latest-report {
-            width: 100%;
-            margin: 14px auto 22px;
-            padding: 18px 20px 16px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.45);
-            border: 2px solid rgba(139, 0, 0, 0.75);
-            border-top: 4px solid rgba(255, 215, 0, 0.95);
-            border-radius: 12px;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-        }
-
-        
-        .latest-report h3 {
-            font-size: 1.5em;
-            color: rgba(204, 0, 0, 1);
-            font-weight: 700;
-            margin-bottom: 0px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .latest-report .report-name {
-            font-size: 1.3em;
-            color: rgba(139, 0, 0, 1);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .latest-report .report-desc {
-            font-size: 1em;
-            color: rgba(102, 102, 102, 1);
-            margin-bottom: 0px;
-        }
-
-        .info-section {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin: 40px 0;
-            border-left: 5px solid rgba(255, 215, 0, 1);
-        }
-
-        .info-section h3 {
-            color: rgba(204, 0, 0, 1);
-            font-size: 1.5em;
-            margin-bottom: 5px;
-        }
-
-        .info-section p {
-            color: rgba(102, 102, 102, 1);
-            font-size: 1.05em;
-            line-height: 1.8;
-        }
-
-        footer {
-            background: rgba(139, 0, 0, 1);
-            color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 60px;
-            border-top: 3px solid rgba(255, 215, 0, 1);
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .hero h1 {
-                font-size: 2em;
-            }
-
-            .hero p {
-                font-size: 1.1em;
-            }
-
-            .hero-exec-access {
-                top: auto;
-                right: 14px;
-                left: 14px;
-                bottom: 14px;
-                align-items: center;
-            }
-
-            .hero-exec-label {
-                text-align: center;
-            }
-
-            section {
-                margin: 40px 0;
-            }
-
-            .sites-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .sites-section {
-                padding: 14px;
-            }
-            .site-card--hero-updated .site-header {
-                min-height: auto;
-                padding: 20px 16px 14px 16px;
-            }
-            .site-card--hero-updated .site-name {
-                font-size: 2.35em;
-            }
-            .site-card--hero-updated .site-location {
-                font-size: 1.4em;
-                margin-bottom: 12px;
-            }
-            .site-consequence-title,
-            .site-consequence-subtitle {
-                font-size: 1.35em;
-            }
-            .site-consequence-pill {
-                font-size: 2em;
-                padding: 10px 8px 8px 8px;
-            }
-            .site-consequence-pill-annual {
-                gap: 6px;
-            }
-            .site-annual-value {
-                font-size: 1.63em;
-            }
-            .site-annual-unit {
-                font-size: 0.82em;
-            }
-            .site-pf-primary {
-                font-size: 1.3em;
-            }
-            .site-pf-range {
-                font-size: 1em;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foster Farms | Executive Electrical Intelligence</title>
+  <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
+  <script src="../../UnityEnergy/hume_character_config.js?v=20260617r30"></script>
+  <script src="../../UnityEnergy/clerk_voice_widget.js?v=20260617r30"></script>
+  <style>
+    :root{
+      --ff-red:#9f0f08;
+      --ff-red-dark:#750700;
+      --ff-gold:#ffd21a;
+      --ink:#171717;
+      --muted:#666;
+      --panel:#ffffff;
+      --line:#eadfd7;
+      --soft:#fbf7f2;
+      --high:#b40000;
+      --moderate:#d4831f;
+      --low:#d9b62a;
+      --tuned:#00bbff;
+      --not-tuned:#9a9a9a;
+      --alert:#d9a456;
+      --blue:#123759;
+      --shadow:0 14px 34px rgba(40,25,10,.12);
+      --radius:16px;
+      --max:1400px;
+      --ui-btn-width:240px;
+    }
+    .nav-link:hover{
+      background:rgba(255,215,26,0.16);
+      border-color:rgba(255,215,26,0.95);
+      color:#fff3b0;
+    }
+    .kpi:last-child{border-right:none}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#fffaf2 0%,#fff 45%,#fffaf2 100%);
+    }
+    .topbar{
+      background:linear-gradient(90deg,var(--ff-red),var(--ff-red-dark));
+      color:#fff;
+      border-bottom:4px solid var(--ff-gold);
+      padding:12px 28px;
+      position:relative;
+      z-index:1
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .brand{display:flex;align-items:center;gap:18px}
+    .logo{
+      width:130px;
+      height:130px;
+      display:block;
+      object-fit:contain;
+      border-radius:0;
+      border:none;
+      background:transparent;
+      padding:0;
+      box-shadow:none;
+    }
+    .brand h1{margin:0;font-size:32px;letter-spacing:.2px}
+    .brand p{margin:0;color:var(--ff-gold);font-weight:800}
+    .nav{display:flex;gap:20px;align-items:center}
+    .voice-control-group{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .nav-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:rgba(0,0,0,0.18);
+      border:2px solid rgba(255,215,26,0.65);
+      border-radius:14px;
+      min-width:var(--ui-btn-width);
+      min-height:46px;
+      padding:10px 20px 8px;
+      font-weight:900;
+      font-size:17px;
+      line-height:1;
+      color:rgba(255,215,26,0.98);
+      text-decoration:none;
+      box-shadow:inset 0 -1px 0 rgba(255,215,26,.20);
+      transition:all .2s ease;
+    }
+    .nav-icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:18px;
+      font-size:18px;
+      line-height:1;
+      transform:translateY(1px);
+    }
+    .nav-icon.home-icon{
+      font-size:20px;
+      font-weight:900;
+      transform:translateY(0);
+    }
+    .nav-label{
+      display:inline-flex;
+      align-items:center;
+      transform:translateY(1px);
+    }
+    .voice-toggle{
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:10px;
+      min-width:var(--ui-btn-width);
+      min-height:46px;
+      padding:10px 20px 8px;
+      border-radius:14px;
+      border:2px solid rgba(255,215,26,0.7);
+      background:rgba(0,0,0,0.24);
+      color:rgba(255,215,26,0.98);
+      font-weight:900;
+      font-size:17px;
+      line-height:1;
+      letter-spacing:.3px;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+    .voice-pill-group{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-left:4px;
+    }
+    .voice-toggle:hover{background:rgba(255,215,26,0.16)}
+    .voice-toggle.is-active{
+      background:rgba(0,0,0,0.3);
+      color:rgba(255,215,26,0.98);
+      border-color:rgba(255,215,26,1);
+    }
+    .voice-state,
+    .voice-reset{
+      border-radius:999px;
+      border:1px solid rgba(255,215,26,0.6);
+      min-width:42px;
+      padding:4px 8px 3px;
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      line-height:1;
+      text-align:center;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.55);
+      color:#ffd965;
+      cursor:pointer;
+      user-select:none;
+      transition:all .2s ease;
+    }
+    .voice-state.off{
+      background:#ffd965;
+      color:#3b1b00;
+      border-color:#ffd965;
+    }
+    .voice-reset{
+      background:rgba(0,0,0,0.46);
+      border-color:rgba(255,215,26,0.72);
+      color:rgba(255,215,26,0.96);
+    }
+    .voice-reset:hover{
+      background:rgba(255,215,26,0.18);
+      border-color:rgba(255,215,26,0.98);
+      color:#fff3b0;
+    }
+    .hero{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      background:none;
+      min-height:550px;
+      padding:30px 28px 40px;
+      border-bottom:none;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url("foster-farms-hero.png?v=20260628a") center calc(15% - 110px) / cover no-repeat;
+      z-index:0;
+      pointer-events:none;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(110% 90% at 5% 25%, rgba(255, 255, 235, 0.90) 0%, rgba(255,245,225,.70) 30%, rgba(255,245,225,.40) 40%, rgba(255,255,255,0) 55%),
+        linear-gradient(90deg, rgba(255,235,185,1) 0%, rgba(255,255,255,.60) 30%, rgba(255,255,255,0) 55%);
+      z-index:1;
+      pointer-events:none;
+    }
+    .hero-inner{max-width:var(--max);margin:auto;position:relative;z-index:2}
+    .principle{
+      display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:18px;font-weight:800;color:#4c1b15;margin-bottom:18px;line-height:1.25;
+    }
+    .chev{color:var(--ff-red);opacity:.7}
+    .brief{max-width:750px}
+    .brief h2{
+      margin:0 0 10px;
+      color:#4c1b15;
+      font-size:34px;
+      line-height:1.14;
+      font-weight:900;
+      letter-spacing:.1px;
+    }
+    .brief-label{
+      color:var(--ff-red);font-weight:880;letter-spacing:.2px;display:flex;align-items:center;gap:9px;margin-bottom:10px;font-size:16px;line-height:1.1;
+    }
+    .brief p{font-size:18px;line-height:1.28;margin:0 0 10px;font-weight:560;color:#2d221f}
+    .brief .small{font-weight:520;font-size:15px}
+    .wrap{max-width:var(--max);margin:-200px auto 0;padding:0 28px 34px;position:relative;z-index:10}
+    .kpis{
+      width:calc(100% + 420px);
+      margin-left:-210px;
+      background:url("../../UnityEnergy/assets/images/ChickFamilyKPI_60628.png?v=20260628d") center center / 90% auto no-repeat;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:8px;
+      padding:8px;
+      margin-bottom:24px;
+      overflow:visible;
+      backdrop-filter:none;
+    }
+    .kpi{
+      padding:16px 14px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      background:transparent;
+      border:none;
+      border-radius:0;
+      box-shadow:none;
+    }
+    .kpis .kpi:nth-child(1) > div {
+      transform: translateX(190px);
+    }
+    .kpis .kpi:nth-child(2) > div {
+      transform: translateX(150px);
+    }
+    .kpis .kpi:nth-child(3) > div {
+      transform: translateX(130px);
+    }
+    .kpis .kpi:nth-child(4) > div {
+      transform: translateX(90px);
+    }
+    .kpis .kpi:nth-child(5) > div {
+      transform: translateX(60px);
+    }
+    .kpis .kpi:nth-child(6) > div {
+      transform: translateX(10px);
+    }
+    .icon{
+      width:auto;
+      height:auto;
+      border-radius:0;
+      display:block;
+      background:none;
+      border:none;
+      color:rgba(255,255,255,0.94);
+      font-weight:900;
+      font-size:42px;
+      line-height:1;
+      flex:0 0 auto;
+      text-shadow:0 1px 0 rgba(0,0,0,.35);
+    }
+    .i-blue{color:rgba(0, 217, 255, 0.94)}
+    .i-green{color:rgb(158, 207, 0)}
+    .i-red{color:rgba(255,255,255,0.94)}
+    .i-orange{color:rgba(255,255,255,0.94)}
+    .i-alert{color:var(--alert)}
+    .kpi .label{font-size:11px;font-weight:900;text-transform:uppercase;color:rgba(255,255,255,.9);letter-spacing:.3px}
+    .kpi .value{font-size:40px;font-weight:900;margin:2px 0;color:#fff1c7;line-height:1}
+    .kpi .sub{font-size:12px;color:rgba(255,255,255,.82)}
+    .kpi .sub.alert-stack{font-size:11px;line-height:1.1;display:flex;flex-direction:column;gap:2px}
+    .kpi .sub .alert-line{display:block;white-space:nowrap}
+    .kpi .sub .alert-focus-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      border:1px solid rgba(145,72,0,.55);
+      background:linear-gradient(180deg,#ffd64f 0%,#f5c331 100%);
+      color:#5f1b05;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+      line-height:1;
+      padding:3px 9px 4px;
+      margin-top:1px;
+    }
+    .kpi .red{color:#ff7834}.kpi .green{color:#7fcd00}.kpi .orange{color:#ffffff}.kpi .gold{color:#f5cd57}
+    .kpi.no-icon{padding-left:24px}
+    .kpi.no-icon .icon{display:none}
+    .board{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:0;margin-bottom:22px;overflow:hidden;
+    }
+    .board-head{
+      padding:20px 24px 10px;display:flex;justify-content:space-between;gap:18px;align-items:flex-start;
+    }
+    .board-head h3{margin:0;color:var(--ff-red);font-size:30px}
+    .board-head p{margin:6px 0 0;color:#333}
+    .board-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+    .legend{display:flex;gap:16px;align-items:center;font-size:13px;font-weight:750}
+    .metric-toggles{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      justify-content:flex-end;
+      padding:10px 12px;
+      border:1px solid #d7bf75;
+      border-radius:12px;
+      background:linear-gradient(135deg,#fffef8 0%,#fff7dd 65%,#f9efc9 100%);
+      box-shadow:0 3px 10px rgba(110,79,18,.14);
+    }
+    .metric-toggles.metric-toggles-utility{
+      border-color:#b88711;
+      background:linear-gradient(135deg,#fff4c9 0%,#ffe9a9 58%,#f7d86d 100%);
+      box-shadow:0 4px 13px rgba(145,101,5,.22);
+    }
+    .metric-label{
+      font-size:13px;
+      font-weight:900;
+      color:#5f130d;
+      text-transform:uppercase;
+      letter-spacing:.42px;
+      white-space:nowrap;
+    }
+    .metric-select{
+      border:1px solid #b69842;
+      background:linear-gradient(135deg,#fff8dd 0%,#fff2c3 100%);
+      color:#5f130d;
+      border-radius:10px;
+      padding:10px 14px;
+      min-width:352px;
+      font-size:14px;
+      font-weight:900;
+      line-height:1.2;
+      box-shadow:0 3px 8px rgba(77,53,8,.15);
+      transition:border-color .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+    .metric-select.metric-select-active{
+      border-color:#b68816;
+      box-shadow:0 3px 9px rgba(129,90,8,.2);
+    }
+    .metric-select.metric-select-active:focus{
+      outline:none;
+      border-color:#7e5900;
+      box-shadow:0 0 0 3px rgba(204,163,51,.27),0 4px 12px rgba(98,69,6,.2);
+    }
+    .metric-select.metric-select-utility{
+      border-color:#8f6500;
+      background:linear-gradient(135deg,#ffe8a2 0%,#ffd66f 100%);
+      color:#4a2f00;
+      box-shadow:0 4px 12px rgba(126,86,2,.27);
+    }
+    .metric-select option[value="energy_cost"]{
+      background:#fff4c6;
+      color:#6c4a00;
+      font-weight:900;
+    }
+    .dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:-1px}
+    .tuned{background:var(--tuned)}.high{background:var(--high)}.moderate{background:var(--moderate)}.low{background:var(--low)}.not-tuned{background:var(--not-tuned)}
+    details.facility{border-top:1px solid var(--line)}
+    details.facility.action-focus > summary{
+      background:linear-gradient(90deg,rgba(255,232,191,.58) 0%,rgba(255,255,255,.96) 55%);
+      box-shadow:inset 0 0 0 1px rgba(181,124,33,.24);
+    }
+    details.facility.action-focus > summary:hover{
+      background:linear-gradient(90deg,rgba(255,225,173,.7) 0%,rgba(255,255,255,.98) 58%);
+    }
+    summary{
+      list-style:none;cursor:pointer;display:grid;
+      grid-template-columns:112px 280px 1fr 240px 48px;gap:18px;
+      align-items:center;padding:18px 24px;
+      transition:background-color .18s ease;
+    }
+    details.facility > summary:hover{background:rgba(255,250,241,.9)}
+    summary::-webkit-details-marker{display:none}
+    .rank{
+      width:42px;height:42px;border-radius:8px;display:grid;place-items:center;
+      color:#fff;font-size:22px;font-weight:950;
+    }
+    .rank.month-rank{
+      width:100%;
+      min-height:42px;
+      height:auto;
+      padding:0 8px 0 0;
+      font-size:13px;
+      line-height:1.05;
+      text-align:left;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      color:#6b140f;
+      background:none !important;
+      border-radius:0;
+      position:relative;
+      white-space:nowrap;
+    }
+    .rank.month-rank::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:12px;
+      bottom:-7px;
+      border-bottom:2px solid rgba(136,30,23,.8);
+    }
+    .rank.unmonitored-rank{
+      width:100%;
+      min-height:42px;
+      height:auto;
+      font-size:13px;
+      letter-spacing:.35px;
+      color:#6f6f6f;
+      background:none !important;
+      border-radius:0;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      position:relative;
+      white-space:nowrap;
+      padding:0 8px 0 0;
+    }
+    .rank.unmonitored-rank::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:12px;
+      bottom:-7px;
+      border-bottom:2px solid rgba(125,125,125,.7);
+    }
+    .rank:not(.month-rank):not(.unmonitored-rank).r-high{background:var(--high)}
+    .rank:not(.month-rank):not(.unmonitored-rank).r-moderate{background:var(--moderate)}
+    .rank:not(.month-rank):not(.unmonitored-rank).r-not-tuned{background:#777}
+    .facility-title{font-size:31px;font-weight:950;color:var(--ff-red)}
+    .facility-title{white-space:nowrap}
+    .facility-title.status-moderate{color:var(--moderate)}
+    .facility-title.status-low{color:var(--low)}
+    .facility-title.status-not-tuned{color:#777}
+    .facility-title.status-tuned{color:#00bbff}
+    .location{font-size:13px;color:#333;margin-top:3px}
+    .bar-track{height:28px;border-radius:999px;background:#f0eeee;position:relative;overflow:hidden}
+    .facility-action-chip{
+      position:absolute;
+      left:0;
+      bottom:0;
+      min-width:220px;
+      max-width:100%;
+      border-radius:0 0 12px 12px;
+      border:1px solid rgba(178,120,29,.52);
+      border-top:0;
+      background:linear-gradient(180deg,#f6d166 0%,#efc451 100%);
+      color:#5f1b05;
+      text-align:center;
+      font-size:13px;
+      font-weight:950;
+      letter-spacing:.28px;
+      text-transform:uppercase;
+      line-height:1.15;
+      padding:2px 10px 3px;
+      z-index:6;
+      white-space:nowrap;
+    }
+    .bar{height:100%;border-radius:999px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+    .bar-track.voltage-track{
+      background:linear-gradient(90deg,rgba(180,0,0,.08) 0%,rgba(255,255,255,.94) 50%,rgba(9,118,210,.08) 100%);
+      overflow:visible;
+    }
+    .bar-track.voltage-track::before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:66.6667%;
+      transform:translate(-50%,-50%);
+      width:2px;
+      height:84%;
+      background:#5f4a46;
+      z-index:4;
+    }
+    .bar-track.voltage-track::after{
+      content:"480V REF";
+      position:absolute;
+      top:calc(100% + 3px);
+      left:66.6667%;
+      transform:translateX(6px);
+      color:#5f4a46;
+      font-size:10px;
+      font-weight:900;
+      line-height:1;
+      white-space:nowrap;
+      z-index:4;
+    }
+    .bar.voltage-range-band{
+      position:absolute;
+      top:3px;
+      bottom:3px;
+      border-radius:999px;
+      border:1px solid rgba(96,62,41,.34);
+      background:linear-gradient(90deg,rgba(187,118,74,.34),rgba(126,165,208,.34));
+      z-index:1;
+      pointer-events:none;
+    }
+    .voltage-range-marker{
+      position:absolute;
+      top:6%;
+      height:88%;
+      width:2px;
+      transform:translateX(-50%);
+      background:rgba(74,52,45,.86);
+      z-index:5;
+      pointer-events:none;
+    }
+    .voltage-range-marker.min{background:rgba(144,59,43,.92)}
+    .voltage-range-marker.max{background:rgba(39,95,151,.92)}
+    .voltage-range-marker-label{
+      position:absolute;
+      top:-15px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:10px;
+      font-weight:850;
+      color:#5d443b;
+      line-height:1;
+      letter-spacing:.1px;
+      white-space:nowrap;
+      text-shadow:0 1px 0 rgba(255,255,255,.92);
+    }
+    .voltage-range-marker.min .voltage-range-marker-label{
+      left:0;
+      transform:translateX(calc(-100% - 5px));
+    }
+    .voltage-range-marker.max .voltage-range-marker-label{
+      left:0;
+      transform:translateX(5px);
+    }
+    .voltage-range-marker.single .voltage-range-marker-label{
+      left:50%;
+      transform:translateX(-50%);
+    }
+    .bar.voltage-delta-bar{
+      position:absolute;
+      top:0;
+      bottom:0;
+      border-radius:999px;
+      box-shadow:inset 0 -2px 0 rgba(0,0,0,.18);
+      z-index:3;
+    }
+    .bar.status-high{background:linear-gradient(90deg,#b40000,#9a0000)}
+    .bar.status-moderate{background:linear-gradient(90deg,#efa23b,#d4831f)}
+    .bar.status-low{background:linear-gradient(90deg,#f2d34f,#d9b62a)}
+    .bar.status-not-tuned{background:#c8c8c8}
+    .money{font-size:34px;font-weight:950;color:var(--ff-red)}
+    .money.status-moderate{color:var(--moderate)}
+    .money.status-low{color:var(--low)}
+    .money.status-not-tuned{color:#777}
+    .pct{font-size:13px;margin-top:3px}
+    .pct-line{display:block;line-height:1.18;white-space:nowrap}
+    .pct-alert{
+      margin-top:2px;
+      color:#8f0000;
+      font-weight:900;
+      letter-spacing:.15px;
+      text-transform:uppercase;
+    }
+    .arrow{font-size:28px;color:var(--ff-red);text-align:center;transform:rotate(0deg)}
+    details[open] > summary .arrow{transform:rotate(180deg)}
+    .groups{
+      margin:0 24px 20px;border:1px solid var(--line);border-radius:12px;
+      padding:18px;background:rgba(255,250,247,.78);
+    }
+    .groups-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .groups-title{font-weight:950;color:var(--ff-red);margin-bottom:12px}
+    .groups-head .groups-title{margin-bottom:0}
+    .status-ribbon-wrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:24px;
+    }
+    .status-ribbon-label{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.25px;
+      color:#4e2b28;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .status-ribbon-bar{
+      width:220px;
+      max-width:45vw;
+      height:10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      background:#ececec;
+      overflow:hidden;
+      display:flex;
+    }
+    .status-seg{height:100%}
+    .status-seg.tuned{background:var(--tuned)}
+    .status-seg.high{background:var(--high)}
+    .status-seg.moderate{background:var(--moderate)}
+    .status-seg.low{background:var(--low)}
+    .status-seg.not-tuned{background:var(--not-tuned)}
+    .status-ribbon-counts{
+      font-size:11px;
+      font-weight:850;
+      color:#493734;
+      white-space:nowrap;
+    }
+    .metric-scale-chip{
+      font-size:11px;
+      font-weight:850;
+      color:#4b3834;
+      border:1px solid rgba(0,0,0,.1);
+      border-radius:999px;
+      padding:3px 10px;
+      background:rgba(255,255,255,.62);
+      white-space:nowrap;
+    }
+    .grid-head,.group-row,.snapshot-row{
+      display:grid;grid-template-columns:82px 32px 230px 34px 1fr 82px 150px 105px;gap:12px;align-items:center;
+    }
+    .grid-head{font-size:12px;font-weight:950;color:#333;text-transform:uppercase;margin-bottom:8px}
+    .group-row{
+      min-height:42px;
+      font-size:16px;
+      font-weight:800;
+      border-radius:8px;
+      padding:4px 6px;
+      transition:background-color 0.2s ease;
+    }
+    .group-row.has-target{cursor:pointer}
+    .group-row.has-target:hover{background:rgba(217,164,86,.14)}
+    .group-row.alert-locator{background:rgba(217,164,86,.14);border:1px solid rgba(217,164,86,.45)}
+    .group-row.alert-locator:hover{background:rgba(217,164,86,.22)}
+    .group-name-cell{display:flex;align-items:center;gap:8px;white-space:nowrap}
+    .alert-locator-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:1px 7px;
+      border-radius:999px;
+      border:1px solid rgba(181,124,33,.55);
+      color:#7a4a0f;
+      background:rgba(217,164,86,.28);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      line-height:1.2;
+      white-space:nowrap;
+    }
+    .group-row:focus-visible{outline:2px solid var(--ff-red)}
+    .expand-mini{font-size:16px;color:var(--ff-red);text-align:center;cursor:pointer}
+    .mini-track{height:16px;border-radius:999px;background:#efefef;overflow:hidden}
+    .mini-bar{height:100%;border-radius:999px}
+    .mini-track.voltage-track{
+      background:linear-gradient(90deg,rgba(180,0,0,.08) 0%,rgba(255,255,255,.93) 50%,rgba(9,118,210,.08) 100%);
+      position:relative;
+      overflow:visible;
+    }
+    .mini-track.voltage-track::before{
+      content:"";
+      position:absolute;
+      left:66.6667%;
+      top:8%;
+      height:84%;
+      width:1px;
+      background:rgba(95,74,70,.85);
+      z-index:2;
+    }
+    .mini-bar.voltage-range-band{
+      position:absolute;
+      top:2px;
+      bottom:2px;
+      border-radius:999px;
+      border:1px solid rgba(96,62,41,.28);
+      background:linear-gradient(90deg,rgba(187,118,74,.26),rgba(126,165,208,.26));
+      z-index:1;
+      pointer-events:none;
+    }
+    .mini-bar.voltage-delta-bar{
+      position:absolute;
+      top:0;
+      bottom:0;
+      border-radius:999px;
+      z-index:3;
+      box-shadow:inset 0 -1px 0 rgba(0,0,0,.16);
+    }
+    .mini-track .voltage-range-marker{
+      top:0;
+      height:100%;
+      width:1px;
+      z-index:4;
+    }
+    .mini-track .voltage-range-marker-label{
+      display:none;
+    }
+    .mini-bar.status-tuned{background:linear-gradient(90deg,#2aa7ef,#1f8fd4)}
+    .mini-bar.status-high{background:linear-gradient(90deg,#b40000,#9a0000)}
+    .mini-bar.status-moderate{background:linear-gradient(90deg,#efa23b,#d4831f)}
+    .mini-bar.status-low{background:linear-gradient(90deg,#f2d34f,#d9b62a)}
+    .mini-bar.status-not-tuned{background:#c8c8c8}
+    .mini-money{font-weight:950}
+    .mini-money.status-high{color:var(--high)}
+    .mini-money.status-moderate{color:var(--moderate)}
+    .mini-money.status-low{color:var(--low)}
+    .mini-money.status-not-tuned{color:var(--not-tuned)}
+    .reactive-pct-display{
+      color:#1f5b2d;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .reactive-pct-label{
+      font-size:.75em;
+      font-weight:800;
+      letter-spacing:.2px;
+      opacity:.95;
+      margin-left:4px;
+    }
+    .field-snapshot{
+      margin:8px 0 12px 74px;
+      padding:14px 18px;
+      border:1px solid rgba(181,124,33,.32);
+      border-radius:10px;
+      background:linear-gradient(90deg,rgba(217,164,86,.14),rgba(255,255,255,.92));
+      display:none;
+    }
+    .field-snapshot.is-open{display:block}
+    .snapshot-title{font-size:13px;font-weight:950;color:var(--ff-red);margin-bottom:10px}
+    .snapshot-row{
+      grid-template-columns:150px 34px 1fr 150px 105px;
+      min-height:30px;
+      font-size:14px;
+      font-weight:800;
+    }
+    .snapshot-row.alert-locator{
+      background:rgba(217,164,86,.18);
+      border-radius:7px;
+      padding:2px 6px;
+    }
+    .snapshot-note{margin-top:8px;font-size:12px;color:#555}
+    .clicknote{text-align:center;border-top:1px solid var(--line);padding-top:12px;margin-top:10px;font-size:13px;color:#444}
+    .visibility-row{
+      display:grid;
+      grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);
+      gap:12px;
+      margin-top:8px;
+    }
+    .visibility-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:0 8px 18px rgba(40,25,10,.08);
+      padding:14px 16px;
+    }
+    .visibility-card h4{
+      margin:0 0 8px;
+      color:var(--ff-red);
+      font-size:27px;
+      font-weight:900;
+      letter-spacing:.2px;
+      line-height:1.1;
+    }
+    .visibility-card p{
+      margin:0 0 12px;
+      color:#2f2f2f;
+      font-size:17px;
+      line-height:1.32;
+    }
+    .visibility-actions{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin-top:2px;
+    }
+    .visibility-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      border:1px solid #202020;
+      border-radius:12px;
+      min-height:40px;
+      min-width:var(--ui-btn-width);
+      padding:8px 14px;
+      background:#242424;
+      color:#fff;
+      font-weight:900;
+      font-size:15px;
+      letter-spacing:.1px;
+      line-height:1;
+      transition:all .2s ease;
+    }
+    .visibility-btn:hover{
+      background:#fff;
+      color:#242424;
+      border-color:#6f6f6f;
+    }
+    .visibility-btn.site-btn{
+      background:var(--ff-red);
+      border-color:var(--ff-red-dark);
+      color:#fff;
+    }
+    .visibility-btn.site-btn:hover{
+      background:rgba(159,15,8,.84);
+      color:#fff;
+      border-color:rgba(117,7,0,.84);
+      box-shadow:0 6px 14px rgba(117,7,0,.2);
+    }
+    .visibility-card.comms-card h4{
+      color:#2b4d21;
+      font-size:24px;
+      white-space:nowrap;
+      letter-spacing:.1px;
+      margin-bottom:10px;
+    }
+    .visibility-card.unity-visibility h4{
+      font-size:24px;
+    }
+    .visibility-card.unity-visibility p{
+      font-size:15px;
+      line-height:1.28;
+    }
+    .visibility-card.comms-card p{
+      color:#30422a;
+      margin-bottom:14px;
+    }
+    .visibility-card.comms-card{
+      background:linear-gradient(145deg,#f6f6ef 0%,#edf3e3 54%,#e6edd7 100%);
+      border-color:#c5d2af;
+      box-shadow:0 10px 22px rgba(43,77,33,.12);
+      display:flex;
+      flex-direction:column;
+    }
+    .visibility-card.comms-card .visibility-btn{
+      align-self:center;
+      margin-top:4px;
+    }
+    .visibility-btn.comms-btn{
+      background:linear-gradient(140deg,#2f5a2a 0%,#3a6f34 100%);
+      border-color:#2a5525;
+      color:#f6f3e8;
+    }
+    .visibility-btn.comms-btn:hover{
+      background:#f5f2e6;
+      border-color:#8fa47b;
+      color:#2f5a2a;
+      box-shadow:0 5px 12px rgba(47,90,42,.16);
+    }
+    .support{
+      background:linear-gradient(90deg,var(--ff-red),var(--ff-red-dark));
+      color:#fff;padding:20px 28px;border-top:4px solid var(--ff-gold);
+    }
+    .support-inner{max-width:var(--max);margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .support p{margin:4px 0 0;color:#f7ded9}
+    .support-actions{display:flex;gap:12px;justify-content:space-between}
+    .support-actions a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      background:var(--ff-gold);
+      border:0;
+      border-radius:8px;
+      padding:12px 18px;
+      min-width:var(--ui-btn-width);
+      font-weight:950;
+      color:#3a1700;
+    }
+    @media (max-width:980px){
+      .kpis{grid-template-columns:repeat(2,1fr)}
+      summary{grid-template-columns:42px 1fr;gap:12px}
+      .facility-title{white-space:normal}
+      .voltage-range-marker-label{display:none}
+      summary .bar-track,summary .money,summary .arrow{grid-column:2}
+      .grid-head{display:none}
+      .group-row{grid-template-columns:28px 24px 1fr}
+      .group-row .dot-wrap,.group-row .mini-track,.group-row .fields-col,.group-row .money-col,.group-row .pct-col{
+        grid-column:3;
+      }
+      .field-snapshot{margin-left:0}
+      .snapshot-row{grid-template-columns:1fr;gap:4px;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.08)}
+      .visibility-row{grid-template-columns:1fr}
+      .visibility-actions{grid-template-columns:1fr}
+      .brand h1{font-size:24px}
+      .money{font-size:28px}
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo">⚡ <span>FOSTER</span> FARMS</div>
-        <nav>
-            <a href="../../UnityEnergy/customer-portals.html" class="back-btn">Customer Portals</a>
-            <a href="../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
-        </nav>
-    </header>
-
-    <div class="hero">
-        <div class="hero-logo-block">
-            <img src="foster-farms-logo.png" alt="Foster Farms Logo" class="hero-logo">
-            <div class="hero-logo-caption">
-                <div>Corporate Headquarters</div>
-                <div>Livingston, California</div>
-            </div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img class="logo" src="foster-farms-logo.png" alt="Foster Farms logo" />
+        <div>
+          <h1>FOSTER FARMS</h1>
+          <p>480v Electrical Energy Field Portfolio</p>
         </div>
-        <div class="hero-exec-access">
-            <div class="hero-exec-label">Private Executive Communications</div>
-            <a href="../../UnityEnergy/customer-portal/foster-farms/executive/" class="hero-exec-btn"> Company Intelligence Center →</a>
+      </div>
+      <nav class="nav">
+        <a class="nav-link" href="../../UnityEnergy/customer-portals.html"><span class="nav-icon" aria-hidden="true">👥</span><span class="nav-label">Customer Portal</span></a>
+        <a class="nav-link" href="../../UnityEnergy/index.html"><span class="nav-icon home-icon" aria-hidden="true">🏠</span><span class="nav-label">Unity Home</span></a>
+        <div class="voice-control-group">
+          <button id="unityVoiceToggle" class="voice-toggle" type="button"><span class="nav-icon" aria-hidden="true">🔊</span><span class="nav-label">Unity Welcomes</span><span class="voice-pill-group"><span id="unityVoiceStatePill" class="voice-state">ON</span><span id="unityVoiceReset" class="voice-reset" role="button" tabindex="0" aria-label="Reset Unity Explains narration">RESET</span></span></button>
         </div>
-        <div class="hero-content">
-            <p>Industrial 480v Electrical Behavior</p>
-            <h1>Unity Energy Field Intelligence</h1>
-            <h2>Facility Monitoring Portals</h2>
-        </div>
+      </nav>
     </div>
-
-    <div class="container">
-        <section class="sites-section">
-            <h2 class="section-title">Explore Measured Energy Field Behavior by Facility</h2>
-            <h2 class="section-subtitle">Select the location Card to begin Exploring</h2>
-
-            <div class="cards-hero-panel">
-            <div class="sites-grid">
-
-                <!-- Livingston Site -->
-                <!-- MAINTENANCE RULE (Livingston):
-                     Whenever Livingston studies are updated, keep Livingston_SIte/index.html group links current.
-                     This front card is auto-synced by updateLivingstonCard():
-                     - PF = arithmetic average of all parsed xfmr*-metric-pf values from each active group’s latest study.
-                     - high/low = min/max over that same PF set.
-                     - count = Livingston site "Measured" stat from Livingston_SIte/index.html overview.
-                     - latest report = newest month found across latest active group studies.
-                     If study structure/IDs change, update updateLivingstonCard() in this file immediately. -->
-                <a href="./Livingston_SIte/index.html" class="site-card site-card--hero-updated">
-                    <div class="site-header">
-                        <div class="site-name">Livingston HQ</div>
-                        <div class="site-name-divider"></div>
-                        <div class="site-location">Livingston, California</div>
-                        <div class="site-efficiency-badge">
-                            <div class="site-consequence-panel">
-                                <div class="site-consequence-title">UN-TUNED CONSEQUENCES</div>
-                                <span class="site-consequence-pill site-consequence-pill-annual" id="livingston-card-annual"><span class="site-annual-value">$3.65M</span><span class="site-annual-unit">ANNUALLY</span></span>
-                                <div class="site-consequence-subtitle">UN-TUNED EFFICIENCY</div>
-                                <div class="site-consequence-pill site-consequence-pill-pf">
-                                    <span class="site-pf-primary" id="livingston-card-pf">85.9% PF</span>
-                                    <div class="site-pf-range">
-                                        <span id="livingston-card-low">low = 71.5%</span>
-                                        <span id="livingston-card-high">high = 96.4%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="site-content">
-                        <div class="fields-measured">
-                            <div class="count" id="livingston-card-count">15</div>
-                            <div class="label">Transformer eFields</div>
-                            <div class="status">Monitored</div>
-                        </div>
-                        <div class="latest-report">
-                            <h3>Latest Reports</h3>
-                            <div class="report-name" id="livingston-card-report-name">April 2026</div>
-                            <div class="report-desc" id="livingston-card-report-desc">30-day Full Analysis</div>
-                        </div>
-                        <div class="site-btn">Explore →</div>
-                    </div>
-                </a>
-
-                <!-- Cherry Avenue Site -->
-                <!-- MAINTENANCE RULE (Cherry Ave):
-                     Every time a new Cherry study is moved/published to eWebmaster,
-                     update CherryAve_Site/index.html first (month, status, and summary link),
-                     then verify this front card reflects the new latest month and efficiency.
-                     Front card PF is computed from xfmr1..xfmr4 metric PF values in Cherry's latest active full-site study. -->
-                <a href="./CherryAve_Site/index.html" class="site-card site-card--hero-updated">
-                    <div class="site-header">
-                        <div class="site-name">Cherry Avenue</div>
-                        <div class="site-name-divider"></div>
-                        <div class="site-location">Fresno, California</div>
-                        <div class="site-efficiency-badge">
-                            <div class="site-consequence-panel">
-                                <div class="site-consequence-title">UN-TUNED CONSEQUENCES</div>
-                                <span class="site-consequence-pill site-consequence-pill-annual" id="cherry-card-annual"><span class="site-annual-value">$2.85M</span><span class="site-annual-unit">ANNUALLY</span></span>
-                                <div class="site-consequence-subtitle">UN-TUNED EFFICIENCY</div>
-                                <div class="site-consequence-pill site-consequence-pill-pf">
-                                    <span class="site-pf-primary" id="cherry-card-pf">86.5% PF</span>
-                                    <div class="site-pf-range">
-                                        <span id="cherry-card-low">low = 84.5%</span>
-                                        <span id="cherry-card-high">high = 88.6%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="site-content">
-                        <div class="fields-measured">
-                            <div class="count" id="cherry-card-count">4</div>
-                            <div class="label">Transformer eFields</div>
-                            <div class="status">Monitored</div>
-                        </div>
-                        <div class="latest-report">
-                            <h3>Latest Reports</h3>
-                            <div class="report-name" id="cherry-card-report-name">April 2026</div>
-                            <div class="report-desc" id="cherry-card-report-desc">30-day Full Site Analysis</div>
-                        </div>
-                        <div class="site-btn">Explore →</div>
-                    </div>
-                </a>
-
-                <!-- Belgravia Site -->
-                <a href="./Belgravia_Site/" class="site-card site-card--hero-updated coming-soon">
-                    <div class="site-header">
-                        <div class="site-name">Belgravia</div>
-                        <div class="site-name-divider"></div>
-                        <div class="site-location">Fresno, California</div>
-                        <div class="site-efficiency-badge">
-                            <div class="site-consequence-panel">
-                                <div class="site-consequence-title">UN-TUNED CONSEQUENCES</div>
-                                <span class="site-consequence-pill site-consequence-pill-annual" id="belgravia-card-annual"><span class="site-annual-value">--</span><span class="site-annual-unit">ANNUALLY</span></span>
-                                <div class="site-consequence-subtitle">UN-TUNED EFFICIENCY</div>
-                                <div class="site-consequence-pill site-consequence-pill-pf">
-                                    <span class="site-pf-primary" id="belgravia-card-pf">N/A PF</span>
-                                    <div class="site-pf-range">
-                                        <span id="belgravia-card-low">low = --</span>
-                                        <span id="belgravia-card-high">high = --</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="site-content">
-                        <div class="fields-measured">
-                            <div class="count">0</div>
-                            <div class="label">Transformer eFields</div>
-                            <div class="status">Studies Pending</div>
-                        </div>
-                        <div class="latest-report">
-                            <h3>Latest Reports</h3>
-                            <div class="report-name">Monitoring Coming Soon</div>
-                            <div class="report-desc"></div>
-                        </div>
-                        <button class="site-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
-                    </div>
-                </a>
-            </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="info-section">
-                <h3>About Foster Farms Energy Analysis</h3>
-                <p>
-                This portal gives Foster Farms a site-by-site view of measured electrical field behavior. 
-                By monitoring transformer fields across each facility, Unity reveals how efficiently electrical energy 
-                is being delivered, where instability or burden may be developing, and which sites present the strongest 
-                opportunities for operational improvement.  
-                </p>
-            </div>
-        </section>
-        <section>
-            <div class="info-section">
-                <h3>Private Executive Communications</h3>
-                <p>
-                Executive review briefs are now delivered through a private web-based briefing room inside the Foster Farms
-                communications vault. This supports secure link sharing, mobile review, and long-term continuity of executive updates.
-                </p>
-                <a href="../../UnityEnergy/customer-portal/foster-farms/executive/" class="site-btn" style="max-width: 420px; margin-top: 22px;">Open Maxwell Intelligence Center →</a>
-            </div>
-        </section>
+  </header>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="brief">
+        <h2 id="heroTitleLine">Welcome to the Foster Farms Executive Electrical Intelligence Center</h2>
+        <p id="heroIntroPrimary">This Executive Intelligence Center provides immediate visibility into the electrical behavior of Foster Farms’ monitored 480V energy fields. By organizing electrical activity into meaningful operational groups, leadership can compare facilities, understand utilization, identify consequence, and explore opportunities to improve efficiency, reliability, and stewardship.</p>
+        <p id="heroIntroSecondary">Unlike a traditional utility bill, this view reveals how electricity behaves throughout the operation, translating continuous field measurement into executive intelligence that supports better operational and financial decisions.</p>
+      </div>
     </div>
+  </section>
+  <main class="wrap">
+    <section class="kpis" id="kpiGrid"></section>
+    <section class="board">
+      <div class="board-head">
+        <div>
+          <h3>Electrical Behavior Consequence Board</h3>
+          <p class="small">Select a facility below to expand groups. Select a group row to open its Monthly Summary Board.</p>
+        </div>
+        <div class="board-side">
+          <div class="legend">
+            <span>Legend:</span>
+            <span><i class="dot tuned"></i>Tuned</span>
+            <span><i class="dot high"></i>High</span>
+            <span><i class="dot moderate"></i>Moderate</span>
+            <span><i class="dot low"></i>Low</span>
+            <span><i class="dot not-tuned"></i>Not Tuned</span>
+          </div>
+          <div class="metric-toggles">
+            <label class="metric-label" for="boardMetricSelect">Executive Views:</label>
+            <select id="boardMetricSelect" class="metric-select" aria-label="Select board metric view">
+              <option value="consequence" selected>Untuned Consequence (annually)</option>
+              <option value="consequence_monthly">Untuned Consequence (monthly)</option>
+              <option value="tuned_value_annual">Tuned Energy (annually)</option>
+              <option value="tuned_value_monthly">Tuned Energy Field (monthly)</option>
+              <option value="efficiency">Efficiency (PF)</option>
+              <option value="voltage">Voltage</option>
+              <option value="energy_cost">Pure Utility Cost (monthly)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="facilityBoard"></div>
+    </section>
+      <div class="principle">
+        <span>Visibility reveals Behavior.</span>➤<b class="chev"></b>
+        <span>Behavior reveals Understanding.</span>➤<b class="chev"></b>
+        <span>Understanding reveals Consequences.</span>➤<b class="chev"></b>
+        <span>Consequences reveal Costs.</span><b class="chev"></b>
+      </div>
+    <section class="visibility-row">
+      <article class="visibility-card unity-visibility">
+        <h4>Unity Visibility</h4>
+        <p>The purpose of these Executive Views is to facilitate and offer quick views of data most have never seen at this level, therefore enabling our minds to expand and begin understanding the greater Stewardship picture. To enjoy a deeper understanding, select the monitored Facility.</p>
+        <div class="visibility-actions">
+          <a class="visibility-btn site-btn" href="./Livingston_SIte/index.html">Livingston HQ Energy Fields</a>
+          <a class="visibility-btn site-btn" href="./CherryAve_Site/index.html">Cherry Ave Energy Fields</a>
+        </div>
+      </article>
+      <article class="visibility-card comms-card">
+        <h4>Executive Communications</h4>
+        <p>Access secure executive briefs and intelligence updates in the Maxwell communications center.</p>
+        <a class="visibility-btn comms-btn" href="../../UnityEnergy/customer-portal/foster-farms/executive/">Unity Intelligence Center</a>
+      </article>
+    </section>
+  </main>
+  <footer class="support">
+    <div class="support-inner">
+      <div>
+        <strong>Need help understanding this board?</strong>
+        <p>Unity is here to help you turn visibility into action.</p>
+      </div>
+      <div class="support-actions">
+        <a href="../../UnityEnergy/contact-us.html">Schedule Briefing</a>
+        <a href="../../UnityEnergy/contact-us.html">Contact Unity</a>
+      </div>
+    </div>
+  </footer>
+    <script src="../../UnityEnergy/founder_share_panel.js?v=20260702e"></script>
+  <script>
+    const STATUS_THRESHOLDS = {
+      facility: { high: 2500000, moderate: 800000, low: 1 },
+      group: { high: 900000, moderate: 500000, low: 1 },
+      field: { high: 800000, moderate: 350000, low: 1 }
+    };
 
-    <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
-        <p>Transforming how facilities understand their electrical systems.</p>
-    </footer>
-
-    <script>
-        // Always enter Foster Farms at the top of the page.
-        const FF_LOCK_KEY = 'fosterfarms_lock_cards_view';
-
-        function scrollToTopPosition() {
-            const goTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            requestAnimationFrame(goTop);
-            setTimeout(goTop, 0);
-            setTimeout(goTop, 50);
+    const boardData = {
+      company: {
+        name: "Foster Farms",
+        brief_month: "May 2026",
+        hero_title: "Welcome to the Foster Farms Executive Electrical Intelligence Center",
+        hero_intro_primary: "This Executive Intelligence Center provides immediate visibility into the electrical behavior of Foster Farms’ monitored 480V energy fields. By organizing electrical activity into meaningful operational groups, leadership can compare facilities, understand utilization, identify consequence, and explore opportunities to improve efficiency, reliability, and stewardship.",
+        hero_intro_secondary: "Unlike a traditional utility bill, this view reveals how electricity behaves throughout the operation, translating continuous field measurement into executive intelligence that supports better operational and financial decisions.",
+        brief_line: "Welcome to the Foster Farms Executive Electrical Intelligence Center.",
+        monthly_change_percent: 8.7,
+        site_efficiency_pf: 83.6
+      },
+      facilities: [
+        {
+          name: "Livingston HQ",
+          location: "Livingston, California",
+          status: "calculated",
+          fields_total: 17,
+          fields_measured: 17,
+          groups: [
+            {
+              name: "Rendering Group",
+              status: "calculated",
+              summary_url: "./Livingston_SIte/Rendering/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html",
+              fields: [
+                { name: "REND 2", consequence_annual: 740000, status: "calculated" },
+                { name: "REND 1", consequence_annual: 420000, status: "calculated" },
+                { name: "REND 3", consequence_annual: 240000, status: "calculated" }
+              ]
+            },
+            {
+              name: "Plant 2 Group",
+              status: "calculated",
+              summary_url: "./Livingston_SIte/Plant2/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html",
+              fields: [
+                { name: "PL2-SOUTH", consequence_annual: 240000, status: "calculated" },
+                { name: "PL2-CENTER", consequence_annual: 190000, status: "calculated" },
+                { name: "PL2-NORTH", consequence_annual: 160000, status: "calculated" }
+              ]
+            },
+            {
+              name: "NCDC Group",
+              status: "calculated",
+              summary_url: "./Livingston_SIte/NCDC/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html",
+              fields: [
+                { name: "NCDC1 WEST", consequence_annual: 190000, status: "calculated" },
+                { name: "NCDC2 SOUTH", consequence_annual: 160000, status: "calculated" },
+                { name: "NCDC3 NORTH", consequence_annual: 140000, status: "calculated" }
+              ]
+            },
+            {
+              name: "Deli Group",
+              status: "calculated",
+              summary_url: "./Livingston_SIte/Deli/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260501-260531_31d.html",
+              fields: [
+                { name: "DELI F", consequence_annual: 200000, status: "calculated" },
+                { name: "DELI G", consequence_annual: 150000, status: "calculated" }
+              ]
+            },
+            {
+              name: "Plant 1 Group",
+              status: "calculated",
+              summary_url: "./Livingston_SIte/Plant1/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html",
+              fields: [
+                { name: "PL1-MSHOP", consequence_annual: 90000, status: "calculated" },
+                { name: "PL1-PROC1", consequence_annual: 80000, status: "calculated" },
+                { name: "PL1-PROC2", consequence_annual: 70000, status: "calculated" }
+              ]
+            },
+            {
+              name: "BNR Group",
+              status: "calculated",
+              summary_url: "./Livingston_SIte/BNR/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260501-260531_31d.html",
+              fields: [
+                { name: "BNR 1", consequence_annual: 80000, status: "calculated" },
+                { name: "BNR 2", consequence_annual: 60000, status: "calculated" }
+              ]
+            },
+            {
+              name: "FSO Group",
+              status: "not-tuned",
+              summary_url: "",
+              fields: [
+                { name: "FSO1 (Q)", consequence_annual: 0, status: "not-tuned" },
+                { name: "FSO2 (R)", consequence_annual: 0, status: "not-tuned" },
+                { name: "FSO3 (S)", consequence_annual: 0, status: "not-tuned" }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Cherry Avenue",
+          location: "Fresno, California",
+          status: "calculated",
+          fields_total: 4,
+          fields_measured: 4,
+          groups: [
+            {
+              name: "Cherry Main Group",
+              status: "calculated",
+              summary_url: "./CherryAve_Site/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html",
+              fields: [
+                { name: "T10 Air Chiller", consequence_annual: 760000, status: "calculated" },
+                { name: "T12 Main", consequence_annual: 720000, status: "calculated" },
+                { name: "T15 Fillet", consequence_annual: 690000, status: "calculated" },
+                { name: "T16 Compressor", consequence_annual: 680000, status: "calculated" }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Belgravia",
+          location: "Fresno, California",
+          status: "not-tuned",
+          fields_total: 0,
+          fields_measured: 0,
+          groups: []
         }
-        function parseCurrencyNumber(rawText) {
-            const match = String(rawText || '').match(/-?[0-9]+(?:,[0-9]{3})*(?:\.[0-9]+)?/);
-            if (!match) return null;
-            const numeric = Number(match[0].replace(/,/g, ''));
-            return Number.isFinite(numeric) ? numeric : null;
+      ]
+    };
+
+    const FIELD_METRICS = {
+      "REND 2": { efficiency_pf: 78.8, energy_cost_period: 156024.24, waste_cost_period: 41641.68, untuned_electrical_cost_period: 78182.25, tuned_simulated_cost_period: 2892.00 },
+      "REND 1": { efficiency_pf: 73.4, energy_cost_period: 145727.28, waste_cost_period: 54691.44, untuned_electrical_cost_period: 54842.42, tuned_simulated_cost_period: 2395.83 },
+      "REND 3": { efficiency_pf: 77.1, energy_cost_period: 97181.28, waste_cost_period: 28696.08, untuned_electrical_cost_period: 39686.83, tuned_simulated_cost_period: 1519.17 },
+      "PL2-SOUTH": { efficiency_pf: 86.4, energy_cost_period: 50778.00, waste_cost_period: 7536.72, untuned_electrical_cost_period: 35335.92, tuned_simulated_cost_period: 1729.17 },
+      "PL2-CENTER": { efficiency_pf: 59.0, energy_cost_period: 10423.44, waste_cost_period: 6762.96, untuned_electrical_cost_period: 10252.17, tuned_simulated_cost_period: 494.75 },
+      "PL2-NORTH": { efficiency_pf: 86.0, energy_cost_period: 152334.00, waste_cost_period: 23666.64, untuned_electrical_cost_period: 17789.83, tuned_simulated_cost_period: 473.83 },
+      "NCDC1 WEST": { efficiency_pf: 85.1, energy_cost_period: 72815.28, waste_cost_period: 12752.16, untuned_electrical_cost_period: 17480.58, tuned_simulated_cost_period: 815.58 },
+      "NCDC2 SOUTH": { efficiency_pf: 93.0, energy_cost_period: 101898.24, waste_cost_period: 7566.48, untuned_electrical_cost_period: 10595.67, tuned_simulated_cost_period: 893.92 },
+      "NCDC3 NORTH": { efficiency_pf: 84.6, energy_cost_period: 77130.48, waste_cost_period: 13979.76, untuned_electrical_cost_period: 19575.58, tuned_simulated_cost_period: 861.58 },
+      "DELI F": { efficiency_pf: 85.3, energy_cost_period: 111793.44, waste_cost_period: 14180.64, untuned_electrical_cost_period: 20677.33, tuned_simulated_cost_period: 1125.17 },
+      "DELI G": { efficiency_pf: 86.0, energy_cost_period: 100923.60, waste_cost_period: 12276.00, untuned_electrical_cost_period: 17943.83, tuned_simulated_cost_period: 1005.00 },
+      "PL1-MSHOP": { efficiency_pf: 84.8, energy_cost_period: 80441.28, waste_cost_period: 12811.68, untuned_electrical_cost_period: 9401.67, tuned_simulated_cost_period: 429.83 },
+      "PL1-PROC1": { efficiency_pf: 86.2, energy_cost_period: 43390.08, waste_cost_period: 6621.60, untuned_electrical_cost_period: 6576.83, tuned_simulated_cost_period: 290.50 },
+      "PL1-PROC2": { efficiency_pf: 84.9, energy_cost_period: 25906.08, waste_cost_period: 4642.56, untuned_electrical_cost_period: 20922.08, tuned_simulated_cost_period: 3778.42 },
+      "BNR 1": { efficiency_pf: 89.8, energy_cost_period: 219286.56, waste_cost_period: 24998.40, untuned_electrical_cost_period: 35426.08, tuned_simulated_cost_period: 2510.08 },
+      "BNR 2": { efficiency_pf: 96.5, energy_cost_period: 2596.56, waste_cost_period: 96.72, untuned_electrical_cost_period: 243.08, tuned_simulated_cost_period: 109.33 },
+      "T10 Air Chiller": { efficiency_pf: 88.0, energy_cost_period: 168357.60, waste_cost_period: 22960.80 },
+      "T12 Main": { efficiency_pf: 84.8, energy_cost_period: 271152.00, waste_cost_period: 48391.20 },
+      "T15 Fillet": { efficiency_pf: 84.5, energy_cost_period: 198396.00, waste_cost_period: 36691.20 },
+      "T16 Compressor": { efficiency_pf: 88.6, energy_cost_period: 248162.40, waste_cost_period: 31802.40 }
+    };
+
+    const BOARD_METRIC_CONFIG = {
+      consequence: { groupColumnLabel: "Untuned Consequence", facilitySuffix: "% of Total" },
+      consequence_monthly: { groupColumnLabel: "Untuned Consequence (monthly)", facilitySuffix: "% of Total" },
+      tuned_value_annual: { groupColumnLabel: "Tuned Energy (annual value)", facilitySuffix: "% of Total" },
+      tuned_value_monthly: { groupColumnLabel: "Tuned Energy Field (monthly value)", facilitySuffix: "% of Total" },
+      efficiency: { groupColumnLabel: "Efficiency (PF)", facilitySuffix: "Avg PF" },
+      voltage: { groupColumnLabel: "Voltage", facilitySuffix: "Avg Voltage" },
+      energy_cost: { groupColumnLabel: "Pure Utility Cost (monthly)", facilitySuffix: "% of Total" }
+    };
+    const KPI_METRIC_CONFIG = {
+      consequence: { label: "Untuned Consequence", sub: "Total Annualized", icon: "", iconClass: "", valueClass: "red" },
+      consequence_monthly: { label: "Untuned Consequence", sub: "Total Monthly", icon: "", iconClass: "", valueClass: "red" },
+      tuned_value_annual: { label: "Value of Tuning", sub: "Tuned Energy (Annual)", icon: "", iconClass: "", valueClass: "green" },
+      tuned_value_monthly: { label: "Value of Tuning", sub: "Tuned Energy Field (Monthly)", icon: "", iconClass: "", valueClass: "green" },
+      efficiency: { label: "Enterprise Efficiency", sub: "PF (Average)", icon: "", iconClass: "i-green", valueClass: "green" },
+      voltage: { label: "Enterprise Voltage", sub: "Field Average", icon: "", iconClass: "", valueClass: "green" },
+      energy_cost: { label: "Pure Utility Cost", sub: "Enterprise Monthly", icon: "", iconClass: "", valueClass: "gold" }
+    };
+    const STATUS_MARKER_ORDER = ["tuned", "high", "moderate", "low", "not-tuned"];
+    const CRITICAL_ALERTS = [
+      "REND2: high waste",
+      "PL1PR2: low voltage"
+    ];
+    const CRITICAL_ALERT_TARGET_FIELDS = new Set(["REND 2", "PL1-PROC2"]);
+    const VOLTAGE_REFERENCE_V = 480;
+    const VOLTAGE_MARKER_POSITION_PCT = 66.6667;
+    const LOW_VOLTAGE_ALERT_THRESHOLD_V = 450;
+    const UNITY_VOICE_PREF_KEY = "fosterFarmsUnityVoiceEnabled";
+    const UNITY_EXPLAINS_AUDIO_SRC = "./audio/unity-explains-welcome.mp3?v=20260701a";
+
+    let currentBoardMetric = "consequence";
+    let unityVoiceEnabled = true;
+    let unityVoiceSpeaking = false;
+    let unityVoiceAudio = null;
+
+    function formatMoney(value){
+      if (!value || value <= 0) return "—";
+      if (value >= 1000000) return `$${(value / 1000000).toFixed(2)}M`;
+      if (value >= 1000) return `$${(value / 1000).toFixed(1)}K`;
+      return `$${value.toFixed(0)}`;
+    }
+    function metricPolarity(metric){
+      if (metric === "consequence" || metric === "consequence_monthly") return "loss";
+      if (metric === "tuned_value_annual" || metric === "tuned_value_monthly") return "gain";
+      return "neutral";
+    }
+    function formatMetricValue(metric, value){
+      if (metric === "voltage") {
+        const numeric = Number(value) || 0;
+        if (!numeric || numeric <= 0) return "—";
+        const delta = numeric - VOLTAGE_REFERENCE_V;
+        return `${delta >= 0 ? "+" : ""}${delta.toFixed(1)}V`;
+      }
+      const numeric = Number(value) || 0;
+      if (!numeric || numeric <= 0) return "—";
+      if (metric === "efficiency") return `${numeric.toFixed(1)}%`;
+      const moneyValue = formatMoney(numeric);
+      const polarity = metricPolarity(metric);
+      if (polarity === "loss") return `-${moneyValue}`;
+      if (polarity === "gain") return `+${moneyValue}`;
+      return moneyValue;
+    }
+    function consequenceMonthly(record){
+      return (Number(record && record.consequence_annual) || 0) / 12;
+    }
+    function tunedResidualMonthly(record){
+      const directResidual = Number(record && record.tuned_behavior_cost_period) || 0;
+      if (directResidual > 0) return directResidual;
+      const tunedTotal = Number(record && record.tuned_simulated_cost_period) || 0;
+      const baseEnergy = Number(record && record.energy_cost_period) || 0;
+      const derivedResidual = tunedTotal - baseEnergy;
+      return derivedResidual > 0 ? derivedResidual : 0;
+    }
+    function tuningValueMonthly(record){
+      const untunedLossMonthly = consequenceMonthly(record);
+      if (untunedLossMonthly <= 0) return 0;
+      const tunedResidual = tunedResidualMonthly(record);
+      return Math.max(0, untunedLossMonthly - tunedResidual);
+    }
+    function tuningValueAnnual(record){
+      const untunedLossAnnual = Number(record && record.consequence_annual) || 0;
+      if (untunedLossAnnual <= 0) return 0;
+      const tunedResidualAnnual = tunedResidualMonthly(record) * 12;
+      return Math.max(0, untunedLossAnnual - tunedResidualAnnual);
+    }
+    function formatActualVoltage(value){
+      const numeric = Number(value) || 0;
+      if (!numeric || numeric <= 0) return "—";
+      return `${numeric.toFixed(1)}V`;
+    }
+    function formatVoltageDeltaVsReferenceText(value){
+      const numeric = Number(value) || 0;
+      if (!numeric || numeric <= 0) return `— vs ${VOLTAGE_REFERENCE_V} V`;
+      const delta = numeric - VOLTAGE_REFERENCE_V;
+      return `${delta >= 0 ? "+" : ""}${delta.toFixed(1)} V vs ${VOLTAGE_REFERENCE_V} V`;
+    }
+    function reactiveEnergyShareFromPf(pfPercent){
+      const numeric = Number(pfPercent) || 0;
+      if (!numeric || numeric <= 0) return 0;
+      const pf = Math.max(0, Math.min(1, numeric / 100));
+      const reactiveComponent = Math.sqrt(Math.max(0, 1 - (pf * pf)));
+      const totalComponents = pf + reactiveComponent;
+      if (!totalComponents) return 0;
+      return (reactiveComponent / totalComponents) * 100;
+    }
+    function formatReactiveEnergyShare(pfPercent){
+      const numeric = Number(pfPercent) || 0;
+      if (!numeric || numeric <= 0) return "—";
+      return `<span class="reactive-pct-display">${reactiveEnergyShareFromPf(numeric).toFixed(1)}%<span class="reactive-pct-label">Reactive</span></span>`;
+    }
+    function isAverageMetric(metric){
+      return metric === "efficiency" || metric === "voltage";
+    }
+    function voltageDeviation(value){
+      const numeric = Number(value) || 0;
+      if (!numeric || numeric <= 0) return 0;
+      return Math.abs(numeric - VOLTAGE_REFERENCE_V);
+    }
+    function voltageDeltaFillStyle(value, scaleMax){
+      const numeric = Number(value) || 0;
+      if (!numeric || numeric <= 0 || !scaleMax || scaleMax <= 0) {
+        return `left:${VOLTAGE_MARKER_POSITION_PCT}%;width:0%;background:transparent;`;
+      }
+      const delta = numeric - VOLTAGE_REFERENCE_V;
+      const direction = delta >= 0 ? 1 : -1;
+      const ratio = Math.min(1, Math.abs(delta) / scaleMax);
+      const rightSpan = 100 - VOLTAGE_MARKER_POSITION_PCT;
+      const leftSpan = VOLTAGE_MARKER_POSITION_PCT;
+      const widthPct = ratio * (direction >= 0 ? rightSpan : leftSpan);
+      const leftPct = direction >= 0 ? VOLTAGE_MARKER_POSITION_PCT : VOLTAGE_MARKER_POSITION_PCT - widthPct;
+      const fill = direction >= 0
+        ? "linear-gradient(90deg,#7fd6ff,#0a63cb)"
+        : "linear-gradient(90deg,#ff7f73,#8f0000)";
+      return `left:${leftPct.toFixed(2)}%;width:${widthPct.toFixed(2)}%;background:${fill};`;
+    }
+    function voltagePositionPct(value, scaleMax){
+      const numeric = Number(value) || 0;
+      if (!numeric || numeric <= 0 || !scaleMax || scaleMax <= 0) return VOLTAGE_MARKER_POSITION_PCT;
+      const delta = numeric - VOLTAGE_REFERENCE_V;
+      const ratio = Math.min(1, Math.abs(delta) / scaleMax);
+      const rightSpan = 100 - VOLTAGE_MARKER_POSITION_PCT;
+      const leftSpan = VOLTAGE_MARKER_POSITION_PCT;
+      return delta >= 0
+        ? VOLTAGE_MARKER_POSITION_PCT + (ratio * rightSpan)
+        : VOLTAGE_MARKER_POSITION_PCT - (ratio * leftSpan);
+    }
+    function voltageRangeFillStyle(minValue, maxValue, scaleMax){
+      const minNumeric = Number(minValue) || 0;
+      const maxNumeric = Number(maxValue) || 0;
+      if (!minNumeric || !maxNumeric || !scaleMax || scaleMax <= 0) {
+        return `left:${VOLTAGE_MARKER_POSITION_PCT}%;width:0%;opacity:0;`;
+      }
+      const low = Math.min(minNumeric, maxNumeric);
+      const high = Math.max(minNumeric, maxNumeric);
+      const lowPos = voltagePositionPct(low, scaleMax);
+      const highPos = voltagePositionPct(high, scaleMax);
+      const left = Math.min(lowPos, highPos);
+      const width = Math.max(1.2, Math.abs(highPos - lowPos));
+      return `left:${left.toFixed(2)}%;width:${width.toFixed(2)}%;`;
+    }
+    function voltageRangeMarkerStyle(value, scaleMax){
+      const markerPos = voltagePositionPct(value, scaleMax);
+      return `left:${markerPos.toFixed(2)}%;`;
+    }
+    function formatVoltageRangeLabel(minValue, maxValue){
+      const minNumeric = Number(minValue) || 0;
+      const maxNumeric = Number(maxValue) || 0;
+      if (!minNumeric || !maxNumeric) return "Range unavailable";
+      const low = Math.min(minNumeric, maxNumeric);
+      const high = Math.max(minNumeric, maxNumeric);
+      return `Range ${low.toFixed(1)}V–${high.toFixed(1)}V`;
+    }
+    function formatVoltageRangeDisplayText(minValue, maxValue){
+      const minNumeric = Number(minValue) || 0;
+      const maxNumeric = Number(maxValue) || 0;
+      if (!minNumeric || !maxNumeric) return "Range: unavailable";
+      const low = Math.min(minNumeric, maxNumeric);
+      const high = Math.max(minNumeric, maxNumeric);
+      return `Range: ${low.toFixed(1)} V to ${high.toFixed(1)} V`;
+    }
+    function voltageRangeMarkersHtml(minValue, maxValue, scaleMax, options = {}){
+      const minNumeric = Number(minValue) || 0;
+      const maxNumeric = Number(maxValue) || 0;
+      if (!minNumeric || !maxNumeric || !scaleMax || scaleMax <= 0) return "";
+      const showLabels = options.showLabels !== false;
+      const low = Math.min(minNumeric, maxNumeric);
+      const high = Math.max(minNumeric, maxNumeric);
+      const marker = (kind, value) => `
+        <span class="voltage-range-marker ${kind}" style="${voltageRangeMarkerStyle(value, scaleMax)}" title="${kind.toUpperCase()} ${value.toFixed(1)}V">
+          ${showLabels ? `<span class="voltage-range-marker-label">${value.toFixed(1)}V</span>` : ""}
+        </span>
+      `;
+      if (Math.abs(high - low) < 0.15) {
+        return marker("single", low);
+      }
+      return `${marker("min", low)}${marker("max", high)}`;
+    }
+    function statusFromValue(value, level){
+      if (!value || value <= 0) return "not-tuned";
+      const t = STATUS_THRESHOLDS[level];
+      if (value >= t.high) return "high";
+      if (value >= t.moderate) return "moderate";
+      if (value >= t.low) return "low";
+      return "not-tuned";
+    }
+    function rankClassForStatus(status){
+      if (status === "high") return "r-high";
+      if (status === "moderate") return "r-moderate";
+      return "r-not-tuned";
+    }
+    function sum(values){
+      return values.reduce((acc, val) => acc + (Number(val) || 0), 0);
+    }
+    function facilityCriticalActionCount(facility){
+      return sum(
+        (facility.groups || []).map((group) =>
+          (group.fields || []).filter((field) => CRITICAL_ALERT_TARGET_FIELDS.has(field.name)).length
+        )
+      );
+    }
+    function normalizeVoltageKey(value){
+      return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    }
+    function parseMonthFolder(folder){
+      const match = String(folder || "").match(/^(\d{2})_([A-Z]{3})(\d{2})$/);
+      if (!match) return null;
+      const monthNum = Number(match[1]);
+      const mon = match[2];
+      const yy = Number(match[3]);
+      return {
+        folder: `${match[1]}_${mon}${match[3]}`,
+        monthNum,
+        monthCode: mon,
+        year: 2000 + yy,
+        label: `${mon} ${2000 + yy}`
+      };
+    }
+    function monthFolderFromBriefMonth(briefMonth){
+      const match = String(briefMonth || "").trim().match(/^([A-Za-z]+)\s+(\d{4})$/);
+      if (!match) return null;
+      const monthCodes = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+      const code = match[1].slice(0, 3).toUpperCase();
+      const monthIndex = monthCodes.indexOf(code);
+      if (monthIndex < 0) return null;
+      const year = Number(match[2]);
+      if (!Number.isFinite(year)) return null;
+      return `${String(monthIndex + 1).padStart(2, "0")}_${code}${String(year).slice(-2)}`;
+    }
+    function previousMonthFolder(folder){
+      const parsed = parseMonthFolder(folder);
+      if (!parsed) return null;
+      const d = new Date(parsed.year, parsed.monthNum - 1, 1);
+      d.setMonth(d.getMonth() - 1);
+      const monthCodes = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+      return `${String(d.getMonth() + 1).padStart(2, "0")}_${monthCodes[d.getMonth()]}${String(d.getFullYear()).slice(-2)}`;
+    }
+    async function resourceExists(url){
+      try {
+        const head = await fetch(url, { method: "HEAD", cache: "no-store" });
+        if (head.ok) return true;
+      } catch (_err) {}
+      try {
+        const getResp = await fetch(url, { cache: "no-store" });
+        return getResp.ok;
+      } catch (_err) {
+        return false;
+      }
+    }
+    async function resolveGroupSummaryMonthPaths(data){
+      const preferredFolder = monthFolderFromBriefMonth(data.company && data.company.brief_month);
+      const fallbackFolder = preferredFolder ? previousMonthFolder(preferredFolder) : null;
+      for (const facility of data.facilities) {
+        for (const group of facility.groups) {
+          const currentUrl = String(group.summary_url || "");
+          if (!currentUrl) continue;
+          const monthMatch = currentUrl.match(/\/(\d{2}_[A-Z]{3}\d{2})\//);
+          if (!monthMatch) continue;
+          const currentFolder = monthMatch[1];
+          const candidateFolders = [preferredFolder, fallbackFolder, currentFolder].filter(Boolean);
+          let resolvedUrl = currentUrl;
+          for (const folder of candidateFolders) {
+            const candidateUrl = currentUrl.replace(`/${currentFolder}/`, `/${folder}/`);
+            if (await resourceExists(candidateUrl)) {
+              resolvedUrl = candidateUrl;
+              break;
+            }
+          }
+          group.summary_url = resolvedUrl;
+          const resolvedMonth = resolvedUrl.match(/\/(\d{2}_[A-Z]{3}\d{2})\//);
+          const parsed = resolvedMonth ? parseMonthFolder(resolvedMonth[1]) : null;
+          group.dataset_month_label = parsed ? parsed.label : "";
         }
-        function sumWasteCostPerHour(summaryDoc) {
-            if (!summaryDoc) return 0;
-            let total = 0;
-            const nodes = summaryDoc.querySelectorAll('[id$="-xfmr-waste-cost-hour"]');
-            nodes.forEach((node) => {
-                const value = parseCurrencyNumber(node.textContent);
-                if (value !== null && value >= 0) total += value;
+      }
+    }
+    function dashboardDataPathForField(groupSummaryUrl, fieldName){
+      if (!groupSummaryUrl || !fieldName) return "";
+      const dir = groupSummaryUrl.slice(0, groupSummaryUrl.lastIndexOf("/") + 1);
+      const safeName = String(fieldName).replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+      return `${dir}dashboard_data_${safeName}.json`;
+    }
+    async function loadDynamicVoltageMetrics(data){
+      const fieldLookup = new Map();
+      const fieldContexts = [];
+      data.facilities.forEach((facility) => {
+        facility.groups.forEach((group) => {
+          group.fields.forEach((field) => {
+            fieldLookup.set(normalizeVoltageKey(field.name), field.name);
+            fieldContexts.push({
+              fieldName: field.name,
+              summaryUrl: group.summary_url
             });
-            return total;
-        }
-        function sumValuePotentialYearlyFromHtml(summaryHtml) {
-            const regex = /value\s*potential\s*:\s*~?\$\s*([0-9][\d,]*(?:\.\d+)?)/ig;
-            let match;
-            let total = 0;
-            while ((match = regex.exec(String(summaryHtml || ''))) !== null) {
-                const value = Number(String(match[1] || '').replace(/,/g, ''));
-                if (Number.isFinite(value) && value >= 0) total += value;
-            }
-            return total;
-        }
-        function getVisibleTransformerCount(summaryDoc) {
-            if (!summaryDoc) return 0;
-            const nameNodes = summaryDoc.querySelectorAll('[id^="xfmr"][id$="-name"]');
-            let count = 0;
-            nameNodes.forEach((node) => {
-                if (String(node.textContent || '').trim()) count += 1;
-            });
-            return count;
-        }
-        function extractPatternDataTransformers(summaryHtml) {
-            const html = String(summaryHtml || '');
-            const marker = 'let PATTERN_DATA =';
-            const markerIndex = html.indexOf(marker);
-            if (markerIndex < 0) return null;
-            const objectStart = html.indexOf('{', markerIndex);
-            if (objectStart < 0) return null;
-
-            let depth = 0;
-            let inString = false;
-            let escaping = false;
-            let objectEnd = -1;
-            for (let i = objectStart; i < html.length; i += 1) {
-                const ch = html[i];
-                if (inString) {
-                    if (escaping) {
-                        escaping = false;
-                    } else if (ch === '\\') {
-                        escaping = true;
-                    } else if (ch === '"') {
-                        inString = false;
-                    }
-                    continue;
-                }
-                if (ch === '"') {
-                    inString = true;
-                    continue;
-                }
-                if (ch === '{') depth += 1;
-                if (ch === '}') {
-                    depth -= 1;
-                    if (depth === 0) {
-                        objectEnd = i + 1;
-                        break;
-                    }
-                }
-            }
-            if (objectEnd < 0) return null;
-
-            const jsonSlice = html.slice(objectStart, objectEnd);
-            try {
-                const parsed = JSON.parse(jsonSlice);
-                const transformers = parsed && parsed.transformers;
-                return transformers && typeof transformers === 'object' ? transformers : null;
-            } catch (e) {
-                return null;
-            }
-        }
-        function areCloseAnnualValues(a, b) {
-            const x = Number(a);
-            const y = Number(b);
-            if (!Number.isFinite(x) || !Number.isFinite(y)) return false;
-            const tolerance = Math.max(1000, 0.02 * Math.max(Math.abs(x), Math.abs(y)));
-            return Math.abs(x - y) <= tolerance;
-        }
-        function normalizeEntryTextCandidates(entry) {
-            if (!entry || typeof entry !== 'object') return [];
-            const fields = [
-                'cross_check',
-                'pattern_part1',
-                'narration_ready_text',
-                'pattern_text',
-                'pattern_brief',
-                'field_condition_summary',
-                'operational_stress_interpretation',
-                'engineering_narration_detailed',
-                'voltage_baseline_notes'
-            ];
-            const texts = [];
-            fields.forEach((field) => {
-                const value = entry[field];
-                if (typeof value === 'string' && value.trim()) texts.push(value);
-            });
-            return texts;
-        }
-        function extractImageAnnualCandidateFromCrossCheck(crossCheckText) {
-            // FOSTER FARMS TEMPLATE RULE:
-            // If cross_check reports image-vs-CSV discrepancy, use image-labeled annual waste
-            // values for front-card "UN-TUNED CONSEQUENCES" to stay aligned with base-image math.
-            const text = String(crossCheckText || '');
-            if (!text) return null;
-            const imageAnnualPatterns = [
-                /\bimage\b[^$\n\r]{0,160}\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:\/\s*yr|\/\s*year|per\s*year|annually)\b/i,
-                /\bmonthly\s+waste[^$\n\r]{0,120}\bimage\b[^$\n\r]{0,120}\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:\/\s*yr|\/\s*year|per\s*year|annually)\b/i
-            ];
-            for (const pattern of imageAnnualPatterns) {
-                const match = text.match(pattern);
-                if (!match) continue;
-                const value = parseMatchedMoneyValue(match[1], match[0]);
-                if (Number.isFinite(value) && value > 0) return { type: 'annual', value };
-            }
-            return null;
-        }
-        function extractTotalWastedCandidateFromPatternEntry(entry) {
-            if (!entry || typeof entry !== 'object') return null;
-            const crossCheckText = typeof entry.cross_check === 'string' ? entry.cross_check : '';
-            const hasCrossCheckDiscrepancy = /\bdiscrepanc/i.test(crossCheckText);
-            if (hasCrossCheckDiscrepancy) {
-                const imageCrossCheckCandidate = extractImageAnnualCandidateFromCrossCheck(crossCheckText);
-                if (imageCrossCheckCandidate) return imageCrossCheckCandidate;
-            }
-            const fieldOrder = [
-                'cross_check',
-                'pattern_part1',
-                'narration_ready_text',
-                'pattern_text'
-            ];
-            const sources = [];
-            fieldOrder.forEach((field) => {
-                const value = entry[field];
-                if (typeof value === 'string' && value.trim()) {
-                    sources.push({ field, text: value });
-                }
-            });
-            if (sources.length === 0) return null;
-            const monthlyPattern = /(?:monthly_waste_image\s*:\s*\$\s*([0-9][\d,]*(?:\.\d+)?)|\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:monthly\s+waste|every\s+month))/i;
-            const annualPatterns = [
-                /\b(?:total\s*wasted|wasting|waste(?:\s+cost)?|annual\s+energy\s+waste|annual\s+waste)\b[^$\n\r]{0,140}\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,90}\b(?:annually|every\s+year|per\s*year|\/\s*yr|\/\s*year)\b/i,
-                /\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,80}\b(?:annually|every\s+year|per\s*year|\/\s*yr|\/\s*year)\b[^.\n\r]{0,90}\b(?:total\s*wasted|waste|wasting|waste\s+cost)\b/i,
-                /\b(?:costing(?:\s+you)?|wasting)\b[^$\n\r]{0,140}\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,90}\b(?:annually|every\s+year|per\s*year|\/\s*yr|\/\s*year)\b/i,
-                /\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,60}\bannual\s+(?:energy\s+)?waste(?:\s+costs?)?\b/i
-            ];
-            const rejectPatternCommon = /\b(recover|recovered|recovery|savings?|captured\s+value|value\s+potential|transforming)\b/i;
-            const rejectPatternAnnualOnly = /\b(investment|payback)\b/i;
-
-            for (const source of sources) {
-                const text = source.text;
-                const monthlyMatch = text.match(monthlyPattern);
-                if (monthlyMatch) {
-                    const raw = monthlyMatch[1] || monthlyMatch[2];
-                    const value = parseMatchedMoneyValue(raw, monthlyMatch[0]);
-                    if (!Number.isFinite(value) || value <= 0) continue;
-                    const index = monthlyMatch.index || 0;
-                    const windowStart = Math.max(0, index - 80);
-                    const windowEnd = Math.min(text.length, index + monthlyMatch[0].length + 80);
-                    const windowText = text.slice(windowStart, windowEnd);
-                    if (rejectPatternCommon.test(windowText)) continue;
-                    return { type: 'monthly', value };
-                }
-            }
-            for (const source of sources) {
-                const text = source.text;
-                if (source.field === 'cross_check' && hasCrossCheckDiscrepancy) continue;
-                for (const pattern of annualPatterns) {
-                    const match = text.match(pattern);
-                    if (!match) continue;
-                    const value = parseMatchedMoneyValue(match[1], match[0]);
-                    if (!Number.isFinite(value) || value <= 0) continue;
-                    const index = match.index || 0;
-                    const windowStart = Math.max(0, index - 160);
-                    const windowEnd = Math.min(text.length, index + String(match[0] || '').length + 160);
-                    const windowText = text.slice(windowStart, windowEnd);
-                    if (rejectPatternCommon.test(windowText) || rejectPatternAnnualOnly.test(windowText)) continue;
-                    return { type: 'annual', value };
-                }
-            }
-            return null;
-        }
-        function resolveMonthlyAsYearly(monthlyTotal, fallbackAnnual) {
-            const monthly = Number(monthlyTotal);
-            if (!Number.isFinite(monthly) || monthly <= 0) return 0;
-            const annualAsIs = monthly;
-            const annualized = monthly * 12;
-            const fallback = Number(fallbackAnnual);
-            if (Number.isFinite(fallback) && fallback > 0) {
-                const diffAsIs = Math.abs(annualAsIs - fallback);
-                const diffAnnualized = Math.abs(annualized - fallback);
-                return diffAnnualized < diffAsIs ? annualized : annualAsIs;
-            }
-            return annualized;
-        }
-        function sumTotalWastedYearlyFromImageText(summaryHtml, visibleTransformerCount = 0, fallbackAnnual = 0) {
-            const html = String(summaryHtml || '');
-            const entryCandidates = [];
-            const transformers = extractPatternDataTransformers(html);
-            if (transformers) {
-                for (const key of Object.keys(transformers)) {
-                    const entry = transformers[key];
-                    if (!entry || typeof entry !== 'object') continue;
-                    const candidate = extractTotalWastedCandidateFromPatternEntry(entry);
-                    if (!candidate) continue;
-                    const duplicate = entryCandidates.some((existing) => areCloseAnnualValues(existing.value, candidate.value));
-                    if (!duplicate) entryCandidates.push(candidate);
-                }
-            }
-
-            let cappedCandidates = entryCandidates;
-            if (visibleTransformerCount > 0 && cappedCandidates.length > visibleTransformerCount) {
-                cappedCandidates = cappedCandidates.slice(0, visibleTransformerCount);
-            }
-
-            let annualTotal = 0;
-            let monthlyTotal = 0;
-            cappedCandidates.forEach((candidate) => {
-                if (candidate.type === 'monthly') monthlyTotal += candidate.value;
-                else annualTotal += candidate.value;
-            });
-            const resolvedPatternTotal = annualTotal + resolveMonthlyAsYearly(monthlyTotal, fallbackAnnual);
-            if (resolvedPatternTotal > 0) {
-                return {
-                    total: resolvedPatternTotal,
-                    matchCount: cappedCandidates.length,
-                    annualCount: cappedCandidates.filter((item) => item.type === 'annual').length,
-                    monthlyCount: cappedCandidates.filter((item) => item.type === 'monthly').length
-                };
-            }
-
-            // HTML-only fallback for non-patterned pages.
-            const fallbackCandidates = [];
-            const totalWastedRegex = /total\s*wasted[^$\n\r]{0,140}\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:\/\s*year|per\s*year|\/\s*yr|annually)/ig;
-            const imageWasteRegex = /image\s+(?:shows|values?)[^$\n\r]{0,100}\$\s*([0-9][\d,]*(?:\.\d+)?)[^\n\r]{0,60}(?:\/\s*yr|\/\s*year|per\s*year|annually|annual\s+waste)/ig;
-            let match;
-            while ((match = totalWastedRegex.exec(html)) !== null) {
-                const value = Number(String(match[1] || '').replace(/,/g, ''));
-                if (Number.isFinite(value) && value > 0) fallbackCandidates.push(value);
-            }
-            while ((match = imageWasteRegex.exec(html)) !== null) {
-                const value = Number(String(match[1] || '').replace(/,/g, ''));
-                if (Number.isFinite(value) && value > 0) fallbackCandidates.push(value);
-            }
-            const uniqueFallbackCandidates = [];
-            fallbackCandidates.forEach((value) => {
-                const duplicate = uniqueFallbackCandidates.some((existing) => areCloseAnnualValues(existing, value));
-                if (!duplicate) uniqueFallbackCandidates.push(value);
-            });
-            const fallbackTotal = uniqueFallbackCandidates.reduce((sum, value) => sum + value, 0);
-            return {
-                total: fallbackTotal,
-                matchCount: uniqueFallbackCandidates.length,
-                annualCount: uniqueFallbackCandidates.length,
-                monthlyCount: 0
+          });
+        });
+      });
+      const metricPaths = new Set();
+      data.facilities.forEach((facility) => {
+        facility.groups.forEach((group) => {
+          if (!group.summary_url) return;
+          const bPath = group.summary_url.replace(/SITE-FosterFarms-Summaryboard_[^/]+\.html$/i, "B_front_card_metrics.json");
+          const btPath = group.summary_url.replace(/SITE-FosterFarms-Summaryboard_[^/]+\.html$/i, "BT_front_card_metrics.json");
+          if (bPath.endsWith("B_front_card_metrics.json")) metricPaths.add(bPath);
+          if (btPath.endsWith("BT_front_card_metrics.json")) metricPaths.add(btPath);
+        });
+      });
+      for (const path of metricPaths) {
+        try {
+          const response = await fetch(path, { cache: "no-store" });
+          if (!response.ok) continue;
+          const payload = await response.json();
+          const transformers = payload && payload.transformers ? payload.transformers : {};
+          Object.entries(transformers).forEach(([xfmrKey, metrics]) => {
+            const fieldName = fieldLookup.get(normalizeVoltageKey(xfmrKey));
+            if (!fieldName) return;
+            const existingVoltage = Number(FIELD_METRICS[fieldName] && FIELD_METRICS[fieldName].voltage_v);
+            if (Number.isFinite(existingVoltage) && existingVoltage > 0) return;
+            const voltage = Number(metrics && metrics.field_voltage);
+            if (!Number.isFinite(voltage) || voltage <= 0) return;
+            FIELD_METRICS[fieldName] = {
+              ...(FIELD_METRICS[fieldName] || {}),
+              voltage_v: voltage
             };
-        }
-        function formatAnnualConsequence(yearlyValue) {
-            const numeric = Number(yearlyValue);
-            if (!Number.isFinite(numeric) || numeric <= 0) {
-                return '<span class="site-annual-value">$--</span><span class="site-annual-unit">ANNUALLY</span>';
-            }
-            if (numeric >= 1000000) {
-                return `<span class="site-annual-value">$${(numeric / 1000000).toFixed(2)}M</span><span class="site-annual-unit">ANNUALLY</span>`;
-            }
-            if (numeric >= 1000) {
-                return `<span class="site-annual-value">$${(numeric / 1000).toFixed(0)}K</span><span class="site-annual-unit">ANNUALLY</span>`;
-            }
-            return `<span class="site-annual-value">$${numeric.toFixed(0)}</span><span class="site-annual-unit">ANNUALLY</span>`;
-        }
-        function parseMatchedMoneyValue(rawNumber, matchedText) {
-            const base = Number(String(rawNumber || '').replace(/,/g, ''));
-            if (!Number.isFinite(base) || base <= 0) return null;
-            const suffixMatch = String(matchedText || '').match(/\$\s*[0-9][\d,]*(?:\.\d+)?\s*([kKmM])\b/);
-            if (!suffixMatch) return base;
-            const suffix = String(suffixMatch[1] || '').toUpperCase();
-            if (suffix === 'M') return base * 1000000;
-            if (suffix === 'K') return base * 1000;
-            return base;
-        }
+          });
+        } catch (_err) {}
+      }
+      for (const context of fieldContexts) {
+        const existingVoltage = Number(FIELD_METRICS[context.fieldName] && FIELD_METRICS[context.fieldName].voltage_v);
+        if (Number.isFinite(existingVoltage) && existingVoltage > 0) continue;
+        const dashboardPath = dashboardDataPathForField(context.summaryUrl, context.fieldName);
+        if (!dashboardPath) continue;
+        try {
+          const response = await fetch(dashboardPath, { cache: "no-store" });
+          if (!response.ok) continue;
+          const payload = await response.json();
+          const voltage = Number(payload && payload.voltage_avg);
+          if (!Number.isFinite(voltage) || voltage <= 0) continue;
+          FIELD_METRICS[context.fieldName] = {
+            ...(FIELD_METRICS[context.fieldName] || {}),
+            voltage_v: voltage
+          };
+        } catch (_err) {}
+      }
+    }
+    function metricValueForField(field, metric){
+      if (metric === "consequence") return Number(field.consequence_annual) || 0;
+      if (metric === "consequence_monthly") return consequenceMonthly(field);
+      if (metric === "tuned_value_annual") return tuningValueAnnual(field);
+      if (metric === "tuned_value_monthly") return tuningValueMonthly(field);
+      if (metric === "efficiency") return Number(field.efficiency_pf) || 0;
+      if (metric === "voltage") return Number(field.voltage_v) || 0;
+      if (metric === "energy_cost") return Number(field.energy_cost_period) || 0;
+      return 0;
+    }
+    function metricValueForGroup(group, metric){
+      if (metric === "consequence") return Number(group.consequence_annual) || 0;
+      if (metric === "consequence_monthly") return consequenceMonthly(group);
+      if (metric === "tuned_value_annual") return tuningValueAnnual(group);
+      if (metric === "tuned_value_monthly") return tuningValueMonthly(group);
+      if (metric === "efficiency") return Number(group.efficiency_pf) || 0;
+      if (metric === "voltage") return Number(group.voltage_v) || 0;
+      if (metric === "energy_cost") return Number(group.energy_cost_period) || 0;
+      return 0;
+    }
+    function metricValueForFacility(facility, metric){
+      if (metric === "consequence") return Number(facility.consequence_annual) || 0;
+      if (metric === "consequence_monthly") return consequenceMonthly(facility);
+      if (metric === "tuned_value_annual") return tuningValueAnnual(facility);
+      if (metric === "tuned_value_monthly") return tuningValueMonthly(facility);
+      if (metric === "efficiency") return Number(facility.efficiency_pf) || 0;
+      if (metric === "voltage") return Number(facility.voltage_v) || 0;
+      if (metric === "energy_cost") return Number(facility.energy_cost_period) || 0;
+      return 0;
+    }
+    function totalForMetric(data, metric){
+      if (isAverageMetric(metric)) return 100;
+      return sum(data.facilities.map((facility) => metricValueForFacility(facility, metric)));
+    }
+    function enterpriseMetricValue(data, metric){
+      if (metric === "efficiency") return Number(data.company.site_efficiency_pf) || 0;
+      if (metric === "voltage") return Number(data.company.site_voltage_v) || 0;
+      return sum(data.facilities.map((facility) => metricValueForFacility(facility, metric)));
+    }
+    function roundedScaleMax(value, metric){
+      if (metric === "efficiency") return 100;
+      const numeric = Number(value) || 0;
+      if (numeric <= 0) return 1;
+      const magnitude = Math.pow(10, Math.floor(Math.log10(numeric)));
+      const normalized = numeric / magnitude;
+      let nice = 1;
+      if (normalized <= 1) nice = 1;
+      else if (normalized <= 2) nice = 2;
+      else if (normalized <= 5) nice = 5;
+      else nice = 10;
+      return nice * magnitude;
+    }
+    function renderStatusRibbon(fields){
+      const counts = STATUS_MARKER_ORDER.reduce((acc, status) => ({ ...acc, [status]: 0 }), {});
+      fields.forEach((field) => {
+        if (counts[field.status] !== undefined) counts[field.status] += 1;
+      });
+      const total = STATUS_MARKER_ORDER.reduce((acc, status) => acc + counts[status], 0);
+      if (!total) {
+        return `
+          <div class="status-ribbon-wrap">
+            <span class="status-ribbon-label">Legend Markers</span>
+            <div class="status-ribbon-counts">No measured fields</div>
+          </div>
+        `;
+      }
+      const segments = STATUS_MARKER_ORDER
+        .map((status) => {
+          const count = counts[status];
+          if (!count) return "";
+          const width = (count / total) * 100;
+          return `<span class="status-seg ${status}" style="width:${width.toFixed(2)}%" title="${status}: ${count}"></span>`;
+        })
+        .join("");
+      const compactCounts = `T:${counts.tuned} H:${counts.high} M:${counts.moderate} L:${counts.low} NT:${counts["not-tuned"]}`;
+      return `
+        <div class="status-ribbon-wrap" aria-label="Legend marker distribution by field status">
+          <span class="status-ribbon-label">Legend Markers</span>
+          <div class="status-ribbon-bar">${segments}</div>
+          <span class="status-ribbon-counts">${compactCounts}</span>
+        </div>
+      `;
+    }
+    function enrichData(data){
+      data.facilities.forEach((facility) => {
+        facility.groups.forEach((group) => {
+          group.transformer_count = group.fields.length;
+          group.fields.forEach((field) => {
+            const fromSummary = FIELD_METRICS[field.name] || {};
+            field.efficiency_pf = Number(fromSummary.efficiency_pf) || 0;
+            field.voltage_v = Number(fromSummary.voltage_v) || 0;
+            field.energy_cost_period = Number(fromSummary.energy_cost_period) || 0;
+            field.waste_cost_period = Number(fromSummary.waste_cost_period) || 0;
+            const untunedCandidate =
+              Number(fromSummary.untuned_electrical_cost_period) ||
+              Number(fromSummary.bt_total_waste_monthly) ||
+              Number(fromSummary.monthly_bt_total_waste) ||
+              Number(fromSummary.monthly_waste) ||
+              ((Number(field.consequence_annual) || 0) > 0 ? (Number(field.consequence_annual) || 0) / 12 : 0) ||
+              Number(fromSummary.waste_cost_period) ||
+              0;
+            field.untuned_behavior_cost_period = untunedCandidate;
+            field.untuned_electrical_cost_period = field.energy_cost_period + field.untuned_behavior_cost_period;
+            const tunedCandidate =
+              Number(fromSummary.tuned_simulated_cost_period) ||
+              Number(fromSummary.s_total_waste_monthly) ||
+              Number(fromSummary.monthly_s_total_waste) ||
+              Number(fromSummary.monthly_simulated_total_waste) ||
+              Number(fromSummary.monthly_simulated_waste) ||
+              Number(fromSummary.simulated_monthly_waste) ||
+              Number(fromSummary.s_waste_cost_period) ||
+              0;
+            field.tuned_behavior_cost_period =
+              Number.isFinite(tunedCandidate) &&
+              tunedCandidate > 0 &&
+              field.untuned_behavior_cost_period > 0 &&
+              tunedCandidate < field.untuned_behavior_cost_period
+                ? tunedCandidate
+                : 0;
+            field.tuned_simulated_cost_period = field.energy_cost_period + field.tuned_behavior_cost_period;
+          });
 
-        let livingstonCardUpdateVersion = 0;
-        async function updateLivingstonCard() {
-            // Dynamically compute Livingston combined efficiency from each unit group's
-            // latest available Summaryboard. Only named transformer slots are counted
-            // (empty xfmr-name = unused template slot, excluded).
-            // PROCESS NOTE: when Livingston group studies are advanced to a new month,
-            // keep Livingston_SIte/index.html study links current so this front-door card
-            // recalculates combined/high/low and refreshes card metadata from newest studies.
-            const pfEl   = document.getElementById('livingston-card-pf');
-            const highEl = document.getElementById('livingston-card-high');
-            const lowEl  = document.getElementById('livingston-card-low');
-            const annualEl = document.getElementById('livingston-card-annual');
-            const countEl = document.getElementById('livingston-card-count');
-            const reportNameEl = document.getElementById('livingston-card-report-name');
-            const reportDescEl = document.getElementById('livingston-card-report-desc');
-            if (!pfEl) return;
-
-            try {
-                const updateVersion = ++livingstonCardUpdateVersion;
-                const cb = Date.now();
-                const indexRes = await fetch(`./Livingston_SIte/index.html?cb=${cb}`);
-                if (!indexRes.ok) return;
-
-                const indexDoc = new DOMParser().parseFromString(await indexRes.text(), 'text/html');
-                const monthIndex = {
-                    jan: 0,
-                    feb: 1,
-                    mar: 2,
-                    apr: 3,
-                    may: 4,
-                    jun: 5,
-                    jul: 6,
-                    aug: 7,
-                    sep: 8,
-                    oct: 9,
-                    nov: 10,
-                    dec: 11
-                };
-
-                const parseMonthYear = (rawText) => {
-                    const text = String(rawText || '').trim();
-                    const m = text.match(/([A-Za-z]{3,9})\s+(\d{4})/);
-                    if (!m) return null;
-                    const key = m[1].slice(0, 3).toLowerCase();
-                    const year = parseInt(m[2], 10);
-                    if (monthIndex[key] == null || !Number.isFinite(year)) return null;
-                    return {
-                        label: `${m[1]} ${year}`,
-                        sortValue: new Date(year, monthIndex[key], 1).getTime()
-                    };
-                };
-                const normalizePfPercent = (rawValue) => {
-                    const numeric = Number(rawValue);
-                    if (!Number.isFinite(numeric) || numeric <= 0) return null;
-                    const pct = numeric <= 1 ? numeric * 100 : numeric;
-                    return Math.max(0, Math.min(100, pct));
-                };
-                const resolveExpectedTransformerCount = (groupBlock, studyPeriodText, visibleCount) => {
-                    const visible = Number(visibleCount);
-                    const summaryEl = groupBlock?.querySelector('summary');
-                    const transformerSpec = String(summaryEl?.getAttribute('data-transformer-spec') || '');
-                    const combinedHintText = `${transformerSpec} ${String(studyPeriodText || '')}`;
-                    const parsedVisible = Number.isFinite(visible) && visible > 0 ? visible : 0;
-                    let expected = parsedVisible;
-
-                    const activeMatch = combinedHintText.match(/\b(\d+)\s*active\b/i);
-                    if (activeMatch) {
-                        const activeCount = parseInt(activeMatch[1], 10);
-                        if (Number.isFinite(activeCount) && activeCount > 0) {
-                            expected = parsedVisible > 0 ? Math.min(parsedVisible, activeCount) : activeCount;
-                        }
-                    }
-
-                    if (/\bsingle\s+(?:loaded\s+)?transformer\b/i.test(combinedHintText)) {
-                        expected = parsedVisible > 0 ? Math.min(parsedVisible, 1) : 1;
-                    }
-
-                    return expected;
-                };
-
-                // Sync measured field count from Livingston index overview metric.
-                if (countEl) {
-                    const measuredStat = Array.from(indexDoc.querySelectorAll('.highlight-card .number'))
-                        .map((el) => String(el.textContent || '').trim())
-                        .find((text) => /measured/i.test(text));
-                    const measuredMatch = measuredStat ? measuredStat.match(/(\d+)/) : null;
-                    if (measuredMatch) countEl.textContent = measuredMatch[1];
-                }
-
-                // Each <details> block = one unit group (Deli, Rendering, NCDC).
-                // Use the LAST active study link = most-recent available report for that unit.
-                const allPfs = [];
-                let totalAnnualConsequence = 0;
-                let latestReport = null;
-
-                for (const block of Array.from(indexDoc.querySelectorAll('details.group-section, details[data-group-code]'))) {
-                    const activeLinks = Array.from(block.querySelectorAll('a.study-btn[href]'));
-                    if (activeLinks.length === 0) continue;
-                    const latestLink = activeLinks[activeLinks.length - 1];
-                    const href = (latestLink.getAttribute('href') || '').replace(/^\.\//, '');
-                    if (!href) continue;
-
-                    const studyItem = latestLink.closest('.study-item');
-                    const studyName = studyItem?.querySelector('.study-name')?.textContent || '';
-                    const studyPeriodRaw = studyItem?.querySelector('.study-period')?.textContent || '';
-                    const studyPeriodParts = String(studyPeriodRaw)
-                        .split(/[•·]/)
-                        .map((part) => part.trim())
-                        .filter(Boolean);
-                    const studyPeriod = studyPeriodParts.find((part) => /\bday\b/i.test(part)) || studyPeriodParts[0] || '';
-                    const parsedDate = parseMonthYear(studyName);
-                    if (parsedDate) {
-                        if (!latestReport || parsedDate.sortValue > latestReport.sortValue) {
-                            latestReport = {
-                                sortValue: parsedDate.sortValue,
-                                label: parsedDate.label,
-                                desc: studyPeriod
-                            };
-                        }
-                    }
-
-                    const summaryRes = await fetch(`./Livingston_SIte/${href}?cb=${cb}`);
-                    if (!summaryRes.ok) continue;
-                    const summaryHtml = await summaryRes.text();
-                    const summaryDoc = new DOMParser().parseFromString(summaryHtml, 'text/html');
-                    const pfNodes = summaryDoc.querySelectorAll('[id^="xfmr"][id$="-metric-pf"]');
-
-                    for (const pfNode of Array.from(pfNodes)) {
-                        const pfRaw = parseFloat(String(pfNode.textContent || '').replace('%', '').trim());
-                        const pf = normalizePfPercent(pfRaw);
-                        if (pf === null) continue;
-                        allPfs.push(pf);
-                    }
-                    const wasteHourlyAnnual = sumWasteCostPerHour(summaryDoc) * 8760;
-                    const visibleTransformerCount = getVisibleTransformerCount(summaryDoc);
-                    const expectedTransformerCount = resolveExpectedTransformerCount(
-                        block,
-                        studyPeriodRaw,
-                        visibleTransformerCount
-                    );
-                    const totalWastedResult = sumTotalWastedYearlyFromImageText(
-                        summaryHtml,
-                        expectedTransformerCount,
-                        wasteHourlyAnnual
-                    );
-                    const yearlyFromTotalWasted = Number(totalWastedResult.total) || 0;
-                    const hasCompleteTotalWastedCoverage =
-                        expectedTransformerCount > 0 &&
-                        Number(totalWastedResult.matchCount) >= expectedTransformerCount;
-                    const yearlyFromValuePotential = sumValuePotentialYearlyFromHtml(summaryHtml);
-                    if (yearlyFromTotalWasted > 0) {
-                        totalAnnualConsequence += hasCompleteTotalWastedCoverage
-                            ? yearlyFromTotalWasted
-                            : (wasteHourlyAnnual > 0 ? wasteHourlyAnnual : yearlyFromTotalWasted);
-                    } else if (yearlyFromValuePotential > 0) {
-                        totalAnnualConsequence += yearlyFromValuePotential;
-                    } else {
-                        if (wasteHourlyAnnual > 0) totalAnnualConsequence += wasteHourlyAnnual;
-                    }
-                }
-
-                if (updateVersion !== livingstonCardUpdateVersion) return;
-                if (allPfs.length > 0) {
-                    const avg  = allPfs.reduce((a, b) => a + b, 0) / allPfs.length;
-                    const high = Math.max(...allPfs);
-                    const low  = Math.min(...allPfs);
-                    pfEl.textContent  = `${avg.toFixed(1)}% PF`;
-                    if (highEl) highEl.textContent = `high = ${high.toFixed(1)}%`;
-                    if (lowEl)  lowEl.textContent  = `low = ${low.toFixed(1)}%`;
-                }
-
-                if (latestReport) {
-                    if (reportNameEl) reportNameEl.textContent = latestReport.label;
-                    if (reportDescEl && latestReport.desc) reportDescEl.textContent = latestReport.desc;
-                }
-                if (annualEl) {
-                    annualEl.innerHTML = formatAnnualConsequence(totalAnnualConsequence);
-                }
-            } catch (e) {
-                // Keep fallback values if fetch/parse fails
-            }
-        }
-
-        async function updateCherryAveCard() {
-            // Keep the Foster Farms portal card in-sync with the Cherry Ave site index.
-            // Source of truth: `Customers/FosterFarms/CherryAve_Site/index.html`
-            // - Latest month = first active full-study entry (supports year-split blocks)
-            // - PF = average of transformer PFs pulled from that month’s Summaryboard
-            const pfEl = document.getElementById('cherry-card-pf');
-            const annualEl = document.getElementById('cherry-card-annual');
-            const countEl = document.getElementById('cherry-card-count');
-            const reportNameEl = document.getElementById('cherry-card-report-name');
-            const reportDescEl = document.getElementById('cherry-card-report-desc');
-            if (!pfEl || !reportNameEl || !reportDescEl) return;
-
-            try {
-                const cb = Date.now();
-                const indexRes = await fetch(`./CherryAve_Site/index.html?cb=${cb}`);
-                if (!indexRes.ok) return;
-
-                const indexHtml = await indexRes.text();
-                const indexDoc = new DOMParser().parseFromString(indexHtml, 'text/html');
-                if (countEl) {
-                    const measuredStat = Array.from(indexDoc.querySelectorAll('.highlight-card .number'))
-                        .map((el) => String(el.textContent || '').trim())
-                        .find((text) => /measured/i.test(text));
-                    const measuredMatch = measuredStat ? measuredStat.match(/(\d+)/) : null;
-                    if (measuredMatch) countEl.textContent = measuredMatch[1];
-                }
-
-                // Collect full-study containers from both legacy and current structures.
-                const fullStudyBlocks = Array.from(indexDoc.querySelectorAll('details')).filter((d) => {
-                    const s = (d.querySelector('summary')?.textContent || '').toLowerCase();
-                    return (
-                        (s.includes('full') && s.includes('site') && (s.includes('studies') || s.includes('study'))) ||
-                        s.includes('full studies')
-                    );
-                });
-
-                // Select first active item in display order; skip pending placeholders.
-                const activeItem = fullStudyBlocks
-                    .flatMap((block) => Array.from(block.querySelectorAll('.study-item')))
-                    .find((item) => {
-                        const btn = item.querySelector('a.study-btn[href]');
-                        if (!btn) return false;
-                        const href = (btn.getAttribute('href') || '').trim();
-                        const isDisabled =
-                            btn.classList.contains('disabled') ||
-                            btn.hasAttribute('disabled') ||
-                            href === '#' ||
-                            href.toLowerCase().startsWith('javascript:');
-                        return !isDisabled;
-                    });
-
-                // Fallback allows name/description updates even if all studies are pending.
-                const selectedItem = activeItem || fullStudyBlocks[0]?.querySelector('.study-item');
-                const monthText = selectedItem?.querySelector('.study-name, .site-summary-name')?.textContent?.trim();
-                const periodTextRaw = selectedItem?.querySelector('.study-period, .study-month-meta')?.textContent?.trim();
-                const hrefRaw = selectedItem?.querySelector('a.study-btn[href]')?.getAttribute('href') || '';
-
-                if (monthText) {
-                    // Extract just "Month YYYY" — strip trailing text like "Site Summaryboard"
-                    const monthMatch = monthText.match(/^([A-Za-z]+ \d{4})/);
-                    reportNameEl.textContent = monthMatch ? monthMatch[1] : monthText;
-                }
-
-                if (periodTextRaw) {
-                    // Drop internal study name in parentheses and resolution suffix (e.g. " • 1minRES")
-                    reportDescEl.textContent = periodTextRaw
-                        .replace(/\s*\(.*\)\s*$/, '')
-                        .replace(/\s*[•·].*$/, '');
-                }
-
-                // Attempt to compute the card PF from the linked Summaryboard
-                const href = hrefRaw.replace(/^\.[\/]/, '');
-                if (!href || href === '#') return;
-
-                const summaryRes = await fetch(`./CherryAve_Site/${href}?cb=${cb}`);
-                if (!summaryRes.ok) return;
-
-                const summaryHtml = await summaryRes.text();
-                const summaryDoc = new DOMParser().parseFromString(summaryHtml, 'text/html');
-
-                let sum = 0;
-                let n = 0;
-                let minPf = Infinity;
-                let maxPf = -Infinity;
-
-                for (let i = 1; i <= 4; i++) {
-                    const el = summaryDoc.getElementById(`xfmr${i}-metric-pf`);
-                    if (!el) continue;
-                    const pf = parseFloat(String(el.textContent || '').replace('%', '').trim());
-                    if (!Number.isFinite(pf)) continue;
-                    sum += pf;
-                    n += 1;
-                    if (pf > maxPf) maxPf = pf;
-                    if (pf < minPf) minPf = pf;
-                }
-
-                if (n > 0) {
-                    const avg = sum / n;
-                    pfEl.textContent = `${avg.toFixed(1)}% PF`;
-                    const highEl = document.getElementById('cherry-card-high');
-                    const lowEl  = document.getElementById('cherry-card-low');
-                    if (highEl) highEl.textContent = `high = ${maxPf.toFixed(1)}%`;
-                    if (lowEl)  lowEl.textContent  = `low = ${minPf.toFixed(1)}%`;
-                }
-                if (annualEl) {
-                    const wasteHourlyAnnual = sumWasteCostPerHour(summaryDoc) * 8760;
-                    const visibleTransformerCount = getVisibleTransformerCount(summaryDoc);
-                    const totalWastedResult = sumTotalWastedYearlyFromImageText(
-                        summaryHtml,
-                        visibleTransformerCount,
-                        wasteHourlyAnnual
-                    );
-                    const yearlyFromTotalWasted = Number(totalWastedResult.total) || 0;
-                    const hasCompleteTotalWastedCoverage =
-                        visibleTransformerCount > 0 &&
-                        Number(totalWastedResult.matchCount) >= visibleTransformerCount;
-                    const yearlyFromValuePotential = sumValuePotentialYearlyFromHtml(summaryHtml);
-                    const totalAnnualConsequence = yearlyFromTotalWasted > 0
-                        ? (hasCompleteTotalWastedCoverage
-                            ? yearlyFromTotalWasted
-                            : (wasteHourlyAnnual > 0 ? wasteHourlyAnnual : yearlyFromTotalWasted))
-                        : (yearlyFromValuePotential > 0
-                            ? yearlyFromValuePotential
-                            : wasteHourlyAnnual);
-                    annualEl.innerHTML = formatAnnualConsequence(totalAnnualConsequence);
-                }
-            } catch (e) {
-                // Keep fallback values if fetch/parse fails
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
-            scrollToTopPosition();
-
-            // Keep site cards fresh automatically
-            updateLivingstonCard();
-            updateCherryAveCard();
+          group.consequence_annual = sum(group.fields.map((field) => field.consequence_annual));
+          group.efficiency_pf = (() => {
+            const pfValues = group.fields.map((field) => Number(field.efficiency_pf) || 0).filter((value) => value > 0);
+            return pfValues.length ? sum(pfValues) / pfValues.length : 0;
+          })();
+          group.voltage_v = (() => {
+            const voltageValues = group.fields.map((field) => Number(field.voltage_v) || 0).filter((value) => value > 0);
+            return voltageValues.length ? sum(voltageValues) / voltageValues.length : 0;
+          })();
+          group.voltage_min_v = (() => {
+            const voltageValues = group.fields.map((field) => Number(field.voltage_v) || 0).filter((value) => value > 0);
+            return voltageValues.length ? Math.min(...voltageValues) : 0;
+          })();
+          group.voltage_max_v = (() => {
+            const voltageValues = group.fields.map((field) => Number(field.voltage_v) || 0).filter((value) => value > 0);
+            return voltageValues.length ? Math.max(...voltageValues) : 0;
+          })();
+          group.energy_cost_period = sum(group.fields.map((field) => field.energy_cost_period));
+          group.untuned_electrical_cost_period = sum(group.fields.map((field) => field.untuned_electrical_cost_period));
+          group.tuned_simulated_cost_period = sum(group.fields.map((field) => field.tuned_simulated_cost_period));
+          group.status = group.status === "not-tuned" ? "not-tuned" : statusFromValue(group.consequence_annual, "group");
         });
-        // Keep top position even when browser restores from bfcache.
-        window.addEventListener('pageshow', () => {
-            try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
-            scrollToTopPosition();
-        });
-    </script>
-    <script>
-        (function () {
-            try {
-                const context = {
-                    customer_slug: "fosterfarms",
-                    customer_name: "Foster Farms",
-                    source_path: window.location.pathname,
-                    selected_at: new Date().toISOString()
-                };
-                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
-                window.maxwellianClerkCustomerContext = context;
-            } catch (_err) {
-                // ignore storage failures
-            }
+        const monthLabels = [...new Set(facility.groups.map((group) => group.dataset_month_label).filter(Boolean))];
+        facility.dataset_month_label = monthLabels.length === 1 ? monthLabels[0] : monthLabels.length > 1 ? "MIXED" : "";
+
+        facility.consequence_annual = sum(facility.groups.map((group) => group.consequence_annual));
+        facility.energy_cost_period = sum(facility.groups.map((group) => group.energy_cost_period));
+        facility.untuned_electrical_cost_period = sum(facility.groups.map((group) => group.untuned_electrical_cost_period));
+        facility.tuned_simulated_cost_period = sum(facility.groups.map((group) => group.tuned_simulated_cost_period));
+        facility.efficiency_pf = (() => {
+          const pfValues = facility.groups
+            .flatMap((group) => group.fields.map((field) => Number(field.efficiency_pf) || 0))
+            .filter((value) => value > 0);
+          return pfValues.length ? sum(pfValues) / pfValues.length : 0;
         })();
-    </script>
+        facility.voltage_v = (() => {
+          const voltageValues = facility.groups
+            .flatMap((group) => group.fields.map((field) => Number(field.voltage_v) || 0))
+            .filter((value) => value > 0);
+          return voltageValues.length ? sum(voltageValues) / voltageValues.length : 0;
+        })();
+        facility.voltage_min_v = (() => {
+          const voltageValues = facility.groups
+            .flatMap((group) => group.fields.map((field) => Number(field.voltage_v) || 0))
+            .filter((value) => value > 0);
+          return voltageValues.length ? Math.min(...voltageValues) : 0;
+        })();
+        facility.voltage_max_v = (() => {
+          const voltageValues = facility.groups
+            .flatMap((group) => group.fields.map((field) => Number(field.voltage_v) || 0))
+            .filter((value) => value > 0);
+          return voltageValues.length ? Math.max(...voltageValues) : 0;
+        })();
+        facility.status = facility.status === "not-tuned" ? "not-tuned" : statusFromValue(facility.consequence_annual, "facility");
+      });
+      data.company.site_voltage_v = (() => {
+        const voltageValues = data.facilities
+          .flatMap((facility) => facility.groups.flatMap((group) => group.fields.map((field) => Number(field.voltage_v) || 0)))
+          .filter((value) => value > 0);
+        return voltageValues.length ? sum(voltageValues) / voltageValues.length : 0;
+      })();
+
+      const totalAnnual = sum(data.facilities.map((f) => f.consequence_annual));
+      data.facilities.forEach((facility) => {
+        facility.percent_total = totalAnnual > 0 ? (facility.consequence_annual / totalAnnual) * 100 : 0;
+        facility.groups.forEach((group) => {
+          group.percent_facility = facility.consequence_annual > 0 ? (group.consequence_annual / facility.consequence_annual) * 100 : 0;
+          group.fields.forEach((field) => {
+            field.status = field.status === "not-tuned" ? "not-tuned" : statusFromValue(field.consequence_annual, "field");
+            field.percent_facility = facility.consequence_annual > 0 ? (field.consequence_annual / facility.consequence_annual) * 100 : 0;
+          });
+        });
+      });
+      return { totalAnnual };
+    }
+    function renderKPIs(data, activeMetric){
+      const totalFacilities = data.facilities.length;
+      const totalFields = sum(data.facilities.map((f) => f.fields_total));
+      const changeArrow = data.company.monthly_change_percent >= 0 ? "▲" : "▼";
+      const metricKey = KPI_METRIC_CONFIG[activeMetric] ? activeMetric : "consequence";
+      const metricTile = KPI_METRIC_CONFIG[metricKey];
+      const metricValue = enterpriseMetricValue(data, metricKey);
+      const metricDisplayValue = metricKey === "voltage"
+        ? formatActualVoltage(metricValue)
+        : formatMetricValue(metricKey, metricValue);
+      const livingstonFacility = data.facilities.find((facility) => /livingston/i.test(facility.name));
+      const livingstonActionCount = livingstonFacility ? facilityCriticalActionCount(livingstonFacility) : 0;
+      const criticalActionSub = livingstonActionCount > 0
+        ? `<span class="alert-line">Located in:</span><span class="alert-line"><span class="alert-focus-chip">Livingston HQ • ${livingstonActionCount}</span></span>`
+        : "Active Conditions";
+      const kpis = [
+        { iconClass: "i-blue",label: "Facilities", value: `${totalFacilities}`, sub: "Total Facilities" },
+        { iconClass: "i-green",label: "Energy Fields", value: `${totalFields}`, sub: "Monitored Fields" },
+        { iconClass: "i-alert",label: "Critical Alerts", value: `${CRITICAL_ALERTS.length}`, sub: criticalActionSub, subClass: "alert-stack" },
+        { iconClass: "i-green",label: "Overall Efficiency", value: `${data.company.site_efficiency_pf.toFixed(1)}%`, sub: "Portfolio PF Average" },
+        { iconClass: "",label: "Monthly Change", value: `${changeArrow} ${Math.abs(data.company.monthly_change_percent).toFixed(1)}%`, sub: "vs Prior Month" },
+        { iconClass: metricTile.iconClass, icon: metricTile.icon, label: metricTile.label, value: metricDisplayValue, sub: metricTile.sub, valueClass: metricTile.valueClass }
+      ];
+      const kpiGrid = document.getElementById("kpiGrid");
+      kpiGrid.innerHTML = kpis.map((kpi) => `
+        <div class="kpi ${kpi.icon ? "" : "no-icon"}">
+          ${kpi.icon ? `<div class="icon ${kpi.iconClass}">${kpi.icon}</div>` : ""}
+          <div>
+            <div class="label">${kpi.label}</div>
+            <div class="value ${kpi.valueClass || ""}">${kpi.value}</div>
+            <div class="sub ${kpi.subClass || ""}">${kpi.sub}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+    function renderFacilityBoard(data, activeMetric){
+      const facilityBoard = document.getElementById("facilityBoard");
+      const ranked = [...data.facilities];
+      const totalMetric = totalForMetric(data, activeMetric);
+      const groupColumnLabel = BOARD_METRIC_CONFIG[activeMetric]?.groupColumnLabel || "Value";
+      const facilityScaleMax = activeMetric === "efficiency"
+        ? 100
+        : activeMetric === "voltage"
+          ? roundedScaleMax(
+            Math.max(
+              ...ranked.flatMap((facility) => [
+                voltageDeviation(facility.voltage_min_v),
+                voltageDeviation(metricValueForFacility(facility, activeMetric)),
+                voltageDeviation(facility.voltage_max_v)
+              ]),
+              0
+            ),
+            activeMetric
+          )
+          : roundedScaleMax(Math.max(...ranked.map((facility) => metricValueForFacility(facility, activeMetric)), 0), activeMetric);
+      facilityBoard.innerHTML = ranked.map((facility, facilityIndex) => {
+        const facilityValue = metricValueForFacility(facility, activeMetric);
+        const facilityCriticalActions = facilityCriticalActionCount(facility);
+        const barWidth = activeMetric === "efficiency"
+          ? Math.max(0, Math.min(100, facilityValue))
+          : activeMetric === "voltage"
+            ? (facilityScaleMax > 0 ? (voltageDeviation(facilityValue) / facilityScaleMax) * 100 : 0)
+          : (facilityScaleMax > 0 ? (facilityValue / facilityScaleMax) * 100 : 0);
+        const facilityRangeLabel = formatVoltageRangeLabel(facility.voltage_min_v, facility.voltage_max_v);
+        const facilityRangeDisplayText = formatVoltageRangeDisplayText(facility.voltage_min_v, facility.voltage_max_v);
+        const facilityLowVoltageAlert = Number(facility.voltage_min_v) > 0 && Number(facility.voltage_min_v) < LOW_VOLTAGE_ALERT_THRESHOLD_V;
+        const facilityBarNode = activeMetric === "voltage"
+          ? `
+              <div class="bar voltage-range-band" style="${voltageRangeFillStyle(facility.voltage_min_v, facility.voltage_max_v, facilityScaleMax)}" title="${facilityRangeLabel}"></div>
+              <div class="bar voltage-delta-bar" style="${voltageDeltaFillStyle(facilityValue, facilityScaleMax)}"></div>
+              ${voltageRangeMarkersHtml(facility.voltage_min_v, facility.voltage_max_v, facilityScaleMax)}
+            `
+          : `<div class="bar status-${facility.status}" style="width:${barWidth}%"></div>${facilityCriticalActions > 0 && (activeMetric === "consequence" || activeMetric === "consequence_monthly") ? `<div class="facility-action-chip">${facilityCriticalActions} Critical Actions</div>` : ""}`;
+        const facilityTrackClass = activeMetric === "voltage" ? "bar-track voltage-track" : "bar-track";
+        const facilityPctText = activeMetric === "efficiency"
+          ? "Average PF"
+          : activeMetric === "voltage"
+            ? `<span class="pct-line">${formatVoltageDeltaVsReferenceText(facilityValue)}</span><span class="pct-line">${facilityRangeDisplayText}</span>${facilityLowVoltageAlert ? `<span class="pct-line pct-alert">Low Voltage Alert</span>` : ""}`
+          : `${(totalMetric > 0 ? (facilityValue / totalMetric) * 100 : 0).toFixed(1)}% of Total`;
+        const groupScaleMax = activeMetric === "efficiency"
+          ? 100
+          : activeMetric === "voltage"
+            ? roundedScaleMax(
+              Math.max(
+                ...facility.groups.flatMap((group) => [
+                  voltageDeviation(group.voltage_min_v),
+                  voltageDeviation(metricValueForGroup(group, activeMetric)),
+                  voltageDeviation(group.voltage_max_v)
+                ]),
+                0
+              ),
+              activeMetric
+            )
+            : roundedScaleMax(Math.max(...facility.groups.map((group) => metricValueForGroup(group, activeMetric)), 0), activeMetric);
+        const scaleChipText = activeMetric === "efficiency"
+          ? "Scale Max: 100.0%"
+          : activeMetric === "voltage"
+            ? `Scale Ref: ±${groupScaleMax.toFixed(1)}V vs ${VOLTAGE_REFERENCE_V}V`
+          : `Scale Max: ${formatMoney(groupScaleMax)}`;
+        const groupRows = facility.groups.map((group, groupIndex) => {
+          const groupMetricValue = metricValueForGroup(group, activeMetric);
+          const facilityMetricValue = metricValueForFacility(facility, activeMetric);
+          const groupHasAlert = group.fields.some((field) => CRITICAL_ALERT_TARGET_FIELDS.has(field.name));
+          const groupBarWidth = activeMetric === "efficiency"
+            ? Math.max(0, Math.min(100, groupMetricValue))
+            : activeMetric === "voltage"
+              ? (groupScaleMax > 0 ? (voltageDeviation(groupMetricValue) / groupScaleMax) * 100 : 0)
+            : (groupScaleMax > 0 ? (groupMetricValue / groupScaleMax) * 100 : 0);
+          const groupRangeLabel = formatVoltageRangeLabel(group.voltage_min_v, group.voltage_max_v);
+          const groupBarNode = activeMetric === "voltage"
+            ? `
+                <div class="mini-bar voltage-range-band" style="${voltageRangeFillStyle(group.voltage_min_v, group.voltage_max_v, groupScaleMax)}" title="${groupRangeLabel}"></div>
+                <div class="mini-bar voltage-delta-bar" style="${voltageDeltaFillStyle(groupMetricValue, groupScaleMax)}"></div>
+                ${voltageRangeMarkersHtml(group.voltage_min_v, group.voltage_max_v, groupScaleMax, { showLabels: false })}
+              `
+            : `<div class="mini-bar status-${group.status}" style="width:${groupBarWidth}%"></div>`;
+          const groupTrackClass = activeMetric === "voltage" ? "mini-track voltage-track" : "mini-track";
+          const groupTrackTitleAttr = activeMetric === "voltage"
+            ? ` title="${groupRangeLabel}"`
+            : "";
+          const groupPctText = activeMetric === "efficiency"
+            ? formatReactiveEnergyShare(groupMetricValue)
+            : activeMetric === "voltage"
+              ? formatMetricValue("voltage", groupMetricValue)
+              : `${(facilityMetricValue > 0 ? (groupMetricValue / facilityMetricValue) * 100 : 0).toFixed(1)}%`;
+          const fieldsSnapshotRows = group.fields.map((field) => {
+            const fieldMetricValue = metricValueForField(field, activeMetric);
+            const fieldHasAlert = CRITICAL_ALERT_TARGET_FIELDS.has(field.name);
+            const fieldBarWidth = activeMetric === "efficiency"
+              ? Math.max(0, Math.min(100, fieldMetricValue))
+              : activeMetric === "voltage"
+                ? (groupScaleMax > 0 ? (voltageDeviation(fieldMetricValue) / groupScaleMax) * 100 : 0)
+              : (groupScaleMax > 0 ? (fieldMetricValue / groupScaleMax) * 100 : 0);
+            const fieldBarNode = activeMetric === "voltage"
+              ? `<div class="mini-bar voltage-delta-bar" style="${voltageDeltaFillStyle(fieldMetricValue, groupScaleMax)}"></div>`
+              : `<div class="mini-bar status-${field.status}" style="width:${fieldBarWidth}%"></div>`;
+            const fieldTrackClass = activeMetric === "voltage" ? "mini-track voltage-track" : "mini-track";
+            const fieldPctText = activeMetric === "efficiency"
+              ? formatReactiveEnergyShare(fieldMetricValue)
+              : activeMetric === "voltage"
+                ? formatMetricValue("voltage", fieldMetricValue)
+              : `${(facilityMetricValue > 0 ? (fieldMetricValue / facilityMetricValue) * 100 : 0).toFixed(1)}%`;
+            return `
+              <div class="snapshot-row ${fieldHasAlert ? "alert-locator" : ""}">
+                <div>${field.name}${fieldHasAlert ? ` <span class="alert-locator-badge">action</span>` : ""}</div>
+                <div><span class="dot ${field.status}"></span></div>
+                <div class="${fieldTrackClass}">${fieldBarNode}</div>
+              <div class="mini-money status-${field.status}">${activeMetric === "voltage" ? formatActualVoltage(fieldMetricValue) : formatMetricValue(activeMetric, fieldMetricValue)}</div>
+                <div>${fieldPctText}</div>
+              </div>
+            `;
+          }).join("");
+          const hasTarget = Boolean(group.summary_url);
+          return `
+            <div class="group-row ${hasTarget ? "has-target" : ""} ${groupHasAlert ? "alert-locator" : ""}" ${hasTarget ? `data-target="${group.summary_url}" tabindex="0" role="link" aria-label="Open ${group.name} monthly summary board"` : ""}>
+              <div>${group.dataset_month_label || (!group.summary_url ? "NO DATA" : (groupIndex + 1))}</div>
+              <div class="expand-mini" data-snapshot-toggle="${facilityIndex}-${groupIndex}" role="button" tabindex="0" aria-label="Toggle ${group.name} field snapshot">⌄</div>
+              <div class="group-name-cell">${group.name}${groupHasAlert ? ` <span class="alert-locator-badge">action</span>` : ""}</div>
+              <div class="dot-wrap"><span class="dot ${group.status}"></span></div>
+              <div class="${groupTrackClass}"${groupTrackTitleAttr}>${groupBarNode}</div>
+              <div class="fields-col">${group.transformer_count}</div>
+              <div class="money-col mini-money status-${group.status}">${activeMetric === "voltage" ? formatActualVoltage(groupMetricValue) : formatMetricValue(activeMetric, groupMetricValue)}</div>
+              <div class="pct-col">${groupPctText}</div>
+            </div>
+            <div class="field-snapshot" id="snapshot-${facilityIndex}-${groupIndex}">
+              <div class="snapshot-title">${group.name.toUpperCase()} — ENERGY FIELD SNAPSHOT</div>
+              ${fieldsSnapshotRows}
+              <div class="snapshot-note">Snapshot rows are informational preview only. Select the ${group.name} row to open the monthly Summary Board.</div>
+            </div>
+          `;
+        }).join("");
+        const hasGroups = facility.groups.length > 0;
+        const hasGroupMonthLabels = facility.groups.some((group) => Boolean(group.dataset_month_label));
+        const facilityFieldStatuses = facility.groups.flatMap((group) => group.fields || []);
+        const statusRibbon = renderStatusRibbon(facilityFieldStatuses);
+        const isUnmonitoredFacility = facility.fields_measured === 0 || facility.groups.length === 0;
+        const facilityBadgeLabel = isUnmonitoredFacility ? "UNMONITORED" : (facility.dataset_month_label || (facilityIndex + 1));
+        const groupsBody = hasGroups
+          ? `
+            <div class="groups">
+              <div class="groups-head">
+                <div class="groups-title">${facility.name.toUpperCase()} — GROUP INTELLIGENCE BOARD</div>
+                ${statusRibbon}
+                <div class="metric-scale-chip">${scaleChipText}</div>
+              </div>
+              <div class="grid-head">
+                <div>${hasGroupMonthLabels ? "Month" : "Rank"}</div><div></div><div>Group</div><div></div><div></div><div>Fields</div><div>${groupColumnLabel}</div><div>${activeMetric === "efficiency" ? "Reactive %" : isAverageMetric(activeMetric) ? "Metric" : "% of Facility"}</div>
+              </div>
+              ${groupRows}
+              <div class="clicknote">☝ Click any group row to open the Monthly Summary Board for that group.</div>
+            </div>
+          `
+          : `<div class="groups"><div class="groups-title">${facility.name.toUpperCase()} — PENDING</div><div class="clicknote">Monitoring coming soon.</div></div>`;
+        return `
+          <details class="facility ${facilityCriticalActions > 0 ? "action-focus" : ""}">
+            <summary>
+              <div class="rank ${rankClassForStatus(facility.status)} ${facility.dataset_month_label ? "month-rank" : ""} ${isUnmonitoredFacility ? "unmonitored-rank" : ""}">${facilityBadgeLabel}</div>
+              <div>
+                <div class="facility-title status-${facility.status}">${facility.name}</div>
+                <div class="location">${facility.location}</div>
+              </div>
+              <div class="${facilityTrackClass}">${facilityBarNode}</div>
+              <div>
+                <div class="money status-${facility.status}">${activeMetric === "voltage" ? formatActualVoltage(facilityValue) : formatMetricValue(activeMetric, facilityValue)}</div>
+                <div class="pct">${facilityPctText}</div>
+              </div>
+              <div class="arrow">⌃</div>
+            </summary>
+            ${groupsBody}
+          </details>
+        `;
+      }).join("");
+      facilityBoard.querySelectorAll("[data-target]").forEach((node) => {
+        node.addEventListener("click", (event) => {
+          if (event.target.closest("[data-snapshot-toggle]")) return;
+          const toggleNode = node.querySelector("[data-snapshot-toggle]");
+          const snapshotKey = toggleNode ? toggleNode.getAttribute("data-snapshot-toggle") : null;
+          const snapshot = snapshotKey ? document.getElementById(`snapshot-${snapshotKey}`) : null;
+          if (snapshot && !snapshot.classList.contains("is-open")) {
+            snapshot.classList.add("is-open");
+            if (toggleNode) toggleNode.textContent = "⌃";
+            return;
+          }
+          window.location.href = node.getAttribute("data-target");
+        });
+        node.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            const toggleNode = node.querySelector("[data-snapshot-toggle]");
+            const snapshotKey = toggleNode ? toggleNode.getAttribute("data-snapshot-toggle") : null;
+            const snapshot = snapshotKey ? document.getElementById(`snapshot-${snapshotKey}`) : null;
+            if (snapshot && !snapshot.classList.contains("is-open")) {
+              snapshot.classList.add("is-open");
+              if (toggleNode) toggleNode.textContent = "⌃";
+              return;
+            }
+            window.location.href = node.getAttribute("data-target");
+          }
+        });
+      });
+      facilityBoard.querySelectorAll("[data-snapshot-toggle]").forEach((toggleNode) => {
+        const key = toggleNode.getAttribute("data-snapshot-toggle");
+        const snapshot = document.getElementById(`snapshot-${key}`);
+        toggleNode.addEventListener("click", (event) => {
+          event.stopPropagation();
+          snapshot.classList.toggle("is-open");
+          toggleNode.textContent = snapshot.classList.contains("is-open") ? "⌃" : "⌄";
+        });
+        toggleNode.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            event.stopPropagation();
+            snapshot.classList.toggle("is-open");
+            toggleNode.textContent = snapshot.classList.contains("is-open") ? "⌃" : "⌄";
+          }
+        });
+      });
+    }
+    function updateBoardMetricSelectState(){
+      const select = document.getElementById("boardMetricSelect");
+      if (!select) return;
+      const toggleWrap = select.closest(".metric-toggles");
+      const selectedMetric = select.value || "consequence";
+      select.classList.add("metric-select-active");
+      const utilitySelected = selectedMetric === "energy_cost";
+      select.classList.toggle("metric-select-utility", utilitySelected);
+      if (toggleWrap) toggleWrap.classList.toggle("metric-toggles-utility", utilitySelected);
+    }
+    function setupBoardMetricDropdown(){
+      const select = document.getElementById("boardMetricSelect");
+      if (!select) return;
+      select.value = currentBoardMetric;
+      updateBoardMetricSelectState();
+      select.addEventListener("change", () => {
+        currentBoardMetric = select.value || "consequence";
+        updateBoardMetricSelectState();
+        renderKPIs(boardData, currentBoardMetric);
+        renderFacilityBoard(boardData, currentBoardMetric);
+      });
+    }
+    function readUnityVoicePreference(){
+      try {
+        const raw = window.localStorage.getItem(UNITY_VOICE_PREF_KEY);
+        if (raw === "0") return false;
+        if (raw === "1") return true;
+      } catch (_err) {}
+      return true;
+    }
+    function writeUnityVoicePreference(value){
+      try {
+        window.localStorage.setItem(UNITY_VOICE_PREF_KEY, value ? "1" : "0");
+      } catch (_err) {}
+    }
+    function updateUnityVoiceToggleUI(){
+      const voiceToggle = document.getElementById("unityVoiceToggle");
+      const statePill = document.getElementById("unityVoiceStatePill");
+      const voiceReset = document.getElementById("unityVoiceReset");
+      if (!voiceToggle) return;
+      voiceToggle.classList.toggle("is-active", unityVoiceEnabled);
+      voiceToggle.classList.toggle("is-off", !unityVoiceEnabled);
+      voiceToggle.setAttribute("aria-pressed", unityVoiceEnabled ? "true" : "false");
+      if (statePill) {
+        statePill.textContent = unityVoiceEnabled ? "ON" : "OFF";
+        statePill.classList.toggle("off", !unityVoiceEnabled);
+      }
+      const stateLabel = unityVoiceEnabled ? (unityVoiceSpeaking ? "Unity Explains On — Speaking" : "Unity Explains On") : "Unity Explains Off";
+      voiceToggle.setAttribute("aria-label", `${stateLabel}. Toggle narration.`);
+      voiceToggle.setAttribute("title", stateLabel);
+      if (voiceReset) {
+        const resetLabel = unityVoiceEnabled ? "Reset Unity Explains narration from the beginning" : "Turn on and reset Unity Explains narration from the beginning";
+        voiceReset.setAttribute("aria-label", resetLabel);
+        voiceReset.setAttribute("title", resetLabel);
+      }
+    }
+    function ensureUnityVoiceAudio(){
+      if (unityVoiceAudio) return unityVoiceAudio;
+      const audio = new Audio(UNITY_EXPLAINS_AUDIO_SRC);
+      audio.preload = "auto";
+      audio.addEventListener("play", () => {
+        unityVoiceSpeaking = true;
+        updateUnityVoiceToggleUI();
+      });
+      audio.addEventListener("pause", () => {
+        unityVoiceSpeaking = false;
+        updateUnityVoiceToggleUI();
+      });
+      audio.addEventListener("ended", () => {
+        unityVoiceSpeaking = false;
+        audio.currentTime = 0;
+        updateUnityVoiceToggleUI();
+      });
+      audio.addEventListener("error", () => {
+        unityVoiceSpeaking = false;
+        updateUnityVoiceToggleUI();
+      });
+      unityVoiceAudio = audio;
+      return unityVoiceAudio;
+    }
+    function stopUnityVoiceNarration(){
+      const audio = ensureUnityVoiceAudio();
+      audio.pause();
+      audio.currentTime = 0;
+      unityVoiceSpeaking = false;
+      updateUnityVoiceToggleUI();
+    }
+    function startUnityVoiceNarration(){
+      if (!unityVoiceEnabled) return;
+      const audio = ensureUnityVoiceAudio();
+      audio.currentTime = 0;
+      const playAttempt = audio.play();
+      if (playAttempt && typeof playAttempt.catch === "function") {
+        playAttempt.catch(() => {
+          unityVoiceSpeaking = false;
+          updateUnityVoiceToggleUI();
+        });
+      }
+    }
+    function resetUnityVoiceNarration(){
+      unityVoiceEnabled = true;
+      writeUnityVoicePreference(true);
+      stopUnityVoiceNarration();
+      updateUnityVoiceToggleUI();
+      startUnityVoiceNarration();
+    }
+    async function init(){
+      const voiceToggle = document.getElementById("unityVoiceToggle");
+      const voiceReset = document.getElementById("unityVoiceReset");
+      const heroTitleLine = document.getElementById("heroTitleLine");
+      const heroIntroPrimary = document.getElementById("heroIntroPrimary");
+      const heroIntroSecondary = document.getElementById("heroIntroSecondary");
+      if (heroTitleLine) heroTitleLine.textContent = boardData.company.hero_title || "Welcome to the Foster Farms Executive Electrical Intelligence Center";
+      if (heroIntroPrimary) heroIntroPrimary.textContent = boardData.company.hero_intro_primary || boardData.company.brief_line || "";
+      if (heroIntroSecondary) heroIntroSecondary.textContent = boardData.company.hero_intro_secondary || "";
+      await resolveGroupSummaryMonthPaths(boardData);
+      await loadDynamicVoltageMetrics(boardData);
+      enrichData(boardData);
+      renderKPIs(boardData, currentBoardMetric);
+      renderFacilityBoard(boardData, currentBoardMetric);
+      setupBoardMetricDropdown();
+      unityVoiceEnabled = readUnityVoicePreference();
+      ensureUnityVoiceAudio();
+      updateUnityVoiceToggleUI();
+      if (voiceToggle) {
+        voiceToggle.addEventListener("click", (event) => {
+          const resetTarget = event.target && typeof event.target.closest === "function"
+            ? event.target.closest("#unityVoiceReset")
+            : null;
+          if (resetTarget) {
+            event.preventDefault();
+            event.stopPropagation();
+            resetUnityVoiceNarration();
+            return;
+          }
+          unityVoiceEnabled = !unityVoiceEnabled;
+          writeUnityVoicePreference(unityVoiceEnabled);
+          if (!unityVoiceEnabled) {
+            stopUnityVoiceNarration();
+            return;
+          }
+          updateUnityVoiceToggleUI();
+          startUnityVoiceNarration();
+        });
+      }
+      if (voiceReset) {
+        voiceReset.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          resetUnityVoiceNarration();
+        });
+        voiceReset.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          event.stopPropagation();
+          resetUnityVoiceNarration();
+        });
+      }
+      if (unityVoiceEnabled) {
+        window.setTimeout(() => {
+          startUnityVoiceNarration();
+        }, 350);
+      }
+      window.addEventListener("beforeunload", stopUnityVoiceNarration);
+    }
+    init();
+  </script>
 </body>
 </html>

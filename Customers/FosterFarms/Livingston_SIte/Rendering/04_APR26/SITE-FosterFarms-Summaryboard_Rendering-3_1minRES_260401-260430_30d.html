@@ -1578,7 +1578,7 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">2500kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">1390kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">44.9%</span></div>
@@ -1664,7 +1664,7 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">1786kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">1363kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">29.9%</span></div>
@@ -1750,7 +1750,7 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">2500kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr3-target-pattern">488.5kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">60.9%</span></div>
@@ -1909,6 +1909,38 @@
 </div>
 </div>
 <!-- Unity Dashboard - Unified JavaScript System -->
+<script>
+(function loadSummaryboardSideMetrics() {
+  if (window.__unitySideMetricsLoaderInjected) return;
+  window.__unitySideMetricsLoaderInjected = true;
+  const scriptName = 'summaryboard-side-metrics.js';
+    const scriptVersion = window.__unitySideMetricsVersion || '20260624d';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 8; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unitySideMetricsLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     // Set Unity date
@@ -4194,5 +4226,38 @@
 </div>
 
 
+<script src="../../../unity-april-baseline-retention.js"></script>
+<script>
+(function loadUnityHowToToggle() {
+  if (window.__unityHowToToggleLoaderInjected) return;
+  window.__unityHowToToggleLoaderInjected = true;
+  const scriptName = 'unity-howto-toggle.js';
+  const scriptVersion = '20260701a';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 10; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unityHowToToggleLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
 </body>
 </html>

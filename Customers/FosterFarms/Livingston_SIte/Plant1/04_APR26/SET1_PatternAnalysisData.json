@@ -1,6 +1,6 @@
 {
   "transformers": {
-    "PL1-PROC1": {
+    "PL1PROC1": {
       "pattern_text": "PART 1: NARRATION READY\nLet's examine your PL1-Proc1 transformer's electromagnetic field patterns and what they mean for your processing operations. You're working with 309.9 kVA supply capacity and 86.3% power factor, but the visual monitoring reveals concerning electrical field behavior that's not captured in your baseline numbers. Your voltage monitoring shows significant instability - pronounced fluctuations between 1200 and 2100 volts with troubling triangular voltage-drop patterns that cluster in the lower voltage ranges. These aren't minor variations - they're sustained voltage sags that create real equipment stress. When your processing equipment experiences these repeated voltage drops, you're looking at accelerated wear, increased maintenance needs, and potential reliability issues during production cycles. The reactive power analysis reveals continuous inductive loading from your processing equipment, creating electromagnetic field stress that manifests as those voltage instability patterns. Your operations show consistent weekday loading that regularly exceeds your supply target during approximately 75 to 80% of operational periods, while poor power factor forces your electrical system to carry additional current without delivering useful work to your processes. This combination - overloading plus reactive stress - creates compounding effects on your electrical infrastructure. That's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nYour PL1-Proc1 transformer tells a story of electrical field stress that's impacting both efficiency and equipment reliability. With 86.3% power factor and significant reactive power demand from your processing operations, you're seeing voltage instability patterns that create equipment stress throughout your facility. The visual monitoring reveals triangular voltage drops and continuous fluctuations that indicate your electrical infrastructure is struggling under inductive loading. Your weekday production cycles consistently exceed supply capacity while poor power quality compounds the stress on transformers and processing equipment. Unity's MPTS simulation shows dramatic correction potential - power factor jumps to 99.5%, voltage stability improves, and you recover approximately $75,160 annually through eliminated reactive losses and improved system efficiency. The engineering priority focuses on addressing voltage instability before it impacts equipment reliability, with MPTS installation representing approximately $200,000 planning-level investment to transform your electromagnetic field from stressed and inefficient to optimized and stable. That's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $63,900 to $86,400.\n\nPART 3: ENGINEERING DETAILED\nYour PL1-Proc1 transformer presents a complex electromagnetic field profile that demands immediate engineering attention. Starting with the fundamentals, you're operating with 309.9 kVA supply capacity and 86.3% power factor, but the visual field monitoring reveals electrical stress patterns that extend far beyond these baseline numbers. The voltage health analysis shows concerning instability - significant fluctuations across a wide voltage range with pronounced triangular voltage-drop patterns that cluster in the lower bands. These aren't temporary disturbances - they're sustained voltage sags that indicate your electrical infrastructure is struggling to maintain stable power delivery under reactive loading. When processing equipment experiences these repeated voltage drops, you're looking at accelerated equipment wear, increased stress on motor windings and transformer components, and elevated risk of unexpected failures during critical production periods. The reactive power analysis reveals the root cause - continuous inductive loading from your processing equipment creates substantial reactive current demand that your electrical system must supply alongside useful power delivery. This reactive burden forces additional current flow through transformers, cables, and switchgear, generating excess heat and stressing components beyond their optimal operating parameters. The harmonic monitoring shows purple disturbance layers with occasional spikes, indicating motor-driven equipment and inductive loads are creating power quality issues that compound the reactive power problem. Your operational patterns show consistent weekday loading that regularly exceeds supply targets during approximately 75 to 80% of production periods, while poor power factor amplifies current flow throughout your electrical infrastructure. This creates a cascading effect where overloading combines with reactive stress to generate thermal burden, voltage instability, and equipment stress. Unity's MPTS simulation demonstrates comprehensive electromagnetic field correction - power factor elevates from 86.3% to 99.5%, voltage stability improves dramatically, and reactive current demand essentially disappears. The visual simulation shows your consumed power profile transforms from a stressed, reactive-laden field to clean, efficient power delivery where consumption closely tracks supply capacity. This correction eliminates the root electromagnetic causes of your voltage instability, reduces equipment stress, and recovers approximately $75,160 annually through improved system efficiency. The engineering assessment should focus on three priority areas: investigating voltage instability patterns to understand reactive loading impacts, enhancing monitoring systems to capture true reactive power consumption, and evaluating MPTS installation with approximately $200,000 planning-level investment depending on site conditions and engineering scope. The timeline matters - addressing electromagnetic field stress before it impacts equipment reliability prevents costly unplanned downtime and extends processing equipment life. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
       "pattern_part1": "Let's examine your PL1-Proc1 transformer's electromagnetic field patterns and what they mean for your processing operations. You're working with 309.9 kVA supply capacity and 86.3% power factor, but the visual monitoring reveals concerning electrical field behavior that's not captured in your baseline numbers. Your voltage monitoring shows significant instability - pronounced fluctuations between 1200 and 2100 volts with troubling triangular voltage-drop patterns that cluster in the lower voltage ranges. These aren't minor variations - they're sustained voltage sags that create real equipment stress. When your processing equipment experiences these repeated voltage drops, you're looking at accelerated wear, increased maintenance needs, and potential reliability issues during production cycles. The reactive power analysis reveals continuous inductive loading from your processing equipment, creating electromagnetic field stress that manifests as those voltage instability patterns. Your operations show consistent weekday loading that regularly exceeds your supply target during approximately 75 to 80% of operational periods, while poor power factor forces your electrical system to carry additional current without delivering useful work to your processes. This combination - overloading plus reactive stress - creates compounding effects on your electrical infrastructure. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
       "pattern_part2": "Your PL1-Proc1 transformer tells a story of electrical field stress that's impacting both efficiency and equipment reliability. With 86.3% power factor and significant reactive power demand from your processing operations, you're seeing voltage instability patterns that create equipment stress throughout your facility. The visual monitoring reveals triangular voltage drops and continuous fluctuations that indicate your electrical infrastructure is struggling under inductive loading. Your weekday production cycles consistently exceed supply capacity while poor power quality compounds the stress on transformers and processing equipment. Unity's MPTS simulation shows dramatic correction potential - power factor jumps to 99.5%, voltage stability improves, and you recover approximately $75,160 annually through eliminated reactive losses and improved system efficiency. The engineering priority focuses on addressing voltage instability before it impacts equipment reliability, with MPTS installation representing approximately $200,000 planning-level investment to transform your electromagnetic field from stressed and inefficient to optimized and stable. That's electromagnetic stewardship \u2014 and that's the Unity standard. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $63,900 to $86,400.",
@@ -74,7 +74,7 @@
       "avg_kvar": 0.0,
       "waste_cost": 0.0
     },
-    "PL1-MSHOP": {
+    "PL1MSHOP": {
       "pattern_text": "PART 1: NARRATION READY\nLet me walk you through what's happening with your PL1-MShop transformer field. You're operating at 86.8% power factor \u2014 that means for every 100 units of power you're paying for, only 87 units are doing productive work while 13 units just circulate as reactive waste. Your system is supplying 473.3 kVA to deliver 277.3 kilowatts of actual work \u2014 that gap represents pure electromagnetic inefficiency costing you approximately $123,737 annually. The voltage stability picture shows concerning stress patterns with frequent triangular drops below your 484-volt nominal reference, particularly during your peak production periods. These voltage sags align with amperage spikes reaching 902 amps, indicating your motors and refrigeration systems are struggling with electrical stress. I've identified 5 distinct power interruption events totaling about 2.5-3 hours of downtime across the monitoring period. Your reactive demand averages 154.1 kVAR with peaks of 164.4 kVAR \u2014 this forces your electrical infrastructure to generate an extra 161,692 BTU per hour of waste heat, driving additional cooling costs of $4.65 per hour. This is classic reactive stress syndrome in food processing operations where motors, compressors, and variable loads create electromagnetic turbulence that cascades through your entire electrical system.\n\nPART 2: EXECUTIVE SHORT\nYour PL1-MShop field shows three critical stress indicators: power factor at 86.8% means you're wasting 14% of your electrical supply, voltage drops below nominal are stressing equipment during peak loads, and reactive demand averaging 154.1 kVAR creates thermal burden costing approximately $123,737 annually. MPTS correction transforms this completely \u2014 bringing you to 99.5% power factor and eliminating 149.7 metric tons of reactive demand yearly. One H490 unit at roughly $200,000 estimated investment recovers approximately $118,277 annually from eliminated waste. Your voltage stability improves dramatically as MPTS reduces the regulation burden causing those troublesome voltage drops. The payback is compelling, but more importantly, you're protecting equipment from chronic electrical stress and reducing maintenance overhead across your entire PL1-MShop infrastructure. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $105,000 to $142,000.\n\nPART 3: ENGINEERING DETAILED\nYour PL1-MShop electromagnetic analysis reveals a textbook case of reactive stress syndrome impacting both operational efficiency and equipment longevity. Starting with the financial picture: you're consuming 473.3 kVA of apparent power to deliver 277.3 kilowatts of productive work \u2014 that 196 kVA gap represents pure reactive circulation costing approximately $123,737 annually. Your 86.8% power factor means nearly 14% of every electrical dollar is wasted in electromagnetic turbulence rather than productive operations. The voltage stability data shows the physical symptoms of this stress: frequent triangular voltage drops below your 484-volt nominal reference, concentrated during peak operational periods when your motors and refrigeration systems demand maximum reactive support. These voltage sags coincide with amperage spikes reaching 902 amps \u2014 clear indicators that your electrical infrastructure is working far harder than necessary. I've documented 5 separate power interruption events totaling approximately 2.5-3 hours of downtime, suggesting your system is operating near its stability limits. The thermal burden tells another concerning story: 161,692 BTU per hour of excess heat generation from reactive losses, driving parasitic cooling loads of 23.6 kilowatts and adding about $4.65 per hour in cooling costs alone. Your harmonic analysis reveals 5.0% ITHD from load turbulence, compound ing the power quality issues. But here's the transformation opportunity: MPTS harmonization brings your power factor from 86.8% to 99.5%, eliminating 149.7 metric tons of annual reactive demand. One H490 unit at roughly $200,000 estimated installed investment recovers approximately $118,277 yearly \u2014 over 95% of your current electromagnetic waste. The voltage stability improvements are equally dramatic as MPTS reduces the reactive burden currently forcing those troublesome voltage regulation episodes. Your equipment operates in a stable, efficient electromagnetic environment rather than the current stress-cycled conditions. This isn't just about energy savings \u2014 you're protecting capital equipment from chronic electrical stress and reducing maintenance overhead across your entire PL1-MShop facility. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
       "pattern_part1": "Let me walk you through what's happening with your PL1-MShop transformer field. You're operating at 86.8% power factor \u2014 that means for every 100 units of power you're paying for, only 87 units are doing productive work while 13 units just circulate as reactive waste. Your system is supplying 473.3 kVA to deliver 277.3 kilowatts of actual work \u2014 that gap represents pure electromagnetic inefficiency costing you approximately $123,737 annually. The voltage stability picture shows concerning stress patterns with frequent triangular drops below your 484-volt nominal reference, particularly during your peak production periods. These voltage sags align with amperage spikes reaching 902 amps, indicating your motors and refrigeration systems are struggling with electrical stress. I've identified 5 distinct power interruption events totaling about 2.5-3 hours of downtime across the monitoring period. Your reactive demand averages 154.1 kVAR with peaks of 164.4 kVAR \u2014 this forces your electrical infrastructure to generate an extra 161,692 BTU per hour of waste heat, driving additional cooling costs of $4.65 per hour. This is classic reactive stress syndrome in food processing operations where motors, compressors, and variable loads create electromagnetic turbulence that cascades through your entire electrical system.",
       "pattern_part2": "Your PL1-MShop field shows three critical stress indicators: power factor at 86.8% means you're wasting 14% of your electrical supply, voltage drops below nominal are stressing equipment during peak loads, and reactive demand averaging 154.1 kVAR creates thermal burden costing approximately $123,737 annually. MPTS correction transforms this completely \u2014 bringing you to 99.5% power factor and eliminating 149.7 metric tons of reactive demand yearly. One H490 unit at roughly $200,000 estimated investment recovers approximately $118,277 annually from eliminated waste. Your voltage stability improves dramatically as MPTS reduces the regulation burden causing those troublesome voltage drops. The payback is compelling, but more importantly, you're protecting equipment from chronic electrical stress and reducing maintenance overhead across your entire PL1-MShop infrastructure. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $105,000 to $142,000.",
@@ -148,7 +148,7 @@
       "avg_kvar": 0.0,
       "waste_cost": 0.0
     },
-    "PL1-PROC2": {
+    "PL1PROC2": {
       "transformer_name": "PL1-PROC2",
       "source_transformer_id": "PL1-PROC2",
       "bt_target_kva": 2145.0,
@@ -159,13 +159,15 @@
     }
   },
   "group_overview": {
-    "group_name": "04_APR26",
+    "group_name": "Plant1",
     "analysis_period": "April (260401-260430)",
     "transformer_count": 3,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 3 transformers compared. Combined annual savings potential is about $198,133. Power-factor spread runs from PL1-Proc1 at 86.3% to PL1-MShop at 86.8%. Highest workload is PL1-PROC2 at about 2145.0 kVA target load. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "narrative": "Group overview for Plant1 in April (260401-260430): 3 transformers compared. Combined monthly savings potential is about $16,511. Combined annual savings potential is about $198,133. Combined monthly waste exposure is about $16,511. Combined annual waste exposure is about $198,133. Power-factor spread runs from PL1-Proc1 at 86.3% to PL1-MShop at 86.8%. Highest workload is PL1-PROC2 at about 2145.0 kVA target load. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
     "totals": {
+      "monthly_savings": 16511.09,
       "annual_savings": 198133.0,
-      "annual_waste": null,
+      "monthly_waste": 16511.09,
+      "annual_waste": 198133.0,
       "birds_processed": null,
       "weighted_cost_per_bird": null,
       "weighted_energy_per_bird": null
@@ -196,22 +198,7 @@
     },
     "transformers_compared": [
       {
-        "key": "PL1-PROC1",
-        "name": "PL1-Proc1",
-        "power_factor_pct": 86.28913951061115,
-        "tmax_supply_kva": 309.89,
-        "avg_kvar": null,
-        "reactive_peak_kvar": null,
-        "monthly_savings": 6654.67,
-        "annual_savings": 79856.0,
-        "monthly_waste": null,
-        "annual_waste": null,
-        "birds_processed": null,
-        "energy_per_bird": null,
-        "cost_per_bird": null
-      },
-      {
-        "key": "PL1-MSHOP",
+        "key": "PL1MSHOP",
         "name": "PL1-MShop",
         "power_factor_pct": 86.80193158394516,
         "tmax_supply_kva": 898.39,
@@ -219,14 +206,29 @@
         "reactive_peak_kvar": null,
         "monthly_savings": 9856.42,
         "annual_savings": 118277.0,
-        "monthly_waste": null,
-        "annual_waste": null,
+        "monthly_waste": 9856.42,
+        "annual_waste": 118277.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
       },
       {
-        "key": "PL1-PROC2",
+        "key": "PL1PROC1",
+        "name": "PL1-Proc1",
+        "power_factor_pct": 86.28913951061115,
+        "tmax_supply_kva": 309.89,
+        "avg_kvar": null,
+        "reactive_peak_kvar": null,
+        "monthly_savings": 6654.67,
+        "annual_savings": 79856.0,
+        "monthly_waste": 6654.67,
+        "annual_waste": 79856.0,
+        "birds_processed": null,
+        "energy_per_bird": null,
+        "cost_per_bird": null
+      },
+      {
+        "key": "PL1PROC2",
         "name": "PL1-PROC2",
         "power_factor_pct": null,
         "tmax_supply_kva": 2145.0,
@@ -241,14 +243,14 @@
         "cost_per_bird": null
       }
     ],
-    "generated_at": "2026-05-20 03:25:42",
+    "generated_at": "2026-06-22 17:13:52",
     "source": "eeWILLIAM_group_rollup_v1"
   },
   "site_overview_state": {
-    "group_name": "04_APR26",
+    "group_name": "Plant1",
     "analysis_period": "April (260401-260430)",
     "transformer_count": 3,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 3 transformers compared. Combined annual savings potential is about $198,133. Power-factor spread runs from PL1-Proc1 at 86.3% to PL1-MShop at 86.8%. Highest workload is PL1-PROC2 at about 2145.0 kVA target load. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
-    "last_updated": "2026-05-20 03:25:42"
+    "narrative": "Group overview for Plant1 in April (260401-260430): 3 transformers compared. Combined monthly savings potential is about $16,511. Combined annual savings potential is about $198,133. Combined monthly waste exposure is about $16,511. Combined annual waste exposure is about $198,133. Power-factor spread runs from PL1-Proc1 at 86.3% to PL1-MShop at 86.8%. Highest workload is PL1-PROC2 at about 2145.0 kVA target load. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "last_updated": "2026-06-22 17:13:52"
   }
 }

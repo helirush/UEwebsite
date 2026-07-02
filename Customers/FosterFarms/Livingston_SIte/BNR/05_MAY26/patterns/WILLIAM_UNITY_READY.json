@@ -1,0 +1,108 @@
+{
+  "generated_at_utc": "2026-06-15T16:37:42.907110+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/BNR/patterns",
+  "mode": "full",
+  "narrative_mode": "pre_mpts_sales",
+  "inventory": {
+    "image_count": 18,
+    "all_images": [
+      "BNR1b-may26.png",
+      "BNR1b_may26.png",
+      "BNR1bt-may26.png",
+      "BNR1bt_may26.png",
+      "BNR1m-may26.png",
+      "BNR1m_may26.png",
+      "BNR1s-may26.png",
+      "BNR1s_may26.png",
+      "BNR1v-may26.png",
+      "BNR1v_may26.png",
+      "BNR2b-may26.png",
+      "BNR2b_may26.png",
+      "BNR2m-may26.png",
+      "BNR2m_may26.png",
+      "BNR2s-may26.png",
+      "BNR2s_may26.png",
+      "BNR2v-may26.png",
+      "BNR2v_may26.png"
+    ],
+    "transformer_count": 2,
+    "raw_coverage_by_transformer": {
+      "BNR1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "BNR2": [
+        "b",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "BNR1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "BNR2": [
+        "b",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "BNR1": [
+        "BNR1b_may26.png",
+        "BNR1bt_may26.png",
+        "BNR1m_may26.png",
+        "BNR1s_may26.png",
+        "BNR1v_may26.png"
+      ],
+      "BNR2": [
+        "BNR2b_may26.png",
+        "BNR2m_may26.png",
+        "BNR2s_may26.png",
+        "BNR2v_may26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "BNR1",
+      "BNR2"
+    ],
+    "unmatched_files": [
+      "BNR1b-may26.png",
+      "BNR1bt-may26.png",
+      "BNR1m-may26.png",
+      "BNR1s-may26.png",
+      "BNR1v-may26.png",
+      "BNR2b-may26.png",
+      "BNR2m-may26.png",
+      "BNR2s-may26.png",
+      "BNR2v-may26.png"
+    ]
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/BNR/patterns",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-06-15T16:46:52.505804+00:00"
+}

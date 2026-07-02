@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
     <script src="hume_character_config.js?v=20260612r21"></script>
-    <script src="clerk_voice_widget.js?v=20260612r24"></script>
-    <script src="public_release_flags.js?v=20260325a"></script>
+    <script src="clerk_voice_widget.js?v=20260701r28"></script>
+    <script src="public_release_flags.js?v=20260702c"></script>
     <title>About Unity Energy</title>
     <style>
         * {
@@ -1447,12 +1447,44 @@
             '../assets/audio/unity-story-unity.mp3',
             '/assets/audio/unity-story-unity.mp3'
         ];
+        const UNITY_AUTO_TOUR_MANUAL_KEY = 'unity_auto_tour_manual_v1';
         const ABOUT_UNITY_AUTO_START_MAX_ATTEMPTS = 10;
         const ABOUT_UNITY_AUTO_START_RETRY_MS = 320;
         let aboutUnityAudioCandidateIndex = 0;
         let aboutUnityAutoStartAttempts = 0;
         let aboutUnityAutoStartEnabled = false;
         let aboutUnityManualNarrationControl = false;
+        function writeUnityAutoTourManualOverride(value) {
+            try {
+                localStorage.setItem(UNITY_AUTO_TOUR_MANUAL_KEY, value ? '1' : '0');
+            } catch (_) {}
+        }
+        function readUnityAutoTourManualOverride() {
+            try {
+                return localStorage.getItem(UNITY_AUTO_TOUR_MANUAL_KEY) === '1';
+            } catch (_) {
+                return false;
+            }
+        }
+        function enterAboutUnityManualMode(options = {}) {
+            const stopNarration = options.stopNarration !== false;
+            aboutUnityManualNarrationControl = true;
+            aboutUnityAutoStartEnabled = false;
+            aboutUnityAutoStartAttempts = 0;
+            writeUnityAutoTourManualOverride(true);
+            if (stopNarration) {
+                stopAboutUnityNarration({ resetToStart: false });
+            }
+        }
+        function handleAboutUnityManualInteraction() {
+            if (readUnityAutoTourManualOverride()) return;
+            enterAboutUnityManualMode({ stopNarration: true });
+        }
+        function initializeAboutUnityManualOverrideListeners() {
+            const passiveOptions = { capture: true, passive: true };
+            document.addEventListener('pointerdown', handleAboutUnityManualInteraction, passiveOptions);
+            document.addEventListener('keydown', handleAboutUnityManualInteraction, true);
+        }
         function updateBodyModalState() {
             const founderModal = document.getElementById('founderUnavailableModal');
             const teamModal = document.getElementById('teamHeroModal');
@@ -1538,7 +1570,7 @@
 
         function scheduleAboutUnityAutoRetry(options = {}) {
             const forceRestart = options.forceRestart === true;
-            if (!aboutUnityAutoStartEnabled || aboutUnityManualNarrationControl) return;
+            if (!aboutUnityAutoStartEnabled || aboutUnityManualNarrationControl || readUnityAutoTourManualOverride()) return;
             if (aboutUnityAutoStartAttempts >= ABOUT_UNITY_AUTO_START_MAX_ATTEMPTS) {
                 setAboutUnityNarrationUi(false);
                 setAboutUnityNarrationNote('paused');
@@ -1557,8 +1589,7 @@
             const audioEl = document.getElementById('aboutUnityNarrationAudio');
             if (!audioEl || !audioEl.src) return;
             if (!autoStart) {
-                aboutUnityManualNarrationControl = true;
-                aboutUnityAutoStartEnabled = false;
+                enterAboutUnityManualMode({ stopNarration: false });
             }
             audioEl.muted = false;
             audioEl.volume = 1;
@@ -1581,8 +1612,7 @@
         function toggleAboutUnityNarration() {
             const audioEl = document.getElementById('aboutUnityNarrationAudio');
             if (!audioEl || !audioEl.src) return;
-            aboutUnityManualNarrationControl = true;
-            aboutUnityAutoStartEnabled = false;
+            enterAboutUnityManualMode({ stopNarration: false });
             if (!audioEl.paused && !audioEl.ended) {
                 stopAboutUnityNarration({ resetToStart: false });
                 return;
@@ -1593,8 +1623,7 @@
         function restartAboutUnityNarration() {
             const audioEl = document.getElementById('aboutUnityNarrationAudio');
             if (!audioEl || !audioEl.src) return;
-            aboutUnityManualNarrationControl = true;
-            aboutUnityAutoStartEnabled = false;
+            enterAboutUnityManualMode({ stopNarration: false });
             playAboutUnityNarration({ restart: true });
         }
 
@@ -1605,8 +1634,7 @@
             }
             const audioEl = document.getElementById('aboutUnityNarrationAudio');
             if (!audioEl || !audioEl.src) return;
-            aboutUnityManualNarrationControl = true;
-            aboutUnityAutoStartEnabled = false;
+            enterAboutUnityManualMode({ stopNarration: false });
             playAboutUnityNarration({ restart: true });
         }
 
@@ -1625,7 +1653,7 @@
 
         function tryAutoStartAboutUnityNarration(options = {}) {
             const forceRestart = options.forceRestart === true;
-            if (!aboutUnityAutoStartEnabled || aboutUnityManualNarrationControl) return;
+            if (!aboutUnityAutoStartEnabled || aboutUnityManualNarrationControl || readUnityAutoTourManualOverride()) return;
             const audioEl = document.getElementById('aboutUnityNarrationAudio');
             if (!audioEl || !audioEl.src) return;
             if (!audioEl.paused && !audioEl.ended) return;
@@ -1647,20 +1675,33 @@
 
         function autoStartUnityIntroductionFromClerkHandoff() {
             const params = new URLSearchParams(window.location.search);
-            const shouldAutoStart = params.get('autostartUnityIntro') === '1' || params.get('autostart') === '1';
-            if (!shouldAutoStart) return;
+            const shouldAutoStart =
+                params.get('autostartUnityIntro') === '1' ||
+                params.get('autostart') === '1' ||
+                params.get('autoplay') === 'introduction' ||
+                params.get('ue_auto_tour') === '1';
+            if (!shouldAutoStart) return false;
             params.delete('autostartUnityIntro');
             params.delete('autostart');
+            params.delete('autoplay');
+            params.delete('ue_auto_tour');
             try {
                 const queryString = params.toString();
                 const updatedUrl = window.location.pathname + (queryString ? `?${queryString}` : '') + window.location.hash;
                 window.history.replaceState({}, document.title, updatedUrl);
             } catch (_) {}
+            if (readUnityAutoTourManualOverride()) {
+                aboutUnityManualNarrationControl = true;
+                aboutUnityAutoStartEnabled = false;
+                setAboutUnityNarrationNote('paused');
+                return false;
+            }
             aboutUnityAutoStartEnabled = true;
             aboutUnityManualNarrationControl = false;
             aboutUnityAutoStartAttempts = 0;
             setAboutUnityNarrationNote('idle');
             scheduleAboutUnityAutoRetry({ forceRestart: true });
+            return true;
         }
 
         function wireAboutUnityNarration() {
@@ -1669,7 +1710,10 @@
             aboutUnityAutoStartEnabled = true;
             aboutUnityAutoStartAttempts = 0;
             aboutUnityAudioCandidateIndex = 0;
-            aboutUnityManualNarrationControl = false;
+            aboutUnityManualNarrationControl = readUnityAutoTourManualOverride();
+            if (aboutUnityManualNarrationControl) {
+                aboutUnityAutoStartEnabled = false;
+            }
             setAboutUnityAudioSource(0);
             setAboutUnityNarrationUi(false);
             setAboutUnityNarrationNote('idle');
@@ -1694,9 +1738,10 @@
                     setAboutUnityNarrationNote('unavailable');
                 }
             });
-
-            autoStartUnityIntroductionFromClerkHandoff();
-            scheduleAboutUnityAutoRetry({ forceRestart: true });
+            const autoStartFromHandoff = autoStartUnityIntroductionFromClerkHandoff();
+            if (!autoStartFromHandoff && aboutUnityAutoStartEnabled && !aboutUnityManualNarrationControl) {
+                scheduleAboutUnityAutoRetry({ forceRestart: true });
+            }
         }
         function openUnityFollowAlong(event) {
             if (event) {
@@ -1772,7 +1817,10 @@
             updateBodyModalState();
         }
 
-        window.addEventListener('DOMContentLoaded', wireAboutUnityNarration);
+        window.addEventListener('DOMContentLoaded', function () {
+            initializeAboutUnityManualOverrideListeners();
+            wireAboutUnityNarration();
+        });
 
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {

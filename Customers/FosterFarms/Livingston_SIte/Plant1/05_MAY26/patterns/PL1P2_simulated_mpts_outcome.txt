@@ -1,0 +1,19 @@
+**PL1P2 — Projected MPTS Correction | Sizing and Recovery Estimate**
+
+The S view represents the projected post-MPTS field state for PL1P2, showing what the energy field looks like when reactive compensation is applied at the transformer level. The S header targets a power factor of 99.5% — up from the current 84.8% — which is the defining shift this correction produces.
+
+**Sizing calculation:**
+kVAR MAX from image = 948 kVAR
+948 ÷ 400 = 2.37 → round UP → **3 H490 units required**
+
+At 400 kVAR compensation capacity per H490 unit, three units deliver 1,200 kVAR of correction headroom — sufficient to address the 948 kVAR peak with margin for load growth. This is an important distinction: sizing to the peak, not the average, is what prevents the correction from being overwhelmed during production surges.
+
+**Projected recovery from S view:**
+The MPTS correction is projected to recover the majority of the $251,065 per year in total waste currently identified. The energy waste component — approximately $133,849 per year — is directly addressable through reactive compensation. The thermal burden reduction cascades into cooling cost recovery as well, bringing the projected annual recovery into the range of the full total waste figure.
+
+**Planning-level investment estimate:**
+Three H490 units at approximately $200,000 installed each represents a planning-level estimate of roughly $600,000 installed. Final pricing depends on engineering scope, site conditions, and specific installation requirements — this is a planning figure, not a binding quote. At a recovery rate in the range of $251,000 per year, the estimated simple payback on this investment is in the range of approximately 28 to 32 months — roughly two and a half years — before accounting for equipment life extension value from reduced thermal and voltage stress.
+
+The voltage stability improvement projected by MPTS correction is a secondary but meaningful benefit: reducing reactive circulation reduces the reactive-driven voltage perturbations that are currently generating 15 to 18 labeled dip events per month. A calmer voltage field means lower stress on every motor, drive, and contactor connected to this transformer.
+
+---

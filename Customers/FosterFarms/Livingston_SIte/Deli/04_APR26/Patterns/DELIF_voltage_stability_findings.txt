@@ -1,1 +1,15 @@
-The voltage health analysis reveals concerning electromagnetic instability with repeated triangular voltage drops throughout the monitoring period. These voltage depressions create a persistent sawtooth pattern that indicates your reactive compensation system is struggling to maintain field stability. During high-demand intervals, you're seeing sustained voltage dips well below the 480V line-to-line nominal reference, with corresponding aggressive amperage spikes in the red traces. This voltage-amperage cycling pattern represents a classic reactive hunting behavior where your inductive loads are fighting for magnetic stability. The clustering of voltage drops around peak production periods suggests your electrical infrastructure is operating at the edge of its reactive capacity. One major power interruption event lasting approximately 3-4 hours occurred around day 26005, indicating additional stress on your electrical systems. These voltage instabilities create cumulative thermal fatigue conditions that accelerate equipment degradation and increase failure risk across your connected devices.
+**DELIF — Voltage Stability | April 2026**
+
+The voltage health view for Deli F is one of the most instructive parts of this analysis. On the surface, your average voltage reads 480.0 volts — right on the nominal line. But the average is not the story. The range is.
+
+Your voltage floor hit 0.0 volts during the month. That zero reading is a confirmed site power-off event — an outage. One distinct gold top-to-bottom streak is visible in the baseline chart near approximately April 14, estimated at 40 to 60 minutes of total downtime. That's one unplanned or scheduled interruption, and it's a reminder that this field is not insulated from disruption.
+
+More operationally significant than the outage are the repeated voltage dips observed during production transitions. Tooltip markers confirm discrete dip events — one near April 14 reading 460.7 volts, and a cluster near April 26 and 27 reading 460.0 volts and 458.2 volts respectively. That lowest confirmed dip of 458.2 volts represents a 4.5 percent drop below the 480-volt nominal — and it is not a one-time event. The triangular dip pattern is present and repeating, which tells you these are load-surge-driven field collapses, not random noise.
+
+The voltage maximum reached 498.3 volts — slightly elevated above nominal — while the current maximum hit 3,221.7 amps against an average of 809.1 amps. That ratio — peak amps nearly four times the average — is the signature of a field under intermittent, high-amplitude load stress. Every time a large motor or compressor starts, or a production line cycles up, the field is being pulled hard.
+
+The orange power factor trace in the V view is never stable. It is continuously jagged and turbulent throughout the month — a visual confirmation that reactive energy is constantly disrupting the field, preventing it from settling into a clean, efficient operating band.
+
+Device health risk from these conditions is rated moderate to high. Variable frequency drives, refrigeration compressor contactors, and motor controls operating repeatedly at 458 to 461 volts are accumulating insulation stress faster than they would in a corrected field. Equipment longevity is a real cost consideration here.
+
+---

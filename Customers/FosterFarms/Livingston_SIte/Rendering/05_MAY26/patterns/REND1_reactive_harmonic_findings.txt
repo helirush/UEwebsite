@@ -1,0 +1,9 @@
+**REND1 — Reactive Power and Harmonic Profile | May 2026**
+
+The reactive burden on REND1 is large. At 697.8 kVAR average and peaking at 1,194.2 kVAR, this transformer is carrying a reactive load that is continuously competing with real productive work for transformer capacity, cable ampacity, and thermal headroom. To put that in physical terms: the field's average apparent demand of 1,145 kVA is delivering only 908 kW of real, productive power. The gap — roughly 237 kVAR on average — is reactive current that produces no output but produces plenty of heat and billing cost.
+
+The current profile tells the same story. Average amperage runs at 1,396.3 amps with peaks reaching 2,224.9 amps on a 2,500 kVA transformer. At 2,224.9 amps peak, the transformer's thermal loading is substantial — the BT header confirms a thermal burden of 880,313 BTU per hour. That is a significant heat load. The transformer is dissipating nearly 880,000 BTUs every hour simply because of the reactive and resistive losses in the system. Every BTU that gets dissipated in the transformer iron and windings is energy that was purchased from the utility and converted directly into heat instead of into work.
+
+On harmonics, the field shows 5.8% current total harmonic distortion on average, with a maximum of 10.7% iTHD. For a food processing and rendering facility running variable frequency drives, motor loads, and industrial HVAC, this harmonic level is within a manageable range but worth monitoring. The 10.7% peak suggests transient harmonic events tied to load switching or drive acceleration intervals. At these levels, harmonics are a contributing stressor — particularly in combination with the reactive burden and the elevated voltage operating point — but are not currently the dominant efficiency loss driver. Reactive correction remains the priority.
+
+---

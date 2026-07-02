@@ -1,0 +1,17 @@
+**PL2-1South — Simulated MPTS Outcome (Projected Correction)**
+
+No S-view image was provided for PL2-1South, so the projected MPTS outcome is derived from standard Unity correction modeling applied to the observed baseline values. Based on the dataset, here is what MPTS correction is projected to deliver on this transformer.
+
+**Sizing:** Your kVAR MAX of 927.9 kVAR drives the sizing calculation. Applying the Unity sizing rule — 927.9 divided by 400, rounded up — you need **3 H490 units** to fully compensate this field. That gives you 1,200 kVAR of correction capacity against a peak demand of 927.9 kVAR, providing adequate headroom for demand growth and transient reactive spikes.
+
+**Power Factor:** Post-correction, the projected power factor moves from 85.7% to approximately 99.5% — essentially unity. That correction eliminates the reactive current component that is currently circulating through your transformer windings, conductors, and distribution infrastructure. Your apparent power draw drops significantly even while your real power output — the work being done on your production floor — remains identical.
+
+**Reactive Burden:** The 562.5 kVAR average and 927.9 kVAR peak reactive demand are absorbed by the MPTS units locally. They stop flowing through your transformer entirely. The transformer's effective loading drops, its thermal burden decreases substantially, and the compounding heat-stress mechanism that's currently aging your insulation slows dramatically.
+
+**Thermal Relief:** With reactive losses eliminated and harmonic distortion partially mitigated through the correction field, the 556,819 BTU per hour thermal burden is projected to decrease substantially. Cooling costs — currently running approximately $16.13 per hour — follow that thermal reduction proportionally. On an annualized basis, the cooling cost recovery alone represents meaningful operational savings.
+
+**Financial Recovery:** The approximately $424,031 per year in total estimated waste is the ceiling of recovery opportunity. Realistic MPTS correction typically recovers the majority of that figure through reactive loss elimination, thermal burden reduction, and cooling cost savings. At a planning-level installed investment of approximately $600,000 for three H490 units — subject to final engineering scope and site conditions — the payback window on this transformer, based on waste recovery alone, falls in the range of roughly 12 to 20 months depending on your blended energy rate and utility demand charge structure. Final payback analysis requires a detailed engineering assessment.
+
+**Voltage Stability:** As reactive current is removed from the distribution path, the voltage sag mechanism that's producing your recurring below-nominal dips is substantially reduced. The voltage field stabilizes, motor loads operate closer to rated voltage, and the device-level stress risk moves from moderate-to-high toward low.
+
+---

@@ -1,0 +1,11 @@
+**NCND1 — West11c Transformer | Reactive and Harmonic Findings**
+
+The reactive profile on West11c is the core story of this field analysis. An 85.0 percent average power factor means that for every unit of electrical capacity this transformer is supplying, only 85 cents of every dollar is doing productive work. The remaining 15 percent is reactive current — magnetizing current that charges and discharges inductive loads, travels the full length of your conductors and transformer windings, generates heat, and returns to the source without accomplishing anything useful.
+
+The numbers are concrete. Average reactive demand sits at 267.9 kVAR throughout the month. Peak reactive demand reaches 445.5 kVAR — that's the worst-case moment your transformer and upstream conductors are carrying maximum reactive burden on top of real load. The real work being done peaks at 551 kilowatts of demand, while the transformer is supplying up to 586 kVA just to deliver that real work because of the reactive overhead.
+
+In the M view, the red amperage trace confirms the transformer is running in the 600 to 700 amp range for most of the month, with a confirmed maximum of 701.2 amps. That's approximately 79 to 80 percent of the transformer's rated amperage ceiling — a healthy utilization level on its face, but the reactive component means those amps are carrying more heat-generating current than necessary. Every amp of reactive current flowing through a winding is an amp of unnecessary thermal load on the insulation system.
+
+The power factor trace in the M view holds in the 80 to 88 percent band through normal operations, consistent with the 85 percent average reported in the header. The collapse to near-zero during the disruption events in early May confirms those events represented complete field interruptions, not partial sags. The reactive imbalance present in this field is consistent, measurable, and directly addressable through MPTS correction.
+
+---

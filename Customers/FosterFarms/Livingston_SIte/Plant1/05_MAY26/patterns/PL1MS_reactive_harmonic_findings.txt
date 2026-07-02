@@ -1,0 +1,13 @@
+**PL1MS — Reactive and Harmonic Profile | May 2026**
+
+The reactive profile of PL1MS has two distinct characters, and both matter for sizing and justification.
+
+The first character is the steady-state reactive drag: 153.4 kVAR average. This is the persistent, low-level reactive burden the transformer carries throughout every production hour. It is not alarming on its own, but it is continuous — every production shift, every weekday, this background reactive draw is reducing your effective power factor to 86.2% and generating unnecessary circulating current in your wiring, switchgear, and transformer windings.
+
+The second character — and the one that drives the sizing recommendation — is the reactive maximum of 2,197.8 kVAR. That is not a typo. During load transition events, this field produces reactive demand spikes nearly fifteen times its average reactive level. These are the moments when large motor loads start, when compressor banks come online, when production systems ramp simultaneously. The field is briefly but significantly stressed, and that stress has real consequences: voltage sags, elevated current draw, and thermal pulses that accelerate equipment aging.
+
+The harmonic picture is persistent but not extreme. The iTHD average of 5.0% with a maximum of 10.3% tells us non-linear loads are present — variable frequency drives, motor controllers, and switching power supplies are likely contributors — but the harmonic content is not at a level that would dominate the loss picture. It adds to total distortion and does contribute to the thermal burden, but reactive compensation remains the primary correction lever here.
+
+The minimum power factor recorded is 77.32% — that is the floor the field touches during its worst reactive moments. Those events are episodic but real, and they confirm that the 86.2% average is an optimistic representation of what this transformer experiences during peak stress conditions.
+
+---

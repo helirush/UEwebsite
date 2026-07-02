@@ -405,13 +405,83 @@
         const UNITY_DEEP_AUDIO = 'assets/audio/unity-deep-dive.mp3';
         const UNITY_BRIEF_LABEL = '30-Second Unity Brief';
         const UNITY_DEEP_LABEL = 'Deep Dive with Unity';
+        const UNITY_AUTO_TOUR_MANUAL_KEY = 'unity_auto_tour_manual_v1';
+        const UNITY_AUTO_TOUR_TO_ABOUT_DELAY_MS = 0;
         let behaviorAutoStartMode = null;
         let behaviorAutoStartAttempts = 0;
         const BEHAVIOR_AUTO_START_MAX_ATTEMPTS = 4;
         const BEHAVIOR_AUTO_START_RETRY_MS = 380;
         const BEHAVIOR_PLAYBACK_PROGRESS_MIN_SECONDS = 0.08;
+        let behaviorIsAutoTourFlow = behaviorQuery.get('ue_auto_tour') === '1';
+        let behaviorShouldHandoffToAbout = behaviorQuery.get('ue_about_handoff') === '1';
+        let behaviorAboutHandoffTimer = null;
         let behaviorManualNarrationControl = false;
+        function writeUnityAutoTourManualOverride(value) {
+            try {
+                localStorage.setItem(UNITY_AUTO_TOUR_MANUAL_KEY, value ? '1' : '0');
+            } catch (_) {}
+        }
+        function readUnityAutoTourManualOverride() {
+            try {
+                return localStorage.getItem(UNITY_AUTO_TOUR_MANUAL_KEY) === '1';
+            } catch (_) {
+                return false;
+            }
+        }
+        function notifyBehaviorManualOverride() {
+            if (!window.opener || window.opener.closed) return;
+            try {
+                window.opener.postMessage({ type: 'unity-auto-tour-manual' }, '*');
+            } catch (_) {}
+        }
+        function clearBehaviorAboutUnityHandoff() {
+            if (!behaviorAboutHandoffTimer) return;
+            window.clearTimeout(behaviorAboutHandoffTimer);
+            behaviorAboutHandoffTimer = null;
+        }
+        function isBehaviorAutoTourStillActive() {
+            return behaviorIsAutoTourFlow && !readUnityAutoTourManualOverride();
+        }
+        function handoffBehaviorToAboutUnity() {
+            if (!isBehaviorAutoTourStillActive()) return;
+            const aboutUnityHref = 'about-unity.html?from=energy-behavior&autoplay=introduction&autostart=1&ue_auto_tour=1';
+            if (window.opener && !window.opener.closed) {
+                try {
+                    window.opener.location.href = aboutUnityHref;
+                    window.close();
+                    return;
+                } catch (_) {}
+            }
+            window.location.href = aboutUnityHref;
+        }
+        function scheduleBehaviorAboutUnityHandoff() {
+            if (!isBehaviorAutoTourStillActive() || !behaviorShouldHandoffToAbout) return;
+            clearBehaviorAboutUnityHandoff();
+            behaviorAboutHandoffTimer = window.setTimeout(function () {
+                behaviorAboutHandoffTimer = null;
+                handoffBehaviorToAboutUnity();
+            }, UNITY_AUTO_TOUR_TO_ABOUT_DELAY_MS);
+        }
+        function enterBehaviorManualMode(options = {}) {
+            const stopNarration = options.stopNarration !== false;
+            behaviorIsAutoTourFlow = false;
+            behaviorShouldHandoffToAbout = false;
+            behaviorAutoStartMode = null;
+            behaviorAutoStartAttempts = 0;
+            behaviorManualNarrationControl = true;
+            clearBehaviorAboutUnityHandoff();
+            writeUnityAutoTourManualOverride(true);
+            notifyBehaviorManualOverride();
+            if (stopNarration) {
+                stopBehaviorNarration({ clearSelection: true });
+            }
+        }
+        function handleBehaviorAutoTourManualInteraction() {
+            if (readUnityAutoTourManualOverride()) return;
+            enterBehaviorManualMode({ stopNarration: true });
+        }
         function closeBehaviorWindow() {
+            clearBehaviorAboutUnityHandoff();
             stopBehaviorNarration({ clearSelection: true });
             if (window.opener && !window.opener.closed) {
                 window.close();
@@ -519,7 +589,7 @@
         }
         function tryAutoStartNarration(mode, options = {}) {
             const forceRestart = options.forceRestart === true;
-            if (!mode || behaviorManualNarrationControl || isBehaviorNarrationActivelyPlaying(mode)) return;
+            if (!mode || behaviorManualNarrationControl || readUnityAutoTourManualOverride() || isBehaviorNarrationActivelyPlaying(mode)) return;
             if (forceRestart || !behaviorActiveAudio || behaviorNarrationMode !== mode) {
                 playUnityNarration(mode, { autoStart: true, forceRestart: true });
             } else {
@@ -557,7 +627,7 @@
                 event.preventDefault();
                 event.stopPropagation();
             }
-            behaviorManualNarrationControl = true;
+            enterBehaviorManualMode({ stopNarration: false });
             playUnityNarration(mode, { forceRestart: true });
         }
         function handleBehaviorResetKey(mode, event) {
@@ -586,7 +656,7 @@
             const label = isBrief ? UNITY_BRIEF_LABEL : UNITY_DEEP_LABEL;
             const src = isBrief ? UNITY_BRIEF_AUDIO : UNITY_DEEP_AUDIO;
             if (!autoStart) {
-                behaviorManualNarrationControl = true;
+                enterBehaviorManualMode({ stopNarration: false });
             }
             const isPlayingThisMode =
                 behaviorNarrationMode === mode &&
@@ -645,6 +715,10 @@
                 behaviorNarrationMode = null;
                 behaviorNarrationIsPlaying = false;
                 setBehaviorNarrationButtonState(null);
+                if (isBrief && behaviorShouldHandoffToAbout && isBehaviorAutoTourStillActive()) {
+                    scheduleBehaviorAboutUnityHandoff();
+                    return;
+                }
                 setBehaviorStatus(`${label} completed. Select another mode any time.`);
             });
             audio.addEventListener('error', function () {
@@ -668,11 +742,22 @@
                 });
             }
         }
+        function initializeBehaviorAutoTourInteractionListeners() {
+            const passiveOptions = { capture: true, passive: true };
+            document.addEventListener('pointerdown', handleBehaviorAutoTourManualInteraction, passiveOptions);
+            document.addEventListener('keydown', handleBehaviorAutoTourManualInteraction, true);
+        }
         window.addEventListener('DOMContentLoaded', function () {
             initializeBehaviorImageView();
-            behaviorManualNarrationControl = false;
+            initializeBehaviorAutoTourInteractionListeners();
+            behaviorManualNarrationControl = readUnityAutoTourManualOverride();
+            if (behaviorManualNarrationControl) {
+                behaviorIsAutoTourFlow = false;
+                behaviorShouldHandoffToAbout = false;
+            }
             stopBehaviorNarration({ clearSelection: true });
             setBehaviorNarrationButtonState(null);
+            if (behaviorManualNarrationControl) return;
             if (behaviorAutoMode === 'deep') {
                 behaviorAutoStartMode = 'deep';
                 behaviorAutoStartAttempts = 0;
@@ -700,9 +785,18 @@
             const payload = event.data || {};
             if (payload.type !== 'unity-behavior-autoplay') return;
             const mode = payload.mode === 'deep' ? 'deep' : 'brief';
+            const autoTourFromPayload = payload.autoTour === true || payload.autoTour === '1';
+            const aboutHandoffFromPayload = payload.aboutHandoff === true || payload.aboutHandoff === '1';
+            behaviorIsAutoTourFlow = autoTourFromPayload;
+            behaviorShouldHandoffToAbout = aboutHandoffFromPayload;
             behaviorAutoStartMode = mode;
             behaviorAutoStartAttempts = 0;
-            behaviorManualNarrationControl = false;
+            behaviorManualNarrationControl = readUnityAutoTourManualOverride();
+            if (behaviorManualNarrationControl) {
+                behaviorIsAutoTourFlow = false;
+                behaviorShouldHandoffToAbout = false;
+                return;
+            }
             tryAutoStartNarration(mode, { forceRestart: true });
         });
     </script>

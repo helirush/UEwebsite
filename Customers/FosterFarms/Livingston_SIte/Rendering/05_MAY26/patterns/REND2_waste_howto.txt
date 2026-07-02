@@ -1,0 +1,10 @@
+How to read the baseline view: first orient to the chart layout and operating window, next focus on trend direction and drift from stable behavior, then connect those shifts to operational strain before planning corrective action. **REND2 — Voltage and Baseline Waste Notes for Clerk** **What the baseline field is doing:**
+REND2 is running an untuned field with a power factor of 73.4% against a 1,665 kVA daily supply target. The transformer reached 88.7% of rated capacity during May, with peak apparent demand of 2,162.9 kVA. The monthly waste cost from the baseline is approximately $49,114 for the dataset period, annualizing to roughly $578,293 in reactive energy waste per year. Total waste including thermal and cooling is approximately $938,187 per year. **Voltage health notes for narration:**
+- Average voltage: 476.4V (slightly above nominal, high-side biased)
+- 14 annotated dip events below 480V nominal, ranging from 460.6V down to 451.1V
+- Deepest sag: 451.1V — approximately 6% below nominal
+- One confirmed outage event (gold streak): approximately 60 to 120 minutes in duration
+- High amperage environment (1,501A average, 2,596A maximum) amplifies stress at each dip
+- Peak iTHD: 11.0% — moderate-to-elevated harmonic environment on this bus **Production pattern:**
+Five-day-on, two-day-off weekly production rhythm. Approximately 60 to 65% of monthly hours in active production. KVA envelope frequently breaches the 1,665 kVA target dashed line during mid-week peak production hours. **Thermal waste summary:**
+Thermal burden: 1,256,097 BTU per hour. Cooling costs: $36.00 per hour, 183.2 kW, $315,354 per year. ---

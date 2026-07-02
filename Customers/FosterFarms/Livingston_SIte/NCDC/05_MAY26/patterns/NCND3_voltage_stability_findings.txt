@@ -1,0 +1,11 @@
+**Transformer: NCND3 — Voltage Stability Findings | May 2026**
+
+The voltage picture on NCND3 is largely favorable, with one important exception. The Merced Irrigation District supply is delivering a tight, well-controlled voltage band — the average came in at 480.1 volts, running predominantly in the 480 to 497 volt corridor across the full thirty-one day period. That 480V average essentially hits nominal right on the mark, and the tight band means you're not dealing with chronic utility-side voltage quality problems. That's the good news.
+
+The mild overvoltage condition — the trace riding up toward 497.2V at its peak — does carry a low but real long-term implication. Motors, drives, and transformer windings running consistently at the top of their nameplate voltage range experience incremental insulation stress over time. It won't manifest as an acute failure, but in a facility running continuous production cycles with large compressor motors and refrigeration systems, that sustained high-end voltage exposure is worth noting for long-term asset planning.
+
+The critical findings, however, are the two complete interruption events. Both events are confirmed by the 0.0V minimum in the voltage header and by the two gold vertical streaks visible in the main chart body — one near May 14th and one near May 17th. Each streak spans an estimated two to five minutes at the one-minute resolution scale of the chart, suggesting brief but complete power loss events. Each re-energization after a complete outage subjects transformer cores, motor windings, and VFD inputs to abrupt inrush current — a stress profile that compounds over time on a field already carrying reactive burden.
+
+The triangular voltage-drop patterns associated with motor switching are present throughout the trace but mild and well-distributed, indicating normal load-switching behavior without concentrated surge zones. The field is not showing chronic undervoltage — dips do not appear to sustain below the 464V lower reference line during non-outage intervals. Overall voltage health is moderate risk, with the two outage events as the primary concern.
+
+---

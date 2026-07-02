@@ -1,0 +1,15 @@
+**PL1MS — Engineering Attention Areas**
+
+Several areas warrant specific engineering follow-up on the PL1MS field.
+
+First and most critical: the 2,197.8 kVAR maximum reactive demand requires verification through a dedicated reactive survey before final MPTS sizing is confirmed. The ratio between the 153.4 kVAR average and the 2,197.8 kVAR maximum is unusually large — roughly a 14-to-1 ratio — which suggests the peak events are sharp, short-duration spikes rather than sustained reactive load. Engineering should determine whether a hybrid fixed-plus-switched reactive compensation strategy could reduce total equipment investment while still addressing the peak events. A 6 × H490 configuration at approximately $1,200,000 installed is the conservative sizing answer; a detailed reactive profile survey may identify a more optimized configuration.
+
+Second: the voltage floor at 454.1 volts and the 260520–260526 event clustering should be correlated against maintenance and production logs. If these events correspond to a specific compressor bank or large motor starting sequence, targeted soft-start or VFD upgrades on those specific loads may reduce both the reactive spike magnitude and the voltage sag depth — complementing the MPTS correction rather than substituting for it.
+
+Third: the elevated voltage ceiling at 508 volts during light-load periods suggests the utility feed voltage regulation should be evaluated. If the facility has the leverage to request a voltage set-point adjustment from the utility, bringing the average voltage closer to 480 volts nominal would reduce high-side insulation stress during off-peak hours and improve energy efficiency of connected equipment across the board.
+
+Fourth: the 710.4-amp maximum current draw on a 2,500 kVA transformer at 480 volts should be validated against the transformer's rated continuous current and its thermal protection settings. With a 147,430 BTU per hour thermal burden already established, any additional loading events during summer months — when ambient cooling efficiency degrades — could push thermal margins further.
+
+Fifth: the 260525–260527 reduced-activity window visible in the production pattern should be investigated for root cause. Whether this represents a planned maintenance window, an equipment trip, or a process interruption, understanding the cause helps quantify reliability impact and informs whether reactive correction would reduce the frequency of such events.
+
+---

@@ -1,0 +1,121 @@
+{
+  "generated_at_utc": "2026-06-18T20:11:25.142353+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eReports/Livingston_Rendering_MAY26/Patterns",
+  "mode": "full",
+  "narrative_mode": "pre_mpts_sales",
+  "inventory": {
+    "image_count": 15,
+    "all_images": [
+      "Rend1b_may26.png",
+      "Rend1bt_may26.png",
+      "Rend1m_may26.png",
+      "Rend1s_may26.png",
+      "Rend1v_may26.png",
+      "Rend2b_may26.png",
+      "Rend2bt_may26.png",
+      "Rend2m_may26.png",
+      "Rend2s_may26.png",
+      "Rend2v_may26.png",
+      "Rend3b_may26.png",
+      "Rend3bt_may26.png",
+      "Rend3m_may26.png",
+      "Rend3s_may26.png",
+      "Rend3v_may26.png"
+    ],
+    "transformer_count": 3,
+    "raw_coverage_by_transformer": {
+      "REND1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "REND2": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "REND3": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "REND1": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "REND2": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "REND3": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "REND1": [
+        "Rend1b_may26.png",
+        "Rend1bt_may26.png",
+        "Rend1m_may26.png",
+        "Rend1s_may26.png",
+        "Rend1v_may26.png"
+      ],
+      "REND2": [
+        "Rend2b_may26.png",
+        "Rend2bt_may26.png",
+        "Rend2m_may26.png",
+        "Rend2s_may26.png",
+        "Rend2v_may26.png"
+      ],
+      "REND3": [
+        "Rend3b_may26.png",
+        "Rend3bt_may26.png",
+        "Rend3m_may26.png",
+        "Rend3s_may26.png",
+        "Rend3v_may26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "REND1",
+      "REND2",
+      "REND3"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eestream/eReports/Livingston_Rendering_MAY26/Patterns",
+    "--force",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-06-18T20:30:52.799661+00:00"
+}

@@ -1,0 +1,34 @@
+{
+  "transformers": {
+    "PL2-1South": {
+      "field_voltage": 483.3,
+      "power_factor_percent": 86.4,
+      "field_consequence_annual": 402033
+    },
+    "PL21SOUTH": {
+      "field_voltage": 483.3,
+      "power_factor_percent": 86.4,
+      "field_consequence_annual": 402033
+    },
+    "PL2S": {
+      "field_voltage": 483.3,
+      "power_factor_percent": 86.4,
+      "field_consequence_annual": 402033
+    },
+    "PL2-2Center": {
+      "field_voltage": 484.3,
+      "power_factor_percent": 86.3,
+      "field_consequence_annual": 128401
+    },
+    "PL22CENTER": {
+      "field_voltage": 484.3,
+      "power_factor_percent": 86.3,
+      "field_consequence_annual": 128401
+    },
+    "PL2C": {
+      "field_voltage": 484.3,
+      "power_factor_percent": 86.3,
+      "field_consequence_annual": 128401
+    }
+  }
+}

@@ -1,0 +1,11 @@
+**PL2C — Voltage Health | March 13–31, 2026**
+
+The voltage picture on PL2C is mostly stable at the macro level, but it carries two concerns worth naming clearly. First, the operating average of 482.7 volts sits about 2.7 volts above the 480-volt nominal — a mild high-side bias that's well within tolerance on its own, but worth noting as context for what the equipment connected to this transformer is experiencing day in and day out. The recorded maximum of 498.1 volts shows the field does push toward the upper boundary under certain conditions.
+
+The more operationally meaningful concern is the downside behavior. The dataset recorded a 0.0-volt minimum — a complete voltage collapse. Visual examination of the voltage trace places this event around the March 24th mark in the dataset. At that moment, the amperage trace simultaneously spiked to 520.7 amps — the dataset maximum — confirming this was not a data artifact. Something significant happened at that moment: a severe disturbance, a momentary fault, or a large motor event that briefly collapsed the field. The duration, estimated from trace width at one-minute resolution, appears to be approximately two to five minutes. Brief, but hard on connected equipment.
+
+Beyond that singular event, the voltage trace shows a recurring pattern of triangular dip formations along the lower boundary of the operating band. These are clustered most densely in the March 18th through March 24th stretch — the heart of the production window. This is the fingerprint of inductive load cycling: motors, compressors, and refrigeration equipment starting and stopping, each pull tugging the voltage field downward before it recovers. The pattern is not random. It's rhythmic and production-coupled.
+
+Device-health risk assessment: **moderate-to-high.** Variable-frequency drives, motor control boards, and refrigeration control electronics are particularly sensitive to this kind of repeated rapid excursion. When the most demanding moments for equipment reliability coincide with the most frequent voltage stress events, that's a condition worth addressing systematically — not just monitoring.
+
+---

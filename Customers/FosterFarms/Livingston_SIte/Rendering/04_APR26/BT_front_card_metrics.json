@@ -1,0 +1,19 @@
+{
+  "transformers": {
+    "REND1": {
+      "field_voltage": 477.2,
+      "power_factor_percent": 83.4,
+      "field_consequence_annual": 548238
+    },
+    "REND2": {
+      "field_voltage": 476.2,
+      "power_factor_percent": 73.0,
+      "field_consequence_annual": 1005145
+    },
+    "REND3": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 76.8,
+      "field_consequence_annual": 479314
+    }
+  }
+}

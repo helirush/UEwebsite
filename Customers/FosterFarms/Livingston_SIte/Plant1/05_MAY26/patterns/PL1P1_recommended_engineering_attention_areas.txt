@@ -1,0 +1,11 @@
+**PL1P1 — Engineering Attention Areas**
+
+**Priority 1 — Voltage Collapse Event Investigation.** The 9.7-volt floor recorded in May requires root cause investigation before this field is characterized as stable. Whether this event was caused by a utility disturbance, a breaker trip, a motor fault, or a protection relay operation, the answer matters for equipment health assessment and recurrence risk management. Connected motors, drives, and control electronics should be evaluated for potential insulation or component damage from the collapse-and-recovery inrush.
+
+**Priority 2 — MPTS Tuning Assignment.** The 317.3 kVAR MAX and 84.7 percent average power factor confirm that one H490 unit is the appropriate correction tool for this transformer. Tuning assignment should be prioritized given the continuous operating profile — waste accumulation on a 24/7 field compounds faster than on a shift-operating transformer. Every month without correction is approximately $6,580 in accumulated waste at the planning-level monthly rate ($78,922 ÷ 12).
+
+**Priority 3 — Above-Target Demand Review.** The transformer is periodically exceeding its 238 kVA Daily Target during heavy production windows. Engineering should confirm that this above-target loading is within the transformer's rated capacity and thermal design margin. Sustained above-target operation combined with a 103,338 BTU/hour thermal burden and an untuned reactive field is a combination that accelerates transformer aging.
+
+**Priority 4 — Triangular Drop Pattern — Load Cycling Review.** The recurring triangular power factor collapses clustered in mid-May suggest that a specific group of inductive loads — likely cold storage compressors or rendering process motors — is cycling at elevated frequency during that window. Soft-starter or VFD health checks on the equipment contributing to these switching events are warranted.
+
+---

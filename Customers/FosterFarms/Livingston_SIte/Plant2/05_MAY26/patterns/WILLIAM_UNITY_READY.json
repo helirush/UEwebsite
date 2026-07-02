@@ -1,0 +1,116 @@
+{
+  "generated_at_utc": "2026-06-17T16:50:56.174953+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Plant2/patterns",
+  "mode": "full",
+  "narrative_mode": "pre_mpts_sales",
+  "inventory": {
+    "image_count": 14,
+    "all_images": [
+      "PL2Cb_may26.png",
+      "PL2Cbt_may26.png.png",
+      "PL2Cm_may26.png.png",
+      "PL2Cs_may26.png.png",
+      "PL2Cv_may26.png.png",
+      "PL2Nb_may26.png",
+      "PL2Nbt_may26.png",
+      "PL2Nm_may26.png",
+      "PL2Ns_may26.png",
+      "PL2Nv_may26.png",
+      "PL2Sbt_may26.png.png",
+      "PL2Sm_may26.png.png",
+      "PL2Ss_may26.png.png",
+      "PL2Sv_may26.png.png"
+    ],
+    "transformer_count": 3,
+    "raw_coverage_by_transformer": {
+      "PL2C": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL2N": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL2S": [
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "PL2C": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL2N": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "PL2S": [
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "PL2C": [
+        "PL2Cb_may26.png",
+        "PL2Cbt_may26.png.png",
+        "PL2Cm_may26.png.png",
+        "PL2Cs_may26.png.png",
+        "PL2Cv_may26.png.png"
+      ],
+      "PL2N": [
+        "PL2Nb_may26.png",
+        "PL2Nbt_may26.png",
+        "PL2Nm_may26.png",
+        "PL2Ns_may26.png",
+        "PL2Nv_may26.png"
+      ],
+      "PL2S": [
+        "PL2Sbt_may26.png.png",
+        "PL2Sm_may26.png.png",
+        "PL2Ss_may26.png.png",
+        "PL2Sv_may26.png.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "PL2C",
+      "PL2N",
+      "PL2S"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Plant2/patterns",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-06-17T17:09:09.696300+00:00"
+}

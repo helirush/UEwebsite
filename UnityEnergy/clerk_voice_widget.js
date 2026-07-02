@@ -821,8 +821,55 @@
     if (protocol === "file:") return false;
     return true;
   }
+  function resolveRuntimeAuthEndpointCandidate(endpointCandidate) {
+    const candidate = coerceText(endpointCandidate);
+    if (!candidate) return "";
+    try {
+      const baseHref = typeof window !== "undefined" && window.location ? window.location.href : "";
+      return new URL(candidate, baseHref || undefined).toString();
+    } catch (_err) {
+      return candidate;
+    }
+  }
 
-  function getRuntimeAuthEndpoint(cfgOrOptions) {
+  function appendRuntimeAuthEndpointCandidate(candidates, endpointCandidate) {
+    if (!Array.isArray(candidates)) return;
+    const resolved = resolveRuntimeAuthEndpointCandidate(endpointCandidate);
+    if (!resolved) return;
+    if (candidates.indexOf(resolved) !== -1) return;
+    candidates.push(resolved);
+  }
+
+  function getRuntimeAuthEndpointPathPrefixes() {
+    if (typeof window === "undefined" || !window.location) return [];
+    const pathname = coerceText(window.location.pathname);
+    if (!pathname) return [];
+    const prefixes = [];
+    const lowerPathname = pathname.toLowerCase();
+    const unitySegment = "/unityenergy/";
+    const unityIndex = lowerPathname.indexOf(unitySegment);
+    if (unityIndex > 0) {
+      const unityPrefix = pathname.slice(0, unityIndex).replace(/\/+$/, "");
+      if (unityPrefix && unityPrefix !== "/" && prefixes.indexOf(unityPrefix) === -1) {
+        prefixes.push(unityPrefix);
+      }
+    }
+    const segments = pathname.split("/").filter(Boolean);
+    if (segments.length > 1) {
+      const firstSegmentPrefix = `/${segments[0]}`;
+      if (
+        firstSegmentPrefix &&
+        firstSegmentPrefix !== "/" &&
+        firstSegmentPrefix.toLowerCase() !== "/unityenergy" &&
+        prefixes.indexOf(firstSegmentPrefix) === -1
+      ) {
+        prefixes.push(firstSegmentPrefix);
+      }
+    }
+    return prefixes;
+  }
+
+  function buildRuntimeAuthEndpointCandidates(cfgOrOptions) {
     const source = cfgOrOptions && typeof cfgOrOptions === "object" ? cfgOrOptions : {};
     const cfg =
       source.cfg && typeof source.cfg === "object"
@@ -845,17 +892,39 @@
               window.MAXWELLIAN_RUNTIME_AUTH_ENDPOINT
           )
         : "";
-    const candidate = explicit || globalOverride || "/api/hume/runtime-auth";
-    try {
-      const baseHref = typeof window !== "undefined" && window.location ? window.location.href : "";
-      return new URL(candidate, baseHref || undefined).toString();
-    } catch (_err) {
-      return candidate || "/api/hume/runtime-auth";
+    const candidates = [];
+    appendRuntimeAuthEndpointCandidate(candidates, explicit);
+    appendRuntimeAuthEndpointCandidate(candidates, globalOverride);
+    if (typeof window !== "undefined") {
+      appendRuntimeAuthEndpointCandidate(
+        candidates,
+        coerceText(window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT)
+      );
     }
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth");
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth.json");
+    appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth");
+    appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth.json");
+    const pathPrefixes = getRuntimeAuthEndpointPathPrefixes();
+    pathPrefixes.forEach(function (prefix) {
+      appendRuntimeAuthEndpointCandidate(candidates, `${prefix}/api/hume/runtime-auth`);
+      appendRuntimeAuthEndpointCandidate(candidates, `${prefix}/api/hume/runtime-auth.json`);
+    });
+    return candidates;
   }
 
-  function getRuntimeAuthEndpointDisplayLabel(cfgOrOptions) {
-    const endpoint = getRuntimeAuthEndpoint(cfgOrOptions);
+  function getRuntimeAuthEndpoint(cfgOrOptions) {
+    const candidates = buildRuntimeAuthEndpointCandidates(cfgOrOptions);
+    return candidates[0] || "/api/hume/runtime-auth";
+  }
+
+  function getRuntimeAuthEndpointDisplayLabel(cfgOrOptions, endpointOverride) {
+    const endpoint =
+      coerceText(endpointOverride) ||
+      (typeof window !== "undefined"
+        ? coerceText(window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT)
+        : "") ||
+      getRuntimeAuthEndpoint(cfgOrOptions);
     if (!endpoint) return "/api/hume/runtime-auth";
     if (typeof window === "undefined" || !window.location) return endpoint;
     try {
@@ -884,31 +953,47 @@
       return Promise.resolve(null);
     }
     const shouldPersist = opts.persist !== false;
-    const endpoint = getRuntimeAuthEndpoint(opts);
-    return window
-      .fetch(endpoint, {
-        method: "GET",
-        credentials: "same-origin",
-        headers: { Accept: "application/json" },
-      })
-      .then(function (response) {
-        if (!response || !response.ok) return null;
-        return response.json().catch(function () {
+    const endpoints = buildRuntimeAuthEndpointCandidates(opts);
+    if (!endpoints.length) return Promise.resolve(null);
+
+    function fetchRuntimeAuthFromEndpoint(endpoint, index) {
+      if (!endpoint || index >= endpoints.length) return Promise.resolve(null);
+      return window
+        .fetch(endpoint, {
+          method: "GET",
+          credentials: "same-origin",
+          headers: { Accept: "application/json" },
+        })
+        .then(function (response) {
+          if (!response || !response.ok) return null;
+          return response.json().catch(function () {
+            return null;
+          });
+        })
+        .then(function (payload) {
+          const candidate = extractRuntimeAuthFromServerPayload(payload);
+          if (!candidate) return null;
+          applyRuntimeAuthToWindow(candidate);
+          if (shouldPersist) {
+            writeRuntimeAuthToStorage(candidate);
+          }
+          if (typeof window !== "undefined") {
+            window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT = endpoint;
+          }
+          return candidate;
+        })
+        .catch(function () {
           return null;
+        })
+        .then(function (candidate) {
+          if (candidate) return candidate;
+          const nextIndex = index + 1;
+          if (nextIndex >= endpoints.length) return null;
+          return fetchRuntimeAuthFromEndpoint(endpoints[nextIndex], nextIndex);
         });
-      })
-      .then(function (payload) {
-        const candidate = extractRuntimeAuthFromServerPayload(payload);
-        if (!candidate) return null;
-        applyRuntimeAuthToWindow(candidate);
-        if (shouldPersist) {
-          writeRuntimeAuthToStorage(candidate);
-        }
-        return candidate;
-      })
-      .catch(function () {
-        return null;
-      });
+    }
+
+    return fetchRuntimeAuthFromEndpoint(endpoints[0], 0);
   }
 
   function exposeRuntimeAuthHelpers() {
@@ -3923,6 +4008,16 @@
       return policy.allowedPages.includes(normalizedPage);
     }
     return true;
+  }
+  function isWidgetReadyEventType(eventType) {
+    const normalized = coerceText(eventType).toLowerCase();
+    if (!normalized) return false;
+    return (
+      normalized === "widget_iframe_is_ready" ||
+      normalized === "widget_iframe_ready" ||
+      normalized === "widget_ready" ||
+      normalized === "iframe_ready"
+    );
   }
 
   function isClerkVoiceAllowedOnCurrentPage(cfg) {
@@ -8038,6 +8133,9 @@
     if (!normalized) return false;
     if (
       normalized === "widget_iframe_is_ready" ||
+      normalized === "widget_iframe_ready" ||
+      normalized === "widget_ready" ||
+      normalized === "iframe_ready" ||
       normalized === "resize_frame" ||
       normalized === "expand_widget" ||
       normalized === "collapse_widget" ||
@@ -9002,6 +9100,78 @@
     }
     return "Microphone is unavailable. Tap Waiting on Clerk, verify browser microphone access, and try again.";
   }
+  function handleWidgetReadySignal(progressEventType) {
+    if (widgetReady) return;
+    widgetReady = true;
+    noteUnityStartGateProgress(
+      coerceText(progressEventType) || "widget-iframe-ready"
+    );
+    clearFrameLoadTimer();
+    const cfg = getRuntimeVoiceConfig();
+    if (unityStartGatePending) {
+      const gateMessage =
+        coerceText(unityStartGatePreflightStatusMessage) ||
+        "Tap Waiting on Clerk to begin speaking with Clerk.";
+      const startBtn = document.getElementById("clerkVoiceStartBtn");
+      if (startBtn) startBtn.textContent = START_BUTTON_WAITING_LABEL;
+      setStatus(gateMessage, unityStartGatePendingRequiresRecovery, true);
+      setWidgetFrameVisible(false);
+      setStartButtonVisible(true);
+      setLaunchEmblemVisible(true);
+      setCompactSquareFrameSize();
+      setPanelMode("centered");
+      setSessionDiagnostics(
+        buildSessionDiagnostics(
+          pendingLaunchSession,
+          cfg,
+          document.getElementById("clerkVoiceFrame")?.src || "",
+          "ready-awaiting-mic"
+        ),
+        false
+      );
+      return;
+    }
+    const configured = sendWidgetConfig(cfg, pendingLaunchSession);
+    if (!configured) {
+      setStatus(getVoiceEngineMissingConfigMessage(cfg), true);
+      setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
+      setWidgetFrameVisible(false);
+      return;
+    }
+    setWidgetFrameVisible(false);
+    setStatus(`${cfg.character_name} is ready. Initializing voice session…`, false, true);
+    setStartButtonVisible(false);
+    setLaunchEmblemVisible(true);
+    setCompactSquareFrameSize();
+    setPanelMode("centered");
+    const readyRetrySchedule = getUnityStartGateRetrySchedule(cfg, "ready");
+    scheduleIframeStartConversationRetry(
+      readyRetrySchedule.maxAttempts,
+      readyRetrySchedule.delayMs
+    );
+    window.setTimeout(function () {
+      const modalEl = document.getElementById("clerkVoiceModal");
+      if (!modalEl || !modalEl.classList.contains("active")) return;
+      if (hasConversationStarted) return;
+      unityStartGatePending = true;
+      unityStartGatePendingRequiresRecovery = false;
+      unityStartGatePreflightStatusMessage = "Tap Waiting on Clerk to begin speaking with Clerk.";
+      const retryBtn = document.getElementById("clerkVoiceStartBtn");
+      if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
+      setStartButtonVisible(true);
+      setLaunchEmblemVisible(true);
+      setStatus("Tap Waiting on Clerk to begin speaking with Clerk.", false, true);
+    }, getUnityStartGatePostReadyPromptDelayMs(cfg));
+    setSessionDiagnostics(
+      buildSessionDiagnostics(
+        pendingLaunchSession,
+        cfg,
+        document.getElementById("clerkVoiceFrame")?.src || "",
+        "ready-awaiting-session-start"
+      ),
+      false
+    );
+  }
 
   function bindFrameMessaging() {
     if (frameMessagingBound) return;
@@ -9022,74 +9192,8 @@
         }
       }
 
-      if (eventType === "widget_iframe_is_ready") {
-        widgetReady = true;
-        noteUnityStartGateProgress("widget-iframe-ready");
-        clearFrameLoadTimer();
-        const cfg = getRuntimeVoiceConfig();
-        if (unityStartGatePending) {
-          const gateMessage =
-            coerceText(unityStartGatePreflightStatusMessage) ||
-            "Tap Waiting on Clerk to begin speaking with Clerk.";
-          const startBtn = document.getElementById("clerkVoiceStartBtn");
-          if (startBtn) startBtn.textContent = START_BUTTON_WAITING_LABEL;
-          setStatus(gateMessage, unityStartGatePendingRequiresRecovery, true);
-          setWidgetFrameVisible(false);
-          setStartButtonVisible(true);
-          setLaunchEmblemVisible(true);
-          setCompactSquareFrameSize();
-          setPanelMode("centered");
-          setSessionDiagnostics(
-            buildSessionDiagnostics(
-              pendingLaunchSession,
-              cfg,
-              document.getElementById("clerkVoiceFrame")?.src || "",
-              "ready-awaiting-mic"
-            ),
-            false
-          );
-          return;
-        }
-        const configured = sendWidgetConfig(cfg, pendingLaunchSession);
-        if (!configured) {
-          setStatus(getVoiceEngineMissingConfigMessage(cfg), true);
-          setHelpLink(document.getElementById("clerkVoiceFrame")?.src || "", true);
-          setWidgetFrameVisible(false);
-          return;
-        }
-        setWidgetFrameVisible(false);
-        setStatus(`${cfg.character_name} is ready. Initializing voice session…`, false, true);
-        setStartButtonVisible(false);
-        setLaunchEmblemVisible(true);
-        setCompactSquareFrameSize();
-        setPanelMode("centered");
-        const readyRetrySchedule = getUnityStartGateRetrySchedule(cfg, "ready");
-        scheduleIframeStartConversationRetry(
-          readyRetrySchedule.maxAttempts,
-          readyRetrySchedule.delayMs
-        );
-        window.setTimeout(function () {
-          const modalEl = document.getElementById("clerkVoiceModal");
-          if (!modalEl || !modalEl.classList.contains("active")) return;
-          if (hasConversationStarted) return;
-          unityStartGatePending = true;
-          unityStartGatePendingRequiresRecovery = false;
-          unityStartGatePreflightStatusMessage = "Tap Waiting on Clerk to begin speaking with Clerk.";
-          const retryBtn = document.getElementById("clerkVoiceStartBtn");
-          if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
-          setStartButtonVisible(true);
-          setLaunchEmblemVisible(true);
-          setStatus("Tap Waiting on Clerk to begin speaking with Clerk.", false, true);
-        }, getUnityStartGatePostReadyPromptDelayMs(cfg));
-        setSessionDiagnostics(
-          buildSessionDiagnostics(
-            pendingLaunchSession,
-            cfg,
-            document.getElementById("clerkVoiceFrame")?.src || "",
-            "ready-awaiting-session-start"
-          ),
-          false
-        );
+      if (isWidgetReadyEventType(eventType)) {
+        handleWidgetReadySignal("widget-iframe-ready");
         return;
       }
       if (eventType === "resize_frame" && data.payload) {
@@ -10347,7 +10451,13 @@
       if (!modalEl || !modalEl.classList.contains("active")) return;
       applyFrameTransparencyOverrides(frame);
       if (!widgetReady) {
-        setStatus("Voice widget loaded. Initializing Clerk session…", false);
+        setStatus("Voice widget loaded. Initializing Clerk session…", false, true);
+        window.setTimeout(function () {
+          const activeModal = document.getElementById("clerkVoiceModal");
+          if (!activeModal || !activeModal.classList.contains("active")) return;
+          if (widgetReady || hasConversationStarted) return;
+          handleWidgetReadySignal("widget-iframe-load-fallback-ready");
+        }, 220);
       }
     });
 
@@ -10564,23 +10674,60 @@
     if (typeof window === "undefined" || typeof window.fetch !== "function") {
       return Promise.resolve({ ok: false, status: 0 });
     }
-    const endpoint = getRuntimeAuthEndpoint(cfgOrOptions);
-    return window
-      .fetch(endpoint, {
-        method: "GET",
-        credentials: "same-origin",
-        headers: { Accept: "application/json" },
-      })
-      .then(function (response) {
-        return {
-          ok: Boolean(response && response.ok),
-          status: response && Number.isFinite(Number(response.status)) ? Number(response.status) : 0,
-          endpoint: endpoint,
-        };
-      })
-      .catch(function () {
-        return { ok: false, status: 0, endpoint: endpoint };
-      });
+    const endpoints = buildRuntimeAuthEndpointCandidates(cfgOrOptions);
+    if (!endpoints.length) {
+      return Promise.resolve({ ok: false, status: 0, endpoint: getRuntimeAuthEndpoint(cfgOrOptions) });
+    }
+    let firstAuthFailure = null;
+    let firstNotFound = null;
+    let lastResult = { ok: false, status: 0, endpoint: endpoints[0] };
+
+    function probeEndpointAt(index) {
+      const endpoint = endpoints[index];
+      return window
+        .fetch(endpoint, {
+          method: "GET",
+          credentials: "same-origin",
+          headers: { Accept: "application/json" },
+        })
+        .then(function (response) {
+          const status =
+            response && Number.isFinite(Number(response.status))
+              ? Number(response.status)
+              : 0;
+          const result = {
+            ok: Boolean(response && response.ok),
+            status: status,
+            endpoint: endpoint,
+          };
+          if (result.ok) {
+            if (typeof window !== "undefined") {
+              window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT = endpoint;
+            }
+            return result;
+          }
+          if ((status === 401 || status === 403) && !firstAuthFailure) {
+            firstAuthFailure = result;
+          }
+          if (status === 404 && !firstNotFound) {
+            firstNotFound = result;
+          }
+          lastResult = result;
+          if (index + 1 >= endpoints.length) {
+            return firstAuthFailure || firstNotFound || lastResult;
+          }
+          return probeEndpointAt(index + 1);
+        })
+        .catch(function () {
+          lastResult = { ok: false, status: 0, endpoint: endpoint };
+          if (index + 1 >= endpoints.length) {
+            return firstAuthFailure || firstNotFound || lastResult;
+          }
+          return probeEndpointAt(index + 1);
+        });
+    }
+
+    return probeEndpointAt(0);
   }
 
   function showUnityStartGateLaunchFailure(cfg, frameSrc, message) {
@@ -10662,7 +10809,6 @@
       return;
     }
 
-    const runtimeAuthEndpointLabel = getRuntimeAuthEndpointDisplayLabel(cfg);
 
     setStatus("Still waiting on Clerk. Checking runtime auth bridge…", false, true);
     probeRuntimeAuthEndpointStatus(cfg).then(function (probeResult) {
@@ -10670,6 +10816,10 @@
       const activeModal = document.getElementById("clerkVoiceModal");
       if (!activeModal || !activeModal.classList.contains("active")) return;
       if (hasConversationStarted) return;
+      const runtimeAuthEndpointLabel = getRuntimeAuthEndpointDisplayLabel(
+        cfg,
+        probeResult && probeResult.endpoint
+      );
       if (probeResult.status === 404) {
         const shouldFailForMissingBridge =
           !authlessHumeMode ||

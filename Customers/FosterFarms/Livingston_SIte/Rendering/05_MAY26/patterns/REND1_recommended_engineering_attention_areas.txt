@@ -1,0 +1,15 @@
+**REND1 — Engineering Attention Areas | May 2026**
+
+The following areas warrant engineering review prior to or concurrent with MPTS correction planning for REND1.
+
+**Reactive compensation sizing:** Three H490 units are required to address the 1,194.2 kVAR MAX demand. Engineering should confirm reactive demand profile across shift patterns and seasonal load cycles — May represents one month's behavior, and sizing should account for peak reactive demand across the full operating year.
+
+**Voltage operating point:** The field runs persistently above nominal at 476.7V average with peaks to 489.3V. Engineering should review utility tap settings and transformer LTC or tap changer position to determine if the high-side operating point can be optimized. Reducing the chronic above-nominal operating voltage will extend insulation life across all connected equipment.
+
+**Recurrent dip events:** Nine or more annotated voltage dip events, with the final week showing the most severe excursions to 454.9V, suggest a developing source of disturbance — potentially load-switching transients, transformer inrush events, or upstream utility disturbances. Root cause investigation is warranted before and after MPTS installation to establish a pre- versus post-correction comparison baseline.
+
+**Outage root cause:** Two confirmed brief outage events occurred in early May, estimated at four to seven combined minutes. In a food processing and rendering environment, even brief outages carry product safety and process continuity implications. Engineering should verify whether these were utility-side events or facility-side switching and assess whether MPTS correction and improved power factor margin would reduce their probability or severity.
+
+**Harmonic monitoring:** Current iTHD peaks at 10.7%. While not the primary concern, ongoing monitoring is recommended, particularly if additional VFDs or nonlinear loads are added to this transformer's distribution circuit. Harmonic filters may become appropriate if the iTHD profile worsens post-correction.
+
+---

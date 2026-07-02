@@ -551,7 +551,7 @@
         <img src="../../assets/images/Investor_Glance.png" alt="Unity Energy investor process and value map" />
       </div>
       <section class="value-audio-controls" aria-label="Unity investor narration controls">
-        <p class="value-audio-head">Unity voice narration (Shimmer)</p>
+        <p class="value-audio-head">Unity Faraday (Voice Narration)</p>
         <div class="value-audio-btn-row">
           <button type="button" class="voice-control-btn" id="playUnityVoiceBtn">Start Voice</button>
           <button type="button" class="voice-control-btn stop" id="stopUnityVoiceBtn">Stop Voice</button>
@@ -559,27 +559,6 @@
         <audio id="unityNarrationAudio" preload="none" src="./audio/unity-investor-welcome.mp3"></audio>
         <p class="value-audio-status" id="unityVoiceStatus">Press Start Voice to play Unity's welcome narration.</p>
       </section>
-      <article class="value-script-block" aria-label="Unity investor welcome narration script">
-        <div class="value-script-head">
-          <h3 class="value-script-title">Unity Welcome Narration Script (for MP3)</h3>
-          <button type="button" class="copy-script-btn" id="copyValueScriptBtn">Copy Script</button>
-        </div>
-        <p class="value-script-text" id="valueScriptText">Welcome to the Unity Energy Investor Center.
-
-What you are viewing is our value map: Measure. Manage. Exchange. Optimize.
-
-We begin by measuring the electrical field with precision, converting invisible behavior into trustworthy operating intelligence.
-We then manage that intelligence through tuning, governance, and repeatable execution, so performance is not accidental, but designed.
-Next, we exchange value through aligned customer economics, where verified outcomes create shared financial return.
-Finally, we optimize across sites, scaling the model into a portfolio system that compounds margin, retention, and enterprise growth.
-
-As you move through this site, we invite you to evaluate not only this image, but the full module story behind it.
-Each section is built to explain how Unity turns industrial electrical complexity into measurable, investable outcomes.
-
-Thank you for taking the time to examine our work and our vision for the future of industrial energy intelligence.</p>
-        <p class="value-script-note">When you generate the MP3, place it at `UnityEnergy/customer-portal/investor-center/audio/unity-investor-welcome.mp3`, and I can wire autoplay on modal open.</p>
-        <p class="value-copy-status" id="valueCopyStatus"></p>
-      </article>
     </div>
   </section>
   <script>
@@ -605,6 +584,14 @@ Thank you for taking the time to examine our work and our vision for the future 
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('value-modal-open');
+        if (voiceAudio) {
+          voiceAudio.currentTime = 0;
+          voiceAudio.play().then(function () {
+            setVoiceStatus('Unity narration is now playing.');
+          }).catch(function () {
+            setVoiceStatus('Autoplay was blocked. Press Start Voice to play Unity narration.');
+          });
+        }
       }
       function closeModal() {
         if (voiceAudio) {

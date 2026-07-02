@@ -2009,6 +2009,38 @@
 </div>
 <!-- Unity Dashboard - Unified JavaScript System -->
 <script>
+(function loadSummaryboardSideMetrics() {
+  if (window.__unitySideMetricsLoaderInjected) return;
+  window.__unitySideMetricsLoaderInjected = true;
+  const scriptName = 'summaryboard-side-metrics.js';
+    const scriptVersion = window.__unitySideMetricsVersion || '20260624d';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 8; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unitySideMetricsLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     // Set Unity date
     const today = new Date();
@@ -2291,6 +2323,7 @@
 
     // Energy mode always displays EFSI front line derived from PF.
     applyEfsiColors();
+    enforcePl1CardOrder();
 
   });
 
@@ -2400,6 +2433,37 @@
       if (yearMatch) return month + yearMatch[1].slice(-2);
     }
     return 'jan26'; // fallback
+  }
+
+  function normalizeTransformerOrderKey(value) {
+    return (value || '')
+      .toString()
+      .toUpperCase()
+      .replace(/[^A-Z0-9]/g, '');
+  }
+
+  function enforcePl1CardOrder() {
+    const grid = document.querySelector('.dashboard-grid');
+    if (!grid) return;
+
+    const desiredOrder = ['PL1MSHOP', 'PL1PROC1', 'PL1PROC2'];
+    const cards = Array.from(grid.querySelectorAll('.xfmr-card'));
+    if (!cards.length) return;
+
+    const rankedCards = cards.map((card, originalIndex) => {
+      const nameEl = card.querySelector('span[id^="xfmr"][id$="-name"]');
+      const normalizedName = normalizeTransformerOrderKey(nameEl?.textContent || '');
+      const desiredIndex = desiredOrder.indexOf(normalizedName);
+      return {
+        card,
+        originalIndex,
+        rank: desiredIndex === -1 ? 999 : desiredIndex
+      };
+    });
+
+    rankedCards
+      .sort((a, b) => (a.rank - b.rank) || (a.originalIndex - b.originalIndex))
+      .forEach(({ card }) => grid.appendChild(card));
   }
 
   function shouldShowProc2WaitingPlaceholder(transformerName) {
@@ -4267,5 +4331,38 @@
 </div>
 
 
+<script src="../../../unity-april-baseline-retention.js"></script>
+<script>
+(function loadUnityHowToToggle() {
+  if (window.__unityHowToToggleLoaderInjected) return;
+  window.__unityHowToToggleLoaderInjected = true;
+  const scriptName = 'unity-howto-toggle.js';
+  const scriptVersion = '20260701a';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 10; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unityHowToToggleLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
 </body>
 </html>

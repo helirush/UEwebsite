@@ -1,0 +1,15 @@
+**Transformer: Deli.G — DELIG | Engineering Attention Areas**
+
+Several areas warrant focused engineering attention on this transformer.
+
+**Transformer loading headroom:** Operating at 102.3 percent of a 2,500 kVA nameplate is the first priority. This is not a condition to monitor and defer — it is a condition requiring near-term action. MPTS correction that reduces apparent power demand would directly recover nameplate headroom. An engineering review of peak loading coincidence — whether all peak demand events are operationally necessary or whether load scheduling could reduce peak coincidence — should accompany any correction design.
+
+**Voltage sag at peak loading:** The recurring 460V dips during high-amperage events need to be mapped against the specific equipment most sensitive to voltage sag in the Deli.G zone. VFDs with undervoltage trip thresholds, PLC power supplies, and refrigeration control boards are all candidates for nuisance trips or accelerated failure if they are repeatedly exposed to 4 percent sags. A voltage sag tolerance audit of critical equipment should be conducted.
+
+**Harmonic environment:** The 10.6 percent iTHD peak warrants a dedicated harmonic survey to identify the dominant frequency components and their sources. If VFD-driven loads are the primary contributors, passive or active harmonic filtering may be warranted in addition to reactive compensation — particularly if IEEE 519 compliance is a facility requirement or a utility contract condition.
+
+**Outage event investigation:** The two apparent outage events near the 260526 period in May should be reviewed against operations logs and any incident reports from that week. Outage events on a transformer operating at nameplate capacity are more consequential than they would be on a lightly loaded transformer.
+
+**Thermal management review:** With 280,066 BTU per hour of thermal burden and $71,933 per year in cooling costs, the thermal environment around this transformer and its associated switchgear should be inspected. Adequate ventilation, clean air filters, and proper clearances are basic stewardship steps that are often deferred and become consequential at this loading level.
+
+---

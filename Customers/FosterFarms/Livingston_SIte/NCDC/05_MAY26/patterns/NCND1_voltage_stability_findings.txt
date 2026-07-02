@@ -1,0 +1,11 @@
+**NCND1 — West11c Transformer | Voltage Stability Findings**
+
+The voltage behavior on West11c tells two distinct stories. The first story is one of routine over-voltage operation — the blue voltage trace spends the majority of the 31-day observation window running between approximately 480 and 500 volts line-to-line, which is at or slightly above nominal for a 480-volt system. The dashed reference markers bracket the acceptable band, with the Max Voltage marker sitting near 503 volts. Sustained operation above nominal isn't automatically alarming, but it does place elevated stress on motor windings, insulation systems, and sensitive control electronics over time.
+
+The second story is the one that demands immediate attention. The minimum voltage recorded across the dataset is 9.7 volts — a near-complete field collapse. This is not a sag. This is not a dip. This is a momentary annihilation of voltage that, for the equipment connected to this transformer, registers as a severe transient event. Motors, variable frequency drives, soft starters, and programmable logic controllers all react violently to events like this — some with nuisance trips, some with latched faults, and some with accelerated insulation degradation that you won't see until a motor fails unexpectedly mid-shift.
+
+Two distinct disturbance windows are identifiable in the voltage trace. The most pronounced clusters around May 8th and 9th, where the voltage trace drops sharply and the power factor trace collapses simultaneously — a signature of genuine field disruption, not instrumentation noise. A secondary, narrower event appears around May 23rd. Combined, these two events account for an estimated 20 to 35 minutes of disruption time across the month.
+
+The facility's minimum voltage annotation also references 460 volts as the observed operational floor — approximately 20 volts below the 480-volt nominal. For motors running near rated load, that 4-percent undervoltage condition increases current draw, elevates winding temperatures, and shortens insulation life. In a food processing environment where motor reliability is directly tied to production continuity, these voltage characteristics warrant serious engineering attention.
+
+---

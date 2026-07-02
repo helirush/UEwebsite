@@ -1,0 +1,11 @@
+**Transformer: PL1M — Field Condition Summary**
+
+At this point in our analysis, the numeric foundation for transformer PL1M has not yet been populated. The power factor reads zero percent, the target supply in kVA is zero, the reactive peak in kVAR is zero, and both the monthly and annual residual waste figures return zero dollars. The residual heat burden in kilowatts is likewise zero, and the installed MPTS asset context has not been provided.
+
+This is not a sign of a clean field — it is a sign of incomplete data submission. The transformer is identified, the tuned-field analysis mode is correctly set, and the story structure is intact. What is missing is the measured field data itself: the baseline readings, the tuned baseline comparison, and the target benchmark that would let us describe where PL1M stands today.
+
+In a tuned-field scenario like this one, the field condition summary should be anchoring three things. First, how much the field has already improved from the simulated historical baseline to the current tuned baseline. Second, where the current tuned baseline sits relative to the optimization target. And third, what the residual burden looks like in terms of heat, reactive draw, and cooling overhead. Right now, none of those three comparisons can be made with confidence.
+
+Once valid data is submitted for PL1M — whether through a corrected CSV export or an uploaded dashboard image — this section will immediately populate with concrete observations. Until then, the field condition for PL1M must be recorded as: **data unavailable, analysis pending.**
+
+---

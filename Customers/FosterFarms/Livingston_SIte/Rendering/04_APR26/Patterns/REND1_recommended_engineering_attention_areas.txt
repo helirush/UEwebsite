@@ -1,1 +1,18 @@
-REND1 requires immediate attention for voltage stability issues and reactive power correction to prevent accelerated equipment degradation and continued energy waste. The repeated voltage drops below nominal create elevated stress risk for connected devices and could lead to premature equipment failures if left uncorrected. Priority should be given to reactive power compensation through MPTS installation, which would address both the power factor inefficiency and the voltage instability simultaneously. The harmonic distortion at 5.8 percent iTHD suggests additional harmonic filtering may be beneficial, particularly given the rendering operation's intensive electrical demands. Thermal management should also be evaluated, as the 731,399 BTU per hour thermal burden from reactive losses is forcing your cooling systems to work approximately 25 percent harder than necessary. Consider coordinating the MPTS installation with any planned electrical infrastructure upgrades to maximize the system-wide benefits and ensure optimal integration with your rendering processes.
+**REND1 — Engineering Attention Priorities | April 2026**
+
+**Priority 1 — Reactive Compensation Assignment.**
+The single highest-leverage action for REND1 is MPTS assignment. At 1,113.9 kVAR peak reactive demand and a sustained 641.9 kVAR average, the reactive burden on this transformer is not a marginal inefficiency — it is a structural field problem. Three H490 units sized at 400 kVAR each provide appropriate correction capacity. Engineering should confirm bus configuration, harmonic interaction screening at 5.8 percent iTHD, and physical installation siting for the MPTS cabinets.
+
+**Priority 2 — Sub-Nominal Voltage Dip Investigation.**
+Twelve labeled voltage dip events in a single thirty-day period, all clustering in the 455 to 461 volt range, warrant a bus-level investigation. The root cause could involve transformer tap settings, upstream impedance under heavy reactive loading, or distribution conductor sizing. With MPTS correction reducing reactive current, a portion of the voltage dip severity should improve — but tap position and conductor adequacy should be confirmed independently.
+
+**Priority 3 — Peak Current Thermal Profile Review.**
+The 1,701.1 amp peak current reading should be cross-referenced against the REND1 transformer nameplate rating and the associated conductor ampacity. At a sustained power factor of 83.4 percent, the transformer is carrying significantly more apparent current than the real load justifies. Engineering should verify that transformer nameplate kVA rating is not being approached or exceeded during peak production windows, and that conductor insulation ratings are appropriate for the observed peak current and thermal environment.
+
+**Priority 4 — Harmonic Interaction Screening Pre-MPTS.**
+Before finalizing MPTS unit configuration, a harmonic interaction study should confirm that the existing 5.8 percent iTHD does not create resonance conditions with the capacitive compensation introduced by the H490 units. Standard screening protocol applies; this is a precautionary step, not an indicator of a known problem.
+
+**Priority 5 — Scheduled Downtime Optimization.**
+The production pattern shows approximately 25 to 30 percent of the month in shutdown or reduced-load state. Engineering review of transformer de-energization versus standby mode during extended weekend shutdowns may offer incremental no-load loss reduction opportunities in parallel with MPTS correction.
+
+---

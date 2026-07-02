@@ -291,13 +291,15 @@
     }
   },
   "group_overview": {
-    "group_name": "04_APR26",
+    "group_name": "CherryAve_Site",
     "analysis_period": "April (260401-260430)",
     "transformer_count": 4,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 4 transformers compared. Combined annual savings potential is about $8,863,061. Combined annual waste exposure is about $1,678,242. Power-factor spread runs from T15 Fillet at 81.9% to T10 Air Chiller at 88.9%. Highest workload is T12 Main at about 1702.6 kVA target load. Highest reactive burden is T12 Main at about 1071.0 kVAR peak. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "narrative": "Group overview for CherryAve_Site in April (260401-260430): 4 transformers compared. Combined monthly savings potential is about $1,477,204. Combined annual savings potential is about $8,863,061. Combined monthly waste exposure is about $1,477,204. Combined annual waste exposure is about $8,863,061. Power-factor spread runs from T15 Fillet at 81.9% to T10 Air Chiller at 88.9%. Highest workload is T12 Main at about 1702.6 kVA target load. Highest reactive burden is T12 Main at about 1071.0 kVAR peak. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
     "totals": {
+      "monthly_savings": 1477204.4,
       "annual_savings": 8863061.0,
-      "annual_waste": 1678242.48,
+      "monthly_waste": 1477204.4,
+      "annual_waste": 8863061.0,
       "birds_processed": null,
       "weighted_cost_per_bird": null,
       "weighted_energy_per_bird": null
@@ -339,8 +341,8 @@
         "reactive_peak_kvar": 576.016,
         "monthly_savings": 577898.0,
         "annual_savings": 6934776.0,
-        "monthly_waste": 22960.23,
-        "annual_waste": 275522.76,
+        "monthly_waste": 577898.0,
+        "annual_waste": 6934776.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
@@ -354,8 +356,8 @@
         "reactive_peak_kvar": 1070.976,
         "monthly_savings": 48396.0,
         "annual_savings": 580752.0,
-        "monthly_waste": 48396.48,
-        "annual_waste": 580757.76,
+        "monthly_waste": 48396.0,
+        "annual_waste": 580752.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
@@ -369,8 +371,8 @@
         "reactive_peak_kvar": 789.616,
         "monthly_savings": 819106.0,
         "annual_savings": 819106.0,
-        "monthly_waste": 36692.43,
-        "annual_waste": 440309.16000000003,
+        "monthly_waste": 819106.0,
+        "annual_waste": 819106.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
@@ -385,20 +387,20 @@
         "monthly_savings": 31804.4,
         "annual_savings": 528427.0,
         "monthly_waste": 31804.4,
-        "annual_waste": 381652.80000000005,
+        "annual_waste": 528427.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
       }
     ],
-    "generated_at": "2026-05-20 02:40:35",
+    "generated_at": "2026-06-22 17:13:52",
     "source": "eeWILLIAM_group_rollup_v1"
   },
   "site_overview_state": {
-    "group_name": "04_APR26",
+    "group_name": "CherryAve_Site",
     "analysis_period": "April (260401-260430)",
     "transformer_count": 4,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 4 transformers compared. Combined annual savings potential is about $8,863,061. Combined annual waste exposure is about $1,678,242. Power-factor spread runs from T15 Fillet at 81.9% to T10 Air Chiller at 88.9%. Highest workload is T12 Main at about 1702.6 kVA target load. Highest reactive burden is T12 Main at about 1071.0 kVAR peak. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
-    "last_updated": "2026-05-20 02:40:35"
+    "narrative": "Group overview for CherryAve_Site in April (260401-260430): 4 transformers compared. Combined monthly savings potential is about $1,477,204. Combined annual savings potential is about $8,863,061. Combined monthly waste exposure is about $1,477,204. Combined annual waste exposure is about $8,863,061. Power-factor spread runs from T15 Fillet at 81.9% to T10 Air Chiller at 88.9%. Highest workload is T12 Main at about 1702.6 kVA target load. Highest reactive burden is T12 Main at about 1071.0 kVAR peak. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "last_updated": "2026-06-22 17:13:52"
   }
 }

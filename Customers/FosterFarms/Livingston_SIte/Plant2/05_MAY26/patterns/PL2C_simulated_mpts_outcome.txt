@@ -1,0 +1,13 @@
+**PL2C — Projected MPTS Correction Outcome**
+
+Based on the reactive profile measured across this 18-day dataset, PL2C's field correction requires a single H490 unit. The sizing math is direct: 311.0 kVAR maximum divided by 400 gives 0.78, which rounds up to one unit. One H490, rated at 400 kVAR compensation capacity, is appropriately sized to address the reactive burden on this transformer.
+
+The planning-level installed investment for one H490 unit is approximately $200,000, with final pricing dependent on engineering scope and site-specific installation conditions.
+
+Post-correction, the projected outcomes align with standard MPTS field correction results for an untuned field at this reactive severity level. Power factor moves from 83.9 percent average to a projected 99.5 percent — that's the reactive current being redirected from the grid supply to local compensation, so the transformer stops seeing it as a burden. The kVAR demand that the utility has been supplying — and likely billing against in demand charges — is absorbed locally.
+
+The thermal consequence follows directly: when reactive current through the windings drops, the heat generated drops with it. The 158,890 BTU per hour thermal burden is substantially reduced, which cascades into reduced cooling system run-time and the approximately $41,867 per year in cooling overhead. Voltage stability also improves — when reactive compensation is local and fast-responding, the triangular dip patterns from inductive load cycling are significantly dampened because the reactive current surges are no longer propagating through the supply-side field.
+
+With approximately $123,026 per year in total identified waste and a planning-level investment of approximately $200,000, the rough payback window lands in the range of 18 to 24 months at this facility's operating profile — a planning-level estimate, not a guaranteed return, but a figure that warrants formal engineering evaluation.
+
+---

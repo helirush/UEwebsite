@@ -1,0 +1,11 @@
+**Transformer: Deli.F — Reactive and Harmonic Profile | May 2026**
+
+The M view lays out the reactive story plainly. Your green kVAR band is running in a continuously elevated range, with a maximum reactive annotation of 648 kVAR visible in the chart — and the B header confirms the monthly kVAR MAX at 1,150.1 kVAR. That peak figure is the critical sizing input: at 1,150.1 kVAR maximum, Deli F is generating reactive burden that, at its worst moments, represents nearly half the transformer's real power delivery in pure circulating current. This is reactive power that does no useful work. It only heats conductors, loads transformer windings, and pulls current from the utility without producing output.
+
+The red amperage trace in M is aggressive. Maximum recorded amperage is 1,865.4 amps — nearly double the monthly average of 928.1 amps. These current spikes are dense, recurring, and phase-aligned with the production-cycle windows observed in both the voltage and baseline views. You have a transformer that is experiencing current surges approximately twice its mean operating level on a recurring scheduled basis. That is mechanical and thermal stress applied with regularity.
+
+The harmonic picture is present but secondary. The purple iTHD trace runs low and relatively flat, with an average of 5.2% and a maximum of 10.4%. These numbers are non-trivial — harmonic distortion at that level contributes to waveform pollution and adds to heat generation — but they are not the dominant stress mechanism on this transformer. The primary aggressors are reactive magnitude and raw current surge. The harmonic content rides alongside the reactive burden and compounds it, but solving reactive compensation first is the correct engineering priority here.
+
+The minimum power factor annotation of 72.58% is the most telling single data point in the M view. At your worst moments, you are converting only 72 cents of every delivered energy dollar into productive work. The remaining 28 cents is generating heat, stressing insulation, and leaving the facility as waste.
+
+---

@@ -1,0 +1,11 @@
+**Transformer: NCND3 — Simulated MPTS Outcome | Planning Estimate**
+
+The MPTS sizing analysis for NCND3 is straightforward: kVAR MAX of 379.4 divided by 400 gives 0.948, which rounds up to one H490 unit. A single H490, rated at 400 kVAR, is the right-sized correction asset for this field.
+
+Based on the S view data and standard MPTS correction modeling, bringing one H490 online on NCND3 would project the power factor from 84.6% up to approximately 99.5% — which is the near-unity correction target. That correction eliminates the reactive drag at its source rather than just masking it. The kVAR MAX that peaks at 379.4 today would be substantially absorbed by the local compensation field, meaning the transformer no longer has to source that reactive current from the utility supply.
+
+The downstream effects of that correction cascade across every cost category: the thermal burden drops proportionally as reactive current through the windings decreases, reducing the BTU per hour heat load and the associated cooling overhead. The approximately $77,744 per year in cooling costs is the most direct beneficiary. The energy waste of approximately $145,924 per year, combined with thermal and cooling overhead, puts the total addressable waste pool at approximately $234,907 per year.
+
+At a planning-level installed investment of approximately $200,000 for one H490 unit — noting that final pricing depends on engineering scope and site-specific installation conditions — the estimated payback window on NCND3 sits in a range that is highly favorable for an industrial facility of this operating profile. The continuous seven-day operation pattern means there are no idle hours diluting the savings accumulation. Every hour of correction is an hour of recovered efficiency on a transformer that never stops working.
+
+---

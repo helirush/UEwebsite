@@ -1,50 +1,5 @@
 {
   "transformers": {
-    "NCND1": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for NCND1. The dark blue layer shows your total supplied power \u2014 the kVA your utility delivers. The light blue shows your consumed power \u2014 the productive kW doing actual work. That green layer? That's reactive kVAR \u2014 electromagnetic waste circulating through your conductors but doing zero productive work. The orange line tracks your power factor, running steady around eighty-five percent all month. I can see your production rhythm clearly \u2014 consistent weekday operations around twenty-one hundred kVA with modest weekend valleys. Roughly eighty-five percent of your operating days run at or above baseline demand \u2014 classic food processing pattern. Your peak reactive demand hits three hundred fifty-eight kVAR. That's creating two hundred eighty-four thousand BTU per hour of thermal burden, costing you over eight dollars per hour just to cool the waste heat. Monthly waste total: roughly eighteen thousand dollars. Annually, that's over two hundred thousand in pure electromagnetic waste. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand is three hundred fifty-eight kVAR. Take that, divide by four hundred, round up \u2014 that gives us one H490 unit. Four hundred kVAR total capacity for an estimated installed investment of approximately two hundred thousand dollars. These figures are planning-level estimates \u2014 final pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what MPTS does in plain language: it injects precisely-timed compensating reactive current that cancels your electromagnetic waste. Power factor jumps to ninety-nine point five percent. The visual result is dramatic \u2014 that green reactive layer collapses to almost nothing. Your supplied power drops much closer to your consumed power. Same production work, but your conductors run cooler, your transformers breathe easier, and your electrical infrastructure operates at peak efficiency. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 from three hundred fifty-eight kVAR down to roughly forty. Your supplied power drops much closer to your consumed power, creating a tight, efficient energy envelope. Power factor jumps to ninety-nine point five percent and stays there. The savings are substantial \u2014 approximately seventeen thousand per month, roughly two hundred six thousand annually. With an estimated two hundred thousand dollar installation, you're looking at about twelve months simple payback. After that, every hour is recovered value. Your transformers run cooler. Your conductors carry less current delivering the same productive work. Your electrical infrastructure operates at Unity standard efficiency. Production stays exactly the same \u2014 efficiency improves dramatically. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for NCND1. The dark blue layer shows your total supplied power \u2014 the kVA your utility delivers. The light blue shows your consumed power \u2014 the productive kW doing actual work. That green layer? That's reactive kVAR \u2014 electromagnetic waste circulating through your conductors but doing zero productive work. The orange line tracks your power factor, running steady around eighty-five percent all month. I can see your production rhythm clearly \u2014 consistent weekday operations around twenty-one hundred kVA with modest weekend valleys. Roughly eighty-five percent of your operating days run at or above baseline demand \u2014 classic food processing pattern. Your peak reactive demand hits three hundred fifty-eight kVAR. That's creating two hundred eighty-four thousand BTU per hour of thermal burden, costing you over eight dollars per hour just to cool the waste heat. Monthly waste total: roughly eighteen thousand dollars. Annually, that's over two hundred thousand in pure electromagnetic waste. Now let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand is three hundred fifty-eight kVAR. Take that, divide by four hundred, round up \u2014 that gives us one H490 unit. Four hundred kVAR total capacity for an estimated installed investment of approximately two hundred thousand dollars. These figures are planning-level estimates \u2014 final pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what MPTS does in plain language: it injects precisely-timed compensating reactive current that cancels your electromagnetic waste. Power factor jumps to ninety-nine point five percent. The visual result is dramatic \u2014 that green reactive layer collapses to almost nothing. Your supplied power drops much closer to your consumed power. Same production work, but your conductors run cooler, your transformers breathe easier, and your electrical infrastructure operates at peak efficiency. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 from three hundred fifty-eight kVAR down to roughly forty. Your supplied power drops much closer to your consumed power, creating a tight, efficient energy envelope. Power factor jumps to ninety-nine point five percent and stays there. The savings are substantial \u2014 approximately seventeen thousand per month, roughly two hundred six thousand annually. With an estimated two hundred thousand dollar installation, you're looking at about twelve months simple payback. After that, every hour is recovered value. Your transformers run cooler. Your conductors carry less current delivering the same productive work. Your electrical infrastructure operates at Unity standard efficiency. Production stays exactly the same \u2014 efficiency improves dramatically. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer NCND1, and there's significant electromagnetic waste happening here. Your power factor is running at eighty-five percent \u2014 that means for every dollar of productive work, you're paying twenty cents extra for reactive power that does no useful work. Your peak reactive demand hits three hundred fifty-eight kVAR, creating substantial thermal burden on your conductors. This waste is costing you roughly two hundred seventeen thousand dollars annually in energy losses, thermal burden, and cooling overhead. We can correct this with one H490 MPTS unit \u2014 approximately four hundred kVAR of reactive compensation for an estimated two hundred thousand dollar installation. That brings your power factor to ninety-nine point five percent and recovers roughly two hundred six thousand annually. Simple payback is approximately twelve months, then every hour after that is pure recovered value. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 85.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f DATA MISSING\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 358.0 kVAR | variance: INFINITE (CSV empty)\nmonthly_waste_csv: $0.00 | monthly_waste_image: $217,083 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 1\u00d7 H490 = 400 kVAR capacity | $200,000 installed\nPAYBACK: $0/month | UNDEFINED (CSV shows no waste)\n\n\u26a0\ufe0f CRITICAL: CSV data appears incomplete (all zeros). Using image data as primary source for this analysis.",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-05-08 11:21:52",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "NCND1"
-    },
-    "NCND2": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for NCND2.\n\nThe dark blue layer shows your total kVA supply \u2014 what your transformer is actually delivering. The light blue beneath it is your productive kW consumption \u2014 the work you're paying for. That green layer in between? That's reactive kVAR \u2014 pure waste cycling back and forth through your conductors.\n\nYour production rhythm is clear. Strong weekday operational blocks around one thousand kVA, dropping to weekend valleys around seven fifty to eight hundred. Most of those weekday operations are pushing well above your optimal efficiency baseline.\n\nThe waste numbers tell the story. Peak demand just over one thousand kilowatts. Average reactive power three oh eight kilovars, spiking to four hundred eighteen. Power factor stuck at ninety-one percent.\n\nThat translates to nearly two hundred fifty thousand BTU per hour of thermal burden. Seven dollars and twenty-seven cents every hour just to cool the excess heat. Total annual waste approximately one hundred eighty-eight thousand dollars.\n\nNow let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction.\n\nYour peak reactive demand hits four hundred eighteen kilovars. Using our sizing protocol \u2014 that's four eighteen divided by four hundred, rounded up \u2014 you need two H490 units. That gives you eight hundred kilovars of correction capacity, roughly four hundred thousand in estimated installed investment.\n\nThese figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions.\n\nMPTS works by injecting precisely compensating reactive power. When your motors and transformers demand lagging reactive, the H490 units supply leading reactive. The net result pushes your power factor to ninety-nine point five percent.\n\nVisually, you'll see that green reactive layer collapse. Your conductors run cooler. Your transformer capacity gets freed up to do actual work instead of shuttling waste back and forth.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like.\n\nThat green reactive layer \u2014 nearly gone. Your total kVA supply drops dramatically closer to your productive kW consumption. Power factor locked at ninety-nine point five percent. Same production output, far less electromagnetic stress.\n\nThe savings are substantial. Approximately fifteen thousand six hundred per month, roughly one hundred eighty-eight thousand annually. Against that four hundred thousand estimated installation investment, you're looking at about twenty-six months to payback.\n\nAfter payback, every hour is recovered value. Cooler conductors, freed transformer capacity, eliminated reactive power charges \u2014 all flowing straight to your operational efficiency.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for NCND2.\n\nThe dark blue layer shows your total kVA supply \u2014 what your transformer is actually delivering. The light blue beneath it is your productive kW consumption \u2014 the work you're paying for. That green layer in between? That's reactive kVAR \u2014 pure waste cycling back and forth through your conductors.\n\nYour production rhythm is clear. Strong weekday operational blocks around one thousand kVA, dropping to weekend valleys around seven fifty to eight hundred. Most of those weekday operations are pushing well above your optimal efficiency baseline.\n\nThe waste numbers tell the story. Peak demand just over one thousand kilowatts. Average reactive power three oh eight kilovars, spiking to four hundred eighteen. Power factor stuck at ninety-one percent.\n\nThat translates to nearly two hundred fifty thousand BTU per hour of thermal burden. Seven dollars and twenty-seven cents every hour just to cool the excess heat. Total annual waste approximately one hundred eighty-eight thousand dollars.\n\nNow let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction.\n\nYour peak reactive demand hits four hundred eighteen kilovars. Using our sizing protocol \u2014 that's four eighteen divided by four hundred, rounded up \u2014 you need two H490 units. That gives you eight hundred kilovars of correction capacity, roughly four hundred thousand in estimated installed investment.\n\nThese figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions.\n\nMPTS works by injecting precisely compensating reactive power. When your motors and transformers demand lagging reactive, the H490 units supply leading reactive. The net result pushes your power factor to ninety-nine point five percent.\n\nVisually, you'll see that green reactive layer collapse. Your conductors run cooler. Your transformer capacity gets freed up to do actual work instead of shuttling waste back and forth.\n\nNow let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like.\n\nThat green reactive layer \u2014 nearly gone. Your total kVA supply drops dramatically closer to your productive kW consumption. Power factor locked at ninety-nine point five percent. Same production output, far less electromagnetic stress.\n\nThe savings are substantial. Approximately fifteen thousand six hundred per month, roughly one hundred eighty-eight thousand annually. Against that four hundred thousand estimated installation investment, you're looking at about twenty-six months to payback.\n\nAfter payback, every hour is recovered value. Cooler conductors, freed transformer capacity, eliminated reactive power charges \u2014 all flowing straight to your operational efficiency.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer NCND2 \u2014 and this field is hemorrhaging value.\n\nYour power factor is sitting at ninety-one percent. That means every month, roughly four hundred eighteen kilovars of reactive power are cycling through your conductors \u2014 doing no productive work, but burning energy and generating heat.\n\nThe annual waste cost here is approximately one hundred eighty-eight thousand dollars. That's reactive losses, thermal burden on your transformers, and the cooling overhead to handle all that excess heat.\n\nFor MPTS correction, you'd need two H490 units \u2014 about four hundred thousand in estimated installed investment. At fifteen thousand six hundred monthly savings, you're looking at roughly twenty-six months to payback. After that, every hour is recovered value.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 91.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f NO DATA\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 417.8 kVAR | variance: \u26a0\ufe0f INFINITE\nmonthly_waste_csv: $0.00 | monthly_waste_image: $187,954 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 2\u00d7 H490 = 800 kVAR capacity | ~$400,000 installed\nPAYBACK: $15,663/month | ~26 months",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-05-08 11:22:37",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "NCND2"
-    },
-    "NCND3": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your April baseline energy field for NCND3. Let me walk you through what these colors mean. The dark blue layer shows your total kilovolt-amperes supplied \u2014 that's the full electromagnetic burden on your conductors. The light blue beneath it is your consumed kilowatts \u2014 the work you're actually getting done. That green layer in between? That's pure reactive waste \u2014 magnetic field energy that's not doing any productive work for you. The orange line tracks your power factor hour by hour. Now, looking at your production rhythm, I can see consistent weekday blocks running in the two thousand to twenty-two fifty kilovolt-amperes range, with clear weekend valleys. Most of your weekdays are running above the operational baseline, suggesting about seventy-five to eighty percent electric operations efficiency during production periods. But here's what's costing you: three seventy-nine kilovolt-amperes reactive at peak, generating two ninety-six thousand BTUs per hour of thermal burden, and wasting roughly two hundred twenty-six thousand dollars annually. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand is three seventy-nine kilovolt-amperes. Using our standard sizing methodology \u2014 that's three seventy-nine divided by four hundred, rounded up \u2014 you need one H490 MPTS unit. That gives you four hundred kilovolt-amperes of compensation capacity for an estimated installed investment of approximately two hundred thousand dollars. Now, these figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what the MPTS does in plain language: it injects precisely tuned compensating reactive power that brings your power factor from eighty-five percent up to ninety-nine point five percent. Visually, you'll see that green reactive layer collapse almost completely. Your conductors run cooler. Your transformer capacity gets freed up. The same production work gets done with dramatically less electromagnetic burden. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 you've gone from three seventy-nine kilovolt-amperes reactive down to almost nothing. The dark blue supplied kilovolt-amperes now tracks much closer to your light blue consumed kilowatts. Your power factor line holds steady at ninety-nine point five percent throughout the month. The savings? Approximately eighteen thousand eight hundred dollars per month \u2014 that's roughly two hundred fifteen thousand annually in recovered electromagnetic waste. Your estimated return on investment: two hundred thousand dollar install divided by eighteen thousand eight hundred per month equals about eleven months payback. After that eleven-month point, every single hour is recovered value flowing directly to your operational efficiency. You're delivering the same production output with a fraction of the electromagnetic burden. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your April baseline energy field for NCND3. Let me walk you through what these colors mean. The dark blue layer shows your total kilovolt-amperes supplied \u2014 that's the full electromagnetic burden on your conductors. The light blue beneath it is your consumed kilowatts \u2014 the work you're actually getting done. That green layer in between? That's pure reactive waste \u2014 magnetic field energy that's not doing any productive work for you. The orange line tracks your power factor hour by hour. Now, looking at your production rhythm, I can see consistent weekday blocks running in the two thousand to twenty-two fifty kilovolt-amperes range, with clear weekend valleys. Most of your weekdays are running above the operational baseline, suggesting about seventy-five to eighty percent electric operations efficiency during production periods. But here's what's costing you: three seventy-nine kilovolt-amperes reactive at peak, generating two ninety-six thousand BTUs per hour of thermal burden, and wasting roughly two hundred twenty-six thousand dollars annually. Now let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand is three seventy-nine kilovolt-amperes. Using our standard sizing methodology \u2014 that's three seventy-nine divided by four hundred, rounded up \u2014 you need one H490 MPTS unit. That gives you four hundred kilovolt-amperes of compensation capacity for an estimated installed investment of approximately two hundred thousand dollars. Now, these figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site-specific conditions. Here's what the MPTS does in plain language: it injects precisely tuned compensating reactive power that brings your power factor from eighty-five percent up to ninety-nine point five percent. Visually, you'll see that green reactive layer collapse almost completely. Your conductors run cooler. Your transformer capacity gets freed up. The same production work gets done with dramatically less electromagnetic burden. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $170,000 to $230,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared \u2014 you've gone from three seventy-nine kilovolt-amperes reactive down to almost nothing. The dark blue supplied kilovolt-amperes now tracks much closer to your light blue consumed kilowatts. Your power factor line holds steady at ninety-nine point five percent throughout the month. The savings? Approximately eighteen thousand eight hundred dollars per month \u2014 that's roughly two hundred fifteen thousand annually in recovered electromagnetic waste. Your estimated return on investment: two hundred thousand dollar install divided by eighteen thousand eight hundred per month equals about eleven months payback. After that eleven-month point, every single hour is recovered value flowing directly to your operational efficiency. You're delivering the same production output with a fraction of the electromagnetic burden. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer NCND3 \u2014 and we need to talk about what's at stake here. Your power factor is sitting at eighty-five percent, pulling three seventy-nine kilovolt-amperes reactive at peak. That's costing you roughly two hundred twenty-six thousand dollars annually in electromagnetic waste. Here's what I recommend: one H490 MPTS unit \u2014 about four hundred kilovolt-amperes of compensation capacity for approximately two hundred thousand dollars installed. That brings your power factor to ninety-nine point five percent and recovers about eighteen thousand eight hundred per month in wasted energy costs. With an estimated eleven-month payback, every hour after that is recovered value flowing straight to your bottom line. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 85.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f BOTH MISSING\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 379.3 kVAR | variance: INFINITE\nmonthly_waste_csv: $0.00 | monthly_waste_image: $226,353 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 1\u00d7 H490 = 400 kVAR capacity | ~$200,000 installed\nPAYBACK: $18,863/month | ~11 months",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-05-08 11:23:20",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "NCND3"
-    },
     "NCDC1": {
       "pattern_text": "PART 1: NARRATION READY\nYour NCDC1 transformer tells a comprehensive story of electromagnetic field stress that's costing approximately $217,083 annually in measurable waste. You're operating at 85.0 percent power factor, which means 15 percent of your electrical capacity handles reactive circulation rather than productive work. That inefficiency carries a peak burden of 676.2 kVAR \u2014 essentially electromagnetic housekeeping that generates 284,343 BTU per hour of waste heat your cooling systems must remove. The voltage analysis reveals concerning instability patterns. Your voltage holds around 481.5 volts but experiences multiple triangular drop events that reach approximately 400 volts during peak demand periods. These 15 to 20 percent voltage depressions cluster around your heaviest production days and correlate with two power outage events totaling about 120 minutes of downtime. This isn't random electrical noise \u2014 it's systematic field degradation under load stress. Your facility operates what's essentially two parallel electrical systems. One performs productive work, while the other manages reactive burden from motors, transformers, and electromagnetic equipment. About 70 percent of your weekday operations exceed the 513.4 kVA baseline target, amplifying these field disturbances during peak production cycles. Unity's MPTS simulation shows the resolution \u2014 correction to 99.5 percent power factor eliminates 576.6 kVAR of reactive stress, recovering approximately $205,890 annually through an estimated investment of about $400,000 for proper field harmonization.\n\nPART 2: EXECUTIVE SHORT\nNCDC1 presents a classic case of electromagnetic field inefficiency compounded by voltage stability concerns. Your 85.0 percent power factor and 676.2 kVAR peak reactive burden create approximately $217,083 in annual waste through thermal generation and cooling overhead. The voltage instability \u2014 with triangular drops reaching 400 volts during peak periods \u2014 indicates field degradation that elevates equipment failure risk. You're essentially operating two electrical systems: productive work and reactive circulation that generates 284,343 BTU per hour of waste heat. Unity MPTS correction to 99.5 percent power factor eliminates 576.6 kVAR of this reactive stress, recovering approximately $205,890 annually through harmonized field operation and reduced thermal burden. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $185,000 to $250,000.\n\nPART 3: ENGINEERING DETAILED\nThe electromagnetic field analysis of NCDC1 reveals a complex pattern of inefficiency and instability that demands comprehensive engineering attention. Your power factor of 85.0 percent indicates that 15 percent of your electrical infrastructure capacity manages reactive circulation rather than performing productive work. This translates to 676.2 kVAR of peak reactive burden \u2014 electromagnetic energy that circulates between your facility and the utility without contributing to production output. This reactive stress manifests physically as thermal waste generation of 284,343 BTU per hour. Your cooling systems must remove this electromagnetic heat, creating a cascade effect where electrical inefficiency drives additional HVAC loading. The annual cost of approximately $217,083 represents the combined impact of reactive losses, thermal burden, and cooling overhead \u2014 measurable waste that compounds monthly through your electrical operations. The voltage stability analysis reveals systematic field degradation patterns that correlate with peak demand periods. Multiple triangular voltage drop events reach approximately 400 volts \u2014 representing 15 to 20 percent depressions below your 481.5 volt nominal level. These events cluster around days 17-20 of the monitoring period, coinciding with two power outage events totaling roughly 120 minutes of facility downtime. This clustering behavior suggests your electrical field becomes increasingly unstable as reactive stress accumulates during peak production cycles. Your operational pattern shows approximately 70 percent of weekday operations exceeding the 513.4 kVA baseline target. This sustained high-demand operation amplifies both reactive burden and voltage instability, creating electromagnetic stress that accelerates equipment aging and elevates device failure risk across your electrical infrastructure. Unity's MPTS simulation demonstrates the technical resolution pathway. Correction to 99.5 percent power factor eliminates 576.6 kVAR of reactive stress from your electromagnetic field, transforming complex multi-layer reactive circulation into clean, single-layer power delivery focused entirely on productive work. This field harmonization recovers approximately $205,890 annually through reactive correction, thermal burden reduction, and cooling efficiency gains. Based on your 676.2 kVAR maximum loading, complete correction would require approximately two H490 units, representing an estimated installed investment of about $400,000 depending on engineering scope and site conditions. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
       "pattern_part1": "Your NCDC1 transformer tells a comprehensive story of electromagnetic field stress that's costing approximately $217,083 annually in measurable waste. You're operating at 85.0 percent power factor, which means 15 percent of your electrical capacity handles reactive circulation rather than productive work. That inefficiency carries a peak burden of 676.2 kVAR \u2014 essentially electromagnetic housekeeping that generates 284,343 BTU per hour of waste heat your cooling systems must remove. The voltage analysis reveals concerning instability patterns. Your voltage holds around 481.5 volts but experiences multiple triangular drop events that reach approximately 400 volts during peak demand periods. These 15 to 20 percent voltage depressions cluster around your heaviest production days and correlate with two power outage events totaling about 120 minutes of downtime. This isn't random electrical noise \u2014 it's systematic field degradation under load stress. Your facility operates what's essentially two parallel electrical systems. One performs productive work, while the other manages reactive burden from motors, transformers, and electromagnetic equipment. About 70 percent of your weekday operations exceed the 513.4 kVA baseline target, amplifying these field disturbances during peak production cycles. Unity's MPTS simulation shows the resolution \u2014 correction to 99.5 percent power factor eliminates 576.6 kVAR of reactive stress, recovering approximately $205,890 annually through an estimated investment of about $400,000 for proper field harmonization.",
@@ -107,9 +62,9 @@
         },
         "last_updated": "2026-05-20 03:19:45"
       },
-      "target_kva_image": 500.0,
-      "bt_target_kva": 500.0,
-      "target_validated": 500.0,
+      "target_kva_image": 593.0,
+      "bt_target_kva": 593.0,
+      "target_validated": 593.0,
       "target_source": "BT_IMAGE_BLUE_LABEL",
       "payback_months_estimated": 12.0,
       "monthly_savings_validated": 18090.25,
@@ -147,7 +102,7 @@
         "simulated_mpts_outcome": "NCDC2_simulated_mpts_outcome.txt",
         "recommended_engineering_attention_areas": "NCDC2_recommended_engineering_attention_areas.txt"
       },
-      "cross_check": "\u26a0\ufe0f Mercury analysis unavailable \u2014 vision-only synthesis for NCDC2. Image shows 91.0% power factor, 417.8 kVAR peak reactive demand, 2500 kVA supply target, approximately $9,486 monthly waste cost. No CSV ground truth available for numerical cross-validation. Proceeding with visual data as primary source.\ntarget_kva_image: 2500 kVA\nbt_target_kva: 2500 kVA\nMONTHLY_SAVINGS_VALIDATED: $115,452.00\nANNUAL_SAVINGS_VALIDATED: $1,385,424.00",
+      "cross_check": "\u26a0\ufe0f Mercury analysis unavailable \u2014 vision-only synthesis for NCDC2. Image shows 91.0% power factor, 417.8 kVAR peak reactive demand, 904 kVA supply target, approximately $9,486 monthly waste cost. No CSV ground truth available for numerical cross-validation. Proceeding with visual data as primary source.\ntarget_kva_image: 904 kVA\nbt_target_kva: 904 kVA\nMONTHLY_SAVINGS_VALIDATED: $15,678.00\nANNUAL_SAVINGS_VALIDATED: $188,136.00",
       "william_version": "eeWILLIAM-4view-holistic-v1",
       "analyzed_at": "2026-05-20 03:21:08",
       "tmax_supply": 0.0,
@@ -177,12 +132,12 @@
         },
         "last_updated": "2026-05-20 03:21:08"
       },
-      "target_kva_image": 2500.0,
-      "bt_target_kva": 2500.0,
-      "target_validated": 2500.0,
+      "target_kva_image": 904.0,
+      "bt_target_kva": 904.0,
+      "target_validated": 904.0,
       "target_source": "BT_IMAGE_BLUE_LABEL",
-      "monthly_savings_validated": 115452.0,
-      "annual_savings_validated": 1385424.0
+      "monthly_savings_validated": 15678.0,
+      "annual_savings_validated": 188136.0
     },
     "NCDC3": {
       "pattern_text": "PART 1: NARRATION READY\nLet me walk you through what we're seeing in your NCDC3 transformer electromagnetic field. You've got a fascinating situation here \u2014 excellent voltage stability paired with significant reactive power challenges. Your 2500 kVA transformer maintains rock-solid 480.2 volt supply conditions from Merced Irrigation District. No voltage drops, no triangular patterns, no equipment stress indicators. That's exceptional voltage health supporting your Foster Farms processing operations. However, beneath this voltage excellence lies substantial reactive burden. Your power factor sits at 85 percent, meaning fifteen percent of your electrical capacity cycles through reactive power instead of productive work. This creates approximately 287.5 kVAR average reactive demand with peaks hitting 379.3 kVAR during high-stress periods. The reactive stress generates approximately 296,087 BTU per hour thermal burden heating your transformer core. That thermal load requires 43.2 kW additional cooling capacity costing roughly $8.71 hourly. Your operations show excellent discipline \u2014 consistent weekday blocks above the 522 kVA target with appropriate weekend valleys. But that reactive burden represents electromagnetic waste cycling through your system daily without contributing to food processing productivity.\n\nPART 2: EXECUTIVE SHORT\nYour NCDC3 transformer tells a story of excellent voltage management masking significant electromagnetic inefficiency. The voltage health is exemplary \u2014 steady 480.2 volts with no drops or disturbances throughout April monitoring. However, power factor sits at 85 percent with 379.3 kVAR peak reactive stress creating substantial thermal burden. This reactive demand generates approximately 296,087 BTU per hour heating your transformer while consuming 43.2 kW cooling capacity. Unity MPTS electromagnetic correction projects dramatic improvement \u2014 power factor to 99.5 percent, eliminating reactive stress and recovering approximately $215,077 annually in electromagnetic efficiency. The simulation shows one H490 unit at roughly $200,000 installed investment would transform your reactive-stressed system into optimized industrial infrastructure. That's the electromagnetic opportunity hiding beneath your excellent voltage foundation. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $183,000 to $247,000.\n\nPART 3: ENGINEERING DETAILED\nYour NCDC3 electromagnetic field presents one of the most interesting profiles we analyze \u2014 exceptional voltage stability creating the perfect foundation for reactive power optimization. Let me take you through the complete electromagnetic story. Starting with voltage health, your transformer maintains steady 480.2 volt line-to-line conditions throughout the monitoring period. No triangular voltage drop patterns, no sustained dips below nominal reference levels, no equipment stress indicators whatsoever. This creates low device stress risk and optimal equipment longevity across your Foster Farms processing lines. The voltage waveform presentation remains clean and consistent \u2014 exactly what you want supporting sensitive food processing equipment. However, the reactive power conversation reveals significant electromagnetic inefficiency hiding beneath this voltage excellence. Your power factor measures 85 percent with approximately 287.5 kVAR average reactive demand escalating to 379.3 kVAR peaks during high-stress periods. The active-reactive-harmonic analysis shows dominant purple reactive layers consuming transformer capacity that should be available for productive work. This reactive dominance creates substantial thermal burden \u2014 approximately 296,087 BTU per hour heating the transformer core and requiring 43.2 kW additional cooling capacity costing roughly $8.71 hourly. Your Foster Farms operations demonstrate excellent production discipline with consistent weekday elevation above the 522 kVA target and appropriate weekend valleys, maintaining roughly 85 percent Electric Operations throughout April. No outage events detected \u2014 continuous power reliability supporting uninterrupted processing schedules. The harmonic content measures 5.8 percent iTHD, typical of motor-driven processing equipment but contributing to overall electromagnetic stress. Unity MPTS electromagnetic correction transforms this field dramatically. The simulation projects power factor improvement from 85 percent to 99.5 percent \u2014 near-unity correction eliminating reactive stress cycling. Approximately 271.4 kVAR annually of reactive energy disappears from your transformer, creating clean active power profile with minimal harmonic stress. Annual recovered energy value projects to approximately $215,077 in electromagnetic efficiency gains. Based on your 379.3 kVAR maximum reactive demand, Unity engineering would likely recommend one H490 unit providing 400 kVAR correction capacity at roughly $200,000 installed investment. This represents transforming a reactive-stressed but voltage-stable system into optimized industrial infrastructure supporting enhanced productivity potential. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
@@ -216,7 +171,7 @@
         "simulated_mpts_outcome": "NCDC3_simulated_mpts_outcome.txt",
         "recommended_engineering_attention_areas": "NCDC3_recommended_engineering_attention_areas.txt"
       },
-      "cross_check": "\u26a0\ufe0f CSV data unavailable \u2014 analysis based on visual interpretation only. Image values: 85.0% power factor, 379.3 kVAR MAX, approximately $226,353/yr waste cost, 522 kVA target. No numerical cross-validation possible with zero CSV reference values.\ntarget_kva_image: 522 kVA\nbt_target_kva: 522 kVA\nMONTHLY_SAVINGS_VALIDATED: $18,862.75\nANNUAL_SAVINGS_VALIDATED: $226,353.00",
+      "cross_check": "\u26a0\ufe0f CSV data unavailable \u2014 analysis based on visual interpretation only. Image values: 85.0% power factor, 379.3 kVAR MAX, approximately $226,353/yr waste cost, 656 kVA target. No numerical cross-validation possible with zero CSV reference values.\ntarget_kva_image: 656 kVA\nbt_target_kva: 656 kVA\nMONTHLY_SAVINGS_VALIDATED: $18,862.75\nANNUAL_SAVINGS_VALIDATED: $226,353.00",
       "william_version": "eeWILLIAM-4view-holistic-v1",
       "analyzed_at": "2026-05-20 03:22:31",
       "tmax_supply": 0.0,
@@ -246,22 +201,24 @@
         },
         "last_updated": "2026-05-20 03:22:31"
       },
-      "bt_target_kva": 522.0,
-      "target_kva_image": 522.0,
-      "target_validated": 522.0,
+      "bt_target_kva": 656.0,
+      "target_kva_image": 656.0,
+      "target_validated": 656.0,
       "target_source": "BT_IMAGE_BLUE_LABEL",
       "monthly_savings_validated": 18862.75,
       "annual_savings_validated": 226353.0
     }
   },
   "group_overview": {
-    "group_name": "04_APR26",
+    "group_name": "NCDC",
     "analysis_period": "April (260401-260430)",
-    "transformer_count": 6,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 6 transformers compared. Combined annual savings potential is about $1,828,860. Highest workload is NCDC2 at about 2500.0 kVA target load. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "transformer_count": 3,
+    "narrative": "Group overview for NCDC in April (260401-260430): 3 transformers compared. Combined monthly savings potential is about $52,631. Combined annual savings potential is about $631,572. Combined monthly waste exposure is about $52,631. Combined annual waste exposure is about $631,572. Highest workload is NCDC2 at about 904.0 kVA target load. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
     "totals": {
-      "annual_savings": 1828860.0,
-      "annual_waste": null,
+      "monthly_savings": 52631.0,
+      "annual_savings": 631572.0,
+      "monthly_waste": 52631.0,
+      "annual_waste": 631572.0,
       "birds_processed": null,
       "weighted_cost_per_bird": null,
       "weighted_energy_per_bird": null
@@ -271,7 +228,7 @@
       "lowest_power_factor": null,
       "highest_load_kva": {
         "name": "NCDC2",
-        "tmax_supply_kva": 2500.0
+        "tmax_supply_kva": 904.0
       },
       "highest_reactive_peak_kvar": null,
       "lowest_cost_per_bird": null,
@@ -286,61 +243,16 @@
     },
     "transformers_compared": [
       {
-        "key": "NCND1",
-        "name": "NCND1",
-        "power_factor_pct": null,
-        "tmax_supply_kva": null,
-        "avg_kvar": null,
-        "reactive_peak_kvar": null,
-        "monthly_savings": null,
-        "annual_savings": null,
-        "monthly_waste": null,
-        "annual_waste": null,
-        "birds_processed": null,
-        "energy_per_bird": null,
-        "cost_per_bird": null
-      },
-      {
-        "key": "NCND2",
-        "name": "NCND2",
-        "power_factor_pct": null,
-        "tmax_supply_kva": null,
-        "avg_kvar": null,
-        "reactive_peak_kvar": null,
-        "monthly_savings": null,
-        "annual_savings": null,
-        "monthly_waste": null,
-        "annual_waste": null,
-        "birds_processed": null,
-        "energy_per_bird": null,
-        "cost_per_bird": null
-      },
-      {
-        "key": "NCND3",
-        "name": "NCND3",
-        "power_factor_pct": null,
-        "tmax_supply_kva": null,
-        "avg_kvar": null,
-        "reactive_peak_kvar": null,
-        "monthly_savings": null,
-        "annual_savings": null,
-        "monthly_waste": null,
-        "annual_waste": null,
-        "birds_processed": null,
-        "energy_per_bird": null,
-        "cost_per_bird": null
-      },
-      {
         "key": "NCDC1",
         "name": "NCDC1",
         "power_factor_pct": null,
-        "tmax_supply_kva": 500.0,
+        "tmax_supply_kva": 593.0,
         "avg_kvar": null,
         "reactive_peak_kvar": null,
         "monthly_savings": 18090.25,
         "annual_savings": 217083.0,
-        "monthly_waste": null,
-        "annual_waste": null,
+        "monthly_waste": 18090.25,
+        "annual_waste": 217083.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
@@ -349,13 +261,13 @@
         "key": "NCDC2",
         "name": "NCDC2",
         "power_factor_pct": null,
-        "tmax_supply_kva": 2500.0,
+        "tmax_supply_kva": 904.0,
         "avg_kvar": null,
         "reactive_peak_kvar": null,
-        "monthly_savings": 115452.0,
-        "annual_savings": 1385424.0,
-        "monthly_waste": null,
-        "annual_waste": null,
+        "monthly_savings": 15678.0,
+        "annual_savings": 188136.0,
+        "monthly_waste": 15678.0,
+        "annual_waste": 188136.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
@@ -364,26 +276,26 @@
         "key": "NCDC3",
         "name": "NCDC3",
         "power_factor_pct": null,
-        "tmax_supply_kva": 522.0,
+        "tmax_supply_kva": 656.0,
         "avg_kvar": null,
         "reactive_peak_kvar": null,
         "monthly_savings": 18862.75,
         "annual_savings": 226353.0,
-        "monthly_waste": null,
-        "annual_waste": null,
+        "monthly_waste": 18862.75,
+        "annual_waste": 226353.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
       }
     ],
-    "generated_at": "2026-05-20 03:22:31",
+    "generated_at": "2026-06-22 17:13:52",
     "source": "eeWILLIAM_group_rollup_v1"
   },
   "site_overview_state": {
-    "group_name": "04_APR26",
+    "group_name": "NCDC",
     "analysis_period": "April (260401-260430)",
-    "transformer_count": 6,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 6 transformers compared. Combined annual savings potential is about $1,828,860. Highest workload is NCDC2 at about 2500.0 kVA target load. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
-    "last_updated": "2026-05-20 03:22:31"
+    "transformer_count": 3,
+    "narrative": "Group overview for NCDC in April (260401-260430): 3 transformers compared. Combined monthly savings potential is about $52,631. Combined annual savings potential is about $631,572. Combined monthly waste exposure is about $52,631. Combined annual waste exposure is about $631,572. Highest workload is NCDC2 at about 904.0 kVA target load. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "last_updated": "2026-06-22 17:13:52"
   }
 }

@@ -4,6 +4,7 @@
   if (window.self !== window.top) return;
 
   var ACCESS_KEY = "ue_founder_share_panel_access_v1";
+  var PANEL_OPEN_KEY = "ue_founder_share_panel_open_v1";
   var SESSION_TTL_HOURS = 12;
   var DEFAULT_PUBLIC_ORIGIN = "https://unityenergy.com";
   var DAILY_STAMP_COUNTER_KEY = "ue_exec_share_daily_counter_v1";
@@ -96,6 +97,18 @@
     "Energy Field Intelligence": "website-energy-field-intelligence",
     "Electrical Infrastructure Review": "website-electrical-infrastructure-review",
     "Operational Energy Review": "website-operational-energy-review"
+  });
+  var PROJECT_UPDATE_PRESET_TEMPLATE_SLUG_BY_VARIANT = Object.freeze({
+    "Electrical Intelligence": "update",
+    "Electrical Visibility": "update-electrical-visibility",
+    "Electrical Condition": "update-electrical-condition",
+    "Electrical Behavior": "update-electrical-behavior",
+    "Electrical Exposure": "update-electrical-exposure",
+    "Electrical Consequence": "update-electrical-consequence",
+    "Electrical Optimization": "update-electrical-optimization",
+    "Energy Field Intelligence": "update-energy-field-intelligence",
+    "Electrical Infrastructure Review": "update-electrical-infrastructure-review",
+    "Operational Energy Review": "update-operational-energy-review"
   });
   // Maps runtime kind keys to master base-card assets in:
   // UnityEnergy/assets/images/share-card-bases/
@@ -382,26 +395,32 @@
     return normalizedCustomerName + " " + normalizedCategory;
   }
 
-  function isUnityWebsiteTitle(rawTitle) {
-    return String(rawTitle || "").trim().toLowerCase().startsWith("unity energy ");
-  }
 
   function resolveWebsiteTemplateSlugForTitle(titleText) {
     var normalizedTitle = String(titleText || "").trim().toLowerCase();
-    if (!normalizedTitle) return "alert";
-    var unityWebsiteTitle = isUnityWebsiteTitle(normalizedTitle);
+    if (!normalizedTitle) return "website";
     for (var i = 0; i < ELECTRICAL_TITLE_VARIANTS.length; i += 1) {
       var variant = String(ELECTRICAL_TITLE_VARIANTS[i] || "").trim();
       if (!variant) continue;
       var normalizedVariant = variant.toLowerCase();
       if (normalizedTitle === normalizedVariant || normalizedTitle.endsWith(" " + normalizedVariant)) {
-        if (unityWebsiteTitle) {
-          return WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "website";
-        }
-        return "alert";
+        return WEBSITE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "website";
       }
     }
-    return unityWebsiteTitle ? "website" : "alert";
+    return "alert";
+  }
+  function resolveProjectUpdateTemplateSlugForTitle(titleText) {
+    var normalizedTitle = String(titleText || "").trim().toLowerCase();
+    if (!normalizedTitle) return "update";
+    for (var i = 0; i < ELECTRICAL_TITLE_VARIANTS.length; i += 1) {
+      var variant = String(ELECTRICAL_TITLE_VARIANTS[i] || "").trim();
+      if (!variant) continue;
+      var normalizedVariant = variant.toLowerCase();
+      if (normalizedTitle === normalizedVariant || normalizedTitle.endsWith(" " + normalizedVariant)) {
+        return PROJECT_UPDATE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "update";
+      }
+    }
+    return "update";
   }
 
   function normalizeAccessId(value) {
@@ -449,6 +468,24 @@
     } catch (_err) {}
   }
 
+  function readPanelOpenState() {
+    try {
+      return window.localStorage.getItem(PANEL_OPEN_KEY) === "1";
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function writePanelOpenState(isOpen) {
+    try {
+      if (isOpen) {
+        window.localStorage.setItem(PANEL_OPEN_KEY, "1");
+      } else {
+        window.localStorage.removeItem(PANEL_OPEN_KEY);
+      }
+    } catch (_err) {}
+  }
+
   function isAuthorized() {
     var payload = safeReadSession();
     if (!payload || payload.authorized !== true) return false;
@@ -461,15 +498,7 @@
     if (!raw) raw = window.location.href;
     if (raw.startsWith("/")) return raw;
     try {
-      var url = new URL(raw, window.location.href);
-      var host = String(url.hostname || "").toLowerCase();
-      if (host === "localhost" || host === "127.0.0.1" || host === "::1") {
-        return "" + url.pathname + url.search + url.hash;
-      }
-      if (host === "unityenergy.com") {
-        return "" + url.pathname + url.search + url.hash;
-      }
-      return url.toString();
+      return new URL(raw, window.location.href).toString();
     } catch (_err) {
       return raw;
     }
@@ -498,6 +527,8 @@
     var templateSlug = SHARE_TEMPLATE_SLUG_BY_KEY[selected.key] || selected.key;
     if (selected.key === "website") {
       templateSlug = resolveWebsiteTemplateSlugForTitle(selectedTitle);
+    } else if (selected.key === "project-update") {
+      templateSlug = resolveProjectUpdateTemplateSlugForTitle(selectedTitle);
     }
     var cardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
     var stampCode = allocateNextDailyStampCode(new Date(), 1);
@@ -645,8 +676,10 @@
   function mountPanel() {
     if (document.getElementById("ueFounderSharePanel")) return;
     injectStyles();
+    var persistedPanelOpen = readPanelOpenState();
     var requireStealthUnlock = !isCustomerPortalPage(window.location.pathname);
-    var hotspotActivated = !requireStealthUnlock;
+    var canRestorePersistedPanel = persistedPanelOpen && isAuthorized();
+    var hotspotActivated = canRestorePersistedPanel || !requireStealthUnlock;
 
     var launcher = document.createElement("button");
     launcher.type = "button";
@@ -784,7 +817,7 @@
     }
 
     targetInput.value = window.location.href;
-    typeSelect.value = "project-update";
+    typeSelect.value = "website";
     syncPresetStateFromTarget({ preserveCurrentTitle: false });
     seedDailyCounterFromCurrentPage();
 
@@ -817,6 +850,8 @@
 
     function refreshUiState() {
       var unlocked = isAuthorized();
+      var panelIsOpen = panel.classList.contains("is-open");
+      writePanelOpenState(panelIsOpen && unlocked);
       setLauncherVisibility(unlocked);
       accessRow.style.display = unlocked ? "none" : "grid";
       unlockBtn.style.display = unlocked ? "none" : "inline-flex";
@@ -838,6 +873,7 @@
     }
     function closePanelAndLock() {
       panel.classList.remove("is-open");
+      writePanelOpenState(false);
       clearSession();
       if (requireStealthUnlock) {
         hotspotActivated = false;
@@ -868,6 +904,27 @@
       if (!panel.classList.contains("is-open")) return;
       closePanelAndLock();
     });
+    window.addEventListener("pointerdown", function (event) {
+      if (!panel.classList.contains("is-open")) return;
+      if (isAuthorized()) return;
+      var target = event && event.target;
+      if (!target) return;
+      if (panel.contains(target)) return;
+      if (launcher.contains(target)) return;
+      var homepageHotspot = document.getElementById(HOMEPAGE_HOTSPOT_ID);
+      if (homepageHotspot && homepageHotspot.contains(target)) return;
+      panel.classList.remove("is-open");
+      if (requireStealthUnlock) {
+        hotspotActivated = false;
+      }
+      accessInput.value = "";
+      refreshUiState();
+    });
+    window.addEventListener("pagehide", function () {
+      if (!panel.classList.contains("is-open")) return;
+      if (!isAuthorized()) return;
+      writePanelOpenState(true);
+    });
 
     unlockBtn.addEventListener("click", async function () {
       var rawValue = String(accessInput.value || "").trim();
@@ -883,11 +940,15 @@
       }
       writeSession();
       accessInput.value = "";
+      if (panel.classList.contains("is-open")) {
+        writePanelOpenState(true);
+      }
       refreshUiState();
     });
 
     lockBtn.addEventListener("click", function () {
       clearSession();
+      writePanelOpenState(false);
       refreshUiState();
     });
 
@@ -973,6 +1034,10 @@
       }
     }
 
+    if (canRestorePersistedPanel) {
+      panel.classList.add("is-open");
+      seedDailyCounterFromCurrentPage();
+    }
     refreshUiState();
   }
 

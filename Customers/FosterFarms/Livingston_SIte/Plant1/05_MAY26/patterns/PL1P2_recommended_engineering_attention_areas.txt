@@ -1,0 +1,15 @@
+**PL1P2 — Engineering Attention Priorities**
+
+Several areas warrant focused engineering review before or concurrent with MPTS sizing finalization.
+
+**First, reactive compensation sizing confirmation.** The kVAR MAX of 948 kVAR is a vision-derived figure. Before committing to a three-unit H490 installation, a Mercury-validated dataset with confirmed kVAR peak values should be used to finalize the sizing. The vision estimate is a reliable planning basis, but submetered confirmation eliminates oversizing or undersizing risk.
+
+**Second, voltage dip root-cause investigation.** The 15 to 18 labeled voltage dip events across May — with the minimum excursion reaching 306–307 volts — should be mapped against the production schedule to identify which specific load events are driving the deepest sags. Motor starting events, compressor cycling, and conveyor inrush are the most likely candidates. If any single load event is responsible for a disproportionate share of the dip depth, targeted soft-start or VFD upgrades may complement the MPTS correction.
+
+**Third, the mid-week outage event at approximately 260514–260515** should be classified as planned or unplanned. If unplanned, the restart profile under current high-reactive conditions should be reviewed to ensure motor restart sequencing does not compound the voltage stress on recovery.
+
+**Fourth, thermal burden trajectory monitoring.** The 424,981 BTU per hour thermal burden is the current May measurement. If this transformer has been in service without reactive compensation for multiple years, winding insulation condition should be assessed — accumulated thermal stress from sustained reactive loading may have already reduced the insulation margin below new-installation ratings.
+
+**Fifth, harmonic content baseline.** The persistent low-amplitude harmonic trace visible in the M view should be formally measured with a power quality analyzer to establish a THD baseline. If harmonic distortion is above 5% THD, a combined MPTS plus harmonic filter approach may be warranted rather than reactive compensation alone.
+
+---

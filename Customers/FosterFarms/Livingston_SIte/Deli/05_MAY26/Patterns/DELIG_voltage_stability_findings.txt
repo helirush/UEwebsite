@@ -1,0 +1,11 @@
+**Transformer: Deli.G — DELIG | Voltage Health**
+
+The voltage picture on Deli.G is nuanced — and in some ways more concerning than a simple high or low reading would be. The average voltage holds at 480.4 volts, which is right at nominal, and the general operating band runs between roughly 480V and the reported maximum of 499.8V to 500.1V. On the surface, that looks acceptable. But the detail tells a different story.
+
+The voltage trace throughout May is not clean. There is persistent fine-grain oscillation riding along the top of the waveform for the entire month. This is the visual signature of harmonic injection and reactive loading interacting with supply impedance — the field is vibrating at a low but constant level. Equipment connected to this transformer is not receiving smooth, stable voltage. It is receiving voltage that is continuously jittered by the reactive and harmonic environment this transformer is operating in.
+
+More significantly, there are recurring triangular voltage-drop events that cluster in alignment with high-amperage load cycling. Two specific minimum voltage annotations appear in the chart near the end of May — readings of 460.3V and 460.2V. Those are approximately 20 volts below the 480V nominal, representing a roughly 4 percent sag below nominal line-to-line voltage. In a facility with motor-driven refrigeration, deli production equipment, and variable frequency drives, a consistent 4 percent sag during peak loading is not a footnote — it is a device-health concern.
+
+The reported header minimum of 9.6V is almost certainly tied to the outage events observed in the chart rather than an operational sag, and should be treated as such. But the 460V-range dips under full load are real operating-condition stress events. Approximately two distinct outage events are visible in the chart as top-to-bottom gold vertical streaks, concentrated near the 260526 region — consistent with where the voltage minimum annotations cluster. The combination of outage events and recurring voltage dips in the same time region suggests a localized stress concentration in that period.
+
+---

@@ -27,6 +27,8 @@
     "special-alert": "special-alert",
     specialalert: "special-alert"
   });
+  // Master share-card contract (8 cards) sourced from:
+  // UnityEnergy/assets/images/share-card-bases/
   const DEFAULT_SHARE_KIND_CONFIG = Object.freeze({
     website: {
       key: "website",

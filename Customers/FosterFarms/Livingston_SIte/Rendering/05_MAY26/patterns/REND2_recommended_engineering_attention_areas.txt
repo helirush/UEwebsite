@@ -1,0 +1,15 @@
+**REND2 — Recommended Engineering Attention Areas**
+
+Several areas warrant direct engineering attention on REND2, independent of and in conjunction with the MPTS correction work.
+
+**Transformer capacity margin:** At 88.7% of rated kVA capacity, REND2 is operating with minimal headroom. Before any facility expansion or new load additions, a formal transformer capacity review should be conducted. If process loads grow, this transformer could breach its rated ceiling without reactive correction in place.
+
+**Voltage sag events — root cause investigation:** The fourteen annotated voltage dip events, ranging from 460.6V down to 451.1V, should be correlated against the facility's operational event log. Identifying which specific loads — compressor starts, rendering process cycling, or large motor inrush — are driving these events will allow targeted mitigation through soft-start controls, sequenced load starts, or VFD tuning alongside the MPTS correction.
+
+**Confirmed outage event:** The gold streak observed in the chart body, estimated at 60 to 120 minutes, should be logged, dated, and reviewed against maintenance records. If this was an unplanned outage rather than a scheduled shutdown, the root cause needs to be identified and documented for reliability planning.
+
+**Harmonic distortion management:** The 11.0% maximum iTHD warrants monitoring. While MPTS correction will reduce reactive amplification effects, a dedicated harmonic survey should be considered if the iTHD maximum climbs further — particularly given the transformer's elevated capacity utilization.
+
+**Thermal monitoring:** Given the 1,256,097 BTU per hour thermal burden and the $315,354 per year cooling cost, verified thermal imaging of the transformer, associated switchgear, and primary conductors is recommended to identify any hotspot conditions that may indicate accelerated insulation aging.
+
+---

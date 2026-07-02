@@ -1,0 +1,18 @@
+**NCND2 — Recommended Engineering Attention Areas**
+
+**1. MPTS Installation — Priority: High**
+The reactive profile at NCND2 is clear and consistent. A single H490 unit sized at 400 kVAR provides full coverage of the 351.6 kVAR peak. The planning-level investment of approximately $200,000 installed should be placed into capital planning with a target installation scoped alongside a full Mercury dataset capture to confirm sizing. Final pricing depends on engineering scope, conduit runs, control integration, and site-specific conditions — a detailed engineering walkthrough is the appropriate next step.
+
+**2. Voltage Floor Monitoring — Priority: Moderate**
+The 464V MinVoltage floor with repeated approaches throughout May indicates this transformer's supply is brushing below nominal on a regular basis. A trending protocol across June and July datasets would confirm whether this floor is stable or degrading. If the pattern worsens, coordination with Merced Irrigation District on tap adjustment or local voltage support should be evaluated.
+
+**3. Harmonic Survey — Priority: Moderate**
+The 10.6% iTHD peak reading is above the level where transformer derating should be evaluated. IEEE C57.110 provides guidance on K-factor transformer loading under harmonic conditions. Given the mix of variable frequency drives and rectifier loads implied by the load profile, a dedicated harmonic survey using a power quality analyzer would identify whether any mitigation — passive filtering, drive input reactors, or transformer derating headroom assessment — is warranted on this 2,500 kVA unit.
+
+**4. Mercury Full Dataset Capture — Priority: High**
+This analysis is vision-only. A full Mercury 2 CSV capture for NCND2 would provide verified numeric ground truth, enable precise payback modeling, and support a formal MPTS proposal with auditable baseline data. This should be scheduled as a parallel action with the MPTS engineering walkthrough.
+
+**5. Outage Event Documentation**
+Three brief outage events totaling approximately 7–11 minutes were detected in the May dataset. While minor in duration, their cause — whether utility switching, internal breaker operations, or transfer events — should be confirmed in the facility's operations log to ensure they are accounted for and not masking a recurring supply reliability issue.
+
+---

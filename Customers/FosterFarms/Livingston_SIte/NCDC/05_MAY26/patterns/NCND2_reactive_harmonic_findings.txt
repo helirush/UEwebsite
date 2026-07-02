@@ -1,0 +1,11 @@
+**NCND2 — Reactive and Harmonic Findings | May 2026**
+
+The reactive power profile of NCND2 is the dominant driver of financial waste on this transformer and the clearest argument for MPTS correction. The field carries an average reactive burden of 244.9 kVAR throughout the month, with a peak reactive demand of 351.6 kVAR MAX. That maximum reading is the engineering anchor for MPTS sizing and confirms that at the worst moments — full production load, maximum motor count in simultaneous operation — this transformer is carrying over 350 kVAR of non-productive reactive current.
+
+To put that in physical terms: reactive current circulates continuously between the power source and the inductive loads on this transformer — compressor motors, processing motors, HVAC units, conveyor drives — without ever delivering useful mechanical work. It occupies conductor capacity, heats transformer windings, and shows up on your utility bill as a power factor penalty. At 93.0% average power factor, NCND2 is operating 7 percentage points below unity, which means the transformer and supply conductors are carrying approximately 7.5% more current than the actual productive load requires. That excess current is the reactive component — and it is costing you every hour of every operating day.
+
+The harmonic picture adds a secondary layer of concern. The M view confirms an iTHD average of 5.7% with a maximum peak of 10.6% iTHD. The 5.7% average is within IEEE 519 guideline thresholds for most industrial points of common coupling, but the 10.6% peak is meaningful. Harmonic currents at those levels — predominantly third and fifth order components from variable speed drives and rectifier loads — add to transformer core losses through eddy current heating. They also interact with the reactive current profile in ways that can accelerate insulation aging in both the transformer and the connected motor windings.
+
+The M view's amperage trace corroborates this picture: maximum 984.1 Amps with a turbulent, spike-rich waveform profile. This is not a smooth resistive load; it is a dynamically cycling industrial field with significant inductive character and measurable harmonic content riding the reactive burden continuously.
+
+---

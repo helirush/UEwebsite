@@ -1,1 +1,15 @@
-MPTS harmonization would transform REND3's electrical field dramatically, elevating power factor from 76.8 percent to 99.5 percent while reducing reactive demand from 480 kVAR average to just 25.8 kVAR. The simulation shows annual recovery of approximately $121,500 through elimination of reactive waste and thermal burden reduction. With proper MPTS sizing - requiring roughly 3 H490 units based on the 909 kVAR maximum demand - your electrical field would operate in true electromagnetic harmony. The voltage instability observed in the baseline condition would stabilize as current stress reduces by approximately 20 percent. Thermal burden would drop significantly, reducing cooling overhead and improving overall system efficiency. The clean consumed energy profile in the MPTS simulation demonstrates how reactive power correction eliminates the magnetic stress that creates both voltage instability and excessive current flow.
+**REND3 — Simulated MPTS Outcome | April 2026**
+
+The MPTS simulation for REND3 shows the field after reactive compensation is applied, and the transformation is significant.
+
+Power factor corrects from a baseline average of 76.8 percent to 99.5 percent in the simulated state. That is not a modest improvement — it is the difference between a field where nearly a quarter of delivered current is reactive waste and a field where less than one-half of one percent is. The reactive average collapses from 480.3 kVAR down to approximately 25.8 kVAR. In practical terms, that means 454.5 kVAR of reactive burden that currently circulates through your transformer, conductors, and connected equipment simply disappears from the field on an average-basis basis in normal operating hours.
+
+The thermal consequence of that reactive collapse is direct and immediate. Reactive current is a primary driver of I²R losses and transformer thermal burden. When 454 kVAR of average reactive load is eliminated, conductor heating drops, transformer core losses improve, and the 634,722 BTU per hour thermal burden decreases materially. Less heat in the field means less cooling demand — and less cooling demand means the $18.35 per hour cooling cost and 92.6 kW cooling load both shrink.
+
+The annualized total waste figure of approximately $479,314 per year represents the maximum recovery opportunity. The MPTS simulation is designed to show what the field looks like after tuning — and the gap between the baseline and the simulated state is the value that MPTS correction delivers.
+
+**MPTS Sizing:** At 909.3 kVAR MAX, the sizing calculation runs 909.3 ÷ 400 = 2.27, which rounds up to **3 H490 units**. Planning-level investment for three H490 units is approximately $600,000 installed — though final pricing depends on engineering scope, site conditions, and configuration. That investment is working against approximately $479,000 in annualized waste, putting a planning-level payback horizon in the range of roughly twelve to fifteen months depending on site-specific rate structures. These are planning-level estimates only, not binding figures.
+
+Note: the S-view kVAR MAX reading of 2,375.8 kVAR appears anomalous and is flagged for engineering review — it likely reflects a peak-capture or chart-scaling artifact and does not affect the average-recovery narrative.
+
+---

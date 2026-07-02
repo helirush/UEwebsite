@@ -1794,6 +1794,38 @@
 </div>
 <!-- Unity Dashboard - Unified JavaScript System -->
 <script>
+(function loadSummaryboardSideMetrics() {
+  if (window.__unitySideMetricsLoaderInjected) return;
+  window.__unitySideMetricsLoaderInjected = true;
+  const scriptName = 'summaryboard-side-metrics.js';
+    const scriptVersion = window.__unitySideMetricsVersion || '20260624d';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 8; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unitySideMetricsLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     // Set Unity date
     const today = new Date();
@@ -3778,74 +3810,220 @@
 </div>
 
 
-<script id="pattern-retention-guard">
+<script id="unity-narration-retention-config">
+window.__UNITY_NARRATION_ARCHIVED__ = (window.__UNITY_NARRATION_ARCHIVED__ === true);
+window.__UNITY_NARRATION_AUDIO_ARCHIVED__ = false;
+window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
+  retentionMonths: 2,
+  includeCurrentMonth: false,
+  reportMonthCode: null
+}, window.__UNITY_NARRATION_RETENTION_POLICY__ || {});
+</script>
+<script id="unity-narration-retention-guard">
 (function(){
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
+  var policy = window.__UNITY_NARRATION_RETENTION_POLICY__ || {};
+
+  function parseMonthCodeFromDateToken(token) {
+    var clean = String(token || '').trim();
+    if (!/^\d{6}$/.test(clean)) return null;
+    var yy = clean.slice(0, 2);
+    var mm = clean.slice(2, 4);
+    var code = Number(yy + mm);
+    return Number.isFinite(code) ? code : null;
+  }
+
+  function parseMonthCodeFromPath(pathText) {
+    var path = String(pathText || '');
+    var dateRangeMatch = path.match(/_(\d{6})-(\d{6})_/);
+    if (dateRangeMatch) {
+      var fromDateRange = parseMonthCodeFromDateToken(dateRangeMatch[1]);
+      if (fromDateRange !== null) return fromDateRange;
+    }
+    var folderMatch = path.match(/\/(\d{2})_[A-Z]{3}(\d{2})\//i);
+    if (folderMatch) {
+      var mm = folderMatch[1];
+      var yy = folderMatch[2];
+      var folderCode = Number(yy + mm);
+      if (Number.isFinite(folderCode)) return folderCode;
+    }
+    return null;
+  }
+
+  function parseMonthCodeFromLabel() {
+    var monthMap = {
+      jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+      jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
+    };
+    var periodEl = document.querySelector('.period-value');
+    var labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
+    if (!labelText) labelText = document.title || '';
+    var m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
+    if (!m) return null;
+    var monthCode = monthMap[(m[1] || '').toLowerCase()];
+    var year = String(m[2] || '');
+    if (!monthCode || year.length !== 4) return null;
+    var labelCode = Number(year.slice(2) + monthCode);
+    return Number.isFinite(labelCode) ? labelCode : null;
+  }
+
+  function monthCodeFromDate(dateObj) {
+    if (!(dateObj instanceof Date)) return null;
+    var yy = String(dateObj.getFullYear() % 100).padStart(2, '0');
+    var mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    var code = Number(yy + mm);
+    return Number.isFinite(code) ? code : null;
+  }
+
+  function resolveRetentionMonths() {
+    var maxMonths = Number(policy.retentionMonths || 2);
+    if (!Number.isFinite(maxMonths) || maxMonths < 1) maxMonths = 2;
+    return Math.floor(maxMonths);
+  }
+
+  function isWithinRetentionWindow(reportCode) {
+    if (!Number.isFinite(reportCode)) return false;
+    var now = new Date();
+    var cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    var maxMonths = resolveRetentionMonths();
+    for (var i = 0; i < maxMonths; i++) {
+      var code = monthCodeFromDate(cursor);
+      if (Number.isFinite(code) && code === reportCode) return true;
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    return false;
+  }
+
+  function describeRetentionWindow() {
+    var labels = [];
+    var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var now = new Date();
+    var cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    var maxMonths = resolveRetentionMonths();
+    for (var i = 0; i < maxMonths; i++) {
+      labels.push(monthNames[cursor.getMonth()] + ' ' + cursor.getFullYear());
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    return labels.join(' and ');
+  }
+
+  var reportMonthCode = Number(policy.reportMonthCode);
+  if (!Number.isFinite(reportMonthCode)) {
+    reportMonthCode =
+      parseMonthCodeFromPath(window.location.pathname) ||
+      parseMonthCodeFromPath(window.location.href) ||
+      parseMonthCodeFromLabel();
+  }
+
+  var forcedArchived = (window.__UNITY_NARRATION_ARCHIVED__ === true);
+  var shouldArchive = forcedArchived;
+  if (!shouldArchive) {
+    if (!Number.isFinite(reportMonthCode)) return;
+    shouldArchive = !isWithinRetentionWindow(reportMonthCode);
+  }
+  if (!shouldArchive) return;
+
+  window.__UNITY_NARRATION_AUDIO_ARCHIVED__ = true;
   var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var archivedText = "Pattern text is archived for this report period (retention policy).";
+  var retentionLabel = describeRetentionWindow();
+  var audioMsg = retentionLabel
+    ? ("Audio is maintained only for the last two months (" + retentionLabel + ").")
+    : "Audio is maintained only for the last two months (retention policy).";
 
-  function str(v){ return (v === null || v === undefined) ? '' : String(v); }
-  function isMp3(u){ return /patterns?\/.*\.mp3([?#].*)?$/i.test(str(u)); }
-  function isTxt(u){ return /patterns?\/.*\.txt([?#].*)?$/i.test(str(u)); }
-  function isPatternAsset(u){ return isMp3(u) || isTxt(u); }
+  function hideNarrativeAudioButtons() {
+    ['unityBriefBtn', 'unityExplainsBtn', 'unityHowToBtn', 'narrativeAudioBtn'].forEach(function(id){
+      var btn = document.getElementById(id);
+      if (btn) btn.style.display = 'none';
+    });
+  }
 
-  var nativeFetch = (typeof window.fetch === 'function') ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = function(input, init){
-      var url = (typeof input === 'string') ? input : (input && input.url ? input.url : '');
-      if (isTxt(url)) {
-        return Promise.resolve(new Response(archivedText, {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-        }));
+  function showArchivedNarrativeModal(transformerId) {
+    var xfmrNum = String(transformerId || '').replace('xfmr', '');
+    var nameEl = document.getElementById('xfmr' + xfmrNum + '-name');
+    var transformerName = nameEl ? (nameEl.textContent || '').trim() : '';
+    var modal = document.getElementById('patternModal');
+    var titleEl = document.getElementById('patternModalTitle');
+    var bodyEl = document.getElementById('patternModalBody');
+    if (titleEl) titleEl.textContent = (transformerName || 'Transformer') + ' - Detailed Narrative';
+    if (bodyEl) {
+      bodyEl.innerHTML = '<div style="text-align:left;"><p>' + textMsg + '</p></div>';
+      if (bodyEl.classList) bodyEl.classList.remove('unity-summary-mode');
+      if (bodyEl.style && typeof bodyEl.style.removeProperty === 'function') {
+        bodyEl.style.removeProperty('--unity-field-backdrop');
       }
-      if (isMp3(url)) {
-        try { alert(audioMsg); } catch (e) {}
-        return Promise.resolve(new Response('', { status: 410, statusText: 'Gone' }));
+    }
+    hideNarrativeAudioButtons();
+    if (modal) modal.style.display = 'block';
+  }
+
+  var originalShowPatternModal = window.showPatternModal;
+  if (typeof originalShowPatternModal === 'function') {
+    window.showPatternModal = function(transformerId, type) {
+      if (type === 'narrative') {
+        if (typeof window.stopCurrentPlayback === 'function') {
+          try { window.stopCurrentPlayback(); } catch (_e) {}
+        } else if (window.speechSynthesis && typeof window.speechSynthesis.cancel === 'function') {
+          try { window.speechSynthesis.cancel(); } catch (_e) {}
+        }
+        window.currentNarrativeText = '';
+        window.currentBriefText = '';
+        window.currentTransformerId = '';
+        showArchivedNarrativeModal(transformerId);
+        return;
       }
-      return nativeFetch(input, init);
+      return originalShowPatternModal.apply(this, arguments);
     };
   }
 
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('[href],[src],[onclick]').forEach(function(el){
-      var href = el.getAttribute('href');
-      var src = el.getAttribute('src');
-      var onclick = el.getAttribute('onclick');
+  window.speakNarrative = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
+  window.playUnityBrief = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
+  window.playHowToAudio = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
+  window.playUnityHowToChart = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
 
-      if (href && isPatternAsset(href)) {
-        el.setAttribute('href', '#');
-        el.addEventListener('click', function(e){
-          e.preventDefault();
-          alert(isMp3(href) ? audioMsg : textMsg);
-        });
-      }
-
-      if (src && isPatternAsset(src)) {
-        el.removeAttribute('src');
-      }
-
-      if (onclick && /patterns?\/.*\.(mp3|txt)/i.test(onclick)) {
-        var msg = /\.mp3/i.test(onclick) ? audioMsg : textMsg;
-        el.setAttribute('onclick', "alert('" + msg.replace(/'/g, "\'") + "'); return false;");
-      }
-    });
-
-    document.querySelectorAll('audio').forEach(function(a){
-      var s = a.getAttribute('src') || '';
-      if (isMp3(s)) {
-        a.removeAttribute('src');
-      }
-      a.addEventListener('play', function(e){
-        if (!a.getAttribute('src')) {
-          e.preventDefault();
-          try { a.pause(); } catch (err) {}
-          alert(audioMsg);
-        }
-      });
-    });
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideNarrativeAudioButtons, { once: true });
+  } else {
+    hideNarrativeAudioButtons();
+  }
 })();
 </script>
-</body>
-</html>
+<script src="../../../unity-april-baseline-retention.js"></script>
+  <script>
+  (function loadUnityHowToToggle() {
+    if (window.__unityHowToToggleLoaderInjected) return;
+    window.__unityHowToToggleLoaderInjected = true;
+    const scriptName = 'unity-howto-toggle.js';
+    const scriptVersion = '20260701a';
+    const candidateSrcs = [];
+    for (let depth = 0; depth <= 10; depth += 1) {
+      const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+      candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+    }
+    const head = document.head || document.getElementsByTagName('head')[0];
+    if (!head) return;
+    const tryLoad = (index) => {
+      if (index >= candidateSrcs.length) return;
+      const src = candidateSrcs[index];
+      const script = document.createElement('script');
+      const separator = src.includes('?') ? '&' : '?';
+      script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+      script.async = false;
+      script.onload = () => {
+        window.__unityHowToToggleLoaderSrc = src;
+      };
+      script.onerror = () => {
+        script.remove();
+        tryLoad(index + 1);
+      };
+      head.appendChild(script);
+    };
+    tryLoad(0);
+  })();
+  </script>
+  </body>
+  </html>

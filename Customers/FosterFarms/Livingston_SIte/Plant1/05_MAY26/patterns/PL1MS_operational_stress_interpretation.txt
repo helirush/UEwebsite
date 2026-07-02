@@ -1,0 +1,13 @@
+**PL1MS — Operational Stress Interpretation | May 2026**
+
+This is a hard-working transformer feeding a demanding food processing operation, and the stress signatures in the data are consistent with that duty. Let me translate what you are seeing in the field into operational language.
+
+The 710.4-amp maximum current draw is the headline. On a 2,500 kVA, 480-volt transformer, that represents a significant fraction of rated capacity being pushed through the windings at peak moments. Combined with the reactive component — meaning a meaningful portion of that current is doing no real work — the transformer is handling more electrical traffic than the productive kilowatt output alone would suggest.
+
+The thermal burden of 147,430 BTU per hour is the consequence of that reactive traffic. Heat is the enemy of transformer insulation, motor windings, and switchgear contacts. Every hour this field runs at 86.2% power factor with uncompensated reactive demand, the insulation systems on this transformer are aging faster than they would under a corrected field. The cooling system is compensating — the $4.25 per hour cooling cost and 21.5 kilowatts of cooling load tell you that mechanical cooling is actively fighting the heat this field generates — but cooling is reactive, not preventive. It does not stop the insulation from experiencing the thermal stress; it only limits how hot the equipment gets.
+
+The production pattern context matters here: the regular weekday blocks exceeding the 600 kVA supply target for 60 to 65 percent of the monthly period means this transformer is operating above its designed supply threshold for the majority of productive hours. That is not an alarm condition — it is a utilization reality — but it means the margin for reactive excursions is thinner than it would be on a lightly loaded transformer. When the 2,197.8 kVAR spike events occur against a background of already-elevated loading, the system is working significantly harder than the average numbers suggest.
+
+The 260520 through 260526 anomaly period — visible in both the voltage view and the baseline production view — warrants specific attention. The combination of voltage disturbance clustering, sharp load spikes, and apparent step-down in overall load density in that window is consistent with either a major equipment cycling event or a partial production interruption followed by restart. Without a confirmed outage gold streak, this does not meet the threshold for a classified power interruption, but it is an operational event worth correlating against maintenance records or process logs.
+
+---

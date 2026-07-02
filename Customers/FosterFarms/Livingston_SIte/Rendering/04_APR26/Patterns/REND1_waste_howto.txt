@@ -1,1 +1,12 @@
-How to read the baseline view: first orient to the chart layout and operating window, next focus on trend direction and drift from stable behavior, then connect those shifts to operational strain before planning corrective action. REND1's voltage field shows repeated triangular drops below 455V creating equipment stress cycles, while the baseline reveals 83.4 percent power factor wasting approximately $548,238 annually. You're consistently exceeding your 1228 kVA supply target during 70 percent of operations, forcing reactive circulation of 641.9 kVAR average with spikes to 1355.5 kVAR maximum. This electromagnetic chaos generates 731,399 BTU per hour waste heat requiring an additional 106.7 kW cooling capacity at $21.10 per hour overhead.
+How to read the baseline view: first orient to the chart layout and operating window, next focus on trend direction and drift from stable behavior, then connect those shifts to operational strain before planning corrective action. **REND1 — Voltage and Baseline Notes for Clerk** When Unity Faraday discusses the waste picture for REND1, she should anchor on these specific data points from the voltage and baseline views: - **Nominal voltage reference:** 480V line-to-line. Every annotated dip this month is below that line.
+- **Dip values to cite:** 455.3 V is the lowest. Most events land in the 455–460 V band. Say "4 to 5 percent below nominal" — it's accurate and it lands naturally in speech.
+- **Number of dip events:** Seven or more distinct triangular dip markers visible. Cluster in mid-month production windows.
+- **When dips happen:** At production peaks — motor starts, compressor cycling. Not random timing. This is the key operational point.
+- **Device health framing:** Moderate-to-high risk. Motors age faster under sub-nominal voltage at peak load. Drives and control electronics are stress-sensitive.
+- **Baseline target kVA:** 1,390 kVA from the BT blue tooltip. Production blocks push above this threshold roughly 60 to 65 percent of production hours.
+- **Weekend shutdowns:** Five clean valley periods — full facility power-down. No gold-streak outage events detected.
+- **Thermal burden:** 731,399 BTU/hr. Use the phrase "that's the heat equivalent of over 200 residential air conditioners running simultaneously in one transformer" if a vivid comparison is helpful.
+- **Cooling cost:** $21.10/hr, $184,879/yr, 106.7 kW continuous.
+- **Total waste cost:** Approximately $548,238/yr. Always use "approximately" or "roughly" in speech.
+- **Monthly waste:** Approximately $27,729 per dataset period.
+- **iTHD note:** 16.2% iTHD in V header — harmonic distortion is compounding the voltage stress picture. ---

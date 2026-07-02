@@ -1,0 +1,11 @@
+**Transformer: NCND3 — Operational Stress Interpretation | May 2026**
+
+When you put the voltage findings, the reactive profile, and the harmonic data together, the operational picture for NCND3 is a transformer carrying a sustained, multi-vector stress load across a full continuous-operation production environment. This is not a field with discrete high-stress windows you could point to and address through scheduling changes. The stress is structural — embedded in how the loads are constituted and how the field has been left untuned.
+
+The 309,876 BTU per hour thermal burden is the most visible symptom of that structural stress. Every unit of reactive current cycling through the transformer windings that never converts to real work generates heat instead. That heat has to go somewhere — and at 45.2 kilowatts of cooling power required and an estimated $8.87 per hour in cooling costs, the facility is literally paying to air-condition the consequences of reactive inefficiency. Annualized, that cooling overhead alone is tracking toward approximately $77,744 per year.
+
+The two interruption events in May add an acute stress layer on top of the chronic thermal burden. When a 2500 kVA transformer serving continuous food processing loads loses power and re-energizes — even for two to five minutes — the inrush currents on compressor motors, refrigeration units, and any across-the-line starters can reach five to eight times normal full-load current. For a field already running 671.5 amps average with a 800.3-amp peak, those inrush events are not trivial. They accelerate insulation aging and increase the probability of nuisance trips or protective relay events on subsequent startups.
+
+The 800.3-amp maximum current reading is also worth flagging in context. The 2500 kVA transformer nameplate corresponds to a full-load ampacity of approximately 3,007 amps at 480V — so the field is running well within transformer nameplate limits. But the 379.4 kVAR reactive peak is pulling apparent power capacity that is not delivering real production output. That reactive overhead is capacity being consumed without productivity return, and on a system this size, the cumulative cost of that inefficiency is the $234,907 annual waste figure staring back from the header.
+
+---

@@ -1,0 +1,13 @@
+**REND1 — Voltage Health Analysis | May 2026**
+
+The voltage story on REND1 has two layers, and both of them matter. The first layer is the high-side bias: your field is running with an average voltage of 476.7 volts against a 480V nominal. That sounds close, but the maximum touches 489.3 volts — and sustained operation above nominal accelerates insulation aging on motor windings, drives, and transformer windings. This is a chronic, continuous stress condition, not a transient event.
+
+The second layer is the recurring dip profile. The V view shows annotated triangular drop events distributed across the full month — nine or more distinct excursion events — with voltage dips reaching as low as 454.9 volts in the final week of May. A 454.9-volt reading is approximately 25 volts below nominal, or about a 5.2% downward excursion. In a 480V industrial system serving motors, VFDs, and control equipment, that kind of repeated cycling through a wide voltage band — from above 480V down to sub-460V and back — creates bidirectional stress that accelerates component fatigue over time.
+
+The dip events are not random. They cluster in the middle two weeks of May and again in the final week, with the final-week cluster containing the most severe readings: 455.5V and 454.9V. This suggests a developing or worsening condition in the last operating week of the dataset — worth watching for recurrence.
+
+The minimum recorded voltage of 9.5 volts confirms at least one full power interruption occurred during the month. Combined with the visual identification of two distinct top-to-bottom gold streak events in the BT and B chart views — at approximately the May 8th and May 11th markers — this field experienced two outage events with a combined estimated duration of roughly four to seven minutes. These were brief interruptions, but in a food processing and rendering environment, even a few minutes of unplanned downtime carries operational and product safety implications.
+
+Device health risk assessment: **Moderate.** The bidirectional voltage stress profile, combined with recurring dip events below nominal and confirmed outage activity, places connected equipment — particularly motors, drives, and any sensitive control systems — in an elevated fatigue risk category.
+
+---

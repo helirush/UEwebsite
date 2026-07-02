@@ -1,1 +1,15 @@
-REND1 exhibits concerning voltage instability with repeated triangular voltage drops creating systematic stress cycles throughout your electrical system. Multiple voltage dip events consistently drop below the 455V threshold, which is well under your 480V nominal line-to-line equivalent, creating moderate to high device stress risk for connected equipment. These aren't isolated incidents but systematic clustering patterns that indicate your field is fighting reactive oscillations. The red amperage traces reveal significant oscillations between roughly 1200 to 1800 amps during normal operations, with reactive power surges driving your transformer harder than your actual productive load requires. No power outages were detected during the monitoring period, but the repeated voltage instability suggests elevated risk for equipment degradation and potential future reliability issues if the reactive stress continues uncorrected.
+**REND1 — Voltage Health | April 2026**
+
+The voltage field on REND1 is elevated above nominal on average — the monthly average is 477.2 volts against the 480-volt nominal reference — but the more important story is what happens during production loading events.
+
+Twelve distinct triangular voltage dip events are labeled and visible in the V-view across the full thirty-day period. These are not clustered in one production week — they are distributed across the entire month, which tells you this is a chronic recurring condition, not an isolated anomaly. The dip readings cluster tightly in the 455 to 461 volt range. The deepest labeled dip is 455.3 volts, which represents a depression of approximately 24.7 volts below the 480-volt nominal — that is a 5.2 percent sub-nominal condition.
+
+Other labeled dips: 456.7 V, 460.6 V, 458.1 V, 456.5 V, 457.4 V, 456.4 V, 457.2 V, 457.0 V, 456.2 V, 459.4 V, and a second instance at 456.5 V. Every single one of these is below nominal.
+
+The minimum recorded voltage of 9.5 volts is the floor captured during scheduled shutdown intervals — not a sustained operational reading — so that figure is not a supply quality concern on its own. The high of 492.8 volts during low-load periods is within acceptable range.
+
+What matters for device health is the production-period pattern: motors and compressors running in the 455 to 461 volt range during load peaks are drawing higher current than they should. In a food processing and cold storage environment, where compressor motors and VFDs run continuously during production, that elevated current draw compounds with the harmonic distortion already present in the field — measured at 5.8 percent iTHD. The combined effect is accelerated insulation aging, elevated contact wear on motor starters and contactors, and increased thermal stress on winding insulation.
+
+Device health risk for REND1 voltage conditions: **moderate to high.** The dips are not catastrophic individually, but their chronic, distributed repetition across a full month of production is the concern. Equipment stress accumulates invisibly until it doesn't.
+
+---

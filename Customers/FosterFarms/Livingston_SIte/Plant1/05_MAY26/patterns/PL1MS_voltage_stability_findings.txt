@@ -1,0 +1,11 @@
+**PL1MS — Voltage Health | May 2026**
+
+The voltage field on PL1MS is elevated overall and moderately stressed at its floor. The operating range across May runs from a confirmed minimum of 454.1 volts up to a maximum of 507.8 volts — a 54-volt swing against a nominal reference of 480 volts. That span represents an 11.2% total range relative to nominal, which is meaningful for the mix of equipment a food processing facility typically runs.
+
+The elevated ceiling — 508 volts during light-load periods — is a characteristic of a lightly regulated utility feed, possibly an irrigation district supply, where no active voltage regulation is compensating for load variation. When your production lines are running light, the voltage climbs. When large loads start, it sags. Both directions carry consequences.
+
+The floor is the more operationally significant concern. The confirmed dip to 454.1 volts sits approximately 5.4% below nominal 480 volts. For motor-driven equipment — compressors, conveyors, refrigeration systems — repeated dips in that range reduce starting torque margins, increase slip in induction motors, and drive up winding temperatures. The clustering of these events in the 260520 through 260526 window suggests a recurring large inductive load event, most likely a compressor bank starting sequence, that is pulling the voltage down episodically.
+
+The combined picture is elevated average voltage with episodic floor excursions — a symmetric stress pattern that pushes insulation systems from both directions. The overall device-health risk assessment for PL1MS is moderate to elevated. The dips are not catastrophic in isolation, but repeated cycling through this range without reactive compensation means the field's reactive draw during those sag events is adding to the voltage depression rather than helping to hold it up. Reactive correction would partially buffer these sag events by reducing the reactive current burden during load transitions.
+
+---

@@ -1,0 +1,11 @@
+**PL2N — Recommended Engineering Attention Areas**
+
+Three areas warrant focused attention as you move from this analysis toward an engineering decision on PL2-3North.
+
+First, the harmonic environment deserves a dedicated harmonic study before MPTS installation is finalized. The 10.7 percent peak iTHD confirmed in the M view indicates a population of variable frequency drives or other non-linear loads on this circuit that may require harmonic filtering consideration alongside reactive compensation. Standard capacitor-based compensation systems can amplify certain harmonic frequencies if harmonic resonance conditions exist — the H490 platform is designed with this in mind, but a pre-installation harmonic survey will confirm whether additional harmonic mitigation measures are needed alongside reactive correction.
+
+Second, the voltage operating range — spending meaningful time above 500 volts while also experiencing dips to 471 volts — suggests a conversation with the utility about tap settings on the supply transformer serving this circuit may be worthwhile. If the nominal operating point can be brought closer to 480V center, both the overvoltage exposure and the depth of the load-driven dip events would be reduced, compounding the benefit of MPTS correction.
+
+Third, the two detected disruption events totaling an estimated 60 to 90 minutes of downtime during the observation window should be investigated for root cause. In a field with this level of reactive stress and harmonic loading, unexpected interruptions carry elevated risk of power quality-related causes — nuisance trips, drive faults, or contactor drop-outs triggered by voltage sag events that exceed equipment tolerance thresholds. Confirming the cause of those events before finalizing the MPTS engineering scope ensures the correction addresses all active risk mechanisms in the field.
+
+---

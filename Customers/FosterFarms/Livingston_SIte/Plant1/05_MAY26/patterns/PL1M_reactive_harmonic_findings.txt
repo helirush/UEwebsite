@@ -1,0 +1,11 @@
+**Transformer: PL1M — Reactive and Harmonic Findings**
+
+Reactive power and harmonic burden analysis for PL1M is pending data. The kVAR MAX value needed to size the reactive compensation gap returns zero from the CSV, and no image view is available to visually confirm the reactive profile shape — the column heights, the above-target versus below-target distribution, and the daily reactive draw pattern.
+
+In a tuned-field optimization context, the reactive findings section plays a particularly important role. It tells us whether the installed MPTS assets are absorbing the reactive load as designed, or whether there is a measurable gap between the compensation being delivered and the full reactive demand the transformer is still seeing. That gap — often expressed as the difference between the current tuned baseline kVAR average and the target kVAR level — defines how much additional optimization work remains.
+
+Harmonics, while not directly surfaced in the current dashboard view, are a secondary concern in reactive-heavy industrial environments. Rendering operations, cold storage compressors, and variable-frequency drives all generate harmonic currents that ride on top of the fundamental reactive burden. A high kVAR MAX reading often signals that harmonic distortion is contributing to the apparent reactive load, even when the fundamental power factor has improved.
+
+For PL1M specifically, once data is available, we would expect to compare the simulated historical baseline kVAR peak against the current tuned baseline peak to quantify how much reactive demand the installed equipment has already absorbed — and then compare the current tuned baseline against the optimization target to define the remaining gap. Both of those comparisons require real numbers, which are not yet in hand.
+
+---

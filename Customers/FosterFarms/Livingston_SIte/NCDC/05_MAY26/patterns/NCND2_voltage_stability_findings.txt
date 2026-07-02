@@ -1,0 +1,13 @@
+**NCND2 — Voltage Stability Findings | May 2026**
+
+The voltage health picture for NCND2 is one of general utility-side stability with a notable floor-approach pattern that warrants ongoing monitoring. The Merced Irrigation District supply is doing a reasonable job of holding the voltage envelope — the blue band in the V view stays compressed between the MaxVoltage reference of 488V and the Nominal reference of 480V for the majority of the month, indicating that the utility is delivering within a controlled range most of the time.
+
+However, the MinVoltage floor of 464V tells a more complicated story. That is 16 volts below the 480V line-to-line nominal reference — a 3.3% undervoltage condition — and the lower edge of the voltage band makes repeated contact with or approaches this floor across the full month. These are not single catastrophic events. They are recurring, distributed dips tied to motor inrush and compressor cycling events that periodically pull the supply voltage downward into that 464V range.
+
+For a food processing facility operating large refrigeration compressors, rendering equipment, and HVAC loads, repeated undervoltage events carry meaningful consequences. Motor windings operating at 3–4% below nominal voltage draw proportionally higher current to deliver the same torque — which generates additional I²R heating in the windings and accelerates insulation fatigue. Variable frequency drives and soft starters are also sensitive to sustained low-voltage input; many are designed to trip or derate when input voltage falls outside a defined window, and at 464V, some equipment may be operating near the edge of its acceptable input range.
+
+The 0.0V minimum voltage reading captured in the header is attributed to the three identified outage events — brief top-to-bottom gold streaks in the chart body estimated at approximately 7–11 total minutes across the month. These appear consistent with utility switching events or momentary supply interruptions from Merced Irrigation District rather than operational collapse. Three distinct events across a 31-day dataset is not an alarming frequency, but their presence confirms the supply is not perfectly continuous.
+
+Overall voltage stability risk for NCND2 is assessed as **moderate** — not requiring emergency intervention, but the 464V floor pattern should be tracked across subsequent monthly datasets to confirm it is not trending downward.
+
+---

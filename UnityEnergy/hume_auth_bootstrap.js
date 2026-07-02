@@ -243,52 +243,130 @@
     if (protocol === "file:") return false;
     return Boolean(coerceText(locationRef.hostname));
   }
+  function resolveRuntimeAuthEndpointCandidate(endpointCandidate) {
+    var normalizedCandidate = coerceText(endpointCandidate);
+    if (!normalizedCandidate) return "";
+    try {
+      var baseHref = window.location && window.location.href ? window.location.href : "";
+      return new URL(normalizedCandidate, baseHref || undefined).toString();
+    } catch (_err) {
+      return normalizedCandidate;
+    }
+  }
 
-  function resolveRuntimeAuthEndpoint() {
+  function appendRuntimeAuthEndpointCandidate(candidates, endpointCandidate) {
+    if (!Array.isArray(candidates)) return;
+    var resolved = resolveRuntimeAuthEndpointCandidate(endpointCandidate);
+    if (!resolved) return;
+    if (candidates.indexOf(resolved) !== -1) return;
+    candidates.push(resolved);
+  }
+
+  function getRuntimeAuthEndpointPathPrefixes() {
+    var locationRef = window.location || {};
+    var pathname = coerceText(locationRef.pathname);
+    if (!pathname) return [];
+    var prefixes = [];
+    var lowerPathname = pathname.toLowerCase();
+    var unitySegment = "/unityenergy/";
+    var unityIndex = lowerPathname.indexOf(unitySegment);
+    if (unityIndex > 0) {
+      var unityPrefix = pathname.slice(0, unityIndex).replace(/\/+$/, "");
+      if (unityPrefix && unityPrefix !== "/" && prefixes.indexOf(unityPrefix) === -1) {
+        prefixes.push(unityPrefix);
+      }
+    }
+    var segments = pathname.split("/").filter(Boolean);
+    if (segments.length > 1) {
+      var firstSegmentPrefix = "/" + segments[0];
+      if (
+        firstSegmentPrefix &&
+        firstSegmentPrefix !== "/" &&
+        firstSegmentPrefix.toLowerCase() !== "/unityenergy" &&
+        prefixes.indexOf(firstSegmentPrefix) === -1
+      ) {
+        prefixes.push(firstSegmentPrefix);
+      }
+    }
+    return prefixes;
+  }
+
+  function buildRuntimeAuthEndpointCandidates() {
     var endpointCandidate = coerceText(
       window.MAXWELLIAN_HUME_RUNTIME_AUTH_ENDPOINT ||
       window.MAXWELLIAN_RUNTIME_AUTH_ENDPOINT
     );
-    if (!endpointCandidate) {
-      endpointCandidate = "/api/hume/runtime-auth";
-    }
-    try {
-      var baseHref = window.location && window.location.href ? window.location.href : "";
-      return new URL(endpointCandidate, baseHref || undefined).toString();
-    } catch (_err) {
-      return endpointCandidate || "/api/hume/runtime-auth";
-    }
+    var candidates = [];
+    appendRuntimeAuthEndpointCandidate(candidates, endpointCandidate);
+    appendRuntimeAuthEndpointCandidate(
+      candidates,
+      coerceText(window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT)
+    );
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth");
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth.json");
+    appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth");
+    appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth.json");
+    var pathPrefixes = getRuntimeAuthEndpointPathPrefixes();
+    pathPrefixes.forEach(function (prefix) {
+      appendRuntimeAuthEndpointCandidate(candidates, prefix + "/api/hume/runtime-auth");
+      appendRuntimeAuthEndpointCandidate(candidates, prefix + "/api/hume/runtime-auth.json");
+    });
+    return candidates;
+  }
+
+  function resolveRuntimeAuthEndpoint() {
+    var candidates = buildRuntimeAuthEndpointCandidates();
+    return candidates[0] || "/api/hume/runtime-auth";
   }
 
   function fetchServerRuntimeAuth() {
     if (typeof window.fetch !== "function") return;
     if (!shouldFetchServerRuntimeAuth()) return;
-    var endpoint = resolveRuntimeAuthEndpoint();
-    window
-      .fetch(endpoint, {
-        method: "GET",
-        credentials: "same-origin",
-        headers: { Accept: "application/json" },
-      })
-      .then(function (response) {
-        if (!response || !response.ok) return null;
-        return response.json();
-      })
-      .then(function (payload) {
-        var candidate = readServerAuthPayload(payload);
-        if (!candidate) return;
-        var active = readRuntimeAuthFromWindow();
-        if (
-          active &&
-          active.type === candidate.type &&
-          active.value === candidate.value
-        ) {
-          return;
-        }
-        applyRuntimeAuthToWindow(candidate);
-        writeRuntimeAuthToStorage(candidate);
-      })
-      .catch(function () {});
+    var endpoints = buildRuntimeAuthEndpointCandidates();
+    if (!endpoints.length) return;
+
+    function fetchEndpointAt(index) {
+      if (index >= endpoints.length) return Promise.resolve(null);
+      var endpoint = endpoints[index];
+      return window
+        .fetch(endpoint, {
+          method: "GET",
+          credentials: "same-origin",
+          headers: { Accept: "application/json" },
+        })
+        .then(function (response) {
+          if (!response || !response.ok) return null;
+          return response.json().catch(function () {
+            return null;
+          });
+        })
+        .then(function (payload) {
+          var candidate = readServerAuthPayload(payload);
+          if (!candidate) return null;
+          var active = readRuntimeAuthFromWindow();
+          if (
+            active &&
+            active.type === candidate.type &&
+            active.value === candidate.value
+          ) {
+            window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT = endpoint;
+            return candidate;
+          }
+          applyRuntimeAuthToWindow(candidate);
+          writeRuntimeAuthToStorage(candidate);
+          window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT = endpoint;
+          return candidate;
+        })
+        .catch(function () {
+          return null;
+        })
+        .then(function (candidate) {
+          if (candidate) return candidate;
+          return fetchEndpointAt(index + 1);
+        });
+    }
+
+    fetchEndpointAt(0).catch(function () {});
   }
 
   exposeRuntimeAuthHelpers();

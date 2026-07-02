@@ -1,0 +1,11 @@
+**Transformer: Deli.G — DELIG | Reactive Power and Harmonic Loading**
+
+The reactive picture on Deli.G is one of the central drivers of this field's inefficiency, and the numbers make it concrete. The field carries an average reactive load of 319.8 kVAR throughout May — that is a continuous, persistent reactive burden riding alongside every kilowatt of productive work this transformer does. But the average understates the problem. The reactive maximum for the month reached 1,779.6 kVAR. That is the instantaneous reactive demand spike that this transformer is required to absorb during peak production loading events.
+
+To put that peak in perspective: 1,779.6 kVAR is a large reactive demand on a 2,500 kVA transformer. When reactive demand spikes that high, it competes directly with real load capacity, drives apparent power upward, and forces the power factor down toward the 86 percent reading you're seeing in the field average. It is also the primary driver of the thermal burden this transformer is carrying.
+
+The harmonic environment compounds this. The field reports 5.1 percent iTHD on average, with a peak of 10.6 percent iTHD. Harmonic distortion at those levels — particularly with peaks above 10 percent — means the current waveform is being distorted by non-linear loads. In a deli processing environment, the likely sources are VFDs on refrigeration compressors and conveyance motors, possibly electronic controls on cooking or processing equipment. Those harmonics interact with the reactive loading to create a combined electromagnetic stress environment that shortens equipment service life, increases transformer core losses, and degrades the voltage waveform for every device on this transformer's downstream circuit.
+
+The reactive and harmonic fingerprint of this field, taken together, confirms an untuned field in a high-demand industrial environment — and confirms that correction would have a meaningful, measurable impact.
+
+---

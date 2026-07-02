@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <script src="passwords.js?v=20260612b"></script>
-    <script src="hume_auth_bootstrap.js?v=20260511r1"></script>
+    <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
     <script src="hume_character_config.js?v=20260612r21"></script>
-    <script src="clerk_voice_widget.js?v=20260612r24"></script>
-    <script src="public_release_flags.js?v=20260615a"></script>
+    <script src="clerk_voice_widget.js?v=20260701r28"></script>
+    <script src="public_release_flags.js?v=20260702c"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UnityEnergy - Welcome to the Future of Electricity</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico?ue_icon=20260701a">
+    <link rel="icon" type="image/png" sizes="192x192" href="unity-icon-circle-192.png?ue_icon=20260701a">
+    <link rel="icon" type="image/png" sizes="512x512" href="unity-icon-circle-512.png?ue_icon=20260701a">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png?ue_icon=20260701a">
+    <link rel="manifest" href="site.webmanifest?ue_icon=20260701a">
     <style>
         /* ===== Base Reset ===== */
         * {
@@ -1419,6 +1424,7 @@
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
+            min-width: clamp(72px, 8vw, 88px);
             padding: 9px 14px;
             cursor: pointer;
             transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
@@ -3214,8 +3220,18 @@
             closeVideoModal();
             window.location.href = 'about-unity.html?autostartUnityIntro=1';
         }
-        function openEnergyBehaviorWindow() {
-            const behaviorUrl = `energy-behavior.html?autoplay=brief&t=${Date.now()}`;
+        function openEnergyBehaviorWindow(options = {}) {
+            const opts = options && typeof options === 'object' ? options : {};
+            const autoTour = opts.autoTour === true;
+            if (autoTour && !isUnityAutoTourActive()) return;
+            const behaviorParams = new URLSearchParams();
+            behaviorParams.set('autoplay', 'brief');
+            behaviorParams.set('t', String(Date.now()));
+            if (autoTour) {
+                behaviorParams.set('ue_auto_tour', '1');
+                behaviorParams.set('ue_about_handoff', '1');
+            }
+            const behaviorUrl = `energy-behavior.html?${behaviorParams.toString()}`;
             const popupWidth = window.screen && Number.isFinite(window.screen.availWidth)
                 ? window.screen.availWidth
                 : 1920;
@@ -3235,6 +3251,7 @@
                 'status=no'
             ].join(',');
             const behaviorWindow = window.open(behaviorUrl, 'unityEnergyBehavior', popupFeatures);
+            unityEnergyBehaviorWindowRef = behaviorWindow || null;
             if (!behaviorWindow) {
                 window.location.href = behaviorUrl;
                 return;
@@ -3244,7 +3261,13 @@
                 behaviorWindow.resizeTo(popupWidth, popupHeight);
             } catch (_) {}
             behaviorWindow.focus();
-            const kickoffPayload = { type: 'unity-behavior-autoplay', mode: 'brief', nonce: Date.now() };
+            const kickoffPayload = {
+                type: 'unity-behavior-autoplay',
+                mode: 'brief',
+                nonce: Date.now(),
+                autoTour: autoTour,
+                aboutHandoff: autoTour
+            };
             [70, 240, 620].forEach(function (delay) {
                 window.setTimeout(function () {
                     try {
@@ -3404,9 +3427,104 @@
         let unityVisibilityPlaybackTimer = null;
         let unityVisibilityPlaybackActive = false;
         let unityPostNarrationPulseActive = false;
+        const UNITY_AUTO_TOUR_MANUAL_KEY = 'unity_auto_tour_manual_v1';
+        const UNITY_INTRO_USER_GESTURE_DELAY_MS = 2000;
+        const UNITY_INTRO_AUTO_START_DELAY_MS = 1000;
+        const UNITY_AUTO_START_RETRY_MS = 1000;
+        const UNITY_INTRO_TO_VISIBILITY_DELAY_MS = 0;
+        const UNITY_VISIBILITY_DEFAULT_START_DELAY_MS = 1500;
+        const UNITY_VISIBILITY_TO_ENERGY_FIELD_DELAY_MS = 0;
+        let unityAutoTourEnabled = true;
+        let unityAutoTourFirstInteractionGracePending = true;
+        let unityIntroToVisibilityTimer = null;
+        let unityIntroAutoRetryTimer = null;
+        let unityVisibilityToEnergyFieldTimer = null;
+        let unityEnergyBehaviorWindowRef = null;
         const UNITY_POST_NARRATION_PULSE_SELECTORS = Object.freeze([
             '#heroVisibilityPrincipleBtn'
         ]);
+        function writeUnityAutoTourManualOverride(isManual) {
+            try {
+                if (isManual) {
+                    window.localStorage.setItem(UNITY_AUTO_TOUR_MANUAL_KEY, '1');
+                } else {
+                    window.localStorage.removeItem(UNITY_AUTO_TOUR_MANUAL_KEY);
+                }
+            } catch (_err) {}
+        }
+        function readUnityAutoTourManualOverride() {
+            try {
+                return window.localStorage.getItem(UNITY_AUTO_TOUR_MANUAL_KEY) === '1';
+            } catch (_err) {
+                return false;
+            }
+        }
+        function isUnityAutoTourActive() {
+            return unityAutoTourEnabled && !readUnityAutoTourManualOverride();
+        }
+        function initializeUnityAutoTourState() {
+            unityAutoTourEnabled = true;
+            unityAutoTourFirstInteractionGracePending = true;
+            writeUnityAutoTourManualOverride(false);
+        }
+        function enterUnityManualMode() {
+            if (!isUnityAutoTourActive()) return;
+            unityAutoTourEnabled = false;
+            unityAutoTourFirstInteractionGracePending = false;
+            writeUnityAutoTourManualOverride(true);
+            clearUnityIntroToVisibilityTimer();
+            clearUnityIntroAutoRetryTimer();
+            clearUnityVisibilityToEnergyFieldTimer();
+            clearVisibilityPlaybackTimer();
+            stopUnityPostNarrationPulse();
+            const introAudio = document.getElementById('unityHomeIntroAudio');
+            if (introAudio) {
+                introAudio.pause();
+            }
+            setUnityIntroToggleState(false);
+            stopVisibilityPrincipleAudio(false);
+            if (unityEnergyBehaviorWindowRef && !unityEnergyBehaviorWindowRef.closed) {
+                try {
+                    unityEnergyBehaviorWindowRef.postMessage({ type: 'unity-auto-tour-manual' }, '*');
+                } catch (_err) {}
+            }
+        }
+        function handleUnityAutoTourManualInteraction(event) {
+            if (!isUnityAutoTourActive()) return;
+            if (!event || event.isTrusted === false) return;
+            if (event.type === 'keydown') {
+                if (!event.key) return;
+                if (event.key === 'Shift' || event.key === 'Control' || event.key === 'Alt' || event.key === 'Meta') return;
+            }
+            if (unityAutoTourFirstInteractionGracePending) {
+                unityAutoTourFirstInteractionGracePending = false;
+                if (typeof event.preventDefault === 'function' && event.cancelable) {
+                    event.preventDefault();
+                }
+                if (typeof event.stopPropagation === 'function') {
+                    event.stopPropagation();
+                }
+                const introAudio = document.getElementById('unityHomeIntroAudio');
+                if (introAudio && introAudio.paused && !introAudio.ended) {
+                    if (!unityHomeIntroPrimed) {
+                        playUnityHomeIntro();
+                    } else {
+                        const playPromise = introAudio.play();
+                        if (playPromise && typeof playPromise.catch === 'function') {
+                            playPromise.catch(function () {});
+                        }
+                    }
+                }
+                return;
+            }
+            if (typeof event.preventDefault === 'function' && event.cancelable) {
+                event.preventDefault();
+            }
+            if (typeof event.stopPropagation === 'function') {
+                event.stopPropagation();
+            }
+            enterUnityManualMode();
+        }
         function setVisibilityAudioToggleState(isActive) {
             const toggleBtn = document.getElementById('heroVisibilityAudioToggleBtn');
             const visibilityBtn = document.getElementById('heroVisibilityPrincipleBtn');
@@ -3425,9 +3543,25 @@
             window.clearTimeout(unityVisibilityPlaybackTimer);
             unityVisibilityPlaybackTimer = null;
         }
+        function clearUnityIntroToVisibilityTimer() {
+            if (!unityIntroToVisibilityTimer) return;
+            window.clearTimeout(unityIntroToVisibilityTimer);
+            unityIntroToVisibilityTimer = null;
+        }
+        function clearUnityIntroAutoRetryTimer() {
+            if (!unityIntroAutoRetryTimer) return;
+            window.clearTimeout(unityIntroAutoRetryTimer);
+            unityIntroAutoRetryTimer = null;
+        }
+        function clearUnityVisibilityToEnergyFieldTimer() {
+            if (!unityVisibilityToEnergyFieldTimer) return;
+            window.clearTimeout(unityVisibilityToEnergyFieldTimer);
+            unityVisibilityToEnergyFieldTimer = null;
+        }
         function stopVisibilityPrincipleAudio(resetPosition) {
             const visibilityAudio = document.getElementById('unityVisibilityPrincipleAudio');
             clearVisibilityPlaybackTimer();
+            clearUnityVisibilityToEnergyFieldTimer();
             if (visibilityAudio) {
                 visibilityAudio.pause();
                 if (resetPosition) visibilityAudio.currentTime = 0;
@@ -3451,23 +3585,30 @@
         }
         function playUnityHomeIntro() {
             const introAudio = document.getElementById('unityHomeIntroAudio');
-            if (!introAudio || unityHomeIntroPrimed) return;
+            if (!introAudio || unityHomeIntroPrimed || !isUnityAutoTourActive()) return;
             unityHomeIntroPrimed = true;
+            clearUnityIntroAutoRetryTimer();
             stopUnityPostNarrationPulse();
             const playPromise = introAudio.play();
             if (playPromise && typeof playPromise.catch === 'function') {
                 playPromise.catch(function () {
-                    showSiteAccessBanner('Tap anywhere to hear Unity’s welcome overview.', 'warn');
-                    const fallbackPlay = function () {
-                        stopUnityPostNarrationPulse();
-                        introAudio.play().catch(function () {});
-                    };
-                    document.addEventListener('pointerdown', fallbackPlay, { once: true });
+                    if (!isUnityAutoTourActive()) return;
+                    unityHomeIntroPrimed = false;
+                    setUnityIntroToggleState(false);
+                    clearUnityIntroAutoRetryTimer();
+                    unityIntroAutoRetryTimer = window.setTimeout(function () {
+                        unityIntroAutoRetryTimer = null;
+                        if (!isUnityAutoTourActive()) return;
+                        playUnityHomeIntro();
+                    }, UNITY_AUTO_START_RETRY_MS);
                 });
             }
         }
         function queueUnityHomeIntroPlayback() {
-            window.setTimeout(playUnityHomeIntro, 3000);
+            window.setTimeout(function () {
+                if (!isUnityAutoTourActive()) return;
+                playUnityHomeIntro();
+            }, UNITY_INTRO_AUTO_START_DELAY_MS);
         }
         function setUnityIntroToggleState(isPlaying) {
             const introToggleBtn = document.getElementById('unityIntroToggleBtn');
@@ -3495,20 +3636,48 @@
                     setUnityIntroToggleState(false);
                     showSiteAccessBanner('Tap once to start Unity’s welcome overview.', 'warn');
                     const fallbackPlay = function () {
-                        introAudio.play().then(function () {
-                            setUnityIntroToggleState(true);
-                        }).catch(function () {});
+                        window.setTimeout(function () {
+                            introAudio.play().then(function () {
+                                setUnityIntroToggleState(true);
+                            }).catch(function () {});
+                        }, UNITY_INTRO_USER_GESTURE_DELAY_MS);
                     };
                     document.addEventListener('pointerdown', fallbackPlay, { once: true });
                 });
             }
         }
-        function triggerVisibilityPrincipleAudio() {
+        function resetUnityHomeIntroPlayback() {
+            const introAudio = document.getElementById('unityHomeIntroAudio');
+            if (!introAudio) return;
+            clearUnityIntroToVisibilityTimer();
+            clearUnityIntroAutoRetryTimer();
+            clearUnityVisibilityToEnergyFieldTimer();
+            stopVisibilityPrincipleAudio(true);
+            stopUnityPostNarrationPulse();
+            introAudio.pause();
+            try {
+                introAudio.currentTime = 0;
+            } catch (_err) {}
+            setUnityIntroToggleState(false);
+            unityHomeIntroPrimed = true;
+        }
+        function triggerVisibilityPrincipleAudio(options) {
+            const opts = options && typeof options === 'object' ? options : {};
+            const autoChain = opts.autoChain === true;
+            if (autoChain && !isUnityAutoTourActive()) return;
+            const requestedDelay = Number(opts.startDelayMs);
+            const visibilityStartDelayMs = Number.isFinite(requestedDelay) && requestedDelay >= 0
+                ? requestedDelay
+                : UNITY_VISIBILITY_DEFAULT_START_DELAY_MS;
             const introAudio = document.getElementById('unityHomeIntroAudio');
             const visibilityAudio = document.getElementById('unityVisibilityPrincipleAudio');
             stopUnityPostNarrationPulse();
+            clearUnityIntroToVisibilityTimer();
+            clearUnityVisibilityToEnergyFieldTimer();
             if (!visibilityAudio) {
-                showSiteAccessBanner('Visibility Principle audio is not ready yet.', 'warn');
+                if (!autoChain) {
+                    showSiteAccessBanner('Visibility Principle audio is not ready yet.', 'warn');
+                }
                 setVisibilityAudioToggleState(false);
                 return;
             }
@@ -3525,8 +3694,18 @@
                 if (playPromise && typeof playPromise.catch === 'function') {
                     playPromise.catch(function () {
                         setVisibilityAudioToggleState(false);
+                        if (autoChain) {
+                            if (!isUnityAutoTourActive()) return;
+                            unityVisibilityPlaybackTimer = window.setTimeout(function () {
+                                unityVisibilityPlaybackTimer = null;
+                                if (!isUnityAutoTourActive()) return;
+                                triggerVisibilityPrincipleAudio({ startDelayMs: 0, autoChain: true });
+                            }, UNITY_AUTO_START_RETRY_MS);
+                            return;
+                        }
                         showSiteAccessBanner('Tap once more to hear Unity’s Visibility Principle overview.', 'warn');
                         const fallbackPlay = function () {
+                            if (autoChain && !isUnityAutoTourActive()) return;
                             visibilityAudio.play().then(function () {
                                 setVisibilityAudioToggleState(true);
                             }).catch(function () {});
@@ -3534,7 +3713,7 @@
                         document.addEventListener('pointerdown', fallbackPlay, { once: true });
                     });
                 }
-            }, 1500);
+            }, visibilityStartDelayMs);
         }
         function getRelativePathname(href) {
             try {
@@ -3709,14 +3888,25 @@
                 }
             }
         });
+        window.addEventListener('message', function (event) {
+            const origin = event.origin || '';
+            if (origin && origin !== 'null' && origin !== window.location.origin) return;
+            const payload = event.data || {};
+            if (payload.type === 'unity-auto-tour-manual') {
+                enterUnityManualMode();
+            }
+        });
         document.addEventListener('DOMContentLoaded', function () {
+            initializeUnityAutoTourState();
+            document.addEventListener('pointerdown', handleUnityAutoTourManualInteraction, true);
+            document.addEventListener('keydown', handleUnityAutoTourManualInteraction, true);
             const isUnlocked = applyHomeNavAccessState();
             showUnlockConfirmationIfNeeded(isUnlocked);
-            queueUnityHomeIntroPlayback();
             const visibilityBtn = document.getElementById('heroVisibilityPrincipleBtn');
             const visibilityAudio = document.getElementById('unityVisibilityPrincipleAudio');
             const introAudio = document.getElementById('unityHomeIntroAudio');
             const unityIntroToggleBtn = document.getElementById('unityIntroToggleBtn');
+            const unityIntroResetBtn = document.getElementById('unityIntroResetBtn');
             if (visibilityBtn) {
                 visibilityBtn.addEventListener('click', function (event) {
                     const actionNode = event.target.closest('[data-visibility-audio-action]');
@@ -3745,22 +3935,43 @@
             if (visibilityAudio) {
                 visibilityAudio.addEventListener('ended', function () {
                     setVisibilityAudioToggleState(false);
+                    if (!isUnityAutoTourActive()) return;
+                    clearUnityVisibilityToEnergyFieldTimer();
+                    unityVisibilityToEnergyFieldTimer = window.setTimeout(function () {
+                        unityVisibilityToEnergyFieldTimer = null;
+                        if (!isUnityAutoTourActive()) return;
+                        openEnergyBehaviorWindow({ autoTour: true });
+                    }, UNITY_VISIBILITY_TO_ENERGY_FIELD_DELAY_MS);
                 });
             }
             if (unityIntroToggleBtn) {
                 unityIntroToggleBtn.addEventListener('click', toggleUnityHomeIntroPlayback);
             }
+            if (unityIntroResetBtn) {
+                unityIntroResetBtn.addEventListener('click', resetUnityHomeIntroPlayback);
+            }
             if (introAudio) {
                 introAudio.addEventListener('play', function () {
+                    clearUnityIntroToVisibilityTimer();
+                    clearUnityVisibilityToEnergyFieldTimer();
                     stopUnityPostNarrationPulse();
                     setUnityIntroToggleState(true);
                 });
                 introAudio.addEventListener('pause', function () {
+                    clearUnityIntroToVisibilityTimer();
+                    clearUnityVisibilityToEnergyFieldTimer();
                     if (!introAudio.ended) setUnityIntroToggleState(false);
                 });
                 introAudio.addEventListener('ended', function () {
+                    clearUnityIntroToVisibilityTimer();
+                    clearUnityVisibilityToEnergyFieldTimer();
                     startUnityPostNarrationPulse();
                     setUnityIntroToggleState(false);
+                    if (!isUnityAutoTourActive()) return;
+                    unityIntroToVisibilityTimer = window.setTimeout(function () {
+                        unityIntroToVisibilityTimer = null;
+                        triggerVisibilityPrincipleAudio({ startDelayMs: 0, autoChain: true });
+                    }, UNITY_INTRO_TO_VISIBILITY_DELAY_MS);
                 });
                 setUnityIntroToggleState(!introAudio.paused && !introAudio.ended);
             }
@@ -3789,6 +4000,7 @@
         <div class="footer-unity-intro-controls" role="group" aria-label="Unity Intro controls">
             <span class="footer-unity-intro-label">Unity Intro</span>
             <button id="unityIntroToggleBtn" class="footer-unity-intro-toggle-btn" type="button" aria-label="Start Unity Intro">START</button>
+            <button id="unityIntroResetBtn" class="footer-unity-intro-toggle-btn" type="button" aria-label="Reset Unity Intro">RESET</button>
         </div>
     </footer>
 </body>

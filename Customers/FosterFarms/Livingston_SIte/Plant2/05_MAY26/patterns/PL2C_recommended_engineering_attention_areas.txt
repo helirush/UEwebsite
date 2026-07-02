@@ -1,0 +1,13 @@
+**PL2C — Engineering Attention Areas**
+
+Three areas warrant formal engineering follow-up based on this dataset.
+
+**First — the March 24th disturbance event.** A voltage collapse to 0.0 volts combined with a simultaneous amperage spike to 520.7 amps is not a routine operating fluctuation. Engineering should pull the event logs from the SCADA or power monitoring system for that timestamp, identify the root cause — whether utility-side, internal fault, or switching event — and assess whether protection coordination is performing correctly for this transformer and its downstream circuits. If this was a utility disturbance, it warrants a conversation with Merced Irrigation District about power quality at the delivery point.
+
+**Second — recurring triangular voltage dip clustering during peak production hours.** The density of dip formation during the March 18th through March 24th production stretch suggests that specific production sequences or equipment start cycles are creating organized field disturbance events. An equipment-level investigation — identifying which motors or compressors are the primary dip drivers — would allow targeted intervention beyond MPTS-level field compensation.
+
+**Third — harmonic background load characterization.** The steady-state harmonic band visible in the M view warrants a formal harmonic survey to quantify THD (total harmonic distortion) levels. If VFD-driven loads are contributing significant harmonic content, the interaction between harmonic loading and MPTS compensation equipment should be evaluated during the H490 engineering specification phase to ensure optimal filter configuration and protection coordination.
+
+MPTS installation engineering should also account for the high-side voltage bias (482.7 V average) when specifying capacitor bank voltage ratings.
+
+---

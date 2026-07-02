@@ -1,0 +1,11 @@
+**Transformer: PL1M — Voltage Stability Findings**
+
+Voltage stability analysis for PL1M cannot be completed at this time. The image view that would show us the voltage waveform profile — specifically the triangular dip patterns, the proximity to nominal 480-volt line-to-line reference, and any gold-streak outage events — has not been submitted. The CSV likewise returns no voltage-related metrics.
+
+In a properly populated tuned-field analysis, this section would describe whether the voltage field at PL1M is holding steady near the 480-volt nominal equivalent, or whether repeated dips are occurring that indicate reactive stress still pulling the field below healthy thresholds. It would also identify any outage intervals visible as gold vertical streaks in the chart body and estimate their duration in minutes or hours.
+
+What we can say structurally is this: in a tuned field where MPTS equipment is already installed, voltage stability typically improves meaningfully once reactive compensation is functioning correctly. The field tends to hold closer to nominal, transient dips become shallower and less frequent, and device stress across motors, drives, and controls begins to ease. Whether PL1M has reached that improved state, or whether voltage instability remains a concern, is a question we cannot answer without the actual waveform data.
+
+If you have a dashboard screenshot or a corrected data export for PL1M, submit it now and we will immediately populate this finding with specific voltage observations, dip severity ratings, and any outage event counts relevant to this transformer.
+
+---

@@ -5,20 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Energy - Cherry Avenue Site - Foster Farms</title>
     <script src="../../../UnityEnergy/hume_auth_bootstrap.js"></script>
-    <script src="../../../UnityEnergy/hume_character_config.js"></script>
-    <script src="../../../UnityEnergy/clerk_voice_widget.js"></script>
+    <script src="../../../UnityEnergy/hume_character_config.js?v=20260617r30"></script>
+    <script src="../../../UnityEnergy/clerk_voice_widget.js?v=20260617r30"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        :root {
+            --cherry-main-card-max: 1080px;
+            --cherry-header-card-max: 1140px;
+            --cherry-cream-surface: linear-gradient(180deg, rgba(253, 250, 242, 0.98) 0%, rgba(245, 239, 225, 0.98) 100%);
+            --cherry-cream-surface-soft: linear-gradient(180deg, rgba(255, 252, 245, 0.98) 0%, rgba(247, 241, 227, 0.96) 100%);
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
             color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            background: linear-gradient(180deg, rgba(248, 244, 235, 1) 0%, rgba(242, 236, 223, 1) 100%);
         }
 
         header {
@@ -286,6 +292,62 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .overview-executive-strip {
+            margin: 26px auto 8px;
+            max-width: var(--cherry-header-card-max);
+            padding: 20px 24px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(173, 121, 22, 0.42);
+            border-top: 8px solid rgba(171, 15, 10, 0.92);
+            background: var(--cherry-cream-surface-soft);
+            box-shadow: 0 10px 30px rgba(70, 50, 25, 0.12);
+            text-align: left;
+        }
+        .overview-executive-kicker {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.78em;
+            font-weight: 900;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+            color: rgba(114, 20, 12, 0.95);
+        }
+        .overview-executive-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .overview-executive-metric {
+            padding: 4px 12px 2px;
+        }
+        .overview-executive-metric + .overview-executive-metric {
+            border-left: 1px solid rgba(176, 138, 80, 0.5);
+        }
+        .overview-executive-label {
+            display: block;
+            font-size: 0.79em;
+            font-weight: 800;
+            letter-spacing: 0.75px;
+            text-transform: uppercase;
+            color: rgba(88, 45, 16, 0.94);
+            margin-bottom: 4px;
+        }
+        .overview-executive-value {
+            display: block;
+            font-size: 1.72em;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+            line-height: 1.05;
+            color: rgba(159, 15, 8, 1);
+            margin-bottom: 3px;
+        }
+        .overview-executive-sub {
+            display: block;
+            font-size: 0.79em;
+            font-weight: 600;
+            line-height: 1.35;
+            color: rgba(92, 72, 45, 0.94);
+        }
 
         .hero-btn {
             display: inline-grid;
@@ -401,8 +463,8 @@
             color: rgba(85, 85, 85, 1);
             line-height: 1.8;
             margin-bottom: 20px;
-            text-align: justify;
-            max-width: 1100px;
+            text-align: center;
+            max-width: var(--cherry-header-card-max);
             margin-left: auto;
             margin-right: auto;
         }
@@ -412,7 +474,7 @@
             line-height: 1.8;
             margin-bottom: 20px;
             text-align: center;
-            max-width: 1100px;
+            max-width: var(--cherry-header-card-max);
             margin-left: auto;
             margin-right: auto;
         }
@@ -421,7 +483,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin: 40px 0;
+            margin: 40px auto;
+            width: 100%;
+            max-width: var(--cherry-main-card-max);
         }
 
         .highlight-card {
@@ -463,7 +527,9 @@
             line-height: 1.5;
         }
         .utility-window {
-            margin: 36px 0 26px;
+            margin: 36px auto 26px;
+            width: 100%;
+            max-width: var(--cherry-main-card-max);
             padding: 32px;
             border-radius: 14px;
             border: 1px solid rgba(204, 0, 0, 0.35);
@@ -488,6 +554,62 @@
             color: rgba(255, 245, 210, 1);
             font-size: 1.95em;
             line-height: 1.25;
+        }
+        .utility-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .utility-heading-group {
+            flex: 1 1 620px;
+            min-width: 280px;
+        }
+        .utility-bill-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+        .utility-bill-btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .utility-bill-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 160px;
+            padding: 8px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(88, 0, 0, 1);
+            background: rgba(255, 198, 29, 1);
+            color: rgba(92, 0, 0, 1);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            font-weight: 900;
+            font-size: 0.94rem;
+            transition: all 0.22s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+        }
+        .utility-bill-btn:hover {
+            background: rgba(255, 230, 124, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+        }
+        .utility-bill-caption {
+            margin: 0;
+            color: rgba(255, 236, 176, 1);
+            font-size: 0.90rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            text-align: center;
         }
         .utility-intro {
             margin: 0;
@@ -651,15 +773,20 @@
         .libraries-container {
             display: grid;
             grid-template-columns: 1fr;
+            justify-items: center;
             gap: 30px;
-            margin: 40px 0;
+            margin: 40px auto;
+            width: 100%;
+            max-width: var(--cherry-main-card-max);
         }
 
         .library-section {
-            background: white;
+            background: var(--cherry-cream-surface);
+            width: 100%;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 34px rgba(70, 50, 25, 0.14);
+            border: 1px solid rgba(184, 148, 88, 0.42);
             border-top: 8px solid rgba(204, 0, 0, 1);
         }
 
@@ -668,7 +795,10 @@
             color: rgba(139, 0, 0, 1);
             margin-bottom: 30px;
             font-weight: 700;
-            text-align: center;
+            text-align: left;
+        }
+        .reference-library-section {
+            border-top-color: rgba(236, 186, 28, 1);
         }
 
         /* Collapsible dropdown styling */
@@ -987,10 +1117,37 @@
 
             .libraries-container {
                 grid-template-columns: 1fr;
+                width: 100%;
             }
 
             .library-section {
                 padding: 30px 20px;
+            }
+            .overview-executive-strip {
+                padding: 14px 14px;
+                margin-top: 20px;
+            }
+            .overview-executive-kicker {
+                font-size: 0.72em;
+                margin-bottom: 8px;
+            }
+            .overview-executive-metrics {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .overview-executive-metric {
+                padding: 4px 4px;
+            }
+            .overview-executive-metric + .overview-executive-metric {
+                border-left: none;
+                border-top: 1px solid rgba(178, 140, 83, 0.42);
+                padding-top: 10px;
+            }
+            .overview-executive-value {
+                font-size: 1.52em;
+            }
+            .overview-executive-sub {
+                font-size: 0.78em;
             }
             .site-summary-name,
             .site-summary-meta {
@@ -1022,6 +1179,23 @@
             }
             .utility-window {
                 padding: 26px 20px;
+            }
+            .utility-top-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .utility-bill-actions {
+                align-items: flex-start;
+            }
+            .utility-bill-btn-row {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .utility-bill-btn {
+                flex: 1 1 180px;
+            }
+            .utility-bill-caption {
+                text-align: left;
             }
             .utility-links {
                 flex-direction: column;
@@ -1092,17 +1266,24 @@
                 This page serves as the entry point to Cherry Avenue’s measured energy architecture.
             </p>
 
-
-            <div class="highlights">
-                <div class="highlight-card">
-                    <div class="number">8 - Total</div>
-                    <h3>Electrical Energy Fields</h3>
-                    <div class="tech-detail">4x 480v : 2x 4160v : 2x 208v</div>
-                </div>
-                <div class="highlight-card">
-                    <div class="number">4 - Measured</div>
-                    <h3> High-Resolution Monitoring</h3>
-                    <div class="tech-detail">4 of 8 Energy Fields (~80% of site)</div>
+            <div class="overview-executive-strip">
+                <span class="overview-executive-kicker">Executive Monitoring Snapshot</span>
+                <div class="overview-executive-metrics">
+                    <div class="overview-executive-metric">
+                        <span class="overview-executive-label">Monitored Transformer Groups</span>
+                        <span class="overview-executive-value">4 of 4</span>
+                        <span class="overview-executive-sub">Primary 480v transformer groups with active high-resolution telemetry.</span>
+                    </div>
+                    <div class="overview-executive-metric">
+                        <span class="overview-executive-label">Coverage Ratio</span>
+                        <span class="overview-executive-value">~80%</span>
+                        <span class="overview-executive-sub">Measured fields represent approximately eighty percent of Cherry Avenue operating site load.</span>
+                    </div>
+                    <div class="overview-executive-metric">
+                        <span class="overview-executive-label">Total Network Scale</span>
+                        <span class="overview-executive-value">8 fields</span>
+                        <span class="overview-executive-sub">4x 480v plus 2x 4160v and 2x 208v electrical energy fields across Cherry Avenue.</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1111,7 +1292,7 @@
         <section id="libraries">
             <div class="libraries-container">
                 <div class="library-section">
-                    <h2 class="library-title">📊 Cherry Avenue Site Studies</h2>
+                    <h2 class="library-title">📊 Cherry Avenue Site Transformer Group Library</h2>
 
                     <details>
                         <!-- MAINTENANCE RULE:
@@ -1212,8 +1393,8 @@
                     </details>
                 </div>
 
-                <div class="library-section">
-                    <h2 class="library-title">📑 Reference Library</h2>
+                <div class="library-section reference-library-section">
+                    <h2 class="library-title">📚 Cherry Avenue Reference Library</h2>
                     <details>
                         <summary>Reference Documents</summary>
                         <div class="study-list month-study-list">
@@ -1244,9 +1425,21 @@
 
         <section id="utility-supply" class="utility-window">
             <p class="utility-kicker">Electrical Energy Service Overview</p>
-            <h3>How Cherry Avenue Gets Electrical Energy:</h3> 
-            <h3>• Shell Energy Supplies the Raw Material</h3>
-            <h3>• PG&amp;E provides Infrsturcture for Delivery, Service, Support and Billing</h3>
+            <div class="utility-top-row">
+                <div class="utility-heading-group">
+                    <h3>How Cherry Avenue Gets Electrical Energy:</h3> 
+                    <h3>• Shell Energy Supplies the Raw Material</h3>
+                    <h3>• PG&amp;E provides Infrsturcture for Delivery, Service, Support and Billing</h3>
+                </div>
+                <div class="utility-bill-actions" aria-label="Reference utility bill PDFs">
+                    <!-- Replace these placeholder PDF paths with final links when provided. -->
+                    <div class="utility-bill-btn-row">
+                        <a href="./ReferenceLibrary/UtilityBills/CherryAve-PGE-Utility-Bill.pdf" class="utility-bill-btn" target="_blank" rel="noopener noreferrer">PG&amp;E</a>
+                        <a href="./ReferenceLibrary/UtilityBills/CherryAve-Shell-Utility-Bill.pdf" class="utility-bill-btn" target="_blank" rel="noopener noreferrer">Shell</a>
+                    </div>
+                    <p class="utility-bill-caption">Reference Utility Bills</p>
+                </div>
+            </div>
             <p class="utility-intro">
                 Cherry Avenue receives site delivery through Pacific Gas and Electric Company (PG&amp;E) in California’s Central Valley utility footprint.
                 Supply-side planning and wholesale procurement context for this site includes Shell Energy Solutions as part of the broader resource stack aligned to operational load planning.
@@ -1320,6 +1513,7 @@
             </video>
         </div>
     </div>
+<script src="../../../UnityEnergy/founder_share_panel.js?v=20260702e"></script>
 
     <script>
         function openIntroVideo() {

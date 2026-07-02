@@ -1,0 +1,11 @@
+**REND3 — Recommended Engineering Attention Areas**
+
+First priority: the 0.0-volt minimum recorded in May requires root-cause investigation before MPTS installation planning is finalized. This event indicates either a hard fault, a protection trip, or a utility supply interruption. Understanding whether this originates upstream of REND3 or within the facility's distribution system directly affects the protection coordination design for any new MPTS installation.
+
+Second: the mid-week production interruption around May 11-12 should be correlated against the operations log. If this was an unplanned trip driven by overload or protection response, the reactive profile on REND3 is a contributing factor — a transformer already running at 76.9 percent power factor has less effective headroom than its nameplate rating suggests, because reactive current is occupying conductor and winding capacity continuously.
+
+Third: conductor sizing and protection ratings between REND3 and the primary induction motor loads should be reviewed in the context of the 1,511.5-ampere current maximum recorded. At that current level, any conductor or breaker running near its rated capacity is being stressed every time the field peaks.
+
+Fourth: with summer months approaching, the 631,000 BTU per hour thermal burden on REND3 will interact with rising ambient temperatures in the transformer room. Confirming adequate cooling capacity for the June-through-September window — before MPTS is installed and while the reactive burden remains uncorrected — is a practical near-term action item.
+
+Finally, the Mercury CSV dataset for REND3 should be obtained and validated. All values in this analysis are vision-derived. Capital investment decisions of this magnitude warrant numeric ground-truth confirmation.

@@ -1,0 +1,13 @@
+**Transformer: Deli.F — Engineering Attention Areas | May 2026**
+
+First priority: investigate the 0.0-volt collapse event recorded in May. A full voltage interruption on this transformer requires root-cause identification before any MPTS installation scoping proceeds. Whether this was a utility event, an internal protection trip, or a bus fault — it needs to be characterized and documented.
+
+Second: the 1,150.1 kVAR MAX reactive peak drives the three-unit H490 sizing requirement. Engineering should confirm whether that peak is driven by a simultaneous large-motor start sequence — multiple compressor starts overlapping during a shift start-up — or whether it represents steady-state reactive load. If it is a start-surge peak, soft-starter or staged-start sequencing may reduce the sizing requirement and lower capital investment.
+
+Third: the 1,865-amp current maximum against a 928-amp monthly average warrants conductor and connection inspection. Recurring current surges at nearly double the mean operating level create mechanical stress on bus connections, lug terminations, and transformer tap connections. A thermal imaging scan of the Deli F panel connections and primary terminations is recommended prior to MPTS installation.
+
+Fourth: voltage sag events clustering at production start windows suggest that load sequencing on Deli F could be staggered to reduce simultaneous reactive demand peaks. Even without MPTS, a load-sequencing review could reduce the severity of the sag events and the kVAR MAX peak.
+
+Fifth: confirm transformer nameplate thermal rating against the 323,371 BTU/hr thermal burden. At 2,500 kVA rated capacity, this burden level is significant and should be evaluated against ambient temperature conditions in the transformer enclosure, particularly given May operating conditions in California's Central Valley.
+
+---

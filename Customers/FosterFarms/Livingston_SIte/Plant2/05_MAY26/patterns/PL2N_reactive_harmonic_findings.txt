@@ -1,0 +1,11 @@
+**PL2N — Reactive Burden and Harmonic Environment**
+
+The reactive story on PL2-3North is one of the most visually striking elements of this analysis. The power factor trace in both the B and M views runs persistently in the 55 to 70 percent band — and it never self-corrects. There is no period in the 441-hour dataset where the field naturally climbs toward a healthy operating range of 90 percent or better. This is the classic profile of a facility with substantial motor load, refrigeration compressor banks, and HVAC systems that all generate reactive demand continuously, with no local compensation in place to absorb it.
+
+The numbers anchor the story precisely. Average reactive demand is 164.1 kVAR across the full observation window. The peak reactive demand reaches 373.0 kVAR. That 373 kVAR peak is your critical sizing number — it represents the moment of maximum magnetic burden on this circuit, and it is the value that drives the MPTS equipment recommendation. Applying the sizing rule — 373 kVAR divided by 400, rounded up — yields one H490 unit at 400 kVAR capacity, which covers the full reactive envelope of this transformer circuit with appropriate headroom.
+
+The harmonic layer confirmed in the M view adds a compounding dimension. At 5.2 percent average iTHD (current Total Harmonic Distortion) with peaks reaching 10.7 percent, the system is generating harmonic currents that ride on top of the fundamental reactive burden. These harmonics increase apparent losses in transformer cores, induce additional heating in motor windings, and can interfere with protective relay operation. The combination of 60.7 percent average power factor and a 10.7 percent harmonic peak is not coincidental — in food processing and cold storage environments with large populations of variable frequency drives, both conditions tend to co-exist and reinforce each other.
+
+The minimum power factor recorded is 49.12 percent — below 50 percent — which means at those moments, the reactive current component is actually larger than the real working current component. This is a fundamentally inefficient operating condition, and it carries measurable cost every minute it persists.
+
+---

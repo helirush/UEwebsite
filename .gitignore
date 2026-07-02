@@ -2,6 +2,9 @@
 **/.DS_Store
 .env
 *.env
+.env.*
+eestream.env/
+**/eestream.env/
 UnityEnergy/hume_runtime_auth.local.js
 zARCHIVE/
 **/__pycache__/

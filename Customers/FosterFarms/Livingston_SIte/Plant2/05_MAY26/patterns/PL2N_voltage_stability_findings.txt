@@ -1,0 +1,11 @@
+**PL2N — Voltage Stability and Field Health**
+
+The voltage picture on PL2-3North is a study in contrasts. The utility supply from Merced Irrigation District is feeding this transformer cleanly — the overall voltage trace spends the majority of its time in the 484 to 503 volt range, which is actually above the 480V nominal reference. That elevated operating voltage is not inherently dangerous, but it does mean the insulation systems across connected motors and drives are living in the upper portion of their design envelope more often than they should be.
+
+The more operationally significant story is what happens during production cycling. The MinVoltage marker is labeled at 471 volts — approximately 9 volts below the 480V nominal line-to-line reference. That 1.9 percent undervoltage condition at its deepest point may sound modest, but the pattern of how it occurs matters more than the magnitude alone. The triangular drop signatures — sharp V-shaped descents and rapid recoveries — are present and clearly clustered. They concentrate most densely in what appears to be peak production weeks in the middle of the observation window, around the 260318 to 260325 time markers. This clustering is the fingerprint of recurring inductive load switching — motor starts, compressor cycling, large HVAC stage-ons — pulling the field down momentarily with each event.
+
+For variable frequency drives, which are prevalent in food processing and cold storage operations, this pattern of oscillating between an elevated steady-state voltage above 500V and repeated dips toward 471V creates compounded stress. VFD input rectifiers and DC bus capacitors age faster under this voltage excursion cycle. Premium efficiency motors similarly experience accelerated winding insulation degradation when the field they operate in is simultaneously carrying 5.2 percent average harmonic distortion — a condition confirmed in the M view.
+
+The overall voltage health classification for PL2-3North is moderate risk — not a crisis, but an active wear mechanism that is shortening equipment service life with every production shift.
+
+---

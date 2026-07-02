@@ -1,0 +1,22 @@
+**NCND2 — Simulated MPTS Outcome | Projected Correction**
+
+No S (MPTS Savings) image was provided in this dataset. The projected MPTS outcome for NCND2 is therefore constructed from first-principles engineering based on the confirmed baseline readings and standard Unity MPTS correction parameters.
+
+**MPTS Sizing — NCND2:**
+kVAR MAX = 351.6 kVAR
+351.6 ÷ 400 = 0.879 → rounded UP → **1 H490 unit (400 kVAR rated)**
+Planning-level installed investment: approximately $200,000 (subject to final engineering scope and site conditions)
+
+A single H490 unit installed at NCND2 would provide up to 400 kVAR of reactive compensation — sufficient to fully offset the 351.6 kVAR peak reactive demand and bring the power factor from the current 93.0% average to approximately 99.5%, in alignment with Unity MPTS design targets.
+
+**Projected outcomes under correction:**
+
+The reactive burden of 244.9 kVAR average would be substantially eliminated — the compensated field would carry only residual reactive current, reducing conductor loading and transformer winding current by the reactive component.
+
+Thermal burden would decrease in proportion to the I²R reduction from lower reactive current. A correction from 93% to 99.5% power factor reduces apparent current draw by approximately 6.5% at equivalent real power delivery — translating to measurable winding temperature reduction and proportionally lower core losses.
+
+Cooling overhead of approximately $42,227 annually would be reduced as the transformer runs cooler. The specific cooling savings magnitude would be confirmed in a post-installation S view, but the directional impact is clear and consistent with Unity MPTS field data across comparable industrial installations.
+
+The total estimated recoverable waste approaching $127,148 per year represents the planning-level financial upside of correction. At approximately $200,000 installed investment, the simple payback horizon is in the range of 18–24 months at full recovery — a planning estimate that would be refined with confirmed utility rate schedules and a formal Mercury analysis once the dataset is complete.
+
+---

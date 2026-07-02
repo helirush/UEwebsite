@@ -1,0 +1,15 @@
+**PL2-1South — Recommended Engineering Attention Areas**
+
+Several areas warrant formal engineering review on PL2-1South before or concurrent with MPTS commissioning planning.
+
+**Outage Root Cause Investigation:** Two confirmed power interruption events within a 19-day observation window is a flag that demands attention independent of the reactive correction opportunity. Engineering should investigate whether these interruptions are upstream utility events, internal switching events, or protection relay operations responding to the high-current, high-harmonic operating conditions on this transformer. If they're protection-driven, the underlying trigger condition needs to be characterized before MPTS installation so the correction equipment is commissioned into a stable feeder environment.
+
+**Harmonic Survey and Mitigation Assessment:** An iTHD of 15.6% is above IEEE 519 thresholds and warrants a dedicated harmonic survey to identify the primary harmonic-generating loads — likely variable frequency drives, rectifiers, and large motor starters in the food processing and cold storage systems. While MPTS correction addresses reactive burden and provides some harmonic field improvement, a harmonic source assessment will determine whether supplemental filtering is warranted to bring the field into full compliance and maximize transformer and equipment lifespan.
+
+**Transformer Thermal Inspection:** Given the sustained 556,819 BTU per hour thermal burden and the 15.6% iTHD contribution to core and winding heating, a formal thermographic inspection of the PL2-1South transformer — including bushings, tap changer contacts, and secondary terminals — is recommended. Thermal imaging will establish a current health baseline and identify any hot spots that have already developed under this operating condition.
+
+**Conductor and Neutral Assessment:** High harmonic distortion environments, particularly those with significant third-harmonic content from nonlinear loads, can cause neutral conductor overloading in three-phase four-wire distribution systems. If PL2-1South feeds single-phase loads through a four-wire secondary distribution, neutral conductor sizing should be reviewed for adequacy under the current harmonic loading.
+
+**Demand Profile and Load Scheduling Review:** The observation that approximately 60% of active production hours run above the 1,584 kVA supply target suggests an opportunity to review load scheduling and motor start sequencing. Staggering large motor starts and sequencing compressor loads during shift startup can reduce reactive peak demand and improve the effectiveness of MPTS correction by flattening the reactive demand profile.
+
+---

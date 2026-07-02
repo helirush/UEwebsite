@@ -1,8 +1,9 @@
 {
-  "generated_at_utc": "2026-05-14T17:58:17.473796+00:00",
+  "generated_at_utc": "2026-06-20T20:32:02.544451+00:00",
   "status": "completed",
   "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Deli/04_APR26/Patterns",
-  "mode": "scripts-only",
+  "mode": "render-only",
+  "narrative_mode": "pre_mpts_sales",
   "inventory": {
     "image_count": 13,
     "all_images": [
@@ -21,6 +22,25 @@
       "unity-field-backdrop.png"
     ],
     "transformer_count": 3,
+    "raw_coverage_by_transformer": {
+      "AGENTICTEA": [
+        "m"
+      ],
+      "DELIF": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "DELIG": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
     "coverage_by_transformer": {
       "AGENTICTEA": [
         "m"
@@ -69,18 +89,21 @@
     ]
   },
   "notes": {
-    "baseline_required": "At least one baseline-style image per transformer (bt/b) is required for William analysis.",
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
     "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
   },
   "william_command": [
     "/opt/anaconda3/bin/python3",
     "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
     "/Users/mdhowell/eestream/eWebmaster/Customers/FosterFarms/Livingston_SIte/Deli/04_APR26/Patterns",
-    "--scripts-only",
+    "--render-only",
     "--force",
     "--verbosity",
-    "standard"
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales"
   ],
   "william_exit_code": 0,
-  "completed_at_utc": "2026-05-14T18:01:16.514295+00:00"
+  "completed_at_utc": "2026-06-20T20:39:19.735469+00:00"
 }

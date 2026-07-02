@@ -1,0 +1,11 @@
+**Transformer: Deli.F — Voltage Stability | May 2026**
+
+The voltage picture on Deli F is the most immediate health concern in this dataset. Average voltage is holding at 480.6 volts — right at nominal — but the recorded minimum is 0.0 volts. That floor is not a data artifact. That is a full voltage collapse event, meaning at some point during May this transformer's output went to zero. That is a hard interruption, not a sag, and on a food processing line carrying refrigeration compressors and conveyor drives, even a momentary full collapse carries real consequence for product integrity, equipment re-start sequencing, and mechanical stress.
+
+Beyond the collapse floor, the voltage trace in the V view shows persistent micro-perturbation texture throughout the month. The waveform band is thickened and fuzzy — that is not data noise, that is real electromagnetic instability riding on the supply waveform. The field is oscillating, not holding clean. The upper ceiling reaches 497.7 volts, representing a 17-volt swell above nominal — so the field is swinging both directions, touching collapse at the floor and swelling toward 498 volts at the ceiling. That is nearly 40 volts of active excursion across a single month on a nominally 480-volt system.
+
+The triangular voltage-drop markers are present, clearly visible, and — critically — they cluster with production periodicity. These drops are not random. They repeat at consistent weekly intervals aligned with your heaviest production windows. The chart explicitly annotates a dip to 456.9 volts — approximately 23 volts below nominal, or a 4.8% sag from the 480-volt reference. The dashed lower boundary in the chart sits near that 457-volt floor, suggesting the system has been characterized around this level, but events are touching and breaching it regularly.
+
+The device-health risk assessment is moderate to high. Recurring 4 to 5 percent voltage sags on motor-driven refrigeration compressors, VFD front ends, and HVAC systems will degrade insulation, increase winding temperature, and shorten equipment service life. The pattern is consistent, production-correlated, and cumulative. Every production cycle is applying voltage stress to your rotating equipment.
+
+---

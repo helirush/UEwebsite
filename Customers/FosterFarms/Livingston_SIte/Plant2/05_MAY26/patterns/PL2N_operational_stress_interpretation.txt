@@ -1,0 +1,11 @@
+**PL2N — Operational Stress Interpretation**
+
+Stepping back and reading this field as a whole system tells you something important about how this facility is actually operating versus how its power infrastructure was designed to operate. The PL2-3North transformer is a 2500 kVA unit — substantial capacity — and on a raw kVA loading basis, it has headroom to spare. The supply target is 464 kVA, and most of the production window runs at or below that level. Capacity is not the constraint here.
+
+The constraint is efficiency. Every hour of production at 60.7 percent average power factor means your conductors, switchgear, transformer windings, and bus connections are carrying approximately 64 percent more current than the actual work being performed would require at unity power factor. That excess current generates heat — 277,688 BTU per hour of thermal burden, measured in this dataset. That heat has to go somewhere, and in a food processing facility, it goes directly into your cooling load. The estimated cooling cost tied to this reactive burden alone runs approximately $8.16 per hour, 40.5 kilowatts of cooling demand, and approximately $71,452 per year.
+
+The two detected outage or disruption events — one near the 260320 marker and another near 260325, totaling an estimated 60 to 90 minutes of combined downtime — are notable context. In a reactive-heavy, harmonically stressed field, unplanned interruptions carry higher restart stress on motor loads than they would in a clean, well-compensated field. The triangular voltage sag events that cluster during production cycling are the visible surface of this deeper stress mechanism.
+
+The total annualized waste estimate of approximately $213,478 per year is the financial expression of all of these stresses operating simultaneously — reactive losses, thermal burden, and cooling overhead — measured against the 464 kVA daily operating target for this circuit.
+
+---

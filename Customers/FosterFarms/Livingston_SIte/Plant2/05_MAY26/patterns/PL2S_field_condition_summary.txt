@@ -1,0 +1,11 @@
+**PL2-1South — Field Condition Summary | Foster Farms, Livingston HQ | 2,500 kVA Transformer**
+
+The PL2-1South transformer at the Livingston facility is carrying one of the more stressed electromagnetic fields I've reviewed. This is a 2,500 kVA asset serving what is clearly a high-intensity food processing operation — and right now, it's working significantly harder than it needs to. Over the 442-hour observation window from March 13 through March 31, 2026, the field reveals a transformer that is thermally burdened, reactively loaded, harmonically stressed, and periodically interrupted by unplanned outage events.
+
+The headline numbers tell the story plainly. Your power factor is averaging 85.7%, which means that for every dollar of electrical capacity you're paying for, roughly 14 cents on the dollar is doing nothing productive — it's just circulating reactive energy back and forth through your transformer windings and cables. Your peak reactive demand is pushing 927.9 kVAR, and your thermal burden is sitting at 556,819 BTU per hour — that's not a warm transformer, that's a hot one. Heat is the single greatest accelerant of transformer aging, and this field is generating it continuously through reactive losses and harmonic distortion.
+
+On top of the chronic inefficiency, you have two confirmed outage events within this 19-day window — brief interruptions of roughly 20 to 30 minutes combined, but in a food processing environment, even a 10-minute unplanned interruption has food safety, equipment restart, and production continuity implications that far exceed what the energy waste line captures. The total annual waste burden estimated from this dataset is approximately $424,031 per year — a number that combines your reactive energy losses, your thermal burden carrying cost, and your cooling overhead. That's not a rounding error. That's a capital-scale drag on this transformer's operating economics.
+
+The field is untuned. There is no reactive compensation in place on PL2-1South. The pattern you're seeing — persistent reactive burden, cycling thermal load, voltage sag under production peaks — is exactly what MPTS correction is designed to resolve. This summary sets the foundation for what the correction opportunity looks like.
+
+---

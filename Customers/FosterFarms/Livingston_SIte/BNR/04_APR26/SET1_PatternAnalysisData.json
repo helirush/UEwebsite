@@ -140,13 +140,15 @@
     }
   },
   "group_overview": {
-    "group_name": "04_APR26",
+    "group_name": "BNR",
     "analysis_period": "April (260401-260430)",
     "transformer_count": 2,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 2 transformers compared. Combined annual savings potential is about $5,291,404. Highest workload is BNR2 at about 2500.0 kVA target load. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "narrative": "Group overview for BNR in April (260401-260430): 2 transformers compared. Combined monthly savings potential is about $440,950. Combined annual savings potential is about $5,291,404. Combined monthly waste exposure is about $440,950. Combined annual waste exposure is about $5,291,404. Highest workload is BNR2 at about 2500.0 kVA target load. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
     "totals": {
+      "monthly_savings": 440950.33,
       "annual_savings": 5291404.0,
-      "annual_waste": null,
+      "monthly_waste": 440950.33,
+      "annual_waste": 5291404.0,
       "birds_processed": null,
       "weighted_cost_per_bird": null,
       "weighted_energy_per_bird": null
@@ -179,8 +181,8 @@
         "reactive_peak_kvar": null,
         "monthly_savings": 440695.0,
         "annual_savings": 5288340.0,
-        "monthly_waste": null,
-        "annual_waste": null,
+        "monthly_waste": 440695.0,
+        "annual_waste": 5288340.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
@@ -194,21 +196,21 @@
         "reactive_peak_kvar": null,
         "monthly_savings": 255.33,
         "annual_savings": 3064.0,
-        "monthly_waste": null,
-        "annual_waste": null,
+        "monthly_waste": 255.33,
+        "annual_waste": 3064.0,
         "birds_processed": null,
         "energy_per_bird": null,
         "cost_per_bird": null
       }
     ],
-    "generated_at": "2026-05-20 03:15:03",
+    "generated_at": "2026-06-22 17:13:52",
     "source": "eeWILLIAM_group_rollup_v1"
   },
   "site_overview_state": {
-    "group_name": "04_APR26",
+    "group_name": "BNR",
     "analysis_period": "April (260401-260430)",
     "transformer_count": 2,
-    "narrative": "Group overview for 04_APR26 in April (260401-260430): 2 transformers compared. Combined annual savings potential is about $5,291,404. Highest workload is BNR2 at about 2500.0 kVA target load. Bird throughput and cost-per-bird metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
-    "last_updated": "2026-05-20 03:15:03"
+    "narrative": "Group overview for BNR in April (260401-260430): 2 transformers compared. Combined monthly savings potential is about $440,950. Combined annual savings potential is about $5,291,404. Combined monthly waste exposure is about $440,950. Combined annual waste exposure is about $5,291,404. Highest workload is BNR2 at about 2500.0 kVA target load. Bird throughput and production-intensity metrics are not yet available for this group payload. Use this cross-transformer ranking to prioritize correction order and report site-level business impact.",
+    "last_updated": "2026-06-22 17:13:52"
   }
 }

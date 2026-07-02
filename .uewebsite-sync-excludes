@@ -13,6 +13,9 @@ zARCHIVE/
 .cache.sqlite
 .env
 *.env
+.env.*
+eestream.env/
+**/eestream.env/
 UnityEnergy/hume_runtime_auth.local.js
 **/*_BU*.html
 **/*backup*.html

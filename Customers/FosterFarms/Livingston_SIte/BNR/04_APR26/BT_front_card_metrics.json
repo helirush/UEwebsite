@@ -1,0 +1,24 @@
+{
+  "transformers": {
+    "BNR1": {
+      "field_voltage": 474.3,
+      "power_factor_percent": 89.7,
+      "field_consequence_annual": 440695
+    },
+    "BNR-1": {
+      "field_voltage": 474.3,
+      "power_factor_percent": 89.7,
+      "field_consequence_annual": 440695
+    },
+    "BNR2": {
+      "field_voltage": 484.4,
+      "power_factor_percent": 96.4,
+      "field_consequence_annual": 3064
+    },
+    "BNR-2": {
+      "field_voltage": 484.4,
+      "power_factor_percent": 96.4,
+      "field_consequence_annual": 3064
+    }
+  }
+}

@@ -1,0 +1,18 @@
+**Transformer: NCND3 — Recommended Engineering Attention Areas**
+
+**1. MPTS Correction — H490 Deployment:**
+One H490 unit (400 kVAR capacity) is the recommended correction asset for NCND3. Installation should be scoped with attention to the existing panel and service infrastructure serving this 2500 kVA transformer. Pre-installation power quality survey to confirm harmonic interaction profile with VFD loads is recommended given the 11.2% iTHD maximum observed.
+
+**2. Outage Event Investigation:**
+The two confirmed interruption events on approximately May 14th and May 17th warrant root-cause investigation. Whether utility-sourced or facility-side switching events, the re-energization stress on continuous refrigeration and compressor motors is a real asset life concern. Review protective relay event logs and utility event records for those dates.
+
+**3. Sustained Overvoltage Monitoring:**
+The voltage trace riding 480–497V continuously represents a mild but chronic high-end voltage exposure. For a food processing facility with large motor loads, periodic insulation resistance testing on critical compressor motors and refrigeration units is a prudent maintenance practice to baseline aging trends before they manifest as failures.
+
+**4. Harmonic Profiling:**
+The 5.7% average iTHD with 11.2% peak events is currently within manageable range but should be formally surveyed, particularly around VFD-driven refrigeration compressors. If additional VFD assets are planned as part of efficiency upgrades, a harmonic mitigation assessment should accompany the MPTS scoping work to ensure the correction system is specified with appropriate filter characteristics.
+
+**5. Cooling Infrastructure Audit:**
+At 45.2 kW of active cooling load and $77,744/yr in cooling overhead, a targeted audit of transformer room and electrical room cooling infrastructure tied to NCND3 is justified. Post-MPTS correction, that cooling demand should decrease meaningfully — and the audit would establish the baseline for confirming realized savings after installation.
+
+---
