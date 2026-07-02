@@ -538,16 +538,16 @@
             box-shadow: 0 10px 28px rgba(139, 0, 0, 0.22);
         }
         .utility-kicker {
-            display: inline-block;
+            display: block;
             margin: 0 0 12px;
-            color: rgba(139, 0, 0, 1);
-            background: rgba(255, 215, 0, 1);
-            font-weight: 800;
-            font-size: 0.78rem;
+            color: rgba(255, 215, 0, 1);
+            background: none;
+            font-weight: 900;
+            font-size: 0.82rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            border-radius: 999px;
-            padding: 6px 12px;
+            border-radius: 0;
+            padding: 0;
         }
         .utility-window h3 {
             margin: 0 0 12px;
@@ -1434,8 +1434,8 @@
                 <div class="utility-bill-actions" aria-label="Reference utility bill PDFs">
                     <!-- Replace these placeholder PDF paths with final links when provided. -->
                     <div class="utility-bill-btn-row">
-                        <a href="./ReferenceLibrary/UtilityBills/CherryAve-PGE-Utility-Bill.pdf" class="utility-bill-btn" target="_blank" rel="noopener noreferrer">PG&amp;E</a>
-                        <a href="./ReferenceLibrary/UtilityBills/CherryAve-Shell-Utility-Bill.pdf" class="utility-bill-btn" target="_blank" rel="noopener noreferrer">Shell</a>
+                        <a href="#" class="utility-bill-btn js-utility-library-under-construction" role="button" aria-label="Utility Library Under Construction">PG&amp;E</a>
+                        <a href="#" class="utility-bill-btn js-utility-library-under-construction" role="button" aria-label="Utility Library Under Construction">Shell</a>
                     </div>
                     <p class="utility-bill-caption">Reference Utility Bills</p>
                 </div>
@@ -1554,6 +1554,12 @@
                 event.preventDefault();
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 history.replaceState(null, '', `#${targetId}`);
+            });
+        });
+        document.querySelectorAll('.js-utility-library-under-construction').forEach((button) => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                window.alert('Utility Library Under Construction');
             });
         });
 
