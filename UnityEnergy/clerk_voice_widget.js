@@ -3085,7 +3085,7 @@
           ? payload.session_context_char_limit
           : cfg && cfg.session_context_char_limit;
       payload.session_context = combineContextBlocks(
-        [coerceText(payload.session_context), retrievalContextBlock],
+        [retrievalContextBlock, coerceText(payload.session_context)],
         clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
       );
       payload.content_scope_instructions = combineContextBlocks(
@@ -5228,24 +5228,24 @@
         : cfg && cfg.session_context_char_limit;
     const mergedSessionContext = combineContextBlocks(
       [
-        configuredSessionContext,
-        responsePrecedenceGuidance ? `Response precedence: ${responsePrecedenceGuidance}` : "",
-        knowledgeReferenceSpine ? `Canonical reference spine: ${knowledgeReferenceSpine}` : "",
-        launchSessionContext,
-        responseStyleHint ? `Response style guidance: ${responseStyleHint}` : "",
-        tokenBudgetHint,
-        syntaxContext,
         pageContextBlock,
         pageAwareOpeningLine ? `Page-aware opening line: ${pageAwareOpeningLine}` : "",
         pageAwareFollowupPrompt ? `Page-aware follow-up prompt: ${pageAwareFollowupPrompt}` : "",
         measureManageExchangeContextBlock,
+        activeSkillPackTitles ? `Active grounding skill packs: ${activeSkillPackTitles}` : "",
+        activeSkillPackExcerpt ? `Grounded source excerpt:\n${activeSkillPackExcerpt}` : "",
+        launchSessionContext,
+        responseStyleHint ? `Response style guidance: ${responseStyleHint}` : "",
+        tokenBudgetHint,
         contentAwarenessMode
           ? "Content awareness mode is active: only provide Unity claims grounded in launch, page, and selected skill-pack context. If context is incomplete, explicitly state uncertainty before proceeding."
           : "",
         contentGroundingPolicy ? `Grounding policy: ${contentGroundingPolicy}` : "",
         unknownAnswerFallback ? `Unknown-answer fallback: ${unknownAnswerFallback}` : "",
-        activeSkillPackTitles ? `Active grounding skill packs: ${activeSkillPackTitles}` : "",
-        activeSkillPackExcerpt ? `Grounded source excerpt:\n${activeSkillPackExcerpt}` : "",
+        configuredSessionContext,
+        responsePrecedenceGuidance ? `Response precedence: ${responsePrecedenceGuidance}` : "",
+        knowledgeReferenceSpine ? `Canonical reference spine: ${knowledgeReferenceSpine}` : "",
+        syntaxContext,
       ],
       clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
     );
@@ -5294,7 +5294,7 @@
         ? payload.session_context_char_limit
         : cfg && cfg.session_context_char_limit;
     const mergedSessionContext = combineContextBlocks(
-      [coerceText(payload.session_context), groundingAppendix],
+      [groundingAppendix, coerceText(payload.session_context)],
       clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
     );
     if (mergedSessionContext) {
@@ -5548,7 +5548,7 @@
         ? payload.session_context_char_limit
         : cfg && cfg.session_context_char_limit;
     const mergedSessionContext = combineContextBlocks(
-      [coerceText(payload.session_context), scopeContextBlock],
+      [scopeContextBlock, coerceText(payload.session_context)],
       clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
     );
     if (mergedSessionContext) {
