@@ -547,7 +547,7 @@
                     <h1>VOLTAGE &amp; CURRENT HEALTH ANALYSIS</h1>
 <p><em>Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden</em></p>
 <p><strong>Transformer:</strong> Deli F<br />
-<strong>Generated:</strong> 2026-06-18 23:46:59<br />
+<strong>Generated:</strong> 2026-06-19 18:06:01<br />
 <strong>Data Source:</strong> AN55050323-V-1minRES_44640CLP_260501-260531c.csv  </p>
 <h2>📊 Analysis Period</h2>
 <ul>
@@ -757,25 +757,6 @@
                 container.appendChild(note);
             }
         }
-        function applyCacheBustFromQuery() {
-            let cacheBust = '';
-            try {
-                const params = new URLSearchParams(window.location.search || '');
-                cacheBust = (params.get('cb') || '').trim();
-            } catch (e) {}
-            if (!cacheBust) return;
-
-            ['patternImageInline', 'patternImageFullscreen'].forEach((id) => {
-                const img = document.getElementById(id);
-                if (!img) return;
-                const src = (img.getAttribute('src') || '').trim();
-                if (!src || src === '#' || src.includes('cb=')) return;
-                const separator = src.includes('?') ? '&' : '?';
-                img.setAttribute('src', `${src}${separator}cb=${encodeURIComponent(cacheBust)}`);
-            });
-        }
-
-        applyCacheBustFromQuery();
 
         (function hidePatternIfMissing() {
             const inlineImg = document.getElementById('patternImageInline');

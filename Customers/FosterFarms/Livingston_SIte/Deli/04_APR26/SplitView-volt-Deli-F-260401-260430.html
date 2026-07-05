@@ -757,25 +757,6 @@
                 container.appendChild(note);
             }
         }
-        function applyCacheBustFromQuery() {
-            let cacheBust = '';
-            try {
-                const params = new URLSearchParams(window.location.search || '');
-                cacheBust = (params.get('cb') || '').trim();
-            } catch (e) {}
-            if (!cacheBust) return;
-
-            ['patternImageInline', 'patternImageFullscreen'].forEach((id) => {
-                const img = document.getElementById(id);
-                if (!img) return;
-                const src = (img.getAttribute('src') || '').trim();
-                if (!src || src === '#' || src.includes('cb=')) return;
-                const separator = src.includes('?') ? '&' : '?';
-                img.setAttribute('src', `${src}${separator}cb=${encodeURIComponent(cacheBust)}`);
-            });
-        }
-
-        applyCacheBustFromQuery();
 
         (function hidePatternIfMissing() {
             const inlineImg = document.getElementById('patternImageInline');
