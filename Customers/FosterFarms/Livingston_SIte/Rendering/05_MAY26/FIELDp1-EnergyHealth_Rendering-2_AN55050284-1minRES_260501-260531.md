@@ -39,8 +39,8 @@
 
 - **Transformer:** Rendering-2
 - **Power Factor:** 0.734
-- **Total Energy (Actual):** 662,769.30 kWh (per period), 891.12 kW (per hour)
-- **Total Waste (Actual):** 248,743.25 kWh (per period), 334.44 kW (per hour)
+- **Total Energy (Actual):** 662,769.30 kWh (per period), 890.80 kW (per hour)
+- **Total Waste (Actual):** 251,844.00 kWh (per period), 338.50 kW (per hour)
 
 ---
 
@@ -56,10 +56,10 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 334.44 kW/hr
+- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 338.50 kW/hr
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
-- **Rendering-2 Utility Cost Offset:** $65.22/hour
-- **Annual Offset Savings:** $571298/year
+- **Rendering-2 Utility Cost Offset:** $66.01/hour
+- **Annual Offset Savings:** $578293/year
 
 ### Element 2: Cooling Elimination Savings
 
@@ -164,15 +164,15 @@ If IEEE compliance is required, individual THD values remain visible and can be 
 
 - **Maximum UtilityDemand:** 1,446.20 kW
   - **Maximum Load:** 2,162.86 kVA
-  - **Percentage of Capacity (MAX):** 86.5%
-- **Average Load:** 1,225.56 kVA
-  - **Percentage of Capacity (Avg):** 49.0%
+  - **Percentage of Capacity (MAX):** 88.7%
+- **Average Load:** 1,229.40 kVA
+  - **Percentage of Capacity (Avg):** 49.2%
 
 ## kVA and Power Factor Analysis (Measured vs Calculated)
 
 ### Measured Values (PRIMARY - Used for All Analysis)
 
-- **Average kVA (Ssum_kVA):** 1,225.56 kVA
+- **Average kVA (Ssum_kVA):** 1,229.40 kVA
 - **Average Power Factor (PF):** 0.734
 
 **Source:** Direct meter measurements (instantaneous values averaged over time)
@@ -187,7 +187,7 @@ If IEEE compliance is required, individual THD values remain visible and can be 
 - Average kW (Psum_kW): 891.12 kW
 
 ### Differences (Measured vs Calculated)
-- **kVA Difference:** 4.42 kVA (0.4%)
+- **kVA Difference:** 0.58 kVA (0.0%)
 - **Calculated PF (kW/kVA from averages):** 0.724
 - **Power Factor Difference:** 0.010 (1.3%)
 
@@ -201,17 +201,17 @@ The meter's instantaneous measurements capture these variations correctly, while
 calculations from averaged values systematically underestimate reactive effects.
 
 **Analysis Method:** All heat calculations, thermal burden, and cost analysis use
-the measured kVA (1225.56) and measured PF (0.734) values.
+the measured kVA (1229.40) and measured PF (0.734) values.
 Calculated values are shown above for verification and engineering transparency.
 
 ## Overall Power Metrics (FPC)
 
 | Metric | Average | % of Capacity | Total Energy | HEAT (BTU/hr) |
 | ------ | ------- | ------------- | ------------------- | ------------- |
-| kVA | 1,225.56 |        49.0% | 911,512.55 kVA | 3,040,622.47 TOTAL-HEAT |
+| kVA | 1,229.40 |        49.2% | 914,673.60 kVA | 3,040,622.47 TOTAL-HEAT |
 | kW |   891.12 |        35.6% | 662,769.30 kWh | 829,757.43 Load-Heat |
 | kVAR |   841.38 |        33.7% | 625,773.10 kVARh | - |
-| WASTE |   334.44 |        13.4% | 248,743.25 WASTE | 311,415.38 Field-Heat |
+| WASTE |   338.50 |        13.5% | 251,844.00 WASTE | 311,415.38 Field-Heat |
 
 ### Heat Unit Notes
 
@@ -225,7 +225,7 @@ Calculated values are shown above for verification and engineering transparency.
 
 | Month | Avg kVA | Avg kW | Avg kVAR | Avg PF | % Capacity |
 | ----- | ------- | ------ | -------- | ------ | ---------- |
-| 5 | 1,225.56 |   891.12 |   836.47 |     0.73 |   49.0% |
+| 5 | 1,229.40 |   890.80 |   836.47 |     0.73 |   49.2% |
 
 ## Measured Hourly Averages
 

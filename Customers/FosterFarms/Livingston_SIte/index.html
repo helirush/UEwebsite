@@ -2245,10 +2245,15 @@
                     </div>
                     <details class="library-master-section">
                         <summary>
-                            <span class="library-master-title library-master-title-primary">480v Transformer Groups</span>
+                            <span class="library-master-title library-master-title-primary">Seven (7) - Electrical Energy Field Groups</span>
                             <span class="library-master-summary-bottom">
                                 <span class="library-master-hint">Select to view transformer groups and monthly field reports.</span>
                                 <span class="library-master-insights">
+                                    <span class="library-master-insight">
+                                        <span class="library-master-insight-label">Available Capacity</span>
+                                        <span class="library-master-insight-value" id="livingston-master-available-capacity">--.- MW</span>
+                                        <span class="library-master-insight-sub">Annual</span>
+                                    </span>
                                     <span class="library-master-insight">
                                         <span class="library-master-insight-label">Site Field Efficiency</span>
                                         <span class="library-master-insight-value" id="livingston-master-efficiency">--.-%</span>
@@ -3009,6 +3014,73 @@
 
             return annualValues;
         }
+        function parseTargetPatternKvaFromText(sourceText) {
+            const normalized = String(sourceText || '').replace(/\s+/g, ' ').trim();
+            if (!normalized) return null;
+
+            const explicitRegexes = [
+                /bt_target_kva\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
+                /target_kva_image\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
+                /target_validated\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
+                /daily\s+supply\s+target[^0-9]{0,24}([0-9][0-9,]*(?:\.[0-9]+)?)\s*kva/i,
+                /supply\s+target[^0-9]{0,24}([0-9][0-9,]*(?:\.[0-9]+)?)\s*kva/i
+            ];
+
+            for (const regex of explicitRegexes) {
+                const match = normalized.match(regex);
+                if (!match) continue;
+                const numeric = Number(String(match[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(numeric) && numeric > 0) return numeric;
+            }
+
+            return null;
+        }
+        function parseAvailableCapacityKvaFromPatternTransformer(transformerData) {
+            if (!transformerData || typeof transformerData !== 'object') return null;
+
+            const directCandidates = [
+                transformerData.bt_target_kva,
+                transformerData.target_kva_image,
+                transformerData.target_validated,
+                transformerData.target_kva,
+                transformerData.daily_target_kva,
+                transformerData.site_overview_state?.metrics?.bt_target_kva,
+                transformerData.site_overview_state?.metrics?.target_kva_image,
+                transformerData.site_overview_state?.metrics?.target_validated
+            ];
+            for (const candidate of directCandidates) {
+                const numeric = Number(candidate);
+                if (Number.isFinite(numeric) && numeric > 0) return numeric;
+            }
+
+            const textSources = [
+                transformerData.cross_check,
+                transformerData.voltage_baseline_notes,
+                transformerData.field_condition_summary,
+                transformerData.pattern_part1,
+                transformerData.pattern_text,
+                transformerData.site_overview_state?.story_blocks?.baseline_notes
+            ];
+            for (const source of textSources) {
+                const parsed = parseTargetPatternKvaFromText(source);
+                if (Number.isFinite(parsed) && parsed > 0) return parsed;
+            }
+
+            return null;
+        }
+        function parseAvailableCapacityKvaFromPatternRollup(patternData) {
+            if (!patternData || typeof patternData !== 'object') return null;
+
+            const transformers = patternData.transformers;
+            if (!transformers || typeof transformers !== 'object') return null;
+
+            const totals = Object.values(transformers)
+                .map(parseAvailableCapacityKvaFromPatternTransformer)
+                .filter((value) => Number.isFinite(value) && value > 0);
+
+            if (!totals.length) return null;
+            return totals.reduce((sum, value) => sum + value, 0);
+        }
         function extractStudyPeriodTokenFromSummaryboard(doc, studyUrl) {
             const periodText = String(doc?.getElementById('param-period')?.textContent || '');
             const periodMatch = periodText.match(/c\.(\d{6}-\d{6})/i);
@@ -3220,6 +3292,30 @@
                 return null;
             }
         }
+        const STUDY_AVAILABLE_CAPACITY_KVA_CACHE = new Map();
+        async function fetchStudyAvailableCapacityKva(studyUrl) {
+            const cacheKey = String(studyUrl || '');
+            if (!cacheKey) return null;
+            if (!STUDY_AVAILABLE_CAPACITY_KVA_CACHE.has(cacheKey)) {
+                const pending = (async () => {
+                    try {
+                        const patternRollupUrl = new URL('SET1_PatternAnalysisData.json', studyUrl).toString();
+                        const patternRollupText = await fetchStudyText(patternRollupUrl);
+                        const patternRollupData = JSON.parse(String(patternRollupText || '{}'));
+                        const availableCapacityKva = parseAvailableCapacityKvaFromPatternRollup(patternRollupData);
+                        if (Number.isFinite(availableCapacityKva) && availableCapacityKva > 0) return availableCapacityKva;
+                    } catch (e) {}
+                    return null;
+                })();
+                STUDY_AVAILABLE_CAPACITY_KVA_CACHE.set(cacheKey, pending);
+            }
+            try {
+                return await STUDY_AVAILABLE_CAPACITY_KVA_CACHE.get(cacheKey);
+            } catch (error) {
+                STUDY_AVAILABLE_CAPACITY_KVA_CACHE.delete(cacheKey);
+                return null;
+            }
+        }
         function formatAnnualConsequence(value) {
             const numeric = Number(value);
             if (!Number.isFinite(numeric)) return '$---/yr';
@@ -3286,6 +3382,26 @@
             const formatted = formatHeroConsequence(siteTotal);
             if (heroConsequenceEl) heroConsequenceEl.textContent = formatted;
             if (masterConsequenceEl) masterConsequenceEl.textContent = formatted;
+        }
+        function formatAvailableCapacityMw(totalKva) {
+            const numeric = Number(totalKva);
+            if (!Number.isFinite(numeric) || numeric <= 0) return '--.- MW';
+            return `${(numeric / 1000).toFixed(1)} MW`;
+        }
+        function updateLivingstonMasterAvailableCapacity(groupSnapshots) {
+            const masterCapacityEl = document.getElementById('livingston-master-available-capacity');
+            if (!masterCapacityEl) return;
+            const capacityTotals = Array.isArray(groupSnapshots)
+                ? groupSnapshots
+                    .map((snapshot) => Number(snapshot?.latestMetrics?.availableCapacityKva))
+                    .filter((value) => Number.isFinite(value) && value > 0)
+                : [];
+            if (!capacityTotals.length) {
+                masterCapacityEl.textContent = '--.- MW';
+                return;
+            }
+            const siteCapacityKva = capacityTotals.reduce((sum, value) => sum + value, 0);
+            masterCapacityEl.textContent = formatAvailableCapacityMw(siteCapacityKva);
         }
         function updateLivingstonHeroSiteAverage(groupSnapshots) {
             const heroAvgEl = document.getElementById('livingston-hero-site-efficiency')
@@ -3402,10 +3518,12 @@
 
             const avgPf = pfValues.reduce((sum, n) => sum + n, 0) / pfValues.length;
             const totalAnnualWasted = await fetchStudyAnnualWastedTotal(resolvedUrl, htmlText);
+            const availableCapacityKva = await fetchStudyAvailableCapacityKva(resolvedUrl);
 
             return {
                 pfPercent: avgPf,
                 totalAnnualWasted,
+                availableCapacityKva,
                 pfValues
             };
         }
@@ -3572,6 +3690,7 @@
             const groupSnapshots = await Promise.all(Array.from(groupSections).map(updateGroupSummary));
             sortGroupSectionsByConsequence(groupSnapshots);
             updateLivingstonHeroConsequence(groupSnapshots);
+            updateLivingstonMasterAvailableCapacity(groupSnapshots);
             updateLivingstonHeroSiteAverage(groupSnapshots);
             updateLivingstonHeroTopline(groupSnapshots);
             updateLivingstonCompositeTitlePills();

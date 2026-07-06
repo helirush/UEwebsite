@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img src="Patterns/BNR2m_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()">
+            <img id="patternImageInline" src="Patterns/BNR2s_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
             <p>BNR-2 - HEAT Pattern</p>
         </div>
         <div class="bottom-section">
@@ -623,7 +623,7 @@
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img src="Patterns/BNR2m_mar26.png" alt="Pattern Analysis">
+            <img id="patternImageFullscreen" src="Patterns/BNR2s_mar26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
             <p>BNR-2 - HEAT Pattern</p>
         </div>
     </div>    
@@ -648,6 +648,43 @@
     
     
     <script>
+        function handlePatternMissing() {
+            const container = document.querySelector('.pattern-image-container');
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            const fullsizeBtn = container ? container.querySelector('.fullsize-btn') : null;
+            const caption = container ? container.querySelector('p') : null;
+
+            if (inlineImg) {
+                inlineImg.style.display = 'none';
+                inlineImg.dataset.patternMissing = 'true';
+            }
+            if (fullscreenImg) {
+                fullscreenImg.style.display = 'none';
+            }
+            if (fullsizeBtn) {
+                fullsizeBtn.style.display = 'none';
+            }
+            if (caption) {
+                caption.textContent = 'Patterns are currently unavailable.';
+            }
+            if (container && !container.querySelector('.pattern-missing-note')) {
+                const note = document.createElement('p');
+                note.className = 'pattern-missing-note';
+                note.style.cssText = 'margin-top: 14px; color: #f3d67a; font-size: 13px;';
+                note.textContent = 'Patterns are currently unavailable.';
+                container.appendChild(note);
+            }
+        }
+
+        (function hidePatternIfMissing() {
+            const inlineImg = document.getElementById('patternImageInline');
+            if (!inlineImg) return;
+            const src = (inlineImg.getAttribute('src') || '').trim();
+            if (!src || src === '#') {
+                handlePatternMissing();
+            }
+        })();
         // If the dashboard HTML isn't available (iframe src is "#"), hide the empty pane.
         (function hideDashboardIfMissing() {
             const iframe = document.querySelector('.dashboard-pane iframe');
@@ -673,6 +710,8 @@
         })();
 
         function showFullscreen() {
+            const inlineImg = document.getElementById('patternImageInline');
+            if (!inlineImg || inlineImg.dataset.patternMissing === 'true' || inlineImg.style.display === 'none') return;
             document.getElementById('imageFullscreenOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }

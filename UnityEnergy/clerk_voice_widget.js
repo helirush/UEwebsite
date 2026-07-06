@@ -2424,6 +2424,39 @@
     }
     return "After answering, ask one concise follow-up question tied to the active page context.";
   }
+  function buildPageAwareNameRequestLine(profile, payload) {
+    const explicit = coerceText(payload && payload.page_context_name_request_line);
+    if (explicit) return explicit;
+    const profileId = resolvePageContextProfileId(profile, payload);
+    if (profileId === "about-unity") {
+      return "What from this About Unity page would you like to unpack first?";
+    }
+    if (profileId === "unity-story") {
+      return "What part of this Unity Introduction page should we go deeper on first?";
+    }
+    if (profileId === "our-systems") {
+      return "Which layer on this page should we start with: Measure, Manage, or Exchange?";
+    }
+    if (profileId === "products-services") {
+      return "Which product or service on this page should we clarify first?";
+    }
+    if (profileId === "customer-portals") {
+      return "Which customer portal section on this page should we review first?";
+    }
+    if (profileId === "electrical-energy-story") {
+      return "Which section of this Electrical Energy Story page should we break down first?";
+    }
+    if (profileId === "contact-us") {
+      return "Before handoff, what should we prioritize from this contact page?";
+    }
+    if (profileId === "maxwellian") {
+      return "Which brief or eInsights section on this page should we discuss first?";
+    }
+    if (profileId.startsWith("customer-")) {
+      return "Which signal on this customer page should we interpret first?";
+    }
+    return "What on this page would you like to clarify first?";
+  }
 
   function buildMeasureManageExchangeGuidance(profile, payload) {
     const profileId = resolvePageContextProfileId(profile, payload);
@@ -2489,7 +2522,9 @@
         : {};
     const normalized = {};
     Object.entries(source).forEach(function ([key, value]) {
-      const normalizedKey = coerceText(key).toLowerCase();
+      const normalizedKey =
+        normalizePageSlugToken(key) ||
+        coerceText(key).toLowerCase();
       if (!normalizedKey) return;
       const files = normalizeStringArray(value, 24);
       if (files.length === 0) return;
@@ -5024,7 +5059,7 @@
       getCurrentPageSlug(),
     ];
     for (let i = 0; i < candidates.length; i += 1) {
-      const key = coerceText(candidates[i]).toLowerCase();
+      const key = normalizePageSlugToken(candidates[i]);
       if (key) return key;
     }
     return "index";
@@ -5122,6 +5157,7 @@
     let pageContextBlock = "";
     let pageAwareOpeningLine = "";
     let pageAwareFollowupPrompt = "";
+    let pageAwareNameRequestLine = "";
     if (profile) {
       assignContextValueIfMissing(payload, "source_page", profile.id);
       assignContextValueIfMissing(payload, "page_context_title", profile.title);
@@ -5138,12 +5174,17 @@
           : "";
       pageAwareOpeningLine = buildPageAwareOpeningLine(profile, payload);
       pageAwareFollowupPrompt = buildPageAwareFollowupPrompt(profile, payload);
+      pageAwareNameRequestLine = buildPageAwareNameRequestLine(profile, payload);
       if (pageAwareOpeningLine) {
         assignContextValueIfMissing(payload, "page_context_opening_line", pageAwareOpeningLine);
         assignContextValueIfMissing(payload, "opening_line", pageAwareOpeningLine);
       }
       if (pageAwareFollowupPrompt) {
         assignContextValueIfMissing(payload, "page_context_followup_prompt", pageAwareFollowupPrompt);
+      }
+      if (pageAwareNameRequestLine) {
+        assignContextValueIfMissing(payload, "page_context_name_request_line", pageAwareNameRequestLine);
+        assignContextValueIfMissing(payload, "name_request_line", pageAwareNameRequestLine);
       }
       pageContextBlock = combineContextBlocks(
         [
@@ -5172,6 +5213,7 @@
       assignContextValueIfMissing(payload, "source_page", getCurrentPageSlug());
       pageAwareOpeningLine = buildPageAwareOpeningLine(null, payload);
       pageAwareFollowupPrompt = buildPageAwareFollowupPrompt(null, payload);
+      pageAwareNameRequestLine = buildPageAwareNameRequestLine(null, payload);
       if (pageAwareOpeningLine) {
         assignContextValueIfMissing(payload, "page_context_opening_line", pageAwareOpeningLine);
         assignContextValueIfMissing(payload, "opening_line", pageAwareOpeningLine);
@@ -5179,6 +5221,10 @@
       }
       if (pageAwareFollowupPrompt) {
         assignContextValueIfMissing(payload, "page_context_followup_prompt", pageAwareFollowupPrompt);
+      }
+      if (pageAwareNameRequestLine) {
+        assignContextValueIfMissing(payload, "page_context_name_request_line", pageAwareNameRequestLine);
+        assignContextValueIfMissing(payload, "name_request_line", pageAwareNameRequestLine);
       }
     }
     if (responsePrecedenceGuidance) {
@@ -5230,6 +5276,7 @@
       [
         pageContextBlock,
         pageAwareOpeningLine ? `Page-aware opening line: ${pageAwareOpeningLine}` : "",
+        pageAwareNameRequestLine ? `Page-aware immediate follow-up line: ${pageAwareNameRequestLine}` : "",
         pageAwareFollowupPrompt ? `Page-aware follow-up prompt: ${pageAwareFollowupPrompt}` : "",
         measureManageExchangeContextBlock,
         activeSkillPackTitles ? `Active grounding skill packs: ${activeSkillPackTitles}` : "",
@@ -5316,7 +5363,8 @@
     const map = normalizePageSourceFileMap(cfg);
     const keys = [];
     const collectKey = function (value) {
-      const normalized = coerceText(value).toLowerCase();
+      const raw = coerceText(value);
+      const normalized = normalizePageSlugToken(raw) || raw.toLowerCase();
       if (!normalized || keys.includes(normalized)) return;
       keys.push(normalized);
     };
@@ -7780,7 +7828,11 @@
   function buildClerkPageLaunchPayload(input) {
     const cfg = getVoiceConfig();
     const source = input && typeof input === "object" ? input : {};
-    const sourcePage = coerceText(source.sourcePage || source.source_page) || getCurrentPageSlug();
+    const sourcePage = (
+      normalizePageSlugToken(source.sourcePage || source.source_page) ||
+      normalizePageSlugToken(getCurrentPageSlug()) ||
+      "index"
+    );
     const contextSource = normalizeContextSource(
       source.contextSource || source.context_source || sourcePage,
       cfg

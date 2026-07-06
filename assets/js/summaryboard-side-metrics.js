@@ -1105,7 +1105,7 @@
       const leftMetric = document.createElement('div');
       leftMetric.className = 'gauge-side-metric gauge-side-left';
       leftMetric.innerHTML = `
-        <div class="gauge-side-label">Field Voltage</div>
+        <div class="gauge-side-label"><span>Energy Field</span><span>Voltage</span></div>
         <div class="gauge-side-value" id="${voltageId}">—</div>
       `;
       gaugeContainer.appendChild(leftMetric);
@@ -1116,7 +1116,7 @@
       const rightMetric = document.createElement('div');
       rightMetric.className = 'gauge-side-metric gauge-side-right';
       rightMetric.innerHTML = `
-        <div class="gauge-side-label">Field Consequence</div>
+        <div class="gauge-side-label"><span>Energy Field</span><span>Consequence</span></div>
         <div class="gauge-side-value" id="${consequenceId}">—</div>
       `;
       gaugeContainer.appendChild(rightMetric);

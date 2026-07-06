@@ -19,7 +19,7 @@
   "generator": "Merced Irrigation District - Water & Power",
   "ppa_provider": "None",
   "composite_kwh_rate": 0.195,
-  "co2e_cost_per_mt": 38.5,
+  "co2e_cost_per_mt": 38.0,
   "transformer": "BNR-1",
   "transformer_group": "BNR",
   "energy_field_group": "BNR",
@@ -132,7 +132,7 @@
       "size_kva": 2500,
       "voltage": 480,
       "ac_space_pct": 50.0,
-      "equipment_cost_annual": 10000.0,
+      "equipment_cost_annual": 45000.0,
       "meter_sn": "AN55050434",
       "group": "Rendering"
     },
@@ -140,7 +140,7 @@
       "size_kva": 2500,
       "voltage": 480,
       "ac_space_pct": 50.0,
-      "equipment_cost_annual": 10000.0,
+      "equipment_cost_annual": 45000.0,
       "meter_sn": "AN55050284",
       "group": "Rendering"
     },
@@ -148,7 +148,7 @@
       "size_kva": 2500,
       "voltage": 480,
       "ac_space_pct": 50.0,
-      "equipment_cost_annual": 10000.0,
+      "equipment_cost_annual": 45000.0,
       "meter_sn": "AN55050429",
       "group": "Rendering"
     }
