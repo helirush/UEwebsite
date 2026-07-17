@@ -1,0 +1,15 @@
+**PL1-MShop | Projected MPTS Correction Outcome | Planning-Level Estimate**
+
+The MPTS sizing calculation for PL1-MShop is driven by the kVAR MAX figure extracted from the BT header: 2,265.0 kVAR. Applying the standard sizing rule — kVAR MAX divided by 400, rounded up — yields 2,265 ÷ 400 = 5.66, which rounds up to **6 H490 units**. Each H490 delivers 400 kVAR of reactive compensation capacity, so 6 units provides 2,400 kVAR of correction headroom — sufficient to cover the peak reactive demand with margin.
+
+At a planning-level installed estimate of approximately $200,000 per H490 unit, the total investment for a 6-unit configuration is approximately $1,200,000 installed. This is a planning-level estimate only. Final pricing will depend on engineering scope, site conditions, electrical access, and switchgear requirements, and should be confirmed through a formal engineering assessment.
+
+What does correction actually deliver for PL1-MShop? The S view projects power factor rising to 99.5% — up from the current 86.6% average. That 12.9 percentage point improvement is not cosmetic. It means the reactive current that currently burdens every conductor, every winding, and every switching contact is largely eliminated from the supply path. The transformer sees a cleaner load profile. The amperage for the same real production demand drops measurably. The thermal burden — currently 184,225 BTU per hour — decreases in proportion to the reactive component eliminated.
+
+The approximately $140,922 per year in total wasted costs represents the upper bound of recoverable savings. A realistic MPTS correction targeting the reactive and thermal components of that waste — roughly $87,654 per year in direct energy waste plus the $5.32 per hour cooling overhead — suggests a meaningful annual recovery that moves payback into a range worth engineering-level analysis. At approximately $1,200,000 installed and approximately $87,654 in direct annual energy waste recovery alone, the planning-level simple payback is in the range of 13 to 15 years on energy savings alone — but the full value case includes transformer capacity relief, reduced maintenance cycles, extended equipment service life, and elimination of the overload risk currently present at 102.3% capacity utilization.
+
+The capacity relief angle deserves emphasis. If MPTS correction raises the effective power factor to 99.5%, the kVA demand for the same real kW production drops significantly. That may pull the transformer back below nameplate capacity — transforming an asset currently operating in overload into one with thermal margin restored. Deferring a transformer replacement or upgrade is a capital avoidance value that should be quantified in the full engineering business case.
+
+No confirmed outage events were detected in this dataset, which means continuous production reliability has been maintained so far. MPTS correction locks in that continuity by reducing the thermal stress that is currently the primary uncontrolled failure risk on this transformer.
+
+---

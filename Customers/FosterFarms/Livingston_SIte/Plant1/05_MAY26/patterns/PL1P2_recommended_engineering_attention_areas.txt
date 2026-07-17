@@ -1,15 +1,20 @@
-**PL1P2 — Engineering Attention Priorities**
+**PL1P2 — Recommended Engineering Attention Areas | May 2026**
 
-Several areas warrant focused engineering review before or concurrent with MPTS sizing finalization.
+The following areas warrant prioritized engineering attention based on the May 2026 field capture for transformer PL1P2:
 
-**First, reactive compensation sizing confirmation.** The kVAR MAX of 948 kVAR is a vision-derived figure. Before committing to a three-unit H490 installation, a Mercury-validated dataset with confirmed kVAR peak values should be used to finalize the sizing. The vision estimate is a reliable planning basis, but submetered confirmation eliminates oversizing or undersizing risk.
+**1. Reactive Compensation Assignment — Immediate Priority**
+PL1P2 is carrying an average of 284.2 kVAR of reactive load continuously through every production hour, with estimated peaks at 455 kVAR. Two H490 units represent the planning-level MPTS solution for this transformer. Until a tuning assignment is made, every additional month of operation in this untuned state accumulates avoidable thermal burden, accelerates insulation aging, and sustains the energy waste trajectory estimated at six figures annually. This should be the first engineering action queued for this transformer.
 
-**Second, voltage dip root-cause investigation.** The 15 to 18 labeled voltage dip events across May — with the minimum excursion reaching 306–307 volts — should be mapped against the production schedule to identify which specific load events are driving the deepest sags. Motor starting events, compressor cycling, and conveyor inrush are the most likely candidates. If any single load event is responsible for a disproportionate share of the dip depth, targeted soft-start or VFD upgrades may complement the MPTS correction.
+**2. Voltage Depression Investigation — Load-Event Correlation**
+The recurring triangular voltage drops into the 308 to 315-volt range on a 480-volt system need to be correlated with specific load events. The two-to-four-day recurrence pattern suggests a specific operational trigger — likely a large motor start sequence, a compressor bank restart, or a refrigeration pull-down cycle. Identifying and sequencing these events through soft-start or staged-start controls can reduce the depth and frequency of voltage sags independent of reactive compensation.
 
-**Third, the mid-week outage event at approximately 260514–260515** should be classified as planned or unplanned. If unplanned, the restart profile under current high-reactive conditions should be reviewed to ensure motor restart sequencing does not compound the voltage stress on recovery.
+**3. Thermal Management Review**
+With 424,981 BTU per hour of reported thermal burden and an estimated 62 kW of cooling load, the thermal environment around this transformer should be inspected. Confirm that cooling airflow paths are unobstructed, that cooling system capacity is matched to actual thermal load rather than nameplate assumptions, and that winding temperature monitoring is in place. Thermal imaging of the transformer enclosure and associated switchgear is recommended given the sustained high-load operating profile.
 
-**Fourth, thermal burden trajectory monitoring.** The 424,981 BTU per hour thermal burden is the current May measurement. If this transformer has been in service without reactive compensation for multiple years, winding insulation condition should be assessed — accumulated thermal stress from sustained reactive loading may have already reduced the insulation margin below new-installation ratings.
+**4. kVAR MAX Spike Investigation**
+The image-extracted kVAR MAX of 948 kVAR is more than double the CSV-estimated 455 kVAR peak. While the CSV figure is used as the engineering basis per cross-check protocol, the image spike reading warrants investigation. If instantaneous reactive spikes are genuinely reaching 948 kVAR — even momentarily — they represent transient events that could be tripping protection systems or causing the brief load interruption events observed near 260514 and 260523. A dedicated power quality meter with sub-cycle capture capability should be installed to characterize these transient events precisely before finalizing MPTS sizing.
 
-**Fifth, harmonic content baseline.** The persistent low-amplitude harmonic trace visible in the M view should be formally measured with a power quality analyzer to establish a THD baseline. If harmonic distortion is above 5% THD, a combined MPTS plus harmonic filter approach may be warranted rather than reactive compensation alone.
+**5. Operational Interruption Events**
+Two brief near-zero load collapse events were observed in the BT view — estimated at one to three minutes each. These should be reviewed against the facility's SCADA event log to determine whether they are planned shutdowns, protection trips, or grid events. If protection-related, the trigger conditions — likely overcurrent or undervoltage — should be evaluated in the context of the reactive stress profile described here.
 
 ---

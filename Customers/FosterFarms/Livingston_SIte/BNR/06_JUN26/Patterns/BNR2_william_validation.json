@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-07-11 19:26:13",
+  "transformer_id": "BNR2",
+  "transformer_name": "BNR2",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "bnr2_june_2026_cross_check": "Vision-Only (No CSV Ground Truth)**",
+    "csv_availability": "** Unavailable. All numeric values sourced exclusively from image extraction. No discrepancy flagging possible against CSV; vision readings treated as best available data.",
+    "target_kva_image": "** 18 kVA (blue tooltip callout, BT view)",
+    "bt_target_kva": "** 18 kVA",
+    "target_kva_csv": "** 0.0 kVA \u2014 CSV unavailable; no cross-check possible",
+    "power_factor_csv": "** 0.0% \u2014 CSV unavailable; image reads 96.5% PF average",
+    "kvar_max_csv_est": "** 0 kVAR \u2014 CSV unavailable; image reads 6.3 kVAR MAX",
+    "monthly_waste_csv": "** $0.00 \u2014 CSV unavailable; image reads approximately $86/dataset, $3,034/yr total wasted",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "planning_install_estimate": "** $200,000 (H490 sizing basis \u2014 see MPTS section for unit count)",
+    "internal_consistency_check": "** BT power factor of 96.5% average with 6.3 kVAR MAX on an 18 kVA supply is physically coherent. Peak kW of 17.8 kW against 18 kVA supply implies a momentary PF near 0.99 at peak \u2014 consistent with the reported MAX PF of 97.3%. No internal contradictions detected. All values accepted as working estimates pending CSV confirmation.",
+    "monthly_savings_validated": "$252.83",
+    "annual_savings_validated": "$3,034.00",
+    "monthly_waste_validated_total": "$252.83",
+    "annual_waste_validated_total": "$3,034.00",
+    "annual_total_wasted_validated": "$3,034.00"
+  },
+  "packet_file": "BNR2_william_validation.json"
+}

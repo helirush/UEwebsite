@@ -1669,10 +1669,52 @@
 <body data-summary-mode="product">
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
-<div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+<div style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 18px; padding: 10px 0; margin-bottom: 10px;">
+  <a id="groupBackLink" href="../../../index.html?group=deli#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Groups</a>
+  <a id="cherrySiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Cherry Avenue</a>
+  <a id="siteBackLink" href="../../../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Foster Farms</a>
+  <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; Unity Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const monthTokenRe = /^\d{2}_[A-Z]{3}\d{2}$/;
+    let groupSegment = 'all';
+    if (parts.length >= 3) {
+      const maybeMonth = parts[parts.length - 2];
+      if (monthTokenRe.test(maybeMonth)) {
+        groupSegment = (parts[parts.length - 3] || '').toLowerCase();
+      }
+    }
+
+    const groupLink = document.getElementById('groupBackLink');
+    if (groupLink) groupLink.href = `${siteBase}index.html?group=${encodeURIComponent(groupSegment)}#libraries`;
+
+    const cherryLink = document.getElementById('cherrySiteLink');
+    if (cherryLink) cherryLink.href = `${siteBase}index.html#page-top`;
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}../index.html`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
 <span class="siteboard-title-main" id="site-facility-name">FOSTER FARMS, CHERRY AVE FACILITY - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
@@ -1702,8 +1744,8 @@
 
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
-    🔊 LISTEN: SITE OVERVIEW
+  <button id="siteOverviewBtn" class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's group-level site overview across all transformers">
+    🔊 LISTEN: GROUP SITE OVERVIEW
   </button>
   <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
     📊 SITE SUMMARY - BASELINE
@@ -2229,10 +2271,11 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
+  const scriptVersion = '20260712b';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}?v=${scriptVersion}`);
   }
   const head = document.head || document.getElementsByTagName('head')[0];
   if (!head) return;
@@ -4622,7 +4665,15 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return labels.join(' and ');
   }
 
-  var reportMonthCode = Number(policy.reportMonthCode);
+  var reportMonthCodeRaw = String(policy.reportMonthCode == null ? '' : policy.reportMonthCode).trim();
+  var reportMonthCode = reportMonthCodeRaw ? Number(reportMonthCodeRaw) : NaN;
+  if (/^\d{8}$/.test(reportMonthCodeRaw)) {
+    reportMonthCode = Number(reportMonthCodeRaw.slice(2, 6));
+  } else if (/^\d{6}$/.test(reportMonthCodeRaw)) {
+    reportMonthCode = /^20\d{4}$/.test(reportMonthCodeRaw)
+      ? Number(reportMonthCodeRaw.slice(2, 6))
+      : Number(reportMonthCodeRaw.slice(0, 4));
+  }
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||

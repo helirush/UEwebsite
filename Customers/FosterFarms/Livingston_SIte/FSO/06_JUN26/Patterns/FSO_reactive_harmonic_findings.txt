@@ -1,0 +1,13 @@
+**FSO Transformer — Reactive and Harmonic Findings | June 2026**
+
+The TM active-reactive-harmonic view is the most revealing layer of the FSO field story for June. This is a reactive-heavy field — and the numbers confirm it with clarity.
+
+The red amperage trace runs aggressively high throughout the entire month, with frequent sharp spikes reaching the maximum amperage callout of 908.2 amps. That peak current level is substantial for a 480-volt distribution system. The current density alone tells you this field is working hard — and a significant portion of that current is reactive, not productive. The orange power factor band shows persistent depression, with the minimum power factor callout at 80.01% — confirming the field regularly drops below the 86.1% monthly average and touches the low 80s during peak reactive stress moments.
+
+The green kVAR layer holds a visible structural floor throughout the month. The maximum reactive excursion from the TM view reaches 429 kVAR at its peak. The TBT header confirms a statistical dataset maximum of 918.5 kVAR — that is the reactive peak the field has seen at its worst moment this month. Averaged across the month, reactive burden sits at 250.5 kVAR. This is not occasional reactive load — it is built into the operating character of this facility. The motor mix, compressor cycling, and cold-storage refrigeration create a continuous reactive draw that the distribution infrastructure must carry at all times.
+
+Harmonic behavior adds another layer of stress. The iTHD average reads 8.0% — elevated but manageable. The iTHD maximum, however, reaches 31.1%. That maximum is meaningful. Harmonic pulses at 31% total harmonic distortion represent significant waveform distortion events that concentrate heat in transformer windings and create interference risk for sensitive controls and VFD-driven systems. The purple harmonics layer in the TM view shows these pulses concentrated in the same zones where amperage spikes occur — confirming motor-start events and nonlinear load switching as the primary harmonic drivers.
+
+The combination of 250.5 kVAR average reactive burden, 918.5 kVAR peak exposure, 908-amp current spikes, and 31% harmonic peaks creates a compounding thermal and electrical stress environment on the FSO transformer and its downstream distribution. The tuned-field MPTS deployment is directly addressing the reactive component — and the TS simulation confirms it can deliver dramatic compression of that burden.
+
+---

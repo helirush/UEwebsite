@@ -1,0 +1,90 @@
+{
+  "generated_at_utc": "2026-07-09T02:51:03.290921+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/06_JUN2026/Deli/patterns",
+  "mode": "render-only",
+  "narrative_mode": "pre_mpts_sales",
+  "inventory": {
+    "image_count": 9,
+    "all_images": [
+      "DeliFb_Jun26.png",
+      "DeliFbt_Jun26.png",
+      "DeliFm_Jun26.png",
+      "DeliFs_Jun26.png",
+      "DeliFv_Jun26.png",
+      "DeliGb_Jun26.png",
+      "DeliGbt_Jun26.png",
+      "DeliGs_Jun26.png",
+      "DeliGv_Jun26.png"
+    ],
+    "transformer_count": 2,
+    "raw_coverage_by_transformer": {
+      "DELIF": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "DELIG": [
+        "b",
+        "bt",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "DELIF": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "DELIG": [
+        "b",
+        "bt",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "DELIF": [
+        "DeliFb_Jun26.png",
+        "DeliFbt_Jun26.png",
+        "DeliFm_Jun26.png",
+        "DeliFs_Jun26.png",
+        "DeliFv_Jun26.png"
+      ],
+      "DELIG": [
+        "DeliGb_Jun26.png",
+        "DeliGbt_Jun26.png",
+        "DeliGs_Jun26.png",
+        "DeliGv_Jun26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "DELIF",
+      "DELIG"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/06_JUN2026/Deli/patterns",
+    "--render-only",
+    "--force",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-07-09T02:56:51.066841+00:00"
+}

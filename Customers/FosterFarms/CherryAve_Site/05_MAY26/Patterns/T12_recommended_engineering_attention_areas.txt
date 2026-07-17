@@ -1,0 +1,15 @@
+**T12 — Engineering Attention Areas and Next Steps**
+
+The following areas require priority engineering attention for T12 based on the May 2026 field analysis:
+
+**1. Reactive Compensation Sizing and Placement.** The 973.4 kVAR reactive peak requires a three-unit H490 MPTS installation at the T12 bus. Engineering should confirm bus configuration, harmonic filter compatibility with the existing iTHD profile, and physical placement to maximize reactive compensation effectiveness at the point of highest inductive load concentration — likely proximate to the refrigeration compressor banks.
+
+**2. Voltage Stability and Sag Remediation.** The recurring voltage dips to 442-to-444 volts during peak load cycles represent a structural field health problem. Engineering should evaluate whether reactive compensation alone is sufficient to stabilize voltage to nominal, or whether supplemental voltage regulation equipment is warranted at the most sensitive load points — particularly refrigeration compressor starters and VFD input circuits.
+
+**3. Harmonic Assessment and Filtering.** The continuous 5.7-to-10.7 percent iTHD profile warrants a dedicated harmonic survey. Engineering should identify the primary harmonic sources — likely VFD loads and nonlinear drive systems — and assess whether passive harmonic filters or active harmonic mitigation should be integrated into the MPTS installation scope to prevent harmonic re-injection after reactive compensation is applied.
+
+**4. Transformer Thermal Audit.** At 788,678 BTU per hour of thermal burden, the transformer core and windings should be evaluated for insulation condition. A thermal imaging inspection of T12 windings and connected switchgear is recommended before tuning assignment to establish a baseline insulation health profile and confirm the transformer is in suitable condition to be corrected without risk of accelerated failure at higher load utilization.
+
+**5. Mercury CSV Data Collection.** All numeric findings in this analysis are vision-derived. A full Mercury 2 CSV upload for T12 is strongly recommended before finalizing any engineering scope, investment authorization, or payback calculation. CSV ground truth will confirm or refine the kVAR MAX sizing basis, validate the waste cost figures, and provide interval-level data needed for precise correction engineering.
+
+---

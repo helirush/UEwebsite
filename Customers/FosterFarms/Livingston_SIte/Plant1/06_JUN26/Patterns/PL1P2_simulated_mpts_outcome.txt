@@ -1,0 +1,13 @@
+**Transformer: PL1P2 — Projected MPTS Correction | June 2026**
+
+Based on the vision-extracted kVAR MAX of 773.4 kVAR from the BT header, the MPTS sizing calculation is straightforward: 773.4 divided by 400 rounds up to 1.93, which means **two H490 units** are the appropriate planning recommendation for PL1-Proc2. Each H490 provides 400 kVAR of reactive compensation, giving the corrected field 800 kVAR of available correction capacity — sufficient to address both the average reactive burden of 311.7 kVAR and absorb the peak reactive spikes at 773.4 kVAR without saturation.
+
+The S view projects the post-correction field state. With MPTS engaged, power factor rises to the 99.5 percent range — a dramatic improvement from the 86.1 percent baseline. That correction means the reactive current component that currently accounts for 14 to 21 percent of total current draw is effectively eliminated from the transformer's load profile. Current flowing through every conductor drops, resistive heating drops proportionately, and the thermal burden begins to decline from its current 442,675 BTU per hour level.
+
+The voltage stability improvement is equally significant. With reactive current no longer surging through the same conductors as real power, the voltage sags that currently reach down to 309 volts will be materially reduced in depth and frequency. The triangular dip events will not disappear entirely — load-switching transients are a physical reality of motor-driven operations — but their amplitude will be substantially attenuated. Variable frequency drives and motor control electronics will operate in a tighter, healthier voltage band.
+
+The thermal burden reduction translates directly to cooling cost savings. At the current rate of $12.78 per hour and 64.9 kilowatts of cooling demand, the post-MPTS cooling load reduction contributes meaningfully to the total recovery figure. The S view's recovered amounts roll up toward the approximately $261,609 per year total waste figure — with the corrected field expected to recover the substantial majority of that ongoing cost stream.
+
+For planning purposes, two H490 units represent an estimated installed investment of approximately $400,000, subject to final engineering scope and site conditions. Against an annualized total waste cost of approximately $261,609 per year, the payback horizon is in the range of 18 to 20 months at sustained production levels — a planning-level estimate that warrants formal engineering validation before commitment.
+
+---

@@ -1,0 +1,13 @@
+**FSO-3 — Voltage Stability Findings | TV View | June 2026**
+
+The FSO-3 voltage field in June runs at a nominal center of 480.5 volts, but calling it stable would overstate the case. The TV view shows a field that is in continuous motion — the voltage trace weaves and oscillates throughout the entire thirty-day window without settling into an extended flat corridor at any point. This is characteristic behavior for a facility with large cycling motor loads, compressor staging, and demand-responsive HVAC, and it's consistent with the Foster Farms Livingston operational profile.
+
+The operational voltage envelope runs from the confirmed low of 460 volts to a recorded high of 498 volts — a peak-to-trough spread of 38 volts. That 38-volt range represents meaningful stress cycling for equipment designed to operate at 480 volts nominal. Every time voltage dips toward 460, motor windings draw higher current to maintain torque, increasing I-squared-R heating in the winding insulation. Every recovery back toward 498 reverses the thermal gradient. That cycle, repeated continuously across a full month, is the mechanism of premature motor aging.
+
+The mid-month disturbance at approximately June 13th is the most significant single event in the voltage record. The trace collapses sharply into a sustained low-voltage event that is distinctly more severe than the normal oscillatory movement seen elsewhere in the month. This event correlates directly with the gold-streak outage markers observed in the TBT chart at the same x-axis position, confirming a power interruption or severe voltage depression event rather than a normal load-switch transient.
+
+Triangular voltage-drop signatures — the pointed-dip pattern characteristic of motor starts and reactive inrush events — are distributed continuously across the full month. They are not clustered into one operational window. This tells you the reactive loading pressure on FSO-3 is a structural feature of every production shift, not an anomaly confined to startup periods. The MPTS tuning has addressed a meaningful portion of this reactive source, but the remaining 334.2 kVAR peak reactive demand is still generating visible voltage disturbance at the waveform level.
+
+Device health risk rating for FSO-3: **moderate to high.** Variable frequency drives, motor protection relays, and cold chain control systems are the primary risk exposure classes in this voltage environment.
+
+---

@@ -1,0 +1,21 @@
+**REND1 — Recommended Engineering Attention Areas | June 2026**
+
+**1. Reactive Compensation — Three-Unit H490 Array**
+The 1,132.9 kVAR maximum reactive demand requires a three-H490-unit correction array at the REND1 service point. This is the primary intervention and should be scoped first. Engineering review should confirm bus configuration, capacitor placement, and harmonic filter compatibility given the 11.1 percent peak iTHD environment.
+
+**2. Voltage Sag Investigation — 357.5V Event**
+The severe sag to 357.5 volts near the 260604 zone requires a root-cause engineering review. This is not a normal operating transient. Potential causes include a large motor starting event without soft-start protection, a momentary upstream fault, or a switching event on the distribution bus. Until the cause is identified and mitigated, this type of sag event represents an ongoing risk to VFD equipment, motor windings, and process control continuity on the REND1 bus.
+
+**3. Voltage Regulation and Sub-Nominal Operating Band**
+The consistent operating band of approximately 454 to 461 volts — running 19 to 25 volts below the 480-volt nominal — warrants investigation of tap changer settings on the REND1 transformer. A tap adjustment or voltage regulator installation may be appropriate to bring the operating band closer to nominal and reduce motor winding stress across the facility's load fleet.
+
+**4. Harmonic Environment Assessment**
+With peak iTHD at 11.1 percent, a brief harmonic survey should accompany the MPTS engineering scope to confirm that capacitor bank placement does not inadvertently amplify any existing harmonic resonance conditions on the bus. Detuned reactor filters on the H490 array are worth evaluating for this site.
+
+**5. Electrical Collapse Event Documentation**
+The 9.5-volt minimum confirmed in the V view should be cross-referenced against facility operations logs for June to identify the specific event, confirm whether it was a planned shutdown or a fault-driven collapse, and assess whether any downstream equipment experienced damage, nuisance trips, or food safety temperature excursions during recovery.
+
+**6. Transformer Thermal Life Assessment**
+Given the sustained 885,600 BTU/hr thermal burden running through June and the likelihood that this profile has been ongoing for multiple prior months in an untuned state, a transformer thermal life assessment is warranted to evaluate insulation condition and establish a baseline for post-correction improvement tracking.
+
+---

@@ -1,0 +1,13 @@
+**Transformer: DELIF — Voltage Health | June 2026**
+
+The voltage field on the Deli F transformer is not stable. The V view captures thirty days of continuous field behavior, and what it shows is a field that is breathing with load — expanding and contracting with every production surge in a pattern that reflects uncompensated reactive demand pulling directly on supply voltage.
+
+The average sits at 480.4 volts, which is nominally on-target for a 480-volt line-to-line system. But averages obscure the operational reality here. The maximum recorded voltage is 500 volts and the minimum is 461 volts — a full 39-volt operational swing across a single field. To put that in perspective: the high end is running 20 volts above nominal, and the low end is dropping 19 volts below nominal. That is approximately a 4 percent undervoltage event at the trough, recurring throughout the month during active production periods.
+
+The triangular voltage-drop pattern is present and it is persistent. These are the characteristic sharp downward spikes followed by immediate recovery — the visual signature of inductive load surges pulling the field below nominal and then releasing. They appear throughout all four weeks of the capture, clustering densely during what are clearly active production shifts. This is not a one-time event or a supply anomaly. The drops are load-driven, rhythmic, and recurring — which is the more concerning pattern because it means they are structurally baked into every production cycle.
+
+For a food processing facility running refrigeration compressors, conveyor motors, HVAC systems, and processing drives, this voltage profile carries real equipment health implications. Variable frequency drives and soft-start motor controllers are sensitive instruments — they are designed within tighter tolerance bands than a 39-volt swing provides. Motor winding insulation accumulates stress with every undervoltage transient. The failures that result from this kind of sustained field instability are rarely traced back to their electromagnetic root cause at the moment they occur — they show up as bearing failures, drive board replacements, and compressor motor rewinds, usually months after the stress events that caused them.
+
+The Deli F voltage field is in a moderate-to-high risk classification based on the June capture. The 461-volt minimum is a flag. The persistent triangular drop clusters are a flag. Together, they describe a field that is under continuous reactive stress with no correction in place to stabilize it.
+
+---

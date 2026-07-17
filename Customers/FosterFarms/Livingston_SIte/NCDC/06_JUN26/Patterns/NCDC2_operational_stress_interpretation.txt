@@ -1,0 +1,17 @@
+**NCDC2 — South D Transformer | Operational Stress Interpretation | June 2026**
+
+South D is carrying a heavy but manageable load profile — and the tuned field status means the worst-case stress scenarios have already been partially addressed. But several stress dimensions remain active and are worth naming clearly.
+
+**Thermal Burden:** The transformer is dissipating 213,624 BTU per hour as waste heat — and the cooling system is consuming 31.3 kW continuously to manage that heat, at an estimated cost of $6.17 per hour. Annualized, that cooling overhead alone represents approximately $54,041 per year in energy expenditure that exists solely to manage electromagnetic inefficiency. In a food processing environment where refrigeration systems are already running near continuous duty, adding 31.3 kW of cooling load for transformer thermal management compounds the total facility cooling burden in a meaningful way.
+
+**Reactive Drag:** The 302.0 kVAR monthly average is the persistent drag on apparent power that keeps the supply envelope elevated above the 1,036 kVA target for an estimated 70 to 75% of production time. Every kVAR of reactive load that doesn't perform real work is nonetheless flowing through the transformer windings and building thermal energy in the core. The 1,850.8 kVAR transient maximum confirms that reactive spikes during motor starts or compressor switching events push momentary apparent power well above the sustained average — creating short-duration but high-intensity thermal stress events that accumulate over a production season.
+
+**Outage Events:** Four to five gold-streak outage events were detected across the June window, with total estimated downtime of approximately 30 to 50 minutes for the month. These appear to be brief switching or supply interruption events rather than extended outages. In a food processing environment with cold chain dependencies, even 10 to 15 minute outage events carry product safety and throughput implications. The outage pattern warrants inclusion in the facility's reliability log and monthly reporting cadence.
+
+**Voltage Floor Events:** The 450.8V voltage minimum — a 6% sag below 480V nominal — is the most acute single stress event in the June dataset. While episodic rather than chronic, voltage sags of this depth in a motor-intensive environment accelerate winding insulation degradation and can cause nuisance trips on sensitive drive electronics. The tuned field has not eliminated this risk; it has reduced the frequency context, but floor events still occur.
+
+**Harmonic Accumulation:** The 5.7% average iTHD is a background stressor that compounds transformer heating and eddy current losses over time. It does not dominate the stress picture, but it is a continuous contributor to the thermal burden that shows up in the 213,624 BTU/hr waste heat figure.
+
+Taken together, the operational stress profile of South D is a tuned-but-not-complete picture — meaningful stabilization achieved, measurable optimization gap remaining.
+
+---

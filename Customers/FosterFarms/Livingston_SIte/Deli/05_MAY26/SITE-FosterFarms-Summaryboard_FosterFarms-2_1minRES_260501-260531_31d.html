@@ -1514,9 +1514,11 @@
 <body data-summary-mode="energy">
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
-<div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a id="siteBackLink" href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+<div style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 18px; padding: 10px 0; margin-bottom: 10px;">
+  <a id="groupBackLink" href="../../../index.html?group=deli#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Groups</a>
+  <a id="livingstonSiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Livingston</a>
+  <a id="siteBackLink" href="../../../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Foster Farms</a>
+  <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; Unity Home</a>
 </div>
 <script>
   (function normalizeSummaryboardHomeLinks() {
@@ -1531,8 +1533,23 @@
       siteBase = '../'.repeat(upLevels);
     }
 
+    const monthTokenRe = /^\d{2}_[A-Z]{3}\d{2}$/;
+    let groupSegment = 'all';
+    if (parts.length >= 3) {
+      const maybeMonth = parts[parts.length - 2];
+      if (monthTokenRe.test(maybeMonth)) {
+        groupSegment = (parts[parts.length - 3] || '').toLowerCase();
+      }
+    }
+
+    const groupLink = document.getElementById('groupBackLink');
+    if (groupLink) groupLink.href = `${siteBase}index.html?group=${encodeURIComponent(groupSegment)}#libraries`;
+
+    const livingstonLink = document.getElementById('livingstonSiteLink');
+    if (livingstonLink) livingstonLink.href = `${siteBase}index.html#page-top`;
+
     const backLink = document.getElementById('siteBackLink');
-    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+    if (backLink) backLink.href = `${siteBase}../index.html`;
 
     let unityHref = `${siteBase}index.html`;
     if (eWebmasterIdx >= 0) {
@@ -1943,7 +1960,7 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
-    const scriptVersion = window.__unitySideMetricsVersion || '20260706a';
+    const scriptVersion = window.__unitySideMetricsVersion || '20260707a';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
@@ -2763,14 +2780,14 @@
       if (unityHowToBtn) {
         if (type === 'baseline') {
           unityHowToBtn.textContent = '🎧 How to Read the Baseline';
-          const baselineSharedCandidates = ['Audio/unity_baseline_results.mp3', 'audio/unity_baseline_results.mp3'];
+          const baselineSharedCandidates = ['../../../../../assets/audio/unity/how-to-read-waste-chart.mp3'];
           currentHowToCandidates = uniqueRoutingValues(baselineSharedCandidates);
           currentHowToPath = currentHowToCandidates[0] || '';
           currentHowToText = FIXED_BASELINE_RESULTS_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else if (type === 'mpts') {
           unityHowToBtn.textContent = '🎧 Understanding the Tuned Energy Field';
-          const tunedSharedCandidates = ['Audio/unity_tuned_energy_field.mp3', 'audio/unity_tuned_energy_field.mp3'];
+          const tunedSharedCandidates = ['../../../../../assets/audio/unity/how-to-read-savings-chart.mp3'];
           currentHowToCandidates = uniqueRoutingValues(tunedSharedCandidates);
           currentHowToPath = currentHowToCandidates[0] || '';
           currentHowToText = FIXED_TUNED_FIELD_TEXT;

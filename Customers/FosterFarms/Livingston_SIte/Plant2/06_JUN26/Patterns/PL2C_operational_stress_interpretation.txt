@@ -1,0 +1,13 @@
+**PL2C — Operational Stress Interpretation | June 2026**
+
+Pulling the full picture together — voltage, reactive, harmonic, and thermal — PL2C is a transformer under layered, compounding stress. None of these stressors is operating in isolation. They are reinforcing each other, and the cumulative effect on the transformer and its connected loads is greater than any single metric would suggest on its own.
+
+Start with the thermal burden. At 139,059 BTU per hour, this transformer is generating substantial heat continuously. The cooling system is working at 20.4 kilowatts and approximately $4.03 per hour just to manage what the reactive imbalance and harmonic loading are producing. In a June operating environment at Livingston — ambient temperatures rising through the month — that cooling demand is not trivial. Every BTU of transformer heat that cooling infrastructure must handle is a BTU that was never needed if the field were properly compensated.
+
+The reactive demand peak of 276.8 kVAR MAX is the sizing anchor for MPTS correction. Apply the Unity sizing rule: 276.8 kVAR MAX divided by 400 rounds up to one H490 unit. That single 400 kVAR H490 provides headroom above the current peak and positions the system to absorb future load growth without requiring immediate re-sizing.
+
+The harmonic profile — peaking at 10.6 percent iTHD — combined with the voltage turbulence and current surges creates a thermal and electrical stress environment that accelerates aging on everything connected to this bus. Motor windings accumulate thermal degradation from repeated inrush and harmonic heating. Drive electronics experience voltage transient stress from the recurring dip-and-recovery cycling visible in the V view. Contactors and relay coils cycle against voltage that routinely departs from nominal. Each of these is a wear mechanism operating in parallel.
+
+In an untuned field, these conditions do not stabilize on their own. Load profiles shift with seasonal demand — summer refrigeration loads in a food processing facility will press this transformer harder in July and August than June already captured. Without tuning assignment, the reactive baseline tends to drift upward, power factor edges downward, and thermal burden climbs. The $106,209 per year in estimated total waste is the June snapshot. The trajectory without correction points upward.
+
+---

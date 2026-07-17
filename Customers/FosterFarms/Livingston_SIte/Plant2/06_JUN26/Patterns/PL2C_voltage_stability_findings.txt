@@ -1,0 +1,11 @@
+**PL2C — Voltage Stability Findings | June 2026**
+
+The voltage view for PL2C is one of the more concerning field signatures in this capture set. The blue voltage trace runs a continuous, jagged, unsettled band across all thirty days of June — there is no extended window of calm. The waveform never smooths out for any meaningful period. That persistent turbulence is characteristic of a field under chronic reactive stress, where the reactive current is oscillating through the system continuously rather than being compensated at the source.
+
+The chart confirms a maximum voltage excursion of 502.2 volts — pushing above the nominal 480-volt line-to-line reference. But the downside behavior is where the real risk lives. The minimum voltage recorded during the capture window came in at 9.7 volts. That is an extreme low excursion. At one-minute resolution data capture, that value represents a genuine momentary event — likely a hard motor start or a switching transient — but it was real, it was captured, and it happened in a facility where connected equipment includes refrigeration compressors, processing motors, and sensitive electronic controls.
+
+The triangular voltage-drop signatures are recurring and clustered. You can see them throughout the month as sharp V-shaped dips in the trace — particularly dense in the first ten days, and repeating into subsequent weeks. These dip patterns are the field fingerprint of inductive load cycling: motor starts, compressor stage changes, refrigeration demand surges. In isolation, any one of those events is manageable. Repeated across thirty days in an untuned field, they represent a cumulative stress cycle on motor insulation, variable frequency drives, contactor coils, and any solid-state process controls connected to this bus.
+
+The device-health risk rating for PL2C based on this voltage profile is **HIGH**. The combination of a 9.7-volt minimum excursion, recurring triangular dip clustering, and persistent waveform turbulence across a full calendar month is not a background noise condition. It is an active degradation pathway — one that compounds over time in the absence of reactive field correction.
+
+---

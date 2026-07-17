@@ -1,0 +1,13 @@
+**DELIG Transformer — Voltage Stability Findings | June 2026 | Untuned**
+
+The voltage health picture for DeliG is one of the more concerning profiles visible in an untuned industrial field. The nominal operating voltage reads 479.9 volts average — technically within range — but that single number conceals a month of continuous voltage turbulence that the V view makes unmistakable. The maximum voltage recorded was 500.9 volts and the minimum logged was 9.6 volts. That floor reading is not a measurement artifact. A 9.6-volt event on a 480-volt industrial bus is a near-total voltage collapse, consistent with a brief outage or hard switching fault that briefly took the supply field down to essentially zero.
+
+The confirmed sag event at 459.2 volts — marked with a downward triangle annotation in the V view around the June 10th period — represents a 20.8-volt drop below nominal. On a 480-volt system supplying food processing and cold storage equipment, a 20.8-volt sag is operationally meaningful. Motor torque falls proportionally to the square of voltage reduction. Compressor contactors can drop out. Variable frequency drives may fault. Sensitive process controls may misread timing signals. Each of these outcomes creates risk to both product integrity and equipment longevity.
+
+The triangular drop pattern clustering — most concentrated in the June 7th through June 20th band — is a strong indicator of inductive inrush events driven by load cycling. This is the signature of motors and compressors starting under unmanaged reactive conditions. In an untuned field, each startup event draws a spike of reactive current, pulls voltage down momentarily, then allows partial recovery — creating the triangular morphology that repeats through the month. The clustering tells us these events are operationally driven and therefore predictable. They will recur in July, and August, and every subsequent month until the field is tuned.
+
+Device health risk classification for DeliG: **HIGH**. The combination of recurring triangular sag clusters, a confirmed 459.2-volt sag event, a 9.6-volt floor reading, and a persistently reactive-loaded supply field creates conditions of chronic electrical stress on motor windings, drive electronics, and contactor insulation. This is the voltage profile of a transformer that is slowly consuming its connected assets through cumulative degradation — one sag cycle at a time.
+
+Outage assessment: One distinct voltage collapse event was detected in the BT view, corresponding to the V-view floor reading. Estimated duration approximately 2 to 5 minutes based on x-axis width at one-minute resolution.
+
+---

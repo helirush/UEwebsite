@@ -10,6 +10,8 @@
   const STATE_ON_TEXT = "ON";
   const STATE_OFF_TEXT = "OFF";
   const RESET_TEXT = "RESET";
+  const SHARED_BASELINE_HOWTO_FILENAME = "how-to-read-waste-chart.mp3";
+  const SHARED_TUNED_HOWTO_FILENAME = "how-to-read-savings-chart.mp3";
 
   let buttonObserver = null;
   let buttonObserverTarget = null;
@@ -31,6 +33,37 @@
     const titleEl = document.getElementById("patternModalTitle");
     if (titleEl && typeof titleEl.textContent === "string" && /\bHarmonized\b/i.test(titleEl.textContent)) {
       titleEl.textContent = titleEl.textContent.replace(/\bHarmonized\b/gi, "Tuned Energy");
+    }
+  }
+
+  function resolveSharedHowToAudioPath(mode) {
+    const normalizedMode = String(mode || "").toLowerCase();
+    const filename = normalizedMode === "tuned" ? SHARED_TUNED_HOWTO_FILENAME : SHARED_BASELINE_HOWTO_FILENAME;
+    try {
+      const scripts = Array.from(document.getElementsByTagName("script"));
+      const sourceScript = scripts.reverse().find((script) => {
+        const src = String(script.getAttribute("src") || "");
+        return src.includes("unity-howto-toggle.js");
+      });
+      const src = String(sourceScript && sourceScript.getAttribute("src") ? sourceScript.getAttribute("src") : "");
+      if (src) {
+        const scriptUrl = new URL(src, window.location.href);
+        return new URL(`../audio/unity/${filename}`, scriptUrl).toString();
+      }
+    } catch (_err) {}
+
+    return normalizedMode === "tuned"
+      ? "Audio/unity_tuned_energy_field.mp3"
+      : "Audio/unity_baseline_results.mp3";
+  }
+
+  function enforceSharedHowToRouting(mode) {
+    if (mode === "baseline") {
+      window.currentHowToPath = resolveSharedHowToAudioPath("baseline");
+      return;
+    }
+    if (mode === "tuned") {
+      window.currentHowToPath = resolveSharedHowToAudioPath("tuned");
     }
   }
 
@@ -57,6 +90,7 @@
     if (
       path.includes("_savings_howto") ||
       path.includes("how-to-read-savings-chart.mp3") ||
+      path.includes("unity_tuned_energy_field.mp3") ||
       buttonText.includes("how to read savings") ||
       buttonText.includes("understanding the tuned energy field")
     ) {
@@ -65,6 +99,7 @@
 
     if (
       path.includes("_waste_howto") ||
+      path.includes("how-to-read-waste-chart.mp3") ||
       path.includes("unity_baseline_results.mp3") ||
       buttonText.includes("how to read the baseline") ||
       text.includes("baseline")
@@ -235,13 +270,23 @@
 
   function resetHowToPlaybackFromControl() {
     hardStopHowToPlayback();
+    clearPauseState();
     if (typeof window.playHowToAudio === "function") {
-      window.setTimeout(() => {
+      const startWhenIdle = (attempt = 0) => {
+        const synth = window.speechSynthesis;
+        const synthBusy = !!(synth && (synth.speaking || synth.pending || synth.paused));
+        const audio = window.currentAudioElement;
+        const audioBusy = !!(audio && (!audio.paused || (audio.paused && !audio.ended && Number(audio.currentTime || 0) > 0)));
+        if ((synthBusy || audioBusy) && attempt < 12) {
+          window.setTimeout(() => startWhenIdle(attempt + 1), 35);
+          return;
+        }
         try {
           window.playHowToAudio();
         } catch (_err) {}
         scheduleHowToButtonRefresh();
-      }, 0);
+      };
+      window.setTimeout(() => startWhenIdle(0), 35);
       return;
     }
     scheduleHowToButtonRefresh();
@@ -259,6 +304,11 @@
   gap: 12px;
   min-width: 330px !important;
   white-space: nowrap;
+}
+#unityHowToBtn.unity-howto-toggle-ready,
+#unityHowToBtn.unity-howto-toggle-ready * {
+  user-select: none;
+  -webkit-user-select: none;
 }
 #unityHowToBtn .unity-howto-toggle-label {
   display: inline-flex;
@@ -319,6 +369,7 @@
     if (!button || !isElementVisible(button)) return;
 
     const mode = detectHowToMode(button);
+    enforceSharedHowToRouting(mode);
     const label = deriveButtonLabel(button, mode);
     const playbackState = getHowToPlaybackState();
     const isOn = playbackState === "playing";
@@ -377,6 +428,22 @@
     button.appendChild(controlsEl);
   }
 
+  function synchronizeSharedHowToRouting(selectionType) {
+    const normalizedSelection = String(selectionType || "").toLowerCase();
+    if (normalizedSelection === "baseline") {
+      enforceSharedHowToRouting("baseline");
+      return "baseline";
+    }
+    if (normalizedSelection === "mpts") {
+      enforceSharedHowToRouting("tuned");
+      return "tuned";
+    }
+    const button = getHowToButton();
+    const mode = detectHowToMode(button);
+    enforceSharedHowToRouting(mode);
+    return mode;
+  }
+
   function patchNarrationFunctions() {
     const patchState = window.__unityHowToTogglePatchState || {
       playHowTo: false,
@@ -394,6 +461,7 @@
       : null;
     if (originalPlayHowToAudio) {
       window.playHowToAudio = function patchedPlayHowToAudio() {
+        synchronizeSharedHowToRouting();
         const state = getHowToPlaybackState();
         if (state === "playing" && pauseHowToPlayback()) {
           scheduleHowToButtonRefresh();
@@ -417,6 +485,8 @@
     if (originalAutoStartVoiceForSelection) {
       window.autoStartVoiceForSelection = function patchedAutoStartVoiceForSelection() {
         clearPauseState();
+        const requestedSelection = arguments.length ? arguments[0] : "";
+        synchronizeSharedHowToRouting(requestedSelection);
         const result = originalAutoStartVoiceForSelection.apply(this, arguments);
         scheduleHowToButtonRefresh();
         return result;
@@ -430,6 +500,7 @@
     if (originalViewPattern) {
       window.viewPattern = function patchedViewPattern() {
         const result = originalViewPattern.apply(this, arguments);
+        synchronizeSharedHowToRouting();
         normalizeTunedEnergyCopy();
         scheduleHowToButtonRefresh();
         return result;
@@ -488,11 +559,20 @@
   }
 
   function onButtonCaptureClick(event) {
-    if (!event || !event.target || typeof event.target.closest !== "function") return;
+    const button = getHowToButton();
+    if (!event || !button) return;
 
-    const resetToggle = event.target.closest(".unity-howto-reset-state");
-    const stateToggle = event.target.closest(".unity-howto-voice-state");
-    if (!stateToggle && !resetToggle) return;
+    const rawTarget = event.target;
+    const targetElement = rawTarget
+      ? (rawTarget.nodeType === Node.ELEMENT_NODE
+          ? rawTarget
+          : rawTarget.nodeType === Node.TEXT_NODE
+          ? rawTarget.parentElement
+          : null)
+      : null;
+    if (!targetElement || !button.contains(targetElement)) return;
+    const path = typeof event.composedPath === "function" ? event.composedPath() : [];
+    const resetToggle = path.find((node) => node && node.nodeType === Node.ELEMENT_NODE && typeof node.matches === "function" && node.matches(".unity-howto-reset-state")) || targetElement.closest(".unity-howto-reset-state");
 
     event.preventDefault();
     event.stopPropagation();

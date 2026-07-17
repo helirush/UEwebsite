@@ -1,0 +1,13 @@
+**Transformer: AGENTICTEA — Voltage Stability Findings**
+
+Voltage stability assessment for AGENTICTEA cannot be completed in this session. The V-view image, which would show the voltage waveform plotted against the time axis at one-minute resolution, was not available for extraction. That means we have no visual record of voltage excursions, triangular dip patterns, sustained sags, or recovery behavior across the measurement window.
+
+Under normal extraction conditions, the V-view lets us assess how well your supply voltage holds against the nominal reference — 480 volts line-to-line, or approximately 277 volts line-to-neutral. Repeated triangular drops in that profile are a meaningful signal: they indicate your field is absorbing inrush or load-switching events and struggling to recover cleanly. Each dip below nominal puts stress on motor windings, drive electronics, and any sensitive control systems connected to the bus.
+
+For an untuned field like AGENTICTEA, voltage instability risk is structurally elevated. Reactive current — the portion of current doing no real work — still flows through your conductors and transformer. It creates impedance-driven voltage drops that compound with every load-switching event. Without reactive compensation, the field has no mechanism to buffer those transients. The voltage profile tends to be more volatile, not less, as load density increases or as seasonal conditions push HVAC and refrigeration systems harder.
+
+We are also unable to confirm outage events for AGENTICTEA at this time. Gold vertical streaks in the BT image would have indicated site power-off intervals, and we would have counted and timed each one. That information is currently value unavailable.
+
+The voltage findings section will remain open for update once image data for AGENTICTEA is successfully loaded into the extraction pipeline.
+
+---

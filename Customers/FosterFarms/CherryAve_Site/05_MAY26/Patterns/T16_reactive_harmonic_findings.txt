@@ -1,0 +1,11 @@
+**T16 — Reactive and Harmonic Profile | M View | May 2026**
+
+The M view confirms the reactive story with hard numbers. The red amperage trace reaches a maximum of 1,841.8 amps — a substantial current load for this transformer. The green kVAR layer runs as a persistent structural floor beneath the operational blocks, not an occasional spike. The reactive maximum recorded in the M view reaches 657 kVAR, and the BT header confirms 718.7 kVAR MAX and a 494.2 kVAR average across the month. You are carrying nearly 500 kVAR of reactive burden on average, every hour, all month. That is magnetic field energy circulating through your transformer windings and cables, generating heat, and never doing a single joule of productive work.
+
+The power factor minimum of 69.52%, confirmed in the M view, is the most alarming single data point in the T16 profile. At 69.52%, you are operating at less than 70% electromagnetic efficiency during load transition moments. Your transformer and your utility metering see this. Your tariff structure may be penalizing you for it right now, depending on your rate schedule.
+
+The harmonic picture adds another layer of concern. The purple iTHD layer runs persistently across the base of the M chart throughout the entire month. The average iTHD is 3.4% — which sounds manageable — but the peak iTHD reaches 59.7%. That gap between average and peak is the signature of non-linear load events: variable frequency drives switching in and out, rectifier stages in compressor controls, power electronics pulsing. The 59.7% peak harmonic event, concentrated around the 260515–260516 window, is a potential resonance event that merits engineering investigation independent of MPTS correction. High harmonic peaks of this magnitude can interact with power factor correction capacitors if not properly filtered, and they contribute to additional heat generation in transformer cores and neutral conductors.
+
+The combined reactive and harmonic profile on T16 places this field in a high-burden operating condition. These are not background inefficiencies — they are active, ongoing energy losses with real dollar values attached to every hour of operation.
+
+---

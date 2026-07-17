@@ -1,0 +1,11 @@
+**Transformer T15 — Voltage Stability Findings | Untuned Field**
+
+The voltage field on T15 is one of the more stressed signatures in this analysis. The operating band across May runs from a low of approximately 406.0V to a high of approximately 504.8V — a peak-to-trough spread of nearly 99 volts on a 480V nominal system. An average of 478.7V sits just below the nominal target, but the average alone does not capture what this field is doing to connected equipment. The range is the story, and the range is severe.
+
+Twenty-one distinct voltage-drop events are annotated and readable in the V view, spanning the full month from May 2 through May 31. These are not random scatter — they cluster in two behavioral zones. The mid-month cluster runs approximately May 11 through May 14, and the late-month cluster concentrates from May 26 through May 30. That clustering pattern is the signature of load-event-driven sags, meaning the drops are tied to production cycle activity: large motor starts, compressor stage-ups, or refrigeration pull-down sequences. They are predictable, repeating, and therefore compounding in their effect on insulation and winding health.
+
+The annotated sag values are worth stating explicitly. Multiple events fall in the 413V to 416V range, representing sustained operation at 13% to 14% below the 480V nominal. The most severe annotated event reaches 406.0V — a 74-volt sag, or approximately 15.4% below nominal. These are not transient flickers. Events of this depth and frequency create measurable insulation stress, motor winding thermal fatigue, and accelerated bearing wear across variable-frequency drives and compressor motors. The MinVoltage reference floor is visible at 400V in the chart, and the field approaches that floor on its worst events.
+
+In a food processing facility running cold storage and continuous refrigeration loads, these recurring sags represent high device-health risk. The equipment running in this environment — compressor motors, VFDs, pump motors — is designed to tolerate occasional sags. It is not designed to absorb repeated 13% to 15% dips on a monthly cycle without cumulative degradation. The untuned field condition means this pattern will continue until correction is applied.
+
+---

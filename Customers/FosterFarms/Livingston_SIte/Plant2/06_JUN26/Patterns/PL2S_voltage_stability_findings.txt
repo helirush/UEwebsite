@@ -1,0 +1,13 @@
+**PL2-1 South — Voltage Stability Findings | June 2026**
+
+The voltage field on PL2-1 South is telling a story of limited headroom and recurring stress events. Average measured voltage for the month is 482.3 volts — nominally acceptable at first glance. But averages can obscure what the floor is doing, and the floor here is the real concern.
+
+The recorded minimum is 454.8 volts. Your 480-volt industrial reference carries an ANSI C84.1 utilization voltage floor of approximately 456 volts for sustained conditions. Your deepest recorded sag — 454.8 volts — is sitting below that threshold. That is not a comfortable margin. That is a field operating at the edge of its design envelope.
+
+Two distinct annotated triangular voltage-drop events are visible in the V-view trace. The first, occurring around June 7th, registers at 460.5 volts — approximately 19.5 volts below nominal, a roughly 4.1 percent depression. The second event, occurring around June 20th, drops to 454.8 volts — approximately 25.2 volts below nominal, a 5.3 percent depression. Both events are well-defined triangular sag shapes, meaning they are not random meter noise. They are real load-response events — likely tied to motor-start inrush or compressor cycling pulling the field down momentarily.
+
+What concerns me is the pattern. Two separate drop events spread across the month rather than clustered together tells me this is a systemic condition, not a one-time anomaly. The voltage field on this transformer lacks the reactive support it needs to hold steady under transient load demands. When reactive burden is high and uncorrected, voltage naturally droops further and recovers more slowly after each transient. That is precisely the dynamic you are seeing here.
+
+On the swell side, the trace shows excursions approaching and touching 500.2 volts — about 4.2 percent above nominal. So the field is swinging nearly 10 percent peak-to-trough across the month. For VFD-driven equipment, motor insulation systems, and programmable process controllers, that is a meaningful swing. Insulation stress accumulates with each cycle. Protection relay logic can behave unpredictably near voltage thresholds. The risk today is moderate to high. Left unaddressed, it escalates.
+
+---

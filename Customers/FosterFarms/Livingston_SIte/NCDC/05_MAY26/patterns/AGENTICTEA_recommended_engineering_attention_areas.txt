@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Recommended Engineering Attention Areas**
+
+Given the absence of measured data for AGENTICTEA, the primary engineering attention item is data capture itself. Before any correction strategy can be sized or prioritized, a complete Mercury 2 CSV dataset and a full BT/V/M/S image capture sequence need to be successfully submitted for this transformer. Without those inputs, the reactive profile, voltage stability assessment, thermal burden calculation, and MPTS sizing are all structurally incomplete.
+
+Beyond the data gap, the untuned field classification for AGENTICTEA warrants immediate attention as a risk posture. Engineering teams should be aware that every month this transformer operates without reactive compensation is a month where heat burden accumulates, insulation ages at an accelerated rate, and the cost of inefficiency compounds. This is not a static situation — untuned fields degrade gradually, and the degradation is not always visible until a thermal event or a failed component surfaces the problem.
+
+Once data is available, engineering attention should focus on four areas. First, confirm the kVAR MAX reading and size the H490 complement accordingly. Second, review the voltage sag profile to determine whether downstream motor and drive equipment is experiencing chronic under-voltage stress. Third, assess transformer loading relative to its nameplate kVA rating to determine whether reactive burden is pushing it toward thermal capacity limits. Fourth, evaluate the cooling infrastructure in the electrical vault or mechanical room associated with AGENTICTEA — if thermal burden is elevated, ambient conditions may be compressing the service life of nearby equipment beyond the transformer itself.
+
+AGENTICTEA's session state entry will be updated and merged into the final group site overview once complete data is available.
+
+---

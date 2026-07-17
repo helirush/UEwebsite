@@ -1,15 +1,13 @@
 **REND2 — Recommended Engineering Attention Areas**
 
-Several areas warrant direct engineering attention on REND2, independent of and in conjunction with the MPTS correction work.
+Four areas warrant priority engineering attention on REND2 before or concurrent with MPTS commission planning.
 
-**Transformer capacity margin:** At 88.7% of rated kVA capacity, REND2 is operating with minimal headroom. Before any facility expansion or new load additions, a formal transformer capacity review should be conducted. If process loads grow, this transformer could breach its rated ceiling without reactive correction in place.
+**First — Reactive array sizing confirmation.** The four-unit H490 configuration is sized to the CSV-estimated kVAR MAX of 1,324 kVAR. A site engineering review should confirm whether that peak is sustained or transient, and whether staged correction deployment — bringing two units online first and adding the remaining two after load verification — is appropriate for this facility's operational rhythm.
 
-**Voltage sag events — root cause investigation:** The fourteen annotated voltage dip events, ranging from 460.6V down to 451.1V, should be correlated against the facility's operational event log. Identifying which specific loads — compressor starts, rendering process cycling, or large motor inrush — are driving these events will allow targeted mitigation through soft-start controls, sequenced load starts, or VFD tuning alongside the MPTS correction.
+**Second — Motor and drive equipment health assessment.** The recurring voltage dip events documented in the V image — thirteen annotated events ranging from 451 to 461 volts against a 480-volt nominal — represent cumulative insulation stress on every motor and variable-frequency drive connected to this transformer. A targeted insulation resistance and thermal imaging survey of the most load-critical motors is warranted before the next production season, independent of the MPTS decision.
 
-**Confirmed outage event:** The gold streak observed in the chart body, estimated at 60 to 120 minutes, should be logged, dated, and reviewed against maintenance records. If this was an unplanned outage rather than a scheduled shutdown, the root cause needs to be identified and documented for reliability planning.
+**Third — Harmonic mitigation evaluation.** The peak iTHD of 11.0% documented in the M view is episodic but meaningful. If drive density continues to increase with facility expansion, harmonic mitigation filtering should be evaluated as a complement to reactive correction — particularly for protecting sensitive control and communication systems that may be co-located on the same bus.
 
-**Harmonic distortion management:** The 11.0% maximum iTHD warrants monitoring. While MPTS correction will reduce reactive amplification effects, a dedicated harmonic survey should be considered if the iTHD maximum climbs further — particularly given the transformer's elevated capacity utilization.
-
-**Thermal monitoring:** Given the 1,256,097 BTU per hour thermal burden and the $315,354 per year cooling cost, verified thermal imaging of the transformer, associated switchgear, and primary conductors is recommended to identify any hotspot conditions that may indicate accelerated insulation aging.
+**Fourth — Transformer thermal monitoring.** Given the 1,256,097 BTU/hr thermal burden and sustained operation above the kVA daily target for an estimated 65–70% of production hours, a periodic transformer winding temperature survey and cooling system integrity check is recommended as a near-term maintenance action, separate from the longer-term MPTS correction plan.
 
 ---

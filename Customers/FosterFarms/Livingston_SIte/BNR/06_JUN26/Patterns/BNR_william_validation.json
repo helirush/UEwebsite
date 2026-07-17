@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-07-11 19:14:08",
+  "transformer_id": "BNR",
+  "transformer_name": "BNR",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "**",
+    "direct_csv_profile": "unavailable",
+    "power_factor_csv": "0.0% \u2014 no CSV data; vision-only analysis applies",
+    "target_kva_csv": "0.0 kVA \u2014 no CSV anchor available",
+    "kvar_max_csv_est": "0 kVAR (CSV unavailable; vision value 730.8 kVAR used)",
+    "monthly_residual_waste_csv": "$0.00 \u2014 unavailable",
+    "annual_residual_waste_csv": "$0 \u2014 unavailable",
+    "residual_heat_burden_kw_csv": "0.0 kW \u2014 unavailable",
+    "vision_extracted_values_used_as_working_ground_truth": "**",
+    "target_kva_image": "1605 kVA",
+    "bt_target_kva": "1605 kVA",
+    "power_factor_image_tbt": "89.7% PF (TBT header)",
+    "power_factor_image_ts": "99.5% PF (TS header, confirmed flat)",
+    "kvar_avg_tbt": "692.6 kVAR",
+    "kvar_max_tbt_header": "152.1 kVAR [\u26a0\ufe0f DISCREPANCY \u2014 TBT header reads 152.1 kVAR MAX, but TS narrative references 730.8 kVAR MAX as pre-correction peak. These values appear to represent different views or chart states. 730.8 kVAR treated as the operative pre-correction kVAR MAX for sizing and narrative; 152.1 kVAR retained as post-correction or secondary header read.]",
+    "peak_demand_kw": "1,515.3 kW",
+    "monthly_waste_tbt": "approximately $22,578 /dataset",
+    "annual_waste_tbt": "approximately $274,706 /yr",
+    "total_wasted_tbt": "approximately $449,367 /yr",
+    "thermal_burden_tbt": "602,911 BTU/hr",
+    "cooling_cost_tbt": "$17.55 /hr | 88.4 kW",
+    "ithd_avg_tm": "6.3% | ithd_max_tm: 11.4%",
+    "amps_max_tm": "1,961.1 A",
+    "kvar_avg_ts": "133.1 kVAR",
+    "kvar_max_ts": "152.1 kVAR",
+    "apparent_power_tbt": "1,571.8 kVA average",
+    "apparent_power_ts": "1,332.9 kVA average",
+    "headroom_freed": "238.9 kVA",
+    "outage_machine_readable_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "internal_consistency_flags": "**",
+    "monthly_savings_validated": "$37,447.25",
+    "annual_savings_validated": "$449,367.00",
+    "monthly_waste_validated_total": "$37,447.25",
+    "annual_waste_validated_total": "$449,367.00",
+    "annual_total_wasted_validated": "$449,367.00"
+  },
+  "packet_file": "BNR_william_validation.json"
+}

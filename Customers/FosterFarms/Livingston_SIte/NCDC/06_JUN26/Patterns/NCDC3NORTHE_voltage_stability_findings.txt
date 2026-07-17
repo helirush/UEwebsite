@@ -1,0 +1,11 @@
+**Transformer: NCDC3NORTHE — Voltage Stability Findings | June 2026**
+
+The voltage field on NCDC3NORTHE is holding its shape. The operating band runs persistently between roughly 460V and 495V across the full thirty-day capture, with the labeled maximum at 494.8V. For a heavy industrial food processing environment — one with large refrigeration compressors, conveyor motor arrays, and continuous HVAC loading — maintaining that kind of band consistency is a meaningful indicator that the tuned field is functioning as intended. The existing MPTS investment is contributing to this stability profile.
+
+That said, the field is not without stress signatures. Triangular voltage-drop patterns are present and visible in the TV view, and they cluster most noticeably in the first third of the dataset — roughly the June 1st through 10th window — before appearing periodically through mid-month. These drops are sharp and abrupt rather than gradual, which is the classic signature of large inductive load switching events: compressor starts, motor engagements, or refrigeration staging sequences pulling sudden reactive current from the transformer and dragging the voltage field downward momentarily.
+
+Several of these drops push the voltage field into the 460V to 470V range, momentarily crossing below the 480V nominal reference. These are transient rather than sustained, and they recover quickly — but their rhythmic, repeating cadence across the month creates cumulative stress on motor windings, VFD front-ends, and sensitive control electronics. In a food processing facility with this motor population, that cumulative effect is worth tracking as a device-health consideration.
+
+The voltage minimum labeled in the TV header at 9.6V is not a sustained operating point — it marks a complete field collapse event, confirmed by the gold outage streaks visible in the BT chart body. Five to six distinct outage events are identified, with an estimated total interruption window of four to six hours across the month. Each of these events carries a separate voltage recovery transient on restart, which adds to the cumulative switching stress picture. Overall voltage health classification: **moderate risk** — stable under normal conditions, with identifiable stress events that warrant continued monitoring.
+
+---

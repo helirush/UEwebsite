@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-07-15 13:54:46",
+  "transformer_id": "T12",
+  "transformer_name": "T12",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "UNAVAILABLE \u2014 all numeric anchors default to zero. Vision extraction is the sole data source for this transformer. No cross-check variances can be flagged against CSV. All values below are vision-derived and carry image-extraction confidence only.",
+    "target_kva_image": "1721 kVA",
+    "bt_target_kva": "1721 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable \u2014 no CSV override applied)",
+    "power_factor_csv": "0.0% (unavailable \u2014 image reading of 83.9% avg used as working value)",
+    "kvar_max_csv_est": "0 kVAR (unavailable \u2014 image reading of 973.4 kVAR used as working value)",
+    "monthly_waste_csv": "$0.00 (unavailable \u2014 image reading of approximately $51,808/month used)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "monthly_savings_validated": "$71,698.25",
+    "annual_savings_validated": "$860,379.00",
+    "monthly_waste_validated_total": "$50,833.33",
+    "annual_waste_validated_total": "$610,000.00",
+    "annual_total_wasted_validated": "$610,000.00"
+  },
+  "packet_file": "T12_william_validation.json"
+}

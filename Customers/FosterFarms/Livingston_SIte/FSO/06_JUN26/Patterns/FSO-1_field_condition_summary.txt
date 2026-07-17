@@ -1,0 +1,15 @@
+**FSO-1 — June 2026 | Tuned Field Condition Summary**
+
+FSO-1 is a 2,500 kVA transformer serving the Foster Farms Livingston HQ facility in Livingston, California. The June 2026 dataset covers a full 720-hour operating window, and the picture it paints is one of a high-utilization industrial field that is actively tuned — but not yet fully optimized.
+
+The good news first: the reactive correction investment is holding. The orange Power Factor trace in the voltage view rides persistently in the upper band throughout the month, generally in the 85 to 95 percent range, which is meaningful improvement over what an uncorrected field of this scale would show. The field is engaged. The tuning is real.
+
+But the field is not clean. The TBT header reports an average Power Factor of 86.1 percent — with a maximum of 96.2 percent and a floor of 0.0 percent at transient moments. A peak demand of 763.3 kilowatts is being served through a transformer whose apparent power reaches 757 kVA at the supply target. The reactive drag on this field is substantial: 250.5 kVAR average, with a peak reactive reading of 918.5 kVAR. That peak is not a rounding error — that is a real excursion, and it is happening on a 2,500 kVA asset that should have headroom to absorb it cleanly but is instead absorbing it thermally.
+
+The energy waste picture is significant. The TBT header reports $9,993 in waste cost for the June dataset alone — annualizing to approximately $121,589 per year in direct reactive losses. Total wasted cost reaches an estimated $207,459 annually when thermal burden and cooling overhead are included. The thermal burden reading of 277,397 BTU per hour is the clearest single indicator that this field is running hotter than it needs to. Cooling costs are running at approximately $8.75 per hour — that is $76,628 per year in cooling overhead alone, consuming 372.8 megawatt-hours annually just to manage the heat this field is generating.
+
+Two power outage events were identified during the June dataset, both concentrated in the 260607 to 260610 window. Each event is estimated at 30 to 60 minutes in duration, for a combined downtime of approximately 60 to 120 minutes. These events corroborate the voltage stress and Power Factor drops observed in the same time window across the TV and TBT views.
+
+In summary: FSO-1 is a tuned field with real correction in place, but the optimization gap between current performance and full field stabilization remains meaningful. The reactive drag, thermal burden, and recurring voltage stress events all point to incremental refinement opportunities that can deliver measurable operational and financial improvement.
+
+---

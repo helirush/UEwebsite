@@ -1,0 +1,15 @@
+**NCDC2-SOUTH-D — June 2026 | Recommended Engineering Attention Areas**
+
+Given South-D's tuned-but-optimizing status, the recommended focus areas are incremental and targeted rather than greenfield in nature.
+
+**1 — Reactive transient investigation.** The 1,850.8 kVAR MAX versus 302.0 kVAR average gap is a 6-to-1 ratio that warrants dedicated investigation. This likely reflects large motor starts or compressor staging sequences. Identifying the specific load events driving these transient peaks and confirming whether the installed MPTS assets are sized and configured to address them is the highest-priority engineering action.
+
+**2 — Voltage dip monitoring and trending.** The recurring triangular voltage dip pattern, with a confirmed low of 450.8 volts, should be formally trended over subsequent months. If dip frequency or depth increases, targeted reactive compensation or soft-start configurations on the highest-impact inductive loads should be evaluated.
+
+**3 — Outage event root-cause review.** The four to five detected power interruption events — estimated at 40 to 60 aggregate minutes — should be correlated with utility logs and internal switching records to determine whether these are utility-sourced or facility-internal. In a food processing environment, even brief outages carry real process and product cost.
+
+**4 — Harmonic monitoring continuity.** The 5.7% average iTHD and 10.8% peak iTHD are at the edge of the IEEE 519 recommended envelope. As VFD configurations or motor loads evolve, harmonic levels should be monitored for upward drift and evaluated against IEEE 519 limits on a periodic basis.
+
+**5 — Cooling burden reduction verification.** As MPTS optimization progresses toward the 99.5% simulation target, the facility should track actual cooling load reduction against the 31.3 kW simulation reference to confirm that the estimated $54,000 annual cooling savings are materializing in operational data.
+
+---

@@ -1,0 +1,11 @@
+**NCDC2-SOUTH-D — June 2026 | Voltage Stability Findings**
+
+The voltage field on South-D is centered at a measured average of 479.8 volts — that's essentially on nominal for a 480-volt system, and it reflects the stabilizing influence of the existing MPTS assets. The maximum recorded voltage was 494.8 volts and the minimum was 450.8 volts, giving a monthly spread of approximately 44 volts. That spread is not alarming for an industrial facility of this load character, but it's also not insignificant.
+
+What draws attention in the voltage trace is the recurring pattern of triangular V-shaped dips. These are present throughout the month and show moderate clustering in the 260607 through 260613 window, with continued sporadic occurrence through month-end. These drops are consistent with recurring high-demand load switching events — compressor staging in cold storage, HVAC cycling, or large motor starts are the most probable candidates. The 450.8-volt minimum reading represents a dip of approximately 29 volts below nominal, which is roughly a 6% sag event. That's not a crisis, but it is a real stress signal.
+
+The MinVoltage reference boundary sits at 431 volts and the MaxVoltage callout sits at 493 volts. The field is not approaching the lower boundary with any regularity, but the triangular dip pattern tells us that load-switching transients are still creating measurable voltage disturbance. In a tuned field, these dips ideally narrow in amplitude and frequency as reactive correction tightens. The fact that they persist indicates the optimization gap is still contributing to voltage instability at the transient event level.
+
+From a device-health perspective, I'd characterize the risk as moderate. Recurring 6% sag events, even if brief, create cumulative stress on motor windings, variable frequency drives, and sensitive control electronics across the facility. This is the kind of low-level sustained stress that accelerates insulation degradation over a multi-year horizon — not an emergency, but a condition worth actively managing through continued field tuning and monitoring.
+
+---

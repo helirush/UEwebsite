@@ -1,0 +1,11 @@
+**T10 — Voltage Health | May 2026**
+
+The voltage story on T10 is one of chronic under-pressure. The monthly average sits at 457.4 volts on a nominal 480-volt system — that's a persistent 22-volt deficit below the reference level, representing roughly a 4.7% chronic sag across all operating hours. The full swing range across the month extends from a minimum of 432.6 volts to a maximum of 485.6 volts — a spread of approximately 53 volts peak to trough. For equipment designed to run at 480 volts, that floor is a serious concern.
+
+What makes this finding more significant than a simple average underperformance is the clustering pattern of the triangular voltage-drop events. These characteristic downward spike shapes — the hallmark of rapid voltage sag from high-inrush events — appear in at least three distinct operational clusters during May: one near the 260508 window, a second grouping around 260517 through 260518, and a third cluster near 260523. The annotation confirms specific sag readings of 435.3 volts, 435.9 volts, and 435.1 volts at those cluster locations.
+
+The minimum recorded voltage of 432.6 volts represents approximately a 47-volt drop from nominal — right at the 10% sag threshold. That is not a benign number. At 10% below nominal, motors in this facility are drawing elevated current to maintain torque — which feeds directly into winding temperature, insulation degradation, and accelerated bearing wear. Variable frequency drives and compressor contactors are also operating outside their optimal voltage window during these events.
+
+The clustering behavior is operationally revealing: these drops align with production schedule patterns — compressor stage starts, large motor inrush sequences, or chiller cycling — rather than random utility disturbances. That means they are predictable, recurring, and unmitigated. Device health risk assessment for T10's voltage profile: **high**. The combination of chronic sub-nominal average voltage with recurring clustered sag events represents an accelerating wear signature that warrants immediate engineering attention.
+
+---

@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-07-10 18:48:14",
+  "transformer_id": "AGENTICTEA",
+  "transformer_name": "AGENTICTEA",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=monthly_savings_validated,annual_savings_validated,payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "AGENTICTEA**",
+    "csv_ground_truth": "unavailable (Mercury analysis not provided)",
+    "image_vision_data": "unavailable (vision analysis not provided)",
+    "cross_check_status": "NO DATA AVAILABLE from either source",
+    "numeric_reconciliation": "cannot be performed \u2014 zero values in CSV placeholders indicate no real measurement was ingested",
+    "power_factor_csv": "0.0% (placeholder \u2014 no real data)",
+    "target_kva_csv": "0.0 kVA (placeholder \u2014 no real data)",
+    "kvar_max_csv_est": "0 kVAR (placeholder \u2014 no real data)",
+    "monthly_waste_csv": "$0.00 \u2014 placeholder only",
+    "planning_install_estimate": "$200,000 (H490 planning-level estimate, retained as system default)",
+    "estimated_payback_months": "0 \u2014 cannot compute without real data",
+    "discrepancy": "All numeric fields are zero/null. No real measurement data was delivered to this session. Narrative will be framed as a qualitative untuned-field assessment using Unity MPTS framework principles only, with explicit flags wherever specific numbers would normally appear.",
+    "machine_readable_outage_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "machine_readable_csv_anchors": "**",
+    "machine_readable_image_anchors": "**",
+    "target_kva_image": "value unavailable",
+    "bt_target_kva": "value unavailable"
+  },
+  "packet_file": "AGENTICTEA_william_validation.json"
+}

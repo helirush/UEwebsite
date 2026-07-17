@@ -1,0 +1,13 @@
+**Transformer T15 — Recommended Engineering Attention Areas**
+
+Four areas warrant priority attention from an engineering assessment standpoint on T15.
+
+**First, reactive compensation sizing confirmation.** The planning-level sizing of 2 H490 units at 800 kVAR total correction capacity is based on the 708.5 kVAR MAX extracted from the BT header. Engineering assessment should validate this peak against a full load-profile review, including any planned capacity expansions at the Foster Farms Cherry Ave facility that could increase the reactive ceiling before installation is complete.
+
+**Second, voltage sag root-cause analysis.** The clustering of 21 annotated sag events — with the deepest reaching 406V, representing a 15.4% sag below the 480V nominal — requires root-cause investigation. The load-event-driven clustering pattern suggests identifiable triggers: specific motor starts, compressor stage-up sequences, or refrigeration pull-down initiation events. Identifying and documenting those triggers informs both the MPTS correction design and any parallel protective relay or soft-start upgrades that may be warranted.
+
+**Third, harmonic source identification.** The iTHD MAX of 37.8% against a 4.8% average is a significant peak-to-average ratio that indicates concentrated, episodic harmonic generation rather than distributed background distortion. Engineering should identify the primary harmonic source — likely one or more large VFDs or motor drive systems — and determine whether dedicated harmonic filtering is required in addition to reactive compensation.
+
+**Fourth, thermal burden monitoring.** The 542,715 BTU per hour thermal burden should be baselined against transformer nameplate thermal ratings to confirm adequate derating margin. In a facility operating year-round refrigeration loads in Fresno's summer heat environment, transformer enclosure temperatures during peak demand windows may be approaching or exceeding recommended operating thresholds. A thermal imaging survey of the T15 enclosure during a peak production window is recommended prior to MPTS installation to establish pre-correction thermal baseline.
+
+---

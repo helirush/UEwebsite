@@ -1,0 +1,11 @@
+**T12 — Voltage Health and Stability | Vision Extraction from V View**
+
+The voltage field on T12 is not healthy. The average operating voltage across the monitoring period is 466.0 volts — already 14 volts below the 480-volt nominal reference for this class of system. The maximum recorded voltage reached 494.7 volts, and the minimum floor landed at 442.5 volts. That is a swing of approximately 52 volts across the month — far outside what a stable, well-compensated industrial field should exhibit.
+
+The triangular voltage-drop events visible in the V chart are not isolated anomalies. They are recurring, they cluster, and they appear consistently across the full monitoring period. Labeled dip events include readings of 444.2 volts, 442.1 volts, 445.0 volts, and the absolute floor of 442.5 volts. Every one of those labeled events sits below the 480-volt nominal reference. The most severe dip — 442.1 volts — represents a departure of approximately 37.9 volts below nominal, or roughly a 7.9 percent sag from the reference level.
+
+What is particularly telling about this voltage pattern is its coupling behavior. The voltage sags are not random — they track directly with the red amperage peaks visible in the M view. When production loads spike and the reactive draw climbs, the voltage field compresses. That voltage-load coupling is a textbook signature of an inductive, uncompensated load environment where reactive current is sharing conductor capacity with real working current and pulling the voltage down in the process.
+
+In a Foster Farms food processing and cold storage environment, the implications of this voltage profile are operationally significant and carry high device-health risk. Refrigeration compressors operating at 442 volts instead of 480 volts are running at reduced torque capacity and elevated winding current — which means more heat, faster insulation degradation, and a shorter service life. Variable frequency drives and soft starters are particularly sensitive to input voltage sags; repeated sub-nominal events accelerate their failure curves. The clustering pattern of these dips — concentrated around multiple dates across the full month — confirms this is a structural feature of the current field, not an isolated incident to be dismissed.
+
+---

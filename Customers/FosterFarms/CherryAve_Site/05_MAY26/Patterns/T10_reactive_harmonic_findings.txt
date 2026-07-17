@@ -1,0 +1,11 @@
+**T10 — Reactive and Harmonic Character | May 2026**
+
+The reactive and harmonic profile on T10 confirms what the voltage data suggests: this is a field under structural electromagnetic stress, not just occasional peak loading. The reactive burden is persistent and sizeable. The average kVAR draw across May is 420.6 kVAR, with a peak reactive demand of 760.5 kVAR maximum. These are not spikes — they are the baseline operating character of this transformer's load environment.
+
+From the M view, the amperage trace runs at a sustained high level throughout all production windows, peaking at 1,964.8 amps maximum with a monthly average of 1,052.4 amps. That current level on a 3,000 kVA transformer tells you the load is real, heavy, and thermally significant. The reactive kVAR layer sits as a consistent structural floor beneath every productive hour — it doesn't come and go with demand peaks; it is always there, always consuming transformer capacity that could otherwise be doing productive work.
+
+The harmonic picture adds another layer of concern. The M view shows iTHD averaging 5.4% across the month, with a maximum of 10.7% iTHD recorded during peak intervals. The IEEE 519 recommended limit for this class of industrial facility is 5% total harmonic distortion. The average is sitting right at that threshold, and the peak is more than double it. Harmonics at this level heat transformers disproportionately — the additional eddy current and hysteresis losses in the core push thermal burden well above what the fundamental load alone would generate. They also stress sensitive control electronics: VFDs, PLCs, relay coils, and compressor inverter boards are all operating in a noisier electromagnetic environment than they should be.
+
+The minimum power factor annotation of 85.17% — visible in the chart body — combined with the header minimum of 81.4% tells you that during the worst production intervals, T10 is wasting nearly one in five delivered volt-amps to reactive and harmonic losses. That's a meaningful efficiency deficit that compounds directly into the thermal burden and cooling overhead figures.
+
+---

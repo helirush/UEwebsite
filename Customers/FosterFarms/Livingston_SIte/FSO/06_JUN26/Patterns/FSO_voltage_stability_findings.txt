@@ -1,0 +1,13 @@
+**FSO Transformer — Voltage Stability Findings | June 2026**
+
+The FSO voltage field in June shows a well-managed corridor. The TV view confirms an average voltage of 481.0 volts — essentially riding on the 480-volt nominal reference for this industrial distribution class. The measured band runs from a minimum of 472.0 volts to a maximum of 498.9 volts. That 26.9-volt span is reasonable for a large motor-heavy facility running continuous-process loads. The upper bound of 498.9 volts is comfortably below any threshold of concern for swell events. The lower bound at 472 volts represents a dip of approximately 1.7% below nominal — brief and transient, not sustained.
+
+The blue voltage trace carries consistent high-frequency texture throughout the month. This is the fingerprint of a heavily loaded motor environment — compressors cycling, refrigeration loads toggling, and process equipment drawing in pulsed patterns. That texture is expected and normal for a food processing and cold storage operation of this scale.
+
+Triangular voltage-drop patterns are present, most visibly clustered in the early-June window around the 7th through 10th. These sharp, brief dips are the voltage signature of large motor starts — a load event pulls the field down momentarily, then the field recovers. They are not sustained undervoltage conditions. The 472-volt floor is the confirmed low excursion point, and recovery appears prompt.
+
+Two outage events were detected — brief gold streaks in the chart body near June 7th and June 9th, each estimated at 2 to 3 minutes duration. Combined estimated downtime is approximately 4 to 6 minutes. These are short interruptions — likely utility switching, feeder transfer, or internal protective relay operations — but they correlate with the voltage drop clustering observed in the early-June period.
+
+The overall voltage health picture for FSO in June is low-to-moderate concern. No sustained sags, no damaging swells, and a well-centered average. Monitoring the early-June disturbance window for recurrence in subsequent months is the appropriate stewardship action.
+
+---

@@ -1,0 +1,13 @@
+**NCDC3 — North E Transformer | Reactive and Harmonic Findings | May 2026**
+
+The M view — the active-reactive-harmonic view — confirms and amplifies what the BT baseline already established. NCDC3's North E transformer is carrying a heavy, continuous reactive burden, and it is doing so in the presence of meaningful harmonic content that peaks at levels worth tracking.
+
+Start with current. The red Amperage band in the M view runs at an average of 671.5 amps, with a Max callout of 800.3 amps. That maximum amperage event is visible as a clear spike excursion above the normal band density — a moment where the transformer was asked to deliver significantly more than its average current, likely coinciding with a large motor start or combined load surge. Running at 671.5 amps average on a continuous basis represents a substantial thermal load on this transformer's conductors, core, and insulation system.
+
+The green kVAR band sits beneath the red amperage band and is visible and persistent throughout the entire month. The Max Reactive callout from the M view reads 348 kVAR — consistent with the BT header's 379.4 kVAR MAX, with the M view reflecting a slightly different calculation window. The critical observation is not the peak alone — it is that the green reactive layer never goes flat. There is no period in May where reactive demand disappears. It is a continuous companion to every productive ampere this transformer delivers. That is the structural reality of an uncompensated industrial field.
+
+Harmonic content adds another layer to the stress picture. The M view shows a purple Harmonics band with consistent density throughout the month. The average iTHD reads 5.7 percent — below the system-level input threshold of 15.8 percent visible in the Unity variables panel, which means the facility is within acceptable average range. But the peak iTHD of 11.2 percent deserves attention. At 11.2 percent harmonic distortion, the current waveform is meaningfully deformed from the ideal sine wave. These peak events are almost certainly tied to nonlinear loads — variable-frequency drives on refrigeration compressors or rendering equipment — cycling through high-demand moments where harmonic injection spikes. The transformer's core and windings must absorb that distortion as additional heating.
+
+The minimum power factor observed in the M view reads 81.62 percent. At its worst moments, this field is delivering barely 82 cents of productive work per dollar of power consumed. The average of 84.6 percent is already a significant efficiency gap. The worst-case floor of 81.62 percent confirms that the field has meaningful downside excursions below even its already-modest average.
+
+---

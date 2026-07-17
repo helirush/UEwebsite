@@ -1,0 +1,18 @@
+**FSO-2 — Recommended Engineering Attention Areas | June 2026**
+
+**1. Reactive gap closure — incremental compensation review.**
+The 152.1 kVAR MAX and 96.4 kVAR average confirm a persistent reactive residual that the current installed assets have not fully eliminated. An engineering review should assess whether additional reactive compensation — sized to address this remaining gap — is warranted given the current installed configuration. The target outcome is power factor at or above 99%, which would meaningfully reduce both the thermal burden and the reactive demand charges on this account. Any expansion recommendation should account for installed asset capacity already deployed and avoid over-compensation.
+
+**2. Outage root-cause documentation.**
+Four to five outage events were captured in June, totaling an estimated 20 to 35 minutes. The early-June event, which produced the widest gold streak in the TBT record, is the highest-priority item for documentation. Engineering should confirm whether this was a planned maintenance window or an unplanned interruption. For a cold storage and food processing facility operating in peak summer production, even brief unplanned outages carry food-safety and product-integrity implications that extend well beyond the minutes of lost power.
+
+**3. Voltage transient monitoring and mitigation.**
+The recurring triangular voltage-drop events distributed across the full thirty-day record indicate repeated sub-nominal excursions on the FSO-2 bus. While individual events are brief, their cumulative frequency across a month represents ongoing dielectric stress on VFDs, PLCs, and instrumentation. Engineering should review whether additional transient voltage suppression or bus-level filtering would reduce the severity and frequency of these events, particularly in the mid-to-late June period where the concentration appears slightly elevated.
+
+**4. Thermal burden assessment in peak summer context.**
+June in Livingston, California places maximum ambient thermal demand on the facility simultaneously with the recorded electromagnetic waste heat burden of 72,923 BTU per hour. A combined thermal assessment — examining the interaction between HVAC cooling load, process refrigeration demand, and transformer waste heat — would identify whether the facility's cooling infrastructure is operating within margin or approaching thermal stress during peak summer days. This assessment should inform the timing and priority of the reactive gap closure described above.
+
+**5. Peak demand surge investigation.**
+The 382.9 kW peak demand exceeds the 347 kVA supply target, confirming above-ceiling demand events during June. Engineering should identify the specific load events — likely simultaneous compressor starts, large motor initiations, or batch process transitions — responsible for these peaks. Demand management strategies, staggered start sequencing, or soft-start modifications for large motor loads could reduce peak demand exposure and keep the field operating within its tuned envelope during normal production hours.
+
+---

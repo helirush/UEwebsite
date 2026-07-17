@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Reactive and Harmonic Findings**
+
+The reactive profile for AGENTICTEA cannot be numerically characterized in this session. The kVAR maximum reads as zero — a data-gap placeholder — and the power factor field returns 0.0 percent, which again reflects a missing measurement rather than a true zero-power-factor condition. I'm flagging both of those clearly so they don't get misread downstream.
+
+That said, the reactive picture for any untuned industrial transformer follows a consistent structural pattern, and I can walk you through what that typically looks like. Inductive loads — motors, compressors, refrigeration equipment, HVAC systems — all draw reactive power as a byproduct of their electromagnetic operation. That reactive current flows back and forth between the load and the transformer, doing no productive work but consuming conductor capacity, generating heat in the windings, and increasing apparent power demand on the upstream supply. The ratio of real working power to total apparent power is your power factor. In an untuned field, that ratio degrades over time as load mix shifts and no correction mechanism adjusts to compensate.
+
+For sizing context: Unity's MPTS sizing rule calls for taking the kVAR maximum and dividing by four hundred, then rounding up to determine how many H490 units are needed. With kVAR MAX listed as value unavailable, I cannot complete that calculation here. The system has provided a planning-level install estimate of approximately two hundred thousand dollars, which maps to a single H490 unit at four hundred kVAR correction capacity. If field measurement ultimately shows a kVAR MAX exceeding four hundred, a second unit would be required. That determination must wait for a confirmed Mercury data pull.
+
+On harmonics: without waveform data, harmonic distortion levels for AGENTICTEA are unconfirmed. In facilities with variable-frequency drives or switching power supplies, harmonic injection into an untuned bus can compound the reactive burden significantly. That's another reason a fresh capture is warranted before finalizing the correction design.
+
+---

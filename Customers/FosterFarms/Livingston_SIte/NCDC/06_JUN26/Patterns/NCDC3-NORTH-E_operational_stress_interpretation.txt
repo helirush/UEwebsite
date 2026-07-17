@@ -1,0 +1,15 @@
+**Transformer: NCDC3-NORTH-E — Operational Stress Interpretation | June 2026**
+
+Taken together, the TV, TBT, and TM views paint a coherent picture of an industrial transformer under sustained, compounded operational stress — stress that the existing tuning investment has partially addressed but not fully resolved.
+
+Start with the thermal burden. At 333,852 BTU per hour, NCDC3-North-E is generating heat at a rate that demands continuous active management. That thermal output is not abstract — it is real heat loading on transformer windings, connected cable infrastructure, and the electrical room environment. The cooling cost consequence is $9.61 per hour, running to an estimated $84,164 per year in cooling overhead alone. For a facility in California's Central Valley, where June ambient temperatures are already elevated, every BTU per hour of unnecessary transformer heat is a direct operational cost.
+
+Layer the reactive burden on top: 308.2 kVAR average, peaking at 372.2 kVAR, with a power factor of 83.7%. This reactive current is circulating through transformer windings, switchgear, and distribution conductors without delivering productive work. It increases I²R losses throughout the distribution path, it inflates apparent power demand and thus transformer loading, and it compresses the effective headroom this transformer has available for real load growth.
+
+Now add the voltage disturbance signature: five estimated outage events, roughly 40 to 60 total minutes of field collapse across June, and a persistent pattern of triangular voltage sags throughout normal operations. In a continuous cold-chain and processing environment, outage events translate directly to product risk, process restart costs, and equipment stress cycles. Compressor trips and rapid restarts are hard on mechanical components. Process control systems that lose power and recover under low-voltage conditions are operating outside their design envelope.
+
+Finally, the harmonic dimension: an iTHD maximum of 11.4% against a field that never fully quiets its harmonic trace. High harmonic content accelerates insulation degradation, increases transformer core losses, and can cause protective relay nuisance trips. The fact that harmonics are present continuously — not just during demand peaks — means this stress is not occasional. It is structural.
+
+The estimated total waste burden of $252,475 per year reflects all of these layers combined. The installed MPTS assets are doing real work. But the gap between the current 83.7% power factor and a fully optimized field — and the distance between 333,852 BTU per hour and a thermally stabilized transformer — represents the remaining optimization opportunity that June 2026 data is clearly framing.
+
+---

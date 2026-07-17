@@ -1,0 +1,18 @@
+**Transformer: PL1P2 — Engineering Attention Priorities | June 2026**
+
+**Priority 1 — Reactive Compensation Assignment:**
+The 773.4 kVAR maximum reactive burden on PL1-Proc2 demands formal MPTS sizing and installation planning. Two H490 units are the planning-level recommendation. Engineering should confirm placement relative to the transformer secondary bus and verify that compensation does not interact adversely with any existing power factor correction capacitors already in the service path.
+
+**Priority 2 — Voltage Sag Root-Cause Investigation:**
+The recurring triangular voltage dips in the 309–314 volt range, clustering throughout every week of June, indicate systematic load-switching transients that exceed acceptable limits for sensitive industrial electronics. Engineering should conduct a load-sequencing audit to identify the specific motor or compressor start events driving the deepest sag events — particularly the 309.2V minimum recorded in the final week — and evaluate whether soft-start timing adjustments or drive ramp settings can reduce peak inrush contribution.
+
+**Priority 3 — Harmonic Assessment and Mitigation Planning:**
+The 5.6 percent iTHD average is not yet at the threshold of a crisis, but it is elevated enough to warrant a full harmonic spectrum analysis. In a food processing and cold storage environment with multiple variable frequency drives, the harmonic profile can shift significantly as drive population changes. A harmonic study should be commissioned alongside MPTS planning to determine whether passive or active harmonic filtering should be integrated with the reactive compensation design.
+
+**Priority 4 — Thermal Monitoring of Transformer and Adjacent Equipment:**
+The 442,675 BTU per hour thermal burden is a significant and sustained heat load. Engineering should verify that transformer ambient temperature monitoring is in place and that transformer winding temperature indicators are being logged. Adjacent switchgear, bus duct, and cable connections in the PL1-Proc2 service path should be included in the next thermographic inspection cycle to identify any early-stage thermal stress points before they become failure events.
+
+**Priority 5 — Outage and Shutdown Event Documentation:**
+The two probable production shutdown intervals observed around June 7–10 and June 28–29 should be cross-referenced against the facility's maintenance and production log to confirm whether these were planned events or unplanned outages. If either event was unplanned, root-cause analysis is warranted to determine whether field instability or equipment stress contributed to the shutdown.
+
+---

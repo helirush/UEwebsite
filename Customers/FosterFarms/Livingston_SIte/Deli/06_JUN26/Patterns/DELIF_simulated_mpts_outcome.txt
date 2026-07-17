@@ -1,0 +1,15 @@
+**Transformer: DELIF — MPTS Correction Simulation | June 2026**
+
+The S view — the MPTS Harmonized Simulation — shows the projected field state after reactive correction is applied, and the contrast with the BT baseline is substantial.
+
+The headline outcome is power factor correction to 99.5 percent — both the maximum and minimum readings in the S header align at 99.5 percent PF. That means the wild orange oscillation visible in the BT and M views — swinging from 73 percent at worst to near 100 percent at best — collapses to a stable, flat line at near-unity. The reactive field is no longer swinging uncontrolled with every production event. It is being compensated at the point of generation.
+
+What that stability translates to in practical terms: the circulating reactive current that was loading the transformer windings, heating conductors, and driving the 364,267 BTU per hour thermal burden gets absorbed by the MPTS system rather than burdening the transformer. The thermal output drops. The cooling demand associated with managing that heat drops with it. The approximately $10.67 per hour cooling cost begins to reduce.
+
+The voltage stability implication is equally meaningful. With reactive compensation active, the inductive load surges that were pulling voltage down to 461 volts during production peaks are moderated. The MPTS system provides reactive current locally, reducing the voltage sag that was creating the 39-volt operational swing observed in the V view. The triangular drop pattern that was recurring throughout all four weeks of June becomes shallower and less frequent because the reactive demand is being satisfied locally rather than drawn through the supply.
+
+For sizing: the 750.7 kVAR MAX is the engineering anchor. Applying the standard sizing rule — 750.7 divided by 400, rounded up — yields 1.877, which rounds up to **2 H490 units**. Each H490 unit provides 400 kVAR of reactive compensation capacity. Two units together deliver 800 kVAR, which brackets the 750.7 kVAR peak and provides modest headroom for demand growth. The planning-level investment estimate for two H490 units installed is approximately $400,000, though final pricing depends on engineering scope and site-specific installation conditions.
+
+Against approximately $279,204 in total annual waste — energy losses, thermal burden, and cooling overhead combined — the projected return timeline at full recovery is under two years at planning-level assumptions. The correction investment is bounded. The waste, without action, is open-ended and growing.
+
+---

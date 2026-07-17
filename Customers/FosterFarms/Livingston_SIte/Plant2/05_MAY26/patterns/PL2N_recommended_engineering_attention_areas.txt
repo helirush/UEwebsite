@@ -1,11 +1,13 @@
-**PL2N — Recommended Engineering Attention Areas**
+**PL2-3North — Engineering Attention Areas**
 
-Three areas warrant focused attention as you move from this analysis toward an engineering decision on PL2-3North.
+Four areas warrant focused engineering attention on PL2-3North before and concurrent with any MPTS deployment conversation.
 
-First, the harmonic environment deserves a dedicated harmonic study before MPTS installation is finalized. The 10.7 percent peak iTHD confirmed in the M view indicates a population of variable frequency drives or other non-linear loads on this circuit that may require harmonic filtering consideration alongside reactive compensation. Standard capacitor-based compensation systems can amplify certain harmonic frequencies if harmonic resonance conditions exist — the H490 platform is designed with this in mind, but a pre-installation harmonic survey will confirm whether additional harmonic mitigation measures are needed alongside reactive correction.
+First, the outage event. A confirmed 60-to-90-minute full field collapse at approximately the 260324 timestamp needs root-cause investigation. In a cold storage and food processing facility, that duration of power interruption has product safety and regulatory implications. Whether this was a utility event, an internal fault, or a protection relay operation — the root cause should be documented and addressed independently of energy correction work.
 
-Second, the voltage operating range — spending meaningful time above 500 volts while also experiencing dips to 471 volts — suggests a conversation with the utility about tap settings on the supply transformer serving this circuit may be worthwhile. If the nominal operating point can be brought closer to 480V center, both the overvoltage exposure and the depth of the load-driven dip events would be reduced, compounding the benefit of MPTS correction.
+Second, voltage envelope management. The field is running above nominal average (484 volts against a 480-volt reference) while also producing repeated dips to approximately 471 volts during load cycles. An engineering review of transformer tap position and utility voltage coordination would be appropriate. MPTS correction will improve reactive-driven voltage instability, but the above-nominal average baseline should be evaluated separately.
 
-Third, the two detected disruption events totaling an estimated 60 to 90 minutes of downtime during the observation window should be investigated for root cause. In a field with this level of reactive stress and harmonic loading, unexpected interruptions carry elevated risk of power quality-related causes — nuisance trips, drive faults, or contactor drop-outs triggered by voltage sag events that exceed equipment tolerance thresholds. Confirming the cause of those events before finalizing the MPTS engineering scope ensures the correction addresses all active risk mechanisms in the field.
+Third, harmonic audit. The 10.7 percent iTHD peak warrants a dedicated harmonic survey to identify the source loads — likely variable frequency drives or nonlinear switching loads — and confirm that transformer derating for harmonic content is adequate. If the transformer is not already derated for the observed harmonic level, that's an additional thermal risk factor that compounds the existing 277,688 BTU per hour burden.
+
+Fourth, cooling system capacity review. At 40.5 kilowatts of cooling load and $8.16 per hour in cooling costs, the thermal management infrastructure tied to this transformer is carrying a significant ongoing burden. A review of cooling system capacity, setpoints, and equipment condition would confirm whether current cooling assets are adequate or approaching their operational limits.
 
 ---

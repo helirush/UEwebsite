@@ -1,0 +1,11 @@
+**Transformer: FSO1 — Reactive and Harmonic Findings (TM View)**
+
+The TM view is where FSO1's electromagnetic character becomes fully readable. The orange Power Factor trace is the lead indicator, and it is not flat. It fluctuates continuously across the month, with a labeled MIN POWER FACTOR threshold at 80.01%. The trace dips to and below that threshold at multiple points — concentrated in the early-month cluster around 260607 to 260610 and recurring through mid-month events near 260616 and 260619. These are not isolated dips. They are a pattern, and they are correlated with the voltage drop events identified in the TV view.
+
+The red Amperage trace carries a Max AMPERAGE annotation of 908.2 Amps. That is a high peak figure. The amperage profile is dense and turbulent throughout the month — peaks and valleys cycle continuously, consistent with large compressor motors, conveyors, and rendering equipment ramping up and down in production rhythm. The field never fully relaxes to a quiet baseline during active production hours.
+
+From the TBT header: average reactive overhead is 250.5 kVAR, with a peak of 918.5 kVAR MAX. The TM view's Max REACTIVE annotation reads 429 kVAR — this represents the sustained reactive ceiling during the measurement window, while the 918.5 kVAR MAX from TBT captures the absolute peak excursion across the full dataset. Both figures matter. The 918.5 kVAR peak is the sizing driver; the 429 kVAR sustained level is the operational burden.
+
+Harmonics are continuously present. The purple harmonic trace in the TM view never flattens to zero during production. The iTHD average is 8.0%, and the iTHD MAX reaches 31.1%. At peak harmonic moments, nearly one-third of the current waveform is distorted. That level of harmonic injection contributes meaningfully to transformer core heating, conductor heating, and accelerated insulation degradation — all of which show up in that 277,397 BTU/hr thermal burden figure.
+
+---

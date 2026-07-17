@@ -1,0 +1,15 @@
+**Transformer T15 — Simulated MPTS Outcome | Projected Post-Correction Field**
+
+Based on the BT header data and the sizing rule applied to T15's reactive profile, the MPTS correction pathway is straightforward to define at the planning level. The kVAR MAX of 708.5 kVAR divided by 400 yields 1.77, which rounds up to 2 H490 units. Two H490 units provide 800 kVAR of correction capacity — sufficient to cover the full reactive peak with margin, and sized to maintain correction headroom as the load profile evolves.
+
+At a planning-level estimate, two H490 units installed represents approximately $400,000 in capital investment, subject to engineering scope and site conditions. Final pricing depends on site-specific factors including panel access, conduit routing, and any required switchgear upgrades — those details get resolved in the engineering assessment phase, not at the planning stage.
+
+The projected outcome from S-view semantics: power factor corrects to 99.5%, the reactive burden is substantially neutralized, and the kVAR demand on the transformer drops to near-zero in steady state. The thermal burden of 542,715 BTU per hour is projected to drop substantially — cooling overhead at $33.47 per hour represents the most immediately recoverable cost line once reactive current stops generating heat inside the transformer enclosure. The annual waste figure of approximately $774,142 represents the ceiling on recoverable value, with the realistic MPTS recovery capturing the majority of reactive loss and thermal burden costs.
+
+Voltage stability improvement is an expected secondary outcome. With reactive current no longer competing with real current demand at the transformer terminals, the voltage sag events driven by reactive-related impedance drops should reduce in both frequency and severity. The 406V floor events that currently place connected equipment at high device-health risk should migrate toward the nominal 480V band, reducing insulation stress and extending motor and VFD service life across the downstream load.
+
+The harmonic peak events at 37.8% iTHD MAX are not directly corrected by reactive compensation alone — those require harmonic-specific filtering assessment. However, stabilizing the reactive field reduces the conditions that allow harmonic events to propagate and amplify through the system, which typically produces measurable improvement in peak iTHD behavior even before dedicated harmonic mitigation is applied.
+
+At the planning-level estimate, the investment of approximately $400,000 against an annual waste baseline of approximately $774,142 implies a payback window in the range of six to seven months under full correction — a compelling return profile for a capital investment of this scale, particularly in an operating environment where equipment reliability and cold chain continuity carry costs that extend beyond the energy meter.
+
+---

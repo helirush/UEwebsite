@@ -1,0 +1,13 @@
+**BNR Transformer | June 2026 — Voltage Stability Findings**
+
+The BNR voltage field for June carries a documented average of 476.5 volts — that is nominally below the 480-volt line-to-line reference — with a measured maximum of 489.2 volts and a confirmed minimum of 0.0 volts. The 0.0-volt minimum is not a meter anomaly; it represents a full voltage collapse event, consistent with a site power interruption captured in the TV view and corroborated by the gold outage streaks visible in the TBT chart body.
+
+Voltage stability behavior across the 30-day period is characterized by recurring triangular drop patterns distributed throughout the month. These are not clustered into a single fault window — they appear across the full dataset, which is the signature of process-driven load events rather than isolated equipment failures. The drop profile — sharp descent, brief trough, recovery — is consistent with large inductive motor starts and refrigeration compression cycling, both expected in a food processing and cold storage environment.
+
+The blue voltage trace makes repeated excursions toward and below the 480-volt nominal line during load events. Given that the operating average is already 476.5 volts, these dips push portions of the facility into voltage territory where motor windings, drive electronics, and contactors experience measurable stress. In an operation this load-dense, sustained sub-nominal voltage accelerates insulation degradation and increases nuisance trip probability on sensitive process controls — compressors, PLC-driven conveyors, and CIP (clean-in-place) systems all carry voltage sensitivity that this profile challenges.
+
+The outage picture adds another layer: approximately 4 to 5 distinct gold-streak events are visible in the TBT chart, each estimated at 1 to 2 minutes in duration, totaling roughly 5 to 10 minutes of site power interruption across June. In a cold-chain food processing environment, even a 2-minute outage carries product safety and process restart implications that go well beyond the electrical cost of the event itself.
+
+The MPTS field stabilization captured in the TS view shows improved voltage envelope consistency — the correction system is actively supporting the field — but the voltage dip pattern and sub-nominal average indicate that the full stabilization benefit has not yet been uniformly achieved across all load conditions.
+
+---

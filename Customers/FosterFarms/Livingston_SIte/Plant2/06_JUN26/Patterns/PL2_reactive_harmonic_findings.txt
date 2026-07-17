@@ -1,0 +1,14 @@
+Transformer: PL2
+
+Reactive and harmonic characterization for PL2 is not possible in this session. The TBT view — which serves as the tuned optimization anchor and primary numeric extraction source for reactive load — has not been delivered. Likewise, the TM view, which captures harmonic content and distortion patterns in the tuned field, is also absent.
+
+In a functioning tuned field, the TBT capture should show us the reactive average in kVAR alongside the kVAR maximum — the peak reactive draw the system experienced during the measurement period. That kVAR maximum is the primary sizing reference for MPTS capacity. In optimization mode, we compare TBT reactive load against the TS projected outcome to see how much additional kVAR correction the installed assets are leaving on the table. That residual reactive gap is the clearest signal of whether the current deployment is right-sized or whether targeted expansion would recover additional value.
+
+Without TBT and TM data for PL2, neither the reactive average, the kVAR maximum, the power factor percentage, nor any harmonic distortion signature can be assessed. We cannot determine whether PL2's power factor has improved to near unity — the 99.5% target that a well-tuned MPTS field should be approaching — or whether significant reactive burden remains uncorrected.
+
+kvar_max_csv_est: 0 kVAR — not available
+power_factor_csv: 0.0% — not available
+
+Reactive and harmonic findings for PL2: value unavailable. TBT and TM captures are required for this section to be completed.
+
+---

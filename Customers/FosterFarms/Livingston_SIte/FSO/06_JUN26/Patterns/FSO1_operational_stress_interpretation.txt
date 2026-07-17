@@ -1,0 +1,13 @@
+**Transformer: FSO1 — Operational Stress Interpretation**
+
+FSO1 is carrying three distinct categories of operational stress in its current tuned state, and each one is quantifiable.
+
+The first is reactive burden. With an average of 250.5 kVAR and a peak of 918.5 kVAR, reactive power is a constant companion to every production cycle on this transformer. The 86.1% average power factor reflects how much of the transformer's apparent power capacity — every kVA flowing through the windings — is being consumed by reactive overhead rather than producing useful work. That gap between apparent power and real work is where waste lives.
+
+The second is thermal burden. The 277,397 BTU/hr thermal load on FSO1 is running above the 242,874 BTU/hr baseline reference — a difference of approximately 34,500 BTU/hr that represents reactive and harmonic heating on top of production-driven thermal output. The cooling system is spending $8.75 per hour and drawing 42.6 kW continuously to manage that heat. Annualized, that cooling energy represents 372.8 MWh per year — energy spent entirely on removing heat that better field correction could reduce.
+
+The third stress category is outage events. Two distinct gold-streak outage events are visible in the TBT view. The first, near the 260607–260608 boundary, spans approximately 60 to 90 minutes of chart width at 1-minute resolution. The second, near 260616, spans approximately 20 to 30 minutes. Total estimated downtime across the month is 80 to 120 minutes. In a food processing environment with cold chain and process continuity requirements, even short unplanned outages carry real operational cost beyond the electrical waste metrics.
+
+The combined picture is of a tuned transformer that is performing better than its untuned baseline would have allowed, but still operating with meaningful overhead in reactive demand, thermal burden, and intermittent supply interruptions. The optimization gap is real, and it is measurable.
+
+---

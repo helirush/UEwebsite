@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-07-10 18:26:30",
+  "transformer_id": "PL1MS",
+  "transformer_name": "PL1MS",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 600.4,
+      "image_value": 600.0,
+      "pct_diff": 0.067,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Plant1/AN55050287-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050287-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.8617912746415771,
+    "csv_power_factor_pct": 86.17912746415772,
+    "csv_real_kw_avg": 265.84254887992836,
+    "csv_reactive_kvar_avg": 142.7223666778674,
+    "csv_apparent_kva_avg": 306.459761155914,
+    "csv_apparent_kva_p95": 600.39005,
+    "csv_pct_at_or_above_kva_p95": 5.0,
+    "csv_voltage_avg": 282.8057527665771,
+    "csv_voltage_min": 0.0,
+    "csv_voltage_max": 293.22,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_PL1-MShop.json",
+    "csv_profile_source_relative_path": "dashboard_data_PL1-MShop.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL1MS (PL1-MShop \u2014 2500 kVA | Foster Farms, Livingston HQ)**",
+    "period": "May 2026 | Field Mode: Untuned**",
+    "kvar_avg_142_7_kvar_153_4_kvar_bt_header_discrepancy_image_reads_7_5_above_csv_within_tolerance_but_noted_accept_csv": "142.7 kVAR avg. |",
+    "outage_machine_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "target_machine_lines": "**",
+    "target_kva_image": "600 kVA",
+    "bt_target_kva": "600 kVA",
+    "target_kva_csv": "600.4 kVA",
+    "power_factor_csv": "86.18%",
+    "kvar_max_csv_est": "228.36 kVAR",
+    "kvar_max_sizing_note": "** The BT header value of 2,197.8 kVAR is flagged as anomalous relative to the CSV estimate of 228 kVAR. For MPTS sizing, the CSV-anchored 228 kVAR is used. This yields 228 \u00f7 400 = 0.57 \u2192 round UP \u2192 **1 H490 unit** required. Engineering review of the BT header kVAR MAX figure is recommended before final equipment specification.",
+    "monthly_savings_validated": "$9,401.67",
+    "annual_savings_validated": "$112,820.00",
+    "monthly_waste_validated_total": "$9,401.67",
+    "annual_waste_validated_total": "$112,820.00",
+    "annual_total_wasted_validated": "$112,820.00"
+  },
+  "packet_file": "PL1MS_william_validation.json"
+}

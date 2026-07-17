@@ -1,0 +1,11 @@
+**Transformer: NCDC3 | Engineering Attention | June 2026**
+
+Four areas warrant focused engineering attention as part of ongoing NCDC3 tuned-field optimization.
+
+First, reactive compensation sizing review. The TBT peak reactive demand of 372.2 kVAR, with the TM view confirming sustained load in the 300-plus kVAR range throughout the month, suggests a review of current MPTS asset configuration against actual reactive demand is warranted. If the existing compensation assets were sized to an older or lower load profile, the field may have grown beyond their effective correction window. A full reactive survey against the current TBT and TM profiles would confirm whether the existing assets are operating at their rated correction capacity or whether a targeted expansion or retuning is appropriate.
+
+Second, harmonic assessment and filtering adequacy. The 11.4% iTHD maximum, co-occurring with reactive stress events at the 80.75% PF floor, indicates that non-linear load events — VFD ramps, motor starts — are injecting meaningful harmonic content. A dedicated harmonic spectrum analysis, particularly at the 5th and 7th harmonic bands typical of VFD topologies, would determine whether passive harmonic filtering additions are warranted to protect motor insulation and drive electronics in the long-term.
+
+Third, voltage dip monitoring continuity. The recurring triangular dip events reaching 468 volts minimum, while individually modest at 2.5% below nominal, should be tracked on a trending basis quarter-over-quarter. If the minimum floor drifts lower across subsequent monthly periods, that is an early indicator of feeder capacity constraints or motor fleet aging that warrants proactive response.
+
+Fourth, outage event logging. The five to seven discrete power interruption events identified in the TBT view across June, totaling an estimated 10 to 20 minutes, should be correlated against Merced Irrigation District feeder event logs. Confirming whether these are utility-side switching events or site-side protective relay operations helps distinguish between external feeder quality issues and internal system health signals — both of which have different engineering response pathways.

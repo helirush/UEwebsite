@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Reactive and Harmonic Findings**
+
+For AGENTICTEA, the reactive power profile — the kVAR average and kVAR MAX values that would normally anchor this section — are unavailable due to the absence of both Mercury CSV data and BT/M image views. I cannot report a measured reactive average, a peak reactive draw, or a computed power factor percentage. All of those values are marked as unavailable for this submission.
+
+Here is what the untuned field framing tells us structurally. In an uncorrected industrial field, reactive power (kVAR) is generated continuously by inductive loads — motors, compressors, refrigeration equipment, transformers themselves. This reactive current does no real work. It does not run conveyors, chill product, or power lighting. But it absolutely circulates through your transformer and your conductors, generating I-squared-R losses — resistive heat losses proportional to the square of the current. That heat accumulates in transformer windings, shortens insulation life, and increases cooling costs.
+
+Without MPTS correction assigned to AGENTICTEA, that reactive current is free-running. The transformer is serving it continuously, and the thermal burden it creates is growing. In untuned fields with significant motor populations — cold storage, rendering, food processing — it is not uncommon to see power factors in the 70 to 85 percent range, meaning 15 to 30 percent of the transformer's apparent capacity is being consumed by reactive circulation rather than productive work.
+
+MPTS correction at the H490 unit level — rated at 400 kVAR per unit — would intercept that reactive circulation at the field level and reclaim it as usable capacity. The sizing calculation requires a confirmed kVAR MAX reading, which will be populated once data is successfully submitted. Until then, this section is preserved as a qualitative reactive burden alert for AGENTICTEA within the session state.
+
+---

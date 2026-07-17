@@ -1,0 +1,11 @@
+**FSO-3 — Reactive and Harmonic Findings | TM View | June 2026**
+
+The TM active-reactive view reveals a field that is carrying persistent reactive and harmonic burden through every production day in June. The amperage trace runs in the 600 to 800 amp range during normal production hours, with the recorded maximum reaching 801.9 amps. That's a high-amperage field for a 2,500 kVA transformer, and it confirms that reactive current — not just real work current — is contributing meaningfully to the total conductor and transformer loading picture.
+
+The kVAR trace in the TM view is a persistent green band that never disappears. The TBT header quantifies this precisely: 202.4 kVAR average reactive demand, peaking at 334.2 kVAR. That 334.2 kVAR peak is the critical sizing reference for any incremental MPTS optimization work. At no point during the month does the reactive burden drop to negligible levels — it is a continuous structural load characteristic of this facility's motor-heavy operations.
+
+The minimum power factor annotation in the TM view confirms 81.51 percent at the field's worst moments. The 91.5 percent average in the TBT header is a meaningful improvement over that floor, but it also means there are recurring intervals where the field drops 10 percentage points below its own average — back into territory where reactive waste and thermal burden run significantly above the reported mean values.
+
+Harmonic distortion deserves specific attention on FSO-3. The iTHD average of 5.6 percent is a manageable baseline — well within industrial tolerance limits — but the 10.0 percent iTHD maximum is a marker worth tracking. When harmonics double from their average level, the frequency content of the current waveform shifts in ways that specifically target transformer core losses and winding eddy-current heating. On a transformer already carrying 149,513 BTU per hour of thermal burden, harmonic spikes are additive heat contributors that compress the thermal safety margin during peak events. The purple harmonic band in the TM view has visible body — it's a structural feature of this field, present across all thirty days, not episodic noise.
+
+---

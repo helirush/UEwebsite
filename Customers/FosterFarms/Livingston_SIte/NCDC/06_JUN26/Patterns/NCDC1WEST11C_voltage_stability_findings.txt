@@ -1,0 +1,11 @@
+**Transformer: NCDC1WEST11C — Voltage Stability Findings | June 2026**
+
+The TV view for NCDC1WEST11C tells a story of a field that has been stabilized but not fully tamed. The blue voltage trace runs as a tight, consistent band anchored near the 480V nominal line for most of the month — and that tight banding is the MPTS investment showing its value. An uncompensated field on a load profile like this would show a much wider, more erratic voltage spread.
+
+The triangular voltage-drop signatures are real and present. They cluster most prominently in the mid-June window, from approximately June 10th through June 15th. These are the characteristic V-shaped downward excursions in the voltage trace that indicate large inductive load events — most likely refrigeration compressor starts or heavy processing line motor engagements cycling in rapid succession. Additional lighter occurrences appear in the early-month window around June 1st through 4th, and again in the late-month band around June 25th through 28th. The field recovers from each event with reasonable speed, which reflects the stabilizing influence of the active compensation — but the events themselves still impose mechanical and thermal stress on every motor, VFD input stage, and capacitor bank connected to this bus.
+
+The voltage header data reports a range from 500.8 volts maximum down to 9.7 volts minimum. The 9.7-volt minimum is the single most significant individual data point in this entire June dataset. Whether that represents a momentary near-complete voltage collapse, a planned shutdown interval captured at instrument resolution, or a meter artifact during a power interruption — it demands engineering attention. In a food processing and cold-chain facility, a near-zero voltage event, even momentary, can trigger refrigeration system faults, PLC resets, and product temperature excursions that have direct food safety implications.
+
+Device health implication for NCDC1WEST11C: moderate risk on sustained operations, elevated concern in the mid-June perturbation window and around the 9.7-volt event. Motor winding insulation is the primary long-term casualty of these repeating voltage dips.
+
+---

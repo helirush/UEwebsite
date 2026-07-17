@@ -1,0 +1,13 @@
+**BNR-1 — Voltage Stability Findings | June 2026**
+
+The voltage story on BNR-1 this month is layered, and it deserves careful attention because voltage health is the foundational indicator of everything else happening in the field.
+
+The average operating voltage of 476.5 volts places the field in a chronically sub-nominal band. The 480-volt line-to-line nominal is the reference standard for this class of industrial system, and running 3.5 volts below that average — every hour, every day, all month — is not a trivial offset. Sub-nominal voltage at this level increases current draw for the same active power output, which in turn elevates conductor and winding thermal stress. For a food processing facility with large continuous motor loads — refrigeration compressors, conveyors, processing equipment — this chronic voltage depression translates directly into accelerated insulation aging and elevated motor failure risk.
+
+The triangular drop events visible throughout the TV view are characteristic of high-inrush switching events — motor starts, large HVAC compressor cycles, or batch process initiations. These are not random noise. Their regular recurrence across the full 30-day window, with visible clustering around what appear to be shift-start intervals, confirms that this is a structural behavioral pattern tied to the operational rhythm of the facility. Each drop pushes the voltage further below nominal during its transient interval, stacking momentary stress on top of the already-suppressed average.
+
+The 489.2-volt maximum is reassuringly bounded on the high side — there is no over-voltage behavior creating swell stress on sensitive electronics or motor insulation.
+
+But the 0.0-volt minimum is the defining finding of this voltage analysis. A registered minimum of zero volts means the monitoring system captured a complete field collapse — not a sag, not a momentary dip, but a full interruption of voltage delivery. In a food processing cold chain environment, even a brief collapse carries food safety and spoilage exposure that extends well beyond the energy cost of the event itself.
+
+Combined device-health risk assessment for BNR-1: **moderate-to-high**. The chronic sub-nominal average, the persistent triangular inrush pattern, and the confirmed collapse event together create cumulative stress conditions that active field correction through the existing MPTS assets is helping to buffer — but has not fully resolved.

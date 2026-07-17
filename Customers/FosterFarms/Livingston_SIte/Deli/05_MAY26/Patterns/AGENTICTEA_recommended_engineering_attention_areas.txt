@@ -1,0 +1,9 @@
+**Transformer: AGENTICTEA — Recommended Engineering Attention Areas**
+
+Given the dual-source data absence for AGENTICTEA, the primary engineering action is data acquisition. Submit the Mercury CSV export and the full image capture set — Voltage view, BT baseline-target chart, Measurement view, and MPTS Savings projection — so that every metric slot in this analysis can be populated with ground-truth values. Until that data is in hand, no engineering sizing decision for MPTS correction should be finalized.
+
+Once data is available, the engineering review should prioritize four areas. First, confirm the kVAR MAX from the reactive profile and apply the H490 sizing rule — kVAR MAX divided by 400, rounded up — to establish the minimum correction capacity required. Second, evaluate the voltage dip frequency and depth in the V-view to determine whether any immediate device-protection measures are warranted ahead of MPTS installation. Third, review the thermal burden value from the BT header against the transformer's nameplate rating to assess how much insulation life is being consumed by the current untuned operating state. Fourth, check whether harmonic distortion is present in the M-view measurement data, as harmonic content can affect MPTS sizing and may require additional filtering consideration in the engineering scope.
+
+The planning install estimate of approximately $200,000 should be treated as a starting reference point only. Final installed cost depends on engineering scope, site access conditions, switchgear configuration, and any coordination requirements with the local utility. A formal site engineering visit is the appropriate next step once the data review confirms correction priority for AGENTICTEA.
+
+---

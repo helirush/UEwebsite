@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-07-11 21:51:41",
+  "transformer_id": "FSO-3",
+  "transformer_name": "FSO-3",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=target_kva_csv,power_factor_csv,kvar_max_csv_est"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "numeric_confidence_note": "** All values are vision-sourced only. No CSV ground truth is available for FSO-3 June 2026. All figures carry image-extraction uncertainty and should be treated as planning-level estimates pending Mercury CSV confirmation. No cross-check discrepancy flags can be formally raised without CSV reference \u2014 all values are image-provisional.",
+    "target_kva_image": "665 kVA",
+    "bt_target_kva": "665 kVA",
+    "monthly_savings_validated": "$9,648.00",
+    "annual_savings_validated": "$115,776.00",
+    "monthly_waste_validated_total": "$9,648.00",
+    "annual_waste_validated_total": "$115,776.00",
+    "annual_total_wasted_validated": "$115,776.00"
+  },
+  "packet_file": "FSO-3_william_validation.json"
+}

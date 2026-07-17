@@ -1,0 +1,13 @@
+**Transformer: AGENTICTEA — Simulated MPTS Outcome**
+
+A full simulated MPTS outcome for AGENTICTEA requires a measured kVAR MAX value, a confirmed power factor reading, and a validated Monthly Waste figure — none of which are available from this submission. The S-view image, which would normally display post-correction projected figures including recovered reactive power, corrected power factor at 99.5 percent, and estimated annual savings, was not submitted for this run. All projected recovery figures are therefore unavailable.
+
+What I can walk through is the correction logic that will apply once data arrives. The MPTS sizing rule is straightforward: take the kVAR MAX reading from the BT header, divide by 400, and round up. That gives you the number of H490 units required to bring the field to near-unity correction. Each H490 unit carries a planning-level installed cost estimate of approximately $200,000, with final pricing dependent on engineering scope and site conditions.
+
+The benefit side of that equation flows from three directions simultaneously. First, reactive losses drop — the circulating kVAR current that was heating conductors and windings is absorbed by the MPTS field at the point of generation. Second, thermal burden decreases — transformer winding temperatures fall, cooling loads lighten, and insulation life extends. Third, apparent power draw on the utility side shrinks — the transformer is no longer requesting reactive support from the grid, which typically reduces demand charges and in some rate structures eliminates reactive power penalty surcharges entirely.
+
+In untuned fields that have been running without correction for extended periods, the post-MPTS power factor correction to 99.5 percent — versus a typical uncorrected baseline in the 70 to 85 percent range — represents a very substantial reclamation of transformer capacity. That recovered capacity can serve additional productive load without requiring additional transformer infrastructure.
+
+Once AGENTICTEA's numeric data is submitted, this section will be populated with specific recovery figures, a calculated H490 unit count, and a planning-level payback estimate in months.
+
+---

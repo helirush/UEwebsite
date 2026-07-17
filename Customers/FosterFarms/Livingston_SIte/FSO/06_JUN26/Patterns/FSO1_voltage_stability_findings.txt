@@ -1,0 +1,11 @@
+**Transformer: FSO1 — Voltage Stability Findings (TV View)**
+
+The TV view for FSO1 is fundamentally reassuring. The blue voltage trace holds steady and close to the 480V nominal reference line throughout the entire 30-day June window. MaxVoltage is 489V and MinVoltage is 472V — a total swing envelope of 17 volts across the full month. For an industrial facility with continuous refrigeration and process motor loads, that is a disciplined voltage band. The tuned field is holding its shape.
+
+That said, the TV view is not without concern. There are at least five to seven distinct triangular voltage-drop events visible across the month. These are sharp, rapid V-shaped plunges in the blue trace — not gradual sags, not slow swells, but fast inrush-driven depression events. The most severe cluster falls in the 260607 to 260610 window, with additional events near 260616, 260619, and 260628. The early-month cluster is the most aggressive in depth and frequency.
+
+The MinVoltage of 472V means the deepest recorded dip reached 8 volts below the 480V nominal. During the triangular drop events, the trace visibly pierces the Nominal 480V dashed reference line. These are sub-nominal events — transient, yes, but real and recurring. The orange Power Factor trace dips in coordination with these voltage drops, confirming that reactive demand surges are the driver. Each one of those coordinated PF-voltage dips is a micro-stress event on motor insulation, VFD front-end capacitors, and control system power supplies.
+
+The device-health implication here is moderate risk, not critical. The tuned field is absorbing the majority of the environmental voltage variation effectively. But the recurring sub-nominal triangular drops warrant continued monitoring, particularly around compressor cycling and any scheduled load-switching events in the first half of each month.
+
+---

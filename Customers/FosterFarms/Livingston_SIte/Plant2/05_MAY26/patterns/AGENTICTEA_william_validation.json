@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-07-13 19:47:33",
+  "transformer_id": "AGENTICTEA",
+  "transformer_name": "AGENTICTEA",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=monthly_savings_validated,annual_savings_validated,payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "AGENTICTEA**",
+    "csv_ground_truth": "unavailable (Mercury analysis not provided)",
+    "vision_image_data": "unavailable (no images submitted)",
+    "cross_check_result": "**No numeric reconciliation possible.** Neither CSV nor image values can be compared. All narrative sections below are structurally preserved per session-state protocol but carry no anchor numbers from this transformer's actual field data.",
+    "machine_readable_anchors_required_output_lines": "",
+    "target_kva_image": "value unavailable",
+    "bt_target_kva": "value unavailable",
+    "target_kva_csv": "0.0 kVA (not populated \u2014 Mercury unavailable)",
+    "power_factor_csv": "0.0% (not populated \u2014 Mercury unavailable)",
+    "kvar_max_csv_est": "0 kVAR (not populated \u2014 Mercury unavailable)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "system_note": "All five session-state story blocks for AGENTICTEA are structurally produced below. Numeric placeholders are explicitly labeled \"value unavailable\" per guardrail protocol. This transformer's session state block should be flagged for re-submission with valid BT, V, M, and S images or a populated Mercury CSV before group-level synthesis is finalized."
+  },
+  "packet_file": "AGENTICTEA_william_validation.json"
+}

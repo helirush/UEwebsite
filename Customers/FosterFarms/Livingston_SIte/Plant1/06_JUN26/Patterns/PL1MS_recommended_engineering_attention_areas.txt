@@ -1,0 +1,13 @@
+**PL1-MShop | Engineering Attention Priorities | June 2026**
+
+**Priority 1 — Transformer Overload Resolution.** At 102.3% of nameplate capacity, PL1-MShop requires immediate engineering attention. This is the highest-urgency finding in the dataset. Either reactive compensation must be applied to reduce kVA demand back below nameplate, or the transformer must be evaluated for derating or replacement. MPTS correction is the most direct path to restoring thermal margin without capital-intensive equipment replacement.
+
+**Priority 2 — MPTS Sizing and Tuning Assignment.** Six H490 units at 400 kVAR each is the planning-level configuration for this transformer based on the 2,265 kVAR MAX extracted from the BT header. Tuning assignment should be scheduled promptly. Without tuning, the reactive burden continues to compound monthly. A formal engineering site survey should confirm kVAR distribution, switchgear access points, and harmonic interaction risks before installation design is finalized.
+
+**Priority 3 — Voltage Stability Monitoring and Root Cause Analysis.** The two confirmed voltage dip events at 447.2V and 452.1V in June — both crossing below the 480V nominal threshold — should be traced to their load-side origins. In a motor-heavy food processing environment, these dips are most likely associated with large motor starts or compressor cycling events. Identifying the specific equipment generating these voltage pull-downs allows targeted mitigation, whether through soft-start upgrades, VFD tuning adjustments, or reactive compensation staging coordinated with those events.
+
+**Priority 4 — Harmonic Resonance Pre-Assessment.** The 10.1% iTHD maximum, while not severe, should be characterized across the full frequency spectrum before MPTS installation. Reactive compensation capacitor banks can interact with existing harmonic content to create resonant conditions at specific harmonic frequencies. A harmonic survey — ideally captured in a dedicated power quality measurement window — should inform the MPTS tuning design to ensure installed compensation does not amplify existing harmonic peaks.
+
+**Priority 5 — Thermal Margin Trending.** The 184,225 BTU per hour thermal burden should be trended month-over-month going forward. In an untuned field, thermal burden tends to grow as motor loads age toward lower individual power factors. Establishing a monthly thermal burden baseline now creates the before-and-after measurement framework that will quantify MPTS correction value post-installation. This data also informs cooling system sizing adequacy for the current load profile.
+
+---

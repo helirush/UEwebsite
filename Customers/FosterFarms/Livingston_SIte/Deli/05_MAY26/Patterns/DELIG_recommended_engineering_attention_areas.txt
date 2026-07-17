@@ -1,15 +1,13 @@
-**Transformer: Deli.G — DELIG | Engineering Attention Areas**
+**DELIG Transformer — Recommended Engineering Attention Areas**
 
-Several areas warrant focused engineering attention on this transformer.
+**Priority 1 — MPTS Tuning Assignment:** The DELIG transformer has no reactive compensation in place. With 293.7 kVAR average reactive load and peaks reaching approximately 470 kVAR, the case for installing two H490 units delivering 800 kVAR combined capacity is supported by the field data. This is the highest-priority corrective action.
 
-**Transformer loading headroom:** Operating at 102.3 percent of a 2,500 kVA nameplate is the first priority. This is not a condition to monitor and defer — it is a condition requiring near-term action. MPTS correction that reduces apparent power demand would directly recover nameplate headroom. An engineering review of peak loading coincidence — whether all peak demand events are operationally necessary or whether load scheduling could reduce peak coincidence — should accompany any correction design.
+**Priority 2 — Outage Root Cause Investigation:** One field collapse event was detected in the final week of May, with an estimated duration of 20 to 40 minutes and a recorded minimum voltage of 9.6 volts. In a food processing and cold storage environment, this event warrants root cause investigation. Source could be upstream utility event, internal fault, or protection device operation. Event logging and protection coordination review are recommended.
 
-**Voltage sag at peak loading:** The recurring 460V dips during high-amperage events need to be mapped against the specific equipment most sensitive to voltage sag in the Deli.G zone. VFDs with undervoltage trip thresholds, PLC power supplies, and refrigeration control boards are all candidates for nuisance trips or accelerated failure if they are repeatedly exposed to 4 percent sags. A voltage sag tolerance audit of critical equipment should be conducted.
+**Priority 3 — Voltage Sag Mitigation:** Recurring triangular voltage-drop signatures reaching 460 volts — approximately 20 volts below nominal — are associated with large motor start events. A motor soft-start or VFD review for the largest inrush contributors would reduce sag depth and improve device longevity across the facility's motor population. Voltage sag events in a 480-volt industrial environment impose cumulative insulation stress that shortens equipment service life measurably.
 
-**Harmonic environment:** The 10.6 percent iTHD peak warrants a dedicated harmonic survey to identify the dominant frequency components and their sources. If VFD-driven loads are the primary contributors, passive or active harmonic filtering may be warranted in addition to reactive compensation — particularly if IEEE 519 compliance is a facility requirement or a utility contract condition.
+**Priority 4 — Harmonic Load Audit:** The 5.1 percent average iTHD with peaks to 10.6 percent indicates a continuous nonlinear load base — likely VFDs and switching supplies. While currently below IEEE 519 action thresholds, a harmonic load audit should be conducted before MPTS installation to confirm filter configuration requirements and ensure the H490 units are optimally specified for this site's harmonic environment.
 
-**Outage event investigation:** The two apparent outage events near the 260526 period in May should be reviewed against operations logs and any incident reports from that week. Outage events on a transformer operating at nameplate capacity are more consequential than they would be on a lightly loaded transformer.
-
-**Thermal management review:** With 280,066 BTU per hour of thermal burden and $71,933 per year in cooling costs, the thermal environment around this transformer and its associated switchgear should be inspected. Adequate ventilation, clean air filters, and proper clearances are basic stewardship steps that are often deferred and become consequential at this loading level.
+**Priority 5 — Thermal Management Review:** The 280,066 BTU per hour thermal burden and approximately $8.21 per hour in cooling overhead suggest the transformer electrical room thermal environment may benefit from an airflow and cooling capacity audit independent of MPTS correction, particularly given the facility's cold storage adjacency and food safety temperature requirements.
 
 ---

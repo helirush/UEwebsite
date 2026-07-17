@@ -1,0 +1,17 @@
+**NCDC1 — Projected MPTS Correction Outcome — Planning-Level Estimate**
+
+Based on the image extraction from the S view and the reactive profile established in the BT and M views, here is what MPTS correction is projected to deliver on NCDC1.
+
+The sizing calculation is straightforward: 302 kVAR maximum reactive demand, divided by 400 kVAR per H490 unit, equals 0.755 — which rounds up to one H490 unit. One H490, rated at 400 kVAR, provides sufficient reactive compensation headroom above the 302 kVAR ceiling to correct the field to a projected 99.5% power factor. That's a move from 85.0% to 99.5% — a 14.5 percentage point correction on a field that's been running uncompensated.
+
+At 99.5% power factor, the reactive current circulating in the system drops from 267.9 kVAR average (with 302 kVAR peaks) to near zero. The 701.2 amp maximum current draw falls as the reactive component is absorbed locally by the MPTS unit rather than being pulled through the full conductor path from the utility. Real power delivery becomes more efficient. The transformer operates with a lower effective loading percentage, recovering thermal margin.
+
+The thermal burden reduction is direct and immediate. When reactive current is no longer circulating through transformer windings and conductors, the 277,515 BTU/hr thermal load drops toward the corrected baseline. The cooling overhead — currently estimated at approximately $7.96 per hour and roughly $69,719 per year — is substantially reduced. That cooling cost recovery alone begins contributing to payback from day one of operation.
+
+The voltage stability improvement is equally important for this facility. With reactive current absorbed at the point of correction, the voltage sag events driven by reactive demand surges are dampened. The triangular drop clusters that appear throughout the V view — particularly the pronounced events in the 260508 to 260511 window — are directly mitigated by local reactive compensation. The voltage field holds closer to the 480V nominal because the reactive current that was depressing it is no longer traveling through the system impedance.
+
+From a planning-level investment perspective, one H490 unit carries an installed planning estimate of approximately $200,000, subject to engineering scope and site conditions — never a fixed or binding figure. Set against an annual total wasted figure of approximately $209,767, the recovery trajectory is compelling. The energy waste alone — approximately $130,033 per year — represents the direct reactive loss component. With MPTS correction absorbing that reactive burden, the annual waste number begins its recovery in the first full operating year.
+
+The S view confirms the power factor correction to 99.5% and shows the recovered energy field — a cleaner, thermally lighter operating environment for every downstream load on NCDC1's secondary bus. That recovered environment extends equipment life, reduces maintenance frequency, and removes the self-reinforcing degradation pressure that an untuned field continuously applies.
+
+---

@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-07-11 23:20:43",
+  "transformer_id": "NCDC2SOUTHD",
+  "transformer_name": "NCDC2SOUTHD",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "NCDC2SOUTHD \u2014 Cross-Check Reconciliation | June 2026**",
+    "csv_ground_truth_status": "UNAVAILABLE \u2014 vision-only synthesis in effect. No CSV numeric override applicable.",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "1036 kVA",
+    "bt_target_kva": "1036 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable)",
+    "power_factor_csv": "0.0% (unavailable)",
+    "kvar_max_csv_est": "0 kVAR (unavailable)",
+    "monthly_residual_waste_csv": "$0.00 (unavailable)",
+    "annual_residual_waste_csv": "$0 (unavailable)",
+    "residual_heat_burden_kw_csv": "0.0 kW (unavailable)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "key_extracted_image_values_tbt_bt_token": "**",
+    "peak_demand": "1,159.6 kW",
+    "reactive_avg_kvar_max": "302.0 kVAR avg / 1,850.8 kVAR MAX",
+    "power_factor": "92.6% avg (TBT state)",
+    "energy_waste": "~$8,259/dataset | ~$100,481/yr",
+    "total_wasted": "~$162,160/yr (planning-level estimate)",
+    "thermal_burden": "213,624 BTU/hr",
+    "cooling_cost": "~$6.17/hr | 31.3 kW cooling load",
+    "kvar_max_tm_view": "372 kVAR (operational observed max, distinct from TBT header 1,850.8 kVAR MAX \u2014 the 1,850.8 figure likely represents dataset-wide peak reactive demand spike; TM operational band is more representative of sustained reactive draw)",
+    "peak_amperage_tm": "1,252.8 A",
+    "min_power_factor_tm": "87.94%",
+    "voltage_avg_tv": "479.8V | Max: 494.8V | Min: 9.6V (near-zero event)",
+    "annotated_voltage_sag_tv": "450.8V",
+    "ts_power_factor": "99.5%",
+    "integrity_note": "** The 1,850.8 kVAR MAX in the TBT header and the 372 kVAR MAX in the TM view represent different measurement windows and granularities. The TBT figure captures the full dataset peak reactive event; TM captures sustained operational reactive character. Both are retained as context. No suppression applied. Vision-only confidence: moderate-to-high given image clarity.",
+    "monthly_savings_validated": "$13,513.33",
+    "annual_savings_validated": "$162,160.00",
+    "monthly_waste_validated_total": "$13,513.33",
+    "annual_waste_validated_total": "$162,160.00",
+    "annual_total_wasted_validated": "$162,160.00"
+  },
+  "packet_file": "NCDC2SOUTHD_william_validation.json"
+}

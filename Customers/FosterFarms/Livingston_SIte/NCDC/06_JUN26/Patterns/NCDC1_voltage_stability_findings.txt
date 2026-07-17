@@ -1,0 +1,11 @@
+**NCDC1 — West11c | Voltage Stability Findings | TV View | June 2026**
+
+The voltage health picture for West11c tells two stories simultaneously, and it's important to hold both of them at once. The first story is broadly positive: the voltage trace across the full thirty-day TV view holds a remarkably tight operational band, sitting consistently near and just above the 480V nominal reference. The average recorded voltage is 481.3V — essentially right on nominal — and the maximum recorded voltage of 500.8V confirms there are no sustained overvoltage conditions or swells threatening equipment from above. This is a stabilized, well-conditioned voltage field for the majority of the month.
+
+The second story is the one that demands engineering attention: the recorded minimum voltage is 9.7 volts. That is not a sag. That is a near-total momentary field collapse. At 9.7V on a nominal 480V system, you are looking at a voltage that has dropped to roughly 2% of nominal — this is characteristic of a brief but complete interruption event or an extremely deep transient, not a normal undervoltage dip. That event is confirmed by the gold vertical streak pattern detected in the TBT view and correlates directly with the triangular drop signatures visible in the mid-month voltage trace.
+
+The triangular voltage drop events are concentrated in the 260610 through 260620 window — roughly the second and third weeks of June. These are fast, narrow drops — characteristic of large motor starts, compressor cycling, or sudden process load switching in an industrial food processing environment. They are not sustained undervoltage conditions, but their clustering suggests a recurring operational pattern. In a facility running variable frequency drives, control electronics, and automated process systems, repeated fast transient collapses accelerate dielectric aging in motor windings and increase the risk of nuisance resets or trips on sensitive controls.
+
+Device health implication: moderate risk. The field is broadly stable, but the 9.7V floor event and mid-month transient cluster are real stress signatures that warrant monitoring continuity and predictive maintenance logging.
+
+---

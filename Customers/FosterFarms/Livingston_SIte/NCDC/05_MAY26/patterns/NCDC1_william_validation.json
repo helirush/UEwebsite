@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-07-10 18:03:59",
+  "transformer_id": "NCDC1",
+  "transformer_name": "NCDC1",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_availability": "** Mercury CSV data is UNAVAILABLE. All numeric ground truth is drawn exclusively from image extraction.",
+    "synthesis_mode": "** Vision-only. No CSV-vs-image discrepancy check can be performed.",
+    "image_extraction_confidence": "** Moderate-to-high. Header values are clearly labeled; reactive callout notation requires interpretive reading (see note below).",
+    "extracted_image_values_used_as_working_ground_truth": "**",
+    "target_kva_image": "586 kVA",
+    "bt_target_kva": "586 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 CSV UNAVAILABLE, no discrepancy check possible",
+    "power_factor_csv": "0.0% \u2014 CSV UNAVAILABLE; image reads 85.0% PF",
+    "kvar_max_csv_est": "0 kVAR \u2014 CSV UNAVAILABLE; image reads 302 kVAR (from M view Max Reactive callout); BT header shows 267.9 kVAR avg / 55.3 kVAR secondary label \u2014 [\u26a0\ufe0f NOTE: The BT header's 55.3 kVAR MAX label appears inconsistent with the M view's 302 kVAR Max Reactive callout. Treating M view 302 kVAR as the operative kVAR MAX for sizing purposes, as M view is the dedicated reactive-harmonic view and the BT header secondary label may represent a different metric or display artifact.]",
+    "monthly_waste_image": "$11,044 /dataset; $130,033 /yr; TOTAL WASTED $209,767 /yr",
+    "thermal_burden_image": "277,515 BTU/hr (baseline 259,742 BTU/hr)",
+    "cooling_costs_image": "$7.96/hr \u00b7 40.5 kW \u00b7 $69,719/yr",
+    "peak_demand_image": "551.0 kW",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "planning_install_estimate": "~$200,000 (one H490 unit; 302 \u00f7 400 = 0.755 \u2192 rounds UP to 1 unit)",
+    "estimated_payback_months": "value unavailable \u2014 annual waste figure available ($130,033/yr energy waste; $209,767/yr total wasted), but formal payback calc requires net savings after correction, pending engineering scope",
+    "monthly_savings_validated": "$17,480.58",
+    "annual_savings_validated": "$209,767.00",
+    "monthly_waste_validated_total": "$17,480.58",
+    "annual_waste_validated_total": "$209,767.00",
+    "annual_total_wasted_validated": "$209,767.00"
+  },
+  "packet_file": "NCDC1_william_validation.json"
+}

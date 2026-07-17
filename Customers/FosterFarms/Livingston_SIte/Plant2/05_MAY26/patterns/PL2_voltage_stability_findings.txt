@@ -1,0 +1,13 @@
+Transformer: PL2C — Voltage and Stability Findings
+
+With no voltage image data available for PL2C, I cannot report specific voltage readings, dip frequencies, or line-to-neutral measurements for this transformer in this session. What I can do is frame what the absence means and what you should expect when monitoring is established.
+
+For an untuned industrial transformer — particularly one serving refrigeration, processing, or mixed motor loads — voltage stability is one of the earliest indicators of field health. Repeated triangular dips in voltage waveform shape typically signal motor starts, compressor cycling, or reactive surge events. These dips stress insulation on connected equipment, cause nuisance trips on sensitive controls, and can accelerate wear on variable-frequency drives and contactors.
+
+The nominal reference for this class of transformer is 480 volts line-to-line, or approximately 277 volts line-to-neutral. Sustained or repeating dips below those thresholds on an untuned field — without compensating reactive power support from an MPTS unit — leave devices exposed to voltage stress without recovery assistance.
+
+Until PL2C has a V-view capture in place, the voltage story is incomplete. When that capture is performed, the engineering team should specifically look for: repeating dip patterns tied to load cycling, sustained depressions below nominal, and any sharp recovery artifacts that might indicate downstream capacitor banks or switching events. Those patterns, once visible, will sharpen the correction scope considerably.
+
+The fact that voltage data is absent for PL2C today is itself a finding — this transformer needs to be added to the next metering sweep.
+
+---

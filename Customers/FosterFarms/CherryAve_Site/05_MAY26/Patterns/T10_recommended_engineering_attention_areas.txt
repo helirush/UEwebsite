@@ -1,0 +1,13 @@
+**T10 — Engineering Attention Areas | May 2026**
+
+Several areas warrant priority engineering review on T10 before or concurrent with MPTS planning.
+
+**Voltage sag mitigation and motor protection review:** The confirmed minimum voltage of 432.6 volts — approximately 10% below the 480V nominal — combined with three distinct clustering events of triangular sag drops during May, indicates a need to audit motor protection relay setpoints and contactor coil voltage tolerances across all production-critical equipment served by T10. Motors operating at sustained sub-nominal voltage draw elevated current, accelerating insulation aging. A voltage sag event audit and motor thermal protection review should be prioritized.
+
+**Harmonic survey and filtering assessment:** With iTHD averaging 5.4% and peaking at 10.7% — above the IEEE 519 threshold — a dedicated harmonic survey is warranted to identify the primary harmonic contributors (likely variable frequency drives, rectifier-based loads, and soft starters in the chiller and compressor systems). Harmonic filtering or passive trap sizing should be evaluated in parallel with MPTS planning, as harmonic current circulation contributes directly to transformer core losses and thermal burden.
+
+**Transformer thermal margin audit:** The 472,779 BTU per hour thermal burden — approximately 84,000 BTU per hour above the reference baseline — should be evaluated against T10's actual thermal rating and insulation class. If this transformer is operating without adequate thermal margin under current untuned conditions, winding insulation life is being consumed faster than its design expects. An infrared thermography scan of the transformer enclosure, cooling fins, and primary connections is recommended.
+
+**MPTS sizing confirmation and tuning assignment:** Two H490 units are indicated based on the 760.5 kVAR maximum. Tuning assignment should be scheduled as a priority action — every month this field remains untuned is a month of continued $662,250-per-year-rate waste accumulation, thermal burden, and drift toward deeper inefficiency.
+
+---

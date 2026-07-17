@@ -13,6 +13,9 @@
             padding: 0;
             box-sizing: border-box;
         }
+        .group-summary-metrics .group-pill-stack:nth-child(1) .group-pill {
+            color: rgba(58, 64, 60, 0.98);
+        }
 
         :root {
             --livingston-main-card-max: 1080px;
@@ -1083,12 +1086,12 @@
         .group-summary-eff.group-summary-eff-cost.state-consequence-moderate {
             border-color: rgba(166, 102, 22, 0.95);
             background: linear-gradient(135deg, rgba(214, 131, 31, 1) 0%, rgba(184, 108, 18, 1) 100%);
-            color: rgba(255, 248, 238, 1);
+            color: rgba(58, 35, 6, 0.98);
         }
         .group-summary-eff.group-summary-eff-cost.state-consequence-low {
             border-color: rgba(160, 125, 20, 0.95);
             background: linear-gradient(135deg, rgba(217, 182, 42, 1) 0%, rgba(194, 158, 26, 1) 100%);
-            color: rgba(78, 54, 8, 1);
+            color: rgba(56, 42, 6, 0.98);
         }
         .group-summary-eff.group-summary-eff-cost.state-consequence-unavailable {
             border-color: rgba(90, 90, 90, 0.95);
@@ -1120,6 +1123,78 @@
             padding-top: 44px;
             padding-right: 0;
             width: 100%;
+        }
+        .group-summary-metrics-rendering {
+            align-items: stretch;
+            justify-content: space-between;
+            gap: 10px;
+            padding-top: 0;
+        }
+        .group-summary-metrics-rendering .rendering-summary-month-year {
+            position: absolute;
+            top: -19px;
+            right: 2px;
+            font-size: 0.84em;
+            font-weight: 900;
+            letter-spacing: 0.7px;
+            line-height: 1;
+            text-transform: uppercase;
+            color: rgba(41, 58, 99, 0.94);
+            white-space: nowrap;
+        }
+        .group-summary-metrics-rendering .rendering-pill {
+            flex: 1 1 0;
+            min-width: 138px;
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            padding: 6px 8px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: center;
+        }
+        .group-summary-metrics-rendering .rendering-pill-title {
+            font-size: 0.62em;
+            font-weight: 900;
+            letter-spacing: 0.75px;
+            text-transform: uppercase;
+            color: rgba(46, 62, 92, 0.9);
+            line-height: 1.02;
+            min-height: 2.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(72, 118, 205, 0.46);
+        }
+        .group-summary-metrics-rendering .rendering-pill-value {
+            font-size: 0.98em;
+            font-weight: 900;
+            line-height: 1.12;
+            color: rgba(28, 42, 71, 0.98);
+            white-space: nowrap;
+        }
+        .group-summary-metrics-rendering .rendering-pill-delta {
+            font-size: 0.76em;
+            font-weight: 800;
+            letter-spacing: 0.25px;
+            line-height: 1;
+            color: rgba(74, 84, 105, 0.9);
+            white-space: nowrap;
+        }
+        .group-summary-metrics-rendering .rendering-pill-delta.delta-up {
+            color: rgba(13, 122, 69, 0.96);
+        }
+        .group-summary-metrics-rendering .rendering-pill-delta.delta-down {
+            color: rgba(161, 34, 34, 0.96);
+        }
+        .group-summary-metrics-rendering .rendering-pill-delta.delta-neutral {
+            color: rgba(82, 88, 100, 0.92);
+        }
+        .group-summary-metrics-rendering .rendering-pill-value[data-group-cost-current] {
+            color: rgba(121, 42, 12, 0.95);
         }
         .group-pill-stack {
             display: flex;
@@ -1216,7 +1291,7 @@
             padding: 3px 8px;
             border-color: rgba(168, 176, 172, 0.72);
             background: rgba(245, 247, 246, 0.96);
-            color: rgba(80, 86, 83, 0.92);
+            color: rgba(50, 56, 53, 0.98);
             box-shadow: none;
         }
         .group-pill-stack .group-summary-eff {
@@ -1233,6 +1308,7 @@
             width: 252px;
             min-width: 252px;
             max-width: 252px;
+            color: rgba(255, 255, 255, 1);
         }
         .group-section .group-summary-meta {
             display: none;
@@ -1262,6 +1338,27 @@
         details > summary:hover {
             background: white;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .group-section {
+            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .group-section:hover {
+            border-color: rgba(122, 130, 142, 0.62);
+            box-shadow: 0 8px 20px rgba(58, 62, 68, 0.16);
+        }
+        .group-section[open] {
+            border-color: rgba(106, 112, 124, 0.86);
+            background: linear-gradient(180deg, rgba(226, 229, 234, 0.96) 0%, rgba(210, 216, 225, 0.94) 100%);
+            box-shadow: 0 12px 24px rgba(42, 47, 54, 0.24);
+        }
+        .group-section[open] > summary {
+            background: linear-gradient(90deg, rgba(190, 196, 206, 0.48) 0%, rgba(236, 240, 246, 0.97) 28%, rgba(230, 236, 244, 0.99) 100%);
+            border-left-color: rgba(103, 111, 123, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+        }
+        .group-section[open] > summary:hover {
+            background: linear-gradient(90deg, rgba(196, 203, 213, 0.58) 0%, rgba(238, 242, 248, 0.98) 28%, rgba(233, 239, 246, 1) 100%);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
         }
 
         .pending-group-section {
@@ -1980,6 +2077,31 @@
             .group-pill-month {
                 font-size: 0.61em;
             }
+            .group-summary-metrics-rendering {
+                padding-top: 8px;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .group-summary-metrics-rendering .rendering-summary-month-year {
+                position: static;
+                width: 100%;
+                text-align: right;
+                margin-bottom: 2px;
+            }
+            .group-summary-metrics-rendering .rendering-pill {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 136px;
+            }
+            .group-summary-metrics-rendering .rendering-pill-title {
+                font-size: 0.6em;
+                min-height: 2em;
+            }
+            .group-summary-metrics-rendering .rendering-pill-value {
+                font-size: 0.9em;
+            }
+            .group-summary-metrics-rendering .rendering-pill-delta {
+                font-size: 0.73em;
+            }
             .study-list {
                 grid-template-columns: 1fr;
                 padding-left: 10px;
@@ -2125,7 +2247,7 @@
         }
     </style>
 </head>
-<body>
+<body id="page-top">
     <header>
         <div class="header-left">
             <img src="../foster-farms-logo.png" alt="Foster Farms" class="header-logo">
@@ -2238,19 +2360,19 @@
                         <span class="library-title-composite">
                             <span class="library-title-composite-label">Composite Cost - Electrical Energy</span>
                             <span class="library-title-composite-row">
-                                <span class="library-title-composite-month" id="livingston-composite-current-month">MAY 2026</span>
+                                <span class="library-title-composite-month" id="livingston-composite-current-month">JUN 2026</span>
                                 <span class="library-title-composite-value" id="livingston-composite-current-value">$0.195/kWh</span>
                             </span>
                         </span>
                     </div>
                     <details class="library-master-section">
                         <summary>
-                            <span class="library-master-title library-master-title-primary">Seven (7) - Electrical Energy Field Groups</span>
+                            <span class="library-master-title library-master-title-primary">Electrical Energy Field Groups (7 Analyzed)</span>
                             <span class="library-master-summary-bottom">
                                 <span class="library-master-hint">Select to view transformer groups and monthly field reports.</span>
                                 <span class="library-master-insights">
                                     <span class="library-master-insight">
-                                        <span class="library-master-insight-label">Available Capacity</span>
+                                        <span class="library-master-insight-label">Releasable Capacity</span>
                                         <span class="library-master-insight-value" id="livingston-master-available-capacity">--.- MW</span>
                                         <span class="library-master-insight-sub">Annual</span>
                                     </span>
@@ -2309,21 +2431,28 @@
                         <div class="study-list">
                             <div class="study-item">
                                 <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">Secondary BNC • 30-day Full Analysis • 1minRES</div>
-                                </div>
-<a class="study-btn" href="Deli/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
                                     <div class="study-name">May 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
 <a class="study-btn" href="Deli/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260501-260531_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+<a class="study-btn" href="Deli/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
                             <details class="study-history-folder">
                                 <summary>2026 Energy Field History</summary>
                                 <div class="study-list study-history-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">Secondary BNC • 30-day Full Analysis • 1minRES</div>
+                                        </div>
+<a class="study-btn" href="Deli/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
+                                    </div>
                                     <div class="study-item">
                                         <div class="study-info">
                                             <div class="study-name">January 2026</div>
@@ -2354,34 +2483,32 @@
                     <details class="group-section" data-group-code="rendering">
                         <summary data-group-name="RENDERING GROUP" data-transformer-spec="3x 2500kVA">
                             <span class="group-summary-name">RENDERING GROUP (3x 2500kVA)</span>
-                            <span class="group-summary-metrics">
-                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
-                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
+                            <span class="group-summary-metrics group-summary-metrics-rendering">
+                                <span class="rendering-summary-month-year" data-group-rendering-month-year>---</span>
+                                <span class="rendering-pill" data-rendering-pill="field-efficiency">
+                                    <span class="rendering-pill-title">Field Efficiency</span>
+                                    <span class="rendering-pill-value" data-rendering-field-value data-group-pf-current>--.-% PF</span>
+                                    <span class="rendering-pill-delta delta-neutral" data-rendering-field-delta>→ --.-%</span>
                                 </span>
-                                <span class="group-pill-stack">
-                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
-                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
+                                <span class="rendering-pill" data-rendering-pill="power-usage">
+                                    <span class="rendering-pill-title">Power Usage</span>
+                                    <span class="rendering-pill-value" data-rendering-usage-value>--.- kW</span>
+                                    <span class="rendering-pill-delta delta-neutral" data-rendering-usage-delta>→ --.-%</span>
                                 </span>
-                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
-                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
-                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
+                                <span class="rendering-pill" data-rendering-pill="group-utility">
+                                    <span class="rendering-pill-title">Group Utility</span>
+                                    <span class="rendering-pill-value" data-rendering-utility-value>$---/yr</span>
+                                    <span class="rendering-pill-delta delta-neutral" data-rendering-utility-delta>→ --.-%</span>
                                 </span>
-                                <span class="group-pill-stack">
-                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
-                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
+                                <span class="rendering-pill" data-rendering-pill="untuned-cost">
+                                    <span class="rendering-pill-title">Untuned Cost</span>
+                                    <span class="rendering-pill-value" data-rendering-untuned-value data-group-cost-current>$---/yr</span>
+                                    <span class="rendering-pill-delta delta-neutral" data-rendering-untuned-delta>→ --.-%</span>
                                 </span>
                             </span>
-                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
+                            <span class="group-summary-meta rendering-summary-meta">Current month with delta vs prior month</span>
                         </summary>
                         <div class="study-list">
-                            <div class="study-item">
-                                <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
-                                </div>
-<a class="study-btn" href="Rendering/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
-                            </div>
                             <div class="study-item">
                                 <div class="study-info">
                                     <div class="study-name">May 2026</div>
@@ -2389,9 +2516,23 @@
                                 </div>
 <a class="study-btn" href="Rendering/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+<a class="study-btn" href="Rendering/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
                             <details class="study-history-folder">
                                 <summary>2026 Energy Field History</summary>
                                 <div class="study-list study-history-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                        </div>
+<a class="study-btn" href="Rendering/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
+                                    </div>
                                     <div class="study-item">
                                         <div class="study-info">
                                             <div class="study-name">January 2026</div>
@@ -2445,21 +2586,28 @@
                         <div class="study-list">
                             <div class="study-item">
                                 <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
-                                </div>
-<a class="study-btn" href="NCDC/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
                                     <div class="study-name">May 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
 <a class="study-btn" href="NCDC/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+<a class="study-btn" href="NCDC/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
                             <details class="study-history-folder">
                                 <summary>2026 Energy Field History</summary>
                                 <div class="study-list study-history-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                        </div>
+<a class="study-btn" href="NCDC/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
+                                    </div>
                                     <div class="study-item">
                                         <div class="study-info">
                                             <div class="study-name">January 2026</div>
@@ -2513,21 +2661,28 @@
                         <div class="study-list">
                             <div class="study-item">
                                 <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
-                                </div>
-<a class="study-btn" href="Plant1/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
                                     <div class="study-name">May 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
 <a class="study-btn" href="Plant1/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+<a class="study-btn" href="Plant1/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
                             <details class="study-history-folder">
                                 <summary>2026 Energy Field History</summary>
                                 <div class="study-list study-history-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                        </div>
+<a class="study-btn" href="Plant1/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
+                                    </div>
                                     <div class="study-item">
                                         <div class="study-info">
                                             <div class="study-name">March 2026</div>
@@ -2566,21 +2721,28 @@
                         <div class="study-list">
                             <div class="study-item">
                                 <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
-                                </div>
-<a class="study-btn" href="Plant2/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
                                     <div class="study-name">May 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES</div>
                                 </div>
 <a class="study-btn" href="Plant2/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260501-260531_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+<a class="study-btn" href="Plant2/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
                             <details class="study-history-folder">
                                 <summary>2026 Energy Field History</summary>
                                 <div class="study-list study-history-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                        </div>
+<a class="study-btn" href="Plant2/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
+                                    </div>
                                     <div class="study-item">
                                         <div class="study-info">
                                             <div class="study-name">March 2026</div>
@@ -2594,8 +2756,8 @@
                     </details>
 
                     <details class="group-section" data-group-code="bnr">
-                        <summary data-group-name="BNR GROUP" data-transformer-spec="2x 2500kVA • 1 active">
-                            <span class="group-summary-name">BNR GROUP (2x 2500kVA • 1 active)</span>
+                        <summary data-group-name="BNR GROUP" data-transformer-spec="2x 2500kVA">
+                            <span class="group-summary-name">BNR GROUP (2x 2500kVA)</span>
                             <span class="group-summary-metrics">
                                 <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
                                     <span class="group-pill-month" data-group-cost-prev-month>---</span>
@@ -2619,21 +2781,28 @@
                         <div class="study-list">
                             <div class="study-item">
                                 <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">Primary BNC • 30-day Full Analysis • 1minRES • BNR-1 only (single loaded transformer)</div>
-                                </div>
-<a class="study-btn" href="BNR/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
                                     <div class="study-name">May 2026</div>
                                     <div class="study-period">31-day Full Analysis • 1minRES • BNR-1 only (single loaded transformer)</div>
                                 </div>
 <a class="study-btn" href="BNR/05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260501-260531_31d.html">VIEW ENERGY FIELDS</a>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES</div>
+                                </div>
+<a class="study-btn" href="BNR/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
                             <details class="study-history-folder">
                                 <summary>2026 Energy Field History</summary>
                                 <div class="study-list study-history-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">Primary BNC • 30-day Full Analysis • 1minRES • BNR-1 only (single loaded transformer)</div>
+                                        </div>
+<a class="study-btn" href="BNR/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260401-260430_30d.html">VIEW ENERGY FIELDS</a>
+                                    </div>
                                     <div class="study-item">
                                         <div class="study-info">
                                             <div class="study-name">March 2026</div>
@@ -2646,44 +2815,56 @@
                         </div>
                     </details>
 
-                    <details class="pending-group-section" data-group-code="fso">
-                        <summary>
+                    <details class="group-section" data-group-code="fso">
+                        <summary data-group-name="FSO GROUP" data-transformer-spec="3x 2500kVA">
                             <span class="group-summary-name">FSO GROUP (3x 2500kVA)</span>
                             <span class="group-summary-metrics">
-                                <span class="group-pill-stack">
-                                    <span class="group-pill-month">APR 2026</span>
-                                    <span class="group-pill group-pill-mini">$---/yr</span>
+                                <span class="group-pill-stack" data-group-cost-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-cost-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-cost-prev>$---/yr</span>
                                 </span>
                                 <span class="group-pill-stack">
-                                    <span class="group-pill-month">MAY 2026</span>
-                                    <span class="group-summary-eff group-summary-eff-cost">$---/yr</span>
+                                    <span class="group-pill-month" data-group-cost-current-month>---</span>
+                                    <span class="group-summary-eff group-summary-eff-cost" data-group-cost-current>$---/yr</span>
+                                </span>
+                                <span class="group-pill-stack" data-group-pf-prev-wrap hidden>
+                                    <span class="group-pill-month" data-group-pf-prev-month>---</span>
+                                    <span class="group-pill group-pill-mini" data-group-pf-prev>--.-%PF</span>
                                 </span>
                                 <span class="group-pill-stack">
-                                    <span class="group-pill-month">APR 2026</span>
-                                    <span class="group-pill group-pill-mini">--.-%PF</span>
-                                </span>
-                                <span class="group-pill-stack">
-                                    <span class="group-pill-month">MAY 2026</span>
-                                    <span class="group-summary-eff">--.-%PF</span>
+                                    <span class="group-pill-month" data-group-pf-current-month>---</span>
+                                    <span class="group-summary-eff" data-group-pf-current>--.-%PF</span>
                                 </span>
                             </span>
+                            <span class="group-summary-meta">Monthly PF + Total Wasted /yr</span>
                         </summary>
                         <div class="study-list">
                             <div class="study-item placeholder">
                                 <div class="study-info">
-                                    <div class="study-name">April 2026</div>
-                                    <div class="study-period">---</div>
-                                </div>
-                                <span class="study-btn disabled">---</span>
-                            </div>
-
-                            <div class="study-item placeholder">
-                                <div class="study-info">
                                     <div class="study-name">May 2026</div>
-                                    <div class="study-period">---</div>
+                                    <div class="study-period">FSO-1 unavailable • no validated study published</div>
                                 </div>
-                                <span class="study-btn disabled">---</span>
+                                <span class="study-btn disabled">UNAVAILABLE</span>
                             </div>
+                            <div class="study-item">
+                                <div class="study-info">
+                                    <div class="study-name">June 2026</div>
+                                    <div class="study-period">30-day Full Analysis • 1minRES • FSO-1, FSO-2, and FSO-3 active</div>
+                                </div>
+<a class="study-btn" href="FSO/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260601-260630_30d.html">VIEW ENERGY FIELDS</a>
+                            </div>
+                            <details class="study-history-folder">
+                                <summary>2026 Energy Field History</summary>
+                                <div class="study-list study-history-list">
+                                    <div class="study-item placeholder">
+                                        <div class="study-info">
+                                            <div class="study-name">April 2026</div>
+                                            <div class="study-period">FSO-1 unavailable • no validated study published</div>
+                                        </div>
+                                        <span class="study-btn disabled">UNAVAILABLE</span>
+                                    </div>
+                                </div>
+                            </details>
                         </div>
                     </details>
                         </div>
@@ -2989,6 +3170,336 @@
             const numeric = Number(match[1].replace(/,/g, ''));
             return Number.isFinite(numeric) ? numeric : null;
         }
+        function parseGroupAggregateMetricsFromSummaryboard(summaryboardHtmlText) {
+            const html = String(summaryboardHtmlText || '');
+            if (!html) {
+                return {
+                    monthYearLabel: '---',
+                    daysInPeriod: null,
+                    pfPercent: null,
+                    powerUsageKw: null,
+                    utilityCostPerHour: null,
+                    untunedCostPerHour: null,
+                    utilityAnnualCost: null,
+                    untunedAnnualCost: null
+                };
+            }
+
+            const pfValues = [];
+            const activeKwValues = [];
+            const utilityCostPerHourValues = [];
+            const untunedCostPerHourValues = [];
+            let monthYearLabel = '---';
+            let daysInPeriod = null;
+
+            try {
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const monthYearText = String(doc.getElementById('month-year')?.textContent || '').trim();
+                if (monthYearText) monthYearLabel = monthYearText.toUpperCase();
+
+                const daysText = String(doc.getElementById('param-days')?.textContent || '').trim();
+                const parsedDays = parseInt(daysText.replace(/[^0-9]/g, ''), 10);
+                if (Number.isFinite(parsedDays) && parsedDays > 0) daysInPeriod = parsedDays;
+
+                doc.querySelectorAll('[id$="-metric-pf"]').forEach((node) => {
+                    const rawPf = parseNumericValue(String(node.textContent || ''));
+                    const normalized = normalizePfPercent(rawPf);
+                    if (normalized !== null) pfValues.push(normalized);
+                });
+                doc.querySelectorAll('[id$="-avg-kw"]').forEach((node) => {
+                    const numeric = parseNumericValue(String(node.textContent || ''));
+                    if (Number.isFinite(numeric)) activeKwValues.push(numeric);
+                });
+                doc.querySelectorAll('[id$="-xfmr-cost-hour"]').forEach((node) => {
+                    const numeric = parseCurrencyValue(String(node.textContent || ''));
+                    if (Number.isFinite(numeric)) utilityCostPerHourValues.push(numeric);
+                });
+                doc.querySelectorAll('[id$="-xfmr-waste-cost-hour"]').forEach((node) => {
+                    const numeric = parseCurrencyValue(String(node.textContent || ''));
+                    if (Number.isFinite(numeric)) untunedCostPerHourValues.push(numeric);
+                });
+            } catch (e) {}
+
+            const pfPercent = pfValues.length
+                ? (pfValues.reduce((sum, value) => sum + value, 0) / pfValues.length)
+                : null;
+            const powerUsageKw = activeKwValues.length
+                ? activeKwValues.reduce((sum, value) => sum + value, 0)
+                : null;
+            const utilityCostPerHour = utilityCostPerHourValues.length
+                ? utilityCostPerHourValues.reduce((sum, value) => sum + value, 0)
+                : null;
+            const untunedCostPerHour = untunedCostPerHourValues.length
+                ? untunedCostPerHourValues.reduce((sum, value) => sum + value, 0)
+                : null;
+            const hoursPerYear = 8760;
+            const utilityAnnualCost = Number.isFinite(utilityCostPerHour)
+                ? utilityCostPerHour * hoursPerYear
+                : null;
+            const untunedAnnualCost = Number.isFinite(untunedCostPerHour)
+                ? untunedCostPerHour * hoursPerYear
+                : null;
+
+            return {
+                monthYearLabel,
+                daysInPeriod,
+                pfPercent,
+                powerUsageKw,
+                utilityCostPerHour,
+                untunedCostPerHour,
+                utilityAnnualCost,
+                untunedAnnualCost
+            };
+        }
+        function normalizeStudyLookupKey(value) {
+            return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+        }
+        function uniqueStudyStrings(values) {
+            const out = [];
+            const seen = new Set();
+            (Array.isArray(values) ? values : []).forEach((value) => {
+                const v = String(value || '').trim();
+                if (!v || seen.has(v)) return;
+                seen.add(v);
+                out.push(v);
+            });
+            return out;
+        }
+        function buildStudyRoutingKeyVariants(transformerName) {
+            const raw = String(transformerName || '').trim();
+            if (!raw) return [];
+
+            const compact = raw.replace(/\s+/g, '');
+            const compactUpper = compact.toUpperCase();
+            const cleanAlnum = compact.replace(/[^A-Za-z0-9]/g, '');
+            const cleanAlnumUpper = cleanAlnum.toUpperCase();
+            const variants = [raw, compact, compactUpper, cleanAlnum, cleanAlnumUpper];
+
+            const tMatch = compactUpper.match(/^(T\d+)/);
+            if (tMatch) variants.push(tMatch[1], tMatch[1].toLowerCase());
+
+            const renderingMatch = compactUpper.match(/^RENDERING-?(\d+)/);
+            if (renderingMatch) {
+                const n = renderingMatch[1];
+                variants.push(`REND${n}`, `RENDERING${n}`, `RENDERING-${n}`, `Rend${n}`, `rend${n}`);
+            }
+
+            const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
+            if (ncdcMatch) {
+                const ncdc = ncdcMatch[1];
+                const ncnd = ncdc.replace('NCDC', 'NCND');
+                variants.push(ncdc, ncdc.toLowerCase(), ncnd, ncnd.toLowerCase());
+            }
+
+            const baseMatch = compactUpper.match(/^([A-Z]+\d+)/);
+            if (baseMatch) {
+                const base = baseMatch[1];
+                variants.push(base, base.toLowerCase());
+            }
+            return uniqueStudyStrings(variants);
+        }
+        function resolveStudyMapEntryForTransformer(map, transformerName) {
+            if (!map || typeof map !== 'object') return null;
+
+            const routingKeys = buildStudyRoutingKeyVariants(transformerName || '');
+            const candidateKeys = uniqueStudyStrings([
+                transformerName,
+                ...routingKeys,
+                ...(routingKeys.map((key) => normalizeStudyLookupKey(key)))
+            ]);
+
+            for (const key of candidateKeys) {
+                if (map[key]) return map[key];
+                const upper = String(key || '').toUpperCase();
+                if (upper && map[upper]) return map[upper];
+                const lower = String(key || '').toLowerCase();
+                if (lower && map[lower]) return map[lower];
+            }
+
+            const normalizedTargets = new Set(
+                candidateKeys.map((key) => normalizeStudyLookupKey(key)).filter(Boolean)
+            );
+            if (!normalizedTargets.size) return null;
+
+            for (const [key, value] of Object.entries(map)) {
+                if (normalizedTargets.has(normalizeStudyLookupKey(key))) return value;
+            }
+            return null;
+        }
+        const MIN_CREDIBLE_ANNUAL_CONSEQUENCE = 1000;
+        function isCredibleAnnualConsequence(value) {
+            return Number.isFinite(value) && value >= MIN_CREDIBLE_ANNUAL_CONSEQUENCE;
+        }
+        function readFrontCardConsequenceFromEntry(entry) {
+            if (!entry || typeof entry !== 'object') return null;
+            const keys = [
+                'field_consequence',
+                'field_consequence_annual',
+                'annual_total_wasted',
+                'total_wasted_annual',
+                'total_wasted',
+                'all_in_annual_waste'
+            ];
+            for (const key of keys) {
+                const numeric = parseNumericValue(entry[key]);
+                if (isCredibleAnnualConsequence(numeric)) return numeric;
+            }
+            return null;
+        }
+        function buildStudyDashboardDataCandidateUrls(studyUrl, transformerName, prefixes) {
+            if (!studyUrl || !transformerName || !Array.isArray(prefixes) || !prefixes.length) return [];
+            const baseVariants = uniqueStudyStrings([
+                transformerName,
+                ...buildStudyRoutingKeyVariants(transformerName),
+                String(transformerName).replace(/\s+/g, '_'),
+                String(transformerName).replace(/\s+/g, '-'),
+                String(transformerName).replace(/\s+/g, '')
+            ]);
+            const normalizedVariants = uniqueStudyStrings(
+                baseVariants
+                    .map((value) => String(value || '').replace(/[\\/]/g, '_'))
+                    .filter(Boolean)
+                    .flatMap((value) => [
+                        value,
+                        value.replace(/\s+/g, '_'),
+                        value.replace(/\s+/g, '-'),
+                        value.replace(/\s+/g, ''),
+                        value.replace(/_/g, '-'),
+                        value.replace(/-/g, '_')
+                    ])
+            );
+            const candidateUrls = [];
+            prefixes.forEach((prefix) => {
+                normalizedVariants.forEach((variant) => {
+                    try {
+                        candidateUrls.push(new URL(`${prefix}${variant}.json`, studyUrl).toString());
+                    } catch (e) {}
+                });
+            });
+            return uniqueStudyStrings(candidateUrls);
+        }
+        async function fetchStudyJson(url) {
+            try {
+                const jsonText = await fetchStudyText(url);
+                const parsed = JSON.parse(String(jsonText || '{}'));
+                return parsed && typeof parsed === 'object' ? parsed : null;
+            } catch (e) {
+                return null;
+            }
+        }
+        function resolveStudyTransformerDashboardEntry(payload, transformerName) {
+            if (!payload || typeof payload !== 'object') return null;
+            const map = payload.transformers && typeof payload.transformers === 'object'
+                ? payload.transformers
+                : null;
+            if (map) {
+                const mappedEntry = resolveStudyMapEntryForTransformer(map, transformerName);
+                return mappedEntry && typeof mappedEntry === 'object' ? mappedEntry : null;
+            }
+            return payload;
+        }
+        function readEeAnalyzeAllInConsequenceFromEntry(entry) {
+            if (!entry || typeof entry !== 'object') return null;
+            const explicitTotal = parseNumericValue(
+                entry.all_in_annual_waste ??
+                entry.annual_total_wasted ??
+                entry.total_wasted_annual ??
+                entry.total_wasted ??
+                entry.field_consequence_annual ??
+                entry.field_consequence
+            );
+            if (isCredibleAnnualConsequence(explicitTotal)) return explicitTotal;
+
+            const annualWaste = parseNumericValue(
+                entry.annual_waste_cost ??
+                entry.annual_waste ??
+                entry.annual_waste_validated ??
+                entry.energy_waste_cost_annual ??
+                entry.waste_cost_annual
+            );
+            if (!isCredibleAnnualConsequence(annualWaste)) return null;
+
+            const coolingAnnual = parseNumericValue(
+                entry.cooling_forensics_value ??
+                entry.cooling_value_year ??
+                entry.annual_cooling_savings
+            ) || 0;
+            const thermalAnnual = parseNumericValue(
+                entry.heat_forensics_value ??
+                entry.thermal_forensics_value ??
+                entry.heat_value_year ??
+                entry.thermal_value_year ??
+                entry.annual_thermal_savings
+            ) || 0;
+            const pollutionAnnual = parseNumericValue(
+                entry.pollution_forensics_value ??
+                entry.pollution_value_year ??
+                entry.annual_co2e_value_dollars ??
+                entry.annual_pollution_savings
+            ) || 0;
+            const allInFromForensics = annualWaste + Math.max(0, thermalAnnual) + Math.max(0, coolingAnnual) + Math.max(0, pollutionAnnual);
+            if (isCredibleAnnualConsequence(allInFromForensics)) return allInFromForensics;
+            return annualWaste;
+        }
+        async function fetchStudyEeAnalyzeAllInConsequence(studyUrl, transformerName) {
+            const candidateUrls = buildStudyDashboardDataCandidateUrls(
+                studyUrl,
+                transformerName,
+                [
+                    'energy_dashboard_data_',
+                    'dashboard_data_'
+                ]
+            );
+            for (const candidateUrl of candidateUrls) {
+                const payload = await fetchStudyJson(candidateUrl);
+                if (!payload) continue;
+                const entry = resolveStudyTransformerDashboardEntry(payload, transformerName);
+                const annualConsequence = readEeAnalyzeAllInConsequenceFromEntry(entry);
+                if (Number.isFinite(annualConsequence) && annualConsequence > 0) {
+                    return {
+                        annualConsequence,
+                        sourceUrl: candidateUrl
+                    };
+                }
+            }
+            return null;
+        }
+        function parseEmbeddedPatternDataFromSummaryboard(summaryboardHtmlText) {
+            const html = String(summaryboardHtmlText || '');
+            if (!html) return null;
+            const match = html.match(/let\s+PATTERN_DATA\s*=\s*({[\s\S]*?})\s*;\s*let\s+patternDataLoadPromise/i);
+            if (!match) return null;
+            try {
+                const parsed = JSON.parse(match[1]);
+                return parsed && typeof parsed === 'object' ? parsed : null;
+            } catch (e) {
+                return null;
+            }
+        }
+        function extractSummaryboardTransformerCards(doc) {
+            if (!doc) return [];
+            const cards = [];
+            const seenNames = new Set();
+            doc.querySelectorAll('[id^="xfmr"][id$="-name"]').forEach((nameEl) => {
+                const name = String(nameEl.textContent || '').trim();
+                if (!name || seenNames.has(name)) return;
+                const idMatch = String(nameEl.id || '').match(/^xfmr(\d+)-name$/i);
+                if (!idMatch) return;
+                const xfmrId = idMatch[1];
+                const wasteEl = doc.getElementById(`xfmr${xfmrId}-xfmr-waste-cost-hour`);
+                const wasteCostHour = parseCurrencyValue(String(wasteEl?.textContent || ''));
+                const domAnnualConsequence = Number.isFinite(wasteCostHour) && wasteCostHour > 0
+                    ? wasteCostHour * 8760
+                    : null;
+                seenNames.add(name);
+                cards.push({
+                    id: xfmrId,
+                    name,
+                    domAnnualConsequence
+                });
+            });
+            return cards;
+        }
         function parseAnnualWastedValuesFromFieldHtml(htmlText) {
             const annualValues = [];
 
@@ -3014,72 +3525,45 @@
 
             return annualValues;
         }
-        function parseTargetPatternKvaFromText(sourceText) {
-            const normalized = String(sourceText || '').replace(/\s+/g, ' ').trim();
-            if (!normalized) return null;
+        function parseAvailableCapacityKvaFromSummaryboard(summaryboardHtmlText) {
+            const html = String(summaryboardHtmlText || '');
+            if (!html) return null;
 
-            const explicitRegexes = [
-                /bt_target_kva\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
-                /target_kva_image\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
-                /target_validated\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
-                /daily\s+supply\s+target[^0-9]{0,24}([0-9][0-9,]*(?:\.[0-9]+)?)\s*kva/i,
-                /supply\s+target[^0-9]{0,24}([0-9][0-9,]*(?:\.[0-9]+)?)\s*kva/i
-            ];
+            const recoverableValues = [];
+            try {
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const wasteNodes = doc.querySelectorAll('[id$="-metric-energy-waste"]');
+                wasteNodes.forEach((node) => {
+                    const numeric = parseNumericValue(String(node.textContent || ''));
+                    if (Number.isFinite(numeric) && numeric > 0) recoverableValues.push(numeric);
+                });
+                if (recoverableValues.length) {
+                    return recoverableValues.reduce((sum, value) => sum + value, 0);
+                }
+            } catch (e) {}
 
-            for (const regex of explicitRegexes) {
-                const match = normalized.match(regex);
-                if (!match) continue;
-                const numeric = Number(String(match[1] || '').replace(/,/g, ''));
-                if (Number.isFinite(numeric) && numeric > 0) return numeric;
+            const wasteRegex = /id\s*=\s*["'][^"']*-metric-energy-waste["'][^>]*>\s*([^<]+)/ig;
+            let wasteMatch;
+            while ((wasteMatch = wasteRegex.exec(html)) !== null) {
+                const numeric = parseNumericValue(String(wasteMatch[1] || ''));
+                if (Number.isFinite(numeric) && numeric > 0) recoverableValues.push(numeric);
+            }
+            if (recoverableValues.length) {
+                return recoverableValues.reduce((sum, value) => sum + value, 0);
+            }
+
+            const headerRecoverableValues = [];
+            const recoverableRegex = /recoverable\s+energy[^0-9-]*([0-9][0-9,]*(?:\.[0-9]+)?)/ig;
+            let recoverableMatch;
+            while ((recoverableMatch = recoverableRegex.exec(html)) !== null) {
+                const numeric = Number(String(recoverableMatch[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(numeric) && numeric > 0) headerRecoverableValues.push(numeric);
+            }
+            if (headerRecoverableValues.length) {
+                return headerRecoverableValues.reduce((sum, value) => sum + value, 0);
             }
 
             return null;
-        }
-        function parseAvailableCapacityKvaFromPatternTransformer(transformerData) {
-            if (!transformerData || typeof transformerData !== 'object') return null;
-
-            const directCandidates = [
-                transformerData.bt_target_kva,
-                transformerData.target_kva_image,
-                transformerData.target_validated,
-                transformerData.target_kva,
-                transformerData.daily_target_kva,
-                transformerData.site_overview_state?.metrics?.bt_target_kva,
-                transformerData.site_overview_state?.metrics?.target_kva_image,
-                transformerData.site_overview_state?.metrics?.target_validated
-            ];
-            for (const candidate of directCandidates) {
-                const numeric = Number(candidate);
-                if (Number.isFinite(numeric) && numeric > 0) return numeric;
-            }
-
-            const textSources = [
-                transformerData.cross_check,
-                transformerData.voltage_baseline_notes,
-                transformerData.field_condition_summary,
-                transformerData.pattern_part1,
-                transformerData.pattern_text,
-                transformerData.site_overview_state?.story_blocks?.baseline_notes
-            ];
-            for (const source of textSources) {
-                const parsed = parseTargetPatternKvaFromText(source);
-                if (Number.isFinite(parsed) && parsed > 0) return parsed;
-            }
-
-            return null;
-        }
-        function parseAvailableCapacityKvaFromPatternRollup(patternData) {
-            if (!patternData || typeof patternData !== 'object') return null;
-
-            const transformers = patternData.transformers;
-            if (!transformers || typeof transformers !== 'object') return null;
-
-            const totals = Object.values(transformers)
-                .map(parseAvailableCapacityKvaFromPatternTransformer)
-                .filter((value) => Number.isFinite(value) && value > 0);
-
-            if (!totals.length) return null;
-            return totals.reduce((sum, value) => sum + value, 0);
         }
         function extractStudyPeriodTokenFromSummaryboard(doc, studyUrl) {
             const periodText = String(doc?.getElementById('param-period')?.textContent || '');
@@ -3125,6 +3609,9 @@
             return iframeMatch ? iframeMatch[1] : '';
         }
         const STUDY_TEXT_CACHE = new Map();
+        const STUDY_FRONT_CARD_METRICS_CACHE = new Map();
+        const STUDY_PATTERN_DATA_CACHE = new Map();
+        const STUDY_ANNUAL_CONSEQUENCE_CHECKPOINT_CACHE = new Map();
         async function fetchStudyText(url) {
             const key = String(url || '');
             if (!key) throw new Error('Missing URL');
@@ -3145,6 +3632,225 @@
                 throw error;
             }
         }
+        async function fetchStudyFrontCardMetricsMap(studyUrl) {
+            const cacheKey = String(studyUrl || '');
+            if (!cacheKey) return null;
+            if (!STUDY_FRONT_CARD_METRICS_CACHE.has(cacheKey)) {
+                const pending = (async () => {
+                    const candidatePaths = [
+                        'BT_front_card_metrics.json',
+                        'bt_front_card_metrics.json',
+                        'Patterns/BT_front_card_metrics.json',
+                        'patterns/BT_front_card_metrics.json'
+                    ];
+                    for (const relativePath of candidatePaths) {
+                        try {
+                            const candidateUrl = new URL(relativePath, studyUrl).toString();
+                            const jsonText = await fetchStudyText(candidateUrl);
+                            const parsed = JSON.parse(String(jsonText || '{}'));
+                            const map = parsed && typeof parsed === 'object'
+                                ? (parsed.transformers && typeof parsed.transformers === 'object' ? parsed.transformers : parsed)
+                                : null;
+                            if (map && typeof map === 'object' && Object.keys(map).length) {
+                                return map;
+                            }
+                        } catch (e) {}
+                    }
+                    return null;
+                })();
+                STUDY_FRONT_CARD_METRICS_CACHE.set(cacheKey, pending);
+            }
+            try {
+                return await STUDY_FRONT_CARD_METRICS_CACHE.get(cacheKey);
+            } catch (error) {
+                STUDY_FRONT_CARD_METRICS_CACHE.delete(cacheKey);
+                return null;
+            }
+        }
+        async function fetchStudyPatternData(studyUrl, summaryboardHtmlText) {
+            const cacheKey = String(studyUrl || '');
+            if (!cacheKey) return null;
+            if (!STUDY_PATTERN_DATA_CACHE.has(cacheKey)) {
+                const pending = (async () => {
+                    try {
+                        const patternRollupUrl = new URL('SET1_PatternAnalysisData.json', studyUrl).toString();
+                        const patternRollupText = await fetchStudyText(patternRollupUrl);
+                        const patternRollupData = JSON.parse(String(patternRollupText || '{}'));
+                        if (patternRollupData && typeof patternRollupData === 'object') return patternRollupData;
+                    } catch (e) {}
+                    const embedded = parseEmbeddedPatternDataFromSummaryboard(summaryboardHtmlText);
+                    return embedded && typeof embedded === 'object' ? embedded : null;
+                })();
+                STUDY_PATTERN_DATA_CACHE.set(cacheKey, pending);
+            }
+            try {
+                return await STUDY_PATTERN_DATA_CACHE.get(cacheKey);
+            } catch (error) {
+                STUDY_PATTERN_DATA_CACHE.delete(cacheKey);
+                return null;
+            }
+        }
+        function readPatternAllInAnnualConsequenceFromStudyData(patternData, transformerName) {
+            const transformerMap = patternData?.transformers;
+            if (!transformerMap || typeof transformerMap !== 'object') return null;
+            const transformerEntry = resolveStudyMapEntryForTransformer(transformerMap, transformerName);
+            const parsedAnnual = parseAnnualWasteFromPatternTransformer(transformerEntry);
+            return isCredibleAnnualConsequence(parsedAnnual) ? parsedAnnual : null;
+        }
+        async function fetchStudyAnnualConsequenceCheckpoint(studyUrl, summaryboardHtmlText) {
+            const cacheKey = String(studyUrl || '');
+            if (!cacheKey) return null;
+            if (!STUDY_ANNUAL_CONSEQUENCE_CHECKPOINT_CACHE.has(cacheKey)) {
+                const pending = (async () => {
+                    const doc = new DOMParser().parseFromString(String(summaryboardHtmlText || ''), 'text/html');
+                    const cards = extractSummaryboardTransformerCards(doc);
+                    if (!cards.length) return null;
+                    const frontCardMetricsMap = await fetchStudyFrontCardMetricsMap(studyUrl);
+                    const patternData = await fetchStudyPatternData(studyUrl, summaryboardHtmlText);
+                    const entries = (await Promise.all(cards.map(async (card) => {
+                        let consequence = null;
+                        let sourceTag = 'UNAVAILABLE';
+                        const hourlyAnnualConsequence = isCredibleAnnualConsequence(card.domAnnualConsequence)
+                            ? card.domAnnualConsequence
+                            : null;
+
+                        const frontCardEntry = resolveStudyMapEntryForTransformer(frontCardMetricsMap, card.name);
+                        const frontCardConsequenceRaw = readFrontCardConsequenceFromEntry(frontCardEntry);
+                        const frontCardConsequence = isCredibleAnnualConsequence(frontCardConsequenceRaw)
+                            ? frontCardConsequenceRaw
+                            : null;
+                        const eeAnalyzeResult = await fetchStudyEeAnalyzeAllInConsequence(studyUrl, card.name);
+                        const eeAnalyzeAllInAnnualConsequence = isCredibleAnnualConsequence(eeAnalyzeResult?.annualConsequence)
+                            ? eeAnalyzeResult.annualConsequence
+                            : null;
+                        const patternAllInAnnualConsequence = readPatternAllInAnnualConsequenceFromStudyData(patternData, card.name);
+
+                        if (isCredibleAnnualConsequence(frontCardConsequence)) {
+                            consequence = frontCardConsequence;
+                            sourceTag = 'BT_FRONT_CARD_METRICS';
+                        } else if (isCredibleAnnualConsequence(patternAllInAnnualConsequence)) {
+                            consequence = patternAllInAnnualConsequence;
+                            sourceTag = 'PATTERN_TEXT_ALL_IN_ANNUAL';
+                        } else if (isCredibleAnnualConsequence(eeAnalyzeAllInAnnualConsequence)) {
+                            consequence = eeAnalyzeAllInAnnualConsequence;
+                            sourceTag = 'EE_ANALYZE_ALL_IN_ANNUAL_JSON';
+                        } else if (isCredibleAnnualConsequence(hourlyAnnualConsequence)) {
+                            consequence = hourlyAnnualConsequence;
+                            sourceTag = 'SUMMARYBOARD_WASTE_COST_HR_X_8760_FALLBACK';
+                        }
+
+                        let crossCheckDeltaAnnual = null;
+                        let crossCheckStatus = 'UNAVAILABLE';
+                        let crossCheckBasis = null;
+
+                        if (sourceTag === 'BT_FRONT_CARD_METRICS') {
+                            if (isCredibleAnnualConsequence(eeAnalyzeAllInAnnualConsequence)) {
+                                crossCheckDeltaAnnual = eeAnalyzeAllInAnnualConsequence - frontCardConsequence;
+                                crossCheckBasis = 'EE_MINUS_BT';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(patternAllInAnnualConsequence)) {
+                                crossCheckDeltaAnnual = frontCardConsequence - patternAllInAnnualConsequence;
+                                crossCheckBasis = 'BT_MINUS_PATTERN';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(hourlyAnnualConsequence)) {
+                                crossCheckDeltaAnnual = hourlyAnnualConsequence - frontCardConsequence;
+                                crossCheckBasis = 'HR_MINUS_BT';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else {
+                                crossCheckStatus = 'BT_ONLY';
+                            }
+                        } else if (sourceTag === 'EE_ANALYZE_ALL_IN_ANNUAL_JSON') {
+                            if (isCredibleAnnualConsequence(frontCardConsequence)) {
+                                crossCheckDeltaAnnual = frontCardConsequence - eeAnalyzeAllInAnnualConsequence;
+                                crossCheckBasis = 'BT_MINUS_EE';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(patternAllInAnnualConsequence)) {
+                                crossCheckDeltaAnnual = eeAnalyzeAllInAnnualConsequence - patternAllInAnnualConsequence;
+                                crossCheckBasis = 'EE_MINUS_PATTERN';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(hourlyAnnualConsequence)) {
+                                crossCheckDeltaAnnual = hourlyAnnualConsequence - eeAnalyzeAllInAnnualConsequence;
+                                crossCheckBasis = 'HR_MINUS_EE';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else {
+                                crossCheckStatus = 'EE_ONLY';
+                            }
+                        } else if (sourceTag === 'PATTERN_TEXT_ALL_IN_ANNUAL') {
+                            if (isCredibleAnnualConsequence(frontCardConsequence)) {
+                                crossCheckDeltaAnnual = frontCardConsequence - patternAllInAnnualConsequence;
+                                crossCheckBasis = 'BT_MINUS_PATTERN';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(eeAnalyzeAllInAnnualConsequence)) {
+                                crossCheckDeltaAnnual = eeAnalyzeAllInAnnualConsequence - patternAllInAnnualConsequence;
+                                crossCheckBasis = 'EE_MINUS_PATTERN';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(hourlyAnnualConsequence)) {
+                                crossCheckDeltaAnnual = hourlyAnnualConsequence - patternAllInAnnualConsequence;
+                                crossCheckBasis = 'HR_MINUS_PATTERN';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else {
+                                crossCheckStatus = 'PATTERN_ONLY';
+                            }
+                        } else {
+                            if (isCredibleAnnualConsequence(eeAnalyzeAllInAnnualConsequence)) {
+                                crossCheckDeltaAnnual = eeAnalyzeAllInAnnualConsequence - hourlyAnnualConsequence;
+                                crossCheckBasis = 'EE_MINUS_HR';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(patternAllInAnnualConsequence)) {
+                                crossCheckDeltaAnnual = hourlyAnnualConsequence - patternAllInAnnualConsequence;
+                                crossCheckBasis = 'HR_MINUS_PATTERN';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else if (isCredibleAnnualConsequence(frontCardConsequence)) {
+                                crossCheckDeltaAnnual = frontCardConsequence - hourlyAnnualConsequence;
+                                crossCheckBasis = 'BT_MINUS_HR';
+                                crossCheckStatus = Math.abs(crossCheckDeltaAnnual) <= 1 ? 'MATCH' : 'MISMATCH';
+                            } else {
+                                crossCheckStatus = isCredibleAnnualConsequence(hourlyAnnualConsequence) ? 'HOURLY_ONLY' : 'UNAVAILABLE';
+                            }
+                        }
+
+                        return {
+                            transformerId: card.id,
+                            transformerName: card.name,
+                            annualConsequence: isCredibleAnnualConsequence(consequence) ? consequence : null,
+                            sourceTag,
+                            crossCheckStatus,
+                            crossCheckBasis,
+                            crossCheckDeltaAnnual,
+                            patternAllInAnnualConsequence,
+                            eeAnalyzeAllInAnnualConsequence,
+                            eeAnalyzeSourceUrl: eeAnalyzeResult?.sourceUrl || null,
+                            hourlyAnnualConsequence,
+                            frontCardAnnualConsequence: frontCardConsequence
+                        };
+                    }))).filter((entry) => isCredibleAnnualConsequence(entry.annualConsequence));
+
+                    if (!entries.length) return null;
+                    const mismatchedEntries = entries.filter((entry) => entry.crossCheckStatus === 'MISMATCH');
+                    if (mismatchedEntries.length && typeof console !== 'undefined' && typeof console.warn === 'function') {
+                        console.warn(`[Livingston Consequence source mismatch] ${studyUrl}`, mismatchedEntries);
+                    }
+                    const totalAnnualConsequence = entries.reduce((sum, entry) => sum + entry.annualConsequence, 0);
+                    return {
+                        totalAnnualConsequence,
+                        entries
+                    };
+                })();
+                STUDY_ANNUAL_CONSEQUENCE_CHECKPOINT_CACHE.set(cacheKey, pending);
+            }
+            try {
+                return await STUDY_ANNUAL_CONSEQUENCE_CHECKPOINT_CACHE.get(cacheKey);
+            } catch (error) {
+                STUDY_ANNUAL_CONSEQUENCE_CHECKPOINT_CACHE.delete(cacheKey);
+                return null;
+            }
+        }
+        async function fetchStudyAnnualConsequenceFromSummaryCards(studyUrl, summaryboardHtmlText) {
+            const checkpoint = await fetchStudyAnnualConsequenceCheckpoint(studyUrl, summaryboardHtmlText);
+            const totalAnnualConsequence = Number(checkpoint?.totalAnnualConsequence);
+            if (!Number.isFinite(totalAnnualConsequence) || totalAnnualConsequence <= 0) return null;
+            return totalAnnualConsequence;
+        }
         function parseAllInAnnualWasteFromText(sourceText) {
             const normalized = String(sourceText || '').replace(/\s+/g, ' ').trim();
             if (!normalized) return null;
@@ -3153,6 +3859,7 @@
                 /total(?:\s+(?:estimated|identified|annual(?:ized)?))?\s+waste[^$]{0,120}\$([0-9][0-9,]*(?:\.[0-9]+)?)/i,
                 /annual(?:ized)?\s+waste(?:\s+across\s+all\s+cost\s+categories)?[^$]{0,120}\$([0-9][0-9,]*(?:\.[0-9]+)?)/i,
                 /\$([0-9][0-9,]*(?:\.[0-9]+)?)\s*(?:per\s+year|annually)\b[^.]{0,120}\b(?:total\s+)?(?:annual(?:ized)?\s+)?waste\b/i,
+                /\$([0-9][0-9,]*(?:\.[0-9]+)?)\s*(?:\/\s*yr|\/yr)\b[^.]{0,120}\btotal\s+wasted\b/i,
                 /costing\s+approximately\s+\$([0-9][0-9,]*(?:\.[0-9]+)?)\s+annually[^.]{0,120}(?:waste|reactive\s+burden)/i,
                 /carrying\s+approximately\s+\$([0-9][0-9,]*(?:\.[0-9]+)?)\s+in\s+estimated\s+annual\s+waste/i
             ];
@@ -3164,7 +3871,7 @@
                 if (Number.isFinite(numeric) && numeric > 0) return numeric;
             }
 
-            const annualTokens = ['annual', 'annually', 'per year', 'annualized'];
+            const annualTokens = ['annual', 'annually', 'per year', 'annualized', '/yr'];
             const positiveTokens = ['waste', 'reactive burden', 'reactive losses', 'total wasted'];
             const excludedTokens = [
                 'cooling', 'per hour', '/hr', 'hourly', 'investment', 'installed',
@@ -3208,22 +3915,29 @@
 
             for (const source of textSources) {
                 const parsed = parseAllInAnnualWasteFromText(source);
-                if (Number.isFinite(parsed) && parsed > 0) return parsed;
+                if (isCredibleAnnualConsequence(parsed)) return parsed;
             }
 
             const annualFallback = Number(
+                transformerData.all_in_annual_waste ??
+                transformerData.annual_total_wasted ??
+                transformerData.total_wasted_annual ??
+                transformerData.total_wasted ??
+                transformerData.field_consequence_annual ??
+                transformerData.field_consequence ??
                 transformerData.annual_waste ??
-                transformerData.annual_savings_validated ??
-                transformerData.annual_savings
+                transformerData.annual_waste_validated ??
+                transformerData.annual_waste_cost
             );
-            if (Number.isFinite(annualFallback) && annualFallback > 0) return annualFallback;
+            if (isCredibleAnnualConsequence(annualFallback)) return annualFallback;
 
             const monthlyFallback = Number(
-                transformerData.monthly_waste ??
-                transformerData.monthly_savings_validated ??
-                transformerData.monthly_savings
+                transformerData.monthly_waste
             );
-            if (Number.isFinite(monthlyFallback) && monthlyFallback > 0) return monthlyFallback * 12;
+            const monthlyAnnualized = Number.isFinite(monthlyFallback) && monthlyFallback > 0
+                ? monthlyFallback * 12
+                : null;
+            if (isCredibleAnnualConsequence(monthlyAnnualized)) return monthlyAnnualized;
             return null;
         }
         function parseAnnualWastedTotalFromPatternRollup(patternData) {
@@ -3233,21 +3947,62 @@
             if (transformers && typeof transformers === 'object') {
                 const totals = Object.values(transformers)
                     .map(parseAnnualWasteFromPatternTransformer)
-                    .filter((value) => Number.isFinite(value) && value > 0);
+                    .filter((value) => isCredibleAnnualConsequence(value));
                 if (totals.length) return totals.reduce((sum, value) => sum + value, 0);
             }
-
-            const groupedRaw = patternData?.group_overview?.totals?.annual_waste;
-            const groupedTotal = groupedRaw == null ? null : Number(groupedRaw);
-            if (Number.isFinite(groupedTotal) && groupedTotal > 0) return groupedTotal;
             return null;
         }
+        async function fetchStudyAnnualWastedFromFieldBoards(studyUrl, summaryboardHtmlText) {
+            const doc = new DOMParser().parseFromString(String(summaryboardHtmlText || ''), 'text/html');
+            const transformerNames = extractTransformerNamesFromSummaryboard(doc);
+            const periodToken = extractStudyPeriodTokenFromSummaryboard(doc, studyUrl);
+            if (!transformerNames.length || !periodToken) return null;
+
+            const annualValues = await Promise.all(transformerNames.map(async (transformerName) => {
+                try {
+                    const splitName = formatTransformerNameForSplitView(transformerName);
+                    if (!splitName) return null;
+                    const splitViewHref = `SplitView-energy-${splitName}-${periodToken}.html`;
+                    const splitViewUrl = new URL(splitViewHref, studyUrl).toString();
+                    const splitViewHtmlText = await fetchStudyText(splitViewUrl);
+                    const fieldHref = parseFieldEnergyboardHrefFromSplitViewHtml(splitViewHtmlText);
+                    if (!fieldHref) return null;
+                    const fieldUrl = new URL(fieldHref, splitViewUrl).toString();
+                    const fieldHtmlText = await fetchStudyText(fieldUrl);
+                    const fieldAnnualValues = parseAnnualWastedValuesFromFieldHtml(fieldHtmlText);
+                    if (!fieldAnnualValues.length) return null;
+                    return fieldAnnualValues[0];
+                } catch (e) {
+                    return null;
+                }
+            }));
+
+            const numericValues = annualValues.filter((value) => Number.isFinite(value));
+            if (!numericValues.length) return null;
+            return numericValues.reduce((sum, value) => sum + value, 0);
+        }
         const STUDY_ANNUAL_WASTED_CACHE = new Map();
-        async function fetchStudyAnnualWastedTotal(studyUrl, summaryboardHtmlText) {
-            const cacheKey = String(studyUrl || '');
+        async function fetchStudyAnnualWastedTotal(studyUrl, summaryboardHtmlText, options = {}) {
+            const preferSummaryCards = Boolean(options?.preferSummaryCards);
+            const preferFieldBoards = Boolean(options?.preferFieldBoards);
+            const mode = `${preferSummaryCards ? 'cards-first' : 'cards-later'}::${preferFieldBoards ? 'field-first' : 'rollup-first'}`;
+            const cacheKey = `${String(studyUrl || '')}::${mode}`;
             if (!cacheKey) return null;
             if (!STUDY_ANNUAL_WASTED_CACHE.has(cacheKey)) {
                 const pending = (async () => {
+                    if (preferSummaryCards) {
+                        try {
+                            const summaryCardAnnual = await fetchStudyAnnualConsequenceFromSummaryCards(studyUrl, summaryboardHtmlText);
+                            if (Number.isFinite(summaryCardAnnual)) return summaryCardAnnual;
+                        } catch (e) {}
+                        return null;
+                    }
+                    if (preferFieldBoards) {
+                        try {
+                            const fieldBoardAnnual = await fetchStudyAnnualWastedFromFieldBoards(studyUrl, summaryboardHtmlText);
+                            if (Number.isFinite(fieldBoardAnnual)) return fieldBoardAnnual;
+                        } catch (e) {}
+                    }
                     try {
                         const patternRollupUrl = new URL('SET1_PatternAnalysisData.json', studyUrl).toString();
                         const patternRollupText = await fetchStudyText(patternRollupUrl);
@@ -3255,33 +4010,17 @@
                         const rollupAnnual = parseAnnualWastedTotalFromPatternRollup(patternRollupData);
                         if (Number.isFinite(rollupAnnual)) return rollupAnnual;
                     } catch (e) {}
-                    const doc = new DOMParser().parseFromString(String(summaryboardHtmlText || ''), 'text/html');
-                    const transformerNames = extractTransformerNamesFromSummaryboard(doc);
-                    const periodToken = extractStudyPeriodTokenFromSummaryboard(doc, studyUrl);
-                    if (!transformerNames.length || !periodToken) return null;
-
-                    const annualValues = await Promise.all(transformerNames.map(async (transformerName) => {
+                    try {
+                        const fieldBoardAnnual = await fetchStudyAnnualWastedFromFieldBoards(studyUrl, summaryboardHtmlText);
+                        if (Number.isFinite(fieldBoardAnnual)) return fieldBoardAnnual;
+                    } catch (e) {}
+                    if (!preferSummaryCards) {
                         try {
-                            const splitName = formatTransformerNameForSplitView(transformerName);
-                            if (!splitName) return null;
-                            const splitViewHref = `SplitView-energy-${splitName}-${periodToken}.html`;
-                            const splitViewUrl = new URL(splitViewHref, studyUrl).toString();
-                            const splitViewHtmlText = await fetchStudyText(splitViewUrl);
-                            const fieldHref = parseFieldEnergyboardHrefFromSplitViewHtml(splitViewHtmlText);
-                            if (!fieldHref) return null;
-                            const fieldUrl = new URL(fieldHref, splitViewUrl).toString();
-                            const fieldHtmlText = await fetchStudyText(fieldUrl);
-                            const fieldAnnualValues = parseAnnualWastedValuesFromFieldHtml(fieldHtmlText);
-                            if (!fieldAnnualValues.length) return null;
-                            return fieldAnnualValues[0];
-                        } catch (e) {
-                            return null;
-                        }
-                    }));
-
-                    const numericValues = annualValues.filter((value) => Number.isFinite(value));
-                    if (!numericValues.length) return null;
-                    return numericValues.reduce((sum, value) => sum + value, 0);
+                            const summaryCardAnnual = await fetchStudyAnnualConsequenceFromSummaryCards(studyUrl, summaryboardHtmlText);
+                            if (Number.isFinite(summaryCardAnnual)) return summaryCardAnnual;
+                        } catch (e) {}
+                    }
+                    return null;
                 })();
                 STUDY_ANNUAL_WASTED_CACHE.set(cacheKey, pending);
             }
@@ -3293,16 +4032,14 @@
             }
         }
         const STUDY_AVAILABLE_CAPACITY_KVA_CACHE = new Map();
-        async function fetchStudyAvailableCapacityKva(studyUrl) {
+        async function fetchStudyAvailableCapacityKva(studyUrl, summaryboardHtmlText = '') {
             const cacheKey = String(studyUrl || '');
             if (!cacheKey) return null;
             if (!STUDY_AVAILABLE_CAPACITY_KVA_CACHE.has(cacheKey)) {
                 const pending = (async () => {
                     try {
-                        const patternRollupUrl = new URL('SET1_PatternAnalysisData.json', studyUrl).toString();
-                        const patternRollupText = await fetchStudyText(patternRollupUrl);
-                        const patternRollupData = JSON.parse(String(patternRollupText || '{}'));
-                        const availableCapacityKva = parseAvailableCapacityKvaFromPatternRollup(patternRollupData);
+                        const sourceHtml = summaryboardHtmlText || await fetchStudyText(studyUrl);
+                        const availableCapacityKva = parseAvailableCapacityKvaFromSummaryboard(sourceHtml);
                         if (Number.isFinite(availableCapacityKva) && availableCapacityKva > 0) return availableCapacityKva;
                     } catch (e) {}
                     return null;
@@ -3326,9 +4063,87 @@
             if (!Number.isFinite(numeric)) return '--.-%PF';
             return `${numeric.toFixed(1)}%PF`;
         }
+        function summarizeConsequenceCheckpoint(checkpoint) {
+            if (!checkpoint || !Array.isArray(checkpoint.entries) || !checkpoint.entries.length) return '';
+            return checkpoint.entries
+                .map((entry) => {
+                    const checkTag = entry?.crossCheckStatus ? `|CHECK:${entry.crossCheckStatus}` : '';
+                    const basisToDeltaLabel = {
+                        BT_MINUS_PATTERN: 'ΔBT-PAT',
+                        EE_MINUS_PATTERN: 'ΔEE-PAT',
+                        HR_MINUS_PATTERN: 'ΔHR-PAT',
+                        EE_MINUS_BT: 'ΔEE-BT',
+                        HR_MINUS_BT: 'ΔHR-BT',
+                        BT_MINUS_EE: 'ΔBT-EE',
+                        HR_MINUS_EE: 'ΔHR-EE',
+                        EE_MINUS_HR: 'ΔEE-HR',
+                        BT_MINUS_HR: 'ΔBT-HR'
+                    };
+                    const deltaLabel = basisToDeltaLabel[entry?.crossCheckBasis] || 'Δ';
+                    const deltaTag = entry?.crossCheckStatus === 'MISMATCH' && Number.isFinite(entry?.crossCheckDeltaAnnual)
+                        ? `|${deltaLabel}:${Math.round(entry.crossCheckDeltaAnnual).toLocaleString('en-US')}`
+                        : '';
+                    return `${entry.transformerName}:${formatAnnualConsequence(entry.annualConsequence)}[${entry.sourceTag}${checkTag}${deltaTag}]`;
+                })
+                .join(' | ');
+        }
+        function publishGroupConsequenceCheckpoint(summary, groupCode, latestStudy, latestMetrics, previousStudy, previousMetrics) {
+            const normalizedGroupCode = String(groupCode || '').toUpperCase();
+            const latestCheckpoint = latestMetrics?.consequenceCheckpoint || null;
+            const previousCheckpoint = previousMetrics?.consequenceCheckpoint || null;
+            const payload = {
+                groupCode: normalizedGroupCode,
+                generatedAt: new Date().toISOString(),
+                current: {
+                    monthLabel: latestStudy?.monthLabel || '---',
+                    totalAnnualConsequence: Number(latestCheckpoint?.totalAnnualConsequence) || null,
+                    entries: Array.isArray(latestCheckpoint?.entries) ? latestCheckpoint.entries : []
+                },
+                previous: previousStudy ? {
+                    monthLabel: previousStudy?.monthLabel || '---',
+                    totalAnnualConsequence: Number(previousCheckpoint?.totalAnnualConsequence) || null,
+                    entries: Array.isArray(previousCheckpoint?.entries) ? previousCheckpoint.entries : []
+                } : null
+            };
+            try {
+                const checkpointStore = window.__livingstonGroupConsequenceCheckpoint || {};
+                checkpointStore[normalizedGroupCode] = payload;
+                window.__livingstonGroupConsequenceCheckpoint = checkpointStore;
+                if (normalizedGroupCode === 'RENDERING') {
+                    window.__livingstonRenderingConsequenceCheckpoint = payload;
+                }
+            } catch (_) {}
+            if (typeof console !== 'undefined' && typeof console.info === 'function') {
+                console.info(`[Livingston ${normalizedGroupCode} Consequence Checkpoint]`, payload);
+            }
+
+            const costCurrentEl = summary?.querySelector('[data-group-cost-current]');
+            const costPrevEl = summary?.querySelector('[data-group-cost-prev]');
+            const latestCheckpointSummary = summarizeConsequenceCheckpoint(latestCheckpoint);
+            const previousCheckpointSummary = summarizeConsequenceCheckpoint(previousCheckpoint);
+
+            if (costCurrentEl && latestCheckpointSummary) {
+                costCurrentEl.dataset.consequenceCheckpoint = latestCheckpointSummary;
+                const baseTitle = String(costCurrentEl.title || '');
+                if (!baseTitle.includes(latestCheckpointSummary)) {
+                    costCurrentEl.title = baseTitle
+                        ? `${baseTitle} • ${latestCheckpointSummary}`
+                        : latestCheckpointSummary;
+                }
+            }
+            if (costPrevEl && previousCheckpointSummary) {
+                costPrevEl.dataset.consequenceCheckpoint = previousCheckpointSummary;
+                const baseTitle = String(costPrevEl.title || '');
+                if (!baseTitle.includes(previousCheckpointSummary)) {
+                    costPrevEl.title = baseTitle
+                        ? `${baseTitle} • ${previousCheckpointSummary}`
+                        : previousCheckpointSummary;
+                }
+            }
+        }
         const LIVINGSTON_SITE_COMPOSITE_BASELINE = Object.freeze({
-            previous: { monthLabel: 'APR 2026', costPerKwh: 0.195 },
-            current: { monthLabel: 'MAY 2026', costPerKwh: 0.195 }
+            previous: { monthLabel: 'MAY 2026', costPerKwh: 0.195 },
+            current: { monthLabel: 'JUN 2026', costPerKwh: 0.195 }
         });
         function formatCompositeCostPerKwh(value) {
             const numeric = Number(value);
@@ -3478,6 +4293,101 @@
                     : 'Latest reporting window: pending';
             }
         }
+        function formatRenderingPfValue(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return '--.-% PF';
+            return `${numeric.toFixed(1)}% PF`;
+        }
+        function formatRenderingPowerUsageValue(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return '--.- kW';
+            return `${numeric.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} kW`;
+        }
+        function formatRenderingAnnualCostValue(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return '$---/yr';
+            return `$${Math.round(numeric).toLocaleString('en-US')}/yr`;
+        }
+        function computeRelativeDeltaPercent(currentValue, previousValue) {
+            const current = Number(currentValue);
+            const previous = Number(previousValue);
+            if (!Number.isFinite(current) || !Number.isFinite(previous) || previous === 0) return null;
+            return ((current - previous) / Math.abs(previous)) * 100;
+        }
+        function setRenderingDeltaLabel(deltaEl, currentValue, previousValue) {
+            if (!deltaEl) return;
+            const deltaPercent = computeRelativeDeltaPercent(currentValue, previousValue);
+            deltaEl.classList.remove('delta-up', 'delta-down', 'delta-neutral');
+            if (!Number.isFinite(deltaPercent)) {
+                deltaEl.classList.add('delta-neutral');
+                deltaEl.textContent = '→ --.-%';
+                return;
+            }
+            if (deltaPercent > 0.05) {
+                deltaEl.classList.add('delta-up');
+                deltaEl.textContent = `↑ +${deltaPercent.toFixed(1)}%`;
+                return;
+            }
+            if (deltaPercent < -0.05) {
+                deltaEl.classList.add('delta-down');
+                deltaEl.textContent = `↓ ${deltaPercent.toFixed(1)}%`;
+                return;
+            }
+            deltaEl.classList.add('delta-neutral');
+            deltaEl.textContent = `→ ${deltaPercent.toFixed(1)}%`;
+        }
+        function updateRenderingMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics) {
+            if (!summary) return;
+
+            const monthYearEl = summary.querySelector('[data-group-rendering-month-year]');
+            const fieldValueEl = summary.querySelector('[data-rendering-field-value]');
+            const fieldDeltaEl = summary.querySelector('[data-rendering-field-delta]');
+            const usageValueEl = summary.querySelector('[data-rendering-usage-value]');
+            const usageDeltaEl = summary.querySelector('[data-rendering-usage-delta]');
+            const utilityValueEl = summary.querySelector('[data-rendering-utility-value]');
+            const utilityDeltaEl = summary.querySelector('[data-rendering-utility-delta]');
+            const untunedValueEl = summary.querySelector('[data-rendering-untuned-value]');
+            const untunedDeltaEl = summary.querySelector('[data-rendering-untuned-delta]');
+
+            const latestAggregate = latestMetrics?.groupAggregates || null;
+            const previousAggregate = previousMetrics?.groupAggregates || null;
+            const monthYearLabel = String(
+                latestAggregate?.monthYearLabel
+                || latestStudy?.monthLabel
+                || '---'
+            ).trim() || '---';
+            if (monthYearEl) monthYearEl.textContent = monthYearLabel;
+
+            const latestPf = Number(latestAggregate?.pfPercent);
+            const previousPf = previousStudy ? Number(previousAggregate?.pfPercent) : null;
+            if (fieldValueEl) fieldValueEl.textContent = formatRenderingPfValue(latestPf);
+            setRenderingDeltaLabel(fieldDeltaEl, latestPf, previousPf);
+
+            const latestUsage = Number(latestAggregate?.powerUsageKw);
+            const previousUsage = previousStudy ? Number(previousAggregate?.powerUsageKw) : null;
+            if (usageValueEl) usageValueEl.textContent = formatRenderingPowerUsageValue(latestUsage);
+            setRenderingDeltaLabel(usageDeltaEl, latestUsage, previousUsage);
+
+            const latestUtility = Number(latestAggregate?.utilityAnnualCost);
+            const previousUtility = previousStudy ? Number(previousAggregate?.utilityAnnualCost) : null;
+            if (utilityValueEl) utilityValueEl.textContent = formatRenderingAnnualCostValue(latestUtility);
+            setRenderingDeltaLabel(utilityDeltaEl, latestUtility, previousUtility);
+            const latestUntunedSource = Number(latestMetrics?.totalAnnualWasted);
+            const previousUntunedSource = previousStudy ? Number(previousMetrics?.totalAnnualWasted) : null;
+            const latestUntunedFallback = Number(latestAggregate?.untunedAnnualCost);
+            const previousUntunedFallback = previousStudy ? Number(previousAggregate?.untunedAnnualCost) : null;
+            const latestUntuned = Number.isFinite(latestUntunedSource) ? latestUntunedSource : latestUntunedFallback;
+            const previousUntuned = Number.isFinite(previousUntunedSource) ? previousUntunedSource : previousUntunedFallback;
+            if (untunedValueEl) untunedValueEl.textContent = formatRenderingAnnualCostValue(latestUntuned);
+            setRenderingDeltaLabel(untunedDeltaEl, latestUntuned, previousUntuned);
+        }
+        function updateGroupMonthPills(summary, groupCode, latestStudy, previousStudy, latestMetrics, previousMetrics) {
+            if (String(groupCode || '').toUpperCase() === 'RENDERING') {
+                updateRenderingMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics);
+                return;
+            }
+            updateDeliMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics);
+        }
         function updateDeliMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics) {
             if (!summary) return;
 
@@ -3508,7 +4418,7 @@
                 if (pfPrevEl) pfPrevEl.textContent = formatPf(previousMetrics?.pfPercent);
             }
         }
-        async function fetchGroupStudyMetrics(studyHref) {
+        async function fetchGroupStudyMetrics(studyHref, options = {}) {
             const resolvedUrl = new URL(studyHref, window.location.href).toString();
             const htmlText = await fetchStudyText(resolvedUrl);
             const pfValues = parsePfValuesFromHtml(htmlText);
@@ -3517,14 +4427,27 @@
             }
 
             const avgPf = pfValues.reduce((sum, n) => sum + n, 0) / pfValues.length;
-            const totalAnnualWasted = await fetchStudyAnnualWastedTotal(resolvedUrl, htmlText);
-            const availableCapacityKva = await fetchStudyAvailableCapacityKva(resolvedUrl);
+            const totalAnnualWasted = await fetchStudyAnnualWastedTotal(
+                resolvedUrl,
+                htmlText,
+                {
+                    preferSummaryCards: Boolean(options?.preferSummaryCardsForConsequences),
+                    preferFieldBoards: Boolean(options?.preferFieldBoardsForConsequences)
+                }
+            );
+            const availableCapacityKva = await fetchStudyAvailableCapacityKva(resolvedUrl, htmlText);
+            const consequenceCheckpoint = Boolean(options?.includeConsequenceCheckpoint)
+                ? await fetchStudyAnnualConsequenceCheckpoint(resolvedUrl, htmlText)
+                : null;
+            const groupAggregates = parseGroupAggregateMetricsFromSummaryboard(htmlText);
 
             return {
                 pfPercent: avgPf,
                 totalAnnualWasted,
                 availableCapacityKva,
-                pfValues
+                pfValues,
+                consequenceCheckpoint,
+                groupAggregates
             };
         }
 
@@ -3554,11 +4477,14 @@
             const costCurrentEl = summary.querySelector('[data-group-cost-current]');
             const metaEl = summary.querySelector('.group-summary-meta');
             const groupCode = String(section.dataset.groupCode || '').trim().toUpperCase();
+            const isRenderingGroup = groupCode === 'RENDERING';
 
             const groupName = String(summary.dataset.groupName || '').trim();
             const transformerSpec = String(summary.dataset.transformerSpec || '').trim();
             const groupDisplayName = groupName || groupCode || 'GROUP';
-            const consequenceMetaLabel = 'Monthly PF + Total Wasted /yr';
+            const consequenceMetaLabel = isRenderingGroup
+                ? 'Current month with delta vs prior month'
+                : 'Monthly PF + Total Wasted /yr';
             if (nameEl && groupName) {
                 nameEl.textContent = transformerSpec ? `${groupName} (${transformerSpec})` : groupName;
             }
@@ -3573,7 +4499,7 @@
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
                 setGroupConsequenceStateClass(costCurrentEl, 'unavailable');
                 if (costCurrentEl) costCurrentEl.title = 'Consequence unavailable';
-                updateDeliMonthPills(summary, null, null, null, null);
+                updateGroupMonthPills(summary, groupCode, null, null, null, null);
                 if (metaEl) metaEl.textContent = consequenceMetaLabel;
                 return {
                     groupCode,
@@ -3583,7 +4509,12 @@
             }
 
             try {
-                const latestMetrics = await fetchGroupStudyMetrics(latestStudy.href);
+                const preferSummaryCardsForConsequences = true;
+                const includeConsequenceCheckpoint = true;
+                const latestMetrics = await fetchGroupStudyMetrics(
+                    latestStudy.href,
+                    { preferSummaryCardsForConsequences, includeConsequenceCheckpoint }
+                );
                 const efficiencyPct = latestMetrics.pfPercent;
                 const state = classifyGroupStateFromPfPercent(efficiencyPct);
                 if (effEl) {
@@ -3603,10 +4534,14 @@
                 let previousMetrics = null;
                 if (previousStudy) {
                     try {
-                        previousMetrics = await fetchGroupStudyMetrics(previousStudy.href);
+                        previousMetrics = await fetchGroupStudyMetrics(
+                            previousStudy.href,
+                            { preferSummaryCardsForConsequences, includeConsequenceCheckpoint }
+                        );
                     } catch (e) {}
                 }
-                updateDeliMonthPills(summary, latestStudy, previousStudy, latestMetrics, previousMetrics);
+                updateGroupMonthPills(summary, groupCode, latestStudy, previousStudy, latestMetrics, previousMetrics);
+                publishGroupConsequenceCheckpoint(summary, groupCode, latestStudy, latestMetrics, previousStudy, previousMetrics);
                 if (metaEl) metaEl.textContent = consequenceMetaLabel;
                 return {
                     groupCode,
@@ -3619,7 +4554,7 @@
                 setGroupEfficiencyStateClass(effEl, 'unavailable');
                 setGroupConsequenceStateClass(costCurrentEl, 'unavailable');
                 if (costCurrentEl) costCurrentEl.title = 'Consequence unavailable';
-                updateDeliMonthPills(summary, latestStudy, previousStudy, null, null);
+                updateGroupMonthPills(summary, groupCode, latestStudy, previousStudy, null, null);
                 if (metaEl) metaEl.textContent = consequenceMetaLabel;
                 return {
                     groupCode,
@@ -3647,6 +4582,44 @@
             if (fallback.startsWith('BNR')) return 'BNR';
             if (fallback.startsWith('FSO')) return 'FSO';
             return fallback;
+        }
+        function getRequestedLivingstonGroupCode() {
+            let requested = '';
+            try {
+                const params = new URLSearchParams(window.location.search || '');
+                requested = params.get('group') || params.get('focusGroup') || '';
+            } catch (e) {}
+            if (!requested) {
+                const hashValue = String(window.location.hash || '');
+                const hashMatch = hashValue.match(/group(?:=|[-_])([a-z0-9]+)/i);
+                if (hashMatch && hashMatch[1]) requested = hashMatch[1];
+            }
+            return normalizeLivingstonGroupCode(requested);
+        }
+        function focusLivingstonGroupSection(groupCode) {
+            if (!groupCode) return false;
+            const groupSections = Array.from(document.querySelectorAll('details.group-section'));
+            if (!groupSections.length) return false;
+            const targetSection = groupSections.find((section) => resolveLivingstonGroupCode(section) === groupCode);
+            if (!targetSection) return false;
+
+            const masterSection = targetSection.closest('details.library-master-section');
+            if (masterSection) masterSection.open = true;
+
+            groupSections.forEach((section) => {
+                section.open = section === targetSection;
+            });
+            targetSection.open = true;
+            targetSection.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
+            return true;
+        }
+        function scheduleLivingstonGroupFocus(groupCode) {
+            if (!groupCode) return;
+            const applyFocus = () => { focusLivingstonGroupSection(groupCode); };
+            requestAnimationFrame(applyFocus);
+            setTimeout(applyFocus, 0);
+            setTimeout(applyFocus, 90);
+            setTimeout(applyFocus, 280);
         }
         function sortGroupSectionsByConsequence(groupSnapshots = []) {
             const sortableSections = Array.from(document.querySelectorAll('.group-section, .pending-group-section'));
@@ -3697,15 +4670,20 @@
         }
         // Offset the right chicken video so they're not synchronized
         document.addEventListener('DOMContentLoaded', function() {
+            const requestedGroupCode = getRequestedLivingstonGroupCode();
             const chickenRight = document.getElementById('chickenRight');
             if (chickenRight) {
                 chickenRight.currentTime = 5; // offset by 5 seconds
             }
-            updateAllGroupSummaries().catch(() => {
-                updateLivingstonHeroSiteAverage([]);
-                updateLivingstonHeroTopline([]);
-                updateLivingstonCompositeTitlePills();
-            });
+            updateAllGroupSummaries()
+                .catch(() => {
+                    updateLivingstonHeroSiteAverage([]);
+                    updateLivingstonHeroTopline([]);
+                    updateLivingstonCompositeTitlePills();
+                })
+                .finally(() => {
+                    if (requestedGroupCode) scheduleLivingstonGroupFocus(requestedGroupCode);
+                });
 
             // Persist scroll position when launching a study, so "Return" lands back at the same frame.
             // (This avoids having to scroll back down to the Energy Behavior Library each time.)
@@ -3724,6 +4702,26 @@
         // Use 'pageshow' instead of 'load' so it fires even from bfcache on repeated navigations.
         const RETURN_OFFSET_PX = 80; // ~1 inch visual offset so the user isn't jammed to the top of the section
         window.addEventListener('pageshow', () => {
+            const hashValue = String(window.location.hash || '').toLowerCase();
+            const isLibrariesAnchor = hashValue === '#libraries';
+            const referrer = String(document.referrer || '');
+            const fromLivingstonSummaryOrSplit = /\/Livingston_SIte\/(?:[^?#]+\/)*(?:SITE-FosterFarms-Summaryboard|SplitView-)/i.test(referrer);
+            const forceTopReturn = isLibrariesAnchor && fromLivingstonSummaryOrSplit;
+
+            if (forceTopReturn) {
+                try { sessionStorage.removeItem('livingston_index_scrollY'); } catch (e) {}
+                try {
+                    history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+                } catch (e) {}
+                window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+                return;
+            }
+            const requestedGroupCode = getRequestedLivingstonGroupCode();
+            if (requestedGroupCode) {
+                try { sessionStorage.removeItem('livingston_index_scrollY'); } catch (e) {}
+                scheduleLivingstonGroupFocus(requestedGroupCode);
+                return;
+            }
             let saved;
             try {
                 saved = sessionStorage.getItem('livingston_index_scrollY');

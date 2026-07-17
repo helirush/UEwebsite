@@ -1,0 +1,85 @@
+{
+  "generated_at": "2026-07-11 23:08:42",
+  "transformer_id": "NCDC1-WEST11C",
+  "transformer_name": "NCDC1-WEST11C",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "** NCDC1-WEST11C | Foster Farms, Livingston HQ | June 2026 | 2500 kVA | 480V",
+    "numeric_source_status": "**",
+    "csv_ground_truth": "UNAVAILABLE \u2014 vision-only synthesis in effect",
+    "all_values_extracted_from_image_views": "TV, TBT, TM, TS",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "585 kVA",
+    "bt_target_kva": "585 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable \u2014 no CSV discrepancy check possible)",
+    "power_factor_csv": "0.0% (unavailable \u2014 no CSV discrepancy check possible)",
+    "kvar_max_csv_est": "0 kVAR (unavailable \u2014 no CSV discrepancy check possible)",
+    "monthly_residual_waste_csv": "$0.00 (unavailable)",
+    "annual_residual_waste_csv": "$0 (unavailable)",
+    "residual_heat_burden_kw_csv": "0.0 kW (unavailable)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "key_image_extractions_vision_only_no_csv_cross_check_possible": "**",
+    "peak_demand": "568.3 kW",
+    "reactive_avg": "267.5 kVAR | Reactive MAX: 875.9 kVAR",
+    "power_factor": "85.3% avg | 100.0% MAX | 70.0% MIN",
+    "energy_waste": "$10,541/dataset | $128,256/yr | Total Wasted: $207,086/yr",
+    "thermal_burden": "273,556 BTU/hr | Baseline reference: 256,192 BTU/hr",
+    "cooling_costs": "$7.89/hr | 40.1 kW | $69,081/yr",
+    "max_amperage_tm": "701.6 A | Reactive MAX (TM): 301 kVAR (tuned view)",
+    "ithd": "6.0% avg | 11.0% MAX",
+    "voltage_avg": "481.3 V | Min event: 9.7 V (extreme transient) | Lower reference: 465 V",
+    "ts_power_factor": "99.5% | kVAR avg post-MPTS: 40.2 kVAR (partial extraction noted)",
+    "discrepancy_flags": "**",
+    "tm_view_reactive_max_301_kvar_vs_tbt_header_reactive_max_875_9_kvar": "[\u26a0\ufe0f DISCREPANCY \u2014 >10% variance noted; TM view likely represents tuned operating window reactive ceiling, while TBT header represents uncompensated peak reactive; these are not equivalent measures. TBT header value used as primary reactive MAX anchor per token hierarchy.]",
+    "minimum_voltage_event_of_9_7_v": "[\u26a0\ufe0f EXTREME TRANSIENT \u2014 this is not a sustained sag; flagged as a single severe switching collapse event, not representative of steady-state field voltage.]",
+    "monthly_savings_validated": "$17,257.17",
+    "annual_savings_validated": "$207,086.00",
+    "monthly_waste_validated_total": "$17,257.17",
+    "annual_waste_validated_total": "$207,086.00",
+    "annual_total_wasted_validated": "$207,086.00"
+  },
+  "packet_file": "NCDC1-WEST11C_william_validation.json"
+}

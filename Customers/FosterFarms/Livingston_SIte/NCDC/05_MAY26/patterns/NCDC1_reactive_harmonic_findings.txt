@@ -1,0 +1,17 @@
+**NCDC1 — Reactive and Harmonic Stress Profile — May 2026 — Untuned**
+
+The M view for NCDC1 delivers a clear, consistent message: this is a field under sustained reactive stress, with harmonic content layered on top, and no correction mechanism in place to absorb either.
+
+The amperage trace in red runs a persistent band in the 600 to 700 amp range through the majority of the month, with the Max Amperage callout reaching 701.2 amps. On a 2,500 kVA transformer, 701 amps is not a transformer-level emergency — but it's a meaningful current load, and a significant portion of that current is reactive, meaning it's doing no useful work. It's circulating, generating heat, and loading every conductor between the transformer secondary and the end-use equipment.
+
+The kVAR trace in green is the defining feature of this M view. The Max Reactive callout reads 302 kVAR — and critically, this reactive ceiling doesn't relax. It doesn't drop significantly overnight. It doesn't ease on weekends. The kVAR floor stays elevated through the full monthly period. That behavior pattern is the signature of permanently connected reactive loads — refrigeration compressor banks, large HVAC motor systems, cold storage equipment that runs 24 hours a day, 365 days a year. These aren't production-cycle loads that you can manage by scheduling. They're baseline loads, always drawing reactive current, always burning thermal margin.
+
+The BT header's 267.9 kVAR average reactive figure and the M view's 302 kVAR maximum reactive figure together define the reactive operating envelope: you're averaging 267.9 kVAR of reactive demand continuously, with peaks reaching 302 kVAR. For MPTS sizing purposes, 302 kVAR divided by 400 equals 0.755 — which rounds up to one H490 unit (400 kVAR capacity). That single H490 unit is sized to absorb the full reactive ceiling with margin.
+
+The minimum power factor recorded in the M view is 82.0% — hit during the disturbance events. The average operating power factor is 85.0%. Both figures represent significant reactive inefficiency on what should be a well-managed industrial transformer.
+
+The harmonic content — tracked in the purple trace at the base of the M view chart — runs at a consistent low-level baseline through the month with concentration spikes during the 260508 to 260511 disturbance cluster. The iTHD average of 6.0% and maximum of 10.7% indicate meaningful harmonic loading — enough to contribute to transformer core losses, add additional thermal burden, and create interference risk for sensitive control electronics on the processing line. While harmonic distortion at these levels is not immediately critical, in an untuned field it accumulates as an additional degradation factor month after month.
+
+The thermal burden figure of 277,515 BTU/hr — with a baseline of 259,742 BTU/hr — represents the heat that reactive and harmonic current is generating in transformer windings, conductors, and switchgear. That 17,773 BTU/hr delta above baseline is the direct thermal signature of reactive current doing no productive work while heating metal. Cooling that heat away costs approximately $7.96 per hour, or roughly $69,719 per year in cooling overhead alone.
+
+---

@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-07-11 23:26:49",
+  "transformer_id": "NCDC3-NORTH-E",
+  "transformer_name": "NCDC3-NORTH-E",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "NCDC3-NORTH-E | Foster Farms, Livingston HQ | June 2026**",
+    "data_source_status": "**",
+    "csv_mercury": "\u26a0\ufe0f UNAVAILABLE \u2014 vision-only synthesis. All numeric anchors derive from image extraction.",
+    "csv_ground_truth_override": "NOT APPLICABLE (no CSV data to compare against)",
+    "image_extracted_values_bt_tbt_token_tuned_optimization_anchor": "**",
+    "target_kva_image": "655 kVA",
+    "bt_target_kva": "655 kVA",
+    "target_kva_csv": "0.0 kVA [CSV unavailable \u2014 no cross-check possible]",
+    "power_factor_csv": "0.0% [CSV unavailable \u2014 image reads 83.7% PF avg; Max 89.9%, Min 0.0%]",
+    "kvar_max_csv_est": "0 kVAR [CSV unavailable \u2014 image reads 372.2 kVAR MAX; TM view corroborates 358 kVAR MAX]",
+    "monthly_residual_waste_csv": "$0.00 [CSV unavailable \u2014 image reads $12,856/dataset; $252,475/yr total]",
+    "annual_residual_waste_csv": "$0 [CSV unavailable \u2014 image reads $156,420/yr energy waste component]",
+    "residual_heat_burden_kw_csv": "0.0 kW [CSV unavailable \u2014 image reads 333,852 BTU/hr; ~97.8 kW equivalent]",
+    "tbt_tm_kvar_consistency_check_image_to_image": "**",
+    "tbt_header_kvar_max": "372.2 kVAR",
+    "tm_view_kvar_max_callout": "358 kVAR",
+    "delta": "14.2 kVAR / ~3.8% \u2014 within 10% tolerance. \u2705 CONSISTENT \u2014 no discrepancy flag required.",
+    "tbt_tm_amperage_cross_reference": "**",
+    "tm_max_amperage": "790 A",
+    "tbt_peak_demand": "664.1 kW at 83.7% PF \u2192 apparent power ~793 kVA \u2192 at 655 kVA target, current is elevated. Directionally consistent. \u2705",
+    "outage_machine_readable_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "voltage_minimum_anomaly": "**",
+    "tv_header_minimum": "9.6 V \u2014 confirmed near-full field collapse event. Chart body MinVoltage reference line reads ~48 V (floor threshold, not actual minimum). Values are semantically distinct. \u2705 Noted \u2014 not a discrepancy, but a critical field-health flag.",
+    "ithd_cross_check": "**",
+    "tm_header_ithd_avg": "5.8% | iTHD MAX: 11.4%",
+    "summary": "** Vision-only synthesis. No CSV discrepancies to flag (CSV unavailable). Internal image consistency across TBT and TM views is within tolerance. All critical anomalies (9.6 V minimum, 5 outage events, 11.4% iTHD peak, 83.7% PF) are image-confirmed and carried forward as primary evidence.",
+    "monthly_savings_validated": "$21,039.58",
+    "annual_savings_validated": "$252,475.00",
+    "monthly_waste_validated_total": "$21,039.58",
+    "annual_waste_validated_total": "$252,475.00",
+    "annual_total_wasted_validated": "$252,475.00"
+  },
+  "packet_file": "NCDC3-NORTH-E_william_validation.json"
+}

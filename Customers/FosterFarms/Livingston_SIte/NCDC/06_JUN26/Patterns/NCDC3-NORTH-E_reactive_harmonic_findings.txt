@@ -1,0 +1,11 @@
+**Transformer: NCDC3-NORTH-E — Reactive and Harmonic Findings | June 2026**
+
+The reactive story for NCDC3-North-E is clear and quantified. The TBT header records a reactive average of 308.2 kVAR and a maximum of 372.2 kVAR. The TM view corroborates this with a Max Reactive callout of 358 kVAR — a 3.8% spread between the two views, well within the consistency threshold. What this means in operational terms is that NCDC3-North-E is consistently carrying between 300 and 370 kVAR of reactive burden throughout normal June operations, with spikes that approach the upper end of that range during demand events.
+
+At 83.7% average power factor, the ratio of real work to apparent power draw is meaningful: for every dollar of productive electrical work this transformer delivers, you are pulling additional apparent power to carry the reactive tail. The green kVAR trace in the TM view never quiets — it runs persistently across the full 30-day window, confirming this is not a transient reactive load but a structural one, driven by the continuous motor, compressor, and refrigeration loads that define a poultry processing facility of this scale.
+
+The harmonic picture adds another layer. The iTHD average of 5.8% is manageable on its own, but the iTHD maximum of 11.4% is where the engineering attention belongs. Harmonic events at 11.4% will stress transformer cores, drive electronics, and neutral conductors. The purple harmonics trace in the TM view is persistently active — it does not drop to zero during off-peak intervals — which confirms that non-linear load density on this transformer is continuous. Variable frequency drives, rectifiers, and switching power supplies are running around the clock, and their harmonic output is a constant presence in the field.
+
+The amperage picture reinforces the reactive-harmonic narrative. The TM Max Amperage reads 790 amps. Cross-referencing the 664.1 kW peak demand at 83.7% power factor yields an apparent power near 793 kVA — directionally consistent with the 790-amp reading and confirming this transformer is periodically pushing toward the upper boundary of its efficient operating envelope. The installed MPTS assets are holding the reactive burden from being worse, but the 308.2 kVAR average and 372.2 kVAR peak confirm a meaningful correction gap still remains.
+
+---

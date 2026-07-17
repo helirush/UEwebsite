@@ -1,0 +1,11 @@
+Transformer: PL2C — Operational Stress Interpretation
+
+Without metered data for PL2C, I can't give you a specific thermal burden figure in BTU per hour, a documented cooling cost in dollars per hour, or a confirmed peak demand reading. Those numbers are value unavailable for this transformer in this session. What I can tell you is how operational stress compounds on an untuned field over time — because the physics doesn't pause while the data gap exists.
+
+In an untuned field, thermal burden is the slow accumulator. Every hour that reactive current flows uncorrected through the transformer's windings, heat builds in the insulation system. That heat doesn't reset between shifts. It accumulates in the cellulose insulation of the transformer core, in the conductor jackets feeding distribution panels, and in the motor windings of connected equipment. Industrial transformers are rated for a defined thermal life — typically measured in decades under proper conditions — but elevated continuous reactive loading can cut that expected life significantly.
+
+Cooling overhead is the cost multiplier that most facility managers underestimate. When a transformer runs hot due to reactive burden, the surrounding mechanical and electrical cooling systems work harder to compensate. Chiller runtime increases. HVAC units serving electrical rooms run longer cycles. That overhead cost shows up in the utility bill — but it rarely gets attributed to the transformer's reactive field condition. It looks like a cooling cost, not an electrical efficiency problem.
+
+For PL2C, the operational stress interpretation is simple: without data, the stress level is unknown. Unknown is not the same as zero. The recommendation is to treat PL2C as a priority for baseline metering in the next scheduled maintenance window, so that the thermal and reactive burden can be quantified and the correction scope can be properly engineered.
+
+---

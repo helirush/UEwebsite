@@ -1,0 +1,15 @@
+**FSO-1 — June 2026 | Reactive and Harmonic Findings (TM View)**
+
+The TM active-reactive-harmonic view for FSO-1 is where the field's stress signature is most fully revealed. What the TBT header summarizes in numbers, the TM chart body makes viscerally visible — and the story is one of a field working significantly harder than it needs to.
+
+The red amperage trace dominates the upper band of the TM chart, running high and turbulent for virtually the entire month. The confirmed maximum amperage is 908.2 amps. On a 2,500 kVA transformer operating at 480V three-phase, that represents a substantial and sustained current draw. The continuity of that amperage level across the 720-hour dataset confirms this is not a peak-event phenomenon — this is the baseline operating condition of FSO-1 for June. The transformer is not idling. It is running hard, continuously, and the current draw reflects it.
+
+The green kVAR reactive trace occupies the lower band of the TM chart. The confirmed maximum reactive reading from the TM view is 429 kVAR, while the TBT header reports a kVAR MAX of 918.5 kVAR. These two values represent different measurement contexts — the TM chart's 429 kVAR reflects the operational reactive ceiling visible in the trace envelope, while the 918.5 kVAR from the TBT header captures instantaneous peak reactive events. Both values matter. The operational average of 250.5 kVAR, held month-long, represents the continuous reactive tax this facility is paying — every hour, every day, regardless of production level.
+
+The kVAR trace shows identifiable spikes in the early-month and late-month windows — precisely the same clustering intervals confirmed in the voltage and baseline-target views. These spikes are moments when inductive load demand surges, likely associated with large motor starts or shift-transition events, and they pull reactive current sharply upward while simultaneously dragging Power Factor toward its floor.
+
+The purple harmonics trace runs as a persistent low band across the full month. It is not the dominant stress signal in this field, but its continuous presence confirms that harmonic content is a background contributor to the overall electromagnetic burden. The minimum Power Factor floor of 80.01 percent — confirmed in the TM view — represents the bottom of the reactive excursion range and underscores that even in a tuned field with active correction, the reactive and harmonic content is still capable of pulling Power Factor meaningfully below the 86.1 percent average.
+
+The combined picture from TM is clear: reactive drag is the primary field stressor on FSO-1, harmonics are a secondary contributor, and the amperage loading is high enough that any further reactive reduction would have direct thermal and current-density benefits across the transformer's operating life.
+
+---

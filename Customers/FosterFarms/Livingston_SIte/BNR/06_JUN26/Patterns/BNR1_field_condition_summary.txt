@@ -1,0 +1,9 @@
+**BNR-1 — Foster Farms, Livingston HQ | June 2026 | Untuned Field**
+
+BNR-1 is carrying one of the heavier electromagnetic burdens in this facility's transformer population. The numbers tell a clear story: a peak demand of 1,515.3 kilowatts, a supply ceiling of 1,605 kVA, and a power factor averaging 89.7 percent — with documented excursions down to 70.0 percent during high-reactive events. That 70 percent floor is not a trivial data point. It means that at certain moments during June, nearly a third of the current flowing through this transformer was doing no productive work at all — it was circulating reactive energy, generating heat, and loading the windings without advancing a single kilowatt of actual production.
+
+The reactive burden sits at 692.6 kVAR average. That's a persistent, structural reactive load — not an occasional spike but a baseline condition that is present hour after hour across the entire 30-day period. The thermal consequence is measurable: 602,911 BTU per hour of thermal burden documented in the BT header. Cooling infrastructure is working hard just to manage the heat this transformer is generating as a direct consequence of that reactive inefficiency — at an estimated $17.55 per hour in cooling costs alone, or roughly $153,778 per year dedicated to removing heat that MPTS correction would largely eliminate.
+
+The full energy waste picture for BNR-1 in June stands at approximately $22,578 for the dataset period, projecting to roughly $274,706 per year in reactive losses, with a total wasted cost including thermal and cooling overhead of approximately $449,367 per year. This transformer is not just inefficient — it is actively expensive to run in its current untuned state. And without a tuning assignment, the thermal burden and reactive losses will continue their month-over-month accumulation without structural relief.
+
+---

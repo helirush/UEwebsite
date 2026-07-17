@@ -1,0 +1,11 @@
+**BNR-2 | Operational Stress Interpretation — June 2026**
+
+BNR-2 presents a low-to-moderate operational stress profile for June 2026. The field has been meaningfully stabilized by prior investment, and the data across all four views confirms that the tuning is holding. But understanding the nature of the remaining stress requires looking at what the field is actually doing relative to its size.
+
+This transformer is carrying 17.8 kW peak demand against an 18 kVA supply target — meaning it is operating near its designed load set point for this circuit, even though that absolute load is small relative to transformer frame capacity. The thermal burden at the current tuned state is 2,248 BTU per hour, with a baseline reference of 2,093 BTU per hour. That differential — roughly 155 BTU per hour above baseline — represents the residual heat load attributable to the remaining optimization gap. On a continuous basis across a full year, that thermal overhead accumulates. Cooling costs are running at an estimated $0.22 per hour and $1,907 per year, which is the dominant component of the $3,034 total annual waste estimate on this circuit.
+
+The single outage event — approximately 60 to 90 minutes centered around June 19th — is the most acute stress event of the month. It appears across all four views and is corroborated by the voltage minimum of 471.8V in the TV record. Whether this event was a planned maintenance window, a utility interruption, or an unplanned fault is not determinable from the field data alone. But the field's clean recovery — no prolonged voltage instability, no reactive surge visible in the TM trace post-event — is a positive indicator that the tuned compensation absorbed the reconnection event well.
+
+The power factor performance, while improved, shows a minimum dip to 85.3% in the TBT record. That minimum floor — occurring at some point during the month, likely during low-load or post-outage conditions — represents a transient excursion below the 95.76% MIN reference established in the TM view. These momentary low-power-factor events carry disproportionate thermal and reactive stress relative to their duration, and they are the primary remaining vulnerability in an otherwise well-managed field.
+
+---

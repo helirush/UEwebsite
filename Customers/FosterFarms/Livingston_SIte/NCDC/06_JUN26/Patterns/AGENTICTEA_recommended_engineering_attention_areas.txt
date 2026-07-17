@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Recommended Engineering Attention Areas**
+
+Given the complete absence of measurement data in this session, the primary engineering recommendation is straightforward and urgent: deploy instrumentation to capture a full measurement sequence for AGENTICTEA as soon as operationally possible. The required capture family — B, BT, S, V, and M views — must be populated before any tuning assignment, sizing confirmation, or financial case can be completed for this transformer.
+
+Specifically, the engineering team should prioritize the following once data is available. First, confirm kVAR MAX from the BT header — this is the primary sizing input for MPTS and determines whether one H490 unit is sufficient or whether multiple units are required. Second, review the V-view for voltage dip frequency and depth, particularly during peak load periods when motor starts and compressor cycling are most likely to produce voltage excursions. Third, assess the thermal burden value in BTU per hour and compare it against the transformer's rated thermal tolerance — if thermal burden is operating near or above the transformer's continuous rating, the risk of accelerated insulation aging is real and near-term.
+
+Fourth, examine the BT chart for gold vertical streaks indicating power-off events. Any outages should be logged with duration and frequency for reliability trending. Fifth, confirm whether any harmonic-generating loads — variable-frequency drives, switching power supplies, arc furnaces — are connected to AGENTICTEA's bus, as harmonic content compounds reactive losses and may require additional filtering beyond standard reactive compensation.
+
+Until tuning is assigned and correction is active, AGENTICTEA's field will continue to accumulate thermal burden and reactive waste. Every month without correction is a month of measurable loss.
+
+---

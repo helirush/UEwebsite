@@ -1,11 +1,21 @@
-**REND1 — Projected MPTS Correction Outcome | Planning-Level Estimate**
+**REND1 — Projected MPTS Correction | Planning-Level Estimate**
 
-The MPTS savings view for REND1 projects a field transformation that is both technically meaningful and financially significant. With the field corrected to approximately 99.5% power factor — the MPTS target state — the reactive burden drops from a 1,194.2 kVAR peak and 697.8 kVAR average to a level consistent with near-unity operation. That represents a correction of roughly 1,194 kVAR at peak demand.
+The S-view simulation projects what REND1's field looks like after MPTS correction is applied. Based on the BT data and kVAR profile, here is the engineering case for correction.
 
-Sizing the correction: applying the Unity sizing rule — kVAR MAX divided by 400, rounded up — gives us 1,194.2 ÷ 400 = 2.985, which rounds up to **3 H490 units**. At planning-level estimates, three H490 units represent an installed investment of approximately $600,000, subject to final engineering scope, site conditions, and any required switchgear or integration work. This is a planning-level range, not a binding quote.
+**MPTS Sizing — REND1:**
+Using the conservative kVAR MAX of 1,194.2 kVAR from the image header:
+1,194.2 ÷ 400 = 2.985 → round UP → **3 H490 units required**
 
-Against an annual total waste cost of approximately $658,109 — reactive losses, thermal burden, and cooling overhead combined — a three-unit H490 correction targeting near-unity power factor projects a recovery of the majority of that annual waste. Using the Total Wasted figure of $658,109 as the pre-correction baseline, the projected payback window falls in the range of approximately 10 to 11 months at planning-level estimates, assuming full field correction is achieved and maintained.
+Three H490 units at approximately $200,000 installed each yields a planning-level installed investment estimate of roughly $600,000. Final pricing will depend on engineering scope, panel access, site conditions, and any required infrastructure modifications — that $600,000 is a planning range anchor, not a binding figure.
 
-Beyond the financial recovery, the operational benefits are concrete: transformer thermal burden drops significantly, reducing winding stress and extending equipment service life. Cooling load decreases, recovering an estimated 128.4 kW of cooling overhead. Amperage peaks are reduced, improving conductor life and reducing the probability of thermally-driven breaker trips. And voltage stability at the transformer secondary improves, directly benefiting the motor and drive loads that are currently cycling through the bidirectional voltage stress profile we observed in the V view.
+Post-correction, the S-view projects power factor correction to approximately 99.5% — compared to the current 79.76% untuned baseline. That 19.7-percentage-point correction is not cosmetic. It means virtually all of the reactive current that is currently heating your transformer windings, inflating your apparent demand, and costing you in utility charges gets eliminated at the point of compensation.
+
+The kVAR burden of 683.2 kVAR on average — and up to 1,194 kVAR at peak — gets absorbed by the MPTS units locally. That reactive current no longer flows back through your distribution system to the utility tie point. Your transformer sees only real power current. Winding temperatures drop. The 880,313 BTU/hr thermal burden decreases substantially — approaching the corrected baseline that the S-view projects as recovered thermal margin.
+
+The annual energy waste recovery projected from the BT header is approximately $405,087 per year in direct reactive losses. The total projected recovered value — including thermal burden reduction and cooling overhead savings — approaches approximately $658,109 per year at the planning-estimate level. Against a roughly $600,000 installed investment for three H490 units, the implied payback window is in the range of 10 to 12 months at these annual recovery rates — subject to actual engineering validation, utility rate structure, and site-specific conditions.
+
+The voltage field also improves under MPTS correction. By locally supplying reactive current, the MPTS units reduce the current draw from the utility, which reduces voltage drop under load. Those 454.9 V to 460.7 V dip events become shallower. The voltage whipsaw narrows. Motor windings, drive capacitors, and contactor coils all operate in a more stable voltage window — reducing cumulative stress and extending equipment service life in ways that don't show up in a simple energy savings calculation but are real and measurable over multi-year operating horizons.
+
+The longer this field runs untuned, the further the baseline drifts. Each month of continued reactive burden is another month of compounding insulation aging, thermal accumulation, and utility cost that correction would have recovered. The planning case for REND1 is strong.
 
 ---

@@ -1,0 +1,15 @@
+**NCDC3 — North E Transformer | Simulated MPTS Outcome | May 2026**
+
+The S view — the MPTS Harmonized Simulation — shows what NCDC3's North E transformer field looks like with reactive compensation applied. The contrast with the BT baseline is immediate and substantial.
+
+Power factor locks at 99.5 percent. The S header confirms 99.5 percent max and 99.5 percent min — a fully stabilized, unity-adjacent power factor across the complete operational envelope. That is the difference between 84.6 cents of productive work per dollar today and 99.5 cents per dollar after correction. The efficiency gap closes almost entirely.
+
+Reactive power drops from a 296.8 kVAR average baseline to 43.1 kVAR average post-MPTS — a reduction of approximately 253.7 kVAR average. The peak reactive demand falls from 379.4 kVAR to 74.1 kVAR — a peak reduction of approximately 305 kVAR. In the S chart, the green UnConsumed layer that was continuously visible throughout the BT view has essentially disappeared. What was a permanent structural feature of the field has been removed.
+
+The financial recovery the S view projects is approximately $224,568 per year in recovered energy value, or roughly $12,081 per month. That figure represents the reactive losses, thermal burden overhead, and cooling costs that the MPTS system recaptures by eliminating the reactive drag from the field.
+
+For MPTS sizing on NCDC3, the rule is kVAR MAX divided by 400, rounded up. Using the image-extracted kVAR MAX of 379.4 kVAR: 379.4 ÷ 400 = 0.9485 — rounded up to 1 unit. One H490 unit, rated at 400 kVAR, is the appropriate specification for this transformer. The planning-level installed investment estimate for one H490 unit is approximately $200,000, though final pricing depends on engineering scope and site conditions. At approximately $224,568 in projected annual savings, the estimated payback horizon is roughly 10 to 11 months — a planning-level estimate, not a guaranteed outcome, but a compelling ratio for a facility of this operational profile.
+
+The thermal burden reduction implied by the S view is significant: eliminating 253.7 kVAR of average reactive current means the conductors run cooler, the transformer core carries less circulating flux burden, and the cooling system draws substantially less than its current 45.2 kilowatts of overhead. That is a direct reduction in the heat-management cost that the facility pays every hour this field runs.
+
+---

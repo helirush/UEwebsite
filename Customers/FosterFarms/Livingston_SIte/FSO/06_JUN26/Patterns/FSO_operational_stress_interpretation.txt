@@ -1,0 +1,15 @@
+**FSO Transformer — Operational Stress Interpretation | June 2026**
+
+The FSO transformer in June is carrying the signature load profile of a large-scale, continuous-process protein production facility. The interplay between reactive burden, harmonic content, peak amperage, and thermal overhead creates a compounding stress environment that deserves clear framing.
+
+Start with the current: 908.2 amps peak, against a 763.3-kilowatt peak demand and a 757-kVA supply ceiling. When power factor drops toward 80%, the transformer must push proportionally more current to deliver the same productive kilowatts. That excess current — the reactive component — generates heat directly in transformer windings, cables, and switchgear. It does not do useful process work. It is purely electromagnetic overhead.
+
+The thermal consequence is concrete: 277,397 BTU per hour of thermal burden confirmed in the TBT header. To manage that heat, the facility is consuming 42.6 kilowatts of cooling capacity at approximately $8.75 per hour. Annualized, that is roughly $76,628 per year spent on cooling infrastructure whose primary job is handling heat that the reactive field is creating. That is recoverable overhead — not a fixed cost of doing business.
+
+The harmonic stress layer compounds this. At 8.0% average iTHD and 31.1% peak, waveform distortion is creating localized heating in transformer laminations and adding interference energy to the distribution network. This accelerates insulation aging and increases the risk of nuisance tripping on sensitive protective relays or VFD systems. The clustering of harmonic peaks with amperage spike events — primarily in the early-June period — reinforces that large motor-start transients are the dominant stress driver.
+
+The two brief outage events detected around June 7th and 9th, though short at an estimated 4 to 6 minutes combined, are worth flagging in the context of this stress profile. In a facility with continuous cold-chain requirements and live protein processing, even a 2-to-3-minute interruption carries operational consequence. The correlation between these events and the voltage-drop clustering in the same window suggests a common cause — possibly a feeder disturbance or protective relay operation triggered by a transient overcurrent condition.
+
+The field is not in failure — it is operating. But it is operating with meaningful excess burden that the existing MPTS investment is positioned to compress further.
+
+---

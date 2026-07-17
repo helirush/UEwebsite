@@ -1,0 +1,13 @@
+**Transformer: AGENTICTEA — Operational Stress Interpretation**
+
+Operational stress interpretation for AGENTICTEA is based on structural inference from the untuned field designation, not from measured values — because measured values are not available in this session.
+
+Here is what the untuned field designation tells us structurally. A transformer operating without reactive compensation is carrying more current than the kilowatt load requires. That excess current — the reactive component — generates heat. Heat accumulates in the transformer windings, in the conductor insulation, and in the bus connections. Over time, that thermal burden degrades insulation materials, accelerates aging of transformer core components, and increases the probability of unplanned failure.
+
+The thermal burden metric in the BT header — measured in BTU per hour — quantifies exactly this effect. It represents the heat your transformer is generating above what efficient power delivery would require. In a corrected field, that number drops sharply because the reactive current is locally compensated before it ever reaches the transformer. The transformer runs cooler, the conductors run cooler, and the cooling infrastructure — whether that is mechanical ventilation, refrigeration, or air conditioning — carries a lighter load.
+
+Cooling cost is a real dollar line item. When your transformer thermal burden is elevated, the ambient heat load in your electrical room or equipment bay increases. Your cooling systems work harder and longer to maintain safe operating temperatures. In facilities with dense electrical infrastructure or in warm-season operating conditions, this overhead can be material.
+
+For AGENTICTEA specifically, we cannot place a dollar figure on current stress without measured data. But the pattern is consistent with all untuned fields: thermal burden is higher than it needs to be, it is trending upward as the field remains untuned, and correction will reduce it measurably from day one of MPTS operation.
+
+---

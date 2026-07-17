@@ -1,0 +1,15 @@
+Transformer: PL2
+
+Voltage stability assessment for PL2 cannot be completed in this session. The TV view — the tuned voltage waveform capture — has not been delivered, and no image analysis is available to identify waveform behavior, triangular drop signatures, or deviation patterns relative to the nominal 480-volt line-to-line reference, which corresponds to approximately 277 volts line-to-neutral.
+
+In a properly tuned field, we expect to see voltage waveforms that hold close to nominal with reduced deviation events compared to the pre-MPTS baseline. The TB contextual view would ordinarily help us establish what the pre-correction field looked like, and the TV tuned capture would then show us how much the MPTS deployment has tightened that behavior. Repeated triangular dips, sustained low-voltage intervals, or frequent excursions below nominal are all indicators of residual field stress that the installed correction equipment may not be fully resolving.
+
+Without the TV image data, we cannot confirm whether PL2's voltage is stable, drifting, or showing signs of uncompensated reactive pull. We also cannot assess outage events. The gold streak detection protocol — which identifies full top-to-bottom vertical streaks in the chart body as site power-off intervals — cannot be applied without image data.
+
+outage_gold_streak_detected: unknown
+outage_event_count_image: unknown
+outage_total_minutes_image: unknown
+
+PL2 voltage stability findings: value unavailable. Re-submission of TV capture is required before any voltage health conclusion can be drawn.
+
+---

@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-07-13 20:00:10",
+  "transformer_id": "PL2",
+  "transformer_name": "PL2",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=monthly_savings_validated,annual_savings_validated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL2",
+    "cross_check_status": "Both CSV data and image vision analysis are unavailable for this transformer.",
+    "target_kva_csv": "0.0 kVA \u2014 not available",
+    "target_kva_image": "not available",
+    "bt_target_kva": "not available",
+    "power_factor_csv": "0.0% \u2014 not available",
+    "kvar_max_csv_est": "0 kVAR \u2014 not available",
+    "monthly_residual_waste_csv": "$0.00 \u2014 not available",
+    "annual_residual_waste_csv": "$0 \u2014 not available",
+    "residual_heat_burden_kw_csv": "0.0 kW \u2014 not available",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "installed_assets_context": "not provided",
+    "optimization_mode": "tuned_field"
+  },
+  "packet_file": "PL2_william_validation.json"
+}

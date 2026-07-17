@@ -1,0 +1,11 @@
+**Transformer: FSO1 — Recommended Engineering Attention Areas**
+
+Given FSO1's tuned operating state and the June data profile, three engineering attention areas are warranted.
+
+First, reactive peak characterization. The 918.5 kVAR MAX figure is significantly higher than the 250.5 kVAR average — a ratio of nearly 3.7 to 1. That spread indicates highly transient reactive demand events rather than steady-state reactive load. Engineering attention should focus on identifying which loads or load combinations are driving these peak excursion events. Compressor starts, large motor inrush, and rendering equipment cycling are the prime candidates in this facility type. Capturing those peaks with sub-minute logging would allow tuning refinement to target the excursion events specifically.
+
+Second, harmonic source identification. The 31.1% iTHD MAX is elevated above IEEE 519 recommended thresholds for most industrial bus configurations. With the purple harmonic trace present and persistent throughout the month, harmonic mitigation should be reviewed as part of the optimization roadmap. This may involve verifying existing filter tuning, checking VFD output characteristics, or evaluating whether additional passive filtering is warranted at specific load points.
+
+Third, outage event investigation. The two gold-streak outage events — totaling an estimated 80 to 120 minutes of downtime — should be correlated against maintenance logs for June 2026. If these were planned outages, no further action is required beyond documentation. If either event was unplanned, the voltage-drop clustering in the 260607 to 260610 window and the coincident power factor dips suggest a potential supply-side or protection-device trigger worth investigating. In a cold chain facility, unplanned downtime carries compounding risk beyond the electrical cost metrics.
+
+---

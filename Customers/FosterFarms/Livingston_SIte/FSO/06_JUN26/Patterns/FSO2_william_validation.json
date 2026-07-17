@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-07-11 21:57:31",
+  "transformer_id": "FSO2",
+  "transformer_name": "FSO2",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "fso2_june_2026_cross_check": "Vision Only (No CSV Ground Truth Available)**",
+    "direct_csv_profile": "unavailable \u2014 all numeric values sourced from visual image extraction only",
+    "target_kva_image": "347 kVA",
+    "bt_target_kva": "347 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 no cross-check possible; image values used as best available]",
+    "power_factor_csv": "0.0% \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads 91.6% avg PF; used as working value]",
+    "kvar_max_csv_est": "0 kVAR \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads 152.1 kVAR MAX; used as working value]",
+    "monthly_residual_waste_csv": "$0.00 \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads $2,829 /dataset; used as planning estimate]",
+    "annual_residual_waste_csv": "$0 \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads $58,543 /yr; used as planning estimate]",
+    "residual_heat_burden_kw_csv": "0.0 kW \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads 11.2 kW cooling; used as estimate]",
+    "outage_interruption_machine_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "discrepancy_flags": "**",
+    "monthly_savings_validated": "$4,878.58",
+    "annual_savings_validated": "$58,543.00",
+    "monthly_waste_validated_total": "$4,875.00",
+    "annual_waste_validated_total": "$58,500.00",
+    "annual_total_wasted_validated": "$58,500.00"
+  },
+  "packet_file": "FSO2_william_validation.json"
+}

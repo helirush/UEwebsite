@@ -1,0 +1,11 @@
+**FSO2 — Operational Stress Interpretation | June 2026**
+
+What June 2026 tells you about FSO2 operationally is this: the prior tuning investment has worked. The field is not in distress. The transformer is loading safely, the power factor has been lifted from what would have been a raw baseline in the mid-70s or lower into the low 90s, and the daily production rhythm is orderly and recognizable. That is real, achieved value from the existing MPTS deployment.
+
+But the field is carrying stress that has not yet been fully resolved, and that stress has a compound character in a food processing environment. You have three interacting factors running simultaneously in June. First, a persistent reactive load averaging 96.4 kVAR — not corrected to target, generating waste heat and pulling power factor below 99.5%. Second, a voltage floor that repeatedly visits 460V — 20 volts below nominal — during the mid-month operating window, creating cumulative thermal stress on motor insulation and electronic controls. Third, harmonic injection events reaching 10.6% iTHD, co-occurring with the voltage drops, suggesting specific high-inertia or switched-mode loads are the common driver of both disturbances.
+
+In a facility like Foster Farms Livingston — continuous refrigeration, cold chain integrity requirements, large compressor banks, and food safety compliance obligations — these three stressors carry consequences beyond just the energy bill. Motor failures in refrigeration duty are not just a maintenance cost. They are a cold-chain risk. Control system instability from harmonic disturbance is not just an efficiency loss. It is a production reliability risk. And the three brief outage events captured in the data — totaling an estimated 4 to 8 minutes — represent field collapse-and-recovery cycles that every VFD, PLC, and soft starter in the downstream system experienced. Even brief events create cumulative wear on power electronics.
+
+The operational stress interpretation for FSO2 in June 2026 is: the field is well-tuned at the macro level, but specific load-level interactions are sustaining a residual stress signature that warrants further engineering attention — not greenfield correction, but targeted diagnostic and refinement work to close the remaining gap.
+
+---

@@ -1,0 +1,11 @@
+Transformer: PL2C — Reactive and Harmonic Findings
+
+For PL2C, reactive power data — kVAR average, kVAR maximum, and power factor — are all value unavailable in this session. No Mercury CSV output and no BT or M image capture exist to extract these figures from. That said, the reactive story for an untuned field can still be framed in engineering terms so you understand what's at stake when measurement does occur.
+
+Reactive power (kVAR) is the portion of electrical current that does no real work — it magnetizes inductive loads like motors and transformer cores — but it still flows through your conductors and your transformer windings. On an untuned field, this reactive component circulates freely, inflating apparent power (kVA) demand beyond what your productive work load actually requires. The ratio of real work power (kW) to apparent demand (kVA) is your power factor. A low power factor means you're paying to move current that delivers no output.
+
+In industrial environments with heavy motor loads or refrigeration systems, power factor can degrade well below 90 percent — sometimes into the low 80s or even high 70s — without active correction in place. At those levels, the reactive burden on the transformer is measurable in thermal terms: excess heat in the windings, elevated conductor temperatures, and accelerated insulation aging.
+
+The MPTS sizing rule applies once kVAR MAX is captured: divide that peak reactive figure by 400, round up, and that gives the number of H490 units needed. Until that measurement is in hand for PL2C, MPTS sizing cannot be formally scoped. What is certain is that the untuned condition means this waste continues to accumulate — invisibly — every operating hour.
+
+---

@@ -1,22 +1,13 @@
-**NCND2 — Simulated MPTS Outcome | Projected Correction**
+**NCDC2 — Simulated MPTS Outcome | May 2026**
 
-No S (MPTS Savings) image was provided in this dataset. The projected MPTS outcome for NCND2 is therefore constructed from first-principles engineering based on the confirmed baseline readings and standard Unity MPTS correction parameters.
+The MPTS sizing calculation for NCDC2 begins with the kVAR MAX figure from the BT header: 351.6 kVAR. Applying the standard Unity sizing rule — kVAR MAX divided by 400, rounded up — yields 351.6 ÷ 400 = 0.879, which rounds up to **1 unit**. The recommended MPTS configuration for NCDC2 is **one H490 unit**, rated at 400 kVAR of reactive compensation capacity. At a planning-level estimate, one H490 installed runs approximately $200,000, with final pricing dependent on engineering scope, site conditions, and integration requirements.
 
-**MPTS Sizing — NCND2:**
-kVAR MAX = 351.6 kVAR
-351.6 ÷ 400 = 0.879 → rounded UP → **1 H490 unit (400 kVAR rated)**
-Planning-level installed investment: approximately $200,000 (subject to final engineering scope and site conditions)
+The S-view simulation projects what this field looks like after MPTS correction is applied. The headline outcome is the recovery of the approximately $127,148 per year in total waste currently being absorbed as reactive losses, thermal burden, and cooling overhead. The power factor moves from 93.0 percent average to a projected 99.5 percent corrected state — essentially eliminating the reactive circulation current that is currently heating this transformer's conductors and core. With reactive demand reduced from 351.6 kVAR peak to near-zero, the thermal burden of 167,322 BTU per hour drops substantially. The cooling load — currently consuming 24.4 kilowatts and costing approximately $42,227 per year — reduces proportionally, freeing that capacity for productive use.
 
-A single H490 unit installed at NCND2 would provide up to 400 kVAR of reactive compensation — sufficient to fully offset the 351.6 kVAR peak reactive demand and bring the power factor from the current 93.0% average to approximately 99.5%, in alignment with Unity MPTS design targets.
+The transformer itself benefits from correction in ways that go beyond the direct waste recovery. With reactive current removed from the current waveform, the transformer core operates cooler. Cooler operation means slower insulation aging, which directly extends transformer service life. In a facility where transformer replacement carries significant capital cost and production disruption risk, insulation life extension is a material financial benefit that does not appear in the direct waste recovery number but is real and cumulative.
 
-**Projected outcomes under correction:**
+The dynamic MPTS response architecture is particularly well-matched to NCDC2's load profile. Because the KVAR trace in the M view pulses with load cycling rather than sitting at a fixed level, a static correction system would be chronically over- or under-compensating as compressors stage and motors start. The H490's dynamic correction capability tracks those reactive swings in real time, holding the power factor stable across the full range of NCDC2's operating cycle — from minimum load to the 1,001.6 kilowatt peak demand events. That consistency is what delivers the full projected savings rather than a fraction of them.
 
-The reactive burden of 244.9 kVAR average would be substantially eliminated — the compensated field would carry only residual reactive current, reducing conductor loading and transformer winding current by the reactive component.
-
-Thermal burden would decrease in proportion to the I²R reduction from lower reactive current. A correction from 93% to 99.5% power factor reduces apparent current draw by approximately 6.5% at equivalent real power delivery — translating to measurable winding temperature reduction and proportionally lower core losses.
-
-Cooling overhead of approximately $42,227 annually would be reduced as the transformer runs cooler. The specific cooling savings magnitude would be confirmed in a post-installation S view, but the directional impact is clear and consistent with Unity MPTS field data across comparable industrial installations.
-
-The total estimated recoverable waste approaching $127,148 per year represents the planning-level financial upside of correction. At approximately $200,000 installed investment, the simple payback horizon is in the range of 18–24 months at full recovery — a planning estimate that would be refined with confirmed utility rate schedules and a formal Mercury analysis once the dataset is complete.
+At approximately $127,148 per year in recoverable waste against a planning estimate of about $200,000 installed, the estimated simple payback horizon for one H490 unit on NCDC2 is in the range of roughly 18 to 20 months — a planning-level estimate subject to final engineering confirmation, utility rate structures, and site-specific integration costs. That is a strong return profile for a capital investment in power system infrastructure.
 
 ---

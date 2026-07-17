@@ -1,0 +1,13 @@
+**PL2-3North — Reactive and Harmonic Findings | June 2026**
+
+The reactive picture on PL2-3North is the central engineering story for this transformer. A power factor of 61.3% is not a borderline reading — it is a field operating at substantially reduced electromagnetic efficiency. What that number means in practical terms is that for every unit of useful real power this transformer delivers, it is drawing roughly 1.6 units of apparent power from the supply. The excess is reactive current — circulating, heating, loading conductors and windings — without doing any productive work.
+
+The kVAR average of 155.6 confirms that reactive demand is a structural condition, not a transient event. It's present across the entire month. More significantly, the kVAR MAX reading of 1,163.8 kVAR is a serious peak — this represents moments when the reactive burden surges to nearly triple the transformer's nominal supply target of 351 kVA. That kind of reactive spike is consistent with large inductive load starts — compressors, refrigeration screw machines, or large motor groups coming online simultaneously — and it places an extreme instantaneous burden on the transformer and the upstream distribution infrastructure.
+
+The M view confirms the structural nature of this reactive burden. The Power Factor trace runs between approximately 55 and 75 percent for virtually the entire month, with a confirmed minimum of 51.28% — meaning the field dropped below half its theoretical conversion efficiency at its worst point. The reactive kVAR trace is not spiking and recovering — it is consistently present, day after day, indicating that the reactive compensation deficit is baked into the operational baseline of this transformer.
+
+On the harmonic side, the picture is secondary but real. The M view shows an iTHD average of 5.1% and an iTHD maximum of 9.7%. The peak exceeds the IEEE 519 recommended threshold of 8% for facilities operating at this voltage class. The harmonic layer is structurally low and relatively stable — the purple trace in the M view sits low and doesn't spike dramatically — but the 9.7% peak events are worth noting. They're consistent with a load environment that includes variable-frequency drives, rectifier loads, and rapid motor cycling. The dominant pathology, however, remains reactive — the harmonics are a secondary layer on top of a much larger power factor depression problem.
+
+Until reactive compensation is applied through MPTS correction, this field will continue to generate thermal burden at approximately 264,972 BTU per hour, require an estimated 38.8 kW of cooling load to manage that heat, and cost this facility roughly $7.63 per hour in cooling overhead alone — every hour the field runs untuned.
+
+---

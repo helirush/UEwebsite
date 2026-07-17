@@ -1,0 +1,13 @@
+**NCDC2SOUTHD — Operational Stress Interpretation | June 2026**
+
+Taken together, the voltage, reactive, and harmonic findings for South D describe a transformer field that is operationally productive, actively stabilized by existing MPTS investment, and still carrying a measurable burden of thermal and reactive stress that has not yet been fully resolved. This is a high-throughput field serving what appears to be an intensive food processing and cold storage operation — and those load types impose demands that do not relax cleanly between shifts.
+
+The production rhythm is clear in the BT view. South D runs a strong weekday-intensive pattern, spending the majority of active production hours at or above the 1,036 kVA supply target. Weekend loads drop to the 400 to 700 kVA range, but the reactive draw does not clear proportionally — the unconsumed kVAR layer remains present throughout the dataset, including the low-load valleys. This is the fingerprint of a permanently energized motor load base: refrigeration compressors that cannot be de-energized without breaking cold chain integrity. The transformer is carrying reactive burden around the clock.
+
+The thermal stress profile is meaningful at 213,624 BTU per hour. Industrial transformers operating with sustained reactive burden run hotter than their real-power loading alone would suggest — the magnetizing current component contributes heat to the core and windings without being captured in a simple kW demand reading. Over a full operating month, that thermal accumulation adds stress to insulation systems and accelerates the aging curve of transformer components, particularly in a warm-month June operating window.
+
+The five to six outage events captured in the gold streak analysis — totaling an estimated 10 to 20 minutes across June — add a reliability dimension to the stress picture. Each outage event is both a production interruption and a thermal cycling shock to transformer insulation. In a food processing environment, even a brief power interruption can trigger compressor restart sequences, cold storage temperature excursions, and process line recovery procedures that take far longer than the outage itself to resolve.
+
+The 92.6 percent average power factor in the TBT state is the central operational stress indicator. It confirms the field is functioning with consistent reactive drag — every production hour at 92.6 percent means the transformer, conductors, and protective devices are sized against the full apparent power demand rather than the real useful work component. That sizing gap represents stranded capacity and absorbed thermal burden that the MPTS assets are partially but not yet fully addressing.
+
+---

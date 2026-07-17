@@ -1,0 +1,20 @@
+**DELIG Transformer — Recommended Engineering Attention Areas | June 2026**
+
+The following areas warrant prioritized engineering review for DeliG based on June 2026 field observations:
+
+**1. MPTS Reactive Compensation Sizing and Installation Planning.**
+The 1,434.3 kVAR MAX reading drives a requirement for 4 H490 units at 1,600 kVAR total capacity. Engineering should confirm transformer interconnect points, harmonic filter integration requirements given the 11.8% iTHD peak, and physical placement to minimize feeder losses between compensation units and primary inductive loads. Planning-level investment estimate is approximately $800,000 installed; final scope requires site engineering assessment.
+
+**2. Voltage Sag Root Cause Investigation.**
+The 459.2-volt confirmed sag event and the 9.6-volt floor reading warrant a dedicated voltage event analysis. Oscillographic capture during suspected inrush events — compressor staging, production line startups — would identify the specific switching operations driving the triangular drop clusters. This root cause work should precede any motor replacement decisions to ensure corrected field conditions are evaluated alongside equipment aging.
+
+**3. Harmonic Spectral Analysis — M View Capture Required.**
+The M view was not available for this session. Given the 11.8% iTHD peak observed in the BT header, a full harmonic order analysis is warranted to determine whether 3rd, 5th, 7th, or higher-order harmonics are dominant. This will inform whether passive harmonic filters should be integrated into the MPTS installation or whether active harmonic compensation is required alongside reactive correction.
+
+**4. Continuous Thermal Burden Monitoring.**
+At 280,095 BTU per hour of active thermal generation and an estimated $72,298 per year in cooling overhead, thermal burden should be trended month-over-month. In an untuned field, thermal burden tends to rise as equipment aging increases resistive losses. Establishing a July baseline immediately and tracking through Q3 will quantify the rate of degradation and build the economic case for correction timeline urgency.
+
+**5. Mercury CSV Confirmation.**
+All numeric values in this analysis are vision-derived. Mercury CSV capture and analysis should be completed as the highest-priority data validation step before finalizing any engineering recommendations or investment estimates for DeliG.
+
+---

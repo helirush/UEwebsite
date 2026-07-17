@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-11 23:23:47",
+  "transformer_id": "NCDC3",
+  "transformer_name": "NCDC3",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "NCDC3 | Foster Farms, Livingston HQ | Merced Irrigation District | 2500 kVA**",
+    "analysis_period": "June 2026 (260601\u2013260630)**",
+    "csv_ground_truth_status": "UNAVAILABLE \u2014 vision-only synthesis in effect.",
+    "machine_readable_anchors": "",
+    "target_kva_image": "655 kVA",
+    "bt_target_kva": "655 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 CSV UNAVAILABLE, no cross-check possible",
+    "power_factor_csv": "0.0% \u2014 CSV UNAVAILABLE, image value used: 83.7% PF (TBT header)",
+    "kvar_max_csv_est": "0 kVAR \u2014 CSV UNAVAILABLE, image value used: 372.2 kVAR MAX (TBT header)",
+    "monthly_residual_waste_csv": "$0.00 \u2014 CSV UNAVAILABLE, image value used: $12,856 /dataset",
+    "annual_residual_waste_csv": "$0 \u2014 CSV UNAVAILABLE, image value used: $156,420 /yr (reactive waste stream); TOTAL WASTED: $252,475 /yr",
+    "residual_heat_burden_kw_csv": "0.0 kW \u2014 CSV UNAVAILABLE, image value used: 333,852 BTU/hr thermal burden; 48.9 kW cooling load",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "cross_check_flags": "",
+    "tbt_kvar_avg_308_2_kvar_vs_tm_max_reactive_358_kvar": "these are different metrics (average vs peak) and do not represent a discrepancy \u2014 alignment is reasonable.",
+    "tbt_kvar_max_372_2_kvar_vs_tm_max_reactive_358_kvar": "delta is approximately 14.2 kVAR (~3.8%) \u2014 within acceptable range, no discrepancy flag needed.",
+    "ts_pf_outcome": "99.5% confirmed from TS header annotation \u2014 consistent with MPTS simulation standard.",
+    "monthly_savings_validated": "$21,039.58",
+    "annual_savings_validated": "$252,475.00",
+    "monthly_waste_validated_total": "$21,039.58",
+    "annual_waste_validated_total": "$252,475.00",
+    "annual_total_wasted_validated": "$252,475.00"
+  },
+  "packet_file": "NCDC3_william_validation.json"
+}

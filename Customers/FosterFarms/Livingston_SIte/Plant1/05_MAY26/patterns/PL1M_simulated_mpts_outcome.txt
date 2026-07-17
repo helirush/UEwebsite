@@ -1,13 +1,11 @@
-**Transformer: PL1M — Tuned-Field Outcome: SB → TB → TBT Sequence**
+**Transformer: PL1M — Tuned-Field MPTS Outcome (TBT → TS)**
 
-The three-view analysis sequence for PL1M — Simulated Baseline (SB), Tuned Baseline (TB), and Tuned Benchmark Target (TBT) — is the analytical backbone of this transformer's story. It is designed to show you the full arc: where the field was before your investment, where it stands today with the installed equipment operating, and where it can go with further optimization.
+In the tuned-field optimization framework, the TS view represents the projected field state after incremental optimization of the already-deployed MPTS assets. The TBT view is our anchor — it shows where the field sits now, post-initial-installation. The delta between TBT and TS is the remaining opportunity: the energy still recoverable, the heat burden still reducible, the power factor still improvable.
 
-Right now, that arc cannot be traced for PL1M because the underlying data has not been submitted. All three reference values — the historical kVAR and power factor from SB, the current tuned kVAR and power factor from TB, and the target values from TBT — return zero or are not provided.
+For PL1M, both TBT and TS data are unavailable. The optimization gap — the delta between current tuned state and fully optimized state — is value unavailable. Projected annual savings from gap closure are value unavailable. Projected reduction in thermal burden in kW is value unavailable. Projected improvement in power factor toward the 99.5% TS target is value unavailable.
 
-When that data is in hand, here is what this section will deliver. The SB-to-TB comparison will quantify the achieved gain: how many kVAR of reactive demand your installed MPTS assets have already removed from the field, how many degrees of thermal burden have already been shed from the transformer, and how much the power factor has climbed from its pre-correction baseline. Those are your proof points — evidence that your investment is working.
+What the tuned-field model tells us in general is this: facilities that have already deployed MPTS typically see their TS projections show a power factor approaching 99.5%, with residual reactive waste reduced to a small fraction of the original baseline burden. The heat burden relief from that final optimization step is real and measurable — it reduces cooling overhead and extends equipment service life. Those gains are waiting for PL1M. We simply need the data to confirm the scale.
 
-The TB-to-TBT comparison will then define the optimization gap: the remaining reactive demand that the field is still carrying above the target level, the residual heat burden that has not yet been eliminated, and the cooling overhead that could still be recovered. This gap is not a failure — it is an opportunity. It tells you precisely how much more your field can improve, and it defines the engineering scope of any refinement or targeted expansion work.
-
-Both halves of that story are ready to be written. The structure is here. The data is the missing piece.
+Once TBT and TS views are available for PL1M, this section will be populated with confirmed numbers and the optimization path will be fully defined.
 
 ---

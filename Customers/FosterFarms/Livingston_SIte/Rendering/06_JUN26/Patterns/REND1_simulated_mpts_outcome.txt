@@ -1,0 +1,13 @@
+**REND1 — Simulated MPTS Outcome | June 2026**
+
+The MPTS correction scenario for REND1 begins with the sizing calculation. The kVAR MAX from the BT header is 1,132.9 kVAR. Applying the standard sizing rule — kVAR MAX divided by 400, rounded up — yields 1,132.9 ÷ 400 = 2.83, which rounds up to **3 H490 units**. That is a three-unit correction array, delivering up to 1,200 kVAR of reactive compensation capacity — sufficient to address the peak reactive demand recorded in June.
+
+At a planning-level installed estimate of approximately $200,000 per H490 unit, a three-unit array represents a planning investment range of roughly $500,000 to $650,000 installed — final scope and site conditions will determine actual engineering costs, and this range is for planning purposes only, not a binding quote.
+
+The projected outcome, based on the S-view simulation data, is a power factor correction to 99.5 percent. At that corrected power factor, the reactive current that is currently consuming transformer capacity, generating heat, and inflating apparent power demand is substantially neutralized. The kVAR burden — currently averaging 698.6 kVAR and peaking at 1,132.9 kVAR — drops to a small residual fraction. The transformer effectively gains back capacity it has been spending on reactive circulation, which means the same real work output now requires meaningfully less apparent power draw.
+
+The annual waste currently running at approximately $662,345 per year represents the economic target for recovery. MPTS correction does not recover 100 percent of that figure — some residual losses remain — but the substantial majority of the reactive waste component is recoverable. At the estimated waste rate and a three-unit investment, the payback horizon depends on final recovered savings, which the S-view will quantify precisely once available. As a planning reference, significant reactive waste recoveries at this scale typically produce payback periods in the range of 12 to 36 months under full production conditions.
+
+Beyond the economics, the thermal burden reduction is equally important for this facility. Dropping from 885,600 BTU per hour of electrical waste heat toward a much lower corrected-state figure directly reduces the load on facility cooling systems — potentially recovering a meaningful portion of the 129.8 kilowatts and approximately $25.60 per hour currently spent on cooling overhead tied to electrical waste. In a food processing environment where temperature control is operationally critical, that thermal relief has value well beyond the line-item cost savings.
+
+---

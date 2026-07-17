@@ -6,7 +6,7 @@
     <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
     <script src="hume_character_config.js?v=20260612r21"></script>
     <script src="clerk_voice_widget.js?v=20260701r28"></script>
-    <script src="public_release_flags.js?v=20260715b"></script>
+    <script src="public_release_flags.js?v=20260717d"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -683,6 +683,7 @@
             justify-content: center;
             gap: clamp(12px, 1.17vw, 18px);
             width: 100%;
+            min-width: 0;
             min-height: clamp(90px, 6.2vw, 118px);
             padding: calc(clamp(12px, 1.1vw, 16px) - 10px) clamp(13px, 1.38vw, 21px);
             border-radius: 13px;
@@ -843,6 +844,8 @@
             display: inline-flex;
             flex-direction: column;
             gap: 2px;
+            min-width: 0;
+            max-width: 100%;
         }
         .hero-bottom-cta-title {
             font-size: clamp(0.94rem, 1.35vw, 1.53rem);
@@ -850,7 +853,9 @@
             text-transform: uppercase;
             letter-spacing: 0.07em;
             font-weight: 800;
-            white-space: nowrap;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            text-wrap: balance;
         }
         .hero-bottom-cta-subtitle {
             font-size: clamp(0.71rem, 0.87vw, 0.98rem);
@@ -858,6 +863,9 @@
             font-weight: 600;
             letter-spacing: 0.01em;
             opacity: 0.96;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            text-wrap: pretty;
         }
         .hero-bottom-cta-cognition .hero-bottom-cta-copy,
         .hero-bottom-cta-learn .hero-bottom-cta-copy,
@@ -873,6 +881,13 @@
             background: linear-gradient(120deg, rgba(21, 73, 50, 0.96) 0%, rgba(28, 88, 58, 0.95) 45%, rgba(34, 97, 63, 0.94) 100%);
             border-color: rgba(203, 170, 95, 0.62);
             color: rgba(236, 213, 150, 0.98);
+            text-decoration: none;
+        }
+        .hero-bottom-cta-cognition:hover,
+        .hero-bottom-cta-cognition:focus,
+        .hero-bottom-cta-cognition:active,
+        .hero-bottom-cta-cognition:visited {
+            text-decoration: none;
         }
         .hero-bottom-cta-cognition .hero-bottom-cta-icon {
             width: clamp(67px, 5.04vw, 97px);
@@ -928,9 +943,15 @@
         }
         .hero-bottom-cta-cognition .hero-bottom-cta-title {
             letter-spacing: 0.045em;
+            text-decoration: none;
+        }
+        .hero-bottom-cta-cognition .hero-bottom-cta-title .cta-tm {
+            font-size: 75%;
+            font-weight: 500;
         }
         .hero-bottom-cta-cognition .hero-bottom-cta-subtitle {
             color: rgba(230, 239, 223, 0.96);
+            text-decoration: none;
         }
         .hero-bottom-cta-cognition-arrow {
             display: inline-block;
@@ -971,6 +992,26 @@
             padding-left: calc(clamp(11px, 0.9vw, 16px) + 65px);
             transform: none;
         }
+        @media (max-width: 1360px) {
+            .hero-bottom-cta-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                width: min(1280px, calc(100% - clamp(24px, 4vw, 68px)));
+            }
+            .hero-bottom-cta-title {
+                font-size: clamp(0.86rem, 1.8vw, 1.24rem);
+            }
+            .hero-bottom-cta-subtitle {
+                font-size: clamp(0.66rem, 1.3vw, 0.92rem);
+            }
+            .hero-bottom-cta-cognition .hero-bottom-cta-copy,
+            .hero-bottom-cta-learn .hero-bottom-cta-copy,
+            .hero-bottom-cta-energy .hero-bottom-cta-copy {
+                transform: none;
+            }
+            .hero-bottom-cta-clerk .hero-bottom-cta-copy {
+                padding-left: clamp(14px, 1.4vw, 20px);
+            }
+        }
         @media (min-width: 1101px) and (max-height: 1250px) {
             .hero-bottom-cta-strip {
                 transform: translateY(-25px) scale(0.9);
@@ -989,12 +1030,13 @@
                 width: 100%;
                 margin-right: auto;
                 padding: 10px 16px 8px;
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 transform: none;
             }
             .hero-bottom-cta-button {
                 min-height: 68px;
                 padding: 2px 14px;
+                top: 0;
             }
             .hero-bottom-cta-icon {
                 width: clamp(38px, 8.75vw, 53px);
@@ -1038,6 +1080,30 @@
             .hero-bottom-cta-clerk .hero-bottom-cta-copy {
                 padding-right: clamp(70px, 18vw, 101px);
                 padding-left: 53px;
+            }
+        }
+        @media (max-width: 760px) {
+            .hero-bottom-cta-strip {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px 10px 8px;
+            }
+            .hero-bottom-cta-button {
+                min-height: 64px;
+            }
+            .hero-bottom-cta-title {
+                font-size: clamp(0.82rem, 4.1vw, 1.04rem);
+            }
+            .hero-bottom-cta-subtitle {
+                font-size: clamp(0.64rem, 3.35vw, 0.82rem);
+            }
+            .hero-bottom-cta-clerk .hero-bottom-cta-icon {
+                width: clamp(74px, 21vw, 95px);
+                height: clamp(74px, 21vw, 95px);
+            }
+            .hero-bottom-cta-clerk .hero-bottom-cta-copy {
+                padding-right: clamp(60px, 17vw, 86px);
+                padding-left: 48px;
             }
         }
 
@@ -2744,7 +2810,7 @@
             min-width: clamp(190px, 18.5vw, 300px);
             min-height: clamp(82px, 6.4vw, 118px);
             border-radius: clamp(10px, 1.05vw, 14px);
-            border: clamp(2px, 0.18vw, 3px) solid rgba(31, 75, 37, 0.95);
+            border: clamp(2px, 0.18vw, 1px) solid rgba(207, 173, 0, 0.7);
             background: rgba(236, 224, 188, 0.80);
             color: rgba(37, 84, 34, 0.98);
             box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
@@ -3228,7 +3294,7 @@
                 <img class="hero-bottom-cta-cognition-image-icon" src="assets/images/CognitionPartnerIconCTA_transparent.png" alt="">
             </span>
             <span class="hero-bottom-cta-copy">
-                <span class="hero-bottom-cta-title">Cognition Partner™</span>
+                <span class="hero-bottom-cta-title">Cognition Partner<span class="cta-tm">™</span></span>
                 <span class="hero-bottom-cta-subtitle">Explore with your reasoning partner</span>
             </span>
         </a>
@@ -3531,9 +3597,35 @@
         let unityIntroAutoRetryTimer = null;
         let unityVisibilityToEnergyFieldTimer = null;
         let unityEnergyBehaviorWindowRef = null;
+        const UNITY_AUTO_TOUR_BLOCKED_CLICK_SELECTORS = [
+            'a',
+            'button',
+            'input',
+            'textarea',
+            'select',
+            '[role=\"button\"]',
+            '.hero-bottom-cta-strip',
+            '.nav-tabs-container',
+            '.footer-unity-intro-controls',
+            'footer',
+            '.site-access-banner',
+            '.video-modal',
+            '.reference-modal',
+            '.reference-viewer-modal',
+            '#loginModal'
+        ].join(', ');
         const UNITY_POST_NARRATION_PULSE_SELECTORS = Object.freeze([
             '#heroVisibilityPrincipleBtn'
         ]);
+        function shouldUnityAutoTourHandlePointerEvent(event) {
+            if (!event || event.type !== 'pointerdown') return false;
+            const target = event.target instanceof Element ? event.target : null;
+            if (!target) return false;
+            if (target.closest(UNITY_AUTO_TOUR_BLOCKED_CLICK_SELECTORS)) return false;
+            const heroContainer = document.querySelector('.hero.hero-raster-rebuild');
+            if (!heroContainer) return false;
+            return heroContainer.contains(target);
+        }
         function writeUnityAutoTourManualOverride(isManual) {
             try {
                 if (isManual) {
@@ -3583,9 +3675,11 @@
         function handleUnityAutoTourManualInteraction(event) {
             if (!isUnityAutoTourActive()) return;
             if (!event || event.isTrusted === false) return;
+            if (event.type === 'pointerdown' && !shouldUnityAutoTourHandlePointerEvent(event)) {
+                return;
+            }
             if (event.type === 'keydown') {
-                if (!event.key) return;
-                if (event.key === 'Shift' || event.key === 'Control' || event.key === 'Alt' || event.key === 'Meta') return;
+                return;
             }
             if (unityAutoTourFirstInteractionGracePending) {
                 unityAutoTourFirstInteractionGracePending = false;

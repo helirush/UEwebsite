@@ -1,0 +1,15 @@
+**BNR2 — June 2026 | Stress Profile: Chronic Low-Level, Accumulating Over Time**
+
+The operational picture for BNR2 in June 2026 is one of chronic, distributed stress rather than acute crisis. No single metric is at a dangerous threshold today. But the combination of metrics tells a story that facility managers need to hear clearly: this field is doing quiet damage, every day, across multiple failure mechanisms simultaneously.
+
+Start with the voltage: a 28-volt oscillation range, a minimum of 471.8 volts, and persistent triangular drop patterns distributed across all thirty days. For motors running refrigeration compressors and processing loads continuously, this means winding temperatures are slightly elevated on a chronic basis — not enough to trip thermal protection today, but enough to shorten the insulation life curve meaningfully over a twelve-to-twenty-four month horizon.
+
+Add the harmonics: 6.3% average iTHD with 11.4% peaks. Every VFD in this circuit, every motor drive, every power supply is seeing waveform distortion at every cycle. Over time, this increases the probability of nuisance trips, capacitor bank failures (if any are installed), and transformer efficiency degradation. The harmonic heat contribution is embedded in that 2,248 BTU per hour thermal burden figure — and that heat is continuous.
+
+Add the reactive burden: 4.6 kVAR average against a 17.8 kW peak. The power factor minimum of 85.3% means there are operational intervals where nearly 15% of the apparent power being drawn from the transformer is doing no productive work. That reactive current circulates through windings, conductors, and switchgear — generating heat, accelerating contact wear, and loading the transformer beyond its efficient operating point.
+
+The single brief outage event around June 22nd — approximately 2 to 5 minutes — is a monitoring note rather than an immediate concern. One brief interruption in thirty days does not indicate a chronic switching or utility problem. However, for a food processing facility where a power interruption can mean product loss, temperature excursion in cold storage, or process line resets, even brief interruptions carry operational cost beyond just the minutes of lost power. This event warrants logging and watching across future datasets.
+
+The total annual waste cost of approximately $3,034 is the financial meter on all of this accumulated stress. It is not a large number in isolation — but it is approximately 3.4 times the annual energy waste line alone, because thermal burden and cooling overhead compound the reactive losses. Every month this field runs untuned, those costs accrue and the equipment inside the field moves incrementally closer to its next unplanned failure.
+
+---

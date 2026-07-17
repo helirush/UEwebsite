@@ -1,0 +1,11 @@
+**REND3 — Reactive and Harmonic Stress | June 2026 | M View and BT Header**
+
+The reactive picture on REND3 is one of the more significant findings in this analysis. Your kVAR average is running at 496.3 kVAR across the month, and your kVAR MAX peaks at 894.7 kVAR. Let that second number settle for a moment. At peak reactive stress moments, nearly 895 kVAR of reactive current is circulating through this transformer — doing no useful work, generating heat, and dragging your power factor down to its minimum recorded reading of 68.66 percent. At that moment, more than thirty percent of all delivered current was pure reactive drag.
+
+The M view reinforces this with its amperage data. Average current is running at 946.8 amps, with a maximum reading of 1,556.5 amps. That maximum is 65 percent above the average operating level. Moments of that current intensity — combined with a power factor dropping to 68.66 percent — represent the kind of compounding field stress that accelerates transformer aging, elevates conductor heating, and pushes the thermal burden you saw in the BT view steadily higher.
+
+The harmonic environment adds another layer. The M view confirms an iTHD average of 5.9 percent with a maximum of 10.9 percent. That maximum harmonic distortion level — nearly double the average — indicates there are concentrated switching event windows where non-linear loads are collectively injecting significant harmonic content into the field. Variable frequency drives, soft starters, and electronic switching equipment in the rendering and refrigeration systems are the likely contributors. Harmonic currents add to RMS current loading without contributing useful power, which compounds both the reactive burden and the thermal burden simultaneously.
+
+The combined picture — high kVAR MAX, low minimum power factor, elevated current peaks, and measurable harmonic content — is the fingerprint of an untuned reactive field under sustained industrial stress. This is exactly the operating environment MPTS correction is designed to address.
+
+---

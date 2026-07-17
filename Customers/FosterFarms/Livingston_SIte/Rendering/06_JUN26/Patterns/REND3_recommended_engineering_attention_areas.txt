@@ -1,0 +1,15 @@
+**REND3 — Recommended Engineering Attention Areas**
+
+Several engineering attention areas emerge from this REND3 June analysis and are worth carrying forward into the site-level review.
+
+First, **reactive compensation sizing confirmation**: the gap between the BT-header kVAR MAX of 894.7 kVAR and the M-view annotated max of 568 kVAR warrants a load-profile deep dive. Understanding whether that BT peak represents a sustained operational condition or a brief transient spike will directly determine whether a two-unit or three-unit H490 configuration is the correct investment. Mercury CSV validation of the full June dataset is the priority step here.
+
+Second, **voltage sag characterization**: the recurring triangular drop pattern with a confirmed minimum of 465V needs to be mapped against the facility's motor start schedule and compressor cycling events. If specific load-switching sequences are driving those drops, MPTS reactive correction will directly improve voltage stability during those events — but the facility's engineering team should also confirm that motor starter settings and soft-start configurations are optimized for the current voltage environment.
+
+Third, **cooling infrastructure audit**: with 96.3 kilowatts of cooling demand and approximately $19.07 per hour in cooling cost attributed to transformer thermal burden, the facility's HVAC and cooling systems serving the electrical infrastructure are carrying a meaningful parasitic load. Post-MPTS correction, that thermal burden should decrease materially, and the engineering team should assess whether cooling capacity can be right-sized or reallocated as part of the efficiency improvement plan.
+
+Fourth, **outage root cause investigation**: the two brief outage events detected in June — at approximately the June 13th and June 19th positions — are worth flagging to the facility's reliability team. Even 5-minute interruptions in a cold-chain food processing environment have product safety and equipment restart implications. Understanding whether these are upstream utility events, protection relay operations, or internal switching events will inform whether additional mitigation measures are warranted.
+
+Finally, **ongoing field monitoring without tuning**: this is an untuned field, and the efficiency drift in untuned reactive environments is not static. Month-over-month, thermal burden tends to rise as load patterns evolve and equipment ages. The June 2026 snapshot is the baseline — it will not improve on its own. Tuning assignment and MPTS installation are the path to arresting that drift.
+
+---

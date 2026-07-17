@@ -1,0 +1,9 @@
+Transformer: PL2
+
+Given the complete absence of data for PL2 in this session, the primary engineering action is straightforward: prioritize re-submission of all five capture views for this transformer. The required views are TB for contextual baseline reference, TBT for the tuned optimization anchor and numeric extraction, TV for voltage waveform and stability assessment, TM for harmonic and distortion characterization, and TS for the projected post-optimization outcome.
+
+Beyond data collection, once PL2 data is in hand, engineering attention should focus on three areas specific to a tuned-field optimization context. First, verify that the installed MPTS assets are operating within their rated compensation range and that the kVAR correction being delivered matches the reactive demand profile captured in TBT. If the kVAR maximum has shifted since the original sizing was performed — due to load additions, seasonal changes, or process expansion — a right-sizing review may be warranted. Second, assess voltage waveform consistency through the TV view to confirm that the deployed correction is stabilizing the field as designed, rather than leaving residual voltage sag events unaddressed. Third, compare thermal burden figures between TB and TBT to confirm that the heat reduction benefit of the installed equipment is being fully realized and sustained over time.
+
+No capital recommendations are appropriate at this stage without data. Incremental refinement and targeted diagnostics are the appropriate next actions for PL2.
+
+---

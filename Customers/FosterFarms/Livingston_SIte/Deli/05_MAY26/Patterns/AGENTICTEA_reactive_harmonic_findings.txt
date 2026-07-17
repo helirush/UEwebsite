@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Reactive and Harmonic Findings**
+
+The reactive power profile is the core diagnostic dimension for an MPTS correction decision, and for AGENTICTEA, that profile is currently unreadable — the CSV kVAR data and the BT header reactive fields are both unavailable. The kVAR MAX estimate is reported as zero, which reflects absent data rather than an actual zero reactive load. I want to be explicit about that distinction.
+
+In an untuned industrial field, reactive power — measured in kVAR, kilovolt-amperes reactive — is the invisible current that does no useful work but still flows through every conductor, every winding, and every protection device in your distribution system. Your utility meters it, and in many rate structures, you pay for it directly through power factor penalty clauses or demand charges that are inflated by the apparent power your field draws. The ratio of real power to apparent power is your power factor, and in an uncorrected field, that ratio is typically well below the 95-to-99 percent range where efficient operation lives.
+
+The MPTS sizing rule I would normally apply here — taking your kVAR MAX and dividing by 400, then rounding up to determine how many H490 units are warranted — requires that MAX kVAR figure from your data. The planning install estimate of approximately $200,000 is carried forward as a session parameter, which would correspond to a single H490 unit at roughly 400 kVAR correction capacity. That is a reasonable starting-point estimate for a mid-scale industrial transformer, but it needs to be validated against your actual reactive demand profile before it carries any engineering weight.
+
+Harmonic content assessment is similarly deferred pending data. When available, the M-view measurement capture would reveal whether harmonic distortion is compounding the reactive burden — a condition common in facilities running variable-frequency drives or switching power supplies alongside large inductive loads.
+
+---

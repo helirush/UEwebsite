@@ -1,0 +1,11 @@
+**REND2 — Voltage Health | June 2026**
+
+The voltage field on REND2 is running above nominal for most of the month — the blue voltage trace holds in the 454 to 461-volt range through active production periods, with a reported average of 475.9 volts and a recorded maximum of 491 volts. On its face, that sounds like a high-side condition, but the critical story is in what happens during load events.
+
+Every single annotated voltage-drop event on the chart falls below the 480-volt nominal reference. The system recorded drop events at 458.1V, 457.6V, 455.5V, 456.3V, 450.4V, 456.3V, 460.7V, 460.6V, 456.7V, 454.2V, 460.4V, and 459.9V. That is twelve distinct sub-nominal voltage events documented across the June period. The most severe is the 450.4-volt dip — approximately 29.6 volts below nominal, which represents a 6.2% depression from the 480-volt reference. That is not a minor fluctuation. That is a meaningful voltage deficiency event in a facility running high-torque industrial motors and processing equipment.
+
+The clustering behavior is notable. The voltage drop events are most concentrated in the first week of the month — the June 1 through 7 window — which aligns with the heaviest production surge periods visible in the BT chart. As reactive demand spikes and the transformer struggles to supply both active and reactive current simultaneously, the voltage bus cannot hold. The triangular drop markers are the visual signature of that failure mode.
+
+In a food processing and rendering environment, this pattern carries real operational risk. Under-voltage events of this frequency and depth accelerate motor winding insulation aging, increase the probability of nuisance tripping on variable frequency drives and soft starters, and create mechanical stress in compressor and conveyor motor loads. The field is not providing clean, stable voltage support to its connected equipment during the moments when that equipment needs it most — at peak production load. This is a systemic voltage instability pattern, not random noise.
+
+---

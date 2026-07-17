@@ -1,0 +1,13 @@
+**NCDC2 — Reactive and Harmonic Stress | May 2026**
+
+The M view on NCDC2 tells the story of a transformer under continuous mechanical demand. The red amperage trace runs dense and active through the month — holding in the 700 to 900 amp range for the majority of operating hours, with visible spikes reaching toward the maximum amperage callout of 984.1 amps. This is a heavily loaded electrical field. The variation in the amperage profile is consistent with motor-heavy industrial loads cycling continuously — compressors, refrigeration systems, processing equipment — none of which ever fully rest.
+
+The green kVAR trace in the M view holds a persistent presence at the lower portion of the chart. The maximum reactive callout reads 239 kVAR in the M view tooltip, while the BT header records 351.6 kVAR MAX — the BT figure captures the broader monthly peak and is the more conservative planning basis. What matters here is not just the magnitude but the persistence. Reactive power on NCDC2 never goes to zero. It is present at every minute of every operating hour, meaning your transformer is continuously carrying energy that performs no useful work but generates heat and stress in every conductor and winding it passes through.
+
+On harmonics, the picture requires careful attention. The M view main header reports 5.7% iTHD average with a maximum of 10.6% iTHD. The environmental variables panel in the M view header shows a different figure — 15.7% iTHD. Without CSV ground truth to resolve this discrepancy, both values must be flagged. Even at the lower 10.6% maximum figure, NCDC2 is operating above the IEEE 519 recommended threshold of 5% total harmonic distortion for industrial systems in this voltage class. At 15.7%, if that figure is accurate, the harmonic condition is significantly elevated and warrants immediate engineering review.
+
+Harmonics at these levels accelerate transformer core heating, increase neutral conductor thermal loading, and create interference risk for motor controls and variable frequency drives. In a food processing environment where VFDs are commonly used on refrigeration compressors and conveyors, harmonic stress is not an abstract concern — it is a direct threat to uptime and equipment service life.
+
+The combination of persistent reactive demand and elevated harmonic distortion creates a compounding thermal burden. These two stressors reinforce each other, and in an untuned field, both will tend to worsen month-over-month as equipment ages.
+
+---

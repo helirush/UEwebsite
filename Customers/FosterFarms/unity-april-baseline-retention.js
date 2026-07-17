@@ -5,7 +5,7 @@
     retentionMonths: 2,
     includeCurrentMonth: false,
     reportMonthCode: null,
-    activeMonthCodes: [2605, 2604],
+    activeMonthCodes: [],
     forceArchive: false
   }, window.__UNITY_NARRATION_RETENTION_POLICY__ || {});
 
@@ -42,7 +42,7 @@
       jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
       jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
-    const periodEl = document.querySelector('.period-value');
+    const periodEl = document.querySelector('.period-value, #month-year');
     let labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
     if (!labelText) labelText = document.title || '';
     const m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
@@ -67,7 +67,17 @@
     const asText = String(value).trim();
     if (!asText) return null;
     if (!/^\d+$/.test(asText)) return null;
-    const numeric = Number(asText);
+    let normalizedText = asText;
+    if (normalizedText.length >= 8) {
+      normalizedText = /^20\d{6}$/.test(normalizedText)
+        ? normalizedText.slice(2, 6)
+        : normalizedText.slice(0, 4);
+    } else if (normalizedText.length === 6) {
+      normalizedText = /^20\d{4}$/.test(normalizedText)
+        ? normalizedText.slice(2, 6)
+        : normalizedText.slice(0, 4);
+    }
+    const numeric = Number(normalizedText);
     if (!Number.isFinite(numeric)) return null;
     const code = Math.floor(numeric);
     const month = code % 100;
@@ -82,17 +92,31 @@
   }
 
   function resolveActiveMonthCodes() {
-    const raw = Array.isArray(policy.activeMonthCodes) ? policy.activeMonthCodes : [2605, 2604];
     const out = [];
     const seen = new Set();
-    raw.forEach((value) => {
-      const code = Number(value);
-      if (!Number.isFinite(code)) return;
-      const normalized = Math.floor(code);
-      if (seen.has(normalized)) return;
-      seen.add(normalized);
-      out.push(normalized);
+    const explicit = Array.isArray(policy.activeMonthCodes) ? policy.activeMonthCodes : [];
+    explicit.forEach((value) => {
+      const code = normalizeMonthCode(value);
+      if (!Number.isFinite(code) || seen.has(code)) return;
+      seen.add(code);
+      out.push(code);
     });
+    if (out.length) return out;
+
+    const now = new Date();
+    const cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    const maxMonths = resolveRetentionMonths();
+    for (let i = 0; i < maxMonths; i++) {
+      const code = monthCodeFromDate(cursor);
+      if (Number.isFinite(code) && !seen.has(code)) {
+        seen.add(code);
+        out.push(code);
+      }
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
     return out;
   }
 

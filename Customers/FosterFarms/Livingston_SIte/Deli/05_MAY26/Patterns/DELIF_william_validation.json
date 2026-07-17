@@ -1,0 +1,97 @@
+{
+  "generated_at": "2026-07-10 17:55:47",
+  "transformer_id": "DELIF",
+  "transformer_name": "DELIF",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 1543.93,
+      "image_value": 1544.0,
+      "pct_diff": 0.005,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Deli/AN55050323-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050323-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.852593974014337,
+    "csv_power_factor_pct": 85.2593974014337,
+    "csv_real_kw_avg": 683.5377700044803,
+    "csv_reactive_kvar_avg": 347.66308624551965,
+    "csv_apparent_kva_avg": 770.2360889896954,
+    "csv_apparent_kva_p95": 1543.9322,
+    "csv_pct_at_or_above_kva_p95": 5.0,
+    "csv_voltage_avg": 277.7719998095878,
+    "csv_voltage_min": 0.0,
+    "csv_voltage_max": 287.318,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_Deli_F.json",
+    "csv_profile_source_relative_path": "dashboard_data_Deli_F.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "delif_transformer_cross_check": "CSV Ground Truth vs. Image Extraction**",
+    "kvar_max_csv_est_556_kvar_csv_est_1_150_1_kvar_image_header_discrepancy_image_kvar_max_exceeds_csv_estimate_by_100_image_likely_reflects_instantaneous_peak_from_a_reactive_surge_event_csv_estimate_reflects_a_derived_or_smoothed_maximum_treat_image_kvar_max_as_peak_transient_use_556_kvar_as_planning_sizing_reference_for_mpts_correction_h490_sizing": "556 \u00f7 400 = 1.39 \u2192 round UP = **2 H490 units**. |",
+    "machine_readable_anchors": "**",
+    "target_kva_image": "1544 kVA",
+    "bt_target_kva": "1544 kVA",
+    "target_kva_csv": "1543.93 kVA",
+    "power_factor_csv": "85.26%",
+    "kvar_max_csv_est": "556.26 kVAR",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "sizing_resolution": "** Using CSV-anchored kVAR MAX of 556 kVAR \u2192 556 \u00f7 400 = 1.39 \u2192 **2 H490 units recommended** at approximately $400,000 installed (planning-level estimate). Image kVAR MAX of 1,150 kVAR is treated as a transient surge peak, not sustained planning load.",
+    "monthly_savings_validated": "$20,677.33",
+    "annual_savings_validated": "$248,128.00",
+    "monthly_waste_validated_total": "$20,677.33",
+    "annual_waste_validated_total": "$248,128.00",
+    "annual_total_wasted_validated": "$248,128.00"
+  },
+  "packet_file": "DELIF_william_validation.json"
+}

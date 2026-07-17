@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-07-10 18:29:35",
+  "transformer_id": "PL1P1",
+  "transformer_name": "PL1P1",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 238.13,
+      "image_value": 238.0,
+      "pct_diff": 0.055,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Plant1/AN55050333-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050333-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.8471719646057346,
+    "csv_power_factor_pct": 84.71719646057346,
+    "csv_real_kw_avg": 157.14297191980287,
+    "csv_reactive_kvar_avg": 84.32203979614695,
+    "csv_apparent_kva_avg": 185.44871133512544,
+    "csv_apparent_kva_p95": 238.13029999999998,
+    "csv_pct_at_or_above_kva_p95": 5.0,
+    "csv_voltage_avg": 278.79204318996415,
+    "csv_voltage_min": 0.0,
+    "csv_voltage_max": 291.061,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_PL1-Proc1.json",
+    "csv_profile_source_relative_path": "dashboard_data_PL1-Proc1.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL1-Proc1 | May 260501\u2013260531 | Untuned Field**",
+    "cross_check_reconciliation_csv_is_ground_truth_where_available": "",
+    "kvar_max_peak_317_3_kvar_bt_header_135_kvar_csv_est_discrepancy_135_variance_csv_estimate_likely_reflects_rolling_average_derived_max_not_instantaneous_peak_image_bt_header_max_is_the_dataset_peak_note": "use image 317.3 kVAR for MPTS sizing (conservative, correct per sizing rule); flag for engineering review |",
+    "monthly_waste_4_153_dataset_csv_monthly_waste": "$0.00 (not computed) | \u26a0\ufe0f Mercury not available \u2014 image BT header is sole source; treat as planning estimate |",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "238 kVA",
+    "bt_target_kva": "238 kVA",
+    "target_kva_csv": "238.13 kVA",
+    "power_factor_csv": "84.72%",
+    "kvar_max_csv_est": "134.92 kVAR",
+    "kvar_max_image_header": "317.3 kVAR (used for MPTS sizing \u2014 conservative)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "sizing_derivation": "** 317.3 kVAR MAX \u00f7 400 = 0.793 \u2192 round UP \u2192 **1 H490 unit** (400 kVAR capacity). Conservative; H490 provides headroom above peak.",
+    "kvar_discrepancy_note_for_engineering": "** The image BT header kVAR MAX of 317.3 versus the CSV-derived estimate of 135 kVAR represents a significant spread. This may reflect a brief inrush event captured in the dataset peak versus a time-weighted average. A site engineering review should validate the true peak reactive demand before final MPTS specification. For planning purposes, the 317.3 kVAR peak drives the sizing recommendation.",
+    "monthly_savings_validated": "$78,922.00",
+    "annual_savings_validated": "$947,064.00",
+    "monthly_waste_validated_total": "$6,575.00",
+    "annual_waste_validated_total": "$78,900.00",
+    "annual_total_wasted_validated": "$78,900.00"
+  },
+  "packet_file": "PL1P1_william_validation.json"
+}

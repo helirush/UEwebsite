@@ -8,6 +8,8 @@
   var SESSION_TTL_HOURS = 12;
   var DEFAULT_PUBLIC_ORIGIN = "https://unityenergy.com";
   var DAILY_STAMP_COUNTER_KEY = "ue_exec_share_daily_counter_v1";
+  var TITLE_PRESET_STORAGE_KEY = "ue_founder_share_panel_title_presets_v1";
+  var TITLE_PRESET_STORAGE_LIMIT = 24;
   var FOUNDER_ACCESS_ID_HASHES = new Set([
     "64b4d0f47c93ce23d157e68a58767356283dc9b63c459d45d0e0e39b3a64b9b9",
     "ec4f2dbb3b140095550c9afbbb69b5d6fd9e814b9da82fad0b34e9fcbe56f1cb",
@@ -17,6 +19,10 @@
     "b3c21cef87a8720d12c1014cc5f4fff4c070361b7ba3d056418a189d7891e41c"
   ]);
   var DEFAULT_PROVIDER_NAME = "Unity Energy";
+  var DEFAULT_TITLE_PRESETS = Object.freeze([
+    "Unity Energy Electrical Intelligence",
+    "Maxwellian Intelligence"
+  ]);
   var ELECTRICAL_TITLE_VARIANTS = [
     "Electrical Intelligence",
     "Electrical Visibility",
@@ -110,6 +116,13 @@
     "Electrical Infrastructure Review": "update-electrical-infrastructure-review",
     "Operational Energy Review": "update-operational-energy-review"
   });
+  var MAXWELLIAN_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
+    "Foster Farms Electrical Intelligence": "maxwellian",
+    "Unity Energy Electrical Intelligence": "maxwellian-unity-energy-electrical-intelligence",
+    "Maxwellian Intelligence": "maxwellian-maxwellian-intelligence",
+    "Cognition Partner Intelligence": "maxwellian-cognition-partner-intelligence",
+    "AvCo Building Electrical Intelligence": "maxwellian-avco-building-electrical-intelligence"
+  });
   // Maps runtime kind keys to master base-card assets in:
   // UnityEnergy/assets/images/share-card-bases/
   var SHARE_CARD_IMAGE_FILENAME_BY_KEY = Object.freeze({
@@ -125,10 +138,17 @@
   var CUSTOMER_PORTAL_PATH_SEGMENT = "/customer-portal/";
   var HOMEPAGE_HOTSPOT_SELECTOR = ".hero.hero-raster-rebuild";
   var HOMEPAGE_HOTSPOT_ID = "ueFounderShareDotHotspot";
+  var GLOBAL_HOTSPOT_ID = "ueFounderShareGlobalHotspot";
   var HOMEPAGE_HOTSPOT = Object.freeze({
     left: "calc(52.5% + 400px)",
     top: "calc(22.5% - 0px)",
     sizeDesktopPx: 25,
+    sizeMobilePx: 40
+  });
+  var GLOBAL_HOTSPOT = Object.freeze({
+    top: "18px",
+    right: "20px",
+    sizeDesktopPx: 24,
     sizeMobilePx: 40
   });
 
@@ -395,6 +415,84 @@
     return normalizedCustomerName + " " + normalizedCategory;
   }
 
+  function normalizeTitlePreset(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+  }
+
+  function titlePresetKey(value) {
+    return normalizeTitlePreset(value).toLowerCase();
+  }
+
+  function readSavedTitlePresets() {
+    try {
+      var raw = window.localStorage.getItem(TITLE_PRESET_STORAGE_KEY);
+      if (!raw) return [];
+      var parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      var deduped = [];
+      var seen = new Set();
+      for (var i = 0; i < parsed.length; i += 1) {
+        var normalized = normalizeTitlePreset(parsed[i]);
+        var key = titlePresetKey(normalized);
+        if (!normalized || !key || seen.has(key)) continue;
+        seen.add(key);
+        deduped.push(normalized);
+        if (deduped.length >= TITLE_PRESET_STORAGE_LIMIT) break;
+      }
+      return deduped;
+    } catch (_err) {
+      return [];
+    }
+  }
+
+  function writeSavedTitlePresets(values) {
+    if (!Array.isArray(values)) return;
+    var deduped = [];
+    var seen = new Set();
+    for (var i = 0; i < values.length; i += 1) {
+      var normalized = normalizeTitlePreset(values[i]);
+      var key = titlePresetKey(normalized);
+      if (!normalized || !key || seen.has(key)) continue;
+      seen.add(key);
+      deduped.push(normalized);
+      if (deduped.length >= TITLE_PRESET_STORAGE_LIMIT) break;
+    }
+    try {
+      window.localStorage.setItem(TITLE_PRESET_STORAGE_KEY, JSON.stringify(deduped));
+    } catch (_err) {}
+  }
+
+  function getConfiguredTitlePresets() {
+    var presets = [];
+    var seen = new Set();
+    function appendPreset(value) {
+      var normalized = normalizeTitlePreset(value);
+      var key = titlePresetKey(normalized);
+      if (!normalized || !key || seen.has(key)) return;
+      seen.add(key);
+      presets.push(normalized);
+    }
+    DEFAULT_TITLE_PRESETS.forEach(appendPreset);
+    readSavedTitlePresets().forEach(appendPreset);
+    return presets;
+  }
+
+  function rememberTitlePreset(value) {
+    var normalized = normalizeTitlePreset(value);
+    var key = titlePresetKey(normalized);
+    if (!normalized || !key) return false;
+    var isDefaultPreset = DEFAULT_TITLE_PRESETS.some(function (item) {
+      return titlePresetKey(item) === key;
+    });
+    if (isDefaultPreset) return false;
+    var saved = readSavedTitlePresets().filter(function (item) {
+      return titlePresetKey(item) !== key;
+    });
+    saved.unshift(normalized);
+    writeSavedTitlePresets(saved);
+    return true;
+  }
+
 
   function resolveWebsiteTemplateSlugForTitle(titleText) {
     var normalizedTitle = String(titleText || "").trim().toLowerCase();
@@ -421,6 +519,19 @@
       }
     }
     return "update";
+  }
+  function resolveMaxwellianTemplateSlugForTitle(titleText) {
+    var normalizedTitle = normalizeTitlePreset(titleText).toLowerCase();
+    if (!normalizedTitle) return "maxwellian";
+    var titleKeys = Object.keys(MAXWELLIAN_PRESET_TEMPLATE_SLUG_BY_TITLE);
+    for (var i = 0; i < titleKeys.length; i += 1) {
+      var titleKey = normalizeTitlePreset(titleKeys[i]);
+      if (!titleKey) continue;
+      if (normalizedTitle === titleKey.toLowerCase()) {
+        return MAXWELLIAN_PRESET_TEMPLATE_SLUG_BY_TITLE[titleKey] || "maxwellian";
+      }
+    }
+    return "maxwellian";
   }
 
   function normalizeAccessId(value) {
@@ -518,21 +629,29 @@
   function buildShareUrl(typeKey, targetValue, titleOverride) {
     var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeKey; }) || SHARE_TYPES[0];
     var routeContext = extractShareRouteContext(targetValue);
-    var resolvedCustomerName =
-      resolveCustomerDisplayName(targetValue) ||
-      resolveCustomerDisplayName(window.location.href) ||
-      DEFAULT_PROVIDER_NAME;
-    var fallbackTitle = buildElectricalCategoryTitle(resolvedCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
+    var fallbackTitle =
+      normalizeTitlePreset(DEFAULT_TITLE_PRESETS[0]) ||
+      buildElectricalCategoryTitle(DEFAULT_PROVIDER_NAME, ELECTRICAL_TITLE_VARIANTS[0]);
     var selectedTitle = String(titleOverride || "").trim() || fallbackTitle;
     var templateSlug = SHARE_TEMPLATE_SLUG_BY_KEY[selected.key] || selected.key;
     if (selected.key === "website") {
       templateSlug = resolveWebsiteTemplateSlugForTitle(selectedTitle);
     } else if (selected.key === "project-update") {
       templateSlug = resolveProjectUpdateTemplateSlugForTitle(selectedTitle);
+    } else if (selected.key === "maxwellian-news") {
+      templateSlug = resolveMaxwellianTemplateSlugForTitle(selectedTitle);
+    }
+    var shareOrigin = getShareOrigin();
+    if (
+      selected.key === "maxwellian-news" &&
+      shareOrigin === DEFAULT_PUBLIC_ORIGIN &&
+      templateSlug !== "maxwellian"
+    ) {
+      templateSlug = "maxwellian";
     }
     var cardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
     var stampCode = allocateNextDailyStampCode(new Date(), 1);
-    var shareUrl = new URL("/UnityEnergy/customer-portal/foster-farms/executive/share/" + templateSlug + ".html", getShareOrigin());
+    var shareUrl = new URL("/UnityEnergy/customer-portal/foster-farms/executive/share/" + templateSlug + ".html", shareOrigin);
     shareUrl.searchParams.set("ue_doc", stampCode);
     shareUrl.searchParams.set("ue_kind", selected.key);
     shareUrl.searchParams.set("ue_share", String(nowMs()));
@@ -595,10 +714,9 @@
     var style = document.createElement("style");
     style.id = "ueFounderSharePanelStyles";
     style.textContent = ""
-      + "#ueFounderShareLauncher{position:fixed;right:22px;bottom:24px;z-index:99998;border:1px solid rgba(65,92,44,.68);border-radius:999px;background:linear-gradient(180deg,rgba(87,123,54,.98) 0%,rgba(53,83,33,.98) 100%);color:#f7f2e5;font-size:12px;font-weight:700;letter-spacing:.04em;padding:11px 16px;cursor:pointer;box-shadow:0 10px 28px rgba(21,35,14,.28);text-transform:uppercase;}"
-      + "#ueFounderSharePanel{position:fixed;right:22px;bottom:76px;z-index:99999;width:min(92vw,420px);background:rgba(248,246,238,.98);border:1px solid rgba(126,128,96,.62);border-radius:16px;box-shadow:0 18px 44px rgba(20,30,12,.28);display:none;color:#26301f;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}"
+      + "#ueFounderSharePanel{position:fixed;right:22px;bottom:24px;z-index:99999;width:min(92vw,420px);background:rgba(248,246,238,.98);border:1px solid rgba(126,128,96,.62);border-radius:16px;box-shadow:0 18px 44px rgba(20,30,12,.28);display:none;color:#26301f;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}"
       + "#ueFounderSharePanel.is-open{display:block;}"
-      + ".uefsp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(164,164,132,.45);}"
+      + ".uefsp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(164,164,132,.45);cursor:move;user-select:none;touch-action:none;}"
       + ".uefsp-title{margin:0;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#34452a;}"
       + ".uefsp-close{border:0;background:transparent;color:#4b523f;font-size:18px;cursor:pointer;line-height:1;padding:0 2px;}"
       + ".uefsp-body{padding:12px 14px 14px;display:grid;gap:10px;}"
@@ -609,21 +727,11 @@
       + ".uefsp-actions{display:flex;flex-wrap:wrap;gap:8px;}"
       + ".uefsp-btn{border:1px solid rgba(112,129,81,.74);background:linear-gradient(180deg,rgba(236,242,226,.98) 0%,rgba(208,222,184,.98) 100%);color:#31442a;font-size:12px;font-weight:700;border-radius:999px;padding:8px 12px;cursor:pointer;}"
       + ".uefsp-btn.primary{border-color:rgba(63,90,39,.82);background:linear-gradient(180deg,rgba(88,123,48,.97) 0%,rgba(53,79,32,.97) 100%);color:#f7f2e5;}"
+      + ".uefsp-btn.align-right{margin-left:auto;}"
       + ".uefsp-foot{font-size:11px;color:#5b6451;line-height:1.35;}";
     document.head.appendChild(style);
   }
 
-  function buildSmsMessage(toneValue, customLabel, titleText, shareUrl) {
-    var labelMap = {
-      information: "Information",
-      project_update: "Project Update",
-      maxwellian_brief: "Maxwellian Brief",
-      custom: String(customLabel || "").trim() || "Share Update"
-    };
-    var toneLabel = labelMap[toneValue] || "Share Update";
-    var title = String(titleText || "").trim() || document.title || "Foster Farms Electrical Intelligence";
-    return toneLabel + ": " + title + "\n" + shareUrl;
-  }
 
   function normalizePathname(pathname) {
     var raw = String(pathname || "/").trim().toLowerCase();
@@ -665,6 +773,7 @@
     hotspot.style.zIndex = "40";
     hotspot.style.outline = "none";
     hotspot.style.webkitTapHighlightColor = "transparent";
+    hotspot.tabIndex = -1;
     if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
       hotspot.style.width = HOMEPAGE_HOTSPOT.sizeMobilePx + "px";
       hotspot.style.height = HOMEPAGE_HOTSPOT.sizeMobilePx + "px";
@@ -672,19 +781,53 @@
     hero.appendChild(hotspot);
     return hotspot;
   }
+  function createGlobalFounderHotspot() {
+    var existing = document.getElementById(GLOBAL_HOTSPOT_ID);
+    if (existing) return existing;
+    var hotspot = document.createElement("button");
+    hotspot.type = "button";
+    hotspot.id = GLOBAL_HOTSPOT_ID;
+    hotspot.setAttribute("aria-label", "Founder access hotspot");
+    hotspot.style.position = "fixed";
+    hotspot.style.right = GLOBAL_HOTSPOT.right;
+    hotspot.style.top = GLOBAL_HOTSPOT.top;
+    hotspot.style.width = GLOBAL_HOTSPOT.sizeDesktopPx + "px";
+    hotspot.style.height = GLOBAL_HOTSPOT.sizeDesktopPx + "px";
+    hotspot.style.borderRadius = "999px";
+    hotspot.style.border = "0";
+    hotspot.style.padding = "0";
+    hotspot.style.margin = "0";
+    hotspot.style.background = "transparent";
+    hotspot.style.opacity = "0";
+    hotspot.style.cursor = "pointer";
+    hotspot.style.zIndex = "99997";
+    hotspot.style.outline = "none";
+    hotspot.style.webkitTapHighlightColor = "transparent";
+    hotspot.tabIndex = -1;
+    if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
+      hotspot.style.width = GLOBAL_HOTSPOT.sizeMobilePx + "px";
+      hotspot.style.height = GLOBAL_HOTSPOT.sizeMobilePx + "px";
+    }
+    document.body.appendChild(hotspot);
+    return hotspot;
+  }
 
   function mountPanel() {
     if (document.getElementById("ueFounderSharePanel")) return;
     injectStyles();
     var persistedPanelOpen = readPanelOpenState();
-    var requireStealthUnlock = !isCustomerPortalPage(window.location.pathname);
+    var requireStealthUnlock = true;
     var canRestorePersistedPanel = persistedPanelOpen && isAuthorized();
     var hotspotActivated = canRestorePersistedPanel || !requireStealthUnlock;
+    function isStealthHotspotTarget(target) {
+      if (!target) return false;
+      var homepageHotspot = document.getElementById(HOMEPAGE_HOTSPOT_ID);
+      if (homepageHotspot && homepageHotspot.contains(target)) return true;
+      var globalHotspot = document.getElementById(GLOBAL_HOTSPOT_ID);
+      if (globalHotspot && globalHotspot.contains(target)) return true;
+      return false;
+    }
 
-    var launcher = document.createElement("button");
-    launcher.type = "button";
-    launcher.id = "ueFounderShareLauncher";
-    launcher.textContent = "Founder Share";
 
     var panel = document.createElement("section");
     panel.id = "ueFounderSharePanel";
@@ -722,28 +865,15 @@
       + "    <label class=\"uefsp-label\" for=\"uefspTitleInput\">Message title</label>"
       + "    <input class=\"uefsp-input\" id=\"uefspTitleInput\" type=\"text\"/>"
       + "  </div>"
-      + "  <div class=\"uefsp-row\">"
-      + "    <label class=\"uefsp-label\" for=\"uefspToneSelect\">Message kind</label>"
-      + "    <select class=\"uefsp-select\" id=\"uefspToneSelect\">"
-      + "      <option value=\"information\">Information</option>"
-      + "      <option value=\"project_update\">Project Update</option>"
-      + "      <option value=\"maxwellian_brief\">Maxwellian Brief</option>"
-      + "      <option value=\"custom\">Custom</option>"
-      + "    </select>"
-      + "  </div>"
-      + "  <div class=\"uefsp-row\">"
-      + "    <label class=\"uefsp-label\" for=\"uefspCustomLabelInput\">Custom kind label</label>"
-      + "    <input class=\"uefsp-input\" id=\"uefspCustomLabelInput\" type=\"text\" placeholder=\"Optional custom label\"/>"
-      + "  </div>"
       + "  <div class=\"uefsp-actions\">"
-      + "    <button type=\"button\" class=\"uefsp-btn primary\" id=\"uefspCopySmsBtn\">Copy SMS Message + Link</button>"
-      + "    <button type=\"button\" class=\"uefsp-btn\" id=\"uefspCopyLinkBtn\">Copy Link Only</button>"
+      + "    <button type=\"button\" class=\"uefsp-btn\" id=\"uefspCopyLinkBtn\">Copy Link</button>"
+      + "    <button type=\"button\" class=\"uefsp-btn align-right\" id=\"uefspCloseActionBtn\">Close</button>"
       + "  </div>"
       + "  <p class=\"uefsp-foot\">Uses Unity executive share cards and attaches your selected target URL as the destination.</p>"
       + "</div>";
 
-    document.body.appendChild(launcher);
     document.body.appendChild(panel);
+    var panelHead = panel.querySelector(".uefsp-head");
 
     var closeBtn = document.getElementById("uefspCloseBtn");
     var statusNode = document.getElementById("uefspStatus");
@@ -756,10 +886,8 @@
     var useCurrentBtn = document.getElementById("uefspUseCurrentBtn");
     var titlePresetSelect = document.getElementById("uefspTitlePresetSelect");
     var titleInput = document.getElementById("uefspTitleInput");
-    var toneSelect = document.getElementById("uefspToneSelect");
-    var customLabelInput = document.getElementById("uefspCustomLabelInput");
-    var copySmsBtn = document.getElementById("uefspCopySmsBtn");
     var copyLinkBtn = document.getElementById("uefspCopyLinkBtn");
+    var closeActionBtn = document.getElementById("uefspCloseActionBtn");
 
     SHARE_TYPES.forEach(function (entry) {
       var opt = document.createElement("option");
@@ -768,52 +896,77 @@
       typeSelect.appendChild(opt);
     });
     var titlePresetOptions = [];
-    var activeCustomerName = DEFAULT_PROVIDER_NAME;
+    var defaultPanelTitle =
+      normalizeTitlePreset(DEFAULT_TITLE_PRESETS[0]) ||
+      buildElectricalCategoryTitle(DEFAULT_PROVIDER_NAME, ELECTRICAL_TITLE_VARIANTS[0]);
     function appendTitlePreset(value) {
-      var normalized = String(value || "").trim();
-      if (!normalized || titlePresetOptions.indexOf(normalized) !== -1) return;
+      var normalized = normalizeTitlePreset(value);
+      var normalizedKey = titlePresetKey(normalized);
+      if (!normalized || !normalizedKey) return;
+      for (var i = 0; i < titlePresetOptions.length; i += 1) {
+        if (titlePresetKey(titlePresetOptions[i]) === normalizedKey) return;
+      }
       titlePresetOptions.push(normalized);
       var opt = document.createElement("option");
       opt.value = normalized;
       opt.textContent = normalized;
       titlePresetSelect.appendChild(opt);
     }
+    function findMatchingTitlePreset(value) {
+      var normalizedKey = titlePresetKey(value);
+      if (!normalizedKey) return "";
+      for (var i = 0; i < titlePresetOptions.length; i += 1) {
+        if (titlePresetKey(titlePresetOptions[i]) === normalizedKey) {
+          return titlePresetOptions[i];
+        }
+      }
+      return "";
+    }
 
-    function rebuildTitlePresetOptions(customerName, preferredTitle) {
-      var normalizedCustomerName = String(customerName || "").trim() || DEFAULT_PROVIDER_NAME;
-      activeCustomerName = normalizedCustomerName;
+    function rebuildTitlePresetOptions(preferredTitle) {
       titlePresetOptions = [];
       titlePresetSelect.innerHTML = "";
       var customTitlePresetOpt = document.createElement("option");
       customTitlePresetOpt.value = "__custom__";
       customTitlePresetOpt.textContent = "Custom (editable)";
       titlePresetSelect.appendChild(customTitlePresetOpt);
-      ELECTRICAL_TITLE_VARIANTS.forEach(function (variantLabel) {
-        appendTitlePreset(buildElectricalCategoryTitle(normalizedCustomerName, variantLabel));
-      });
-      var preferred = String(preferredTitle || "").trim();
-      if (preferred && titlePresetOptions.indexOf(preferred) === -1) {
+      getConfiguredTitlePresets().forEach(appendTitlePreset);
+      var preferred = normalizeTitlePreset(preferredTitle);
+      if (preferred && !findMatchingTitlePreset(preferred)) {
         appendTitlePreset(preferred);
       }
-      return buildElectricalCategoryTitle(normalizedCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
+      return titlePresetOptions[0] || defaultPanelTitle;
     }
 
     function syncPresetStateFromTarget(options) {
       var opts = options && typeof options === "object" ? options : {};
       var preserveCurrentTitle = opts.preserveCurrentTitle !== false;
-      var currentTitle = String(titleInput.value || "").trim();
-      var resolvedCustomerName = resolveCustomerDisplayName(targetInput.value) || DEFAULT_PROVIDER_NAME;
-      var defaultTitle = rebuildTitlePresetOptions(resolvedCustomerName, currentTitle);
+      var currentTitle = normalizeTitlePreset(titleInput.value);
+      var defaultTitle = rebuildTitlePresetOptions(currentTitle);
       if (!preserveCurrentTitle || !currentTitle) {
         titleInput.value = defaultTitle;
-        titlePresetSelect.value = defaultTitle;
+        titlePresetSelect.value = findMatchingTitlePreset(defaultTitle) || "__custom__";
         return;
       }
-      if (titlePresetOptions.indexOf(currentTitle) !== -1) {
-        titlePresetSelect.value = currentTitle;
+      var matched = findMatchingTitlePreset(currentTitle);
+      if (matched) {
+        titleInput.value = matched;
+        titlePresetSelect.value = matched;
         return;
       }
+      titleInput.value = currentTitle;
       titlePresetSelect.value = "__custom__";
+    }
+
+    function saveTitlePresetAndRefresh(rawTitle) {
+      var normalizedTitle = normalizeTitlePreset(rawTitle);
+      if (!normalizedTitle) return false;
+      var didSave = rememberTitlePreset(normalizedTitle);
+      syncPresetStateFromTarget({ preserveCurrentTitle: true });
+      var matched = findMatchingTitlePreset(normalizedTitle);
+      titleInput.value = normalizedTitle;
+      titlePresetSelect.value = matched || "__custom__";
+      return didSave;
     }
 
     targetInput.value = window.location.href;
@@ -824,18 +977,58 @@
     function setStatus(message) {
       statusNode.textContent = message;
     }
-
-    function setLauncherVisibility(unlocked) {
-      if (!requireStealthUnlock) {
-        launcher.style.display = "inline-flex";
-        return;
-      }
-      if (!hotspotActivated) {
-        launcher.style.display = "none";
-        return;
-      }
-      launcher.style.display = unlocked ? "inline-flex" : "none";
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
     }
+    var dragPointerId = null;
+    var dragOffsetX = 0;
+    var dragOffsetY = 0;
+    function startPanelDrag(event) {
+      if (!event || !panel.classList.contains("is-open")) return;
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      if (closeBtn && (event.target === closeBtn || closeBtn.contains(event.target))) return;
+      dragPointerId = event.pointerId;
+      var rect = panel.getBoundingClientRect();
+      dragOffsetX = event.clientX - rect.left;
+      dragOffsetY = event.clientY - rect.top;
+      panel.style.left = rect.left + "px";
+      panel.style.top = rect.top + "px";
+      panel.style.right = "auto";
+      panel.style.bottom = "auto";
+      if (panelHead && panelHead.setPointerCapture) {
+        try {
+          panelHead.setPointerCapture(event.pointerId);
+        } catch (_err) {}
+      }
+      event.preventDefault();
+    }
+    function movePanelDrag(event) {
+      if (dragPointerId === null || !event || event.pointerId !== dragPointerId) return;
+      var rect = panel.getBoundingClientRect();
+      var maxLeft = Math.max(8, window.innerWidth - rect.width - 8);
+      var maxTop = Math.max(8, window.innerHeight - rect.height - 8);
+      var nextLeft = clamp(event.clientX - dragOffsetX, 8, maxLeft);
+      var nextTop = clamp(event.clientY - dragOffsetY, 8, maxTop);
+      panel.style.left = nextLeft + "px";
+      panel.style.top = nextTop + "px";
+      panel.style.right = "auto";
+      panel.style.bottom = "auto";
+      event.preventDefault();
+    }
+    function endPanelDrag(event) {
+      if (dragPointerId === null) return;
+      if (event && event.pointerId !== undefined && event.pointerId !== dragPointerId) return;
+      if (panelHead && panelHead.releasePointerCapture) {
+        try {
+          panelHead.releasePointerCapture(dragPointerId);
+        } catch (_err) {}
+      }
+      dragPointerId = null;
+    }
+    if (panelHead) panelHead.addEventListener("pointerdown", startPanelDrag);
+    window.addEventListener("pointermove", movePanelDrag);
+    window.addEventListener("pointerup", endPanelDrag);
+    window.addEventListener("pointercancel", endPanelDrag);
 
     function openPanelFromHiddenHotspot() {
       hotspotActivated = true;
@@ -852,7 +1045,6 @@
       var unlocked = isAuthorized();
       var panelIsOpen = panel.classList.contains("is-open");
       writePanelOpenState(panelIsOpen && unlocked);
-      setLauncherVisibility(unlocked);
       accessRow.style.display = unlocked ? "none" : "grid";
       unlockBtn.style.display = unlocked ? "none" : "inline-flex";
       lockBtn.style.display = unlocked ? "inline-flex" : "none";
@@ -861,12 +1053,13 @@
       useCurrentBtn.disabled = !unlocked;
       titlePresetSelect.disabled = !unlocked;
       titleInput.disabled = !unlocked;
-      toneSelect.disabled = !unlocked;
-      customLabelInput.disabled = !unlocked;
-      copySmsBtn.disabled = !unlocked;
       copyLinkBtn.disabled = !unlocked;
+      if (closeActionBtn) {
+        closeActionBtn.style.display = unlocked ? "inline-flex" : "none";
+        closeActionBtn.disabled = !unlocked;
+      }
       if (unlocked) {
-        setStatus("Founder access unlocked. Choose type, set target link, then copy your message.");
+        setStatus("Founder access unlocked. Choose type, set target link, then copy your link.");
       } else {
         setStatus("Enter your Unity Access ID to unlock share controls.");
       }
@@ -882,22 +1075,23 @@
       refreshUiState();
     }
 
-    launcher.addEventListener("click", function () {
-      panel.classList.toggle("is-open");
-      if (panel.classList.contains("is-open")) {
-        seedDailyCounterFromCurrentPage();
-        refreshUiState();
-        if (!isAuthorized()) {
-          window.setTimeout(function () { accessInput.focus(); }, 30);
-        }
-      } else {
-        closePanelAndLock();
+    titleInput.addEventListener("change", function () {
+      var rawTitle = normalizeTitlePreset(titleInput.value);
+      if (!rawTitle) return;
+      var didSave = saveTitlePresetAndRefresh(rawTitle);
+      if (didSave) {
+        setStatus("Custom title saved to presets.");
       }
     });
 
     closeBtn.addEventListener("click", function () {
       closePanelAndLock();
     });
+    if (closeActionBtn) {
+      closeActionBtn.addEventListener("click", function () {
+        closePanelAndLock();
+      });
+    }
 
     window.addEventListener("keydown", function (event) {
       if (!event || event.key !== "Escape") return;
@@ -910,9 +1104,7 @@
       var target = event && event.target;
       if (!target) return;
       if (panel.contains(target)) return;
-      if (launcher.contains(target)) return;
-      var homepageHotspot = document.getElementById(HOMEPAGE_HOTSPOT_ID);
-      if (homepageHotspot && homepageHotspot.contains(target)) return;
+      if (isStealthHotspotTarget(target)) return;
       panel.classList.remove("is-open");
       if (requireStealthUnlock) {
         hotspotActivated = false;
@@ -955,21 +1147,21 @@
     useCurrentBtn.addEventListener("click", function () {
       targetInput.value = window.location.href;
       seedDailyCounterFromCurrentPage();
-      syncPresetStateFromTarget({ preserveCurrentTitle: false });
+      syncPresetStateFromTarget({ preserveCurrentTitle: true });
       setStatus("Target set to current page.");
     });
 
     targetInput.addEventListener("change", function () {
-      syncPresetStateFromTarget({ preserveCurrentTitle: false });
+      syncPresetStateFromTarget({ preserveCurrentTitle: true });
     });
     typeSelect.addEventListener("change", function () {
       var selected = SHARE_TYPES.find(function (entry) { return entry.key === typeSelect.value; });
       if (!selected) return;
       var selectedCardImageFilename = SHARE_CARD_IMAGE_FILENAME_BY_KEY[selected.key] || "";
       if (!String(titleInput.value || "").trim()) {
-        var fallbackTitle = buildElectricalCategoryTitle(activeCustomerName, ELECTRICAL_TITLE_VARIANTS[0]);
+        var fallbackTitle = titlePresetOptions[0] || defaultPanelTitle;
         titleInput.value = fallbackTitle;
-        titlePresetSelect.value = fallbackTitle;
+        titlePresetSelect.value = findMatchingTitlePreset(fallbackTitle) || "__custom__";
       }
       setStatus(
         "Share card type set to " + selected.label +
@@ -984,11 +1176,12 @@
       setStatus("Preset title loaded. You can still edit it before copying.");
     });
     titleInput.addEventListener("input", function () {
-      var rawTitle = String(titleInput.value || "").trim();
-      if (!rawTitle || titlePresetOptions.indexOf(rawTitle) === -1) {
+      var rawTitle = normalizeTitlePreset(titleInput.value);
+      var matched = findMatchingTitlePreset(rawTitle);
+      if (!rawTitle || !matched) {
         titlePresetSelect.value = "__custom__";
       } else {
-        titlePresetSelect.value = rawTitle;
+        titlePresetSelect.value = matched;
       }
     });
 
@@ -999,38 +1192,31 @@
       }
       var payload = buildShareUrl(typeSelect.value, targetInput.value, titleInput.value);
       var ok = await copyToClipboard(payload.url);
+      if (ok) {
+        saveTitlePresetAndRefresh(payload.title);
+      }
       setStatus(ok ? (payload.type.label + " link copied · " + payload.stampCode + " · " + payload.title) : "Copy failed.");
     });
 
-    copySmsBtn.addEventListener("click", async function () {
-      if (!isAuthorized()) {
-        refreshUiState();
-        return;
-      }
-      var payload = buildShareUrl(typeSelect.value, targetInput.value, titleInput.value);
-      var smsMessage = buildSmsMessage(
-        toneSelect.value,
-        customLabelInput.value,
-        titleInput.value,
-        payload.url
-      );
-      var ok = await copyToClipboard(smsMessage);
-      setStatus(ok ? ("SMS message + " + payload.type.label + " link copied.") : "Copy failed.");
-    });
-
+    function bindStealthHotspotTrigger(hotspot) {
+      if (!hotspot) return;
+      hotspot.addEventListener("click", function (event) {
+        if (event) event.preventDefault();
+        openPanelFromHiddenHotspot();
+      });
+      hotspot.addEventListener("keydown", function (event) {
+        if (!event) return;
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openPanelFromHiddenHotspot();
+      });
+    }
     if (requireStealthUnlock) {
       var homepageHotspot = createHomepageFounderHotspot();
       if (homepageHotspot) {
-        homepageHotspot.addEventListener("click", function (event) {
-          if (event) event.preventDefault();
-          openPanelFromHiddenHotspot();
-        });
-        homepageHotspot.addEventListener("keydown", function (event) {
-          if (!event) return;
-          if (event.key !== "Enter" && event.key !== " ") return;
-          event.preventDefault();
-          openPanelFromHiddenHotspot();
-        });
+        bindStealthHotspotTrigger(homepageHotspot);
+      } else {
+        bindStealthHotspotTrigger(createGlobalFounderHotspot());
       }
     }
 

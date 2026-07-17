@@ -1,0 +1,11 @@
+**PL2-1 South — Reactive and Harmonic Findings | June 2026**
+
+The M view on PL2-1 South is one of the more vivid reactive-burden pictures I have seen in a dataset of this size. The red amperage trace is aggressive — peaking at a confirmed 2,039 amps maximum across the month, with sustained high-level current delivery during all active production windows. That peak amperage, on a 2,500 kVA transformer, is carrying a substantial reactive component that is not contributing to any useful process work.
+
+The pink reactive fill — the visual representation of unconsumed reactive energy — is large, persistent, and present throughout the entire month, including valley periods. This is the telling detail. A purely production-driven reactive load would collapse during off-shift and weekend troughs. The fact that the green kVAR trace maintains a visible floor even when production activity is low confirms that a portion of your reactive burden here is fixed — motor magnetizing currents, transformer core losses, possibly legacy capacitor equipment that is undersized or incorrectly staged.
+
+Average reactive load is 571.3 kVAR, with a monthly maximum of 1,843.8 kVAR. That maximum figure is the number that drives MPTS sizing. At 1,843.8 kVAR MAX, the sizing rule calls for 1,843.8 divided by 400, which equals 4.61 — rounded up to 5 H490 units to provide full peak correction capacity. This is a large correction plant requirement, which reflects the scale and reactive intensity of what PL2-1 South is serving.
+
+On harmonics: the M-view header confirms 5.6 percent iTHD average with a maximum of 11.0 percent iTHD. The 11 percent maximum is the figure that warrants attention. Industry guidance — IEEE 519 — places total harmonic distortion thresholds for industrial systems in the 5 to 8 percent range at the point of common coupling. At 11 percent maximum, PL2-1 South is breaching that range at peak distortion moments. The harmonic spike events correlate with production ramp-up and ramp-down transitions, consistent with VFD switching transients common in food processing motor loads. The minimum recorded power factor of 80.25 percent confirms that at worst-case reactive moments, nearly 20 percent of all apparent power delivered to this transformer is producing no useful work whatsoever.
+
+---

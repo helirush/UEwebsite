@@ -1228,16 +1228,16 @@
             <div class="hero-key-metrics">
                 <div class="hero-key-metric">
                     <span class="hero-key-metric-label">Site Connected Capacity</span>
-                    <span class="hero-key-metric-value" id="cherry-hero-connected-capacity">10,500 kVA</span>
+                    <span class="hero-key-metric-value" id="cherry-hero-connected-capacity">10,000 kVA</span>
                 </div>
                 <div class="hero-key-metric">
                     <span class="hero-key-metric-label">Average Site Consumption</span>
-                    <span class="hero-key-metric-value" id="cherry-hero-average-consumption">3,500 kW</span>
+                    <span class="hero-key-metric-value" id="cherry-hero-average-consumption">3,374 kW</span>
                 </div>
             </div>
             <div class="hero-secondary-metrics">
-                <span>Untuned Energy Consequence<strong id="cherry-hero-site-consequence">$2.85M</strong></span>
-                <span>Site Efficiency<strong id="cherry-hero-site-efficiency">86.5% PF</strong></span>
+                <span>Untuned Energy Consequence<strong id="cherry-hero-site-consequence">$2.54M</strong></span>
+                <span>Site Efficiency<strong id="cherry-hero-site-efficiency">85.4% PF</strong></span>
             </div>
             <div class="hero-buttons">
                 <a href="#welcome" class="hero-btn hero-btn--consumption" data-scroll-target="welcome"><span class="hero-btn-icon">📈</span><span class="hero-btn-text"><span class="hero-btn-line1">How Cherry Avenue</span><span class="hero-btn-line2">Consumes Energy</span></span></a>
@@ -1304,6 +1304,16 @@
                              4) verify ../index.html Cherry card updates latest month + PF from the newest active full-site study. -->
                         <summary>2026 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
                         <div class="study-list month-study-list">
+                            <div class="study-item study-month-card">
+                                <div class="study-info">
+                                    <div class="study-month-top">
+                                        <span class="site-summary-name">MAY 2026</span>
+                                        <span class="site-summary-eff state-good">85.4% PF</span>
+                                    </div>
+                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: May Summaryboard</div>
+                                </div>
+                                <a href="./05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260501-260531_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
+                            </div>
                             <div class="study-item study-month-card">
                                 <div class="study-info">
                                     <div class="study-month-top">
@@ -1568,11 +1578,23 @@
         const CHERRY_RETURN_MODE_KEY = 'cherry_return_mode';
         const CHERRY_RETURN_MODE_SECONDARY_HOME = 'secondary-home';
         const SECONDARY_HOME_OFFSET_PX = 220;
+        const GROUP_LIBRARY_HASH = '#libraries';
 
         function closeAllLibraryDetails() {
             document.querySelectorAll('#libraries details[open]').forEach((detail) => {
                 detail.open = false;
             });
+        }
+
+        function shouldOpenPrimaryGroupLibrary() {
+            return String(window.location.hash || '').toLowerCase() === GROUP_LIBRARY_HASH;
+        }
+
+        function openPrimaryGroupLibraryDetail() {
+            const primaryDetail = document.querySelector('#libraries .library-section:first-child details');
+            if (primaryDetail) {
+                primaryDetail.open = true;
+            }
         }
 
         function scrollToSecondaryHomePosition() {
@@ -1618,7 +1640,8 @@
             } catch (e) {
                 returnMode = null;
             }
-            if (returnMode !== CHERRY_RETURN_MODE_SECONDARY_HOME) return;
+            const openPrimaryGroupLibrary = shouldOpenPrimaryGroupLibrary();
+            if (returnMode !== CHERRY_RETURN_MODE_SECONDARY_HOME && !openPrimaryGroupLibrary) return;
 
             try {
                 sessionStorage.removeItem(CHERRY_RETURN_MODE_KEY);
@@ -1626,6 +1649,9 @@
             } catch (e) {}
 
             closeAllLibraryDetails();
+            if (openPrimaryGroupLibrary) {
+                openPrimaryGroupLibraryDetail();
+            }
             scrollToSecondaryHomePosition();
         });
     </script>

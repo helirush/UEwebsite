@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-07-11 21:54:25",
+  "transformer_id": "FSO1",
+  "transformer_name": "FSO1",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "FSO1 | Period: June 2026 | Field Mode: Tuned | Vision-Only Synthesis**",
+    "csv_ground_truth": "UNAVAILABLE \u2014 all numeric anchors sourced from vision extraction only.",
+    "power_factor_csv": "0.0% (unavailable)",
+    "target_kva_csv": "0.0 kVA (unavailable)",
+    "kvar_max_csv_est": "0 kVAR (unavailable)",
+    "monthly_residual_waste_csv": "$0.00 \u2192 NOT USABLE; image reads $9,993/dataset (TBT header)",
+    "annual_residual_waste_csv": "$0 \u2192 NOT USABLE; image reads $207,459/yr (TBT header)",
+    "residual_heat_burden_kw_csv": "0.0 kW \u2192 NOT USABLE; image reads 42.6 kW cooling load (TBT header)",
+    "tm_max_reactive": "429 kVAR | Max AMPERAGE: 908.2 A | iTHD AVG: 8.0% | iTHD MAX: 31.1%",
+    "tbt_thermal_burden": "277,397 BTU/hr | baseline reference 242,874 BTU/hr",
+    "cooling_cost": "$8.75/hr | 372.8 MWh/yr cooling energy",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "757 kVA",
+    "bt_target_kva": "757 kVA",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "direct_csv_profile": "unavailable",
+    "optimization_mode": "tuned_field_optimization",
+    "note": "Because CSV is entirely unavailable, no percentage-variance flags can be generated. All figures carry vision-extraction status. Mercury confirmation recommended before final financial commitments.",
+    "monthly_savings_validated": "$17,288.25",
+    "annual_savings_validated": "$207,459.00",
+    "monthly_waste_validated_total": "$17,250.00",
+    "annual_waste_validated_total": "$207,000.00",
+    "annual_total_wasted_validated": "$207,000.00"
+  },
+  "packet_file": "FSO1_william_validation.json"
+}

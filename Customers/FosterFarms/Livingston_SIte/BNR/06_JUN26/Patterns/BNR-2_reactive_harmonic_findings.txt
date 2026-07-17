@@ -1,0 +1,11 @@
+**BNR-2 | Reactive and Harmonic Behavior — TM View | June 2026**
+
+The TM active-reactive-harmonic view for BNR-2 tells a field story that is consistent with disciplined tuning. The reactive stress indicators — the red amperage trace and the green kVAR trace — are subdued and largely absent from the upper visual range of the chart. This is not a field where reactive current is visibly churning through the transformer. The tuned compensation is working, and the evidence is in what you don't see as much as what you do.
+
+What is prominent in the TM view is the purple harmonics trace. It runs as a dense, continuous band across the full 720-hour dataset — persistent, unbroken, and riding low on the chart at consistent amplitude. This is the signature of a steady-state process load generating continuous harmonic content rather than episodic bursts tied to shift changes or production cycling. The iTHD header value of 6.3% with a MAX of 11.4% confirms that harmonic activity is real and present — but within a range that the tuned field is managing without crisis behavior. The MAX value of 11.4% is worth noting as a ceiling indicator: under peak load conditions, harmonic content does climb meaningfully, but it does not appear to be sustained.
+
+The power factor orange band holds steady near the top of the TM chart, and the MIN POWERFACTOR reference line at 95.76% establishes the performance floor. That floor is materially above many uncompensated industrial circuits, which is a direct reflection of the prior MPTS investment and its ongoing effect on field quality.
+
+Reactive stress in the tuned state sits at 4.6 kVAR average with a 6.3 kVAR maximum from the TBT header. At an 18 kVA supply target, that reactive load is proportionally significant — but it is not running unchecked. The optimization simulation shows this dropping to 1.6 kVAR average and 1.8 kVAR maximum with full tuning closure, a reduction of approximately 65 to 71 percent. That remaining gap represents the primary technical opportunity on BNR-2.
+
+---

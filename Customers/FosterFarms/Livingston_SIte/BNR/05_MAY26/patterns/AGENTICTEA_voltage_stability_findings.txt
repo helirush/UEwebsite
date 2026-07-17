@@ -1,0 +1,13 @@
+**Transformer: AGENTICTEA — Voltage Stability Findings**
+
+Voltage stability analysis for AGENTICTEA cannot be completed at this time because no image data was available for the V view — the voltage profile capture — and no CSV rows were provided to derive voltage behavior from the Mercury analysis.
+
+In the standard untuned field sequence, the V view would reveal the peak-to-trough voltage behavior at the transformer secondary, typically referenced against a 480-volt line-to-line nominal, or approximately 277 volts line-to-neutral. We would be looking for triangular dip patterns, which indicate inductive load switching transients, and for sustained voltage sag conditions, which indicate that the field is spending meaningful time below nominal reference — a sign of elevated device stress and accelerated insulation aging.
+
+For industrial facilities running cold storage compressors, rendering process motors, or heavy HVAC staging, voltage dip frequency and depth are critical health indicators. Each triangular drop below nominal puts mechanical stress on motor windings at startup and increases the probability of nuisance tripping on sensitive downstream controls. Repeated sags — even shallow ones — compound over months into measurable degradation.
+
+Without the V image, we cannot confirm: the number of voltage dip events, the depth of those dips relative to the 277-volt or 480-volt reference, whether any sustained below-nominal conditions are present, or whether the dip pattern correlates with known load cycling behavior at this site.
+
+The voltage stability analysis for AGENTICTEA is preserved as a placeholder in this session state block. It will need to be completed when image data or CSV voltage columns are submitted. Until then, this transformer carries an unresolved voltage health flag going into the group site overview.
+
+---

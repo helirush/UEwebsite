@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-13 19:58:19",
+  "transformer_id": "PL2S",
+  "transformer_name": "PL2S",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL2-1South | Foster Farms, Livingston HQ | May 2026 (260501\u2013260531)**",
+    "data_source": "Vision only \u2014 CSV ground truth unavailable**",
+    "target_kva_image": "1584 kVA",
+    "bt_target_kva": "1584 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 CSV unavailable, image value used as working reference",
+    "power_factor_csv": "0.0% \u2014 CSV unavailable; image-extracted value 85.7% PF used as working reference",
+    "kvar_max_csv_est": "0 kVAR \u2014 CSV unavailable; image-extracted value 927.9 kVAR MAX used as working reference",
+    "monthly_waste_csv": "$0.00 \u2014 CSV unavailable; image-extracted $13,260/dataset used as working reference",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "cross_check_disposition": "** No CSV numerics available for reconciliation. All figures below are image-extracted and carry standard vision-read uncertainty. No >10% discrepancy can be formally flagged without CSV ground truth. Treat all values as planning-level estimates pending Mercury confirmation. Planning install estimate carried from session parameters: approximately $200,000 for H490 sizing.",
+    "mpts_sizing_pre_check": "**",
+    "note": "Session parameter states $200,000 planning estimate \u2014 at 3 units that is approximately $600,000 installed. Flagging for engineering scope review.",
+    "monthly_savings_validated": "$35,335.92",
+    "annual_savings_validated": "$424,031.00",
+    "monthly_waste_validated_total": "$35,335.92",
+    "annual_waste_validated_total": "$424,031.00",
+    "annual_total_wasted_validated": "$424,031.00"
+  },
+  "packet_file": "PL2S_william_validation.json"
+}

@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-11 18:02:48",
+  "transformer_id": "REND2",
+  "transformer_name": "REND2",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "rend2_june_2026_cross_check": "Vision-Only (No CSV Ground Truth Available)**",
+    "target_kva_image": "1669 kVA",
+    "bt_target_kva": "1669 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 CSV unavailable; vision is sole numeric source",
+    "power_factor_csv": "0.0% \u2014 CSV unavailable; image-extracted value used: 73.9% avg PF",
+    "kvar_max_csv_est": "0 kVAR \u2014 CSV unavailable; image-extracted value used: 1,432.8 kVAR MAX",
+    "monthly_waste_csv": "$0.00 \u2014 CSV unavailable; image-extracted value used: approximately $50,196/dataset",
+    "planning_install_estimate": "$200,000 (one H490 unit, planning-level estimate)",
+    "estimated_payback_months": "not calculable without confirmed CSV anchors",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "discrepancy_flags": "**",
+    "note_kvar_max_from_bt_header": "1,432.8 kVAR. M view annotation showed 1,149 kVAR MAX \u2014 discrepancy of approximately 20%. BT header value (1,432.8 kVAR) used as primary per extraction hierarchy. M view value noted as secondary reference.",
+    "monthly_savings_validated": "$82,801.83",
+    "annual_savings_validated": "$993,622.00",
+    "monthly_waste_validated_total": "$82,801.83",
+    "annual_waste_validated_total": "$993,622.00",
+    "annual_total_wasted_validated": "$993,622.00"
+  },
+  "packet_file": "REND2_william_validation.json"
+}

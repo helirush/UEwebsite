@@ -1,0 +1,13 @@
+**Transformer: PL1P2 — Reactive and Harmonic Burden | June 2026**
+
+The reactive picture on PL1-Proc2 is one of a field under sustained electromagnetic stress that has never been addressed at the source. The numbers from the BT header make the case plainly: 311.7 kVAR average reactive demand, 773.4 kVAR maximum reactive spike. The spread between those two figures — a peak more than 2.4 times the average — is diagnostic in itself. It means this transformer is not experiencing a steady, manageable reactive load. It is experiencing sharp, high-amplitude reactive events layered on top of an already elevated baseline.
+
+The average power factor of 86.1 percent means that roughly 14 percent of all current flowing through PL1-Proc2 at any given moment is reactive current — non-productive, heat-generating, and capacity-consuming. At the confirmed minimum of 78.57 percent, that rises to over 21 percent. For a 2500 kVA transformer, that is a significant fraction of nameplate capacity being consumed by work that produces nothing but heat and electromagnetic noise.
+
+The thermal burden number crystallizes the consequence: 442,675 BTU per hour of heat being generated inside and around this transformer by resistive and reactive losses. That heat burden does not dissipate for free. It costs approximately $12.78 per hour in cooling load, drawing 64.9 kilowatts of additional electrical demand just to manage the thermal byproduct of the inefficiency. The facility is spending real electricity to cool the waste heat from wasted electricity. That circular cost pattern is one of the clearest signatures of an uncompensated reactive field.
+
+The M view confirms this with the amperage profile: a maximum of 1,451.4 amps against a monthly average of 927.0 amps. That elevated average current means every conductor, every lug, every bus connection, and every winding in this transformer's service path is carrying more current than it would in a corrected field — generating more heat per hour, every hour, for the full thirty-day period.
+
+The 5.6 percent iTHD harmonic contamination adds another layer. Harmonics at this level distort the current waveform, increase eddy current losses in the transformer core, and accelerate insulation aging. In an untuned field, harmonic distortion and reactive burden compound each other — the reactive current exacerbates voltage distortion, and the harmonic distortion increases the apparent reactive demand. The result is a system that is simultaneously less efficient and less stable than its nameplate suggests it should be.
+
+---

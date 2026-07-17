@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Reactive and Harmonic Findings**
+
+Reactive power and harmonic profile for transformer AGENTICTEA: value unavailable at this session. The kVAR average and kVAR maximum — the two values that drive MPTS unit sizing — cannot be extracted without either a Mercury CSV or a BT-view image header. Both are absent for this transformer.
+
+What we can speak to is the structural expectation for an untuned industrial field. Reactive kVAR demand in facilities with significant motor load, refrigeration compressors, or variable-speed drives typically runs between fifteen and forty percent of real kilowatt demand. In some heavily loaded cold storage or food processing environments, reactive demand can approach or exceed real demand at certain load intervals, pushing the power factor well below 0.90 — sometimes below 0.80 — without any compensation in place.
+
+For AGENTICTEA, the MPTS sizing calculation depends on kVAR MAX. The rule is straightforward: take the kVAR MAX reading, divide by 400, and round up to determine the number of H490 units required. With kVAR MAX unavailable, we cannot complete that sizing exercise here. However, the planning-level installed investment estimate provided for this session is approximately $200,000 — which corresponds to a single H490 unit at roughly 400 kVAR of correction capacity. Whether that unit is appropriately sized for AGENTICTEA's actual reactive demand profile is unknown until field data is submitted.
+
+Harmonic content assessment is similarly deferred. Without waveform data from the M-view or V-view images, harmonic distortion levels cannot be characterized. In untuned fields with significant non-linear load content, harmonics add a secondary efficiency penalty on top of reactive losses — and both compound the thermal burden carried by the transformer core and windings. That compounding effect is the reason untuned fields tend to age infrastructure faster than corrected ones.
+
+---

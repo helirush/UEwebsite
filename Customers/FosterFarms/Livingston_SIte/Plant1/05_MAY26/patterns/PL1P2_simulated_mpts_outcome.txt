@@ -1,19 +1,15 @@
-**PL1P2 — Projected MPTS Correction | Sizing and Recovery Estimate**
+**PL1P2 — Simulated MPTS Outcome | May 2026**
 
-The S view represents the projected post-MPTS field state for PL1P2, showing what the energy field looks like when reactive compensation is applied at the transformer level. The S header targets a power factor of 99.5% — up from the current 84.8% — which is the defining shift this correction produces.
+The S view — Unity's post-MPTS projection for this field — shows what PL1P2 looks like after reactive compensation is applied. The headline result is a power factor recovery to 99.5 percent, compared to the current measured average of 84.82 percent. That 14.7-point improvement in power factor is not a small refinement — it is a fundamental restructuring of the electromagnetic relationship between your transformer and your load.
 
-**Sizing calculation:**
-kVAR MAX from image = 948 kVAR
-948 ÷ 400 = 2.37 → round UP → **3 H490 units required**
+At 99.5 percent power factor, the reactive kVAR draw that is currently averaging 284.2 kVAR and peaking at an estimated 455 kVAR is absorbed locally by the MPTS system rather than being sourced from the utility and carried through your transformer windings. The current that your transformer has to manage drops significantly — which directly relieves the thermal burden, reduces voltage depression during peak events, and lowers the total apparent power demand the utility sees at your meter.
 
-At 400 kVAR compensation capacity per H490 unit, three units deliver 1,200 kVAR of correction headroom — sufficient to address the 948 kVAR peak with margin for load growth. This is an important distinction: sizing to the peak, not the average, is what prevents the correction from being overwhelmed during production surges.
+The MPTS sizing for PL1P2 is straightforward. Using the CSV-basis kVAR MAX of 455 kVAR: 455 divided by 400 rounds up to 2 — meaning **two H490 units** are the planning-level recommendation for this transformer. The estimated planning investment is approximately $400,000 installed, with final pricing dependent on engineering scope and site conditions.
 
-**Projected recovery from S view:**
-The MPTS correction is projected to recover the majority of the $251,065 per year in total waste currently identified. The energy waste component — approximately $133,849 per year — is directly addressable through reactive compensation. The thermal burden reduction cascades into cooling cost recovery as well, bringing the projected annual recovery into the range of the full total waste figure.
+The simulated outcome carries several compounding benefits beyond the direct energy savings. Voltage depressions that are currently pulling the field down to 308 to 315 volts during peak events are driven by reactive current draw. With that reactive current compensated locally, the voltage field stabilizes — reducing the frequency and severity of triangular dip events and the device stress they create. Motor winding temperatures drop. Insulation degradation rates slow. Compressor cycling becomes more voltage-stable. Control systems and drives experience fewer undervoltage transients.
 
-**Planning-level investment estimate:**
-Three H490 units at approximately $200,000 installed each represents a planning-level estimate of roughly $600,000 installed. Final pricing depends on engineering scope, site conditions, and specific installation requirements — this is a planning figure, not a binding quote. At a recovery rate in the range of $251,000 per year, the estimated simple payback on this investment is in the range of approximately 28 to 32 months — roughly two and a half years — before accounting for equipment life extension value from reduced thermal and voltage stress.
+The waste recovered — estimated in the image at approximately $251,065 per year across energy waste and cooling overhead combined — represents the planning-level financial case for correction. Against an estimated $400,000 installed investment for two H490 units, the implied payback window is in the range of approximately 18 to 24 months at these planning-level waste estimates, though the final payback calculation depends on confirmed utility rate structures, billing demand charges, and site-specific engineering validation.
 
-The voltage stability improvement projected by MPTS correction is a secondary but meaningful benefit: reducing reactive circulation reduces the reactive-driven voltage perturbations that are currently generating 15 to 18 labeled dip events per month. A calmer voltage field means lower stress on every motor, drive, and contactor connected to this transformer.
+What the S view makes visible is that PL1P2's untuned field is not a fixed cost of doing business. It is a recoverable loss — and the recovery is quantifiable, engineerable, and available now.
 
 ---

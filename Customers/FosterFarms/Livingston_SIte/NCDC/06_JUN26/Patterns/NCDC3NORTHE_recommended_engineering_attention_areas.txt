@@ -1,0 +1,15 @@
+**Transformer: NCDC3NORTHE — Recommended Engineering Attention Areas | June 2026**
+
+Given the tuned-field context and existing MPTS investment, the following engineering attention areas are recommended as incremental actions — refinement and gap-closure, not greenfield redesign.
+
+**1. Reactive compensation tuning review.** The gap between the current 83.7% power factor and the 99.5% TS target represents approximately 265 kVAR of average reactive burden still in circulation. A tuning review should assess whether the installed MPTS assets are operating at their optimal setpoints for this facility's load profile, and whether reactive compensation scheduling can be better aligned with the refrigeration compressor sequencing pattern that dominates this transformer's reactive signature.
+
+**2. Outage event root-cause investigation.** Five to six field interruption events across a single thirty-day window is a pattern worth investigating. Identifying the common cause — whether upstream utility events, facility switching behavior, or protection relay responses — will determine whether these interruptions are addressable through site-side action or require utility coordination. Each restart event generates a compounding harmonic and voltage stress burst that adds to cumulative device wear.
+
+**3. Harmonic monitoring and switching-event correlation.** The 11.4% iTHD peak and the temporal correlation between harmonic spikes and voltage drops in the first third of the month suggest that large inductive switching events are injecting distortion concentrations into the field in a predictable pattern. A targeted monitoring effort around the identified clustering window — approximately June 1st through 10th — could confirm whether this is compressor sequencing behavior and whether any mitigation at the motor-drive level is warranted.
+
+**4. Voltage dip tracking for device-health management.** The repeated triangular drops pushing into the 460V to 470V range create cumulative insulation and electronics stress in the motor and VFD population served by this transformer. A preventive maintenance scheduling review for motors and VFDs on this circuit is appropriate given the volume and cadence of observed dip events across the month.
+
+**5. Cooling system efficiency audit.** At $84,164 per year in estimated cooling costs and 48.9 kW of cooling draw, the thermal management overhead on NCDC3NORTHE is a meaningful cost line. As reactive compensation is refined and the heat burden decreases toward the TS outcome, a reassessment of cooling system sizing and operating setpoints could capture additional efficiency gains beyond the direct reactive correction value.
+
+---

@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-07-17 15:59:35",
+  "transformer_id": "PL1P2",
+  "transformer_name": "PL1P2",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "kvar_max",
+      "csv_value": 773.4,
+      "image_value": 773.4,
+      "pct_diff": 0.0,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL1P2 \u2014 Foster Farms, Livingston HQ | June 2026**",
+    "source_status": "** Mercury CSV unavailable \u2014 vision-only synthesis. All CSV anchors default to 0.0 (not applicable).",
+    "image_extracted_values_ground_truth_for_this_session": "**",
+    "target_kva_image": "993 kVA",
+    "bt_target_kva": "993 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable)",
+    "power_factor_csv": "0.0% (unavailable) \u2014 image reads 86.1% PF average",
+    "kvar_max_csv_est": "0 kVAR (unavailable) \u2014 image reads 773.4 kVAR MAX",
+    "monthly_waste_csv": "$0.00 (unavailable) \u2014 image reads approximately $11,435/dataset \u00b7 $139,124/yr energy waste; Total Wasted approximately $261,609/yr",
+    "planning_install_estimate": "$200,000 (H490 reference)",
+    "estimated_payback_months": "not calculable without CSV confirmation",
+    "discrepancy_flags": "**",
+    "outage_machine_readable_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "mpts_sizing_vision_based": "**",
+    "kvar_max_image": "773.4 kVAR",
+    "sizing_calculation": "773.4 \u00f7 400 = 1.93 \u2192 round UP \u2192 **2 \u00d7 H490 units**",
+    "planning_investment_estimate": "approximately $400,000 installed (subject to engineering scope and site conditions)",
+    "monthly_savings_validated": "$21,800.75",
+    "annual_savings_validated": "$261,609.00",
+    "monthly_waste_validated_total": "$21,800.75",
+    "annual_waste_validated_total": "$261,609.00",
+    "annual_total_wasted_validated": "$261,609.00"
+  },
+  "packet_file": "PL1P2_william_validation.json"
+}

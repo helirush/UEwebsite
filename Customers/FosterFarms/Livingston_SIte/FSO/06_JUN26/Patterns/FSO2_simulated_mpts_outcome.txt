@@ -1,0 +1,11 @@
+**FSO2 — Tuned Simulation Outcome | TS View | June 2026**
+
+The TS view — the tuned simulation projection for FSO2 — shows what full optimization of the existing tuned field is designed to deliver. Power factor in the simulation resolves to 99.5%, the Unity MPTS target. That is the ceiling the existing deployment is calibrated toward, and the gap between the current 91.6% average and that 99.5% target defines the recovery opportunity still available within the already-invested system.
+
+Translating that gap into operational terms: the 96.4 kVAR average reactive load and the 152.1 kVAR reactive maximum represent the inductive drag that full optimization would correct to near-zero. When reactive load is driven toward zero, several things happen simultaneously and in cascade. The current carrying thermal burden drops — 72,923 BTU per hour of heat generation would be substantially reduced, relieving both the transformer itself and the cooling infrastructure serving the electrical spaces. The cooling cost running at approximately $2.46 per hour — roughly $21,507 annually — would be significantly offset by the reduction in reactive-driven heat production.
+
+The annual waste estimate of approximately $58,543 per year represents the combined cost of reactive losses, thermal burden, and cooling overhead that remains in the current tuned-but-not-fully-optimized state. The TS simulation confirms that a meaningful portion of that figure is recoverable through optimization gap closure — without new greenfield deployment, but through refinement of the existing tuned system's compensation profile.
+
+The voltage stability dimension of the TS outcome is also relevant here. Reactive compensation at the 99.5% level stiffens the voltage bus — it reduces the magnitude of the triangular voltage drops that are currently visible in the 460V floor events. That voltage stiffening directly reduces the cumulative device stress described in the operational stress section. Fewer and shallower voltage dips mean longer motor service life, fewer nuisance trips, and a more stable platform for the VFDs and PLCs that govern refrigeration and production control. In a cold-chain food processing facility, that reliability improvement is not abstract. It is operationally concrete.
+
+---

@@ -1,0 +1,19 @@
+**NCDC2 — MPTS Simulation Outcome | S View**
+
+The S view simulation projects what NCDC2 looks like after MPTS correction is applied — and the contrast with the BT baseline is significant.
+
+Power factor moves from a 93.0% average in the untuned baseline to a consistent 99.5% after correction. That is not a marginal improvement — that is the field moving from a state of continuous reactive overhead to near-unity delivery. The orange power factor band in the S chart runs flat and tight near the top of the display for the full simulated month, a visual profile that looks nothing like the variable, stress-laden baseline.
+
+The reactive recovery is substantial. The BT baseline averages 244.9 kVAR of reactive demand. The S simulation brings that down to 60.6 kVAR average — a recovery of approximately 184 kVAR. That is reactive energy that stops flowing through your transformer windings, stops heating your conductors, and stops loading your cooling systems.
+
+**MPTS sizing estimate for NCDC2:**
+Using the standard sizing rule — kVAR MAX divided by 400, rounded up:
+351.6 kVAR MAX ÷ 400 = 0.879 → rounds up to **1 H490 unit**
+
+One H490 unit, rated at 400 kVAR, is the appropriate planning-level sizing for NCDC2's reactive profile. The planning-level installed investment estimate for one H490 unit is approximately $200,000, subject to engineering scope and site-specific conditions. That is a planning figure — final pricing depends on detailed engineering assessment.
+
+Against a total waste figure of approximately $127,148 per year, the investment case for correction is clear from a directional standpoint. The MPTS simulation does not eliminate all losses — some residual reactive demand remains at 60.6 kVAR average — but the dominant reactive and thermal waste drivers are addressed by the correction.
+
+The thermal burden reduction implied by near-unity power factor operation means your transformer runs cooler, your cooling systems work less, and the compounding thermal stress on insulation and windings decreases meaningfully with each operating hour after correction is applied.
+
+---

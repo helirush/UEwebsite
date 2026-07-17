@@ -1,0 +1,15 @@
+**Transformer: NCDC3-NORTH-E — Tuned-Field Outcome | TBT → TS Optimization Gap | June 2026**
+
+The TS (Savings) view for NCDC3-North-E frames what the field looks like as reactive correction moves toward full optimization — anchored on the TBT baseline at 83.7% power factor and a 372.2 kVAR reactive peak. The installed MPTS assets have already moved the field away from its uncorrected state, and the TS outcome represents the target condition toward which further optimization is directed.
+
+At full correction to the 99.5% power factor target indicated in the TS header, the reactive burden compresses from 308.2 kVAR average and 372.2 kVAR peak down toward a residual reactive tail of approximately 30–40 kVAR — a reduction of roughly 85 to 90 percent of the reactive load. This is not theoretical: it is the consequence of proper reactive compensation at the point of generation. The kVAR circulating through transformer windings, switchgear, and distribution conductors drops from a sustained 300-plus kVAR band to a negligible residual.
+
+The thermal consequence of that reactive reduction is direct and significant. Moving from 333,852 BTU per hour toward a thermally stabilized field translates to a substantial reduction in winding heat, cable I²R losses, and electrical room ambient temperature. At a facility running in California's Central Valley heat in June, every BTU per hour of thermal burden removed from NCDC3-North-E is cooling load relief that the facility's HVAC system no longer has to compensate for. The estimated $84,164 per year in cooling overhead compresses meaningfully as the reactive burden drops.
+
+The energy waste component — $12,856 per dataset month, $156,420 per year — represents recoverable losses that flow directly from the reactive and harmonic burden documented in the TBT and TM views. As the field moves from 83.7% to the 99.5% optimization target, the apparent power demand against the 655 kVA supply target normalizes. The transformer stops working against itself to carry reactive current, and more of its capacity is available for real productive load.
+
+The voltage stability improvement that flows from reactive correction is also material. Reactive compensation at the point of generation reduces the voltage-depressing effect of inductive reactive current on the distribution rail. The frequency and depth of the triangular voltage sags visible in the TV view should diminish as the reactive burden is addressed — delivering a more stable voltage rail for motors, drives, and control systems across the facility.
+
+The sizing reference for full gap closure: 372.2 kVAR MAX ÷ 400 = 0.93, rounding up to one H490 unit (400 kVAR capacity, approximately $200,000 installed at planning-level estimate, subject to engineering scope and site conditions). Given that MPTS assets are already deployed, the incremental requirement to close the remaining gap is the focus — not a greenfield deployment.
+
+---

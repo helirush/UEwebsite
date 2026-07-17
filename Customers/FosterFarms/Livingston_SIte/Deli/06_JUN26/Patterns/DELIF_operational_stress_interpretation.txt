@@ -1,0 +1,15 @@
+**Transformer: DELIF — Operational Stress Interpretation | June 2026**
+
+Pulling the full capture picture together — voltage behavior, reactive demand, harmonic loading, and thermal output — the Deli F transformer is operating under compounded, multi-vector stress. Each individual indicator is a concern on its own. Together, they describe a system that is consuming itself incrementally every production day.
+
+The thermal burden number deserves specific attention here. At 364,267 BTU per hour, this transformer is radiating heat at a rate that requires 53.4 kilowatts of dedicated cooling power to manage — at a running cost of approximately $10.67 per hour. In a food processing environment, where refrigeration and climate control are already energy-intensive operational requirements, this thermal overhead is not neutral. Every BTU that the transformer generates from reactive inefficiency and harmonic losses is a BTU that the facility's cooling infrastructure has to remove. The two systems are coupled — electromagnetic waste directly drives thermal management costs, and those costs are continuous.
+
+The production pattern visible in the BT view tells the operational story clearly. This is a facility that cycles hard — full production during weekday shifts, sharp dropoffs during nights and weekends, near-zero demand during extended shutdowns. That cycling behavior is particularly stressful for an untuned field. Every time production ramps up, the reactive demand surges — the green KVAR base fills immediately, the power factor drops, and the transformer absorbs a fresh inductive hit. Without reactive compensation, the field has no way to moderate that surge. The transformer windings, the switchgear, and the connected motors take the full brunt of each ramp-up event unassisted.
+
+The maximum amperage recorded in the M view is 1,896.4 amps. That is a substantial current draw for this transformer. High amperage combined with low power factor means elevated I²R losses in conductors — heat generated in wiring and connections that serves no productive purpose. This is where reactive waste translates directly into infrastructure wear at the physical level, not just on paper.
+
+The 39-volt voltage swing documented in the V view compounds all of the above. Voltage instability adds stress to every piece of equipment that the Deli F transformer feeds — drives, controllers, compressors, motors. The equipment on this circuit is operating in a field that is regularly 19 volts below nominal during production surges. That is not a comfortable operating margin for precision industrial equipment. It is the kind of condition that shortens equipment service life and drives unplanned maintenance events that are difficult to budget for and expensive to absorb.
+
+In summary: Deli F is an untuned field exhibiting active decay indicators across all four measurement dimensions — voltage stability, reactive demand, harmonic content, and thermal burden. The trajectory without correction is continued inefficiency growth and accelerating equipment stress accumulation.
+
+---

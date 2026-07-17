@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-07-10 17:47:31",
+  "transformer_id": "BNR1",
+  "transformer_name": "BNR1",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 1587.45,
+      "image_value": 1545.6,
+      "pct_diff": 2.636,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/BNR/AN55050325-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050325-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.897705376344086,
+    "csv_power_factor_pct": 89.7705376344086,
+    "csv_real_kw_avg": 1346.8117754592292,
+    "csv_reactive_kvar_avg": 635.9186265344982,
+    "csv_apparent_kva_avg": 1500.0199691756272,
+    "csv_apparent_kva_p95": 1587.4523499999998,
+    "csv_pct_at_or_above_kva_p95": 5.0,
+    "csv_voltage_avg": 273.84806705869175,
+    "csv_voltage_min": 0.0,
+    "csv_voltage_max": 283.831,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_BNR-1.json",
+    "csv_profile_source_relative_path": "dashboard_data_BNR-1.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "mpts_sizing_using_csv_kvar_max_1_017_kvar": "**",
+    "planning_level_installed_estimate": "approximately **$600,000** (3 \u00d7 ~$200,000 installed per H490; subject to engineering scope and site conditions).",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "1545.6 kVA",
+    "bt_target_kva": "1545.6 kVA",
+    "target_kva_csv": "1587.45 kVA",
+    "power_factor_csv": "89.77%",
+    "kvar_max_csv_est": "1017.47 kVAR",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "monthly_savings_validated": "$35,416.67",
+    "annual_savings_validated": "$425,000.00",
+    "monthly_waste_validated_total": "$35,416.67",
+    "annual_waste_validated_total": "$425,000.00",
+    "annual_total_wasted_validated": "$425,000.00"
+  },
+  "packet_file": "BNR1_william_validation.json"
+}

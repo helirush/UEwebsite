@@ -1,0 +1,15 @@
+**NCDC3 — North E Transformer | Recommended Engineering Attention Areas | May 2026**
+
+Several engineering focus areas emerge from this analysis and warrant attention before any correction assignment is finalized.
+
+**Reactive compensation sizing and placement:** One H490 unit at 400 kVAR is the preliminary specification for NCDC3. Engineering review should confirm the optimal placement relative to the largest reactive load contributors — likely the refrigeration compressor banks and any rendering process motors on this transformer's downstream bus. Point-of-load placement maximizes reactive cancellation efficiency and minimizes conductor heating upstream of the correction point.
+
+**Voltage stabilization review:** The 33-volt swing envelope and confirmed dips to 464 volts across May indicate that voltage regulation alone — independent of reactive compensation — may benefit from engineering evaluation. While MPTS correction will improve voltage stability by reducing reactive current draw and associated line voltage drop, the magnitude of the observed swing suggests a review of tap changer settings or distribution transformer regulation on upstream supply is warranted.
+
+**Harmonic monitoring and VFD filter assessment:** The 11.2 percent peak iTHD events suggest concentrated harmonic injection from nonlinear loads. Engineering should identify the specific VFD or rectifier loads contributing to these peaks and evaluate whether passive or active harmonic filtering is warranted in addition to reactive compensation. Harmonic currents interact with compensation capacitors and can cause resonance issues if not properly coordinated in the system design.
+
+**Outage root-cause follow-up:** The single 60-to-90-minute outage event detected in May should be documented and root-caused. In a food safety environment, understanding whether the outage was planned maintenance, a protective relay trip, or an upstream supply event informs both reliability planning and the urgency of field correction.
+
+**Thermal monitoring on transformer and connected equipment:** Given the 309,876 BTU/hr thermal burden and the sustained above-target kVA operation, thermal imaging of transformer connections, bus work, and motor terminal boxes on this circuit is advisable. Hotspot identification before correction installation provides a documented before-state for comparison after MPTS is commissioned.
+
+---

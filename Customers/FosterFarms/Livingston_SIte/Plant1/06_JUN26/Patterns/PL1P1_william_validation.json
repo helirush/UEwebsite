@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-17 15:56:23",
+  "transformer_id": "PL1P1",
+  "transformer_name": "PL1P1",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "pl1p1_cross_check": "Vision vs. CSV (June 2026)**",
+    "csv_ground_truth": "unavailable (direct_csv_profile: unavailable).",
+    "key_extracted_image_values": "**",
+    "target_kva_image": "254 kVA",
+    "bt_target_kva": "254 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image used as sole source]",
+    "power_factor_csv": "0.0% \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image value: 81.5% avg PF, min 0.0%, max 91.9%]",
+    "kvar_max_csv_est": "0 kVAR \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image value: 200.9 kVAR MAX]",
+    "monthly_waste_csv": "$0.00 \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image value: approximately $4,263/dataset]",
+    "planning_install_estimate": "approximately $200,000 installed (one H490 unit \u2014 see sizing note below)",
+    "estimated_payback_months": "0 (CSV unavailable; image-derived payback: approximately $80,269/yr recovered \u2192 roughly 30 months at planning estimate)",
+    "outage_machine_readable_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "mpts_sizing_check_image_derived": "**",
+    "planning_investment_estimate": "approximately $200,000 installed. Final pricing depends on engineering scope and site conditions.",
+    "monthly_savings_validated": "$6,976.50",
+    "annual_savings_validated": "$83,718.00",
+    "monthly_waste_validated_total": "$6,976.50",
+    "annual_waste_validated_total": "$83,718.00",
+    "annual_total_wasted_validated": "$83,718.00",
+    "payback_months_estimated": "30.0"
+  },
+  "packet_file": "PL1P1_william_validation.json"
+}

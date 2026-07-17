@@ -1,0 +1,11 @@
+**FSO2 — Voltage Stability | TV View | June 2026**
+
+The voltage field on FSO2 in June tells a story of fundamental stability with a clear mid-month stress chapter. The blue voltage trace holds consistently in the upper register for most of the 30-day window, respecting the 480V nominal reference line with reasonable discipline. The maximum recorded voltage is 498.4V — a modest swell above nominal, not alarming, but worth noting as evidence that the field experiences both-direction excursions.
+
+The operational floor, however, is where the concern lives. A sustained minimum voltage annotation of approximately 460V is visible in the chart body — that's 20 volts below the 480V nominal line-to-line reference. In a food processing facility running continuous refrigeration, large motors, compressors, and VFD-controlled equipment, a repeating 460V floor is not a footnote. It is a cumulative stress condition. Motor insulation rated for 480V operation that routinely sees 460V delivery is drawing higher current to maintain torque — that means more heat in the windings, more thermal cycling in the bearings, and a measurably shorter service life expectation.
+
+The header also captures an extreme transient minimum of 9.6V. This is almost certainly a momentary near-zero event — the kind associated with a brief interruption or a severe inductive transient — rather than a sustained operating condition. It does, however, confirm that the field experienced at least one near-collapse event during the month.
+
+The triangular drop pattern is clearly present and concentrated in the 260607 through 260616 window. These are structured, repeating drops — the signature of large inductive loads switching on and pulling voltage down before the system recovers. Compressor starts, large refrigeration cycling, or high-inertia motor events are the most likely candidates in this environment. The clustering in the middle two weeks of the month suggests a recurring operational schedule or equipment pattern rather than random electrical fault behavior. Three distinct outage-level interruption events are also confirmed, with estimated total downtime of approximately 4 to 8 minutes across the month — brief, but real, and each one representing a field-collapse and recovery cycle for every connected device downstream.
+
+---

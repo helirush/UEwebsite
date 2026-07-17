@@ -1,0 +1,20 @@
+**FSO-3 — Recommended Engineering Attention Areas | Tuned-Field Optimization Context**
+
+Given the tuned-field state of FSO-3 and the June 2026 data profile, the following engineering attention areas are recommended as optimization and reliability priorities — not as first-deployment actions, but as targeted steps to close the remaining gap and protect the existing investment.
+
+**1. Mid-Month Event Root Cause Investigation (June 13th)**
+The severity and duration of the voltage collapse and associated gold-streak outage event at approximately June 13th warrants event-level investigation. Pull protective relay event logs, SCADA interruption records, and utility event logs for that date window. Determine whether the event originated upstream (utility), at the FSO-3 transformer itself, or at a downstream load node. Root cause clarity protects both the existing MPTS assets and the transformer's insulation health.
+
+**2. Reactive Compensation Tuning — Targeting the 334.2 kVAR Peak**
+The existing MPTS deployment has pulled average power factor to 91.5 percent, but the 334.2 kVAR reactive peak confirms that peak-demand reactive events are still exceeding the currently compensated level. An MPTS tuning review — examining compensation switching thresholds, step sizing, and response timing relative to the facility's load cycling pattern — can reduce the peak reactive gap and close the distance to the 99.5 percent target field without requiring additional capital hardware if the existing equipment has headroom.
+
+**3. Harmonic Monitoring and Filtering Assessment**
+The 10.0 percent iTHD maximum on a field averaging 5.6 percent suggests episodic harmonic concentration events. Identify the operating conditions that drive the maximum — likely VFD load step changes or compressor staging sequences — and assess whether passive harmonic filtering or active filter adjustment at those load nodes would reduce the transformer winding heat contribution from the harmonic current component.
+
+**4. VFD Voltage Tolerance Audit**
+With a confirmed 460-volt minimum and a field that drops to 81.51 percent power factor at its worst, conduct a tolerance audit of the VFD units serving compressor and processing line motors. Verify trip setpoint programming is appropriate for the actual voltage environment, and consider whether undervoltage ride-through adjustments are warranted to reduce nuisance trip frequency during reactive-inrush events.
+
+**5. June 28th Secondary Interruption Follow-Up**
+The narrower gold streak near June 28th represents a second interruption event. Even if shorter in duration than the June 13th event, two interruptions in one month on a food processing transformer warrant attention to identify any pattern — scheduled maintenance, specific load behavior, or utility feed condition — that can be addressed through operational or protection coordination changes.
+
+---

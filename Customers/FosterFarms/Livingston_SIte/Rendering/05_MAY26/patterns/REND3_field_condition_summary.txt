@@ -1,9 +1,12 @@
-**REND3 — Field Condition Summary | May 2026 | Foster Farms Livingston HQ | 2,500 kVA Transformer**
+**REND3 — May 2026 | Field Condition Summary**
+**Transformer: REND3 | Foster Farms, Livingston HQ | 2,500 kVA, 480V | Untuned Field**
 
-REND3 is a 2,500 kVA transformer carrying a peak demand of 858.3 kilowatts across a full production month. On the surface, that load level sounds manageable for a transformer of this rating — but the field condition underneath that number tells a different story entirely.
+REND3 is one of the more heavily stressed transformers in this facility group, and May 2026 gives you a clear, data-confirmed picture of what that stress looks like month over month. The CSV file contains 44,640 one-minute resolution data points — that is a full 31-day capture at continuous granularity, and what it shows is a transformer that is operating in a persistent reactive-loss condition with no current compensation in place.
 
-The average power factor across May sits at 76.9 percent. That means for every unit of real work this transformer is delivering to your process, it is also hauling a substantial invisible burden — reactive energy that consumes conductor capacity, heats your transformer windings, and drives up operating costs without producing a single pound of product. The kVAR average is 478.2, and it peaks at 885.4 kVAR MAX. That reactive peak is not an occasional spike — it is a recurring operational reality that the field must absorb every time heavy loads cycle on.
+The field is untuned. That distinction matters. An untuned field does not hold its losses at a stable level — without correction, reactive burden tends to drift upward and thermal stress compounds as the months progress. What you are looking at right now is not the ceiling of this problem; it is the current position on a downward efficiency slope.
 
-The all-in waste figure extracted from the BT header is approximately $476,242 per year. That number includes energy waste of roughly $293,907 annually, plus thermal burden costs and cooling overhead that together push the total well above the energy line alone. The thermal burden reads 631,000 BTU per hour — a continuous heat load that your cooling infrastructure is working around the clock to counter, at an estimated $18.23 per hour and 92 kilowatts of cooling demand.
+At a CSV-confirmed average power factor of 76.94%, REND3 is converting less than 77 cents of every apparent-power dollar into productive work. The average apparent load across the month runs at 750.6 kVA, with a 95th-percentile peak of 865.9 kVA — essentially matching the 866 kVA supply target the BT view establishes. Average reactive draw confirmed by CSV is 471.8 kVAR, and the image header pushes the peak reactive moment to 885.4 kVAR. The average real work output — the kilowatts actually turning motors and running compressors — is 578.5 kW. The gap between those two numbers tells the waste story in a single breath.
 
-This is a field operating under chronic reactive stress, with measurable financial and thermal consequences accumulating every hour of every production day. REND3 has not been corrected, and the data shows it clearly.
+Two confirmed power interruption events occurred during May, with a combined estimated outage duration of 150 to 210 minutes. Device health is assessed at HIGH RISK based on recurring sub-nominal voltage dips and at least one confirmed field collapse to zero volts.
+
+---

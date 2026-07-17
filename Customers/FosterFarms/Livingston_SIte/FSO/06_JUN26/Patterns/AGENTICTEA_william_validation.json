@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-07-11 21:39:29",
+  "transformer_id": "AGENTICTEA",
+  "transformer_name": "AGENTICTEA",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=monthly_savings_validated,annual_savings_validated,payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "AGENTICTEA**",
+    "csv_ground_truth": "unavailable (Mercury analysis not provided)",
+    "image_vision_data": "unavailable (vision analysis not provided)",
+    "numeric_reconciliation": "cannot be performed \u2014 no data from either source",
+    "power_factor_csv": "0.0% \u2014 no reconcilable field reading",
+    "target_kva_csv": "0.0 kVA \u2014 value unavailable",
+    "kvar_max_csv_est": "0 kVAR \u2014 value unavailable",
+    "monthly_waste_csv": "$0.00 \u2014 value unavailable",
+    "planning_install_estimate": "$200,000 (system-provided planning reference, H490-class)",
+    "estimated_payback_months": "0 \u2014 value unavailable",
+    "target_kva_image": "value unavailable",
+    "bt_target_kva": "value unavailable",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "cross_check_status": "\u26a0\ufe0f BOTH DATA STREAMS ABSENT \u2014 narrative built on field-mode framing and system-provided planning constants only. No numeric discrepancies can be flagged. All section content reflects untuned field characterization with structural placeholders clearly marked."
+  },
+  "packet_file": "AGENTICTEA_william_validation.json"
+}

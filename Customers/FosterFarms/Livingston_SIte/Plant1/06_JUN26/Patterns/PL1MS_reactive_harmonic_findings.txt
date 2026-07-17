@@ -1,0 +1,13 @@
+**PL1-MShop | Reactive and Harmonic Burden | June 2026 | M View + BT Header**
+
+The M view is where the mechanical cost of this untuned field becomes undeniable. The red amperage trace is the dominant signal — running persistently between 400 and 700 amps during active production hours, then spiking to a confirmed peak of 952.6 amps during the mid-month surge cluster. That is a substantial current draw on a 480V system, and it is not all productive. A meaningful portion of that current is reactive — circulating magnetism that the transformer must carry, the conductors must handle thermally, and the cooling system must manage, all without producing a single watt of useful output at the production floor.
+
+The peak reactive excursion registered 387 kVAR in the M view, with the BT header confirming a monthly kVAR MAX of 2,265.0 kVAR. That disparity between the M view peak and the BT header kVAR MAX warrants a note: the BT header's 2,265 kVAR figure appears to reflect the broader dataset aggregate or the supply-side reactive ceiling, while the 387 kVAR M view annotation may reflect a localized reactive spike within the amperage context. Given CSV is unavailable, both values are extracted at face value. The BT header figure of 2,265.0 kVAR MAX drives the MPTS sizing calculation.
+
+Power factor behavior in the M view is shown through the orange trace riding between approximately 80% and 94% for most of the month — consistent with the BT header's 86.6% average and 79.73% minimum. At 79.73% minimum power factor, the field is at its least efficient state: only about 79 cents of every electrical dollar is doing productive mechanical work. The remaining 21 cents is reactive overhead — invisible to a production meter, very visible to a utility bill and a transformer's thermal load.
+
+Harmonic distortion (iTHD) in the M view reads as a low, dense band near baseline — the header confirms 5.1% iTHD average and 10.1% iTHD MAX. This is a moderate harmonic environment, not a severe one. At 5.1% average, harmonics are a contributing stressor rather than a primary driver of waste. However, the 10.1% maximum peak is worth monitoring. In a food processing environment with multiple VFD-driven motors, harmonic peaks can interact with resonant conditions on the reactive compensation network once MPTS is installed, and that should be factored into the tuning design.
+
+The combination of 194.1 kVAR reactive average, 86.6% average power factor, 184,225 BTU per hour thermal burden, and 27.0 kW of cooling draw creates a compounding burden profile. These are not separate problems — they are one system of interrelated electromagnetic inefficiency operating simultaneously, every hour, every day, without correction.
+
+---

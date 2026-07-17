@@ -1,0 +1,11 @@
+**BNR-1 — MPTS Harmonized Simulation | June 2026**
+
+The S view for BNR-1 projects the field behavior after MPTS correction is applied. The result is unambiguous: power factor lifts from the current 89.7 percent average — with its 70 percent floor — to a consistent 99.5 percent, held at both the maximum and minimum values across the entire simulated period. The MPTS MODE annotation confirms the target: 99.5% PF, maintained continuously rather than episodically.
+
+What that power factor correction means in practical terms is this: the reactive component of the current burden — currently averaging 692.6 kVAR — is substantially absorbed and compensated at the point of correction rather than being drawn through the transformer windings and distribution system. The amperage required to deliver the same kilowatt output drops materially, the thermal burden across the transformer and feeder cables decreases in proportion, and the cooling infrastructure requirement eases accordingly.
+
+The BT header documents the current annual waste at approximately $274,706 per year in reactive losses and a total wasted figure of approximately $449,367 per year including thermal and cooling overhead. The S view's recovered amounts represent the portion of that waste that MPTS correction captures — and at 99.5 percent power factor, the recovery is substantial. The remaining waste after correction is small by comparison and not worth emphasizing in planning conversations.
+
+For MPTS sizing on BNR-1: applying the standard sizing rule to the reactive burden — taking the operative kVAR MAX figure and dividing by 400 — the field calls for at minimum one H490 unit at 400 kVAR capacity, with engineering review warranted given the 692.6 kVAR average burden and the possibility that peak reactive demand exceeds a single unit's compensation range. A two-unit H490 configuration — at a planning-level installed estimate of roughly $400,000 — would provide full correction headroom across the operating range, including during the high-reactive excursions that drive the power factor floor to 70 percent. Final sizing and configuration depend on engineering scope and site-specific conditions, and these figures should be treated as planning estimates, not binding quotes.
+
+---

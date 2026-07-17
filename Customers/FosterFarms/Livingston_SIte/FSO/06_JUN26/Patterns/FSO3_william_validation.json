@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-07-11 22:00:35",
+  "transformer_id": "FSO3",
+  "transformer_name": "FSO3",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=target_kva_image,bt_target_kva,target_kva_csv,power_factor_csv,kvar_max_csv_est"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "monthly_residual_waste_csv_0_00_not_available_image_derived": "~$5,801/dataset |",
+    "annual_residual_waste_csv_0_not_available_image_derived": "~$70,580/yr (energy waste component) |",
+    "ground_truth_note": "** Direct CSV profile is unavailable for FSO-3. All numeric values are derived exclusively from visual image extraction (TBT, TV, TM, TS views). No CSV-vs-image discrepancy analysis is possible. All figures carry vision-only confidence and should be treated as planning-level references pending Mercury data validation.",
+    "voltage_header_artifact": "** The 9.6V minimum in the TV header is inconsistent with physical operations on a 480V system and is treated as a data artifact or metering anomaly. The 460V axis annotation is used as the operational voltage floor throughout this analysis.",
+    "monthly_savings_validated": "$9,648.00",
+    "annual_savings_validated": "$115,776.00",
+    "monthly_waste_validated_total": "$9,648.00",
+    "annual_waste_validated_total": "$115,776.00",
+    "annual_total_wasted_validated": "$115,776.00",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable"
+  },
+  "packet_file": "FSO3_william_validation.json"
+}

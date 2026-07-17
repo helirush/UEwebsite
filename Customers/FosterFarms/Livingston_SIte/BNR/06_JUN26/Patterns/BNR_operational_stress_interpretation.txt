@@ -1,0 +1,15 @@
+**BNR Transformer | June 2026 — Operational Stress Interpretation**
+
+Taken together, the voltage, reactive, and harmonic profiles documented for BNR in June paint a picture of a facility operating under layered and compounding electromagnetic stress — stress that the existing MPTS investment is actively working to reduce, but has not yet fully resolved.
+
+The thermal burden of 602,911 BTU per hour is the most immediate operational consequence. Transformer cores and windings operating at elevated thermal levels experience accelerated insulation aging on a well-documented exponential curve — every 10°C of sustained excess temperature roughly halves insulation service life. The 88.4 kilowatts of cooling load at $17.55 per hour is not just a utility line item; it is the facility's mechanical response to heat that the reactive field is generating inside the electrical infrastructure.
+
+The voltage profile compounds this stress. An operating average of 476.5 volts — below the 480-volt nominal — combined with recurring triangular voltage drops during load cycling means that motors, drives, and contactors at this facility are routinely exposed to sub-nominal conditions. Motor torque output drops roughly as the square of voltage reduction. At 476.5 volts average, that translates to motors working harder to deliver rated torque — drawing more current, generating more heat, and wearing faster than their design life assumes.
+
+The 11.4% peak iTHD harmonic content adds a third stress layer. Harmonic currents cause additional transformer core losses, increase winding temperatures beyond what fundamental-frequency load alone would produce, and create voltage distortion that ripples into sensitive control systems. In a food processing environment where process continuity is a product safety requirement — not just an efficiency preference — harmonic-driven instability in control systems represents real operational risk.
+
+The 4 to 5 outage events observed across June, totaling an estimated 5 to 10 minutes, may appear minor in aggregate duration, but in cold-chain operations each interruption triggers restart protocols, product temperature monitoring reviews, and potential hold events on product batches. The operational cost of these interruptions exceeds the electrical cost by a significant multiple.
+
+The MPTS system already deployed is demonstrably cutting into this stress profile — the TS outcome shows what full optimization looks like — but the gap between the TBT baseline condition and the TS target outcome represents real, ongoing operational exposure that rewards continued attention.
+
+---

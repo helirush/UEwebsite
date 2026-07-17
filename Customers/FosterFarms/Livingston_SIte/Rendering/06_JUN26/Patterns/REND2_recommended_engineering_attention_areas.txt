@@ -1,0 +1,18 @@
+**REND2 — Engineering Attention Areas | June 2026**
+
+**1. Reactive Compensation Sizing Confirmation**
+The BT-extracted kVAR MAX of 1,432.8 kVAR and the M-view annotation of 1,149 kVAR MAX represent a 20% discrepancy in peak reactive readings. Before finalizing MPTS unit count, a Mercury CSV pull for REND2 should be completed to confirm the authoritative kVAR MAX figure. The difference between 3 and 4 H490 units at planning-level pricing is approximately $200,000 — that gap warrants CSV confirmation before capital commitment.
+
+**2. Voltage Bus Stabilization**
+The twelve documented sub-nominal voltage events — including a 450.4V floor event — indicate that the voltage bus on REND2 is not adequately supported during production peak loading. Engineering review should evaluate whether reactive compensation alone will fully address the voltage sag pattern, or whether additional voltage regulation measures are warranted at this transformer service point.
+
+**3. Harmonic Survey**
+The 5.8% average iTHD with 10.6% peak events warrants a dedicated harmonic survey at REND2 to characterize the frequency spectrum and identify primary harmonic sources. If significant third, fifth, or seventh harmonic content is confirmed, harmonic filter staging may need to be incorporated into the MPTS correction design to prevent capacitor bank resonance conditions.
+
+**4. Transformer Thermal Condition Assessment**
+Running at an estimated 1,333,719 BTU per hour of thermal burden in an untuned state, the REND2 transformer should receive a thermal imaging and insulation resistance assessment. Accumulated thermal stress from operating in this reactive-heavy condition may have already affected winding insulation condition. Early detection of thermal degradation prevents unplanned failures and informs maintenance scheduling.
+
+**5. Outage Root Cause Review**
+The two power interruption events detected in June — estimated at 2 to 3 total hours of downtime — should be reviewed against facility maintenance logs and utility records. Confirming whether these were scheduled, protective relay-initiated, or utility-side events informs both operational planning and any protective relay coordination adjustments needed alongside MPTS installation.
+
+---

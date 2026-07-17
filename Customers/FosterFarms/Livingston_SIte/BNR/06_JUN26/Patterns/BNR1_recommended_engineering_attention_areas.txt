@@ -1,0 +1,13 @@
+**BNR-1 — Engineering Attention Areas | June 2026**
+
+Several areas warrant engineering attention on BNR-1 before and alongside MPTS deployment.
+
+First, the voltage collapse events documented in the V view — five to six distinct momentary interruptions across June, totaling an estimated 10 to 18 minutes of accumulated outage time — should be investigated for root cause. In a cold-chain food processing environment, these events carry food safety implications beyond their electromagnetic significance. Identifying whether the driver is large motor starting inrush, compressor cycling, or utility-side fluctuations will determine whether soft-start upgrades, inrush limiting, or utility coordination are warranted in parallel with reactive correction.
+
+Second, the iTHD environment at 6.3 percent average and 11.4 percent peak exceeds IEEE 519 limits for this facility class. Engineering should assess whether passive harmonic filtering or active front-end treatment on the largest VFD loads would bring the harmonic environment within limits and reduce the compounding insulation stress currently accumulating on transformer windings and cable infrastructure.
+
+Third, the kVAR MAX figure discrepancy observed in the BT header — where a secondary value of 152.1 kVAR was labeled alongside the primary 692.6 kVAR figure — should be clarified in the detailed engineering data pull. If 152.1 kVAR represents a sub-circuit or a specific meter point rather than the transformer-level reactive maximum, the MPTS sizing recommendation may need adjustment once the full reactive profile hierarchy is mapped.
+
+Fourth, given the untuned field status and the documented thermal burden of 602,911 BTU per hour, transformer insulation condition assessment — including winding temperature trending and insulation resistance testing — is advisable before summer peak loading arrives at this California facility. June's numbers establish the baseline; July and August ambient conditions will stress this transformer further without correction in place.
+
+---

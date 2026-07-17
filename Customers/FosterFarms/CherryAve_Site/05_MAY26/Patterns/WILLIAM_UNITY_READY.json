@@ -1,0 +1,147 @@
+{
+  "generated_at_utc": "2026-07-15T17:48:46.567059+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eeclips/FosterFarms/CherryAve/aSITE2026/05_MAY2026/patterns",
+  "mode": "full",
+  "narrative_mode": "pre_mpts_sales",
+  "inventory": {
+    "image_count": 20,
+    "all_images": [
+      "T10b_may26.png",
+      "T10bt_may26.png",
+      "T10m_may26.png",
+      "T10s_may26.png",
+      "T10v_may26.png",
+      "T12b_may26.png",
+      "T12bt_may26.png",
+      "T12m_may26.png",
+      "T12s_may26.png",
+      "T12v_may26.png",
+      "T15b_may26.png",
+      "T15bt_may26.png",
+      "T15m_may26.png",
+      "T15s_may26.png",
+      "T15v_may26.png",
+      "T16b_may26.png",
+      "T16bt_may26.png",
+      "T16m_may26.png",
+      "T16s_may26.png",
+      "T16v_may26.png"
+    ],
+    "transformer_count": 4,
+    "raw_coverage_by_transformer": {
+      "T10": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "T12": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "T15": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "T16": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "T10": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "T12": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "T15": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ],
+      "T16": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "T10": [
+        "T10b_may26.png",
+        "T10bt_may26.png",
+        "T10m_may26.png",
+        "T10s_may26.png",
+        "T10v_may26.png"
+      ],
+      "T12": [
+        "T12b_may26.png",
+        "T12bt_may26.png",
+        "T12m_may26.png",
+        "T12s_may26.png",
+        "T12v_may26.png"
+      ],
+      "T15": [
+        "T15b_may26.png",
+        "T15bt_may26.png",
+        "T15m_may26.png",
+        "T15s_may26.png",
+        "T15v_may26.png"
+      ],
+      "T16": [
+        "T16b_may26.png",
+        "T16bt_may26.png",
+        "T16m_may26.png",
+        "T16s_may26.png",
+        "T16v_may26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "T10",
+      "T12",
+      "T15",
+      "T16"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "auto",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eeclips/FosterFarms/CherryAve/aSITE2026/05_MAY2026/patterns",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "pre_mpts_sales",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-07-15T18:12:22.988719+00:00"
+}

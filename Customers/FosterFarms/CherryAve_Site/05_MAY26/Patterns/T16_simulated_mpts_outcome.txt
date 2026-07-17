@@ -1,0 +1,11 @@
+**T16 — MPTS Correction Simulation | S View | May 2026**
+
+The MPTS simulation view shows what T16's field looks like after correction. Power factor locks at 99.5% — essentially flat, essentially unity. The simulation confirms this with the green "MPTS MODE | Target PF: 99.5%" annotation. The reactive average drops from 494.2 kVAR to 87.0 kVAR — a reduction of 407.2 kVAR per hour, every hour, all month. That 407.2 kVAR is reactive burden that disappears from your transformer, your cables, your switchgear, and your utility metering.
+
+The MPTS sizing for T16 is straightforward. kVAR MAX of 718.7 divided by 400 equals 1.80 — rounding up, you need 2 H490 units, providing 800 kVAR of combined correction capacity. At a planning-level estimate, that represents approximately $400,000 installed — though final pricing depends on engineering scope, site conditions, and any harmonic filtering requirements that the 59.7% iTHD peak may necessitate.
+
+With the reactive burden reduced from $391,495 per year toward the corrected-field baseline, and thermal burden decreasing proportionally as the transformer runs cooler, the estimated planning-level payback at image-extracted waste figures is in the range of approximately 12 months. That is a rough planning estimate pending Mercury 2 CSV confirmation, but the magnitude of the waste signal — nearly half a million dollars per year in total estimated wasted value — makes the correction economics compelling at even conservative assumptions.
+
+The S view also shows the voltage envelope stabilizing post-correction. When reactive demand stops pulling the field down during load transitions, the sharp V-shaped voltage dips reduce in frequency and depth. The 451V floor events and the clustered sag periods in the back half of May become less likely in a corrected field because the transformer is no longer chasing reactive current — it is operating from a stable magnetic platform. Motor insulation, drive electronics, and contactors all benefit from this stabilization, translating reactive correction into extended equipment service intervals.
+
+---

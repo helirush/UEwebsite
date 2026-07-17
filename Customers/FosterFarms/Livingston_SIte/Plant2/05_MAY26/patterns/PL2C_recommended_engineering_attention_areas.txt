@@ -1,13 +1,21 @@
-**PL2C — Engineering Attention Areas**
+**Transformer: PL2-2Center (PL2C) — Engineering Attention Areas**
 
-Three areas warrant formal engineering follow-up based on this dataset.
+**1. Reactive Compensation — Immediate Priority**
+One H490 MPTS unit (400 kVAR) should be assigned to PL2-2Center as the primary engineering action. The 311 kVAR reactive maximum is well-matched to this unit's capacity. Engineering scope should confirm installation point, switchgear coordination, and any required space or ventilation provisions at the PL2 switchroom location.
 
-**First — the March 24th disturbance event.** A voltage collapse to 0.0 volts combined with a simultaneous amperage spike to 520.7 amps is not a routine operating fluctuation. Engineering should pull the event logs from the SCADA or power monitoring system for that timestamp, identify the root cause — whether utility-side, internal fault, or switching event — and assess whether protection coordination is performing correctly for this transformer and its downstream circuits. If this was a utility disturbance, it warrants a conversation with Merced Irrigation District about power quality at the delivery point.
+**2. Field Interruption Root Cause Review**
+The confirmed outage event — voltage drop to zero, 520-amp reconnection inrush, estimated 5–15 minute duration — should be investigated for root cause. Was this a utility event, a protection trip, or a manual switching operation? Understanding the cause determines whether protective relay settings, switchgear maintenance, or operational protocols need adjustment to prevent recurrence and reduce restart stress on the transformer.
 
-**Second — recurring triangular voltage dip clustering during peak production hours.** The density of dip formation during the March 18th through March 24th production stretch suggests that specific production sequences or equipment start cycles are creating organized field disturbance events. An equipment-level investigation — identifying which motors or compressors are the primary dip drivers — would allow targeted intervention beyond MPTS-level field compensation.
+**3. Harmonic Monitoring — Near-Term Watch**
+The 10.4 percent iTHD peak warrants a targeted harmonic survey, particularly if VFD loading on this transformer is expected to increase. If harmonic content trends upward as load mix evolves, passive or active harmonic filtering should be evaluated as a complementary measure to the MPTS installation.
 
-**Third — harmonic background load characterization.** The steady-state harmonic band visible in the M view warrants a formal harmonic survey to quantify THD (total harmonic distortion) levels. If VFD-driven loads are contributing significant harmonic content, the interaction between harmonic loading and MPTS compensation equipment should be evaluated during the H490 engineering specification phase to ensure optimal filter configuration and protection coordination.
+**4. Thermal Management — Ongoing Monitoring**
+At 158,890 BTU/hr, the transformer thermal load should be monitored with at least quarterly infrared thermography on the transformer tank, bushings, and primary/secondary connections. Post-MPTS installation, a follow-up thermal survey at 30 and 90 days will confirm the expected burden reduction and validate the correction is performing as projected.
 
-MPTS installation engineering should also account for the high-side voltage bias (482.7 V average) when specifying capacitor bank voltage ratings.
+**5. Voltage Profile Follow-Up Post-Correction**
+After MPTS installation, re-capture the voltage field under equivalent loading conditions. The expectation is that the oscillating voltage envelope narrows meaningfully, triangular drop amplitudes decrease, and sub-nominal excursion frequency drops. If significant voltage oscillation persists post-correction, that would point to upstream utility-side impedance issues requiring utility engagement.
+
+**6. Date-Period Data Reconciliation**
+The image header references May (260501–260531) while the vision narrative body references March 13–31. This discrepancy should be resolved with the data capture team before any compliance reporting or formal engineering documentation is produced from this dataset.
 
 ---

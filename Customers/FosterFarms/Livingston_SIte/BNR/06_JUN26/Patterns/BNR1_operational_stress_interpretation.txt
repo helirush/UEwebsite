@@ -1,0 +1,13 @@
+**BNR-1 — Operational Stress Profile | June 2026**
+
+Taken together, the V, BT, and M views paint a consistent and concerning picture of BNR-1's operating environment in June 2026. This is a transformer running at high sustained load — 1,515.3 kilowatts of peak demand against a 1,605 kVA supply ceiling — with a power factor that averages 89.7 percent but periodically collapses toward 70 percent, a reactive burden of 692.6 kVAR that never really relaxes, and a harmonic environment that persistently exceeds IEEE 519 limits.
+
+The thermal consequence of this combined stress is significant. At 602,911 BTU per hour of documented thermal burden, this transformer is running warm — and in a June operating environment at a California processing facility, ambient temperatures are not providing relief. The cooling infrastructure is working continuously, at an estimated $17.55 per hour, to manage heat that is fundamentally a consequence of electromagnetic inefficiency rather than productive work. That's approximately $153,778 per year in cooling costs that exist solely because BNR-1's field is untuned.
+
+The voltage collapse events documented in the V view add a reliability dimension to what is otherwise a pure efficiency story. Five to six documented outage events — even brief ones of 1 to 3 minutes — in a cold-chain food processing environment introduce temperature excursion risk, food safety documentation requirements, and cumulative equipment stress that cannot be recovered. Each collapse event is a warranty cycle on the connected drives and control systems.
+
+The untuned field semantics are important here. Without a MPTS tuning assignment on BNR-1, this profile will not self-correct. Reactive losses tend to accumulate as motor populations age, insulation resistance decreases, and drive systems add harmonics over time. The baseline established in June 2026 is likely to be a floor, not a ceiling, for future waste costs. The direction of drift in an untuned field is one way: toward higher reactive burden, higher thermal output, and higher operating cost. Every month without correction is a month of accumulated, unrecoverable waste.
+
+The aggregate operating cost impact for BNR-1 in its current state — approximately $449,367 per year in total wasted cost including reactive losses, thermal burden, and cooling overhead — represents a clear and quantifiable efficiency gap that MPTS correction is designed to close.
+
+---

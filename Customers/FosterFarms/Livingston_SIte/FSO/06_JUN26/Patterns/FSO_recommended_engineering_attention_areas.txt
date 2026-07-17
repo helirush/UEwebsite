@@ -1,0 +1,20 @@
+**FSO Transformer — Recommended Engineering Attention Areas | June 2026**
+
+The FSO field is tuned and operating, but several areas warrant targeted engineering attention to close the remaining optimization gap and improve field resilience.
+
+**1. Reactive Compensation Optimization Review**
+The current average power factor of 86.1% against a 99.5% TS target indicates the deployed MPTS assets have not yet delivered full compensation to the field. An engineering review of compensation setpoints, switching thresholds, and capacitor bank responsiveness is warranted. Confirm that all installed MPTS units are fully commissioned and operating within design parameters. Any units in partial-service or commissioning-hold status should be prioritized for completion.
+
+**2. Harmonic Distortion Assessment**
+The 31.1% iTHD peak recorded in the TM view is above typical industrial thresholds for clean power distribution. A harmonic survey targeting the early-June spike periods is recommended to identify specific nonlinear load contributors — likely large motor starts, VFD systems, or switching power supplies in the process chain. Passive or active harmonic filtering should be evaluated if peak iTHD events are recurring.
+
+**3. Early-June Disturbance Event Investigation**
+The two outage events near June 7th and 9th, and the correlated voltage-drop clustering in the same window, should be reviewed against protection relay logs and utility event records. Identifying whether these were utility-side feeder events or internal protective relay operations will determine whether any internal distribution upgrades are warranted.
+
+**4. Cooling Overhead Monitoring**
+At 42.6 kilowatts of cooling load and approximately $8.75 per hour in cooling costs, the thermal overhead is significant and partially recoverable through reactive compression. As MPTS optimization progresses, tracking the correlation between cooling load reduction and reactive burden improvement provides a concrete validation metric for the optimization investment.
+
+**5. Voltage Transient Monitoring for Sensitive Equipment**
+The triangular voltage-drop pattern clustering in early June, with a confirmed minimum of 472 volts, warrants monitoring for any VFD-driven systems or sensitive electronic controls operating on the FSO circuit. A brief transient survey or data-logging exercise during production peaks would confirm whether device-level stress is present.
+
+---

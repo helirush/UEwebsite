@@ -1,0 +1,13 @@
+**FSO-1 — June 2026 | Voltage Stability Findings (TV View)**
+
+The voltage health picture for FSO-1 in June 2026 is best described as moderately stabilized with recurring episodic stress. The blue voltage trace in the TV view maintains general proximity to the 480V line-to-line nominal reference throughout the month, and the overall coherence of the envelope is consistent with an actively tuned field. That is the baseline expectation — and the field is meeting it most of the time.
+
+The confirmed voltage range for the month is 472V minimum to 499V maximum, giving a total swing of 27 volts across the 720-hour dataset. The floor at 472V sits approximately 8 volts — or about 1.7 percent — below the nominal 480V line-to-line reference. That deviation percentage may sound modest, but in a facility running continuous motor loads — compressors, refrigeration systems, conveyors, rendering equipment — repeated sub-nominal excursions carry cumulative consequences. Each dip below nominal increases electromagnetic stress on motor windings, accelerates insulation aging, and shortens the effective service life of rotating equipment.
+
+The TV view confirms the presence of triangular voltage-drop patterns — sharp V-shaped dips in the blue trace where voltage descends steeply and recovers at a similar rate. These are load-induced events, not random noise. They cluster in two identifiable windows: the first and most concentrated cluster runs from approximately 260601 through 260612, coinciding directly with the two outage events identified in the BT view. The second, lighter cluster appears in the final week of the month, near 260625 through 260628. The mid-month period — roughly 260613 through 260622 — shows comparatively more settled behavior, though low-amplitude ripple persists throughout even the calmer intervals.
+
+The 499V maximum is within acceptable range and does not indicate sustained swell conditions. The field is not running hot on the high side. The concern is the low-side behavior: the 472V floor, combined with the frequency of dips below 480V, indicates that load cycling — particularly large motor starts — is pulling the voltage envelope down in a pattern that repeats across the month.
+
+**Device health risk assessment: Moderate.** The recurring triangular drops, particularly in the early-month cluster, represent episodic load-induced voltage stress that is not yet at a critical threshold but is measurably above the tolerance floor for long-term equipment health in a food-processing environment. This is a condition that benefits from continued monitoring and targeted optimization in the next engineering cycle — not an emergency, but not background noise either.
+
+---

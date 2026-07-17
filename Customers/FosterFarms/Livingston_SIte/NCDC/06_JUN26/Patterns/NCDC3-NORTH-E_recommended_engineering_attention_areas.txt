@@ -1,0 +1,18 @@
+**Transformer: NCDC3-NORTH-E — Engineering Attention Areas | June 2026**
+
+**1. Reactive Compensation Gap Closure**
+The gap between the current 83.7% power factor and the 99.5% optimization target represents the primary incremental action item for NCDC3-North-E. The 372.2 kVAR peak confirms that the installed MPTS assets, while delivering measurable stabilization, have not fully closed the reactive tail. An engineering review should assess whether existing units are operating at full rated output, whether any detuning or configuration drift has occurred, and whether targeted expansion of correction capacity is warranted. The 308.2 kVAR average reactive burden running continuously across a near-zero-downtime facility means every month without closure carries approximately $21,000 in estimated total waste burden.
+
+**2. Voltage Disturbance Root-Cause Diagnostics**
+Five estimated outage events and a recorded minimum voltage of 9.6 volts in a single month demands attention beyond reactive correction alone. A dedicated voltage disturbance diagnostic — waveform capture at the point of occurrence, coordination with upstream protection, and identification of the load events triggering the deepest triangular sags — should be prioritized. The persistent sub-nominal triangular excursions visible across the full June window suggest recurring inrush events or protection coordination issues that reactive correction alone will not resolve.
+
+**3. Harmonic Assessment and Mitigation Review**
+An iTHD maximum of 11.4% against a continuously active harmonic trace warrants a dedicated harmonic audit for NCDC3-North-E. The non-linear load density — VFDs, rectifiers, and switching power supplies running continuously — suggests that passive or active harmonic filtering may be appropriate as a complement to reactive correction. Transformer core losses, neutral conductor heating, and drive electronics longevity all improve with harmonic burden reduction.
+
+**4. Thermal Management Verification**
+At 333,852 BTU per hour, this transformer's thermal output during June warrants a physical inspection of winding temperature indicators, cooling fan operation, and electrical room ventilation adequacy. Confirm that existing cooling infrastructure is performing to specification, particularly given the Central Valley ambient heat context in June.
+
+**5. MPTS Asset Health Check**
+Given the tuned-field context and existing installed assets, a maintenance review of current MPTS unit operating parameters, connection integrity, and capacitor bank health is appropriate. Confirm that deployed assets are delivering their rated kVAR correction and that no drift from original commissioning parameters has occurred.
+
+---

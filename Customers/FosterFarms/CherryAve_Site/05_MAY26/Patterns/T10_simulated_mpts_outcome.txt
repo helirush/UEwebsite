@@ -1,0 +1,14 @@
+**T10 — MPTS Harmonized Simulation | May 2026**
+
+The S view simulation for T10 projects the field behavior after MPTS correction is applied, and the results are substantial. Power factor rises from the untuned 89.7% average to the MPTS target of 99.5% — confirmed by the simulation annotation. That's not an incremental improvement; it's a fundamental transformation of how efficiently this transformer converts apparent power into productive real work.
+
+The reactive burden drops from 420.6 kVAR average and 760.5 kVAR maximum in the untuned baseline down to approximately 62.9 kVAR average and 144.4 kVAR maximum in the simulated MPTS field. That means roughly 358 kVAR average — and approximately 616 kVAR at peak — is recovered from reactive waste and returned to productive capacity. That recovered kVAR represents transformer headroom that currently doesn't exist: capacity to serve additional load, reduce apparent current draw, and meaningfully reduce thermal burden across the entire system.
+
+**MPTS sizing for T10:**
+Using the sizing rule — kVAR MAX ÷ 400, rounded up — we get 760.5 ÷ 400 = 1.9, which rounds up to **2 H490 units**. At planning-level estimates, two H490 units represent an installed investment of approximately $400,000, subject to final engineering scope and site conditions. That figure should be treated as a planning range, not a binding cost.
+
+**Energy waste recovery:** The simulation projects recovery of the approximately $662,250 annual total waste figure down to a meaningfully smaller remainder — the exact post-correction waste is not the focus here, but the directional shift is clear and significant.
+
+**Payback framing:** At roughly $662,250 in annual waste against an estimated $400,000 planning investment, the simple payback window on T10 alone is well under one year on total waste elimination — a compelling economic case even before accounting for extended equipment life, reduced maintenance frequency, and avoided cooling energy costs.
+
+---

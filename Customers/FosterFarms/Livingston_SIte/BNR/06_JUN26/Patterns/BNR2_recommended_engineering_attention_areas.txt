@@ -1,0 +1,18 @@
+**BNR2 — June 2026 | Engineering Attention Priorities**
+
+**1. Reactive Correction Assignment — Bundled Approach Recommended**
+BNR2's 6.3 kVAR MAX reactive burden is small in absolute terms but real in its thermal and field-stability impact. Given the modest standalone energy recovery of approximately $907 per year, this circuit is best addressed through a bundled MPTS deployment covering multiple transformers at the site simultaneously. Engineering scoping should evaluate BNR2 alongside adjacent circuits to identify whether a shared or co-located MPTS unit can serve multiple small-load circuits economically.
+
+**2. Voltage Oscillation Root-Cause Investigation**
+The 27.8-volt swing range and persistent triangular drop pattern across all thirty days of June warrants investigation. Specifically, engineering should assess whether the voltage variability is originating upstream (utility or main bus) or is being generated locally by motor start events and VFD load transitions on BNR2's own circuit. If the drops are locally generated, load-side reactive correction and soft-start assessment may provide meaningful stabilization. If the source is upstream, the finding should be escalated to the site electrical infrastructure review.
+
+**3. Harmonic Monitoring — iTHD Trending**
+The 11.4% iTHD maximum is elevated enough to warrant ongoing monitoring. Engineering should establish a baseline trend for harmonic content on BNR2 across subsequent monthly datasets. If iTHD average trends above 8% or maximum iTHD exceeds 15% in future periods, harmonic filtering should be added to the correction specification. MPTS correction will reduce the reactive component, which indirectly reduces some harmonic circulation pathways, but dedicated harmonic mitigation may be warranted if VFD loads increase.
+
+**4. Outage Event — June 22nd | Single Brief Interruption**
+The confirmed gold-streak outage event at approximately June 22nd — estimated at 2 to 5 minutes duration — should be logged and tracked across future datasets. A single brief interruption is not a pattern, but for a food processing facility, the cost of even brief power interruptions in cold storage or active processing can exceed the electrical cost of the interruption itself. If subsequent monthly datasets show recurrence at similar date positions, a switching or utility supply investigation is warranted.
+
+**5. Untuned Field Drift — Monthly Monitoring Priority**
+BNR2 is currently untuned, with no correction equipment assigned. In an untuned field, efficiency does not hold steady — it tends to drift downward as insulation surfaces degrade, contact resistance increases, and reactive burden gradually grows with load evolution. Monthly dataset review is recommended to track whether the thermal burden, kVAR MAX, or iTHD average are trending upward. Early detection of drift allows correction to be scheduled before equipment reaches a failure threshold.
+
+---

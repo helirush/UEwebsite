@@ -1,0 +1,21 @@
+**Transformer: DELIF — Engineering Attention Areas | June 2026**
+
+**1. Reactive compensation sizing and specification.**
+Two H490 units at 400 kVAR each are the indicated solution for the 750.7 kVAR MAX demand documented in this capture. Engineering should confirm transformer nameplate ratings, available switchgear space, and bus connection points before finalizing unit placement and interconnection design.
+
+**2. Voltage stability — sub-nominal dip investigation.**
+The 461-volt minimum and the recurring triangular drop pattern indicate that load-driven voltage sags are a structural feature of this circuit's untuned state. Post-MPTS commissioning should include a voltage quality verification sweep to confirm that drop amplitude is reduced. If sub-nominal dips persist at reduced amplitude after correction, additional power quality analysis may be warranted to rule out supply-side contributions.
+
+**3. Harmonic content — IEEE 519 threshold exceedance.**
+The 10.3 percent iTHD maximum is running at double the IEEE 519 recommended limit for industrial facilities. While MPTS reactive correction will reduce some harmonic loading indirectly, dedicated harmonic filtering should be evaluated if post-correction measurements continue to show iTHD peaks above 5 percent. Transformer core heating from harmonic eddy current losses is a cumulative degradation mechanism that reactive compensation alone does not fully address.
+
+**4. Thermal burden and cooling system review.**
+At 364,267 BTU per hour and a dedicated cooling draw of 53.4 kilowatts, the thermal overhead on this transformer is substantial. Facilities engineering should review the cooling infrastructure serving this equipment bay to confirm it is operating within its design envelope. Post-MPTS, the expected thermal reduction should be documented and the cooling capacity recalibrated to the corrected operating point.
+
+**5. Motor and drive equipment health audit.**
+Given the thirty days of documented voltage instability, harmonic exposure, and reactive stress on the Deli F circuit, a targeted inspection of high-value connected assets — refrigeration compressors, VFD-driven conveyors, and motor control centers — is advisable prior to MPTS commissioning. Understanding the current health baseline of connected equipment allows accurate attribution of any post-correction improvements in maintenance frequency and equipment longevity.
+
+**6. Ongoing field monitoring cadence.**
+Because CSV Mercury data is unavailable for this transformer at this time, the current analysis is vision-only. Establishing continuous Mercury monitoring for Deli F is a recommended first step before finalizing the engineering scope. Ground-truth numeric data will sharpen the sizing and payback projections and support commissioning verification after MPTS installation.
+
+---

@@ -1,0 +1,15 @@
+**NCDC1 — West11c | Recommended Engineering Attention Areas | June 2026**
+
+Given the tuned field context and the evidence from all four views, the following engineering attention areas are prioritized for West11c:
+
+**1. Mid-Month Transient Event Forensics.** The clustering of voltage drop events, outage interruptions, and harmonic peaks in the June 10–20 window is specific enough to warrant operational forensics. Correlate the event timestamps with the facility's production schedule — specifically large motor start sequences, refrigeration compressor cycling, and any rendering or processing load switching events that occur in that window. Understanding the root cause of the transient cluster is the first step toward mitigation.
+
+**2. Harmonic Burden Monitoring and Mitigation Assessment.** The 11.0% iTHD maximum and 6.0% average are at the upper boundary of comfortable operating range for a transformer of this class. An active harmonic filter assessment should be conducted to determine whether targeted harmonic mitigation would meaningfully reduce transformer core heating, lower the effective thermal burden, and improve the reliability margin of the existing MPTS reactive compensation equipment. Harmonic currents and reactive currents interact — reducing harmonics typically improves the effective performance of the reactive compensation layer.
+
+**3. Reactive Peak Compression Opportunity.** The 875.9 kVAR peak reactive demand, even in a tuned field, represents a significant instantaneous burden event. Reviewing whether the existing MPTS assets are sized and positioned to capture peak events of this magnitude — or whether additional capacity or faster-response compensation is warranted — is a logical next step in the optimization sequence.
+
+**4. Voltage Event Logging and Predictive Maintenance Integration.** The 9.7V floor event should be flagged and logged in the facility's predictive maintenance system. Even if it is a single brief event, its severity warrants documentation and correlation with equipment health records for motors, VFDs, and control electronics on this transformer circuit.
+
+**5. Continued Monthly Field Review.** The June 2026 field data establishes a clear tuned-field baseline. Continued monthly review will confirm whether the mid-month disturbance pattern is seasonal, production-driven, or indicative of a developing equipment condition — and will measure whether the optimization gap between TBT and TS is narrowing over time.
+
+---

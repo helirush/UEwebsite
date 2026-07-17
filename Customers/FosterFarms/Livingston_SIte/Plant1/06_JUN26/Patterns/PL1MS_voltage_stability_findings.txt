@@ -1,0 +1,13 @@
+**PL1-MShop | Voltage Health Assessment | June 2026 | V View**
+
+The voltage field on PL1-MShop is running in a persistently elevated and compressed band — not collapsed, but operating with less headroom than a 2,500 kVA industrial transformer should carry. The blue voltage trace held between approximately 470V and 509V across the full 30-day period, with an average of 484.5V against a nominal 480V line-to-line reference. The Max Voltage annotation of 509V tells you the supply side is pushing hard into the upper band, and the field is not absorbing that energy cleanly.
+
+Two annotated voltage dip events are confirmed in the V view. The first, near June 10th, reached 447.2V — a drop of approximately 32.8 volts below nominal, representing roughly a 6.8% excursion. The second, near June 28th, reached 452.1V — approximately 27.9 volts below nominal, or about 5.8% deviation. Both events crossed below the 480V nominal threshold, and both were sustained long enough to be captured at 1-minute resolution. That matters. These are not sub-cycle transients that instrumentation misses — they are real, persistent voltage depressions that your motors and drive electronics experienced in full.
+
+For a food processing facility running VFDs, contactors, and precision motor controls, voltage deviations beyond 5% are classified as reliability stress events. Two confirmed excursions of 5.8% and 6.8% in a single 30-day window — combined with the persistent elevated average voltage and the reactive loading environment generating 194.1 kVAR average — creates an environment of cumulative insulation stress. Motor windings operating in elevated-temperature, voltage-stressed conditions degrade faster. Contactor contact surfaces experience accelerated arcing wear. Drive electronics absorb the instability through their protection circuitry, shortening service intervals.
+
+Between the two annotated dip events, the voltage trace shows additional micro-variation — subtle compressed oscillation consistent with reactive turbulence pulling at the voltage rail during load surge moments. This is the fingerprint of an untuned reactive field: the real load demands current, the reactive overhead resists, and the voltage rail flexes under the tension. It is not dramatic. It is chronic. And chronic is exactly the mode that shortens equipment life quietly, without tripping alarms, until something fails prematurely.
+
+**Device-health risk classification: Moderate-to-High.** Two sub-nominal excursions, elevated average voltage, reactive turbulence between events, and no compensation in place to stabilize the field going forward.
+
+---

@@ -1,0 +1,97 @@
+{
+  "generated_at": "2026-07-10 17:58:48",
+  "transformer_id": "DELIG",
+  "transformer_name": "DELIG",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 1378.76,
+      "image_value": 1379.0,
+      "pct_diff": 0.017,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Deli/AN55050305-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050305-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.8602080197132617,
+    "csv_power_factor_pct": 86.02080197132616,
+    "csv_real_kw_avg": 617.110943671595,
+    "csv_reactive_kvar_avg": 293.6915100694444,
+    "csv_apparent_kva_avg": 692.2001682683691,
+    "csv_apparent_kva_p95": 1378.7592499999998,
+    "csv_pct_at_or_above_kva_p95": 5.0,
+    "csv_voltage_avg": 277.59345480510757,
+    "csv_voltage_min": 0.0,
+    "csv_voltage_max": 288.757,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_Deli_G.json",
+    "csv_profile_source_relative_path": "dashboard_data_Deli_G.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_file": "AN55050305-V-1minRES_44640CLP_260501-260531c.csv | 44,640 rows | May 2026",
+    "mpts_sizing_corrected_using_csv_kvar_max_470_kvar": "**",
+    "planning_level_installed_investment": "approximately **$400,000**",
+    "machine_readable_anchors": "**",
+    "target_kva_image": "1379 kVA",
+    "bt_target_kva": "1379 kVA",
+    "target_kva_csv": "1378.76 kVA",
+    "power_factor_csv": "86.02%",
+    "kvar_max_csv_est": "469.9 kVAR",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "monthly_savings_validated": "$17,943.83",
+    "annual_savings_validated": "$215,326.00",
+    "monthly_waste_validated_total": "$17,943.83",
+    "annual_waste_validated_total": "$215,326.00",
+    "annual_total_wasted_validated": "$215,326.00"
+  },
+  "packet_file": "DELIG_william_validation.json"
+}

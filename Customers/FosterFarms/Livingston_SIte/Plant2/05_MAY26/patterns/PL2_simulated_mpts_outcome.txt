@@ -1,0 +1,13 @@
+Transformer: PL2C — Simulated MPTS Outcome
+
+Because no kVAR MAX figure is available for PL2C — neither from CSV nor from image capture — a formal MPTS savings simulation cannot be produced for this transformer in this session. The S-view projection, which would normally show the post-correction field with power factor recovered to approximately 99.5 percent, requires a reactive peak anchor to build from. That anchor is value unavailable.
+
+What I can give you is the structural framework for what the correction outcome would look like, once metering establishes the reactive baseline.
+
+When MPTS correction is applied to an untuned industrial transformer, the primary change in the energy field is reactive power compensation at the point of use. Circulating kVAR is absorbed and offset locally, so apparent power demand (kVA) drops toward alignment with real load (kW). Power factor climbs toward 99.5 percent. The transformer windings carry less reactive current, so thermal burden drops — typically producing measurable reductions in BTU-per-hour heat output and associated cooling overhead.
+
+The planning-level investment estimate for a single H490 unit — Unity's 400 kVAR correction platform — is approximately $200,000 installed. That figure is a planning estimate; final pricing depends on engineering scope and site-specific conditions. Payback period cannot be calculated without waste figures, but once baseline metering is complete for PL2C, that calculation becomes straightforward.
+
+The simulated outcome for PL2C is pending data capture. Consider this a placeholder in the session state that will be populated when the baseline metering sweep is completed for this transformer.
+
+---

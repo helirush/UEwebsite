@@ -1,0 +1,11 @@
+**BNR-1 — Voltage Health | June 2026**
+
+The voltage field on BNR-1 presents a split picture: a stable, slightly elevated operating band punctuated by repeated, severe momentary collapse events. The blue voltage trace holds in a tight corridor centered around 476.5 volts for the vast majority of operating time — running slightly below the 480-volt line-to-line nominal reference, but within a range that, under ordinary circumstances, would be considered acceptable for industrial equipment tolerance bands.
+
+What is not acceptable is the pattern of sharp, triangular drops that interrupt this otherwise stable band throughout the full 30-day period. These are not gradual voltage sags of the type associated with grid fluctuations or utility switching. They are abrupt, narrow, plunging excursions — and the documented minimum of 0.0 volts in the header confirms that at least some of these events represent full momentary voltage collapse rather than partial sags. A reading of 0.0 volts at 1-minute resolution means the field went dark, even if only for seconds.
+
+These collapse events are distributed relatively uniformly across the month, which tells you they are operationally triggered — large motor starts, refrigeration compressor cycling, or load-switching events that repeatedly pull the field below sustainable levels. In a food processing and cold-chain environment, this pattern carries compounding risk. Variable frequency drives, motor control centers, soft starters, and microprocessor-based control systems all accumulate electromagnetic stress with every collapse cycle. Each event is an insulation stress cycle, a potential nuisance trip, and a step closer to premature equipment failure.
+
+The device-health risk classification for BNR-1 is high. Thirty days of repeated momentary collapses — with an estimated 5 to 6 documented outage events totaling approximately 10 to 18 minutes of accumulated interruption time — represents a meaningful cumulative stress load on the connected equipment population. In a facility where even a 2-minute refrigeration interruption can trigger temperature excursion risk, this pattern warrants immediate attention alongside the reactive correction work.
+
+---

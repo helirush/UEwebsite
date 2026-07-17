@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-07-11 23:11:42",
+  "transformer_id": "NCDC1WEST11C",
+  "transformer_name": "NCDC1WEST11C",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "NCDC1WEST11C | Foster Farms Livingston HQ | June 2026**",
+    "numeric_source_status": "**",
+    "csv_data": "UNAVAILABLE \u2014 vision extraction is sole numeric source for all values",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "585 kVA",
+    "bt_target_kva": "585 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable \u2014 no discrepancy calculation possible)",
+    "power_factor_csv": "0.0% (unavailable \u2014 image reads 85.3% avg; cannot cross-check)",
+    "kvar_max_csv_est": "0 kVAR (unavailable \u2014 image reads 875.9 kVAR MAX; cannot cross-check)",
+    "monthly_residual_waste_csv": "$0.00 (unavailable \u2014 image reads $10,541/dataset)",
+    "annual_residual_waste_csv": "$0 (unavailable \u2014 image reads $207,086/yr total wasted)",
+    "residual_heat_burden_kw_csv": "0.0 kW (unavailable \u2014 image reads 273,556 BTU/hr \u2248 80.2 kW)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "discrepancy_flags": "**",
+    "note": "The 9.7V minimum voltage reading observed in TV view is flagged as anomalous \u2014 either a momentary near-complete collapse or a meter artifact at a shutdown interval; engineering review recommended regardless of cause",
+    "monthly_savings_validated": "$17,257.17",
+    "annual_savings_validated": "$207,086.00",
+    "monthly_waste_validated_total": "$17,257.17",
+    "annual_waste_validated_total": "$207,086.00",
+    "annual_total_wasted_validated": "$207,086.00"
+  },
+  "packet_file": "NCDC1WEST11C_william_validation.json"
+}

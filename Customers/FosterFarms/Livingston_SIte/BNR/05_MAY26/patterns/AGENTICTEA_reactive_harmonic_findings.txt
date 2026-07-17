@@ -1,0 +1,13 @@
+**Transformer: AGENTICTEA — Reactive and Harmonic Findings**
+
+Reactive power analysis for AGENTICTEA is structurally incomplete due to the absence of both CSV and image data. The key values we would extract from the BT header — reactive average in kVAR, kVAR maximum, power factor percentage, and energy waste in dollars per dataset and per year — all return as value unavailable.
+
+In an untuned field, the reactive power story is always the foundational cost story. Reactive demand, measured in kVAR, is the portion of your apparent power draw that does no useful work. It circulates between the transformer and your inductive loads — motors, compressors, refrigeration systems — heating conductors, stressing core insulation, and inflating your apparent power demand in kVA. Because your utility bills on kVA or penalizes low power factor, this reactive circulation translates directly into dollars wasted every month.
+
+The M view — the MPTS sizing and monthly savings model — would normally give us the kVAR maximum figure that drives equipment sizing. The sizing rule is straightforward: take the kVAR maximum, divide by 400, and round up to determine the number of H490 units required. With kVAR maximum returning as value unavailable, we cannot complete that calculation for AGENTICTEA at this time.
+
+What the untuned framing tells us qualitatively is this — without correction, reactive demand on this transformer is not static. It drifts upward as loads age, as motor efficiency degrades, and as additional inductive equipment is added to the circuit. The thermal burden captured in BTU per hour and the cooling overhead captured in dollars per hour both grow in proportion to that reactive accumulation. Month over month, an untuned field costs more to run than the prior month, even when the production schedule stays constant.
+
+This block is flagged. Reactive and harmonic findings for AGENTICTEA require data re-submission.
+
+---

@@ -1,0 +1,20 @@
+**NCDC2SOUTHD — Recommended Engineering Attention Areas | June 2026**
+
+The following attention areas are framed as incremental optimization and diagnostic actions appropriate for a tuned field with existing MPTS investment. These are not greenfield deployment recommendations.
+
+**1. Reactive Compensation Calibration Audit**
+The TBT state at 92.6 percent average power factor, against a TS target of 99.5 percent, indicates that existing MPTS assets have not yet fully closed the reactive compensation gap. A calibration review of deployed unit switching thresholds and response curves is recommended — particularly against the 1,850.8 kVAR peak reactive event captured in the dataset. If compensation assets are not staged to respond to reactive spike events of this magnitude, the gap will persist during high-load transient moments even if average-state correction is improving.
+
+**2. Voltage Event Root-Cause Investigation**
+The 450.8-volt annotated sag, the 9.6-volt header minimum, and the four-to-five gold streak outage events across June collectively indicate a field experiencing episodic supply disturbances. Engineering should review upstream protective device event logs, feeder fault records, and utility event reports for the June 2026 window to determine whether these events originate upstream of the transformer or are generated within the facility distribution. Sag severity at 450.8 volts is in the range that can trigger VFD faults and compressor trip events in cold storage systems.
+
+**3. Harmonic Monitoring and Trending**
+The 5.7 percent iTHD average is manageable in the current state, but the correlated harmonic micro-agitations observed during high-current transient events suggest that load addition — particularly additional VFD-driven equipment — could push harmonic distortion into a more problematic range without corresponding harmonic mitigation. A quarterly iTHD trending review is recommended to catch early harmonic creep before it affects equipment reliability.
+
+**4. Thermal Burden Trending Against Transformer Life Curve**
+At 213,624 BTU per hour of thermal burden in the tuned state, continued monitoring of transformer operating temperature against the nameplate thermal life curve is warranted. Monthly thermal burden trending will confirm whether MPTS optimization progress is yielding measurable insulation temperature relief over time — this is the mechanical benefit of reactive correction that extends transformer service life.
+
+**5. Outage Event Logging Enhancement**
+The gold streak events totaling approximately 10 to 20 minutes of outage exposure across June should be correlated with production event logs, compressor restart records, and utility interruption notices. Establishing whether these are utility-sourced or internally generated will determine whether the appropriate response is upstream protective coordination adjustment, UPS or ride-through capacity addition, or distribution fault investigation.
+
+---

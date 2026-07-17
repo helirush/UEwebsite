@@ -1,0 +1,13 @@
+**PL2-3North — Simulated MPTS Outcome | June 2026**
+
+The S view simulation for PL2-3North shows one of the most dramatic field transformations visible in any MPTS projection — and the numbers bear that out clearly. Power factor moves from 61.3% in the untuned baseline to 99.5% post-correction, and it holds there essentially flat across the entire month. That's not a marginal improvement — that's a fundamental restructuring of how this transformer's electromagnetic field behaves.
+
+The reactive burden collapses from 155.6 kVAR average and a peak of 1,163.8 kVAR MAX down to 8.9 kVAR average and 36.0 kVAR MAX after MPTS correction. The peak reactive demand drops by approximately 97 percent. What was a structurally dominant reactive layer consuming transformer capacity and driving thermal burden becomes essentially invisible in the corrected field. The transformer can now deliver its supply capacity as real, usable power rather than burning a significant fraction of it on reactive circulation.
+
+The simulated monthly energy recovery is approximately $10,291 per dataset, projecting to roughly $125,212 annually in direct energy savings. That figure represents the reactive losses and energy waste that MPTS correction removes from the monthly operating cost of this transformer. Combined with the thermal burden reduction — which reduces the cooling overhead currently running at approximately 38.8 kW and $7.63 per hour — the total annual value of correction is considerably larger than the direct energy savings line alone suggests.
+
+For MPTS sizing: the kVAR MAX of 1,163.8 kVAR ÷ 400 = 2.91, which rounds up to **3 H490 units**. At approximately $200,000 per H490 unit installed, the planning-level investment estimate for PL2-3North is in the range of **approximately $600,000 installed** — though final pricing depends on engineering scope, site conditions, and configuration. At roughly $125,000 to $202,000 in annual waste recovery, the planning-level payback window for this transformer falls in the range of approximately 3 to 5 years, with compounding benefit as the field stabilizes and thermal burden on connected equipment decreases.
+
+The S view also confirms that the voltage field improves in character post-correction — reactive compensation reduces the magnitude of bus voltage depressions during large inductive load events, which directly reduces the severity of the sub-nominal dip events documented in the V view. The 449V to 460V dip cluster in the third week of June would be expected to moderate meaningfully in a corrected field.
+
+---

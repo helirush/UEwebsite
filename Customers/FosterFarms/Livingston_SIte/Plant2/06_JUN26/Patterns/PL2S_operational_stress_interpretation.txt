@@ -1,0 +1,11 @@
+**PL2-1 South — Operational Stress Interpretation | June 2026**
+
+Put all of the data together and what you have on PL2-1 South is a transformer under compounding stress from multiple directions simultaneously. Reactive burden is high and persistent. Voltage headroom is limited and subject to recurring sag events. Harmonic distortion is approaching or exceeding IEEE 519 thresholds at peak. And the thermal burden this field is carrying — 554,423 BTU per hour at peak, with a baseline of 522,241 BTU per hour — is generating heat that has to go somewhere.
+
+That heat goes into your cooling infrastructure. The BT header reports cooling costs of approximately $15.91 per hour, consuming 81.3 kilowatts of cooling capacity continuously. On an annualized basis, that projects to roughly $139,367 per year in cooling energy alone, consuming approximately 711.9 megawatt-hours per year just to manage the heat that reactive inefficiency is generating. That is not process cooling. That is waste cooling — energy spent managing a problem rather than producing product.
+
+The 60 to 65 percent above-target operating time compounds this picture. When a transformer is running above its efficiency target for the majority of productive hours, it is living in a range where thermal aging accelerates, insulation stress accumulates faster, and the probability of unplanned interruption increases over time. This is not a transformer on the verge of failure this week. But it is a transformer that is consuming its service life at an elevated rate in an untuned field.
+
+The minimum power factor of 80.25 percent — confirmed in the M-view header — tells you that at your worst reactive moments, the effective capacity of this 2,500 kVA transformer is being utilized as though it were a substantially smaller unit. Reactive current is consuming conductor capacity, transformer winding capacity, and switchgear ampacity, all without contributing a single watt of productive process output. Every day this field runs untuned is another day of that compounding.
+
+---

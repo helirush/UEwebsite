@@ -1,0 +1,18 @@
+**PL1-Proc1 — Engineering Attention Priorities**
+
+**Priority 1 — Reactive Compensation Assignment:**
+The most immediate engineering action for PL1-Proc1 is tuning assignment. At 200.9 kVAR MAX with an 81.5% average power factor, this transformer is a clear candidate for one H490 unit. Every month without correction is approximately $6,700 in ongoing waste — the $83,718 annual total wasted figure is accumulating daily. Tuning should be scoped and scheduled as a near-term priority, not a deferred study item.
+
+**Priority 2 — Voltage Stability and Undervoltage Monitoring:**
+The 35-volt operating band with a documented 468V minimum floor warrants dedicated voltage monitoring and logging at the transformer secondary. If VFDs, motor starters, or sensitive control systems on this circuit have lower voltage tolerance limits, they may already be operating in degraded conditions during the recurring triangular drop events. An engineering review of device voltage tolerance against the observed operating band is recommended before the next seasonal load peak.
+
+**Priority 3 — Outage Root Cause Review:**
+The confirmed power interruption in the 260607–260608 window, and the probable second event near 260610, should be investigated against maintenance logs, upstream protection event records, and utility switching records. In a food processing environment, understanding whether these were utility-side events, protection relay operations, or process-driven shutdowns has direct bearing on business continuity planning and arc-flash coordination schedules.
+
+**Priority 4 — Thermal Burden Trending:**
+At 109,451 BTU per hour of thermal burden with 16.0 kilowatts of active cooling load, this transformer's thermal envelope should be logged continuously. If the facility's cooling infrastructure for this equipment room or switchgear area is already near capacity, the compounding effect of month-over-month reactive growth in an untuned field could push ambient temperatures into ranges that accelerate insulation aging nonlinearly. A thermal baseline inspection — infrared scan of transformer windings, connections, and cooling surfaces — is recommended within the current quarter.
+
+**Priority 5 — Harmonic Survey:**
+The 9.7% iTHD MAX observed in the M view is within acceptable ranges for most industrial systems, but it is persistent and broadband. If VFD density on this circuit has increased recently, or if additional drives are planned as part of production expansion, a targeted harmonic survey should be conducted to verify that the existing wiring, transformer derating, and any K-factor ratings remain appropriate for the evolving load profile.
+
+---

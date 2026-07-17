@@ -1,1 +1,18 @@
-Priority attention for BNR2 should focus on reactive power correction planning and voltage stability monitoring protocols. The repetitive triangular voltage drop patterns require systematic tracking to prevent equipment stress accumulation - implement voltage logging during peak reactive demand periods to establish baseline stress profiles before MPTS installation. The 6.2% harmonic content warrants periodic monitoring to ensure it remains stable during field correction implementation. Engineering should evaluate the thermal burden reduction pathway, as the projected elimination of 2,158 BTU per hour thermal load will create measurable cooling cost recovery and reduced HVAC loading. The steady-state nature of your reactive circulation makes this transformer an excellent candidate for magnetic power transformation - the predictable waste patterns ensure consistent correction performance and reliable payback calculations. Consider staging MPTS installation during planned maintenance windows to minimize operational disruption while maximizing correction effectiveness. The voltage stability improvements alone justify engineering attention, as eliminating reactive-induced voltage stress will extend equipment life and improve overall system reliability throughout your facility.
+**BNR-2 Recommended Engineering Attention Areas**
+
+**1. Voltage Floor Monitoring — 466.9 V Minimum**
+The repeated dips below 480-volt nominal — flooring at 466.9 volts — should be formally logged and trended. If this floor descends further as inductive loads age or production intensity increases, the risk profile for sensitive downstream equipment escalates. Recommend establishing a continuous voltage-floor alarm threshold at 468 volts to provide early warning before the situation worsens.
+
+**2. Harmonic Source Identification**
+The persistent 6.2 percent iTHD average with spikes reaching 12.0 percent warrants source identification. The mid-month clustering pattern in the M view suggests a specific production-scheduled load — likely a large motor or compressor bank — is the primary harmonic injector. A targeted harmonic survey during the peak production window would confirm the source and inform mitigation sizing.
+
+**3. Reactive Compensation Sizing Confirmation**
+The kVAR MAX planning estimate of 6 kVAR should be validated with a full Mercury analysis run once data availability is restored. The current image-extracted value of 4.6 kVAR and the CSV planning estimate of 6 kVAR represent a 23 percent gap — enough to affect H490 sizing confidence. Until Mercury confirmation is available, the 6 kVAR planning estimate governs, supporting 1 H490 unit.
+
+**4. Voltage Spike Event — May 29–30**
+The voltage spike approaching 500.7 volts near the end of the dataset should be investigated as a potential load-shedding transient or upstream switching event. If this represents a recurring pattern at month-end or end-of-shift, it adds to the cumulative voltage stress burden on BNR-2's connected equipment.
+
+**5. Field Tuning Assignment**
+BNR-2 is operating in an untuned state. Without a tuning assignment, efficiency will drift downward month-over-month as inductive loads age and reactive losses widen. Recommend prioritizing BNR-2 for tuning scheduling in the next engineering planning cycle.
+
+---

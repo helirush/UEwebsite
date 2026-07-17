@@ -1,0 +1,13 @@
+**REND1 — Reactive and Harmonic Findings | June 2026**
+
+The reactive stress signature on REND1 is both persistent and severe. The M view confirms what the BT header reports: this field carries a sustained reactive burden throughout every production hour, and it peaks at levels that demand correction.
+
+The kVAR average across the month was 698.6 kVAR. That figure alone represents a substantial circulating reactive current that is occupying transformer capacity, generating heat, and increasing the apparent power demand without contributing a single watt of productive work. But averages can be misleading. The kVAR maximum recorded was 1,132.9 kVAR — at that peak, the reactive demand was approaching the level of the transformer's entire real power draw of 1,295.2 kilowatts. That kind of reactive-to-real ratio is the textbook definition of an inefficient, untuned power field.
+
+The M view's red current trace confirms the current burden this creates. The peak amperage annotated in the chart reached 1,693.3 amps. That is a heavy current load, and that current is flowing through every conductor, connection, and winding in the circuit — heating everything it touches.
+
+On the harmonic side, the iTHD average sits at 5.8 percent with a maximum of 11.1 percent. This is a moderate harmonic environment — not catastrophic as a standalone figure, but not benign either. In combination with the reactive stress and the elevated current burden, the harmonic content adds incremental heat to the transformer core and increases losses in motor windings. At 11.1 percent peak THD, any harmonic-sensitive equipment on this bus — including variable frequency drives and precision temperature controls — is operating in a noisier electrical environment than optimal. The harmonic contribution also complicates power factor correction planning slightly, since uncorrected harmonics can interact with capacitor banks if not properly filtered.
+
+Together, the reactive and harmonic profile of REND1 presents a clear picture: this is a transformer carrying significantly more apparent power than it needs to, running hotter than it should, and delivering a noisier field to its loads than the equipment is designed to tolerate long-term.
+
+---

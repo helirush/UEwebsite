@@ -1,0 +1,13 @@
+**REND2 — Projected MPTS Correction | Planning-Level Estimate**
+
+The MPTS sizing calculation for REND2 starts with the kVAR MAX value from the BT header: 1,432.8 kVAR. Applying the Unity sizing rule — kVAR MAX divided by 400, rounded up — yields 1,432.8 ÷ 400 = 3.582, which rounds up to **4 H490 units**. At a planning-level estimate of approximately $200,000 installed per H490 unit, the planning-range investment for REND2 would be approximately $800,000 installed. Final pricing depends on engineering scope, site conditions, and configuration — this is a planning-level estimate only, not a binding figure.
+
+Note: The S-view image was partially captured in the observation report as "MPTS Harmonized" without full header extraction. The projected outcome narrative is therefore based on BT baseline values and standard MPTS correction modeling rather than direct S-header extraction.
+
+With four H490 units correcting the 1,432.8 kVAR peak reactive burden, the projected post-correction power factor would reach approximately 99.5% — moving from the current 73.9% average to near-unity. That correction eliminates the majority of the reactive current circulating through the transformer and its connected infrastructure.
+
+The practical outcomes of that correction are layered. First, the active power demand — the real kW delivered to the facility — is expected to remain at approximately 1,406.1 kW, but the apparent power draw drops substantially as the reactive component is compensated locally. The transformer is no longer supplying reactive current from the utility source — that current is generated locally by the MPTS capacitor banks. Second, the thermal burden drops in proportion to the reactive loss elimination. At the current estimated cooling cost of approximately $38.41 per hour and approximately $336,468 per year in cooling overhead alone, the thermal recovery represents a meaningful portion of the total projected savings. Third, the voltage instability pattern — the sub-nominal dips documented throughout June — improves directly as reactive compensation stabilizes the voltage bus during production load peaks. The MPTS correction reduces the reactive current draw that was pulling the voltage down during those surge events.
+
+The total estimated annual waste of approximately $993,622 per year establishes the ceiling for recoverable value. MPTS correction is projected to recover the substantial majority of that figure, with the precise recovery dependent on confirmed installation scope and site engineering validation.
+
+---

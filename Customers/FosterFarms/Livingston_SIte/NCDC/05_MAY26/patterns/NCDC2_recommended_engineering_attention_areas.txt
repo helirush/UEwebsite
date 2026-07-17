@@ -1,0 +1,20 @@
+**NCDC2 — Engineering Attention Areas | Priority Review**
+
+Several items on NCDC2 warrant focused engineering attention before or concurrent with MPTS planning:
+
+**1. Harmonic iTHD Discrepancy — Immediate Flag**
+The M view reports two different iTHD reference values: 5.7% average / 10.6% maximum in the main header, versus 15.7% in the environmental variables panel. This discrepancy exceeds the 10% cross-check threshold. CSV ground truth is needed to resolve which figure accurately represents the field condition. If 15.7% iTHD is confirmed, NCDC2 is operating with a harmonic distortion profile that exceeds IEEE 519 limits meaningfully and may require harmonic filtering as part of the correction solution in addition to reactive compensation. Do not size MPTS without resolving this data point.
+
+**2. Voltage Dip Pattern — Motor and VFD Asset Risk**
+Recurring voltage drops toward 464 volts — 16 volts below nominal — distributed across the full month indicate ongoing insulation stress accumulation on motor windings and elevated thermal risk on variable frequency drives. An asset health survey of compressor motors and VFDs on this transformer feed is recommended. If insulation resistance testing has not been performed recently on refrigeration compressors served by NCDC2, that testing should be prioritized.
+
+**3. Outage Event Correlation**
+Four to five detected outage events totaling an estimated 10 to 20 minutes across May should be correlated with facility maintenance logs, SCADA event records, and production downtime records. Understanding whether these events are utility-sourced, equipment-trip-driven, or protection-relay responses will inform both the reliability engineering approach and whether additional surge/transient protection is warranted.
+
+**4. Thermal Burden Trending**
+At 167,322 BTU per hour, NCDC2's thermal burden should be trended month-over-month. In an untuned field, this figure is expected to drift upward as loads age. Establishing a May 2026 baseline and tracking it through subsequent months will quantify the rate of thermal degradation and strengthen the investment case for correction.
+
+**5. CSV Data Capture**
+All numeric values in this analysis are vision-extracted from image captures. Mercury CSV data for NCDC2 is unavailable at the time of this analysis. CSV confirmation is required before any figures are used in formal cost-benefit documentation or engineering specifications.
+
+---

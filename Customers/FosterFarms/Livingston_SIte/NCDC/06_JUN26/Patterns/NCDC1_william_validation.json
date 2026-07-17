@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-07-11 23:05:33",
+  "transformer_id": "NCDC1",
+  "transformer_name": "NCDC1",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=target_kva_image,bt_target_kva,target_kva_csv,power_factor_csv,kvar_max_csv_est"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth": "NOT AVAILABLE \u2014 all numeric values sourced from image extraction only.",
+    "discrepancy_flags": "**",
+    "installed_mpts_asset_inventory": "not provided. Optimization framing applied per tuned_field_optimization narrative mode.",
+    "monthly_savings_validated": "$17,257.17",
+    "annual_savings_validated": "$207,086.00",
+    "monthly_waste_validated_total": "$17,257.17",
+    "annual_waste_validated_total": "$207,086.00",
+    "annual_total_wasted_validated": "$207,086.00",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable"
+  },
+  "packet_file": "NCDC1_william_validation.json"
+}

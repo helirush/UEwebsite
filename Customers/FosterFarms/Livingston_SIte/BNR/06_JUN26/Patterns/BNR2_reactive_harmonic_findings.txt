@@ -1,0 +1,11 @@
+**BNR2 — June 2026 | Reactive Burden: 6.3 kVAR MAX | Harmonics: 11.4% iTHD MAX**
+
+The M view — the active-reactive-harmonic view — is where BNR2 reveals its real internal stress profile. The dominant visual element is the purple harmonics trace, and it is persistent. The iTHD (Total Harmonic Distortion, current) reads 6.3% average with an 11.4% peak maximum. That peak is nearly double the average — which tells you harmonic content is not a flat background noise level. It spikes, likely coinciding with load transitions: compressor starts, processing line motor engagements, VFD acceleration ramps.
+
+A 6.3% average iTHD is meaningful on a circuit serving food processing loads. Harmonic currents do not perform useful work — they generate heat in transformer windings, motor windings, and neutral conductors. They also distort the voltage waveform, which feeds back into the voltage instability you see in the V view. The 11.4% iTHD maximum is the level at which harmonic heating begins to create measurable insulation stress over time, particularly in transformer cores running at continuous duty.
+
+The reactive burden — 4.6 kVAR average, 6.3 kVAR MAX — is the second key stressor. On an 18 kVA supply circuit, 6.3 kVAR reactive at peak represents a significant reactive fraction. The thermal burden reading of 2,248 BTU per hour is the direct thermal consequence of this reactive and harmonic load combination. That heat has to go somewhere — and on this circuit, it is going into transformer winding insulation, motor windings, and the cooling systems that fight to remove it.
+
+The cooling cost of approximately $0.22 per hour — roughly $1,907 per year — is the facility paying its HVAC system to fight the heat this field is generating unnecessarily. That is not a production cost. That is pure waste overhead, driven entirely by an untuned field. Without correction, this harmonic and reactive burden will not self-resolve. On an untuned field, the tendency is upward drift — slightly higher heat each month as insulation gradually degrades and loss efficiency slowly worsens.
+
+---

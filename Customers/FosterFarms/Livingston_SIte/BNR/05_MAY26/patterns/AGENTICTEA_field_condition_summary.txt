@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Field Condition Summary**
+
+For transformer AGENTICTEA, we are working in an untuned field condition. That means no MPTS correction has been assigned, and the electromagnetic profile captured in the baseline-target views — the BT, V, M, and S images — reflects a field that is operating under natural reactive decay without any compensating intervention. In this mode, the field tends to drift. Efficiency does not hold steady month over month. Thermal burden tends to accumulate gradually, and reactive demand quietly erodes the real power your equipment can deliver.
+
+Unfortunately, for this specific transformer, neither the CSV ground truth nor the vision image analysis was available at the time of synthesis. That means every numeric anchor — peak demand in kilowatts, reactive power maximum in kVAR, power factor percentage, energy waste in dollars per year, thermal burden in BTU per hour — returns as value unavailable. We cannot confirm the supply target in kVA, and we cannot confirm the daily operations pattern from the BT chart columns.
+
+What we can say with confidence is this: the untuned field framing applies. AGENTICTEA is operating without correction. In the absence of tuning assignment, the pattern we observe across similar industrial transformer profiles is consistent — reactive losses build, transformer core temperatures rise with thermal load cycling, and the gap between apparent power drawn and real power delivered widens over time. That gap costs money every billing cycle, and it stresses insulation and connected devices every operating hour.
+
+This session state block is flagged for data re-submission. Until numeric data is confirmed, AGENTICTEA cannot be compared quantitatively against other transformers in the group site overview, but the untuned condition framing is structurally preserved and will carry forward into group aggregation.
+
+---

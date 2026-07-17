@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-07-15 13:57:48",
+  "transformer_id": "T15",
+  "transformer_name": "T15",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "T15 \u2014 Cross-Check Reconciliation (Vision Only, No CSV Ground Truth)**",
+    "csv_availability": "** Unavailable. All numeric values sourced exclusively from image observation (BT, V, M, S views). No CSV cross-check possible.",
+    "csv_anchors_machine_readable": "**",
+    "target_kva_csv": "0.0 kVA (unavailable)",
+    "power_factor_csv": "0.0% (unavailable)",
+    "kvar_max_csv_est": "0 kVAR (unavailable)",
+    "monthly_waste_csv": "$0.00 (unavailable)",
+    "image_extracted_anchors_machine_readable": "**",
+    "target_kva_image": "1403 kVA",
+    "bt_target_kva": "1403 kVA",
+    "power_factor_image": "80.8% avg | 91.2% MAX | 59.3% MIN",
+    "kvar_max_image": "708.5 kVAR (BT header) | 668 kVAR (M view annotation)",
+    "monthly_waste_image": "approximately $39,164/dataset | approximately $461,139/year | approximately $774,142 total wasted/year",
+    "thermal_burden_image": "542,715 BTU/hr (active) | 513,200 BTU/hr (baseline)",
+    "cooling_cost_image": "approximately $33.47/hr | 95.0 kW",
+    "kvar_max_internal_discrepancy": "** BT header reports 708.5 kVAR; M view annotates 668 kVAR. Variance is approximately 6% \u2014 within the 10% threshold, no flag required. BT header value (708.5 kVAR) used as primary for MPTS sizing.",
+    "outage_detection_machine_readable": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "ithd_note": "** M view reports 4.8% average iTHD with 37.8% MAX \u2014 significant peak harmonic event risk logged for engineering attention.",
+    "sizing_calculation_vision_based": "** 708.5 kVAR \u00f7 400 = 1.77 \u2192 rounds UP to 2 H490 units.",
+    "monthly_savings_validated": "$64,511.83",
+    "annual_savings_validated": "$774,142.00",
+    "monthly_waste_validated_total": "$64,511.83",
+    "annual_waste_validated_total": "$774,142.00",
+    "annual_total_wasted_validated": "$774,142.00"
+  },
+  "packet_file": "T15_william_validation.json"
+}

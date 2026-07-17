@@ -1,0 +1,13 @@
+**PL1-Proc1 — Voltage Health Assessment**
+
+The voltage field on PL1-Proc1 is running at a 30-day composite average of 481.1 volts — just barely above the 480V nominal line-to-line reference. On paper that looks acceptable. In practice, the operating band tells a more demanding story. The voltage swings between a documented minimum of 468 volts and a maximum of 503 volts — a 35-volt spread on a system that should hold tight to 480V.
+
+That 468V floor matters. It represents a 2.5% undervoltage condition at the worst recorded point. For motor controls, variable frequency drives, and sensitive food-processing instrumentation, repeated excursions into the 468 to 474 volt range are not neutral events. Motors running below nominal voltage draw higher current to maintain torque — which means more heat in the windings, more stress on insulation, and accelerated aging of components that are difficult and expensive to replace mid-production.
+
+The voltage trace in the V view is not a smooth band. It shows a dense, textured profile with visible triangular drop patterns — repeating V-shaped dips that cluster in two distinct windows: the first two weeks of June and again in the final week approaching the month end. These are not random noise. The rhythm of the drops is consistent with load-driven events — large motor starts, refrigeration compressor cycling, and process line changeovers that are characteristic of a food processing facility operating across multiple production shifts.
+
+The orange Power Factor trace in the V view confirms the correlation: every major PF dip aligns with a voltage disturbance cluster. The field is cycling between moderate stress and deeper stress intervals, not holding steady. This voltage instability pattern is a direct consequence of the reactive overhead present in this untuned field. Correct the reactive load, and voltage stability improves as a downstream benefit — the two are mechanically linked.
+
+Overall device-health risk from observed voltage behavior: **moderate-to-high**. The 35-volt operating band combined with repeated below-nominal excursions and triangular drop clustering is not a condition to observe passively. Every month this continues, the cumulative stress count on drives, contactors, and motor insulation climbs.
+
+---

@@ -1581,9 +1581,11 @@
 <body data-summary-mode="product">
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
-<div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a id="siteBackLink" href="../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a id="unityHomeLink" href="../../../../UnityEnergy/index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+<div style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 18px; padding: 10px 0; margin-bottom: 10px;">
+  <a id="groupBackLink" href="../../../index.html?group=deli#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Groups</a>
+  <a id="cherrySiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Cherry Avenue</a>
+  <a id="siteBackLink" href="../../../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Foster Farms</a>
+  <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; Unity Home</a>
 </div>
 <script>
   (function normalizeSummaryboardHomeLinks() {
@@ -1598,8 +1600,23 @@
       siteBase = '../'.repeat(upLevels);
     }
 
+    const monthTokenRe = /^\d{2}_[A-Z]{3}\d{2}$/;
+    let groupSegment = 'all';
+    if (parts.length >= 3) {
+      const maybeMonth = parts[parts.length - 2];
+      if (monthTokenRe.test(maybeMonth)) {
+        groupSegment = (parts[parts.length - 3] || '').toLowerCase();
+      }
+    }
+
+    const groupLink = document.getElementById('groupBackLink');
+    if (groupLink) groupLink.href = `${siteBase}index.html?group=${encodeURIComponent(groupSegment)}#libraries`;
+
+    const cherryLink = document.getElementById('cherrySiteLink');
+    if (cherryLink) cherryLink.href = `${siteBase}index.html#page-top`;
+
     const backLink = document.getElementById('siteBackLink');
-    if (backLink) backLink.href = `${siteBase}index.html#libraries`;
+    if (backLink) backLink.href = `${siteBase}../index.html`;
 
     let unityHref = `${siteBase}index.html`;
     if (eWebmasterIdx >= 0) {
@@ -1639,8 +1656,8 @@
 
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
-    🔊 LISTEN: SITE OVERVIEW
+  <button id="siteOverviewBtn" class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's group-level site overview across all transformers">
+    🔊 LISTEN: GROUP SITE OVERVIEW
   </button>
   <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
     📊 SITE SUMMARY - BASELINE
@@ -2166,10 +2183,11 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
+  const scriptVersion = '20260712b';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}?v=${scriptVersion}`);
   }
   const head = document.head || document.getElementsByTagName('head')[0];
   if (!head) return;

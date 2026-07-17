@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-07-13 19:52:20",
+  "transformer_id": "PL2C",
+  "transformer_name": "PL2C",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL2-2Center | PL2C | 2500 kVA | Foster Farms, Livingston HQ**",
+    "analysis_period": "May 2025 (image header reads 260501\u2013260531; vision narrative references March 13\u201331 \u2014 note period label inconsistency; using image header dates as authoritative)**",
+    "csv_ground_truth_status": "** UNAVAILABLE \u2014 synthesis from vision only. All numeric values sourced from image extraction.",
+    "date_label_note": "** The image observation report title references \"May 260501\u2013260531\" while the vision narrative body references \"March 13\u201331.\" This inconsistency should be confirmed with the facility data team before final reporting. All numbers are treated as valid regardless of date resolution.",
+    "machine_readable_anchors": "**",
+    "target_kva_image": "434 kVA",
+    "bt_target_kva": "434 kVA",
+    "target_kva_csv": "unavailable",
+    "power_factor_csv": "unavailable",
+    "kvar_max_csv_est": "unavailable",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "planning_install_estimate": "$200,000 (1\u00d7 H490, vision-only sizing)",
+    "estimated_payback_months": "not calculable without CSV confirmation",
+    "mpts_sizing_vision_only": "** 311.0 kVAR MAX \u00f7 400 = 0.78 \u2192 rounds UP to **1 \u00d7 H490 unit** (400 kVAR capacity). Planning-level investment: approximately $200,000 installed, subject to engineering scope and site conditions.",
+    "monthly_savings_validated": "$10,252.17",
+    "annual_savings_validated": "$123,026.00",
+    "monthly_waste_validated_total": "$10,252.17",
+    "annual_waste_validated_total": "$123,026.00",
+    "annual_total_wasted_validated": "$123,026.00"
+  },
+  "packet_file": "PL2C_william_validation.json"
+}

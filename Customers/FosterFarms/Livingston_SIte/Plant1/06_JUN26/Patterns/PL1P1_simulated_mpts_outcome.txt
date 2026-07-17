@@ -1,0 +1,17 @@
+**PL1-Proc1 — MPTS Correction Simulation (S View)**
+
+The S view — the MPTS Harmonized Simulation — shows what this field looks like with reactive compensation applied. The transformation is substantial and immediate in the simulation.
+
+Power factor moves from 81.5% average to 99.5% — essentially unity correction across the full operating window. The simulation holds 99.5% PF consistently, not as a momentary peak but as the sustained operating state. That means the field is no longer wasting transformer capacity on non-productive magnetizing current. Every ampere the transformer delivers in the corrected state is doing real work.
+
+Reactive power compresses from 98.0 kVAR average down to 12.8 kVAR average — a reduction of approximately 85 kVAR of reactive overhead removed from the field's daily burden. At the peak, kVAR MAX drops from 200.9 kVAR down to 31.7 kVAR. That peak compression is critical — it directly reduces the worst-case thermal events the transformer experiences, protects insulation, and smooths the voltage disturbances that the V view documented.
+
+The financial recovery from the S header: approximately $4,173 per dataset month, or roughly $50,773 per year in direct energy recovery. Adding emission recovery of approximately $3,859 per year — 102 carbon credits annually, representing 101.6 metric tons of CO2-equivalent recovered per year — the total projected savings reach approximately $80,269 per year.
+
+The cooling improvement is also directly visible: the $2.93 per hour cooling cost and 14.9 kilowatt reduction in cooling load recovered by MPTS correspond to approximately 29 homes powered continuously on the recovered energy equivalent.
+
+**MPTS Sizing for PL1-Proc1:**
+kVAR MAX of 200.9 ÷ 400 = 0.50, rounded up = **1 H490 unit.**
+Planning investment: approximately $200,000 installed. At approximately $80,269 per year recovered, the planning-level payback estimate is roughly 30 months. Final pricing depends on engineering scope and site conditions.
+
+---

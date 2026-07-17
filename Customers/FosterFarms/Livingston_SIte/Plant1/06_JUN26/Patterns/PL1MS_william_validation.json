@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-07-17 15:53:20",
+  "transformer_id": "PL1MS",
+  "transformer_name": "PL1MS",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_status": "** Unavailable. All numeric values sourced exclusively from visual image extraction. No discrepancy flagging possible against CSV ground truth. All figures carry image-extraction confidence only.",
+    "target_kva_image": "** ~2,265 kVA (visual dashed-line approximation from BT chart body)",
+    "bt_target_kva": "** ~2,265 kVA (consistent across BT visual read)",
+    "target_kva_csv": "** 0.0 kVA \u2014 NOT AVAILABLE",
+    "power_factor_csv": "** 0.0% \u2014 NOT AVAILABLE | Image-extracted: 86.6% PF average (BT header)",
+    "kvar_max_csv_est": "** 0 kVAR \u2014 NOT AVAILABLE | Image-extracted: 2,265.0 kVAR MAX (BT header)",
+    "monthly_waste_csv": "** $0.00 \u2014 NOT AVAILABLE | Image-extracted: approximately $7,204/dataset, approximately $87,654/yr, TOTAL WASTED approximately $140,922/yr",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "voltage_dip_events_v_view": "** 2 confirmed annotated dip events \u2014 447.2V near 06/10, 452.1V near 06/28",
+    "peak_amperage_m_view": "** 952.6 A (image-extracted)",
+    "harmonic_distortion_m_view": "** 5.1% iTHD avg / 10.1% iTHD MAX (image-extracted)",
+    "transformer_loading_bt_header": "** 102.3% CAP / 2,494.0 kVA MAX \u2014 operating past nameplate",
+    "mpts_sizing_check": "** kVAR MAX 2,265 \u00f7 400 = 5.66 \u2192 round UP \u2192 **6 H490 units** required",
+    "planning_investment_estimate": "** 6 \u00d7 ~$200,000 = approximately $1,200,000 installed (planning-level estimate only; final pricing depends on engineering scope and site conditions)",
+    "note": "** All figures are planning estimates derived from visual image extraction. CSV ground truth unavailable for this transformer. Treat all values as preliminary pending Mercury 2 confirmation.",
+    "monthly_savings_validated": "$11,743.50",
+    "annual_savings_validated": "$140,922.00",
+    "monthly_waste_validated_total": "$11,743.50",
+    "annual_waste_validated_total": "$140,922.00",
+    "annual_total_wasted_validated": "$140,922.00"
+  },
+  "packet_file": "PL1MS_william_validation.json"
+}

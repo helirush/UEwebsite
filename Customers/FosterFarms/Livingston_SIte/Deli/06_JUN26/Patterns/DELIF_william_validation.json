@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-07-10 19:00:32",
+  "transformer_id": "DELIF",
+  "transformer_name": "DELIF",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "DELIF (Deli F Transformer) \u2014 June 2026**",
+    "csv_status": "** Mercury CSV analysis is unavailable. Vision-only synthesis applied. All numeric anchors are derived exclusively from image observation.",
+    "cross_check_summary": "**",
+    "target_kva_image": "1571 kVA",
+    "bt_target_kva": "1571 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 no reconciliation possible]",
+    "power_factor_csv": "0.0% \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads 86.1% average PF]",
+    "kvar_max_csv_est": "0 kVAR \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads 750.7 kVAR MAX]",
+    "monthly_waste_csv": "$0.00 \u2014 [\u26a0\ufe0f CSV UNAVAILABLE \u2014 image reads approximately $14,186/dataset, approximately $172,600/year, approximately $279,204 total wasted/year]",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "discrepancy_flags": "** No CSV-to-image reconciliation is possible. All numeric values below are image-derived and should be treated as planning estimates until Mercury CSV data is made available for ground-truth validation.",
+    "planning_install_estimate_provided": "** approximately $200,000 for one H490 unit installed",
+    "sizing_check": "** 750.7 kVAR MAX \u00f7 400 = 1.877 \u2192 rounds UP to **2 H490 units** required. Planning estimate should reflect approximately $400,000 installed for two H490 units. Note that the provided single-unit figure of $200,000 may need revision at engineering scope.",
+    "monthly_savings_validated": "$23,267.00",
+    "annual_savings_validated": "$279,204.00",
+    "monthly_waste_validated_total": "$23,267.00",
+    "annual_waste_validated_total": "$279,204.00",
+    "annual_total_wasted_validated": "$279,204.00"
+  },
+  "packet_file": "DELIF_william_validation.json"
+}

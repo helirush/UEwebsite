@@ -1,0 +1,9 @@
+Transformer: PL1M — Recommended Engineering Attention Areas
+
+Given the complete absence of numeric data for PL1M in this analysis pass, the primary engineering recommendation is straightforward and urgent: resubmit the full view capture package for this transformer. This means providing valid image files for the TV, TBT, TM, and TS views, along with the corresponding Mercury CSV export, so that the tuned-field analysis can be completed with real numbers anchoring every observation.
+
+Beyond the data gap, there are several attention areas that are structurally warranted for any tuned-field transformer in optimization mode. First, confirm that the installed MPTS assets are still operating within their commissioned parameters — reactive compensation systems can drift over time, particularly in high-cycling environments like food processing, cold storage, or rendering operations. A field verification check of the correction equipment's output against its original commissioning baseline is a low-cost, high-value diagnostic step.
+
+Second, once voltage data is available, assess whether the tuned voltage profile shows sustained dips below 480 volts line-to-line. Repeated dips in a tuned field can indicate that the compensation point is not optimally positioned for the actual load profile, or that the load has shifted since commissioning.
+
+Third, evaluate the TBT-to-TS optimization gap. If significant residual reactive burden remains after accounting for installed assets, an incremental expansion — potentially a targeted H240 or H490 addition — may be warranted. That determination requires the kVAR MAX value from TBT, which is currently unavailable. No expansion recommendation is being made here without that data — only the diagnostic framework for making that determination once the numbers are in hand.

@@ -1,0 +1,13 @@
+**NCDC2 — South D Transformer | Voltage Stability Findings | June 2026**
+
+The voltage health picture for South D in June is broadly encouraging, with one notable event that deserves specific attention. The blue voltage trace holds remarkably horizontal across the full 30-day observation window — it rides consistently near the 480V nominal reference line without progressive sag or swell trend. For a transformer serving the full production load of a major food processing headquarters, that sustained horizontal discipline tells you the upstream supply from Merced Irrigation District is well-regulated and that the tuned field is not experiencing chronic supply-side instability.
+
+The full-month voltage spread lands between 494.5V maximum and 451V minimum — a range of approximately 43.5 volts. The 494.5V upper boundary is a normal feeder characteristic; industrial feeders are routinely supplied slightly above nominal to account for distribution voltage drop under load. The 451V floor, however, is the number that earns engineering attention.
+
+The most significant single event captured in the TV view is a voltage drop annotated at 450.8V — the lowest recorded point in the June dataset. That represents approximately a 6% sag below the 480V nominal reference, which is a meaningful transient for a facility running variable-frequency drives, precision motor starters, and cold storage control electronics. At 6% below nominal, nuisance trips and accelerated insulation stress on motor windings become realistic outcomes — particularly in the poultry processing environment where conveyor systems and refrigeration compressors operate near continuous duty cycle.
+
+Triangular drop signatures are visible in the voltage trace, with the 450.8V event being the most prominent. Additional minor inflections appear in the mid-month window, but they are not densely clustered and do not suggest a recurring systematic fault. The behavior reads as episodic load-switching events — possibly large motor starts or facility switching actions — rather than chronic field degradation.
+
+The episodic nature of these dips keeps device-health risk in the moderate category rather than high. But the 260604-region event is worth logging. Repeated exposure to the 450–451V floor, even at low frequency, accumulates cumulative stress on insulation systems and drive components over a production season. The tuned field is holding, but voltage floor events are worth tracking quarter over quarter as part of ongoing stewardship.
+
+---

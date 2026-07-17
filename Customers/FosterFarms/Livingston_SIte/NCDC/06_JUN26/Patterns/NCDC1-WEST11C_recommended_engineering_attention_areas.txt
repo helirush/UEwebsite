@@ -1,0 +1,20 @@
+**NCDC1-WEST11C — Engineering Attention Areas | June 2026 | Tuned Field**
+
+The following are incremental optimization and diagnostic focus areas for West11C, consistent with an already-invested, tuned field in active optimization:
+
+**1. Reactive Peak Suppression at High-Load Events**
+The 875.9 kVAR reactive maximum recorded in the TBT view represents a significant spike above the 267.5 kVAR average. This peak-to-average ratio — roughly 3.3 to 1 — suggests the existing MPTS correction is handling average reactive demand well, but high-load switching events are generating reactive surges that exceed the correction bandwidth. Engineering attention should focus on whether additional reactive compensation capacity or dynamic response tuning can further suppress these peaks. A targeted review of compressor start sequencing and load-switching protocols may reduce peak reactive demand without requiring additional hardware.
+
+**2. Voltage Transient Diagnostic — 9.7 V Minimum Event**
+The recorded minimum voltage event of 9.7 V is an outlier that warrants specific investigation. Identifying the source switching event, the load circuit involved, and whether any equipment experienced nuisance trips or stress at that moment would be valuable. If this transient is repeatable, mitigation through soft-start evaluation, pre-charge sequencing, or transient voltage suppression devices on sensitive circuits should be considered.
+
+**3. Power Factor Floor Improvement — 70.0% Minimum**
+The minimum power factor of 70.0 percent indicates that during specific high-reactive-demand moments, the field correction is not keeping pace with reactive surge. Understanding whether this floor is driven by compressor starts, chiller cycling, or another discrete load would allow targeted correction tuning. Closing the gap between the 70 percent floor and the 99.5 percent TS target is the primary remaining optimization lever on this transformer.
+
+**4. Thermal Burden Monitoring — Above Baseline Reference**
+The current thermal reading of 273,556 BTU per hour sitting above the 256,192 BTU per hour baseline reference is worth tracking month-over-month. If June's heavier-than-baseline production load is seasonal — driven by summer cooling demands at a food processing facility — expect this pattern to repeat annually. Confirming whether thermal burden tracks consistently with production volume or shows unexplained drift would support proactive transformer health management.
+
+**5. Outage Event Correlation**
+The two to three brief switching events noted in the TBT view should be logged against the facility's maintenance records to confirm whether they correspond to planned switching or unplanned interruptions. Given the voltage transient profile, correlation with the 9.7 V event would be particularly informative.
+
+---

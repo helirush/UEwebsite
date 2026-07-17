@@ -1,0 +1,13 @@
+**Transformer: DELIF — Reactive and Harmonic Stress | June 2026**
+
+The M view — Active-Reactive-Harmonic — lays the stress architecture of this transformer out in full. The reactive picture and the harmonic picture are both elevated, and they are both structural — present throughout the capture period, not episodic.
+
+On the reactive side: the average kVAR demand is 407.1 kVAR, and the peak reaches 750.7 kVAR. The green reactive layer in the M view is persistent — it sits at the base of every production event column, thick and constant, never going away between shifts. This reactive demand is the portion of the transformer's apparent power capacity that is being consumed but never converted to productive mechanical or thermal work. It is circulating energy — back and forth between source and load — heating conductors, loading transformer windings, and contributing directly to the 364,267 BTU per hour thermal burden documented in the BT header.
+
+Power factor behavior in the M view confirms the severity. The minimum power factor recorded is 73.38 percent. At that floor, this transformer is operating at less than three-quarters efficiency — 27 cents of every apparent-power dollar is waste. The orange power factor trace oscillates wildly, swinging from near 100 percent during light-load off-shift periods to the low 70s during peak production. That volatility is the behavioral signature of an uncompensated inductive load field — no reactive correction is moderating the swings.
+
+On the harmonic side: the average iTHD is 5.3 percent and the maximum iTHD is 10.3 percent. The IEEE 519 recommended limit for industrial facilities is typically 5 percent THD at the point of common coupling. The average is right at that threshold and the peak is running double it. Harmonics at this level contribute to transformer core heating through eddy current losses, create elevated stress on neutral conductors, and accelerate insulation degradation in motor windings and drive components. The purple harmonics trace in the M view never disappears — it is a continuous background tax on this field's health, present at every hour of every production day captured in June.
+
+Combined, the reactive waste and harmonic burden describe a transformer that is working significantly harder than its nameplate load would require if the field were properly tuned.
+
+---

@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Field Condition Summary**
+
+For the AGENTICTEA transformer, both the Mercury CSV data stream and the visual image extraction are unavailable at this time. That means I cannot anchor this summary to measured power factor, peak demand in kilowatts, reactive load in kVAR, or a confirmed Daily Target in kVA. All of those numbers would normally be the backbone of this section — and their absence is itself a data-quality signal worth noting.
+
+What I can tell you with confidence is the field framing. AGENTICTEA is classified as an untuned field. That's the most important contextual fact right now. An untuned field means no MPTS correction has been assigned or commissioned to this transformer. Without that tuning assignment in place, the electromagnetic field at AGENTICTEA is operating in its natural, uncorrected state — and uncorrected industrial fields do not hold steady. They drift. Reactive load tends to accumulate as motor populations age and HVAC cycles intensify. Power factor — the ratio of real working power to total apparent power drawn — tends to decline month over month when nothing is actively pulling it back toward unity.
+
+In practical terms, that means your transformer is almost certainly carrying more apparent power (kVA) than it needs to in order to deliver the same amount of real work. That gap between apparent and real power is reactive burden. It produces heat, it stresses insulation, and it shows up on your utility bill as demand charges and inefficiency penalties.
+
+Until Mercury data and BT image views are successfully submitted for AGENTICTEA, I'll preserve this section as a structural placeholder in session state. The moment numeric data arrives, this field condition summary will be populated with measured kW, kVAR, kVA, and power factor to give you a fully grounded picture of where this transformer stands today.
+
+---

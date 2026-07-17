@@ -1,0 +1,13 @@
+**Transformer: PL1P2 — Voltage Health | June 2026**
+
+The voltage field on PL1-Proc2 is not clean, and the data is explicit about that. The monitoring period captures a measured average of 399.6 volts across the dataset, with a labeled maximum of 333 volts and a minimum of 309 volts on the scaled voltage axis. On a 480-volt nominal system, the MinVoltage reading of 309 volts — translated across the line-to-line equivalent — represents a sustained sag of approximately 14 to 15 percent below nominal. That is not a momentary flicker. That is a stress event with duration.
+
+The triangular voltage-drop markers catalogued across the V view tell the full story. Labeled dip values include readings at 309.2V, 312.1V, 312.3V, 313.0V, 313.3V, 313.7V, 314.2V, 314.3V, 314.6V, and 314.7V — recurring throughout the entire thirty-day period with no extended clean window. These dips cluster in groups of two to four successive drops, which is the classic signature of inductive load switching: a motor starts, pulls the voltage down, recovers partially, and the next motor in the sequence starts before the field fully restores. In a food processing and cold storage environment, that pattern repeats dozens of times every operating day.
+
+The voltage trace itself carries a persistent granular texture — not the smooth, steady band you would see in a well-regulated field. That texture is consistent with the 5.6 percent iTHD average reported in the header. Harmonic contamination of this magnitude rides on top of every voltage sag, amplifying the stress delivered to sensitive electronics with every transient.
+
+The most concerning development is the final week of the period — approximately June 25 through June 30 — where the voltage trace shows a measurable compression and decline. Dip events in that window approach the 309.2V floor, the lowest recorded value of the month. That is a deteriorating trend, not a stable one.
+
+For the equipment population this transformer serves — variable frequency drives, soft starters, programmable logic controllers, motor contactor coils — sustained sags in the 309 to 314 volt range represent a real and ongoing threat. These devices are designed for tight voltage tolerance, and repeated excursions of 13 to 15 percent below nominal accelerate insulation degradation, shorten drive lifespan, and increase nuisance trip frequency. The health risk here is HIGH. The trajectory without field correction is toward more frequent failures, not fewer.
+
+---

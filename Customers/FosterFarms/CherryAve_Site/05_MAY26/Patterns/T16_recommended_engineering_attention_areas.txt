@@ -1,0 +1,11 @@
+**T16 — Engineering Attention Areas | May 2026**
+
+**Priority 1 — Harmonic Investigation:** The 59.7% iTHD peak recorded in the M view requires immediate engineering investigation before MPTS sizing is finalized. High-magnitude harmonic events of this level can interact destructively with power factor correction capacitor banks if harmonic filtering is not incorporated into the correction design. The spike concentration around 260515–260516 should be correlated with operational logs to identify the triggering load event — likely a VFD startup, rectifier stage cycling, or compressor bank sequencing event. MPTS specification for T16 should explicitly include harmonic analysis as part of the engineering scope.
+
+**Priority 2 — Voltage Sag Event Clustering (260517–260520):** The mid-to-late month clustering of triangular voltage dip events in the V view represents a period of elevated field instability. Engineering review should determine whether this clustering correlates with a specific operational change — increased compressor cycling frequency, a load addition, or a scheduled maintenance event — or whether it represents progressive field degradation. If clustering behavior is confirmed as progressive, it is a leading indicator of accelerated insulation and drive stress.
+
+**Priority 3 — Power Factor Minimum at 69.52%:** A minimum power factor of 69.52% on a transformer of this size represents a significant instantaneous reactive event. Identifying the specific load transition that drives the field to this depth — likely a large compressor block startup or simultaneous motor inrush — is important for both MPTS sizing validation and for evaluating whether soft-start or VFD staging adjustments can reduce peak reactive demand at the source.
+
+**Priority 4 — Summer Thermal Risk (Fresno, CA):** With ambient temperatures in Fresno regularly exceeding 100°F during June through August, the 464,279 BTU/hr thermal burden identified in May is a conservative baseline. Summer months will add external heat load to an already thermally stressed transformer. Prioritizing MPTS tuning assignment before the peak summer period is a direct risk-mitigation action for T16.
+
+---

@@ -1,0 +1,17 @@
+**Transformer: AGENTICTEA — Recommended Engineering Attention Areas**
+
+Given the absence of numeric data for AGENTICTEA, the primary engineering attention recommendation is data re-submission. The BT, V, M, and S image captures for this transformer should be reprocessed through the Mercury 2 CSV pipeline and resubmitted alongside the vision image set. Until that submission is complete, this transformer cannot be quantitatively compared against other transformers in the group site overview, and no MPTS sizing recommendation can be confirmed.
+
+Beyond the data gap, the following structural attention areas apply to any untuned field operating under these framing conditions:
+
+First, reactive power baseline confirmation. Once the BT header values are recovered, the reactive average and kVAR maximum must be reviewed against the transformer's nameplate kVA rating to assess how close the field is operating to thermal limits.
+
+Second, voltage dip frequency audit. The V view, when available, should be reviewed for triangular drop patterns and any sustained below-nominal conditions. Facilities with high-inertia inductive loads — refrigeration compressors, rendering process motors — are particularly vulnerable to accelerating insulation stress from repeated voltage recovery transients.
+
+Third, thermal burden trend assessment. The BTU per hour figure from the BT header, once recovered, should be contextualized against the ambient operating temperature of the transformer installation space. Summer months compound transformer thermal burden significantly, and untuned fields that are borderline in winter can enter thermal stress territory in peak cooling season.
+
+Fourth, MPTS sizing confirmation. Once kVAR maximum is confirmed, the H490 unit count calculation must be finalized before any capital planning conversation proceeds. The planning estimate of approximately $200,000 is a starting point — final scope determines final investment range.
+
+AGENTICTEA is flagged as a data-incomplete transformer in this group session state.
+
+---

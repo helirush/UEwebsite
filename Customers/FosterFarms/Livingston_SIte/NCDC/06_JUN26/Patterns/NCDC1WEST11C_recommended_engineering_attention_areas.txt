@@ -1,0 +1,18 @@
+**Transformer: NCDC1WEST11C — Engineering Attention Areas | June 2026**
+
+**Priority 1 — 9.7V Minimum Voltage Event Investigation:**
+The single most urgent engineering task for NCDC1WEST11C is determining the cause and nature of the 9.7-volt minimum voltage reading captured in the June TV dataset. This requires review of the corresponding minute-resolution timestamp, correlation with SCADA or BMS event logs, and confirmation of whether this represents a true voltage collapse, a planned shutdown, or a metering artifact. In a food processing and cold-chain facility, any true near-zero voltage event has food safety implications beyond the electrical system.
+
+**Priority 2 — Reactive Peak Compression at 875.9 kVAR MAX:**
+The 875.9 kVAR peak reactive reading represents the primary remaining optimization gap on this transformer. Engineering review should assess whether the current MPTS configuration is sized and tuned to address this peak reactive demand, or whether the reactive compensation is calibrated to manage average load rather than peak events. Targeted adjustment or supplemental reactive support at the peak-demand window could materially reduce the worst-case transformer loading stress.
+
+**Priority 3 — Mid-June Outage Interval Review:**
+The three to four outage events detected in the 260613–260620 window, totaling an estimated 4 to 6 cumulative hours, warrant event log review. Each restoration event is a high-inrush stress moment for the transformer and connected equipment. Understanding whether these were planned maintenance windows, utility interruptions, or equipment trips informs both reliability risk assessment and MPTS configuration optimization for inrush handling.
+
+**Priority 4 — Harmonic Management at 11% iTHD Peak:**
+The 11 percent maximum iTHD events, while not occurring continuously, represent moments of elevated transformer iron-loss and equipment stress. Engineering review of harmonic filtering adequacy at the peak iTHD events should be conducted, particularly in relation to any precision instrumentation or programmable control systems sharing this bus.
+
+**Priority 5 — Thermal Burden Monitoring in Summer Operating Conditions:**
+The 273,556 BTU per hour thermal burden on a Central Valley summer operating schedule represents an elevated and compounding stress condition. Verification that transformer cooling is operating within design parameters — and that ambient temperature conditions in the transformer enclosure are being actively monitored — is recommended as a seasonal stewardship action for the June through September window.
+
+---

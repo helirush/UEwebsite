@@ -1,0 +1,23 @@
+**PL2-3North — Recommended Engineering Attention Areas | June 2026**
+
+Several specific engineering actions are warranted based on this June analysis of PL2-3North.
+
+**1. Reactive Compensation Assignment — Priority: High**
+The 1,163.8 kVAR MAX and 61.3% power factor baseline make this transformer a clear priority candidate for MPTS correction. Three H490 units are indicated by the sizing calculation. This is the highest-leverage action available for this transformer and should be assigned before the next seasonal loading cycle. Delaying correction allows reactive accumulation and thermal burden to continue unchecked — and in a food processing environment with continuous cold-storage operations, the burden does not pause between analysis periods.
+
+**2. Voltage Event Investigation — 260619 to 260622 Window**
+The clustering of four sub-nominal voltage dips — reaching as low as 449.2V — in a roughly three-to-four-day window in the third week of June warrants investigation. Engineering should determine whether these events correlate with specific equipment starts, utility supply variability, or load shedding actions. If large motor group starts are driving local bus voltage depression to that magnitude, targeted soft-start or drive solutions may supplement MPTS correction in protecting connected equipment.
+
+**3. Load Collapse Event — 260616 to 260617**
+The deep operational drop observed in the BT view near mid-month should be reconciled against operational logs to confirm whether this was a planned shutdown, an equipment trip, or a supply event. In the context of the surrounding voltage dip cluster, understanding the causal sequence is important for both operational risk assessment and equipment health baseline.
+
+**4. Harmonic Monitoring — iTHD Peak at 9.7%**
+While harmonics are a secondary concern relative to power factor depression, the 9.7% iTHD peak exceeds IEEE 519 recommended limits for this voltage class. Ongoing monitoring and correlation with specific load events — particularly VFD operations and large rectifier loads — is advisable. If iTHD peaks become more frequent or exceed 10%, supplemental harmonic filtering should be evaluated alongside the MPTS correction.
+
+**5. Thermal Management Review**
+The 264,972 BTU per hour thermal burden on an untuned field is generating approximately 38.8 kW of cooling load that would not exist in a corrected field. Facilities engineering should review the thermal management capacity serving the electrical room and distribution equipment associated with PL2-3North. In summer months, coincident heat from production operations and this transformer burden may be stressing cooling infrastructure beyond design margins.
+
+**6. CSV Mercury Upload — Priority: Data Integrity**
+All figures in this analysis are sourced from vision extraction only. Mercury CSV data is unavailable for PL2-3North at this time. Uploading the Mercury 2 CSV for this transformer should be treated as a near-term action item to validate image-extracted values — particularly the kVAR MAX of 1,163.8 and the total wasted figure of approximately $202,380 per year — before these figures are used in capital investment planning or utility tariff negotiations.
+
+---

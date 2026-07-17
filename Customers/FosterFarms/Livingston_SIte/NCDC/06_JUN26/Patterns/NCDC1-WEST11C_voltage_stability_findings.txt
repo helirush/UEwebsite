@@ -1,0 +1,11 @@
+**NCDC1-WEST11C — Voltage Health | TV View | June 2026**
+
+The voltage field on West11C is running at a tuned average of 481.3 volts — that's just above the 480V nominal line-to-line target, which is exactly where you want to be. The MPTS tuning has contributed to this near-nominal centering. The bulk of operating time is clustered in a tight band around nominal, and the field is contained between the upper reference of 501 V and the lower reference of 465 V for the majority of the month.
+
+That said, the voltage trace is not clean. Triangular dip patterns are clearly visible throughout the entire 30-day window — V-shaped drops that descend sharply and recover quickly. These signatures are consistent with heavy motor starts, compressor cycling, and refrigeration load switching events typical of a poultry processing and cold storage environment. The clustering is moderate to heavy and distributed across the full month, which tells you this is routine operational turbulence, not isolated incidents. The facility's load profile generates these voltage stresses every day.
+
+The most significant flag is the recorded minimum voltage event of 9.7 volts. This is an extreme transient — a momentary field collapse during a switching event — not a sustained sag. But a collapse to that level, even for milliseconds, represents serious instantaneous stress on motor control electronics, variable frequency drives, and contactor coils. In a food processing environment where refrigeration uptime is non-negotiable, these transient events carry real equipment health risk.
+
+The lower reference boundary of 465 V is being approached and, in select events, breached. Motor windings operating repeatedly at voltages below 480V nominal experience elevated current draw, which compounds the thermal burden already present from reactive losses. The power factor trace on the TV view tracks inversely with the voltage dip events — confirming that each dip corresponds to a reactive stress surge within the facility. The field is tuned, but voltage discipline at the transient level remains an active engineering concern for West11C.
+
+---

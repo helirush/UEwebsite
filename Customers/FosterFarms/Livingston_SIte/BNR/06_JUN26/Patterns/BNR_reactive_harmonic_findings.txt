@@ -1,0 +1,11 @@
+**BNR Transformer | June 2026 — Reactive and Harmonic Findings**
+
+The BNR reactive field in June carries a substantial burden. The TBT header documents a reactive average of 692.6 kVAR, with the operative pre-correction peak reaching 730.8 kVAR. At 89.7% power factor, roughly 44 cents of every dollar of apparent power drawn by this transformer is doing electrical work — the remaining fraction is circulating reactive energy that the utility sees, meters, and charges for, but that delivers no productive output to the facility's processes.
+
+The M view (TM) adds important detail to this picture. The amperage band peaks at 1,961.1 amps — a significant current load that contributes directly to the 602,911 BTU per hour thermal burden. The reactive KVAR band in the M view holds at a consistent elevated level with a Max Reactive reading of 683 kVAR, confirming the reactive burden is persistent rather than event-driven. This is a steady-state condition, not a transient surge profile.
+
+The harmonic content reading from the TM header shows an average iTHD (total harmonic distortion of current) of 6.3%, with a peak iTHD of 11.4%. The 11.4% peak is a meaningful threshold — it exceeds the IEEE 519 standard's recommended limits for many industrial service categories. Harmonic current at this level contributes to transformer heating, increases neutral conductor loading, and degrades the accuracy and lifespan of power measurement instrumentation. In a facility running variable frequency drives, soft starters, and switch-mode power supplies — all common in food processing environments — this distributed harmonic profile is expected, but it still demands managed attention.
+
+The TS view shows what full reactive correction delivers: average kVAR drops to 133.1, peak kVAR drops to 152.1, and apparent power compresses from 1,571.8 kVA to 1,332.9 kVA — freeing 238.9 kVA of transformer capacity. Power factor locks at 99.5% flat. Average iTHD improves from 6.3% to 5.0%. These are the gains the MPTS investment is positioned to deliver when fully optimized across all operating conditions.
+
+---

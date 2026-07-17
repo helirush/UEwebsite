@@ -1,0 +1,9 @@
+**T16 — Compressor Transformer | Untuned Field | May 2026**
+
+What you're looking at with T16 is a 2,500 kVA compressor transformer running in an untuned state — and the field is telling a very clear story. The average power factor across the month sits at 87.3%, with a peak of 91.7% and a floor that drops all the way to 45.6% during load transitions. That 45.6% minimum is not a rounding artifact — that is the field collapsing toward half efficiency at its worst moments. The transformer is carrying a peak apparent demand of 1,414.8 kilowatts, but the reactive overhead brings the peak apparent power up to 1,473 kVA — that gap between real and apparent power is the waste signature.
+
+The monthly energy waste is running at approximately $33,249 per dataset period, which extrapolates to roughly $391,495 per year in reactive losses alone. Add the thermal burden layer — 464,279 BTU per hour — and the cooling cost overhead of $9.65 per hour at 27.1 kilowatts of cooling load, and the total wasted value climbs to an estimated $492,824 per year. This is not a marginal efficiency gap. This is a transformer carrying a persistent and growing reactive burden that is converting facility electrical budget into heat and wasted magnetic field energy every single hour of every production day.
+
+Without tuning assignment, this trajectory only moves in one direction. In an untuned field, reactive burden and heat tend to grow month over month as motor insulation ages, load profiles intensify, and the field drifts further from the correction curve. T16 is presently operating in that drift zone, and the numbers confirm it.
+
+---

@@ -1,13 +1,15 @@
-**NCND1 — West11c Transformer | Recommended Engineering Attention Areas**
+**NCDC1 (West11c) — Recommended Engineering Attention Areas | May 2026**
 
-Several areas warrant focused engineering follow-up based on the West11c field analysis.
+Several areas on this transformer warrant engineering follow-up beyond the standard MPTS tuning assignment.
 
-**Priority 1 — Root cause of voltage collapse events.** The 9.7-volt minimum recorded in the dataset and the confirmed outage or severe disruption events around May 8th through 9th and May 23rd require investigation. Whether these represent upstream supply interruptions, internal switching events, or downstream fault conditions, understanding the root cause is essential before MPTS installation proceeds. Capacitor banks installed into an electrically unstable bus environment face stress risks that must be assessed.
+**Reactive Compensation Priority:** The 445.5 kVAR MAX reading establishes a clear sizing requirement. Two H490 units provide sufficient reactive correction headroom with reserve capacity. This should be the primary engineering action item.
 
-**Priority 2 — MPTS sizing confirmation and placement.** Two H490 units at 400 kVAR each provide 800 kVAR of total correction capacity against a 445.5 kVAR maximum reactive demand. This provides appropriate headroom. Placement should be confirmed by a site engineering study that accounts for harmonic content, bus topology, and the location of major inductive loads — particularly the refrigeration compressor motors and any variable frequency drive systems on this bus.
+**Voltage Stability and Motor Health:** The repeated triangular voltage-drop signatures — clustering most densely in the May 2 through May 15 window — indicate sustained inductive load cycling that is producing recurring under-voltage excursions below the 480V nominal. An engineering review of the largest motor loads on this transformer, particularly refrigeration compressors, is recommended to assess insulation condition and VFD parameter tuning. Motor insulation testing (megohmmeter survey) would provide a baseline for trend monitoring.
 
-**Priority 3 — Motor and drive fleet condition assessment.** Given the confirmed near-zero voltage collapse event and the sustained over-voltage operation above nominal, a thermal imaging and insulation resistance survey of the motor fleet served by West11c is warranted. Variable frequency drives and soft starters connected to this bus should be reviewed for fault logs that may capture prior trip events correlated to the disruption windows identified in this analysis.
+**Harmonic Content Review:** The 6.0% average and 10.7% peak iTHD readings exceed the IEEE 519 recommended threshold. A harmonic survey to identify the primary contributing loads — likely VFDs and rectifier-front-end equipment — would support decisions about passive harmonic filtering as a complement to MPTS reactive correction. MPTS alone will reduce harmonic-driven heating indirectly by reducing reactive current amplitude, but passive filtering may be warranted if iTHD remains above 5.0% post-MPTS.
 
-**Priority 4 — Demand charge exposure review.** With a peak demand of 551 kilowatts and a supply kVA of 586, the facility may be carrying demand charge exposure tied to apparent power rather than real power depending on tariff structure. Correcting the power factor through MPTS installation may reduce billed demand in addition to reducing reactive energy losses — a financial benefit that should be quantified in the formal engineering study.
+**Outage Root Cause Investigation:** Two unplanned interruptions in a single month — particularly the May 8th event estimated at 60 to 90 minutes — warrant review of the upstream supply and switching gear serving this transformer. For a continuous food processing and cold storage operation, supply reliability is a food safety and product integrity issue, not only an energy issue.
+
+**Thermal Monitoring:** Given the 277,515 BTU per hour thermal burden, infrared thermography of the transformer and associated switchgear is recommended on a quarterly basis until MPTS correction is commissioned.
 
 ---

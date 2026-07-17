@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cognition Partner Intelligence</title>
+  <meta name="description" content="Cognition Partner intelligence from Unity Energy." />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Cognition Partner Intelligence" />
+  <meta property="og:description" content="Cognition Partner Intelligence · Electrical Visibility &amp; Intelligence Progress Report" />
+  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/maxwellian-cognition-partner-intelligence.html?ue_doc=UE.0614.01" />
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/share-card-bases/MaxwellianNews.png?ue_doc=UE.0601.01&ue_img=UEMAXWELLIANNEWS" />
+  <meta property="og:image:alt" content="Cognition Partner Intelligence share card" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Cognition Partner Intelligence" />
+  <meta property="twitter:description" content="Cognition Partner Intelligence · Electrical Visibility &amp; Intelligence Progress Report" />
+  <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/assets/images/share-card-bases/MaxwellianNews.png?ue_doc=UE.0601.01&ue_img=UEMAXWELLIANNEWS" />
+  <script>
+    (function () {
+      const SHARE_KIND = "maxwellian";
+      const RETIRED_TEST_STAMPS = Object.freeze(["UE.26.0528"]);
+      const RETIRED_TEST_MESSAGE = "This was used for testing purposes. Please contact Unity for the updated link.";
+      function pad2(value) {
+        return String(value).padStart(2, "0");
+      }
+      function formatStamp(dateObj, revisionCounter) {
+        const mm = pad2(dateObj.getMonth() + 1);
+        const dd = pad2(dateObj.getDate());
+        const parsedRevision = Number.parseInt(revisionCounter, 10);
+        const normalizedRevision = Number.isFinite(parsedRevision) && parsedRevision > 0 ? parsedRevision : 1;
+        const rr = pad2(normalizedRevision);
+        return `UE.${mm}${dd}.${rr}`;
+      }
+      function parseStamp(rawValue) {
+        const value = String(rawValue || "").trim().toUpperCase();
+        if (/^UE\.\d{2}\.\d{4}$/.test(value)) return value;
+        if (/^UE\.\d{4}\.\d{2}$/.test(value)) return value;
+        return null;
+      }
+      function normalizeStatus(rawValue) {
+        const value = String(rawValue || "").trim().toLowerCase();
+        if (value === "published") return "published";
+        if (value === "test") return "test";
+        return "review";
+      }
+      function normalizeRecipientKey(rawValue) {
+        return String(rawValue || "").trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+      }
+      function normalizeRouteAddress(rawValue) {
+        return String(rawValue || "").trim().toLowerCase().replace(/[^a-z0-9@._+-]/g, "");
+      }
+      function renderUnavailable(message) {
+        document.addEventListener("DOMContentLoaded", function () {
+          if (!document.body) return;
+          document.body.textContent = message;
+        });
+      }
+      const pageUrl = new URL(window.location.href);
+      const incomingStamp = parseStamp(pageUrl.searchParams.get("ue_doc"));
+      if (incomingStamp && RETIRED_TEST_STAMPS.indexOf(incomingStamp) !== -1) {
+        renderUnavailable(RETIRED_TEST_MESSAGE);
+        return;
+      }
+      const incomingStatus = normalizeStatus(pageUrl.searchParams.get("ue_status"));
+      if (incomingStatus !== "published") {
+        renderUnavailable("This share link is unavailable while the document is in review/test mode.");
+        return;
+      }
+      const stampCode = parseStamp(pageUrl.searchParams.get("ue_doc")) || formatStamp(new Date());
+      const targetPath = String(pageUrl.searchParams.get("ue_target") || "../executive-update/");
+      const target = new URL(targetPath, window.location.href);
+      target.searchParams.set("ue_doc", stampCode);
+      target.searchParams.set("ue_kind", SHARE_KIND);
+      target.searchParams.set("ue_share", pageUrl.searchParams.get("ue_share") || String(Date.now()));
+      target.searchParams.set("ue_status", "published");
+      const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
+      if (incomingRevision) {
+        target.searchParams.set("ue_rev", incomingRevision);
+      }
+      const incomingTitle = String(pageUrl.searchParams.get("ue_title") || "").trim();
+      if (incomingTitle) {
+        target.searchParams.set("ue_title", incomingTitle);
+      }
+      const recipientKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_recipient"));
+      if (recipientKey) {
+        target.searchParams.set("ue_recipient", recipientKey);
+      }
+      const customerKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_customer"));
+      if (customerKey) {
+        target.searchParams.set("ue_customer", customerKey);
+      }
+      const senderAddress = normalizeRouteAddress(pageUrl.searchParams.get("ue_from"));
+      if (senderAddress) {
+        target.searchParams.set("ue_from", senderAddress);
+      }
+      const recipientAddress = normalizeRouteAddress(pageUrl.searchParams.get("ue_to"));
+      if (recipientAddress) {
+        target.searchParams.set("ue_to", recipientAddress);
+      }
+      target.searchParams.set("ue_target", targetPath);
+      window.location.replace(target.toString());
+    })();
+  </script>
+</head>
+<body>
+  Redirecting to the Maxwellians brief…
+</body>
+</html>

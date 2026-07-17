@@ -1,0 +1,13 @@
+**Transformer: AGENTICTEA — Field Condition Summary**
+
+This report covers transformer AGENTICTEA operating in an untuned field configuration. The capture family for this session is B, BT, S, V, and M — with the numeric extraction family being BT, V, M, and S, and the B image treated as qualitative contextual reference only.
+
+At the time of this analysis, neither Mercury CSV data nor vision image extractions were successfully delivered to the synthesis engine. Both data streams are showing as unavailable. That means every metric that would normally anchor this field condition summary — peak demand in kilowatts, reactive power in kVAR, power factor percentage, thermal burden in BTU per hour, and energy waste in dollars — cannot be confirmed from measurement at this time.
+
+What we can state with confidence is the operational context: AGENTICTEA is an untuned field. Untuned fields, by definition, have not had reactive power compensation assigned or calibrated. In the absence of correction, electromagnetic fields in industrial environments tend to drift. Reactive demand accumulates. The gap between real work delivered to your loads and the total current your transformer is carrying grows wider over time. That gap is waste — it shows up as heat in your conductors, as thermal stress on your transformer windings, and as additional cooling load your mechanical systems must absorb.
+
+Without a measured baseline to reference, we cannot quantify the specific waste burden on AGENTICTEA today. However, the structural risk profile of an untuned field is consistent and well-documented: efficiency tends to move downward month over month, and heat burden tends to rise as reactive demand goes uncompensated. The planning-level install estimate anchored in this session is approximately $200,000 — consistent with one H490 unit rated at 400 kVAR — though final engineering scope and site conditions will determine the actual investment required.
+
+This session's output is scoped to AGENTICTEA and will be preserved as transformer-level session state for aggregation into a full group-level site overview once all transformers in the dataset have been processed.
+
+---

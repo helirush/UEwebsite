@@ -1,0 +1,9 @@
+ENERGY FIELD SUMMARY BRIEF — Transformer PL1M
+Analysis Mode: Tuned Field Optimization
+Data Status: Both CSV and image sources unavailable for this pass. FIELD CONDITION:
+PL1M is operating in a tuned-field environment, meaning MPTS correction assets have been deployed at this site and the field has already benefited from prior reactive compensation investment. The current analysis pass cannot quantify the field's condition numerically — peak demand, supply target in kVA, and power factor are all listed as value unavailable pending data resubmission. VOLTAGE STABILITY:
+No voltage waveform data is available for PL1M from the TV view. Nominal reference for this system type is 480 volts line-to-line. Whether the tuned field is holding near that nominal, experiencing triangular dips, or showing outage events cannot be confirmed. Outage detection: no gold streaks confirmed — image unavailable. REACTIVE AND HARMONIC PROFILE:
+Reactive load figures including average kVAR and kVAR maximum are value unavailable. Without a confirmed kVAR maximum, MPTS sizing adequacy cannot be assessed against installed assets. Harmonic content is also uncharacterized for this transformer. OPERATIONAL STRESS:
+Thermal burden in BTU per hour and cooling cost in dollars per hour are value unavailable. The stress reduction achieved by installed assets cannot be quantified in this pass. SIMULATED MPTS OUTCOME:
+The TBT-to-TS optimization gap — representing remaining energy savings, heat relief, and cooling cost recovery — is value unavailable. TS header values have not been extracted. RECOMMENDED ENGINEERING ATTENTION:
+Resubmit TV, TBT, TM, and TS image data along with Mercury CSV for PL1M. Once received, complete the tuned-field gap analysis, verify installed asset performance against commissioning baseline, and assess voltage dip frequency and residual reactive burden for any incremental optimization opportunity.

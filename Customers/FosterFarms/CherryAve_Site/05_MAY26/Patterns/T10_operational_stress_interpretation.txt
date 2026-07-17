@@ -1,0 +1,13 @@
+**T10 — Operational Stress Interpretation | May 2026**
+
+Taken together, the voltage, reactive, and harmonic findings on T10 paint a picture of a transformer that is being asked to carry more than its share of the electromagnetic burden — and doing so without the benefit of reactive compensation or harmonic mitigation. The operational stress on this machine is multi-dimensional.
+
+First, consider the loading pattern. The BT chart shows production blocks consistently reaching toward and breaching the 1,509 kVA Max Supply target line. My visual estimate puts T10 above that supply ceiling during roughly 55 to 65 percent of active weekday production intervals. That's not occasional overreach — that's the normal operating posture of this transformer during production hours. Sustained operation at or above the supply target compresses transformer margins and accelerates thermal aging of the winding insulation.
+
+Second, consider what that 760.5 kVAR reactive maximum is doing to apparent power capacity. At peak reactive demand, T10 is committing a substantial fraction of its apparent power capacity to magnetizing current that performs no real work — it just circulates, generating heat and occupying conductor space. That reactive burden is what drives the power factor down to the 81.4% floor and keeps the average at 89.7% rather than the 95%+ range a well-compensated industrial transformer should be holding.
+
+Third, the thermal numbers are direct evidence of operational stress. The baseline thermal burden is 472,779 BTU per hour, against a reference of 388,410 BTU per hour. That's approximately 84,000 BTU per hour of excess heat generation above the reference baseline — heat that has to be removed by mechanical cooling systems consuming an estimated 96.5 kilowatts of cooling capacity at roughly $34.05 per hour. Annually, that cooling overhead alone represents approximately $298,265 — a very real operating cost generated entirely by field inefficiency.
+
+Without tuning assignment, this trajectory is self-reinforcing. Reactive burden deepens, thermal stress accumulates, insulation ages faster, and efficiency drifts further downward month over month. The untuned field does not find a natural equilibrium — it drifts toward higher waste, not lower.
+
+---

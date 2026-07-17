@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-07-11 21:42:30",
+  "transformer_id": "FSO",
+  "transformer_name": "FSO",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth": "unavailable (direct_csv_profile: unavailable). All numeric extraction is vision-only from TV, TBT, TM, and TS images.",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "757 kVA",
+    "bt_target_kva": "757 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 \u26a0\ufe0f CSV unavailable; no reconciliation possible",
+    "power_factor_csv": "0.0% \u2014 \u26a0\ufe0f CSV unavailable; image reads 86.1% avg PF (TBT header)",
+    "kvar_max_csv_est": "0 kVAR \u2014 \u26a0\ufe0f CSV unavailable; image reads 918.5 kVAR MAX (TBT header)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "image_only_extraction_summary_tbt": "**",
+    "peak_demand": "763.3 kW",
+    "reactive_avg_max": "250.5 kVAR / 918.5 kVAR",
+    "power_factor": "86.1% avg (Min 0.0%, Max 96.2%)",
+    "monthly_waste": "approximately $9,993/dataset | $121,589/yr",
+    "total_wasted": "approximately $207,459/yr",
+    "thermal_burden": "277,397 BTU/hr",
+    "cooling_costs": "approximately $8.75/hr | 42.6 kW | $76,628/yr",
+    "image_only_extraction_summary_ts": "**",
+    "post_mpts_pf": "99.5%",
+    "post_mpts_kvar_avg": "36.5 kVAR | kVAR MAX: 76.6 kVAR",
+    "annual_savings_recovered": "approximately $187,830/yr",
+    "energy_recovery": "approximately $9,737/dataset | $118,467/yr",
+    "carbon_credits": "237 Credits/yr",
+    "tm_active_reactive_harmonic": "**",
+    "max_amperage": "908.2 A",
+    "min_power_factor_tm": "80.01%",
+    "max_reactive_tm": "429 kVAR",
+    "ithd_avg": "8.0% | iTHD MAX: 31.1%",
+    "discrepancy_flags": "**",
+    "kvar_max_from_tbt_header_918_5_kvar_vs_tm_max_reactive_callout_429_kvar": "these represent different measurement contexts \u2014 TBT header captures the dataset statistical maximum across the full month; TM callout reflects the visible peak in the active-reactive view. No reconciliation flag issued; difference is contextual.",
+    "monthly_savings_validated": "$17,288.25",
+    "annual_savings_validated": "$207,459.00",
+    "monthly_waste_validated_total": "$17,288.25",
+    "annual_waste_validated_total": "$207,459.00",
+    "annual_total_wasted_validated": "$207,459.00"
+  },
+  "packet_file": "FSO_william_validation.json"
+}

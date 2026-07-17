@@ -1,0 +1,13 @@
+**REND1 — Voltage Stability Findings | June 2026**
+
+The voltage picture for REND1 is one of the more concerning field health profiles in this review. The month-average voltage of 476.6 volts is already below the 480-volt nominal line — meaning on average, across all 43,200 minutes of June, this transformer was delivering slightly under-nominal voltage to the load. That alone is a yellow flag. But the detail within that average tells a harder story.
+
+Across the voltage chart, at least seven distinct triangular drop events are annotated with specific voltage callout values. The majority of these dips land in the 454–461 volt range — consistently 19 to 25 volts below nominal. For motor drive systems, VFDs, and control electronics running on a 480-volt bus, that operating band creates elevated thermal stress on motor windings and increases the risk of nuisance VFD fault trips during production shifts.
+
+The single most alarming data point in this view is the annotated sag to 357.5 volts, observed in the early June timeframe near the 260604 zone. A drop of over 120 volts below nominal is not a flicker — it is a severe sag event. At 357.5 volts on a 480-volt system, sensitive equipment is operating approximately 25 percent under nominal voltage. That level of sag can trip drives offline, stress motor starters, and in some cases cause momentary loss of process control on refrigeration or rendering systems.
+
+And then there is the absolute minimum recorded voltage of 9.5 volts — a near-total collapse. This was not a brief transient. It is confirmed as a true electrical collapse event, likely coinciding with a planned site shutdown, but its presence in the dataset confirms that this field has experienced at least one complete power-off condition during the month.
+
+Device health risk level for REND1 based on this voltage profile: **high**. A food processing and cold storage environment running compressors, rendering equipment, and HVAC loads cannot afford the kind of repeated sub-nominal sag this field is producing. Insulation life shortens, motor bearings stress under voltage imbalance, and control systems accumulate fault history that shortens their operational lifespan. This voltage profile deserves immediate engineering attention alongside the reactive correction work.
+
+---

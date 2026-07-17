@@ -1,0 +1,11 @@
+**T16 — Voltage Health | V View | May 2026**
+
+The voltage field on T16 has a 53-volt swing across the month — from a minimum of 451.3V to a maximum of 504.8V, against a nominal reference of 480V line-to-line. That spread, on a compressor transformer of this scale, is consequential. A 53-volt range means the connected equipment — motors, drives, controls, contactors — is operating across a wide voltage envelope, and not all of that envelope is safe territory.
+
+The minimum recorded voltage of 451.3V sits approximately 28.7 volts below the 480V nominal — that's a 6% sag from nominal. The field touched this floor episodically, confirmed by the MinVoltage reference line in the V chart. But more concerning than the absolute floor is the clustering behavior. The triangular voltage drop markers — those sharp V-shaped downward excursions in the blue trace — cluster most densely in the 260517 through 260520 window, mid-to-late month. A labeled sag event at 453.7V, roughly 26 volts below nominal, is visible and isolated in the earlier part of the record. The clustering in the back half of the month tells you the compressor load was cycling harder or more frequently during that period, pulling the field down repeatedly rather than in isolated incidents.
+
+Each of those V-shaped dips is an electromagnetic event for every piece of connected equipment. Motor insulation sees voltage stress at the transition edges. Variable frequency drives experience momentary undervoltage that forces protection circuits to respond. Contactors operating near their dropout voltage threshold during those dips face accelerated mechanical wear. These are not theoretical concerns — they are measurable decay mechanisms that shorten equipment service intervals and increase maintenance event frequency.
+
+The orange power factor trace in the V view reinforces this: it dips sharply and visibly on load-on transitions, confirming that the field is reactive rather than stable. It is chasing demand, not leading it. In an untuned field, this reactive chasing behavior compounds over time. The voltage health assessment for T16 is moderate-to-high risk, and the clustering pattern in the back half of May 2026 is a signal that warrants immediate attention.
+
+---

@@ -1,13 +1,25 @@
-**Transformer: Deli.G — DELIG | Projected MPTS Correction Impact**
+**DELIG Transformer — Simulated MPTS Correction Outcome | Planning Estimate**
 
-The S view provides the projected post-MPTS field state for Deli.G, and the contrast with the baseline is significant.
+Based on the cross-checked field data from May 2026, the MPTS correction scenario for DELIG is straightforward to model. The sizing calculation uses the CSV-derived kVAR peak estimate of approximately 470 kVAR as the reference value.
 
-Beginning with sizing: applying the standard MPTS sizing rule to Deli.G's kVAR MAX of 1,779.6 kVAR — divide by 400, round up — yields a requirement of 4.45, rounded up to **5 H490 units**. At the planning-level estimate of approximately $200,000 installed per H490 unit, the planning-range investment for full correction on Deli.G would be approximately **$1,000,000 installed**, with final pricing dependent on engineering scope, site conditions, and configuration. That is a planning-level estimate, not a binding quote.
+**Sizing calculation:**
+470 kVAR ÷ 400 kVAR per H490 unit = 1.175 → rounded up → **2 H490 units required**
 
-Post-MPTS, the S view projects power factor correction to 99.5 percent — up from the current 86.0 percent baseline. That 13.5 percentage point improvement in power factor directly reduces the reactive current circulating in the transformer, which reduces apparent power demand, reduces thermal burden, and relieves the transformer loading that currently pushes it to 102.3 percent of nameplate capacity. With reactive compensation in place, the same real-work load would be delivered at a substantially lower apparent power draw — creating headroom on the transformer that does not currently exist.
+Two H490 units deliver 800 kVAR of combined reactive compensation capacity, providing substantial headroom above the 470 kVAR peak demand and ensuring the system can absorb reactive surges during large motor starts without saturation.
 
-The projected annual waste recovery approaches the full $215,326/yr total wasted figure — with the reactive loss recovery component of approximately $133,139/yr and the thermal and cooling component of approximately $71,933/yr being the primary recovery drivers. The carbon recovery of 266.3 MT/yr CO2e equivalent is a secondary benefit worth noting for sustainability reporting purposes.
+**Projected field improvements with MPTS correction:**
 
-Voltage stability also benefits directly: reactive compensation reduces the reactive current spikes that cause the 460V voltage dips observed during peak loading. A corrected field would deliver flatter, more stable voltage to motor controls, VFDs, and refrigeration equipment — reducing the device-stress cycle that currently repeats every production shift.
+Power factor correction: from 86.02 percent to a projected 99.5 percent. That 13.5-percentage-point improvement eliminates the reactive current burden that is currently driving 293.7 kVAR of average non-productive load through the transformer. The transformer's effective capacity increases — the same kVA rating now delivers substantially more real kilowatt work per hour.
+
+Thermal burden reduction: eliminating the reactive current component removes the primary heat source above baseline. The estimated 14,000 BTU per hour of excess thermal burden associated with reactive losses would be largely recovered. This translates directly into reduced cooling demand, lower ambient temperatures in the electrical environment, and extended transformer insulation life.
+
+Cooling cost recovery: the approximately $8.21 per hour cooling overhead — estimated at roughly $71,900 annually — becomes substantially reducible. The S-view data from the image reports recovered cooling cost estimates, which align with this projection in direction if not precisely in magnitude given the data limitations.
+
+Reactive waste elimination: the approximately $133,000 to $215,000 per year in estimated total waste shown in the image header — acknowledging these are planning-level reference values from the visualization — represents the target recovery envelope. With MPTS correction, the DELIG transformer field moves from reactive waste to productive throughput.
+
+**Planning-level investment estimate:**
+Two H490 units installed: approximately $400,000. Final pricing depends on engineering scope, site conditions, switchgear configuration, and installation complexity. This is a planning-level estimate only — not a binding quote.
+
+The waste cost data available from this dataset is insufficient for a precise payback calculation. However, the thermal burden recovery alone — over $71,000 per year in cooling cost — combined with reactive waste elimination provides a meaningful return trajectory that warrants a full engineering assessment.
 
 ---

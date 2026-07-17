@@ -1,11 +1,15 @@
 **Transformer: PL1M — Recommended Engineering Attention Areas**
 
-Given that no numeric field data has been returned for PL1M, the primary engineering action at this moment is straightforward: data recovery and validation. Before any field refinement, tuning adjustment, or incremental asset decision can be responsibly recommended, the measurement data for this transformer must be confirmed, corrected, and resubmitted.
+The primary engineering action for PL1M is immediate: resubmit the TBT, TV, TM, and TS capture images or the Mercury CSV data file for this transformer. Without those inputs, no quantified optimization recommendation can be made responsibly.
 
-Specifically, the engineering team should verify that the PL1M data export from the Mercury analysis platform completed successfully and that no channel mapping error caused the transformer's readings to be zeroed out or attributed to a different asset. It is also worth confirming that the monitoring interval for PL1M aligns with the dataset window being analyzed — a mismatched time range can produce apparent zeros even when the physical meter is logging correctly.
+Beyond data collection, the following attention areas apply in the context of a tuned-field transformer pending data confirmation:
 
-Once valid data is in hand, the engineering attention areas for a tuned-field transformer at this stage of optimization would typically include: confirming that installed MPTS assets are operating within their rated compensation range and have not drifted since commissioning; reviewing the TB-to-TBT gap for any reactive demand that remains above target and warrants incremental correction; assessing voltage stability at PL1M for any recurring dip patterns that suggest the field has not fully stabilized; and evaluating whether the thermal burden reduction achieved so far is consistent with the expected output of the installed equipment.
+First, verify that the installed MPTS assets on PL1M are operating within expected correction parameters. Even in a tuned field, capacitor bank drift, connection degradation, or control firmware issues can erode correction quality over time without triggering obvious alarms. A field inspection of the installed hardware is appropriate if the last verification was more than six months ago.
 
-If any of those diagnostics reveals a meaningful gap, the recommended path is targeted refinement — not a ground-up redesign. The investment already made at this site has value, and the goal of any engineering work at this stage is to protect and extend that value.
+Second, once reactive data is available, confirm that the installed kVAR compensation capacity is still correctly sized for PL1M's current load profile. Industrial load profiles shift — particularly in food processing and rendering environments where seasonal throughput changes and equipment additions can increase reactive demand above the original sizing assumption.
+
+Third, review voltage stability data from the TV view when available. If dip frequency has increased since the initial installation, that may indicate load growth or a developing harmonic condition that warrants attention.
+
+PL1M remains an open diagnostic item for this site review cycle and must be resolved before group-level conclusions are finalized.
 
 ---

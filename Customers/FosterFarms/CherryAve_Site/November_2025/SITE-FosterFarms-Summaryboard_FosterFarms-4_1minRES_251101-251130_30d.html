@@ -2946,7 +2946,15 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return labels.join(' and ');
   }
 
-  var reportMonthCode = Number(policy.reportMonthCode);
+  var reportMonthCodeRaw = String(policy.reportMonthCode == null ? '' : policy.reportMonthCode).trim();
+  var reportMonthCode = reportMonthCodeRaw ? Number(reportMonthCodeRaw) : NaN;
+  if (/^\d{8}$/.test(reportMonthCodeRaw)) {
+    reportMonthCode = Number(reportMonthCodeRaw.slice(2, 6));
+  } else if (/^\d{6}$/.test(reportMonthCodeRaw)) {
+    reportMonthCode = /^20\d{4}$/.test(reportMonthCodeRaw)
+      ? Number(reportMonthCodeRaw.slice(2, 6))
+      : Number(reportMonthCodeRaw.slice(0, 4));
+  }
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||

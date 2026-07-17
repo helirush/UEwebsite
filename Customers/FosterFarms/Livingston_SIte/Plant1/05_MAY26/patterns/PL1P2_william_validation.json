@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-07-10 18:32:39",
+  "transformer_id": "PL1P2",
+  "transformer_name": "PL1P2",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 942.74,
+      "image_value": 943.0,
+      "pct_diff": 0.028,
+      "status": "ok"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/Plant1/AN55050338-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050338-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.8482143033154123,
+    "csv_power_factor_pct": 84.82143033154122,
+    "csv_real_kw_avg": 491.81692193100366,
+    "csv_reactive_kvar_avg": 284.2134879256273,
+    "csv_apparent_kva_avg": 570.1736807571684,
+    "csv_apparent_kva_p95": 942.7431999999999,
+    "csv_pct_at_or_above_kva_p95": 5.0,
+    "csv_voltage_avg": 230.37543527105737,
+    "csv_voltage_min": 0.0,
+    "csv_voltage_max": 240.041,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_PL1-Proc2.json",
+    "csv_profile_source_relative_path": "dashboard_data_PL1-Proc2.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "pl1p2_cross_check": "CSV vs. Image (May 2026 | AN55050338)**",
+    "kvar_max_csv_est": "454.74 kVAR",
+    "monthly_waste_csv": "$0.00 (unavailable) | Image: ~$251,065/yr | \u26a0\ufe0f CSV waste field is zero \u2014 treat image annualized waste as planning-level estimate only |",
+    "machine_readable_anchors": "**",
+    "target_kva_image": "943 kVA",
+    "bt_target_kva": "943 kVA",
+    "target_kva_csv": "942.74 kVA",
+    "power_factor_csv": "84.82%",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "sizing_calculation_using_csv_kvar_max_455_kvar": "**",
+    "planning_estimate": "approximately $400,000 installed (scope and site conditions will affect final pricing)",
+    "monthly_savings_validated": "$20,922.08",
+    "annual_savings_validated": "$251,065.00",
+    "monthly_waste_validated_total": "$20,922.08",
+    "annual_waste_validated_total": "$251,065.00",
+    "annual_total_wasted_validated": "$251,065.00"
+  },
+  "packet_file": "PL1P2_william_validation.json"
+}

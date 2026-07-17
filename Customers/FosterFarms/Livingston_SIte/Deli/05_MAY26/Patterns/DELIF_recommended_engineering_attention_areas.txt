@@ -1,13 +1,17 @@
-**Transformer: Deli.F — Engineering Attention Areas | May 2026**
+**DELIF Transformer — Recommended Engineering Attention Areas | May 2026**
 
-First priority: investigate the 0.0-volt collapse event recorded in May. A full voltage interruption on this transformer requires root-cause identification before any MPTS installation scoping proceeds. Whether this was a utility event, an internal protection trip, or a bus fault — it needs to be characterized and documented.
+The following areas warrant priority engineering attention for the DELIF transformer based on the May 2026 field analysis.
 
-Second: the 1,150.1 kVAR MAX reactive peak drives the three-unit H490 sizing requirement. Engineering should confirm whether that peak is driven by a simultaneous large-motor start sequence — multiple compressor starts overlapping during a shift start-up — or whether it represents steady-state reactive load. If it is a start-surge peak, soft-starter or staged-start sequencing may reduce the sizing requirement and lower capital investment.
+**Reactive compensation — MPTS sizing and placement:** Two H490 units are indicated based on the 556 kVAR planning maximum. Engineering site assessment should confirm optimal placement relative to the dominant inductive load centers — refrigeration compressor banks and processing line motor groups are the likely primary targets. Placement at load rather than at the transformer bus maximizes reactive current path reduction.
 
-Third: the 1,865-amp current maximum against a 928-amp monthly average warrants conductor and connection inspection. Recurring current surges at nearly double the mean operating level create mechanical stress on bus connections, lug terminations, and transformer tap connections. A thermal imaging scan of the Deli F panel connections and primary terminations is recommended prior to MPTS installation.
+**Voltage quality investigation:** The confirmed 0.0-volt minimum and the recurring 456.9-volt sag events warrant a dedicated power quality investigation to identify whether the protection event near month-end is related to field stress, upstream supply, or a specific load switching sequence. The 41-volt peak-to-trough voltage spread across May is wider than a healthy industrial field should exhibit.
 
-Fourth: voltage sag events clustering at production start windows suggest that load sequencing on Deli F could be staggered to reduce simultaneous reactive demand peaks. Even without MPTS, a load-sequencing review could reduce the severity of the sag events and the kVAR MAX peak.
+**Outage event review:** The approximately 60 to 90 minute power-off interval near May 29 to 30 should be characterized — whether planned maintenance, upstream fault, or protection trip — to assess whether field stress contributed and whether recurrence risk exists.
 
-Fifth: confirm transformer nameplate thermal rating against the 323,371 BTU/hr thermal burden. At 2,500 kVA rated capacity, this burden level is significant and should be evaluated against ambient temperature conditions in the transformer enclosure, particularly given May operating conditions in California's Central Valley.
+**Harmonic mitigation assessment:** The 5.2 percent iTHD average with 10.4 percent peaks warrants evaluation of whether passive or active harmonic filtering is warranted alongside reactive compensation. Variable frequency drives and switching power supplies in the load mix are likely harmonic contributors, and MPTS correction alone does not eliminate harmonic distortion.
+
+**Thermal management review:** At 323,371 BTU per hour of thermal burden, the transformer and surrounding electrical infrastructure should be assessed for cooling adequacy, particularly during summer months when ambient temperatures in the Central Valley will compound the thermal stress significantly. The $82,759 annual cooling cost estimate underscores the financial stakes of allowing this burden to persist.
+
+**Load growth headroom:** With P95 demand already at the 1,544 kVA supply ceiling, any planned production expansion requires reactive correction first — otherwise load growth pushes the transformer into sustained overload territory.
 
 ---

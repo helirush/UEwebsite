@@ -1,0 +1,13 @@
+**NCDC1 — Transformer: West11c · 2500 kVA · Foster Farms Livingston HQ · May 2026 · Untuned Field**
+
+NCDC1 is a 2,500 kVA industrial transformer serving what the capture data confirms is a continuously operating food processing facility. In May 2026, this transformer's field is running untuned — meaning there is no reactive power compensation applied, and the electromagnetic environment is carrying full reactive burden every hour of every day.
+
+The headline condition is this: NCDC1 is operating at a sustained power factor of 85.0%, with a monthly energy waste figure of approximately $11,044 for this single dataset period, projecting to roughly $130,033 per year in pure reactive losses. When you add the thermal burden overhead and cooling cost layer, the total wasted figure climbs to approximately $209,767 per year — nearly a quarter of a million dollars annually — on one transformer.
+
+Peak demand on NCDC1 reaches 551.0 kW. The transformer is feeding a load profile consistent with refrigeration-dominant continuous operation — cold storage compressors, HVAC systems, and processing line motors that don't cycle off at night or on weekends. That persistent load profile is exactly why the reactive demand never relaxes. The M view's Max Reactive callout of 302 kVAR confirms the reactive ceiling, and the voltage field's consistent 85% power factor band confirms it's a structural condition, not a transient one.
+
+Two power interruption events were detected in May — estimated at a combined 90 to 135 minutes of total downtime. These are not small events in a food safety and cold-chain environment. Every outage carries spoilage risk, restart thermal stress, and compliance exposure.
+
+Without a tuning assignment — without MPTS correction — this field will continue its pattern. In industrial facilities, untuned reactive fields don't stay static. Thermal burden tends to rise month-over-month as insulation ages, reactive current continues to stress motor windings, and cooling infrastructure works harder to compensate. NCDC1 is a field that needs attention now, not at the next budget cycle.
+
+---

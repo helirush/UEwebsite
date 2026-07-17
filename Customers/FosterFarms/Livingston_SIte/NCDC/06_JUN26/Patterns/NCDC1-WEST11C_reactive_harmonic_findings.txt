@@ -1,0 +1,11 @@
+**NCDC1-WEST11C — Reactive and Harmonic Profile | TM and TBT Views | June 2026**
+
+The reactive portrait on West11C in June is one of a field that has been meaningfully corrected — but is still carrying a persistent reactive floor that costs real money every hour. The TM view shows the amperage trace running consistently in the 600 to 700 amp range across the month, with a peak of 701.6 amps. That is a substantial continuous current load, and it is not clean current — reactive content is visible throughout.
+
+The KVAR trace in the TM view holds a persistent reactive floor in the 200 to 300 kVAR range, with the tuned-state reactive ceiling annotated at 301 kVAR in that view. The TBT header — which is the primary numeric anchor — reports the full reactive average at 267.5 kVAR and a reactive maximum of 875.9 kVAR. That 875.9 kVAR peak is the uncompensated stress ceiling this transformer encounters during peak load events. Even in a tuned field, those reactive spikes are reaching nearly 900 kVAR. The MPTS correction is absorbing a significant portion of reactive demand continuously, but the peaks still break through at high load moments.
+
+Average power factor of 85.3 percent confirms the field is corrected from what would have been a much lower untuned baseline — but 85.3 percent means roughly 15 percent of the apparent power being drawn by this transformer is reactive waste. At a peak demand of 568.3 kW, that gap translates directly into transformer heating, elevated conductor losses, and the cooling overhead captured in the $69,081 annual cooling cost figure.
+
+On the harmonic side, the picture is manageable. The iTHD average is 6.0 percent, with a recorded maximum of 11.0 percent. The harmonic trace in the TM view is low and flat — consistent with a blend of variable speed drives, refrigeration compressors, and distributed facility loads rather than a single dominant harmonic source. Harmonics here are a secondary contributor to thermal burden, not the primary driver. The reactive load is the story on West11C — it doesn't rest, and it compounds every hour of operation.
+
+---

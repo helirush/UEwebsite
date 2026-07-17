@@ -1,0 +1,13 @@
+**PL2-3North — Voltage Stability Findings | June 2026**
+
+The voltage health picture on PL2-3North is a study in contrast — a field that runs elevated most of the time and then dips below nominal in concentrated stress windows. The sustained average voltage is approximately 484 volts, which sits above the 480V nominal but within operational tolerance for the bulk of the month. The maximum voltage recorded reached 507.2V — confirmed at 507V in the chart annotation — which represents a meaningful high-side excursion of roughly 27 volts above nominal. Persistent high-side voltage in an industrial environment is not inherently dangerous, but it does indicate the field lacks the reactive discipline to hold steady near nominal.
+
+The more operationally significant story lives in those mid-month dip events. Four distinct sub-nominal voltage excursions are annotated in the V view: 460.7V, 459.7V, 452.7V, and 449.2V — with the 449.2V event confirmed as the monthly minimum. That 449V reading is approximately 6.5% below nominal, and it clusters with the 452.7V event in the 260619 to 260622 window, suggesting roughly a three-to-four-day period of elevated load stress or external supply instability during the third week of June.
+
+For a transformer feeding compressors, refrigeration systems, conveyors, and other large inductive motor loads, those sub-nominal dip events are not abstract engineering footnotes. Voltage depression of 5 to 7 percent on a motor load increases winding current draw, elevates thermal stress on insulation, increases slip in induction motors, and accelerates bearing wear — all of which translate to shortened equipment life and elevated maintenance frequency. In a cold storage and food processing environment, an unplanned motor failure carries operational consequence that goes well beyond the repair invoice.
+
+The triangular dip pattern — four events clustered in approximately ten days — is consistent with either utility supply variability during a peak-demand period or a sequence of large inductive load starts that are depressing the local bus voltage. Either way, the field is not self-correcting, because it's untuned. An MPTS-corrected field with reactive compensation active would dampen the reactive draw during motor start events and reduce the severity of these bus voltage depressions.
+
+Overall voltage health assessment: **moderate-to-high risk**. The field is stable enough to operate, but it is not protecting its connected equipment from repeated low-voltage stress events. Continued untuned operation into summer loading conditions will likely see this pattern persist or worsen.
+
+---

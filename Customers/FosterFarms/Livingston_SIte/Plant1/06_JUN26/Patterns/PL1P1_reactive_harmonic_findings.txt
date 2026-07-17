@@ -1,0 +1,11 @@
+**PL1-Proc1 — Reactive Power and Harmonic Load Assessment**
+
+The reactive profile on PL1-Proc1 is the clearest driver of the waste picture. The M view — the Active-Reactive-Harmonic composite — shows power factor riding in the 80 to 92 percent range during production windows, with a documented minimum of 67.84%. That 67.84% floor is significant. A power factor that low means more than 30% of the current flowing through that transformer at its worst moments is doing no useful work. It is magnetizing the field, heating conductors, and stressing insulation — without moving a single pound of product through the facility.
+
+Reactive power averages 98.0 kVAR across the month, with a peak of 200.9 kVAR MAX. At the peak, nearly a fifth of the transformer's theoretical capacity is consumed by reactive overhead. That overhead has to be supplied — the transformer and the upstream distribution system carry it as real current, even though it appears on no production ledger.
+
+The harmonic picture adds another layer. The M view shows an iTHD average of 5.3% with a peak of 9.7% iTHD MAX. These numbers are not in the danger zone for tripping protective devices outright, but they are persistent. The harmonic signal in the purple trace is broad and continuous — the fingerprint of variable frequency drive loading across refrigeration systems, conveyors, and HVAC equipment. That combination of moderate sustained harmonics and a regularly lagging power factor creates a thermal compounding effect: the transformer and its cooling infrastructure work harder than the kWh meter suggests, because the meter only captures the real power component.
+
+The Max Amperage annotation confirms 307 amps — the red amperage trace in M stays below this ceiling throughout the month, so the transformer is not being driven into overcurrent. But the thermal burden of 109,451 BTU per hour tells you the heat is real, even when the current headroom appears comfortable. Reactive current and harmonic distortion create iron core losses and copper losses that don't show up as demand spikes — they show up as heat, insulation aging, and cooling costs.
+
+---

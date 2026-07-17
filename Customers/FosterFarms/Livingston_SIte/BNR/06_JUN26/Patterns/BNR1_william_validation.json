@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-07-11 19:23:10",
+  "transformer_id": "BNR1",
+  "transformer_name": "BNR1",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "target_kva_image": "1605 kVA",
+    "bt_target_kva": "1605 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 CSV unavailable; image is sole numeric source for this session",
+    "power_factor_csv": "0.0% \u2014 CSV unavailable; image-extracted value is 89.7% PF (avg), 70.0% MIN, 100.0% MAX",
+    "kvar_max_csv_est": "0 kVAR \u2014 CSV unavailable; image-extracted kVAR avg is 692.6 kVAR; secondary labeled value 152.1 kVAR appears inconsistent with the primary reactive figure \u2014 [\u26a0\ufe0f DISCREPANCY NOTE: the 152.1 kVAR label may represent a different reactive sub-metric or a chart annotation artifact; the 692.6 kVAR avg is treated as the operative reactive burden figure for sizing purposes]",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "monthly_waste_csv": "$0.00 \u2014 unavailable; image-extracted monthly waste is approximately $22,578/dataset",
+    "planning_install_estimate": "$200,000 (per system prompt H490 planning estimate)",
+    "estimated_payback_months": "0 \u2014 CSV payback calculation unavailable; narrative payback estimated from image annual waste ($274,706/yr reactive losses alone)",
+    "monthly_savings_validated": "$37,447.25",
+    "annual_savings_validated": "$449,367.00",
+    "monthly_waste_validated_total": "$37,447.25",
+    "annual_waste_validated_total": "$449,367.00",
+    "annual_total_wasted_validated": "$449,367.00"
+  },
+  "packet_file": "BNR1_william_validation.json"
+}

@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-07-13 19:49:20",
+  "transformer_id": "PL2",
+  "transformer_name": "PL2C",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=monthly_savings_validated,annual_savings_validated,payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "transformer": "PL2C",
+    "csv_ground_truth": "unavailable (Mercury analysis not provided)",
+    "vision_image_data": "unavailable (no images submitted)",
+    "cross_check_status": "CANNOT PERFORM \u2014 both data sources are absent for this transformer",
+    "power_factor_csv": "0.0% \u2014 value unavailable, no ground truth",
+    "target_kva_csv": "0.0 kVA \u2014 value unavailable, no ground truth",
+    "kvar_max_csv_est": "0 kVAR \u2014 value unavailable, no ground truth",
+    "monthly_waste_csv": "$0.00 \u2014 value unavailable, no ground truth",
+    "planning_install_estimate": "$200,000 (H490 \u2014 one unit, planning-level estimate only)",
+    "estimated_payback_months": "0 \u2014 value unavailable, no ground truth",
+    "target_kva_image": "value unavailable",
+    "bt_target_kva": "value unavailable",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "note_to_downstream_synthesis": "PL2C has no numeric anchor data from either CSV or image sources. All narrative sections below are structured per session-state protocol and clearly flagged as data-absent. PL2C cannot contribute quantitative values to the group site overview. Qualitative framing and field-condition structure are preserved for completeness and format integrity."
+  },
+  "packet_file": "PL2_william_validation.json"
+}

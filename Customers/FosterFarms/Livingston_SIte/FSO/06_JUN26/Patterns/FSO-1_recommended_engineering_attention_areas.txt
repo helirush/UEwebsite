@@ -1,0 +1,20 @@
+**FSO-1 — June 2026 | Recommended Engineering Attention Areas**
+
+Given the tuned-field context and the optimization gap identified across the TV, TBT, and TM views, the following engineering attention areas are recommended for FSO-1 as incremental actions — not greenfield deployments, but targeted refinements to the existing investment.
+
+**1. Reactive Peak Event Diagnostics — 918.5 kVAR Peak Investigation**
+The 918.5 kVAR peak reported in the TBT header is significantly higher than the operational ceiling of 429 kVAR visible in the TM trace. This gap suggests either instantaneous transient spikes not visible at chart resolution, or a measurement artifact that warrants direct data review. Engineering should identify what load events are generating the peak reactive excursions and confirm whether existing MPTS correction capacity covers the full reactive range — particularly during the early-month and late-month stress clustering windows.
+
+**2. Voltage Stabilization During Load Transition Events**
+The triangular voltage-drop pattern clustering in 260601–260612 and 260625–260628 indicates load-transition events — likely large motor starts — that are pulling the voltage envelope below 480V nominal. Engineering should review the load sequencing for large refrigeration compressors, rendering equipment, and HVAC systems during shift transitions. Soft-start configurations or staggered load sequencing may reduce the amplitude and frequency of these dips, complementing the reactive correction already in place.
+
+**3. Outage Root-Cause Confirmation**
+The two gold-streak outage events near 260607–260610, each estimated at 30 to 60 minutes duration, occurred in the same window as the peak voltage stress cluster. Engineering should confirm whether these events were utility-sourced or load-side-induced, and whether the existing correction assets were active and responsive during these intervals. Post-event field behavior should be reviewed to confirm the correction system returned to full engagement without manual intervention.
+
+**4. Cooling Burden Reduction Pathway**
+At 277,397 BTU per hour and $76,628 per year in estimated cooling cost, the thermal burden on FSO-1 is a meaningful secondary optimization target. As reactive correction tightens through ongoing MPTS refinement, the thermal benefit should be monitored directly — not just inferred. Installing or reviewing thermal monitoring on the transformer enclosure would allow the facility to confirm that Power Factor improvement is translating into measurable temperature reduction, closing the feedback loop on the optimization investment.
+
+**5. CSV Data Capture for Next Review Cycle**
+This analysis is vision-only. All figures are planning-level estimates extracted from chart imagery. For the next optimization review cycle, Mercury CSV export should be prioritized for FSO-1 so that numeric ground truth can be established, cross-checked, and used to sharpen the reactive correction tuning profile with precision rather than planning-level estimates.
+
+---

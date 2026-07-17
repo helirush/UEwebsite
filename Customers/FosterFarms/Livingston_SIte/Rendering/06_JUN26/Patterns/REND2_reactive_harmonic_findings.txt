@@ -1,0 +1,11 @@
+**REND2 — Reactive and Harmonic Profile | June 2026**
+
+The reactive burden on REND2 is substantial and structurally embedded. The kVAR average runs at 896.2 kVAR across the month, with a peak of 1,432.8 kVAR MAX. To put that in context: this transformer is pushing nearly 1,433 kVAR of reactive current at its worst moments — that is reactive loading that almost equals the 1,406.1 kW peak active demand. The system is working nearly as hard to move reactive current that does no useful work as it is to deliver the power that actually runs the production floor.
+
+The power factor average of 73.9% tells that same story numerically. The utility is supplying apparent power; the facility is converting only 73.9% of it into productive work. The remaining 26.1% is circulating reactive current — heating conductors, loading the transformer core, and appearing on the utility bill without producing a single unit of output.
+
+The M view confirms the harmonic dimension of this problem. The integrated total harmonic distortion — iTHD — runs at 5.8% average with a peak of 10.6% MAX. At 5.8% average, this field has measurable, persistent harmonic contamination. Harmonics at this level contribute to transformer core heating beyond what the fundamental-frequency reactive load alone would generate. They also create neutral conductor loading in three-phase systems, interfere with sensitive control electronics, and can cause metering errors. The 10.6% peak events represent concentrated harmonic stress during specific load transitions — likely motor start events or large drive load changes on the production floor.
+
+The combination of 73.9% average power factor, 1,432.8 kVAR peak reactive load, and 5.8% average harmonic distortion is a reinforcing system. Each element makes the others worse. High reactive current elevates conductor temperatures, which increases resistance losses. Harmonic currents add additional heating on top of that. The elevated amperage — peaking at 2,062.6 amps as annotated in the M view — is the direct physical expression of all of this combined electrical stress flowing through the transformer and its connected infrastructure. This is a field under continuous, multi-vector stress.
+
+---

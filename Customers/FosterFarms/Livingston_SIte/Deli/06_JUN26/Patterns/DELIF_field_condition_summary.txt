@@ -1,0 +1,13 @@
+**Transformer: DELIF — Deli F, Foster Farms Livingston HQ | June 2026 | Untuned Field**
+
+The Deli F transformer is carrying a heavy and structurally inefficient load profile through the full thirty-day capture window. What you're looking at here is a field operating under persistent reactive stress with no compensating mechanism in place — the classic signature of an untuned industrial transformer in continuous food-processing service.
+
+The numbers out of the BT header tell the core story directly. Peak demand is running at 1,699.4 kilowatts against a supply target of 1,571 kVA. Average power factor sits at 86.1 percent — meaning roughly fourteen cents of every apparent-power dollar flowing through this transformer is doing zero productive work. It is generating heat, loading the windings, and eroding equipment life around the clock. The reactive average is 407.1 kVAR, and the reactive peak reaches 750.7 kVAR at maximum. That reactive ceiling is the sizing anchor for any correction conversation.
+
+The total waste picture is substantial. The BT header identifies approximately $14,186 in energy waste per dataset period, projecting to approximately $172,600 annually in direct energy losses alone. When thermal burden and cooling overhead are included, the total wasted figure rises to approximately $279,204 per year. That is not a rounding error — that is a real, recurring operational cost that compounds every month this field remains untuned.
+
+The thermal burden is 364,267 BTU per hour, with a baseline of 344,769 BTU per hour. Cooling cost is approximately $10.67 per hour and 53.4 kilowatts of dedicated cooling demand just to manage the heat that reactive inefficiency is generating. In a food processing environment where ambient thermal management is already a critical operational concern, this adds a compounding burden on cooling infrastructure that was never designed to compensate for electromagnetic waste.
+
+This is an untuned field exhibiting decay behavior. Without correction assignment, efficiency will continue drifting downward and thermal burden will trend upward month over month.
+
+---

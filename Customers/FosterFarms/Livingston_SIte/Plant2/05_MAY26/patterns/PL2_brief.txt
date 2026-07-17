@@ -1,0 +1,15 @@
+ENERGY FIELD SUMMARY BRIEF — Transformer: PL2C
+Site: Unspecified | Field Mode: Untuned | Dataset Status: Data Unavailable **Field Condition:**
+PL2C is operating in an untuned field state with no MPTS correction assigned. Neither Mercury CSV data nor image captures were available for this transformer in this session. All primary numeric values — power factor, kVAR MAX, kVA target, and waste figures — are value unavailable. The field is confirmed active and uncompensated. **Voltage Stability:**
+No voltage image data is available. Voltage profile, dip frequency, and line-to-neutral readings cannot be reported. PL2C should be prioritized in the next metering sweep to establish voltage health documentation. Nominal reference is 480V line-to-line / approximately 277V line-to-neutral. **Reactive and Harmonic Profile:**
+Reactive power figures are value unavailable. In an untuned industrial field, reactive circulation (kVAR) inflates apparent demand and degrades power factor. Thermal burden accumulates continuously until correction is applied. MPTS sizing cannot be calculated without kVAR MAX. **Operational Stress:**
+Thermal burden, cooling overhead, and peak demand are all value unavailable. The absence of data does not imply the absence of stress. Untuned reactive loading produces ongoing heat accumulation in transformer windings and connected distribution conductors. **Simulated MPTS Outcome:**
+Post-correction simulation cannot be completed without baseline kVAR data. Planning-level investment for one H490 unit is approximately $200,000 installed. Payback period is pending baseline capture. Power factor recovery to approximately 99.5% is the expected correction outcome once MPTS is properly sized and commissioned. **Recommended Engineering Actions:**
+Priority one: add PL2C to the next baseline metering sweep. Priority two: infrared thermography inspection. Priority three: MPTS sizing calculation upon data capture. Priority four: flag as a data gap in the group site overview. - outage_gold_streak_detected: false
+- outage_event_count_image: value unavailable
+- outage_total_minutes_image: value unavailable
+- target_kva_image: value unavailable
+- bt_target_kva: value unavailable
+- target_kva_csv: 0.0 kVA
+- power_factor_csv: 0.0%
+- kvar_max_csv_est: 0 kVAR ---

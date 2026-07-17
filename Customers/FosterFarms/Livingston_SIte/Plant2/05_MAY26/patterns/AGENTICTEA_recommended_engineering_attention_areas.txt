@@ -1,0 +1,17 @@
+**Transformer: AGENTICTEA — Recommended Engineering Attention Areas**
+
+The primary engineering action for transformer AGENTICTEA at this time is data collection. Before any correction sizing, investment planning, or payback projection can be completed, this transformer needs a complete field data submission. That means a populated Mercury CSV with real measured values, and a full image set including the BT view, V view, M view, and S view. The B view should also be retained as contextual baseline reference.
+
+Once field data is available, the following specific areas warrant engineering review:
+
+**Reactive demand profile:** The kVAR MAX value will drive MPTS unit count. If AGENTICTEA's reactive demand peaks above 400 kVAR, a single H490 may be insufficient and a second unit should be evaluated. If peak demand falls below 200 kVAR, the H240 at roughly $100,000 installed may be the appropriate tier. Right-sizing matters — over-correction and under-correction both carry operational consequences.
+
+**Voltage regulation margin:** The V-view waveform should be reviewed for repeating triangular dips below the 277-volt line-to-neutral nominal. If those dips correlate with inductive load switching events — compressor start cycles, conveyor acceleration, HVAC staging — that is direct evidence of field stress that MPTS correction will help stabilize.
+
+**Thermal burden trajectory:** In an untuned field, BTU-per-hour thermal burden is not static. It tends to increase as load grows and as ambient temperatures change with the season. Engineering attention should include a trend review: is thermal burden accelerating? If so, the cost of delay compounds each month correction is deferred.
+
+**Outage correlation:** Once imaging is available, gold-streak outage events should be identified and their timing correlated with load events or grid disturbances. Recurring outages tied to reactive demand spikes are a correctable condition with MPTS in place.
+
+AGENTICTEA's data gap is the engineering priority. Close it before the next analysis cycle.
+
+---

@@ -1,0 +1,11 @@
+Transformer: PL2C — Recommended Engineering Attention Areas
+
+The single highest-priority engineering action for PL2C is immediate inclusion in the site's baseline metering program. This transformer currently exists in the session as a data-absent asset — no power factor, no reactive peak, no voltage profile, no thermal burden figure. That condition means the facility's engineering team has no documented evidence of how this transformer is performing, how much reactive waste it is generating, or whether its thermal loading is within design parameters.
+
+Second priority is a physical inspection of the transformer's cooling condition and insulation indicators. If PL2C has been operating in an untuned field for an extended period without reactive compensation, the cumulative thermal exposure may have already degraded insulation condition beyond what surface inspection reveals. Infrared thermography of the transformer tank and primary connections would establish a current thermal health snapshot.
+
+Third, once baseline data is captured, the MPTS sizing calculation should be run immediately: kVAR MAX divided by 400, rounded up, determines the number of H490 units. Planning-level investment for a single H490 is approximately $200,000 installed — though final scope and pricing will depend on engineering assessment and site conditions. If kVAR MAX comes in below 400, a single H490 unit would cover the field. If the reactive peak is higher, two units may be warranted.
+
+Fourth, PL2C should be flagged in the group site overview as a data gap that limits the completeness of the multi-transformer assessment. Other transformers in the group may be covering for load that belongs to PL2C, which could inflate their apparent reactive burden. Resolving the PL2C data gap improves the accuracy of the entire site picture.
+
+---

@@ -1,0 +1,13 @@
+**NCDC1 — Engineering Attention Areas — Priority Assessment**
+
+**Priority 1 — Reactive Compensation Assignment:** NCDC1's 302 kVAR maximum reactive demand requires immediate planning for one H490 MPTS unit. Without a tuning assignment, the reactive burden and thermal stress continue to accumulate month over month. This is the highest-leverage intervention available for this transformer.
+
+**Priority 2 — Outage Root Cause Investigation:** Two site power interruption events occurred in May 2026 — one estimated at 60 to 90 minutes near the 260508 date, and one estimated at 30 to 45 minutes near 260523. In a food processing cold-chain environment, these are not acceptable recurring events. Engineering review should identify whether the outage triggers are upstream utility events, internal switching operations, or fault-induced interruptions. The voltage and power factor disturbance pattern surrounding both events suggests possible reactive-demand-induced instability as a contributing factor — something MPTS correction would directly address.
+
+**Priority 3 — Voltage Sag Characterization on Critical Loads:** The repeating triangular voltage sag pattern — touching approximately 460V during disturbance clusters — warrants sub-metering or power quality monitoring on the highest-sensitivity downstream loads: refrigeration compressor VFDs, processing line motor controls, and any programmable logic controllers on the secondary bus. A 4.2% voltage sag below 480V nominal, recurring multiple times per month, is above the tolerance threshold for many Class A drive systems.
+
+**Priority 4 — Harmonic Audit Consideration:** The 10.7% iTHD maximum and 6.0% iTHD average are within a range that warrants documentation and trending. If NCDC1's harmonic content grows as additional VFD loads are added to the facility — which is common in modernizing food processing operations — the harmonic picture should be reassessed during or after MPTS installation to determine whether harmonic filtering supplementation is warranted alongside reactive compensation.
+
+**Priority 5 — Thermal Margin Monitoring:** With 277,515 BTU/hr of thermal burden and a field running untuned, transformer insulation temperature trending and winding temperature monitoring are recommended if not already in place. The thermal delta above the 259,742 BTU/hr baseline is 17,773 BTU/hr — real heat that has nowhere to go except into aging insulation and elevated cooling costs.
+
+---

@@ -1,0 +1,11 @@
+**Transformer: AGENTICTEA — Reactive and Harmonic Findings**
+
+Reactive power characterization for AGENTICTEA is not available from measured data in this session. Under a complete extraction, the BT and M views would provide the reactive average in kVAR, the kVAR maximum, and the power factor percentage — three values that together define how efficiently your transformer is converting apparent power into real, useful work.
+
+The kVAR maximum is the critical sizing input for MPTS. The sizing rule is straightforward: take your kVAR MAX, divide by 400, and round up — that gives you the number of H490 units needed to fully compensate the field. With kVAR MAX currently showing as value unavailable, we cannot complete that calculation for AGENTICTEA. What we can say is that the planning-level session anchor of $200,000 corresponds to one H490 unit, which covers up to 400 kVAR of reactive demand. If measured kVAR MAX on this transformer exceeds 400, additional units would be required.
+
+In untuned industrial environments — particularly those with cold storage compressors, rendering equipment, HVAC variable-frequency drives, or large induction motor banks — reactive demand commonly ranges from moderate to severe. These load types are known reactive generators. They draw lagging current, reduce power factor, and force the transformer to carry substantially more apparent power than the kilowatt load alone would suggest. Every kVAR of reactive demand that goes uncompensated translates directly into thermal burden on the transformer and into energy cost on your utility bill.
+
+Harmonic content assessment is similarly unavailable without image or CSV data. The M-view would have shown harmonic distortion signatures if present. Harmonic loading compounds reactive losses and accelerates insulation aging. Until measurement data is available, the harmonic risk profile for AGENTICTEA remains open.
+
+---

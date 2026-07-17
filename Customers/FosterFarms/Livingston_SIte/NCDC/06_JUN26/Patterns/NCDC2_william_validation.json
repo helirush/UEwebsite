@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-07-11 23:14:43",
+  "transformer_id": "NCDC2",
+  "transformer_name": "NCDC2",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "data_source_status": "**",
+    "csv_ground_truth": "UNAVAILABLE \u2014 vision-only synthesis in effect",
+    "machine_readable_anchor_lines": "**",
+    "target_kva_image": "1036 kVA",
+    "bt_target_kva": "1036 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable)",
+    "power_factor_csv": "0.0% (unavailable)",
+    "kvar_max_csv_est": "0 kVAR (unavailable)",
+    "monthly_residual_waste_csv": "$0.00 (unavailable)",
+    "annual_residual_waste_csv": "$0 (unavailable)",
+    "residual_heat_burden_kw_csv": "0.0 kW (unavailable)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "numeric_values_extracted_from_vision_tbt_tv_tm_ts_tokens": "**",
+    "peak_demand": "1,159.6 kW",
+    "supply_target_tbt": "1,036 kVA",
+    "power_factor": "92.6% avg | 96.3% max | 0.0% min",
+    "kvar_avg": "302.0 kVAR | kVAR MAX: 1,850.8 kVAR",
+    "max_amperage_tm": "1,252.8 A | Max Reactive (TM): 372 kVAR",
+    "ithd_avg": "5.7% | iTHD max: 10.8%",
+    "min_power_factor_tm": "87.94%",
+    "energy_waste": "$8,259/dataset | ~$100,481/yr",
+    "thermal_burden": "213,624 BTU/hr (baseline ref: 200,711 BTU/hr)",
+    "cooling_cost": "$6.17/hr | 31.3 kW (~$54,041/yr | ~274.3 MWh/yr)",
+    "total_wasted_annual": "~$162,160/yr",
+    "voltage_max": "494.5V | Voltage Min: 451V | Noted event low: 450.8V",
+    "cross_check_flags": "**",
+    "monthly_savings_validated": "$13,513.33",
+    "annual_savings_validated": "$162,160.00",
+    "monthly_waste_validated_total": "$13,513.33",
+    "annual_waste_validated_total": "$162,160.00",
+    "annual_total_wasted_validated": "$162,160.00"
+  },
+  "packet_file": "NCDC2_william_validation.json"
+}

@@ -1,0 +1,13 @@
+**NCDC2 — South D Transformer | Reactive and Harmonic Findings | June 2026**
+
+The TM view gives us the clearest window into what's driving the thermal and electrical burden on South D — and what it shows is a field where reactive demand is structural, constant, and deeply embedded in the load character of the facility.
+
+The amperage trace runs high and turbulent throughout the month. The Max Amperage reference sits at 1,252.8 amps, and the red trace repeatedly approaches and contacts that ceiling — particularly through the first half of June when production intensity appears highest. This is not surprising for a transformer serving Foster Farms' combined poultry processing lines, refrigeration compressor banks, rendering operations, and HVAC systems. These are collectively among the most motor-intensive load profiles in industrial processing, and the amperage signature reflects that reality plainly.
+
+The reactive load — the kVAR trace in green — maintains a persistent floor throughout the observation window. The TM header annotates a Max Reactive of 372 kVAR, and the TBT header confirms a monthly average of 302.0 kVAR with a transient maximum of 1,850.8 kVAR. That gap between average and maximum is significant. The 302 kVAR average represents the steady-state reactive burden the field carries every hour of every production day. The 1,850.8 kVAR maximum is the transient reactive spike — likely coinciding with large motor start events or compressor bank switching — that pushes apparent power well above consumed watts and drives up the thermal burden on the transformer core during those events.
+
+The harmonic signature is moderate but consistent. The iTHD average of 5.7% with a maximum of 10.8% puts this field in a range that doesn't require immediate alarm, but it does contribute meaningfully to transformer heating through increased eddy current losses and skin effect in the windings. The purple harmonic band in the TM view runs as a continuous low floor across the full month — it does not spike dramatically, but its constancy tells you harmonics are a structural feature of this load, not an intermittent artifact.
+
+The minimum power factor event of 87.94% — visible as the dashed reference line in the TM view — marks the worst-case coincidence of high reactive demand and high amperage during the month. That floor event, combined with the 92.6% average PF from the TBT header, defines the reactive envelope this transformer is operating within. The tuned field has improved these numbers from an uncorrected baseline, but the 92.6% average still leaves optimization headroom toward the 99.5% target the TS projection aims for.
+
+---

@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-07-10 17:50:31",
+  "transformer_id": "BNR2",
+  "transformer_name": "BNR2",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [
+    {
+      "metric": "target_kva",
+      "csv_value": 17.57,
+      "image_value": 4.0,
+      "pct_diff": 77.234,
+      "status": "fail"
+    }
+  ],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {
+    "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/05_MAY2026/BNR/AN55050299-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_file_name": "AN55050299-V-1minRES_44640CLP_260501-260531c.csv",
+    "csv_row_count": 44640,
+    "csv_power_factor_avg": 0.9646790770609318,
+    "csv_power_factor_pct": 96.46790770609319,
+    "csv_real_kw_avg": 15.954682302867385,
+    "csv_reactive_kvar_avg": 4.004014538530467,
+    "csv_apparent_kva_avg": 16.53871984767025,
+    "csv_apparent_kva_p95": 17.571,
+    "csv_pct_at_or_above_kva_p95": 5.002240143369176,
+    "csv_voltage_avg": 279.49979036738347,
+    "csv_voltage_min": 269.353,
+    "csv_voltage_max": 289.285,
+    "csv_data_resolution": "1minRES",
+    "csv_profile_source_file": "dashboard_data_BNR-2.json",
+    "csv_profile_source_relative_path": "dashboard_data_BNR-2.json"
+  },
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated",
+    "discrepancy_fail:target_kva:77.23%"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "bnr_2_cross_check": "CSV Ground Truth vs. Image Extraction**",
+    "kva_p95_target_17_6_kva_image_shows_2_500_kva_ref_line_transformer_nameplate_not_load_target_note": "Image reference line appears to be transformer nameplate ceiling, not load target. CSV p95 of 17.6 kVA is ground truth for target kVA. |",
+    "monthly_waste_86_dataset_image_csv": "$0.00 (Mercury unavailable) | \u26a0\ufe0f Mercury not available \u2014 image value used for narrative with appropriate estimate framing |",
+    "machine_readable_anchors": "**",
+    "target_kva_image": "4 kVA",
+    "bt_target_kva": "4 kVA",
+    "target_kva_csv": "17.57 kVA",
+    "power_factor_csv": "96.47%",
+    "kvar_max_csv_est": "6.4 kVAR",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "sizing_check": "** kVAR MAX 6 \u00f7 400 = 0.015 \u2192 rounds UP to 1 H490 unit.",
+    "key_flag": "** Image BT reference line reads as transformer nameplate ceiling (~2,500 kVA), not a load target tooltip. Load target is properly anchored to CSV p95 of 17.6 kVA. No >10% discrepancy on PF. kVAR MAX image vs. CSV estimate flagged at ~23% \u2014 CSV planning estimate of 6 kVAR governs sizing.",
+    "monthly_savings_validated": "$243.08",
+    "annual_savings_validated": "$2,917.00",
+    "monthly_waste_validated_total": "$243.08",
+    "annual_waste_validated_total": "$2,917.00",
+    "annual_total_wasted_validated": "$2,917.00"
+  },
+  "packet_file": "BNR2_william_validation.json"
+}

@@ -1,0 +1,18 @@
+**PL2C — Recommended Engineering Attention Areas | June 2026**
+
+**Priority 1 — MPTS Sizing and Tuning Assignment**
+The reactive kVAR MAX of 276.8 kVAR drives the sizing recommendation to one H490 unit (400 kVAR capacity). This provides correction headroom above the current peak and accommodates summer load growth as refrigeration demand increases through July and August. Tuning assignment should be prioritized — every month without correction continues the $106,209 per year waste trajectory. The planning-level installed investment estimate is approximately $200,000, subject to engineering scope and site conditions.
+
+**Priority 2 — Voltage Field Investigation**
+The 9.7-volt minimum excursion recorded during June requires engineering review. Even as a momentary transient, a drop of that magnitude on a bus serving food processing equipment deserves identification of the source event. Whether it is a switching transient, a motor fault, or a protection relay operation, the root cause should be logged and evaluated before the summer loading peak arrives.
+
+**Priority 3 — Harmonic Survey and Mitigation Assessment**
+The 10.6 percent peak iTHD level warrants a targeted harmonic survey to identify the primary generating sources — likely variable frequency drives or large rectifier loads in the refrigeration or processing systems. If harmonic content is contributing meaningfully to transformer heating, a passive filter or active harmonic filter addition alongside MPTS correction should be evaluated as a combined solution.
+
+**Priority 4 — Thermal Baseline Re-evaluation Post-Correction**
+Once MPTS correction is commissioned, the transformer thermal burden should be re-measured against the June baseline of 139,059 BTU per hour. This confirms that reactive elimination is producing the projected cooling load reduction and establishes a new health baseline for ongoing field stewardship on PL2C.
+
+**Priority 5 — Seasonal Load Projection**
+This capture covers June. Foster Farms, Livingston is a food processing and cold storage facility — July and August will drive higher refrigeration compressor cycling and HVAC demand. The 276.8 kVAR MAX captured in June may not represent the annual peak. Engineering should project seasonal reactive demand growth to confirm one H490 unit remains adequate through peak summer months, or identify whether a second unit should be scoped into the planning estimate.
+
+---

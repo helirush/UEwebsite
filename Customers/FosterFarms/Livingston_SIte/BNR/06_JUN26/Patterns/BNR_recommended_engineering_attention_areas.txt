@@ -1,0 +1,15 @@
+**BNR Transformer | June 2026 — Recommended Engineering Attention Areas**
+
+Given that BNR is an invested, tuned field still showing a meaningful gap between its TBT baseline and TS optimized outcome, the following engineering attention areas are recommended for the next optimization cycle:
+
+**1. Reactive compensation coverage audit.** The 559.5 kVAR average reduction between TBT and TS represents the full correction target. Confirm that installed MPTS assets are actively compensating at rated capacity across all operating hours — particularly during peak refrigeration and motor-start load cycles. Any derating, scheduling gap, or partial deployment is directly visible in the TBT-versus-TS spread.
+
+**2. Voltage stabilization review for sub-nominal conditions.** The 476.5-volt operating average and recurring triangular drop pattern indicate that voltage support during inductive load events is not yet fully resolved. A targeted review of MPTS capacitor bank switching response time relative to motor-start ramp rates is warranted — faster reactive injection during large motor starts would reduce the depth and frequency of the triangular voltage excursions documented in the TV view.
+
+**3. Harmonic content monitoring and mitigation assessment.** The 11.4% peak iTHD exceeds IEEE 519 thresholds for this industrial service category. With the MPTS already reducing iTHD from 6.3% to 5.0% average, the remaining harmonic content warrants a dedicated harmonic audit — identifying the primary harmonic-generating loads (VFDs, soft starters, rectifier-fed drives) and evaluating whether passive harmonic filters or active front-end drive replacements at the highest-contributing loads would bring peak iTHD into compliant range.
+
+**4. Outage event root cause review.** The 4 to 5 outage events observed across June, totaling an estimated 5 to 10 minutes, should be correlated against facility maintenance logs and utility event records. Repeated brief outages in a cold-chain environment carry compounding operational risk. If these are utility-origin events, power conditioning at the transformer service entrance warrants evaluation. If they are load-side events, protection coordination review is appropriate.
+
+**5. Thermal burden trending.** The 602,911 BTU per hour thermal burden should be trended month-over-month as MPTS optimization progresses. Declining thermal burden confirms that reactive correction is translating into real heat relief — and provides the engineering team with a clear, measurable indicator of optimization progress independent of billing data.
+
+---

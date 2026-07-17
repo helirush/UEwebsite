@@ -1,0 +1,13 @@
+**Transformer: PL1P2 — Foster Farms, Livingston HQ | June 2026 | 2500 kVA | Untuned Field**
+
+PL1-Proc2 is a 2500 kVA transformer carrying a measured peak demand of 911.2 kilowatts against a daily supply target of 993 kVA. On paper, those numbers look like a transformer running well within its nameplate ceiling — and in raw kVA terms, that is technically true. But the field tells a very different story when you look beneath the surface at how that power is actually being delivered.
+
+The power factor average sits at 86.1 percent, with a confirmed minimum of 78.57 percent during some operating intervals. That means at its worst moments, nearly one dollar in four flowing through this transformer's windings is buying nothing — no useful work, no production output, no refrigeration, no conveyor movement. It is pure electromagnetic drag. And that drag is not a brief excursion — it is a chronic, month-long condition.
+
+The reactive burden is substantial. Average reactive demand is 311.7 kVAR, but the system peaks at 773.4 kVAR maximum — a reactive spike more than twice the average load. That gap between average and peak tells you this facility has significant intermittent inductive switching: large motors starting, compressors cycling, HVAC loads cutting in and out. Every one of those switching events sends a reactive shockwave through the field.
+
+The total wasted energy cost from this one transformer, in this one month, extrapolates to approximately $261,609 per year. That is not a rounding error. That is a budget line — and right now, it is going straight into heat, vibration, and electromagnetic friction rather than into production output.
+
+The field is untuned. There is no MPTS correction assigned. Without intervention, this condition does not hold steady — reactive burden tends to grow as motors age and insulation degrades, meaning the waste trajectory is upward, not flat.
+
+---

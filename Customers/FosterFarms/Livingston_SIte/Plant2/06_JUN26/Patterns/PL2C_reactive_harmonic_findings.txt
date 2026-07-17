@@ -1,0 +1,11 @@
+**PL2C — Reactive and Harmonic Findings | June 2026**
+
+The M view — the Active-Reactive-Harmonic view — layers the story in a way the BT chart alone cannot. What you see across all thirty days is a field that carries a persistent reactive imbalance at every hour of every operating day. The power factor orange trace never reaches unity — it oscillates between roughly 81 percent at its minimum and the 86.5 percent average, which means the reactive deficit is baked into the base operating profile of this transformer. It is not a peak-hour phenomenon. It is a continuous condition.
+
+The maximum amperage recorded in this view reaches 599.8 amps — a significant current level for a 2500 kVA transformer. The sharp spikes visible in the red amperage trace correlate directly with the voltage dip events captured in the V view. That connection is important: what you saw as voltage drops are, from the current perspective, inrush and reactive current surges pushing the field further out of balance. Both phenomena — the voltage sags and the current spikes — are expressions of the same underlying reactive deficit.
+
+The reactive kVAR band holds at a maximum of 192 kVAR in the M view, consistent with the 276.8 kVAR MAX reading in the BT header. That spread between the average and the peak is where your field health risk concentrates — those peak reactive moments are when transformer heating is at its worst.
+
+The harmonic picture adds another layer. The total harmonic distortion of current — iTHD — averages 5.3 percent across the month, with peaks reaching 10.6 percent. The purple harmonics trace in the M view runs as a dense, continuous band with no quiet periods across the entire thirty days. A 10.6 percent peak iTHD in a food processing environment is meaningful. That level of harmonic current is injecting additional heat into transformer windings and connected cabling continuously. It's the kind of steady background heat generation that shortens insulation life in ways that don't announce themselves until a fault occurs.
+
+---

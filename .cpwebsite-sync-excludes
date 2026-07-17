@@ -1,0 +1,21 @@
+# Cognition Partner website sync exclusions
+.git/
+**/.git/
+.DS_Store
+**/.DS_Store
+zARCHIVE/
+**/zARCHIVE/
+**/__pycache__/
+**/*.pyc
+**/*.log
+**/*.tmp
+**/*.swp
+.cache.sqlite
+.env
+*.env
+.env.*
+eestream.env/
+**/eestream.env/
+**/*_BU*.html
+**/*backup*.html
+**/*.bak_*

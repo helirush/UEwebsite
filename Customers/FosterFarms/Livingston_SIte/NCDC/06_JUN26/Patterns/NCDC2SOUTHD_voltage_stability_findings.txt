@@ -1,0 +1,13 @@
+**NCDC2SOUTHD — Voltage Stability Findings | June 2026**
+
+The voltage field on South D is holding its nominal band reasonably well for a 2,500 kVA industrial transformer serving a high-inductive-load environment. The thirty-day average of 479.8 volts sits within two-tenths of a volt of the 480-volt nominal reference — that's a well-centered field under continuous production load. The max recorded at 494.8V stays within acceptable swell tolerance and does not indicate a chronic overvoltage condition.
+
+What demands attention is the lower end of the voltage excursion envelope. The TV header records a minimum of 9.6 volts — that's a near-zero voltage event, consistent with a brief power interruption or a deep fault that momentarily collapsed the field. This is not a sag; this is effectively a zero-crossing event. It aligns with the gold streak outage indicators visible in both the TV and BT views across the June window.
+
+The annotated 450.8-volt dip is the most clinically significant single event in the trace. At 450.8 volts, South D's field dropped approximately 29 volts below nominal — roughly a 6 percent sag. For the load types present here — refrigeration compressors, VFD-driven process motors, and cold storage equipment — a 6 percent voltage sag is in the range where nuisance trips become likely, soft-start logic can fault, and motor insulation experiences elevated thermal stress due to increased magnetizing current draw during recovery.
+
+The triangular drop patterns visible across the TV trace are not isolated to a single calendar cluster. They appear intermittently from early through late June — suggesting episodic field disturbance rather than a single causal event. The gold streak analysis across both TV and BT views confirms four to five distinct outage events during June, with estimated total outage exposure in the range of 10 to 20 minutes for the month. Each of these events represents both a production interruption risk and a field-health stress episode for transformer insulation and connected equipment.
+
+The device-health implication here is moderate-to-high concern. This voltage field is not in crisis, but it is showing stress indicators that warrant continued monitoring and logging. In a food processing environment with cold chain integrity requirements, voltage sag events of this magnitude carry operational consequences beyond just energy efficiency — they intersect directly with product safety and process continuity.
+
+---

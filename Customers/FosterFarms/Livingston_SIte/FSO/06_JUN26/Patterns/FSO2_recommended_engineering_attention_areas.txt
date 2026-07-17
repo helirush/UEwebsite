@@ -1,0 +1,11 @@
+**FSO2 — Recommended Engineering Attention Areas | June 2026**
+
+Given the tuned field state and the optimization gap visible in June 2026, three engineering attention areas are warranted for FSO2.
+
+First, a **load-level diagnostic sweep** targeting the mid-month voltage drop and harmonic injection events — specifically the 260607 through 260616 window. The co-occurrence of 460V voltage floor events and 10.6% iTHD peaks points to one or more specific loads as the primary disturbance drivers. Identifying those loads — whether large compressor starts, high-inertia motors, or switching-mode equipment — enables targeted mitigation through soft-start adjustment, VFD parameter tuning, or localized harmonic filtering. This diagnostic work does not require new capital deployment. It is refinement of the existing system.
+
+Second, a **reactive compensation profile review** for the existing MPTS assets on FSO2. The 96.4 kVAR average and 152.1 kVAR maximum suggest the compensation curve may benefit from re-calibration against the current load profile. Foster Farms Livingston's June load pattern — including the mid-month intensity shift — may have evolved since the original compensation profile was set. A profile refresh is a low-cost, high-leverage tuning action that can close a meaningful portion of the remaining 8-point power factor gap without additional hardware.
+
+Third, **sustained voltage floor monitoring** at 460V should be formalized as a threshold alert condition. The current 460V operational floor is a device-health risk in a continuous food processing environment. Establishing a monitored lower-limit alarm at, say, 468V — 12 volts of headroom above the observed floor — would provide early warning of worsening conditions before equipment failures occur. This is a stewardship action, not a capital action, and it is appropriate for a tuned field in ongoing optimization.
+
+---

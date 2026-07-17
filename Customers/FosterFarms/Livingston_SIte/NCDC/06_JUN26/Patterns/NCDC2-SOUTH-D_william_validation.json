@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-07-11 23:17:38",
+  "transformer_id": "NCDC2-SOUTH-D",
+  "transformer_name": "NCDC2-SOUTH-D",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "tuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "** UNAVAILABLE \u2014 vision-only synthesis. No CSV numeric anchors available for comparison. All values sourced from image extraction only.",
+    "power_factor_csv": "** 0.0% \u2014 not available; image reads 92.6% PF (TBT header). Accepted as working reference.",
+    "target_kva_csv": "** 0.0 kVA \u2014 not available; image reads 1,036 kVA (TBT Blue tooltip). Accepted.",
+    "kvar_max_csv_est": "** 0 kVAR \u2014 not available; image reads 1,850.8 kVAR MAX (TBT header). Accepted with caution \u2014 this figure is unusually high relative to 302.0 kVAR average and warrants engineering review.",
+    "monthly_residual_waste_csv": "** $0.00 \u2014 not available; image reads $8,259/dataset (TBT). Accepted as planning-level estimate.",
+    "annual_residual_waste_csv": "** $0 \u2014 not available; image reads $100,481/yr energy waste, $162,160/yr total wasted. Accepted as planning-level estimates.",
+    "residual_heat_burden_kw_csv": "** 0.0 kW \u2014 not available; image reads 213,624 BTU/hr thermal burden, 31.3 kW cooling load. Accepted.",
+    "installed_assets_context": "** not provided \u2014 no installed MPTS unit count or capacity confirmed. Optimization framing applied without specific unit attribution.",
+    "optimization_mode": "** tuned_field \u2014 confirmed. TBT and TS views interpreted as tuned-field optimization sequence.",
+    "discrepancy_flag_kvar_max_vs_kvar_avg_spread": "** The gap between 302.0 kVAR average and 1,850.8 kVAR MAX is a 6:1 ratio. This is atypical and suggests extreme transient reactive spikes rather than sustained load. Without CSV confirmation, treat kVAR MAX with caution in sizing discussions. Flag for engineering review before any MPTS capacity refinement decisions.",
+    "ts_kvar_reduction_confirmed": "** 302.0 kVAR avg \u2192 71.9 kVAR avg (76% reduction). kVAR MAX: 1,850.8 \u2192 116.4 kVAR (94% peak reduction). Both directionally consistent with MPTS correction behavior.",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "target_kva_image": "** 1,036 kVA",
+    "bt_target_kva": "** 1,036 kVA",
+    "direct_csv_profile": "** unavailable \u2014 all conclusions are vision-derived and should be treated as planning-level estimates pending CSV confirmation.",
+    "monthly_savings_validated": "$13,513.33",
+    "annual_savings_validated": "$162,160.00",
+    "monthly_waste_validated_total": "$13,513.33",
+    "annual_waste_validated_total": "$162,160.00",
+    "annual_total_wasted_validated": "$162,160.00"
+  },
+  "packet_file": "NCDC2-SOUTH-D_william_validation.json"
+}

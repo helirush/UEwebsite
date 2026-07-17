@@ -1,0 +1,18 @@
+**NCDC2 — South D Transformer | Engineering Attention Areas | June 2026**
+
+**1. Voltage Floor Event — 260604 Region:**
+The 450.8V minimum voltage event warrants specific attention in the maintenance and reliability log. A 6% sag below 480V nominal in a motor-intensive poultry processing environment poses real risk of nuisance trips on VFDs and accelerated motor winding insulation degradation. Engineering should correlate this event timestamp with operational logs to identify whether a large motor start, compressor bank switching, or external supply event was the cause. If the event correlates with a repeating operational sequence — such as a scheduled compressor start — operational scheduling adjustments or surge suppression at the load point may reduce future exposure.
+
+**2. Reactive Transient Investigation — 1,850.8 kVAR MAX:**
+The gap between the 302.0 kVAR monthly average and the 1,850.8 kVAR transient maximum is striking and deserves engineering investigation. Identifying the load events that produce these transient reactive spikes — almost certainly large motor starts or multi-compressor switching sequences — will clarify whether dynamic reactive compensation or soft-start upgrades at specific load points could reduce peak reactive demand and further close the optimization gap. This is a refinement action, not a new deployment decision.
+
+**3. Harmonic Baseline Monitoring:**
+The 5.7% average iTHD with a 10.8% maximum is within tolerable range but should be tracked quarterly. If iTHD trends upward as additional VFDs or non-linear loads are added to the facility over time, harmonic mitigation measures may become warranted. Establishing a documented quarterly benchmark now provides the baseline for future comparison.
+
+**4. Outage Event Logging and Pattern Review:**
+Four to five brief outage events totaling an estimated 30 to 50 minutes in June should be formally logged with timestamps and correlated against operational and utility records. Brief supply interruptions in a cold chain environment carry food safety implications. Understanding whether these are utility-side events or facility-side switching actions determines the appropriate engineering response.
+
+**5. Cooling System Audit:**
+With 31.3 kW of continuous cooling load dedicated to transformer thermal management, and a total thermal burden of 213,624 BTU/hr, a targeted cooling system audit for the South D installation area is warranted. As MPTS tuning advances and thermal burden decreases, cooling capacity may become redistributable to process refrigeration — a meaningful operational efficiency gain in a food processing context.
+
+---

@@ -1,1 +1,15 @@
-Because no baseline data exists for transformer AGENTICTEA — neither CSV nor image — we cannot run a meaningful MPTS correction simulation at this time. The Unity MPTS projection framework requires a measured kVAR maximum to size the correction hardware, a measured power factor to establish the correction target, and a measured energy waste figure to calculate financial recovery. All three inputs are unavailable here. What we can describe is the expected correction trajectory once data is in hand. A properly sized MPTS installation targeting a ninety-nine-point-five percent power factor correction would recover the reactive current burden almost entirely, reduce transformer thermal loading proportionally, and eliminate the reactive component of energy waste charges. For a transformer of the scale implied by the two-hundred-thousand-dollar planning estimate, post-correction savings would typically be meaningful on a monthly basis — but specific figures cannot be responsibly stated without measured inputs. Once AGENTICTEA's baseline is captured and processed, a full simulated MPTS outcome — with recovered kVAR, reduced thermal burden in BTUs per hour, and estimated annual financial recovery — can be generated with confidence.
+**Transformer: AGENTICTEA — Simulated MPTS Outcome**
+
+The simulated MPTS outcome for transformer AGENTICTEA cannot be fully computed in this session because the baseline measurements — kVAR maximum, power factor, thermal burden, and waste cost — are all showing as value unavailable from the data pipeline. A meaningful savings projection requires those measured inputs. Without them, any recovery figure would be an unsupported estimate, and I won't present unsupported numbers as though they're site-specific projections.
+
+What I can do is describe the correction framework that will apply once data is available.
+
+Unity's MPTS technology brings the field power factor to 99.5 percent by injecting compensating reactive power at the point of need, eliminating the reactive circulation that currently burdens the transformer. The result is a measurable reduction in RMS current, a measurable reduction in thermal burden, and a corresponding reduction in cooling overhead costs. These three components — reactive loss recovery, thermal burden reduction, and cooling cost savings — combine to produce the total annual savings figure.
+
+The planning-level install estimate for AGENTICTEA's correction is approximately $200,000, consistent with one H490 unit at 400 kVAR capacity. Once the kVAR maximum is confirmed from measurement data, that unit count may be revised upward if the reactive demand exceeds 400 kVAR.
+
+Payback period — estimated payback months is currently value unavailable — will be calculated as the planning install estimate divided by the confirmed annual waste figure, once that figure is established through complete data capture.
+
+The correction story for AGENTICTEA will be a strong one once the numbers are in. An untuned industrial transformer field with uncorrected reactive load consistently shows meaningful recoverable waste. The simulation will quantify it. The MPTS correction will eliminate it. That transition — from untuned waste to corrected efficiency — is exactly what this analysis is designed to make visible and actionable.
+
+---

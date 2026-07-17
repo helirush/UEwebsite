@@ -1,0 +1,11 @@
+**BNR-2 | Voltage Health — TV View | June 2026**
+
+The voltage field on BNR-2 is one of the cleaner fields in this capture family. The TV view shows the blue voltage trace running with strong horizontal consistency across the full 720-hour period, anchored tightly to the nominal reported value of 481.7V. The operating envelope spans from a recorded maximum of 499.6V down to a recorded minimum of 471.8V — a total spread of 27.8 volts across the entire month. For a 480-volt line-to-line nominal system, that is a well-controlled band. The field is not wandering. It is not drifting seasonally. It is holding its operating lane.
+
+The three dashed reference rails visible on the right axis — MaxVoltage near 499V, Nominal near 480V, and MinVoltage near 472V — all align with what the trace is actually doing. The bulk of the operating record sits comfortably between nominal and the upper rail, which is the ideal operating region for a tuned field serving motor and process loads.
+
+The one notable exception is a sharp, deep voltage drop visible near the 260619–260621 timestamp window. This is not a gradual sag or a slow regulation excursion. It is steep and sudden — the profile of a load interruption or momentary supply disconnect rather than a regulation problem. The voltage reaches the recorded minimum of 471.8V in this region, consistent with the gold outage streak identified in the TBT and TM views at the same timestamp. The field recovers cleanly afterward with no prolonged oscillation or instability tail — a positive indicator.
+
+Critically, there are no chronic triangular voltage-drop patterns visible across this field. The repeated V-shaped dips that indicate inductive motor cycling and elevated device stress risk are absent from the broader trace. BNR-2 is not grinding its downstream devices through repeated start-stop transients. The field stress profile is low outside the single acute event. Device health risk from voltage behavior is rated low-to-moderate — dominated by the single outage event rather than by sustained operating stress.
+
+---

@@ -1,0 +1,15 @@
+**NCDC1 — Voltage Health Assessment — May 2026 — Untuned**
+
+The voltage field on NCDC1 runs at a nominal 481.5 volts across the month of May — close to the 480V line-to-line industrial standard, but the stability story underneath that nominal average is more concerning than the average suggests.
+
+The V view shows a voltage band spanning from a MinVoltage floor of approximately 460V to a MaxVoltage ceiling of approximately 503V. That's a peak-to-peak spread of roughly 43 volts across the month. In a precision food processing environment with variable frequency drives, refrigeration compressors, and automated processing line controls, a 43-volt swing is not academic — it creates real stress on drive electronics and motor insulation.
+
+The more significant finding is the triangular voltage-drop pattern — it's present, it's repeating, and it clusters. The most pronounced cluster appears in the 260508 to 260511 window, where the blue voltage trace descends sharply and recovers in the classic triangular sag-and-recover signature. This is the electromagnetic fingerprint of large motor inrush events or reactive demand surges pulling the field down momentarily. Additional triangular dips appear near 260514 and again near 260523 — confirming this is a recurrent structural behavior, not an isolated incident.
+
+At their deepest point, these sags touch or approach the 460V MinVoltage floor — representing a 4.2% voltage depression below the 480V nominal. For most standard motor loads, a 4.2% sag is tolerable momentarily. But when it repeats — and when it's occurring on a field already running at 85% power factor — the compound effect accelerates insulation aging, increases the probability of nuisance tripping on sensitive VFD systems, and degrades the long-term health of every motor winding in the downstream circuit.
+
+The power factor trace in orange drops sharply during these same disturbance windows, confirming that the voltage events are electromagnetically coupled to reactive demand surges — not just mechanical load switches. This is the kind of voltage-quality signature that MPTS correction directly addresses by absorbing and smoothing the reactive current that drives these sag events.
+
+The two gold vertical streaks — the outage events — are also visible in this view at the same time positions as the BT chart: one near 260508 and one near 260523. Each represents a full site power interruption of estimated 30 to 90 minutes duration. In a cold-chain food processing facility, these events carry real operational and food safety risk beyond the electrical stress they impose on restart.
+
+---

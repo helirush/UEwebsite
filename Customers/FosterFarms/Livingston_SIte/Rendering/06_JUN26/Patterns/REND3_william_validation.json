@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-07-11 18:05:49",
+  "transformer_id": "REND3",
+  "transformer_name": "REND3",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "** UNAVAILABLE. All numeric values sourced exclusively from image extraction (BT, V, M, S views). No CSV override applied.",
+    "target_kva_image": "** 882 kVA (extracted from BT blue tooltip callout)",
+    "bt_target_kva": "** 882 kVA",
+    "target_kva_csv": "** 0.0 kVA \u2014 CSV unavailable; image value stands as working reference",
+    "power_factor_csv": "** 0.0% \u2014 CSV unavailable; image-extracted BT value is 77.0% PF (avg), min 0.0%, max 83.4%",
+    "kvar_max_csv_est": "** 0 kVAR \u2014 CSV unavailable; image-extracted kVAR MAX is 894.7 kVAR",
+    "monthly_waste_csv": "** $0.00 \u2014 CSV unavailable; image-extracted Energy Waste is approximately $24,999/dataset, approximately $304,160/yr; Total Wasted approximately $494,353/yr",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "discrepancy_flags": "** No CSV-vs-image cross-check possible. All values are image-extraction only. Treat all figures as planning-level estimates pending Mercury CSV confirmation. No [\u26a0\ufe0f DISCREPANCY] condition triggered (no CSV baseline to compare against).",
+    "m_view_alignment_check": "** M-view kVAR max annotated at 568 kVAR vs. BT header kVAR MAX 894.7 kVAR. These represent different measurement windows and averaging horizons \u2014 no discrepancy flag triggered, but the difference is noted. BT kVAR MAX is the governing sizing reference per protocol.",
+    "planning_install_estimate": "** approximately $200,000 installed (1\u00d7 H490 sizing reference \u2014 see Section 5 for full sizing rationale)",
+    "monthly_savings_validated": "$41,196.08",
+    "annual_savings_validated": "$494,353.00",
+    "monthly_waste_validated_total": "$41,196.08",
+    "annual_waste_validated_total": "$494,353.00",
+    "annual_total_wasted_validated": "$494,353.00",
+    "payback_months_estimated": "12.0"
+  },
+  "packet_file": "REND3_william_validation.json"
+}

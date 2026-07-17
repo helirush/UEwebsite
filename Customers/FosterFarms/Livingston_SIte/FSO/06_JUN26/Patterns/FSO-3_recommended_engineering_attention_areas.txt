@@ -1,0 +1,15 @@
+**FSO-3 | Foster Farms, Livingston HQ | June 2026 — Recommended Engineering Attention Areas**
+
+Given the tuned-field context and the optimization gap confirmed by the June data, the following engineering attention areas are recommended as incremental, targeted actions — not wholesale system changes.
+
+**1. Mid-Month Disturbance Zone Diagnostic (260610–260614 window):** The clustered voltage compression, reactive surge, and amperage spike events in this zone — correlated with the confirmed gold-streak outage event at approximately June 13th — warrant a dedicated root cause review. Determine whether the outage originated upstream from utility supply, from an internal protection event, or from a process-driven load disruption. Understanding the initiating cause directly informs whether field hardening, protection coordination adjustment, or process sequencing changes are the appropriate response.
+
+**2. Post-Outage Reactive Inrush Management:** The restart reactive surge following the June 13th outage is visible across both the TV and TM views. Evaluate whether the existing MPTS correction assets are configured for optimal post-restart response — specifically, whether capacitor switching speed and sequencing are adequate to buffer the large-motor inrush events that follow power restoration. Soft-start or VFD sequencing review on the largest motor loads may also reduce the severity of post-restart reactive demand.
+
+**3. Harmonic Standing Load Assessment:** The persistent harmonic trace confirmed in the TM view — present every day of the month without exception — indicates a structural harmonic source population, almost certainly VFD-driven loads. A harmonic spectrum measurement at the FSO-3 bus would quantify the dominant harmonic orders, confirm whether the existing MPTS configuration includes harmonic filtering coverage adequate for this load population, and identify whether additional harmonic mitigation is warranted.
+
+**4. Voltage Floor Review at 460V:** The confirmed minimum voltage of approximately 460V, particularly during the mid-month disturbance cluster, is within the acceptable ANSI range but represents a stress condition for sensitive drive electronics and motor insulation. Review the voltage regulation settings and tap position on the transformer serving FSO-3 to determine whether a tap adjustment could raise the voltage floor without compromising the upper boundary. This is a low-cost, high-value refinement step.
+
+**5. Power Factor Floor Attention — 81.51% Minimum:** The minimum power factor floor recorded in the TM view at 81.51% is the clearest indicator that the existing correction assets have coverage gaps during peak reactive events. A reactive load flow study during the facility's peak production hours would confirm whether additional reactive compensation — incremental to the existing installation — is justified to close the floor from 81.51% toward the optimized 99.5% target.
+
+---

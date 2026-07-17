@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-07-13 20:09:18",
+  "transformer_id": "PL2S",
+  "transformer_name": "PL2S",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "pl2_1_south_pl2s_cross_check": "Vision vs. CSV**",
+    "csv_ground_truth_status": "** UNAVAILABLE \u2014 no Mercury CSV data provided for PL2S. All numeric values sourced exclusively from vision extraction. No cross-check discrepancies can be flagged because there is no CSV baseline to compare against. All figures below carry vision-only confidence and should be treated as planning estimates pending Mercury confirmation.",
+    "target_kva_image": "** 1,687 kVA (read from BT blue tooltip callout)",
+    "bt_target_kva": "** 1,687 kVA",
+    "target_kva_csv": "** 0.0 kVA (unavailable \u2014 no CSV)",
+    "power_factor_csv": "** 0.0% (unavailable \u2014 no CSV)",
+    "kvar_max_csv_est": "** 0 kVAR (unavailable \u2014 no CSV)",
+    "monthly_waste_csv": "** $0.00 (unavailable \u2014 no CSV)",
+    "planning_install_estimate": "** approximately $200,000 (1\u00d7 H490, vision-derived sizing; see MPTS section)",
+    "estimated_payback_months": "** not calculable without CSV confirmation",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "sizing_note": "** kVAR MAX from vision = 1,843.8 kVAR \u00f7 400 = 4.61 \u2192 rounds UP to 5 H490 units. Planning estimate for 5\u00d7 H490 is approximately $1,000,000 installed. This is a materially larger correction plant than a single-unit installation and should be confirmed against Mercury CSV before presenting to the client.",
+    "data_confidence": "** VISION-ONLY. All waste, thermal, and savings figures are extracted from image headers. Mercury confirmation required before binding any investment conversation.",
+    "monthly_savings_validated": "$33,330.33",
+    "annual_savings_validated": "$399,964.00",
+    "monthly_waste_validated_total": "$35,057.33",
+    "annual_waste_validated_total": "$420,688.00",
+    "annual_total_wasted_validated": "$420,688.00"
+  },
+  "packet_file": "PL2S_william_validation.json"
+}

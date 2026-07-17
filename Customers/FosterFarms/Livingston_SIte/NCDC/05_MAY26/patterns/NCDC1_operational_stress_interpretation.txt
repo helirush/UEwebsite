@@ -1,0 +1,15 @@
+**NCDC1 — Operational Stress Interpretation — Untuned Field, May 2026**
+
+When you step back and look at the full picture NCDC1 is presenting — the voltage sags, the 302 kVAR reactive ceiling, the 85% power factor, the 277,515 BTU/hr thermal burden, and two outage events in a single month — what you're seeing is a transformer and facility operating under compound electromagnetic stress with no active correction.
+
+Each stress layer compounds the others. The reactive current circulating at 267.9 kVAR average doesn't just waste energy — it generates heat. That heat degrades insulation on motor windings and transformer internals. Degraded insulation increases the probability of fault events. Fault events create the kind of voltage disturbances you're already seeing in the triangular sag clusters in the V view. And those voltage sags increase thermal cycling stress on the very equipment the insulation is protecting. It's a self-reinforcing degradation loop, and in an untuned field, nothing is breaking that cycle.
+
+The food processing context amplifies every risk dimension here. Cold storage compressors and refrigeration systems are among the most sensitive loads in industrial settings — they depend on stable voltage and clean power factor to operate at rated efficiency. When the field sags to 460V during inrush events, refrigeration compressors are drawing more current to maintain output, accelerating wear. When harmonic content runs at 10.7% iTHD peak, VFD systems on processing lines face increased stress on their input rectifiers and DC bus capacitors.
+
+The two outage events are particularly significant in this operational context. A 60 to 90 minute power interruption at a food processing facility isn't just a productivity loss — it's a cold-chain integrity event, a food safety compliance exposure, and a motor restart thermal stress event rolled into one. In May 2026, NCDC1's field experienced two such events. Without field correction and improved power quality, the probability of recurrence is not reduced.
+
+The electric operations pattern shows the facility running at or near its electrical plateau for approximately 75 to 80% of the monthly period. That consistent high-utilization pattern means there is no natural low-load window that's self-correcting the field. The reactive demand doesn't rest. The thermal burden doesn't ease. The field is continuously stressed from the first hour of the month to the last.
+
+From an infrastructure lifecycle perspective, every month that NCDC1 runs in this untuned state accelerates aging on the transformer's insulation system, the downstream motor windings, the switchgear contacts, and the VFD electronics. The $209,767 annual total wasted figure is the financial expression of that accelerating degradation — but the long-term consequence isn't just wasted money. It's shortened equipment life, increased maintenance frequency, and elevated risk of an unplanned outage that costs far more than the correction investment ever would have.
+
+---

@@ -1,0 +1,17 @@
+**NCDC2 — Voltage Health | May 2026**
+
+The voltage profile on NCDC2 is active and loaded — and it is not calm. The blue voltage band runs through the month carrying noticeable thickness, which is the visual signature of ongoing oscillation rather than a tight, stable delivery profile. This is a field that breathes with its load.
+
+The chart identifies three reference lines: a MaxVoltage upper reference at 488 volts, the Nominal 480 volts line-to-line at the center, and a MinVoltage reference at 464 volts. The voltage band repeatedly dips toward and at times contacts that lower boundary at 464 volts — that is 16 volts below nominal. In a 480-volt industrial system, that is a meaningful excursion.
+
+Triangular voltage-drop signatures are present and distributed across the full month. These are the downward V-shaped excursions visible in the voltage band — and their distribution tells an important story. They are not clustered in one week or one shift window. They appear across the entire month, which means they are operationally recurring events tied to production cycles, compressor starts, and HVAC demand, not isolated anomalies.
+
+The red amperage trace in the V view mirrors these voltage excursions closely, confirming these disturbances are load-coupled — driven by what this facility is drawing — rather than utility-side supply problems. The facility itself is generating its own voltage instability through uncompensated reactive loading.
+
+The BT header logs a minimum voltage of 0.0 volts, which is interpreted as a momentary outage capture event — consistent with the gold streak outage events detected in the chart body — rather than sustained undervoltage at that extreme.
+
+For a food processing facility running refrigeration compressors and processing motors continuously, repeated voltage dips to 464 volts carry real consequences. Insulation stress on motor windings accelerates with every undervoltage event. Variable frequency drives increase thermal output under low-voltage conditions. Sensitive process controls are more prone to nuisance trips. No single event is catastrophic — but accumulated across a full month of recurring dips, the equipment fatigue cost is real and growing.
+
+**Outage events detected:** approximately 4 to 5 distinct gold vertical streaks observed in the BT chart body, each representing a top-to-bottom power interruption. Estimated individual event duration: 2 to 5 minutes each. Estimated total outage time across May: approximately 10 to 20 minutes. In food processing with cold chain dependencies, even a 3-minute interruption carries food safety implications that go well beyond the kilowatt-hour cost of that downtime.
+
+---

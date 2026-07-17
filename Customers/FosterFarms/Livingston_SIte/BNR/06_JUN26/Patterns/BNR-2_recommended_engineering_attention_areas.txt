@@ -1,0 +1,13 @@
+**BNR-2 | Engineering Attention Areas — Tuned Field Refinement | June 2026**
+
+Three areas merit focused engineering attention on BNR-2 as optimization continues.
+
+**First: Outage event characterization.** The single gold-streak event at approximately June 19th to 21st — estimated at 60 to 90 minutes of downtime — should be classified. Was this planned maintenance, a utility event, or an unplanned fault? That classification matters for tuning decisions: if the MPTS equipment experienced an unplanned reconnection, the post-event reactive behavior in the TM trace should be reviewed for any transient compensation lag. The field appears to have recovered cleanly, but a formal log review is warranted.
+
+**Second: Power factor floor management.** The TBT record shows a minimum power factor of 85.3% — well below the 95.76% MIN reference in the TM view. This gap suggests that under specific low-load or transitional conditions, the current compensation is not fully tracking the field. Identifying the operating conditions that produce that 85.3% floor and adjusting compensation response accordingly is the most direct path to closing the remaining optimization gap on this circuit.
+
+**Third: Harmonic ceiling monitoring.** The iTHD MAX of 11.4% is a ceiling value that deserves periodic review. While the average of 6.3% is manageable, the peak harmonic excursions could be influencing the power factor floor behavior under certain load conditions. A harmonic audit at peak production intervals — particularly during the conditions that drove the 11.4% iTHD MAX — would confirm whether additional harmonic filtering is warranted or whether the current tuning is sufficient for long-term field health.
+
+These are refinement actions, not first-deployment recommendations. The investment is already in place. The work now is optimization discipline.
+
+---
