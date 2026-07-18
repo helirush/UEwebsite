@@ -989,8 +989,9 @@
         .hero-bottom-cta-clerk .hero-bottom-cta-copy {
             flex: 1 1 auto;
             padding-right: clamp(90px, 7.2vw, 135px);
-            padding-left: calc(clamp(11px, 0.9vw, 16px) + 65px);
-            transform: none;
+            padding-left: clamp(11px, 0.9vw, 16px);
+            margin-left: 0;
+            transform: translateX(-5px);
         }
         @media (max-width: 1360px) {
             .hero-bottom-cta-strip {
@@ -1080,6 +1081,8 @@
             .hero-bottom-cta-clerk .hero-bottom-cta-copy {
                 padding-right: clamp(70px, 18vw, 101px);
                 padding-left: 53px;
+                margin-left: 0;
+                transform: none;
             }
         }
         @media (max-width: 760px) {
@@ -3331,7 +3334,7 @@
                 <img class="hero-bottom-cta-clerk-image-icon" src="assets/images/ClerkMaxwell_60423t.png" alt="">
             </span>
             <span class="hero-bottom-cta-copy">
-                <span class="hero-bottom-cta-title">Meet with Clerk</span>
+                <span class="hero-bottom-cta-title">Meet with Clerk Maxwell</span>
                 <span class="hero-bottom-cta-subtitle">Ask. Explore. Understand.</span>
             </span>
         </button>
