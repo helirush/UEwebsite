@@ -1114,7 +1114,7 @@
             {
               name: "FSO Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/FSO/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260601-260630_30d.html",
+              summary_url: "./Livingston_SIte/FSO/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260601-260630_30d.html",
               fields: [
                 { name: "FSO1 (Q)", consequence_annual: 0, status: "not-tuned" },
                 { name: "FSO2 (R)", consequence_annual: 49297, status: "calculated" },
@@ -1133,7 +1133,7 @@
             {
               name: "Cherry Main Group",
               status: "calculated",
-              summary_url: "./CherryAve_Site/04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html",
+              summary_url: "./CherryAve_Site/06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260601-260630_30d.html",
               fields: [
                 { name: "T10 Air Chiller", consequence_annual: 760000, status: "calculated" },
                 { name: "T12 Main", consequence_annual: 720000, status: "calculated" },
@@ -1962,6 +1962,41 @@
       }
       return null;
     }
+    function resolvePfPercentFromSummaryboardDoc(summaryDoc, fieldName){
+      if (!summaryDoc || !fieldName) return null;
+      const candidateTargets = new Set(
+        uniqueStrings([
+          fieldName,
+          ...getFieldAliasVariants(fieldName),
+          ...buildRoutingKeyVariants(fieldName)
+        ])
+          .map((value) => normalizeVoltageKey(value))
+          .filter(Boolean)
+      );
+      if (!candidateTargets.size) return null;
+
+      const nameNodes = Array.from(summaryDoc.querySelectorAll("[id^=\"xfmr\"][id$=\"-name\"]"));
+      for (const nameNode of nameNodes) {
+        const idMatch = String(nameNode.id || "").match(/^xfmr(\d+)-name$/i);
+        if (!idMatch) continue;
+        const rawName = String(nameNode.textContent || "").trim();
+        if (!rawName) continue;
+        const resolvedNameKeys = uniqueStrings([
+          rawName,
+          ...getFieldAliasVariants(rawName),
+          ...buildRoutingKeyVariants(rawName)
+        ])
+          .map((value) => normalizeVoltageKey(value))
+          .filter(Boolean);
+        const isMatch = resolvedNameKeys.some((key) => candidateTargets.has(key));
+        if (!isMatch) continue;
+
+        const pfNode = summaryDoc.getElementById(`xfmr${idMatch[1]}-metric-pf`);
+        const pfPercent = normalizePfPercent(parseMetricNumber(pfNode && pfNode.textContent));
+        if (pfPercent !== null && pfPercent > 0) return pfPercent;
+      }
+      return null;
+    }
     function resolveVoltageFromData(data){
       if (!data || typeof data !== "object") return null;
       const candidates = [
@@ -1976,6 +2011,77 @@
         if (parsed !== null && parsed >= 100 && parsed <= 1000) return parsed;
       }
       return null;
+    }
+    async function resolveMonthlyChangePercentFromSummaryboards(data){
+      if (!data || !Array.isArray(data.facilities)) return null;
+      let currentTotal = 0;
+      let previousTotal = 0;
+      let pairedFieldCount = 0;
+
+      for (const facility of data.facilities) {
+        const groups = Array.isArray(facility && facility.groups) ? facility.groups : [];
+        for (const group of groups) {
+          const currentUrl = String(group && group.summary_url || "").trim();
+          if (!currentUrl) continue;
+          const currentFolder = extractMonthFolderFromHref(currentUrl);
+          if (!currentFolder) continue;
+          const previousFolder = previousMonthFolder(currentFolder);
+          if (!previousFolder) continue;
+          const previousUrl = currentUrl.replace(`/${currentFolder}/`, `/${previousFolder}/`);
+          if (!previousUrl || previousUrl === currentUrl) continue;
+
+          const [previousBtMap, previousPatternTransformers, previousSummaryDoc] = await Promise.all([
+            loadBtFrontCardMetricsForGroup(previousUrl),
+            loadPatternRollupForGroup(previousUrl),
+            loadSummaryboardDocument(previousUrl)
+          ]);
+          const fields = Array.isArray(group && group.fields) ? group.fields : [];
+          for (const field of fields) {
+            const fieldName = String(field && field.name || "").trim();
+            if (!fieldName) continue;
+            const currentAnnual = parseMetricNumber(field && field.consequence_annual);
+            if (!isCredibleAnnualConsequence(currentAnnual)) continue;
+
+            const previousEnergyData = await fetchFirstAvailableJson(
+              buildDashboardDataCandidatePaths(previousUrl, fieldName, [
+                "energy_dashboard_data_",
+                "dashboard_data_"
+              ])
+            );
+            const previousBtEntry = getBtEntryForField(previousBtMap, fieldName);
+            const previousPatternEntry = getBtEntryForField(previousPatternTransformers, fieldName);
+            const previousHourly = resolveAnnualConsequenceFromSummaryboardHourly(previousSummaryDoc, fieldName);
+
+            let previousAnnual = resolveAnnualConsequenceFromEnergyData(previousEnergyData);
+            const previousPatternConsequence = resolveAnnualConsequenceFromPatternEntry(previousPatternEntry);
+            if (previousPatternConsequence !== null && previousPatternConsequence > 0) {
+              previousAnnual = previousPatternConsequence;
+            }
+            const previousBtConsequence = readBtMetricNumber(previousBtEntry, [
+              "field_consequence",
+              "field_consequence_annual",
+              "annual_total_wasted",
+              "total_wasted_annual",
+              "all_in_annual_waste"
+            ]);
+            if (previousBtConsequence !== null && previousBtConsequence > 0) {
+              previousAnnual = previousBtConsequence;
+            }
+            if ((previousAnnual === null || previousAnnual <= 0) && isCredibleAnnualConsequence(previousHourly)) {
+              previousAnnual = previousHourly;
+            }
+            if (!isCredibleAnnualConsequence(previousAnnual)) continue;
+
+            currentTotal += currentAnnual;
+            previousTotal += previousAnnual;
+            pairedFieldCount += 1;
+          }
+        }
+      }
+
+      if (pairedFieldCount <= 0 || previousTotal <= 0 || currentTotal <= 0) return null;
+      const deltaPct = ((currentTotal - previousTotal) / previousTotal) * 100;
+      return Number.isFinite(deltaPct) ? deltaPct : null;
     }
     async function loadExecutiveViewMetrics(data){
       const fieldContexts = [];
@@ -2048,6 +2154,8 @@
           "pf"
         ]));
         if (btPfPercent !== null) pfPercent = btPfPercent;
+        const summaryPfPercent = resolvePfPercentFromSummaryboardDoc(summaryDoc, fieldName);
+        if (summaryPfPercent !== null) pfPercent = summaryPfPercent;
 
         let voltage = resolveVoltageFromData(voltData) || resolveVoltageFromData(energyData);
         const btVoltage = readBtMetricNumber(btEntry, [
@@ -2674,6 +2782,10 @@
       await resolveGroupSummaryMonthPaths(boardData);
       await loadExecutiveViewMetrics(boardData);
       enrichData(boardData);
+      const computedMonthlyChange = await resolveMonthlyChangePercentFromSummaryboards(boardData);
+      if (computedMonthlyChange !== null) {
+        boardData.company.monthly_change_percent = computedMonthlyChange;
+      }
       renderKPIs(boardData, currentBoardMetric);
       renderFacilityBoard(boardData, currentBoardMetric);
       setupBoardMetricDropdown();

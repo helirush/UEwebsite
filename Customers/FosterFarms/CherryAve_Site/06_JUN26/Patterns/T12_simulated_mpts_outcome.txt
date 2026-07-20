@@ -1,0 +1,17 @@
+**T12 — Simulated MPTS Outcome | Post-Correction Projection | Untuned Baseline**
+
+The S-view projection for T12 shows what the field looks like after MPTS reactive compensation is applied. The headline result is a power factor correction to 99.5 percent — from the current 83.6 percent average. That 15.9 percentage-point improvement is not a cosmetic metric. It represents a fundamental restructuring of how current flows through T12's distribution system.
+
+At 99.5 percent power factor, the reactive kVAR component drops to a negligible residual. The transformer is no longer carrying a 712.9 kVAR average reactive burden. The amperage on every conductor serving T12's load pool decreases proportionally, which reduces I²R resistive heating across the entire downstream infrastructure. The thermal burden — currently 848,819 BTU per hour — falls substantially. The cooling overhead — currently approximately $311,485 per year — is largely recovered. The combined energy waste and cooling recovery projected from the S view totals toward the approximately $991,303 per year currently being wasted.
+
+Voltage stability improves measurably as a direct consequence. When MPTS correction sources reactive current locally rather than requiring it to travel through transformer impedance from the utility, the voltage bus stiffens at load transition moments. The amplitude of the triangular dip events — currently reaching as low as 435.8 volts — is reduced because the reactive inrush demand at motor startup is met locally rather than propagating as a voltage disturbance through the distribution system. The device health risk profile on T12's downstream equipment shifts from HIGH to MODERATE or LOW depending on the completeness of correction coverage.
+
+**MPTS Sizing for T12:**
+kVAR MAX = 1,043.5 kVAR ÷ 400 = 2.609 → rounds UP to **3 H490 units**.
+Planning-level installed investment estimate: approximately $600,000 for three H490 units, subject to engineering scope, site-specific installation conditions, and final configuration review. This is a planning-level estimate — final pricing depends on a detailed site engineering assessment.
+
+At approximately $991,303 in annual waste, a planning-level payback window of under 9 months is a reasonable working estimate for internal financial modeling — again, subject to final engineering and utility rate confirmation.
+
+The S-view projection makes clear: the correction pathway for T12 is well-defined, the magnitude of recoverable waste is large, and the equipment health benefit is real and compounding forward from day one of commissioning.
+
+---

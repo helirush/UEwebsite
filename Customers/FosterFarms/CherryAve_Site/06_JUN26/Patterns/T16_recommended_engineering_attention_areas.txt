@@ -1,0 +1,18 @@
+**T16 Compressor — Recommended Engineering Attention Areas | June 2026**
+
+**Priority 1 — MPTS Sizing and Placement Engineering:**
+Three H490 units at 400 kVAR each are indicated by the 957.3 kVAR MAX calculation. Engineering review should confirm optimal placement relative to the compressor bus, cable routing from the correction units to the primary interconnection point, and harmonic filter coordination given the 27.9% iTHD maximum recorded in June. High harmonic environments require careful filter design to avoid resonance conditions between the correction capacitors and system inductance.
+
+**Priority 2 — Voltage Stability and Field Collapse Root Cause:**
+The 9.5V minimum voltage recorded in June represents a full field collapse event. Engineering should investigate whether this event was caused by utility supply interruption, an internal protective relay operation, or a catastrophic load transient. Understanding the root cause determines whether the outage risk is primarily addressable through reactive compensation or whether additional protective infrastructure — such as bus transfer switching or voltage ride-through capability — is warranted.
+
+**Priority 3 — Thermal Monitoring and Insulation Assessment:**
+507,670 BTU per hour of thermal burden sustained over June's production schedule represents significant cumulative insulation stress. A transformer thermal inspection and insulation resistance test should be scheduled to establish current insulation health before MPTS correction is commissioned. This baseline will allow the post-correction thermal improvement to be documented and will identify whether any accelerated aging has already occurred that warrants closer monitoring.
+
+**Priority 4 — Harmonic Distortion Survey:**
+The 27.9% iTHD maximum warrants a dedicated harmonic survey at the T16 bus to characterize the frequency spectrum of the distortion. Variable frequency drives and compressor control electronics are common harmonic sources in this application. Understanding which harmonic orders are dominant will inform the MPTS filter configuration and ensure the correction solution addresses both reactive and harmonic burden simultaneously.
+
+**Priority 5 — Outage Event Documentation and Correlation:**
+Both confirmed outage events in June should be cross-referenced against the facility's SCADA or DCS event log to establish precise timestamps, affected equipment, and restart sequences. This documentation supports both the engineering case for MPTS correction and any utility demand response or reliability reporting obligations.
+
+---

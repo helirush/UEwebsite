@@ -1,0 +1,13 @@
+**T15 — Voltage Health | June 2026**
+
+The voltage story on T15 looks stable at the surface — an average of 478.2 volts against a 480V nominal, which at first glance suggests normal operation. But the moment you look past the average and into the actual waveform behavior across the full 30-day window, the picture changes substantially.
+
+The field is recording a maximum of 509.6V and a minimum of 9.6V. That near-zero floor is not a measurement artifact — it is a real field event, and it correlates with the outage signatures identified in the BT view. But the more operationally significant finding is not the floor event. It is the repeating, structured triangular voltage dips that are distributed across the entire month.
+
+Reading directly from the annotated chart values, the left cluster of the month shows dips to 496.3V, 415.0V, 434.6V, 437.4V, 413.4V, 412.6V, 413.3V, and 413.8V. Mid-month the pattern continues with drops to 457.2V, 420.0V, 427.2V, 416.1V, and 413.5V. Moving into the right portion of the month the dips read 440.6V, 446.9V, 434.5V, 425.4V, 422.6V, 412.9V, 408.2V, 435.1V, 425.0V, 415.8V, and 415.7V. The worst single annotated event reached 408.2V — approximately 15% below the 480V nominal.
+
+To put that in practical terms: a 15% undervoltage event on a 480V system is not a nuisance fluctuation. It is a stress event for every motor, drive, and control circuit on that bus. Values in the 412V to 437V range — which appear repeatedly across every week of the month — represent sustained undervoltage conditions in the 9% to 15% below nominal band. And the clustering behavior is telling. These dips are appearing in groups of two to four consecutive events, which indicates compounding load-switching — motor starts, compressor cycling, and refrigeration load changes that are driving voltage into distress before the field has time to recover.
+
+For a food processing and cold storage environment, that means motor windings absorbing excess current to compensate for the undervoltage, variable frequency drives hunting for stable reference points, soft starters experiencing elevated thermal stress at each start cycle, and compressor contactors cycling against a degraded voltage reference. The device health risk is real and is accumulating daily in this untuned field.
+
+---

@@ -1,0 +1,13 @@
+**T12 — Voltage Stability Findings | June 2026 | Untuned**
+
+The voltage health picture on T12 is a high-risk condition that deserves immediate engineering attention. The nominal operating voltage for this transformer is the 480-volt line-to-line equivalent, or approximately 277 volts line-to-neutral. T12's voltage trace holds at roughly 465.0 volts across most operating hours — already running about 15 volts below nominal as a matter of routine. That chronic under-voltage condition is the baseline from which the dip events then drop further.
+
+The confirmed voltage dips recorded across the June period include a sequence of readings: 445.9V, 446.0V (repeated), 445.6V, 443.4V, 445.8V, 441.6V, 440.4V, and a most-severe reading of 435.8 volts. That 435.8-volt event sits approximately 44 volts — roughly 9.2 percent — below the 480-volt nominal. It also breaches the MinVoltage reference boundary visible in the chart. A sustained dip of that magnitude in a food processing facility is not a nuisance event. It is a stress event for every motor, variable frequency drive, and control relay on that circuit at the moment it occurs.
+
+The dip pattern is not random. The triangular voltage-drop markers cluster at load transition moments — early-shift startups, shift changes, and large motor sequencing events. This is the signature of an uncompensated reactive field. When large inductive loads demand reactive current at startup and there is no local compensation source available, the voltage bus sags under the strain. The utility feeder and the transformer impedance absorb that reactive surge and return it as a voltage dip.
+
+The most alarming single data point is the 9.3-volt minimum recorded in the header. That value is not a sag — it is a collapse. It represents a near-complete loss of voltage, consistent with the confirmed outage event identified at approximately the 260607–260608 boundary. That event lasted an estimated 60 to 90 minutes based on the gold streak width in the BT chart. One confirmed outage event in 30 days, with a voltage floor of 9.3 volts, confirms that T12's supply field experienced at least one full power-off interval during the measurement period.
+
+Device-health risk level: **HIGH**. Compressor motors, conveyor drives, and VFD-fed equipment cycling through repeated sub-nominal voltage events accumulate insulation stress, bearing wear, and control-board fatigue faster than manufacturers' ratings anticipate. The untuned reactive field is the root contributor. Reactive compensation would stabilize the voltage bus at transition moments, reducing the amplitude and frequency of these dip events.
+
+---

@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-07-18 11:35:57",
+  "transformer_id": "T16",
+  "transformer_name": "T16",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "** UNAVAILABLE. All numeric values sourced exclusively from vision extraction (BT/V/M/S image reads). No CSV override applies.",
+    "target_kva_image": "1508 kVA",
+    "bt_target_kva": "1508 kVA",
+    "target_kva_csv": "** 0.0 kVA (unavailable \u2014 vision is sole source)",
+    "power_factor_csv": "** 0.0% (unavailable \u2014 vision read: 88.9% avg, 93.0% max, 0.0% min)",
+    "kvar_max_csv_est": "** 0 kVAR (unavailable \u2014 vision read: 957.3 kVAR MAX from BT header; M view confirms 675 kVAR peak callout \u2014 note: BT header is primary extraction value)",
+    "monthly_waste_csv": "** $0.00 (unavailable \u2014 vision read: approximately $34,763/dataset, $422,956/yr energy waste, $535,133/yr total wasted)",
+    "planning_install_estimate": "** $200,000 (per Unity H490 unit; sizing calculation below)",
+    "estimated_payback_months": "** value unavailable from CSV; vision-derived estimate provided in narrative",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "mpts_sizing_check": "**",
+    "planning_level_installed_investment": "approximately **$600,000** (3 \u00d7 H490 at roughly $200,000 each, subject to engineering scope and site conditions)",
+    "discrepancy_flags": "** No CSV available to cross-check against. No >10% variance can be computed. All values are vision-only. [\u26a0\ufe0f NOTE: BT header kVAR MAX (957.3) and M view peak kVAR callout (675) differ by approximately 30% \u2014 this is expected, as BT MAX is the dataset ceiling and M callout represents a labeled peak moment. No conflict flagged; both values retained in context.]",
+    "monthly_savings_validated": "$44,594.42",
+    "annual_savings_validated": "$535,133.00",
+    "monthly_waste_validated_total": "$44,594.42",
+    "annual_waste_validated_total": "$535,133.00",
+    "annual_total_wasted_validated": "$535,133.00"
+  },
+  "packet_file": "T16_william_validation.json"
+}

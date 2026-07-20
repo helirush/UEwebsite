@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-07-18 11:26:42",
+  "transformer_id": "T10",
+  "transformer_name": "T10",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "\u26a0\ufe0f Mercury CSV analysis unavailable. All numeric values sourced from vision extraction only. No cross-check variances can be computed. All figures carry vision-only confidence designation.",
+    "target_kva_image": "1545 kVA",
+    "bt_target_kva": "1545 kVA",
+    "target_kva_csv": "0.0 kVA (unavailable \u2014 vision value used as working reference)",
+    "power_factor_csv": "0.0% (unavailable \u2014 image reads 88.8% average, 84.32% floor, 97.1% maximum)",
+    "kvar_max_csv_est": "0 kVAR (unavailable \u2014 image reads 776.0 kVAR MAX from BT header; M view callout reads 721 kVAR \u2014 within 8%, no discrepancy flagged)",
+    "monthly_waste_csv": "$0.00 (unavailable \u2014 image reads approximately $29,730/dataset, approximately $361,720/year, approximately $693,304 total wasted/year)",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "planning_install_estimate": "$200,000 (H490 sizing, see MPTS section)",
+    "estimated_payback_months": "not computable without CSV confirmation; directional estimate provided in narrative",
+    "ithd_avg": "5.5% | iTHD max: 10.4% (vision, M view)",
+    "peak_current_m_view": "2,009.1 A | Average current (V view): 986.7 A | Peak current (V view): 1,905.4 A",
+    "bt_vs_m_kvar_max_cross_note": "BT header shows 776.0 kVAR MAX; M view shows 721 kVAR max reactive callout. Delta is approximately 7.1% \u2014 within 10% threshold, no discrepancy flag. Working kVAR MAX for sizing: 776.0 kVAR (BT header, more conservative).",
+    "mpts_sizing": "776.0 \u00f7 400 = 1.94 \u2192 round UP \u2192 **2 H490 units** recommended. Planning-level installed investment estimate: approximately $200,000, subject to engineering scope and site conditions.",
+    "monthly_savings_validated": "$57,775.33",
+    "annual_savings_validated": "$693,304.00",
+    "monthly_waste_validated_total": "$57,775.33",
+    "annual_waste_validated_total": "$693,304.00",
+    "annual_total_wasted_validated": "$693,304.00"
+  },
+  "packet_file": "T10_william_validation.json"
+}

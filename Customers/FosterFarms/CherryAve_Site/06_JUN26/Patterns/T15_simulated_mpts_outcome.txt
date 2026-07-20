@@ -1,0 +1,13 @@
+**T15 — Projected MPTS Correction | Planning Estimate**
+
+Sizing T15 for MPTS correction begins with the kVAR MAX reading from the BT header: 723.5 kVAR. Applying the standard sizing rule — kVAR MAX divided by 400, rounded up — 723.5 divided by 400 equals 1.81, which rounds up to 2 H490 units. T15 is a two-unit installation.
+
+At approximately $200,000 per H490 unit installed, the planning-level investment estimate for T15 is roughly $400,000 installed. Final pricing will depend on engineering scope, site conditions, and integration specifics — this is a planning-level estimate, not a binding quote.
+
+What does that investment recover? The S view projects power factor correction to 99.5% — moving T15 from 81.1% to essentially unity. At 99.5% power factor, the reactive kVAR demand that is currently averaging 527.8 kVAR and peaking at 723.5 kVAR is reduced to a negligible residual. The transformer no longer has to carry both productive work and a 500-plus kVAR reactive overhead simultaneously. Current draw drops substantially from its 953.6-amp average, thermal burden decreases, and the voltage dips driven by reactive load-switching events become measurably shallower and less frequent.
+
+The MPTS correction addresses the reactive component of the voltage instability problem directly. By providing local reactive support at the transformer bus, the voltage sags associated with compressor starts and motor load-switching are buffered — the field stops oscillating through those 408V to 437V undervoltage events at the current frequency and severity. This reduces device stress on motors, drives, and compressor contactors across the facility.
+
+On the financial side, the MPTS-recovered savings projected from the BT baseline represent a substantial portion of the approximately $840,783 annual waste figure. At planning-level estimates, the reactive loss recovery alone — approximately $496,647 per year — would suggest a payback horizon in the range of roughly 9 to 10 months on the reactive loss component, before thermal burden and cooling overhead savings are included. With the full waste figure in view, the economics of correction are compelling for a transformer running at this utilization level.
+
+---

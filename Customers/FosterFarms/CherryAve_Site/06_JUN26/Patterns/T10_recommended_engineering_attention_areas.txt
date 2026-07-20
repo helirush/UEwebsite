@@ -1,0 +1,16 @@
+**1. Reactive compensation sizing and installation — Priority: High**
+Two H490 units at 800 kVAR total compensation capacity are the recommended configuration for T10. The installation site at Cherry Avenue should be assessed for switchgear proximity, ventilation adequacy, and physical placement relative to the transformer secondary bus. The 776 kVAR peak demand leaves minimal margin if reactive loads grow — confirm that the H490 pair provides sufficient headroom for seasonal load escalation in Fresno's summer cooling peak.
+
+**2. Voltage sag investigation at recurring trigger events — Priority: High**
+The two clustering windows of triangular voltage drops — early June and June 18–19 — warrant operational investigation. Identify what load sequences, compressor staging events, or switching operations are occurring in those windows. The voltage is sagging 43 to 46 volts below nominal on a repeating basis, which is causing elevated current draw and motor stress. Short-term mitigation may involve load sequencing adjustment; long-term correction requires MPTS installation to remove the reactive burden that amplifies these sag events.
+
+**3. Harmonic distortion monitoring — Priority: Moderate**
+The 10.4 percent iTHD peak observed in the M view exceeds the IEEE 519 recommended limit of 8 percent. While the 5.5 percent average is within acceptable range, the peak harmonic events are occurring during load transitions that coincide with the highest reactive stress moments. Consider whether passive harmonic filtering should be evaluated alongside MPTS installation, particularly if variable frequency drives are present on this bus.
+
+**4. Outage root cause analysis — Priority: Moderate**
+The single confirmed outage event in the June 21–22 window — estimated at 60 to 90 minutes — produced a near-zero voltage reading of 9.1 volts. For a refrigeration and air chiller system, that duration of outage carries product safety implications. Determine whether the outage was utility-side, transformer protection-initiated, or process-related. Implement event logging to capture the triggering condition.
+
+**5. Month-over-month drift monitoring — Priority: Ongoing**
+This is an untuned field. Without tuning assignment, the reactive burden, thermal stress, and efficiency losses on T10 are likely to worsen through the summer months. Establish a monthly field health review cadence and flag for escalation if the power factor floor drops below 83 percent, if kVAR MAX exceeds 850 kVAR, or if the thermal burden baseline climbs above 500,000 BTU per hour.
+
+---

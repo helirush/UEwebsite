@@ -1,0 +1,15 @@
+**T15 — Engineering Attention Areas**
+
+Several specific areas warrant engineering attention before MPTS commissioning and in parallel with the correction investment decision.
+
+First, the two confirmed outage events in June — totaling an estimated 80 to 120 minutes of combined downtime — should be investigated for root cause. If these events are reactive-stress-driven field collapses rather than upstream utility interruptions, MPTS correction will directly reduce their recurrence probability. If they are utility-sourced, a parallel investigation into upstream supply reliability is appropriate.
+
+Second, the 9.6V minimum voltage event should be correlated against facility SCADA or protection relay logs to determine whether it triggered downstream trip events, contactor dropout, or drive faults. A near-zero voltage event on a 480V industrial bus has cascading potential across every piece of connected equipment.
+
+Third, the 43.4% maximum iTHD reading should be investigated for source identification. If a specific motor-start event, variable frequency drive, or switching sequence can be correlated with that harmonic spike, targeted harmonic filtering may complement the reactive correction provided by MPTS. The MPTS H490 units address reactive compensation; severe harmonic sources may warrant additional filtering consideration in the engineering scope.
+
+Fourth, the persistent voltage dip pattern — particularly the recurring 408V to 416V events across every week of June — should be mapped against motor failure and maintenance logs for T15-served equipment. If motor replacement frequency is elevated on this bus, the voltage stress documented here is a likely contributing cause, and correction will deliver measurable reliability improvement alongside the financial recovery.
+
+Fifth, with T15 operating above its 1,371 kVA target line for approximately 70 to 75 percent of active production periods, transformer loading margin should be evaluated in the context of any planned production expansion. A 2,500 kVA transformer running at this utilization with no reactive compensation has limited headroom for additional load growth.
+
+---

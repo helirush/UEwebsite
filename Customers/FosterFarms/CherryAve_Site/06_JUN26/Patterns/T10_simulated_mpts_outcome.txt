@@ -1,0 +1,11 @@
+Based on the kVAR MAX of 776.0 kVAR from the BT header, the MPTS sizing calculation is straightforward. Dividing 776 by 400 yields 1.94, which rounds up to 2 H490 units. Two H490 units deliver 800 kVAR of reactive compensation capacity — sufficient to address the peak reactive demand on this transformer with margin.
+
+The planning-level installed investment estimate for two H490 units is approximately $200,000, subject to final engineering scope and site-specific conditions at the Cherry Avenue facility. That is not a binding quote — it is a planning-level figure to anchor the business case.
+
+The S view projection shows what post-MPTS correction looks like for this field. Power factor rises to 99.5 percent — from an average of 88.8 percent and a floor of 84.32 percent today. The reactive burden that is currently averaging 440.8 kVAR and peaking at 776.0 kVAR is absorbed by the MPTS compensation system, removing it from the transformer's apparent load. The thermal burden of 492,467 BTU per hour drops substantially — the reactive circulating current that generates that heat is eliminated at the source. Cooling costs of $36.08 per hour and 102.3 kilowatts are recovered.
+
+The annual energy waste estimate from the BT header is approximately $361,720 per year in reactive losses, with a total wasted figure of approximately $693,304 per year when thermal and cooling overhead are included. MPTS correction targets the majority of that waste. Using the $361,720 annual reactive waste figure as the conservative recovery basis against the approximately $200,000 installed investment, the directional payback window falls in the range of six to eight months — though final payback computation requires confirmed CSV data and utility rate schedule verification.
+
+The voltage stability improvement is equally significant. With reactive compensation active, the voltage sags that are currently pulling the field to 434–437 volts on a 480-volt nominal system will be substantially reduced. The compressor and chiller motors on this bus will operate closer to nameplate voltage, drawing less compensating current, generating less winding heat, and extending service life. The recurring triangular drop events that are clustering at startup should diminish in frequency and depth.
+
+---

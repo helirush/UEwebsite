@@ -1,0 +1,18 @@
+**T12 — Recommended Engineering Attention Areas**
+
+**1. MPTS Sizing and Commissioning Priority.**
+T12 requires three H490 units to address the 1,043.5 kVAR peak reactive demand. Planning-level installed investment is approximately $600,000. Given the approximately $991,303 annual waste figure, this transformer should be ranked as a high-priority commissioning candidate in the site-wide MPTS deployment sequence. Until correction is assigned and commissioned, the field continues drifting toward higher losses and greater thermal burden with each passing month.
+
+**2. Voltage Dip Investigation and Motor Start Sequencing.**
+The nine confirmed sub-nominal voltage dip events — with a worst case of 435.8 volts, 9.2 percent below 480-volt nominal — warrant a dedicated motor start-sequencing review. Large motors coming online without staggered starts or soft-start control are the most likely mechanism generating the reactive inrush that produces these dips. Engineering should audit the startup sequences for refrigeration compressors and large conveyor drive motors served by T12.
+
+**3. Outage Root-Cause Review.**
+The confirmed 60-to-90-minute outage near the 260607–260608 boundary should be cross-referenced with site maintenance logs. In a food processing environment, even a single unplanned outage of that duration creates HACCP compliance risk, product temperature deviation exposure, and production loss. If the outage is related to field stress conditions on T12, MPTS correction — by reducing current loading and thermal burden — reduces the probability of thermally-driven protective relay events.
+
+**4. Cooling Infrastructure Audit.**
+At 848,819 BTU per hour thermal burden, the cooling systems managing T12's heat environment are working at sustained high capacity. Engineering should verify that cooling equipment serving the transformer room and associated MCC (motor control center) spaces is rated for this continuous load, and assess the condition of that equipment for signs of accelerated wear. MPTS correction will reduce this burden substantially, potentially allowing cooling system right-sizing on the next replacement cycle.
+
+**5. Harmonic Monitoring — Secondary Priority.**
+The 10.8 percent iTHD maximum is manageable at current levels but should be trended. As VFD penetration increases in food processing facilities over time, harmonic loading can grow. A baseline harmonic survey now, cross-referenced with the June 2026 M-view data, establishes a trend anchor for future comparison.
+
+---

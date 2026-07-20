@@ -1,0 +1,15 @@
+**T12 — Operational Stress Interpretation | June 2026 | Untuned**
+
+T12 is operating in a state of continuous compounding stress. The interaction between its reactive burden, its voltage instability, and its thermal loading creates a reinforcing cycle that worsens incrementally every month the field remains untuned. Understanding how these three stressors connect is essential for prioritizing the engineering response.
+
+Start with reactive demand. At 712.9 kVAR average and 1,043.5 kVAR peak, the transformer is continuously carrying a reactive component that generates no useful work but demands full current capacity. That excess current translates directly into resistive heating — I²R losses — inside the transformer windings, the distribution conductors, and the motor stators across the facility. The thermal burden measurement of 848,819 BTU per hour is the quantified result of that heating. At 848,819 BTU per hour, the facility's cooling systems are working against a continuous heat load equivalent to running dozens of large residential air conditioning units just to offset what the uncompensated reactive field is generating inside the electrical infrastructure.
+
+That cooling overhead is not free. The approximately $311,485 per year in cooling costs is direct operational spending to fight a problem that MPTS correction would substantially eliminate. The cooling systems themselves are adding to the electrical load — which in turn adds to the reactive demand — a feedback loop that grows modestly worse each month as equipment ages into slightly higher losses.
+
+The voltage dip pattern overlays onto this thermal picture in a damaging way. Each sub-nominal voltage event — and there were at least nine confirmed dip events below 480 volts during June, with the worst at 435.8 volts — forces motors to draw higher current to maintain torque. Higher current means more heat. More heat means faster insulation degradation. Faster insulation degradation means higher leakage current and even more reactive demand. The cycle is slow, but it is directional and it is accumulating.
+
+The electric operations pattern on T12 shows approximately 65 to 70 percent of weekday hours running at or above the 1,709 kVA daily target. That is a productive, heavily-utilized transformer. The facility is not idle — this is a working asset serving active food processing operations. The consequence of leaving it untuned is not theoretical future risk. It is approximately $991,303 per year in confirmed waste, currently being paid every month that correction is deferred.
+
+One outage event — approximately 60 to 90 minutes in duration near the 260607–260608 boundary — was captured in the dataset. In a food processing environment, even a 90-minute outage carries potential consequence for temperature-sensitive product, cleaning and sanitization protocol disruption, and production rescheduling costs that dwarf the electrical waste numbers alone.
+
+---

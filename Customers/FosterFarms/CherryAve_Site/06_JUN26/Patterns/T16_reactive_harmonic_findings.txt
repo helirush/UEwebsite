@@ -1,0 +1,13 @@
+**T16 Compressor — Reactive and Harmonic Findings | June 2026**
+
+The reactive picture on T16 is large, persistent, and unmanaged. The BT header records an average reactive load of 547.9 kVAR with a dataset maximum of 957.3 kVAR. The M view confirms a labeled peak of 675 kVAR during active production. These are not spikes — the green kVAR layer in both the BT and M views runs as a continuous band through every production period. Reactive energy is structural to how this compressor load operates. It does not go away between cycles. It is present in every production hour, drawing transformer capacity and generating heat without delivering usable work.
+
+The power factor numbers anchor this clearly. At 88.9% average, T16 is operating with roughly 11% of its electromagnetic capacity dedicated to maintaining the reactive field rather than delivering real power. At the minimum recorded power factor of 0.0% — which aligns with the field collapse event — the transformer was momentarily delivering no real power at all while still drawing current. During normal production, the minimum measured PF is 84.7%, recorded during the deepest reactive stress intervals.
+
+The harmonic picture adds another layer. The M view header confirms 3.7% iTHD (current total harmonic distortion) on average, with a maximum of 27.9% iTHD. That maximum is significant. IEEE 519 guidelines set an industrial current distortion limit of 5% at the point of common coupling for many utility interconnection agreements. An iTHD maximum of 27.9% means that at peak harmonic events, this field is producing distortion current at more than five times that threshold. Harmonic currents add to the RMS current burden, increase transformer core losses, generate additional heat in neutral conductors, and can interfere with metering and protective relay accuracy.
+
+The combination of 957.3 kVAR reactive maximum and 27.9% iTHD maximum is particularly stressful for the transformer core and winding insulation. Both reactive current and harmonic current produce heat without contributing to real work output. They are, in effect, two independent mechanisms of thermal waste operating simultaneously on T16.
+
+MPTS sizing for this transformer is driven by the kVAR MAX of 957.3 kVAR. Applying the Unity sizing rule — 957.3 ÷ 400, rounded up — yields a requirement for **3 H490 units**. That is 1,200 kVAR of installed correction capacity, providing meaningful headroom above the 957.3 kVAR peak while ensuring stability across the full production demand envelope.
+
+---

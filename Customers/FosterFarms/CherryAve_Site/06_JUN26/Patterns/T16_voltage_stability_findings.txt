@@ -1,0 +1,13 @@
+**T16 Compressor — Voltage Stability Findings | June 2026**
+
+The voltage picture on T16 is one of the more concerning readings in this capture family. The average voltage across the June dataset is 473.6 volts — already below the 480V nominal line-to-line reference. The maximum recorded is 509.6V, and the minimum is 9.5V. That near-zero minimum is not a data artifact. It represents at least one full field collapse — a moment where voltage on this transformer dropped to near-nothing. That kind of event is deeply stressful to every piece of equipment downstream.
+
+The labeled dip events in the V view tell a consistent story. Six labeled voltage dip triangles appear across the month, with measured values of 455.5V, 455.6V, 455.6V, 455.2V, 455.5V, and 452.3V. Every one of those readings is below 480V nominal. The deepest confirmed dip is 452.3V — approximately 5.8% below nominal. While a single isolated dip at that level might be manageable, these are clustered events. They repeat. They concentrate around the same production intervals. That clustering behavior tells us these dips are structurally tied to compressor start transients and load-step events — not random noise.
+
+The coupling between the voltage trace and the amperage trace in the M view confirms the mechanism. When amperage climbs toward its 1,885.9A peak, voltage compresses downward. This is classic undervoltage-under-load behavior in a transformer without reactive compensation. The field cannot hold voltage steady because reactive current is consuming transformer capacity that should be serving real load.
+
+The triangular dip markers cluster most visibly around 260601–260603, 260607, 260610, 260613, and 260619–260620. These windows align exactly with the outage events identified in the BT view and with the supply trace spikes that push above the 1,508 kVA target line. The correlation is not coincidental — it is the field telling you where and when it is under the greatest stress.
+
+For equipment downstream — variable frequency drives, motor starters, compressor control electronics — repeated exposure to 452–456V during high-current events accelerates insulation fatigue and increases the probability of nuisance trips, premature drive failure, and unplanned production stoppages. The 9.5V minimum event almost certainly subjected motor starters to severe inrush stress on restart. Device health risk on T16 is assessed as **HIGH**.
+
+---

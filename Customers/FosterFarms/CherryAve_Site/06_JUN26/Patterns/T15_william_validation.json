@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-07-18 11:32:52",
+  "transformer_id": "T15",
+  "transformer_name": "T15",
+  "narrative_mode": "pre_mpts_sales",
+  "field_mode": "untuned",
+  "status": "failed",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated",
+    "payback_months_estimated"
+  ],
+  "missing_required_keys": [
+    "payback_months_estimated"
+  ],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [
+    "missing_required_keys=payback_months_estimated"
+  ],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "csv_ground_truth_status": "**UNAVAILABLE** \u2014 vision-only synthesis in effect.",
+    "machine_readable_anchor_lines": "**",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "target_kva_image": "1371 kVA",
+    "bt_target_kva": "1371 kVA",
+    "target_kva_csv": "unavailable",
+    "power_factor_csv": "unavailable (image: 81.1%)",
+    "kvar_max_csv_est": "unavailable (image: 723.5 kVAR)",
+    "note": "All numeric values in this analysis derive from image extraction alone. No CSV discrepancy flags are applicable. All figures should be treated as vision-estimated planning values pending Mercury CSV confirmation.",
+    "monthly_savings_validated": "$70,065.25",
+    "annual_savings_validated": "$840,783.00",
+    "monthly_waste_validated_total": "$70,065.25",
+    "annual_waste_validated_total": "$840,783.00",
+    "annual_total_wasted_validated": "$840,783.00"
+  },
+  "packet_file": "T15_william_validation.json"
+}

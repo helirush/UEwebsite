@@ -1,0 +1,11 @@
+**T12 — Reactive and Harmonic Findings | June 2026 | Untuned**
+
+The reactive profile of T12 is aggressive by any industrial benchmark. Average reactive demand runs at 712.9 kVAR across the full 30-day dataset. The peak reactive demand reaches 1,043.5 kVAR — that is more than a megavar of reactive current flowing through this transformer at its worst moments. To put that in physical terms: at 1,043.5 kVAR peak, T12 is carrying a reactive current load nearly as large as the productive real-power load it exists to serve. That imbalance is what drives the 83.6 percent average power factor and the 76.29 percent power factor floor recorded at peak stress.
+
+From the M view, the amperage trace tells a visceral story. Peak amperage reaches 2,177.4 amperes, against a dataset average of 1,615.8 amperes. The gap between those two numbers — nearly 562 amps of headroom being consumed by peak demand events — reflects the reactive current component inflating the total current beyond what real work alone would require. The sharp-edged, near-vertical rise characteristics of the red amperage peaks confirm that large motor loads are coming online hard, without soft-start or reactive pre-compensation. Each of those hard starts injects a reactive inrush into the transformer that the untuned field cannot absorb locally.
+
+The green kVAR trace in the M view never disappears. Even during overnight valleys and weekend setback periods, a persistent baseline reactive layer remains. This is the signature of always-on inductive loads: refrigeration compressors maintaining cold-chain temperatures, large transformer magnetizing currents, HVAC systems that never fully de-energize. The utility is billing for that idle reactive demand whether or not the production floor is running.
+
+Harmonic distortion is present but not the primary driver of waste on T12. The iTHD average of 5.8 percent and maximum of 10.8 percent are within manageable bounds for a facility of this type and size. The purple harmonics trace in the M view runs as a low-amplitude, relatively flat band. Harmonics are a secondary concern here — the reactive kVAR burden and the resulting thermal loading are the dominant waste mechanisms that MPTS correction would address first.
+
+---
