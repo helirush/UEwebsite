@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merced Irrigation District Electricity Industrial Electricity Service Bill</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: Arial, sans-serif;
+            background: rgba(246, 247, 249, 1);
+            color: rgba(30, 30, 30, 1);
+        }
+        .bill-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid rgba(208, 208, 208, 1);
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        .bill-head {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, rgba(92, 0, 0, 1) 0%, rgba(161, 0, 0, 1) 100%);
+            color: rgba(255, 238, 189, 1);
+        }
+        .bill-head h1 {
+            margin: 0 0 8px;
+            font-size: 1.3rem;
+            line-height: 1.3;
+        }
+        .bill-head p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        .bill-section {
+            padding: 18px 24px 4px;
+        }
+        .bill-section h2 {
+            margin: 0 0 10px;
+            color: rgba(139, 0, 0, 1);
+            font-size: 1.02rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .bill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .bill-card {
+            border: 1px solid rgba(225, 225, 225, 1);
+            border-radius: 8px;
+            padding: 14px;
+            background: rgba(252, 252, 252, 1);
+        }
+        .bill-card h3 {
+            margin: 0 0 8px;
+            color: rgba(139, 0, 0, 1);
+            font-size: 0.92rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .bill-card p {
+            margin: 4px 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .bill-note {
+            margin: 0;
+            padding: 0 24px 24px;
+            color: rgba(90, 90, 90, 1);
+            font-size: 0.9rem;
+        }
+        .bill-card--site-total {
+            border-color: rgba(192, 0, 0, 0.45);
+            background: rgba(255, 247, 229, 1);
+        }
+        @media (max-width: 760px) {
+            .bill-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="bill-wrap">
+        <header class="bill-head">
+            <h1>Merced Irrigation District Electricity Industrial Electricity Service Bill</h1>
+            <p>Combined reference view with Bill A and Bill B for Livingston utility service review.</p>
+        </header>
+
+        <section class="bill-section">
+            <h2>Reference Bill A</h2>
+            <div class="bill-grid">
+                <article class="bill-card">
+                    <h3>Service Account</h3>
+                    <p><strong>Service Area:</strong> Livingston Facility</p>
+                    <p><strong>Rate Class:</strong> Industrial Service</p>
+                    <p><strong>Billing Cycle:</strong> Monthly</p>
+                </article>
+                <article class="bill-card">
+                    <h3>Usage Summary</h3>
+                    <p><strong>kWh Delivered:</strong> 2,847,120</p>
+                    <p><strong>Peak Demand:</strong> 4,910 kW</p>
+                    <p><strong>Power Factor Adj:</strong> Included</p>
+                </article>
+                <article class="bill-card">
+                    <h3>Charge Summary</h3>
+                    <p><strong>Energy Charge:</strong> $416,973.21</p>
+                    <p><strong>Demand Charge:</strong> $108,744.82</p>
+                    <p><strong>Other Adjustments:</strong> $7,402.10</p>
+                </article>
+                <article class="bill-card">
+                    <h3>Total Due</h3>
+                    <p><strong>Total Current Charges:</strong> $533,120.13</p>
+                    <p><strong>Due Date:</strong> 2026-07-28</p>
+                    <p><strong>Status:</strong> Reference Preview</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="bill-section">
+            <h2>Reference Bill B</h2>
+            <div class="bill-grid">
+                <article class="bill-card">
+                    <h3>Service Account</h3>
+                    <p><strong>Service Area:</strong> Livingston Facility</p>
+                    <p><strong>Rate Class:</strong> Industrial Time-of-Use</p>
+                    <p><strong>Billing Cycle:</strong> Monthly</p>
+                </article>
+                <article class="bill-card">
+                    <h3>Usage Summary</h3>
+                    <p><strong>kWh Delivered:</strong> 2,596,440</p>
+                    <p><strong>Peak Demand:</strong> 4,588 kW</p>
+                    <p><strong>Power Factor Adj:</strong> Included</p>
+                </article>
+                <article class="bill-card">
+                    <h3>Charge Summary</h3>
+                    <p><strong>Energy Charge:</strong> $392,504.67</p>
+                    <p><strong>Demand Charge:</strong> $101,833.19</p>
+                    <p><strong>Other Adjustments:</strong> $6,228.52</p>
+                </article>
+                <article class="bill-card">
+                    <h3>Total Due</h3>
+                    <p><strong>Total Current Charges:</strong> $500,566.38</p>
+                    <p><strong>Due Date:</strong> 2026-08-27</p>
+                    <p><strong>Status:</strong> Reference Preview</p>
+                </article>
+            </div>
+        </section>
+        <section class="bill-section">
+            <h2>Site Total (Reference Bill A + Reference Bill B)</h2>
+            <div class="bill-grid">
+                <article class="bill-card bill-card--site-total">
+                    <h3>Combined Usage</h3>
+                    <p><strong>Total kWh Delivered:</strong> 5,443,560</p>
+                    <p><strong>Site Peak Demand (reference max):</strong> 4,910 kW</p>
+                    <p><strong>Reference Bills Included:</strong> A and B</p>
+                </article>
+                <article class="bill-card bill-card--site-total">
+                    <h3>Combined Charges</h3>
+                    <p><strong>Total Energy Charge:</strong> $809,477.88</p>
+                    <p><strong>Total Demand Charge:</strong> $210,578.01</p>
+                    <p><strong>Total Other Adjustments:</strong> $13,630.62</p>
+                    <p><strong>Combined Current Charges:</strong> $1,033,686.51</p>
+                </article>
+            </div>
+        </section>
+
+        <p class="bill-note">This combined page is a reference preview. Replace values and/or attach final production bill files when ready.</p>
+    </main>
+</body>
+</html>

@@ -88,6 +88,7 @@
   const CUSTOMER_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_customer_memory_v1";
   const PAGE_CONTEXT_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_page_context_memory_v1";
   const PATTERN_CONTEXT_PREFETCH_TTL_MS = 1000 * 60 * 10;
+  const PATTERN_CONTEXT_PREFETCH_LAUNCH_BUDGET_MS = 360;
   const CROSS_PAGE_ROAMING_MAX_TRANSCRIPT_ENTRIES = 10;
   const CROSS_PAGE_ROAMING_STATE_TTL_MS = 1000 * 60 * 45;
   const CROSS_PAGE_ROAMING_RESUME_DELAY_MS = 180;
@@ -821,6 +822,58 @@
     if (protocol === "file:") return false;
     return true;
   }
+  function isStartGateInteractiveElementDisabled(element) {
+    if (!element || typeof element !== "object") return true;
+    if (element.disabled === true) return true;
+    const ariaDisabled =
+      typeof element.getAttribute === "function"
+        ? coerceText(element.getAttribute("aria-disabled")).toLowerCase()
+        : "";
+    return ariaDisabled === "true";
+  }
+
+  function isStartGateInteractiveElementVisible(element) {
+    if (!element || typeof element !== "object") return false;
+    if (element.hidden) return false;
+    const style = typeof window.getComputedStyle === "function" ? window.getComputedStyle(element) : null;
+    if (style) {
+      if (style.display === "none" || style.visibility === "hidden") return false;
+      if (Number(style.opacity) === 0) return false;
+    }
+    if (typeof element.getBoundingClientRect === "function") {
+      const rect = element.getBoundingClientRect();
+      if (rect && rect.width <= 0 && rect.height <= 0) return false;
+    }
+    return true;
+  }
+
+  function buildStartConversationCandidateSignature(element) {
+    if (!element || typeof element !== "object") return "";
+    const parts = [
+      coerceText(element.textContent),
+      coerceText(element.value),
+      typeof element.getAttribute === "function" ? coerceText(element.getAttribute("aria-label")) : "",
+      typeof element.getAttribute === "function" ? coerceText(element.getAttribute("title")) : "",
+      coerceText(element.id),
+      coerceText(element.className),
+      typeof element.getAttribute === "function" ? coerceText(element.getAttribute("name")) : "",
+      typeof element.getAttribute === "function" ? coerceText(element.getAttribute("data-testid")) : "",
+    ];
+    return parts.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
+  }
+
+  function scoreStartConversationCandidate(signature) {
+    if (!signature) return Number.NEGATIVE_INFINITY;
+    let score = 0;
+    if (/start conversation/.test(signature)) score += 120;
+    if (/\b(start|begin|join|connect|continue|launch|open)\b/.test(signature)) score += 40;
+    if (/\b(conversation|session|voice|call|chat|talk|speak|microphone|mic)\b/.test(signature)) score += 24;
+    if (/\b(close|cancel|dismiss|end|hang ?up|stop|mute|minimize|maximize|settings|help|copy|download|share)\b/.test(signature)) {
+      score -= 90;
+    }
+    if (/^\s*[×x]\s*$/.test(signature)) score -= 140;
+    return score;
+  }
   function resolveRuntimeAuthEndpointCandidate(endpointCandidate) {
     const candidate = coerceText(endpointCandidate);
     if (!candidate) return "";
@@ -1104,12 +1157,10 @@
       page_context_memory_enabled: true,
       page_context_memory_max_entries: 18,
       page_context_memory_excerpt_char_limit: 420,
-      customer_exit_sweep_enabled: true,
-      customer_exit_sweep_prompt:
-        "Before you exit, should Clerk save a brief memory note from this session for your customer guide?",
-      customer_exit_sweep_note_prompt:
-        "Add an optional note for next time (leave blank to skip):",
-      customer_exit_sweep_saved_status: "Customer memory captured for the next session.",
+      customer_exit_sweep_enabled: false,
+      customer_exit_sweep_prompt: "",
+      customer_exit_sweep_note_prompt: "",
+      customer_exit_sweep_saved_status: "",
       customer_exit_sweep_skipped_status: "",
       tour_guide_enabled: false,
       tour_guide_max_candidates: 3,
@@ -1173,6 +1224,7 @@
       guardrails_min_relevance_score: 1,
       guardrails_max_sessions_per_day: 20,
       guardrails_enable_daily_metering: true,
+      guardrails_idle_prompts_enabled: true,
       guardrails_contact_email: "sales@unityenergy.com",
       guardrails_contact_url: "https://unityenergy.com/contact-us",
       guardrails_contact_redirect_url: "/UnityEnergy/contact-us.html",
@@ -1427,11 +1479,18 @@
     return detectVoiceEngine(cfg) === "hume" ? "Hume voice engine" : "OpenAI realtime voice";
   }
   function allowsHumeAuthlessConnect(cfg) {
-    return Boolean(
+    const explicitlyEnabled = Boolean(
       cfg &&
         (cfg.allow_hume_authless_connect === true ||
           cfg.allow_hume_authless_connect === "true")
     );
+    if (!explicitlyEnabled) return false;
+    const embedUrl = coerceText(cfg && cfg.embed_url).toLowerCase();
+    if (embedUrl.includes("/hume_renderer/")) {
+      // Current self-hosted Hume renderer requires explicit runtime auth.
+      return false;
+    }
+    return true;
   }
 
   function getVoiceEngineMissingConfigMessage(cfg) {
@@ -4521,42 +4580,8 @@
     );
   }
 
-  function maybeCaptureCustomerExitSweep(launchSession, closeOptions, cfg) {
-    if (!launchSession || typeof launchSession !== "object") return false;
-    const options = closeOptions && typeof closeOptions === "object" ? closeOptions : {};
-    const closeReason = coerceText(options.reason).toLowerCase();
-    if (options.preserveRoaming) return false;
-    if (closeReason === "page-transition" || closeReason === "relaunch") return false;
-    const scope = resolveGuideScopeReference(launchSession, cfg);
-    if (scope.guideMode !== "customer") return false;
-    if (cfg && cfg.customer_exit_sweep_enabled === false) return false;
-    if (customerExitSweepCaptured) return false;
-    if (typeof window === "undefined" || typeof window.confirm !== "function") return false;
-    customerExitSweepCaptured = true;
-    const savePrompt =
-      coerceText(cfg && cfg.customer_exit_sweep_prompt) ||
-      "Before you exit, should Clerk save a brief memory note from this session for your customer guide?";
-    const shouldSave = window.confirm(savePrompt);
-    if (!shouldSave) {
-      const skippedStatus = coerceText(cfg && cfg.customer_exit_sweep_skipped_status);
-      if (skippedStatus) setStatus(skippedStatus, false, true);
-      return false;
-    }
-    const notePrompt = coerceText(cfg && cfg.customer_exit_sweep_note_prompt);
-    let note = "";
-    if (notePrompt && typeof window.prompt === "function") {
-      const response = window.prompt(notePrompt, "");
-      note = coerceText(response);
-    }
-    const summary = buildCustomerMemoryEntryFromSession(launchSession, note, scope, cfg);
-    const saved = appendCustomerMemoryEntry(summary, { page: getCurrentPageSlug() }, scope, cfg);
-    if (saved) {
-      const savedStatus =
-        coerceText(cfg && cfg.customer_exit_sweep_saved_status) ||
-        "Customer memory captured for the next session.";
-      if (savedStatus) setStatus(savedStatus, false, true);
-    }
-    return saved;
+  function maybeCaptureCustomerExitSweep(_launchSession, _closeOptions, _cfg) {
+    return false;
   }
 
   function activateCrossPageRoamingFromLaunch(launchSession, cfg) {
@@ -4818,7 +4843,17 @@
       await runUnityStartGatePreflight(cfg);
     } catch (_err) {}
     try {
-      await prefetchActivePagePatternContext();
+      const patternPrefetchPromise = prefetchActivePagePatternContext().catch(function (_err) {
+        return null;
+      });
+      if (isLikelySummaryboardPage()) {
+        await Promise.race([
+          patternPrefetchPromise,
+          new Promise(function (resolve) {
+            window.setTimeout(resolve, PATTERN_CONTEXT_PREFETCH_LAUNCH_BUDGET_MS);
+          }),
+        ]);
+      }
     } catch (_err) {}
     return openClerkFromLaunchInput(rawInput, fallbackInput);
   }
@@ -6082,6 +6117,7 @@
       idleFinalPromptMessage:
         coerceText(cfg && cfg.guardrails_idle_final_prompt_message) ||
         "Any other Unity Energy questions before I close this session?",
+      idlePromptsEnabled: !cfg || cfg.guardrails_idle_prompts_enabled !== false,
       lowRelevanceLimit: clampNumber(cfg && cfg.guardrails_low_relevance_limit, 1, 6, 3),
       minRelevanceScore: clampNumber(cfg && cfg.guardrails_min_relevance_score, 1, 8, 1),
       maxSessionsPerDay: clampNumber(cfg && cfg.guardrails_max_sessions_per_day, 1, 100, 20),
@@ -6363,6 +6399,15 @@
       const modal = document.getElementById("clerkVoiceModal");
       if (!modal || !modal.classList.contains("active")) return;
       if (guardrailOffboarded) return;
+      if (!settings.idlePromptsEnabled) {
+        setGuardrailIdlePromptStage(3, "guardrail-idle-autoclose", true);
+        closeClerkVoiceModal({
+          reason: "guardrail-idle-autoclose",
+          preserveRoaming: false,
+          preserveDailyMeter: true,
+        });
+        return;
+      }
       if (guardrailIdlePromptStage <= 0) {
         setGuardrailIdlePromptStage(1, "guardrail-idle-nudge-sent", true);
         setStatus(
@@ -9002,12 +9047,43 @@
     try {
       const doc = frame.contentDocument || (frame.contentWindow && frame.contentWindow.document);
       if (!doc) return false;
-      const buttons = Array.from(doc.querySelectorAll("button"));
-      const startButton = buttons.find(function (button) {
-        return /start conversation/i.test(coerceText(button && button.textContent));
-      });
-      if (!startButton || startButton.disabled) return false;
-      startButton.click();
+      const interactiveElements = Array.from(
+        doc.querySelectorAll("button, [role=\"button\"], input[type=\"button\"], input[type=\"submit\"]")
+      );
+      const candidates = interactiveElements
+        .filter(function (element) {
+          return (
+            isStartGateInteractiveElementVisible(element) &&
+            !isStartGateInteractiveElementDisabled(element)
+          );
+        })
+        .map(function (element) {
+          const signature = buildStartConversationCandidateSignature(element);
+          return {
+            element: element,
+            signature: signature,
+            score: scoreStartConversationCandidate(signature),
+          };
+        })
+        .sort(function (a, b) {
+          return b.score - a.score;
+        });
+      const startCandidate =
+        candidates.find(function (candidate) {
+          return /start conversation/.test(candidate.signature);
+        }) ||
+        candidates.find(function (candidate) {
+          return candidate.score >= 56;
+        }) ||
+        (candidates.length === 1 && candidates[0].score >= 24 ? candidates[0] : null);
+      if (!startCandidate || !startCandidate.element) return false;
+      try {
+        if (typeof startCandidate.element.focus === "function") {
+          startCandidate.element.focus({ preventScroll: true });
+        }
+      } catch (_focusErr) {}
+      startCandidate.element.click();
+      noteUnityStartGateProgress("start-button-clicked");
       return true;
     } catch (_err) {
       return false;
@@ -9022,10 +9098,11 @@
       const modalEl = document.getElementById("clerkVoiceModal");
       if (!modalEl || !modalEl.classList.contains("active")) return;
       if (hasConversationStarted) return;
-      if (clickIframeStartConversationButton()) return;
+      const clicked = clickIframeStartConversationButton();
       attempts += 1;
+      if (hasConversationStarted) return;
       if (attempts >= attemptLimit) return;
-      window.setTimeout(runAttempt, retryDelay);
+      window.setTimeout(runAttempt, clicked ? Math.max(240, retryDelay) : retryDelay);
     };
     window.setTimeout(runAttempt, 60);
   }
@@ -10417,7 +10494,7 @@
       setPanelMode(panelMode === "docked" ? "centered" : "docked");
     });
     document.getElementById("clerkVoiceStartBtn").addEventListener("click", async function () {
-      const cfg = getRuntimeVoiceConfig();
+      let cfg = getRuntimeVoiceConfig();
       clearUnityStartGateLaunchTimers();
       noteUnityStartGateProgress("start-button-tap");
       setLaunchEmblemVisible(true);
@@ -10446,6 +10523,17 @@
       unityStartGatePreflightStatusMessage = "";
       unityStartGatePending = false;
       unityStartGatePendingRequiresRecovery = false;
+      if (
+        detectVoiceEngine(cfg) === "hume" &&
+        !normalizeAuthConfig(cfg) &&
+        shouldFetchServerRuntimeAuth()
+      ) {
+        setStatus("Refreshing secure runtime auth for Clerk…", false, true);
+        await fetchRuntimeAuthFromServer({ force: true, cfg: cfg }).catch(function () {
+          return null;
+        });
+        cfg = getRuntimeVoiceConfig();
+      }
 
       const configured = sendWidgetConfig(cfg, pendingLaunchSession);
       if (!configured) {
@@ -10888,6 +10976,59 @@
         return;
       }
       if (probeResult.status === 401 || probeResult.status === 403) {
+        if (detectVoiceEngine(cfg) === "hume" && shouldFetchServerRuntimeAuth()) {
+          setStatus(
+            "Runtime auth bridge rejected authorization. Refreshing secure runtime auth…",
+            false,
+            true
+          );
+          fetchRuntimeAuthFromServer({ force: true, cfg: cfg })
+            .then(function (runtimeAuth) {
+              if (stallSequence !== unityStartGateStallSequence) return;
+              const activeModalAfterRefresh = document.getElementById("clerkVoiceModal");
+              if (!activeModalAfterRefresh || !activeModalAfterRefresh.classList.contains("active")) return;
+              if (hasConversationStarted) return;
+              const refreshedCfg = getRuntimeVoiceConfig();
+              if (runtimeAuth && normalizeAuthConfig(refreshedCfg)) {
+                const configured = sendWidgetConfig(refreshedCfg, pendingLaunchSession);
+                if (!configured) {
+                  showUnityStartGateLaunchFailure(
+                    refreshedCfg,
+                    frameSrc,
+                    getVoiceEngineMissingConfigMessage(refreshedCfg)
+                  );
+                  return;
+                }
+                noteUnityStartGateProgress("runtime-auth-refreshed");
+                expandWidgetFromClient();
+                const refreshRetrySchedule = getUnityStartGateRetrySchedule(
+                  refreshedCfg,
+                  "resend"
+                );
+                scheduleIframeStartConversationRetry(
+                  refreshRetrySchedule.maxAttempts,
+                  refreshRetrySchedule.delayMs
+                );
+                scheduleUnityStartGateStallTimer(refreshedCfg);
+                setStatus("Runtime auth refreshed. Retrying Clerk voice session…", false, true);
+                return;
+              }
+              showUnityStartGateLaunchFailure(
+                refreshedCfg,
+                frameSrc,
+                `Clerk runtime auth endpoint rejected authorization (${runtimeAuthEndpointLabel} returned ${probeResult.status}). Voice cannot start until valid runtime auth is provided.`
+              );
+            })
+            .catch(function () {
+              if (stallSequence !== unityStartGateStallSequence) return;
+              showUnityStartGateLaunchFailure(
+                cfg,
+                frameSrc,
+                `Clerk runtime auth endpoint rejected authorization (${runtimeAuthEndpointLabel} returned ${probeResult.status}). Voice cannot start until valid runtime auth is provided.`
+              );
+            });
+          return;
+        }
         showUnityStartGateLaunchFailure(
           cfg,
           frameSrc,
@@ -11165,7 +11306,6 @@
         closeReasonToken !== "page-transition" &&
         closeReasonToken !== "relaunch"
     );
-    maybeCaptureCustomerExitSweep(pendingLaunchSession, closeOptions, cfg);
     if (preserveRoaming) {
       if (closeReasonToken === "page-transition" || pageTransitionInProgress) {
         markCrossPageRoamingForPageTransition(pendingLaunchSession);
@@ -11277,7 +11417,17 @@
         }
         const cfg = getVoiceConfig();
         await runUnityStartGatePreflight(cfg);
-        await prefetchActivePagePatternContext();
+        const patternPrefetchPromise = prefetchActivePagePatternContext().catch(function (_err) {
+          return null;
+        });
+        if (isLikelySummaryboardPage()) {
+          await Promise.race([
+            patternPrefetchPromise,
+            new Promise(function (resolve) {
+              window.setTimeout(resolve, PATTERN_CONTEXT_PREFETCH_LAUNCH_BUDGET_MS);
+            }),
+          ]);
+        }
         const launchInput = parseLaunchInput(button.getAttribute("data-clerk-voice") || "");
         openClerkFromLaunchInput(launchInput, fallbackLaunch);
       });

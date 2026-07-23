@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Energy - Livingston Site - Foster Farms</title>
     <script src="../../../UnityEnergy/hume_auth_bootstrap.js"></script>
-    <script src="../../../UnityEnergy/hume_character_config.js?v=20260617r30"></script>
-    <script src="../../../UnityEnergy/clerk_voice_widget.js?v=20260617r30"></script>
+    <script src="../../../UnityEnergy/hume_character_config.js?v=20260721r31"></script>
+    <script src="../../../UnityEnergy/clerk_voice_widget.js?v=20260721r31"></script>
     <style>
         * {
             margin: 0;
@@ -1711,9 +1711,9 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            margin-top: 2px;
-            position: relative;
-            transform: translateY(-50px);
+            margin-top: 16px;
+            margin-left: auto;
+            align-self: flex-start;
         }
         .utility-bill-btn-row {
             display: flex;
@@ -1743,6 +1743,13 @@
             background: rgba(255, 230, 124, 1);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+        }
+        .utility-bill-btn--full-title {
+            max-width: 460px;
+            white-space: normal;
+            text-align: center;
+            line-height: 1.25;
+            text-transform: none;
         }
         .utility-bill-caption {
             margin: 0;
@@ -2361,7 +2368,7 @@
                 <div class="overview-executive-metrics">
                     <div class="overview-executive-metric">
                         <span class="overview-executive-label">Monitored Energy Fields</span>
-                        <span class="overview-executive-value">15 of 31</span>
+                        <span class="overview-executive-value">19 of 31</span>
                         <span class="overview-executive-sub">Active high-resolution telemetry coverage across Livingston transformer groups.</span>
                     </div>
                     <div class="overview-executive-metric">
@@ -2957,10 +2964,9 @@
                 <div class="utility-heading-group">
                     <h3>How Livingston Gets Power: Merced Electric Service</h3>
                 </div>
-                <div class="utility-bill-actions" aria-label="Reference utility bill PDF">
-                    <!-- Replace this placeholder PDF path with the final meter bill link when provided. -->
+                <div class="utility-bill-actions" aria-label="Reference utility bills">
                     <div class="utility-bill-btn-row">
-                        <a href="#" class="utility-bill-btn js-utility-library-under-construction" role="button" aria-label="Utility Library Under Construction">MID SERVICE</a>
+                        <a href="UtilityBills/merced-irrigation-district-electricity-industrial-electricity-service-bill.html" class="utility-bill-btn utility-bill-btn--full-title" target="_blank" rel="noopener noreferrer" aria-label="Open Merced Irrigation District Electricity Industrial Electricity Service Bill reference">Merced Irrigation District Electricity Industrial Electricity Service Bill</a>
                     </div>
                     <p class="utility-bill-caption">Reference Utility Bill</p>
                 </div>
@@ -3021,7 +3027,7 @@
         <p>&copy; 2026 Unity Energy. All rights reserved.</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
-<script src="../../../UnityEnergy/founder_share_panel.js?v=20260702e"></script>
+<script src="../../../UnityEnergy/founder_share_panel.js?v=20260721a"></script>
 
     <script>
         document.querySelectorAll('.hero-btn[data-scroll-target]').forEach((button) => {

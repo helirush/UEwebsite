@@ -123,6 +123,13 @@
     "Cognition Partner Intelligence": "maxwellian-cognition-partner-intelligence",
     "AvCo Building Electrical Intelligence": "maxwellian-avco-building-electrical-intelligence"
   });
+  var MONTHLY_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
+    "Foster Farms Electrical Intelligence": "monthly",
+    "Foster Farms June 2026 Data": "monthly-report",
+    "Foster Farms June2026 Data": "monthly-report",
+    "Foster Farms June2026 Electrical Data": "monthly-report",
+    "Foster Farms June 2026 Electrical Data": "monthly-report"
+  });
   // Maps runtime kind keys to master base-card assets in:
   // UnityEnergy/assets/images/share-card-bases/
   var SHARE_CARD_IMAGE_FILENAME_BY_KEY = Object.freeze({
@@ -418,6 +425,9 @@
   function normalizeTitlePreset(value) {
     return String(value || "").replace(/\s+/g, " ").trim();
   }
+  function buildTemplateRoutingTitleKey(value) {
+    return normalizeTitlePreset(value).toLowerCase().replace(/[^a-z0-9]+/g, "");
+  }
 
   function titlePresetKey(value) {
     return normalizeTitlePreset(value).toLowerCase();
@@ -533,6 +543,30 @@
     }
     return "maxwellian";
   }
+  function resolveMonthlyTemplateSlugForTitle(titleText) {
+    var normalizedTitle = normalizeTitlePreset(titleText).toLowerCase();
+    if (!normalizedTitle) return "monthly";
+    var normalizedTitleKey = buildTemplateRoutingTitleKey(normalizedTitle);
+    var titleKeys = Object.keys(MONTHLY_PRESET_TEMPLATE_SLUG_BY_TITLE);
+    for (var i = 0; i < titleKeys.length; i += 1) {
+      var titleKey = normalizeTitlePreset(titleKeys[i]);
+      if (!titleKey) continue;
+      if (
+        normalizedTitle === titleKey.toLowerCase() ||
+        normalizedTitleKey === buildTemplateRoutingTitleKey(titleKey)
+      ) {
+        return MONTHLY_PRESET_TEMPLATE_SLUG_BY_TITLE[titleKey] || "monthly";
+      }
+    }
+    if (
+      normalizedTitleKey.indexOf("fosterfarms") !== -1 &&
+      normalizedTitleKey.indexOf("june2026") !== -1 &&
+      normalizedTitleKey.indexOf("data") !== -1
+    ) {
+      return "monthly-report";
+    }
+    return "monthly";
+  }
 
   function normalizeAccessId(value) {
     var raw = String(value || "").trim().toLowerCase();
@@ -638,6 +672,8 @@
       templateSlug = resolveWebsiteTemplateSlugForTitle(selectedTitle);
     } else if (selected.key === "project-update") {
       templateSlug = resolveProjectUpdateTemplateSlugForTitle(selectedTitle);
+    } else if (selected.key === "monthly-report") {
+      templateSlug = resolveMonthlyTemplateSlugForTitle(selectedTitle);
     } else if (selected.key === "maxwellian-news") {
       templateSlug = resolveMaxwellianTemplateSlugForTitle(selectedTitle);
     }

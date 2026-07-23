@@ -71,13 +71,10 @@ window.MAXWELLIAN_HUME = {
   customer_memory_enabled: true,
   customer_memory_max_entries: 16,
   customer_memory_excerpt_char_limit: 1800,
-  customer_exit_sweep_enabled: true,
-  customer_exit_sweep_prompt:
-    "Before you exit, should Clerk save a short memory recap for this customer guide session?",
-  customer_exit_sweep_note_prompt:
-    "Add an optional note for your next visit (leave blank to skip):",
-  customer_exit_sweep_saved_status:
-    "Customer memory recap saved for your next session.",
+  customer_exit_sweep_enabled: false,
+  customer_exit_sweep_prompt: "",
+  customer_exit_sweep_note_prompt: "",
+  customer_exit_sweep_saved_status: "",
   engagement_protocol:
     "Lead with a warm, human greeting and helpful curiosity. If the visitor asks a technical question, answer immediately with clear field-grounded guidance before any onboarding. Keep responses conversational, encouraging, and context-aware. Provide speech-ready phrasing that sounds natural when spoken, without decorative pseudo-voice punctuation or theatrical styling.",
   response_precedence_guidance:
@@ -950,6 +947,7 @@ window.MAXWELLIAN_HUME = {
   guardrails_idle_timeout_seconds: 90,
   guardrails_idle_followup_seconds: 35,
   guardrails_idle_final_exit_seconds: 25,
+  guardrails_idle_prompts_enabled: false,
   guardrails_idle_first_prompt_message: "Can I help with anything else on this page?",
   guardrails_idle_final_prompt_message:
     "Any other Unity Energy questions before I close this session?",

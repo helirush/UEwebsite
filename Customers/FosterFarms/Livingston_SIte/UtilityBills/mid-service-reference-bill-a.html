@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MID Service Reference Bill A</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: Arial, sans-serif;
+            background: rgba(247, 248, 250, 1);
+            color: rgba(32, 32, 32, 1);
+        }
+        .bill-wrap {
+            max-width: 920px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid rgba(210, 210, 210, 1);
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        .bill-head {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 1) 0%, rgba(204, 0, 0, 1) 100%);
+            color: rgba(255, 245, 210, 1);
+        }
+        .bill-head h1 {
+            margin: 0 0 8px;
+            font-size: 1.35rem;
+        }
+        .bill-head p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        .bill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            padding: 22px 24px;
+        }
+        .bill-card {
+            border: 1px solid rgba(225, 225, 225, 1);
+            border-radius: 8px;
+            padding: 14px;
+            background: rgba(252, 252, 252, 1);
+        }
+        .bill-card h2 {
+            margin: 0 0 8px;
+            color: rgba(139, 0, 0, 1);
+            font-size: 0.96rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .bill-card p {
+            margin: 4px 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .bill-note {
+            margin: 0;
+            padding: 0 24px 24px;
+            color: rgba(90, 90, 90, 1);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="bill-wrap">
+        <header class="bill-head">
+            <h1>MID Service Reference Utility Bill A</h1>
+            <p>Preview format for Livingston electric service reference library.</p>
+        </header>
+        <section class="bill-grid">
+            <article class="bill-card">
+                <h2>Service Account</h2>
+                <p><strong>Service Area:</strong> Livingston Facility</p>
+                <p><strong>Rate Class:</strong> Industrial Service</p>
+                <p><strong>Billing Cycle:</strong> Monthly</p>
+            </article>
+            <article class="bill-card">
+                <h2>Usage Summary</h2>
+                <p><strong>kWh Delivered:</strong> 2,847,120</p>
+                <p><strong>Peak Demand:</strong> 4,910 kW</p>
+                <p><strong>Power Factor Adj:</strong> Included</p>
+            </article>
+            <article class="bill-card">
+                <h2>Charge Summary</h2>
+                <p><strong>Energy Charge:</strong> $416,973.21</p>
+                <p><strong>Demand Charge:</strong> $108,744.82</p>
+                <p><strong>Other Adjustments:</strong> $7,402.10</p>
+            </article>
+            <article class="bill-card">
+                <h2>Total Due</h2>
+                <p><strong>Total Current Charges:</strong> $533,120.13</p>
+                <p><strong>Due Date:</strong> 2026-07-28</p>
+                <p><strong>Status:</strong> Reference Preview</p>
+            </article>
+        </section>
+        <p class="bill-note">This is a reference-preview layout for the MID service bill link. Replace values/files with production utility bill records when finalized.</p>
+    </main>
+</body>
+</html>

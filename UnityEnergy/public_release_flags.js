@@ -62,7 +62,7 @@
         if (window.__ueFounderSharePanelInitialized) return;
         if (document.getElementById('ueFounderSharePanelScript')) return;
 
-        var src = 'founder_share_panel.js?v=20260717d';
+        var src = 'founder_share_panel.js?v=20260721a';
         if (currentScriptSrc) {
             try {
                 src = new URL(src, currentScriptSrc).toString();
