@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foster Farms - Energy Field Analysis Portal</title>
+    <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
+    <script src="../../UnityEnergy/hume_character_config.js?v=20260617r30"></script>
+    <script src="../../UnityEnergy/clerk_voice_widget.js?v=20260617r30"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .site-card:hover .site-header {
+            filter: brightness(1.08) saturate(1.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: rgba(44, 62, 80, 1);
+            background: linear-gradient(180deg, rgba(245, 246, 248, 1) 0%, rgba(236, 239, 242, 1) 100%);
+            background-color: rgba(236, 239, 242, 1);
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid rgba(255, 215, 0, 1);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: rgba(255, 215, 0, 1);
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 1);
+            color: rgba(0, 0, 0, 1);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 0, 0, 1);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
+        }
+
+        .hero {
+            background: url('foster-farms-hero.png') center top / cover no-repeat;
+            position: relative;
+            background-position: 0% 5%;
+            color: white;
+            padding: 0;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 8px solid rgba(255, 215, 0, 1);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+        }
+
+        .hero-logo-block {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 2;
+            width: 250px;
+        }
+
+        .hero-logo {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .hero-logo-caption {
+            margin-top: 8px;
+            max-width: 100%;
+            text-align: center;
+            font-size: 0.78em;
+            line-height: 1.35;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+            letter-spacing: 0.2px;
+        }
+
+        .hero-exec-access {
+            position: absolute;
+            top: 28px;
+            right: 40px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .hero-exec-label {
+            font-size: 0.74em;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.95);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+        }
+
+        .hero-exec-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            border: 2px solid rgba(255, 215, 0, 1);
+            font-size: 0.88em;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .hero-exec-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.33);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 900px;
+            padding: 0px 0px;
+        }
+        .hero-content1 {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 900px;
+            padding: 0px 0px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            color: rgba(255, 215, 0, 1);
+            letter-spacing: 2px;
+        }
+        .hero h2 {
+            font-size: 4em;
+            margin-bottom: 0px;
+            font-weight: 900;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            color: rgba(255, 215, 0, 1);
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+        
+        .hero p {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 0px;
+        }
+
+        section {
+            margin: 30px 0;
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            color: rgba(204, 0, 0, 1);
+            margin-bottom: 0px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        .section-subtitle {
+            font-size: 1.45em;
+            color: rgba(204, 0, 0, 1);
+            letter-spacing: 2px;
+            margin-top: 4px;
+            margin-bottom: 6px;
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.05;
+        }
+        .sites-section {
+            position: relative;
+            overflow: visible;
+            border-radius: 16px;
+            padding: 24px;
+            background: linear-gradient(180deg, rgba(246, 247, 249, 0.96) 0%, rgba(237, 240, 243, 0.96) 100%);
+            border: 1px solid rgba(205, 212, 218, 0.9);
+            box-shadow: 0 8px 24px rgba(44, 62, 80, 0.08);
+            margin-bottom: 18px;
+        }
+
+        .sites-section + section {
+            margin-top: 14px;
+        }
+
+        .sites-section::before {
+            content: none;
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            z-index: 0;
+        }
+
+        .sites-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 28px;
+            margin: 12px 0 6px;
+            overflow: visible;
+        }
+
+        .cards-hero-panel {
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 16px;
+            padding: 8px 0 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .site-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            border-top: 5px solid rgba(255, 215, 0, 1);
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .site-card:hover {
+            transform: translateY(-10px) scale(1.015);
+            box-shadow:
+                0 0 0 2px rgba(255, 215, 0, 0.95),
+                0 0 20px rgba(255, 230, 120, 0.75),
+                0 20px 55px rgba(120, 0, 0, 0.35);
+            border-color: rgba(255, 230, 120, 0.95);
+            z-index: 20;
+        }
+
+        .site-header {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 1) 0%, rgba(102, 0, 0, 1) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .site-name {
+            font-size: 1.9em;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .site-location {
+            font-size: 1.4em;
+            color: rgba(255, 215, 0, 1);
+            opacity: 0.95;
+            margin-bottom: 2px;
+        }
+        .site-card--hero-updated .site-header {
+            padding: 18px 18px 12px 18px;
+            background: linear-gradient(180deg, rgba(147, 12, 0, 1) 0%, rgba(123, 9, 0, 1) 100%);
+            min-height: 386px;
+            justify-content: flex-start;
+        }
+        .site-card--hero-updated .site-name {
+            font-size: 2.05em;
+            line-height: 1;
+            font-weight: 500;
+            margin-bottom: 6px;
+            letter-spacing: 0.2px;
+        }
+        .site-card--hero-updated .site-name-divider {
+            width: 92%;
+            border-bottom: 2px solid rgba(255, 245, 230, 0.9);
+            margin: 0 auto 6px auto;
+        }
+        .site-card--hero-updated .site-location {
+            font-size: 1.1em;
+            line-height: 1;
+            font-style: italic;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: rgba(245, 209, 32, 1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+        }
+        .site-consequence-panel {
+            width: 100%;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 245, 230, 0.9);
+            background: rgba(165, 46, 33, 1);
+            padding: 12px 12px 10px 12px;
+            box-shadow: none;
+        }
+        .site-consequence-title {
+            font-size: 1.02em;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: rgba(255, 246, 240, 1);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .site-consequence-pill {
+            border-radius: 10px;
+            border-top: 2px solid rgba(255, 247, 230, 0.95);
+            border-left: 2px solid rgba(255, 247, 230, 0.95);
+            border-right: 2px solid rgba(255, 247, 230, 0.95);
+            border-bottom: 1px solid rgba(188, 151, 20, 0.85);
+            background: rgba(242, 202, 21, 1);
+            color: rgba(122, 16, 0, 1);
+            font-size: 1.12em;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            padding: 8px 8px 7px 8px;
+            margin: 0 auto 8px auto;
+            width: 100%;
+            display: block;
+            text-transform: uppercase;
+        }
+        .site-consequence-pill-annual {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1em;
+            letter-spacing: 0;
+            line-height: 1;
+        }
+        .site-annual-value {
+            font-size: 1.66em;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+        .site-annual-unit {
+            font-size: 0.87em;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+        .site-consequence-subtitle {
+            font-size: 0.98em;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: rgba(255, 246, 240, 1);
+            margin: 30px 0 8px 0;
+            text-transform: uppercase;
+        }
+        .site-consequence-pill-pf {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 8px 9px 8px;
+        }
+        .site-pf-primary {
+            display: block;
+            font-size: 1.46em;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+        .site-pf-range {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            color: rgba(111, 12, 0, 0.96);
+            font-size: 0.78em;
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+        .site-pf-range span {
+            white-space: nowrap;
+        }
+        .site-card--hero-updated .site-efficiency-badge {
+            width: 100%;
+            margin-top: 20px;
+            gap: 0;
+        }
+
+        .site-efficiency-badge {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .efficiency-circle {
+            width: 160px;
+            height: 60px;
+            border-radius: 999px;
+            background: rgba(255, 215, 0, 1);
+            border: 4px solid rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(139, 0, 0, 1);
+            font-size: 1.75em;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+        }
+
+        .efficiency-label {
+            color: rgba(255, 255, 255, 0.96);
+            font-size: 1.02em;
+            font-style: normal;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        .efficiency-range {
+            display: flex;
+            justify-content: space-between;
+            gap: 35px;
+            width: 270px;
+            color: rgba(255, 255, 255, 0.80);
+            font-size: 1.2em;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+            margin-bottom: -12px;
+        }
+
+        .site-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(233, 236, 239, 1) 50%, rgba(222, 226, 230, 1) 100%);
+        }
+
+        .site-description {
+            color: rgba(102, 102, 102, 1);
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            flex: 1;
+        }
+
+        .site-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(238, 238, 238, 1);
+            border-bottom: 1px solid rgba(238, 238, 238, 1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: rgba(204, 0, 0, 1);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: rgba(153, 153, 153, 1);
+        }
+
+        .site-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, rgba(204, 0, 0, 1) 0%, rgba(139, 0, 0, 1) 100%);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2em;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid rgba(255, 215, 0, 1);
+        }
+
+        /* Disable navigation for not-yet-live sites */
+        .site-card.coming-soon {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .site-card.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .site-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(204, 0, 0, 0.4);
+        }
+
+        /* Latest Report Section */
+        .fields-measured {
+            padding: 0px 30px 0 30px; /* reduce top gap */
+            text-align: center;
+            color: rgba(139, 0, 0, 1);
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+        }
+
+        .fields-measured .count {
+            font-size: 2.55em;
+            font-weight: 700; /* not as bold */
+            font-style: normal; /* count should NOT be italic */
+            margin-bottom: 6px;
+            margin-top: -15px;
+        }
+
+        .fields-measured .label,
+        .fields-measured .status {
+            font-size: 1.25em;
+            font-weight: 600; /* not as bold */
+            font-style: italic;
+        }
+
+        .latest-report {
+            width: 100%;
+            margin: 14px auto 22px;
+            padding: 18px 20px 16px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.45);
+            border: 2px solid rgba(139, 0, 0, 0.75);
+            border-top: 4px solid rgba(255, 215, 0, 0.95);
+            border-radius: 12px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+        }
+
+        
+        .latest-report h3 {
+            font-size: 1.5em;
+            color: rgba(204, 0, 0, 1);
+            font-weight: 700;
+            margin-bottom: 0px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .latest-report .report-name {
+            font-size: 1.3em;
+            color: rgba(139, 0, 0, 1);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .latest-report .report-desc {
+            font-size: 1em;
+            color: rgba(102, 102, 102, 1);
+            margin-bottom: 0px;
+        }
+
+        .info-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin: 40px 0;
+            border-left: 5px solid rgba(255, 215, 0, 1);
+        }
+
+        .info-section h3 {
+            color: rgba(204, 0, 0, 1);
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .info-section p {
+            color: rgba(102, 102, 102, 1);
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: rgba(139, 0, 0, 1);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 3px solid rgba(255, 215, 0, 1);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .hero-exec-access {
+                top: auto;
+                right: 14px;
+                left: 14px;
+                bottom: 14px;
+                align-items: center;
+            }
+
+            .hero-exec-label {
+                text-align: center;
+            }
+
+            section {
+                margin: 40px 0;
+            }
+
+            .sites-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sites-section {
+                padding: 14px;
+            }
+            .site-card--hero-updated .site-header {
+                min-height: auto;
+                padding: 20px 16px 14px 16px;
+            }
+            .site-card--hero-updated .site-name {
+                font-size: 2.35em;
+            }
+            .site-card--hero-updated .site-location {
+                font-size: 1.4em;
+                margin-bottom: 12px;
+            }
+            .site-consequence-title,
+            .site-consequence-subtitle {
+                font-size: 1.35em;
+            }
+            .site-consequence-pill {
+                font-size: 2em;
+                padding: 10px 8px 8px 8px;
+            }
+            .site-consequence-pill-annual {
+                gap: 6px;
+            }
+            .site-annual-value {
+                font-size: 1.63em;
+            }
+            .site-annual-unit {
+                font-size: 0.82em;
+            }
+            .site-pf-primary {
+                font-size: 1.3em;
+            }
+            .site-pf-range {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">⚡ <span>FOSTER</span> FARMS</div>
+        <nav>
+            <a href="../../UnityEnergy/customer-portals.html" class="back-btn">Customer Portals</a>
+            <a href="../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-logo-block">
+            <img src="foster-farms-logo.png" alt="Foster Farms Logo" class="hero-logo">
+            <div class="hero-logo-caption">
+                <div>Corporate Headquarters</div>
+                <div>Livingston, California</div>
+            </div>
+        </div>
+        <div class="hero-exec-access">
+            <div class="hero-exec-label">Private Executive Communications</div>
+            <a href="../../UnityEnergy/customer-portal/foster-farms/executive/" class="hero-exec-btn"> Company Intelligence Center →</a>
+        </div>
+        <div class="hero-content">
+            <p>Industrial 480v Electrical Behavior</p>
+            <h1>Unity Energy Field Intelligence</h1>
+            <h2>Facility Monitoring Portals</h2>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="sites-section">
+            <h2 class="section-title">Explore Measured Energy Field Behavior by Facility</h2>
+            <h2 class="section-subtitle">Select the location Card to begin Exploring</h2>
+
+            <div class="cards-hero-panel">
+            <div class="sites-grid">
+
+                <!-- Livingston Site -->
+                <!-- MAINTENANCE RULE (Livingston):
+                     Whenever Livingston studies are updated, keep Livingston_SIte/index.html group links current.
+                     This front card is auto-synced by updateLivingstonCard():
+                     - PF = arithmetic average of all parsed xfmr*-metric-pf values from each active group’s latest study.
+                     - high/low = min/max over that same PF set.
+                     - count = Livingston site "Measured" stat from Livingston_SIte/index.html overview.
+                     - latest report = newest month found across latest active group studies.
+                     If study structure/IDs change, update updateLivingstonCard() in this file immediately. -->
+                <a href="./Livingston_SIte/index.html" class="site-card site-card--hero-updated">
+                    <div class="site-header">
+                        <div class="site-name">Livingston HQ</div>
+                        <div class="site-name-divider"></div>
+                        <div class="site-location">Livingston, California</div>
+                        <div class="site-efficiency-badge">
+                            <div class="site-consequence-panel">
+                                <div class="site-consequence-title">UN-TUNED CONSEQUENCES</div>
+                                <span class="site-consequence-pill site-consequence-pill-annual" id="livingston-card-annual"><span class="site-annual-value">$3.65M</span><span class="site-annual-unit">ANNUALLY</span></span>
+                                <div class="site-consequence-subtitle">UN-TUNED EFFICIENCY</div>
+                                <div class="site-consequence-pill site-consequence-pill-pf">
+                                    <span class="site-pf-primary" id="livingston-card-pf">85.9% PF</span>
+                                    <div class="site-pf-range">
+                                        <span id="livingston-card-low">low = 71.5%</span>
+                                        <span id="livingston-card-high">high = 96.4%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="site-content">
+                        <div class="fields-measured">
+                            <div class="count" id="livingston-card-count">15</div>
+                            <div class="label">Transformer eFields</div>
+                            <div class="status">Monitored</div>
+                        </div>
+                        <div class="latest-report">
+                            <h3>Latest Reports</h3>
+                            <div class="report-name" id="livingston-card-report-name">May 2026</div>
+                            <div class="report-desc" id="livingston-card-report-desc">31-day Full Analysis</div>
+                        </div>
+                        <div class="site-btn">Explore →</div>
+                    </div>
+                </a>
+
+                <!-- Cherry Avenue Site -->
+                <!-- MAINTENANCE RULE (Cherry Ave):
+                     Every time a new Cherry study is moved/published to eWebmaster,
+                     update CherryAve_Site/index.html first (month, status, and summary link),
+                     then verify this front card reflects the new latest month and efficiency.
+                     Front card PF is computed from xfmr1..xfmr4 metric PF values in Cherry's latest active full-site study. -->
+                <a href="./CherryAve_Site/index.html" class="site-card site-card--hero-updated">
+                    <div class="site-header">
+                        <div class="site-name">Cherry Avenue</div>
+                        <div class="site-name-divider"></div>
+                        <div class="site-location">Fresno, California</div>
+                        <div class="site-efficiency-badge">
+                            <div class="site-consequence-panel">
+                                <div class="site-consequence-title">UN-TUNED CONSEQUENCES</div>
+                                <span class="site-consequence-pill site-consequence-pill-annual" id="cherry-card-annual"><span class="site-annual-value">$2.85M</span><span class="site-annual-unit">ANNUALLY</span></span>
+                                <div class="site-consequence-subtitle">UN-TUNED EFFICIENCY</div>
+                                <div class="site-consequence-pill site-consequence-pill-pf">
+                                    <span class="site-pf-primary" id="cherry-card-pf">86.5% PF</span>
+                                    <div class="site-pf-range">
+                                        <span id="cherry-card-low">low = 84.5%</span>
+                                        <span id="cherry-card-high">high = 88.6%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="site-content">
+                        <div class="fields-measured">
+                            <div class="count" id="cherry-card-count">4</div>
+                            <div class="label">Transformer eFields</div>
+                            <div class="status">Monitored</div>
+                        </div>
+                        <div class="latest-report">
+                            <h3>Latest Reports</h3>
+                            <div class="report-name" id="cherry-card-report-name">April 2026</div>
+                            <div class="report-desc" id="cherry-card-report-desc">30-day Full Site Analysis</div>
+                        </div>
+                        <div class="site-btn">Explore →</div>
+                    </div>
+                </a>
+
+                <!-- Belgravia Site -->
+                <a href="./Belgravia_Site/" class="site-card site-card--hero-updated coming-soon">
+                    <div class="site-header">
+                        <div class="site-name">Belgravia</div>
+                        <div class="site-name-divider"></div>
+                        <div class="site-location">Fresno, California</div>
+                        <div class="site-efficiency-badge">
+                            <div class="site-consequence-panel">
+                                <div class="site-consequence-title">UN-TUNED CONSEQUENCES</div>
+                                <span class="site-consequence-pill site-consequence-pill-annual" id="belgravia-card-annual"><span class="site-annual-value">--</span><span class="site-annual-unit">ANNUALLY</span></span>
+                                <div class="site-consequence-subtitle">UN-TUNED EFFICIENCY</div>
+                                <div class="site-consequence-pill site-consequence-pill-pf">
+                                    <span class="site-pf-primary" id="belgravia-card-pf">N/A PF</span>
+                                    <div class="site-pf-range">
+                                        <span id="belgravia-card-low">low = --</span>
+                                        <span id="belgravia-card-high">high = --</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="site-content">
+                        <div class="fields-measured">
+                            <div class="count">0</div>
+                            <div class="label">Transformer eFields</div>
+                            <div class="status">Studies Pending</div>
+                        </div>
+                        <div class="latest-report">
+                            <h3>Latest Reports</h3>
+                            <div class="report-name">Monitoring Coming Soon</div>
+                            <div class="report-desc"></div>
+                        </div>
+                        <button class="site-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="info-section">
+                <h3>About Foster Farms Energy Analysis</h3>
+                <p>
+                This portal gives Foster Farms a site-by-site view of measured electrical field behavior. 
+                By monitoring transformer fields across each facility, Unity reveals how efficiently electrical energy 
+                is being delivered, where instability or burden may be developing, and which sites present the strongest 
+                opportunities for operational improvement.  
+                </p>
+            </div>
+        </section>
+        <section>
+            <div class="info-section">
+                <h3>Private Executive Communications</h3>
+                <p>
+                Executive review briefs are now delivered through a private web-based briefing room inside the Foster Farms
+                communications vault. This supports secure link sharing, mobile review, and long-term continuity of executive updates.
+                </p>
+                <a href="../../UnityEnergy/customer-portal/foster-farms/executive/" class="site-btn" style="max-width: 420px; margin-top: 22px;">Open Maxwell Intelligence Center →</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>Transforming how facilities understand their electrical systems.</p>
+    </footer>
+
+    <script>
+        // Always enter Foster Farms at the top of the page.
+        const FF_LOCK_KEY = 'fosterfarms_lock_cards_view';
+
+        function scrollToTopPosition() {
+            const goTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            requestAnimationFrame(goTop);
+            setTimeout(goTop, 0);
+            setTimeout(goTop, 50);
+        }
+        function parseCurrencyNumber(rawText) {
+            const match = String(rawText || '').match(/-?[0-9]+(?:,[0-9]{3})*(?:\.[0-9]+)?/);
+            if (!match) return null;
+            const numeric = Number(match[0].replace(/,/g, ''));
+            return Number.isFinite(numeric) ? numeric : null;
+        }
+        function sumWasteCostPerHour(summaryDoc) {
+            if (!summaryDoc) return 0;
+            let total = 0;
+            const nodes = summaryDoc.querySelectorAll('[id$="-xfmr-waste-cost-hour"]');
+            nodes.forEach((node) => {
+                const value = parseCurrencyNumber(node.textContent);
+                if (value !== null && value >= 0) total += value;
+            });
+            return total;
+        }
+        function sumValuePotentialYearlyFromHtml(summaryHtml) {
+            const regex = /value\s*potential\s*:\s*~?\$\s*([0-9][\d,]*(?:\.\d+)?)/ig;
+            let match;
+            let total = 0;
+            while ((match = regex.exec(String(summaryHtml || ''))) !== null) {
+                const value = Number(String(match[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(value) && value >= 0) total += value;
+            }
+            return total;
+        }
+        function getVisibleTransformerCount(summaryDoc) {
+            if (!summaryDoc) return 0;
+            const nameNodes = summaryDoc.querySelectorAll('[id^="xfmr"][id$="-name"]');
+            let count = 0;
+            nameNodes.forEach((node) => {
+                if (String(node.textContent || '').trim()) count += 1;
+            });
+            return count;
+        }
+        function extractPatternDataTransformers(summaryHtml) {
+            const html = String(summaryHtml || '');
+            const marker = 'let PATTERN_DATA =';
+            const markerIndex = html.indexOf(marker);
+            if (markerIndex < 0) return null;
+            const objectStart = html.indexOf('{', markerIndex);
+            if (objectStart < 0) return null;
+
+            let depth = 0;
+            let inString = false;
+            let escaping = false;
+            let objectEnd = -1;
+            for (let i = objectStart; i < html.length; i += 1) {
+                const ch = html[i];
+                if (inString) {
+                    if (escaping) {
+                        escaping = false;
+                    } else if (ch === '\\') {
+                        escaping = true;
+                    } else if (ch === '"') {
+                        inString = false;
+                    }
+                    continue;
+                }
+                if (ch === '"') {
+                    inString = true;
+                    continue;
+                }
+                if (ch === '{') depth += 1;
+                if (ch === '}') {
+                    depth -= 1;
+                    if (depth === 0) {
+                        objectEnd = i + 1;
+                        break;
+                    }
+                }
+            }
+            if (objectEnd < 0) return null;
+
+            const jsonSlice = html.slice(objectStart, objectEnd);
+            try {
+                const parsed = JSON.parse(jsonSlice);
+                const transformers = parsed && parsed.transformers;
+                return transformers && typeof transformers === 'object' ? transformers : null;
+            } catch (e) {
+                return null;
+            }
+        }
+        function areCloseAnnualValues(a, b) {
+            const x = Number(a);
+            const y = Number(b);
+            if (!Number.isFinite(x) || !Number.isFinite(y)) return false;
+            const tolerance = Math.max(1000, 0.02 * Math.max(Math.abs(x), Math.abs(y)));
+            return Math.abs(x - y) <= tolerance;
+        }
+        function normalizeEntryTextCandidates(entry) {
+            if (!entry || typeof entry !== 'object') return [];
+            const fields = [
+                'cross_check',
+                'pattern_part1',
+                'narration_ready_text',
+                'pattern_text',
+                'pattern_brief',
+                'field_condition_summary',
+                'operational_stress_interpretation',
+                'engineering_narration_detailed',
+                'voltage_baseline_notes'
+            ];
+            const texts = [];
+            fields.forEach((field) => {
+                const value = entry[field];
+                if (typeof value === 'string' && value.trim()) texts.push(value);
+            });
+            return texts;
+        }
+        function extractImageAnnualCandidateFromCrossCheck(crossCheckText) {
+            // FOSTER FARMS TEMPLATE RULE:
+            // If cross_check reports image-vs-CSV discrepancy, use image-labeled annual waste
+            // values for front-card "UN-TUNED CONSEQUENCES" to stay aligned with base-image math.
+            const text = String(crossCheckText || '');
+            if (!text) return null;
+            const imageAnnualPatterns = [
+                /\bimage\b[^$\n\r]{0,160}\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:\/\s*yr|\/\s*year|per\s*year|annually)\b/i,
+                /\bmonthly\s+waste[^$\n\r]{0,120}\bimage\b[^$\n\r]{0,120}\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:\/\s*yr|\/\s*year|per\s*year|annually)\b/i
+            ];
+            for (const pattern of imageAnnualPatterns) {
+                const match = text.match(pattern);
+                if (!match) continue;
+                const value = parseMatchedMoneyValue(match[1], match[0]);
+                if (Number.isFinite(value) && value > 0) return { type: 'annual', value };
+            }
+            return null;
+        }
+        function extractTotalWastedCandidateFromPatternEntry(entry) {
+            if (!entry || typeof entry !== 'object') return null;
+            const crossCheckText = typeof entry.cross_check === 'string' ? entry.cross_check : '';
+            const hasCrossCheckDiscrepancy = /\bdiscrepanc/i.test(crossCheckText);
+            if (hasCrossCheckDiscrepancy) {
+                const imageCrossCheckCandidate = extractImageAnnualCandidateFromCrossCheck(crossCheckText);
+                if (imageCrossCheckCandidate) return imageCrossCheckCandidate;
+            }
+            const fieldOrder = [
+                'cross_check',
+                'pattern_part1',
+                'narration_ready_text',
+                'pattern_text'
+            ];
+            const sources = [];
+            fieldOrder.forEach((field) => {
+                const value = entry[field];
+                if (typeof value === 'string' && value.trim()) {
+                    sources.push({ field, text: value });
+                }
+            });
+            if (sources.length === 0) return null;
+            const monthlyPattern = /(?:monthly_waste_image\s*:\s*\$\s*([0-9][\d,]*(?:\.\d+)?)|\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:monthly\s+waste|every\s+month))/i;
+            const annualPatterns = [
+                /\b(?:total\s*wasted|wasting|waste(?:\s+cost)?|annual\s+energy\s+waste|annual\s+waste)\b[^$\n\r]{0,140}\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,90}\b(?:annually|every\s+year|per\s*year|\/\s*yr|\/\s*year)\b/i,
+                /\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,80}\b(?:annually|every\s+year|per\s*year|\/\s*yr|\/\s*year)\b[^.\n\r]{0,90}\b(?:total\s*wasted|waste|wasting|waste\s+cost)\b/i,
+                /\b(?:costing(?:\s+you)?|wasting)\b[^$\n\r]{0,140}\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,90}\b(?:annually|every\s+year|per\s*year|\/\s*yr|\/\s*year)\b/i,
+                /\$\s*([0-9][\d,]*(?:\.\d+)?)[^.\n\r]{0,60}\bannual\s+(?:energy\s+)?waste(?:\s+costs?)?\b/i
+            ];
+            const rejectPatternCommon = /\b(recover|recovered|recovery|savings?|captured\s+value|value\s+potential|transforming)\b/i;
+            const rejectPatternAnnualOnly = /\b(investment|payback)\b/i;
+
+            for (const source of sources) {
+                const text = source.text;
+                const monthlyMatch = text.match(monthlyPattern);
+                if (monthlyMatch) {
+                    const raw = monthlyMatch[1] || monthlyMatch[2];
+                    const value = parseMatchedMoneyValue(raw, monthlyMatch[0]);
+                    if (!Number.isFinite(value) || value <= 0) continue;
+                    const index = monthlyMatch.index || 0;
+                    const windowStart = Math.max(0, index - 80);
+                    const windowEnd = Math.min(text.length, index + monthlyMatch[0].length + 80);
+                    const windowText = text.slice(windowStart, windowEnd);
+                    if (rejectPatternCommon.test(windowText)) continue;
+                    return { type: 'monthly', value };
+                }
+            }
+            for (const source of sources) {
+                const text = source.text;
+                if (source.field === 'cross_check' && hasCrossCheckDiscrepancy) continue;
+                for (const pattern of annualPatterns) {
+                    const match = text.match(pattern);
+                    if (!match) continue;
+                    const value = parseMatchedMoneyValue(match[1], match[0]);
+                    if (!Number.isFinite(value) || value <= 0) continue;
+                    const index = match.index || 0;
+                    const windowStart = Math.max(0, index - 160);
+                    const windowEnd = Math.min(text.length, index + String(match[0] || '').length + 160);
+                    const windowText = text.slice(windowStart, windowEnd);
+                    if (rejectPatternCommon.test(windowText) || rejectPatternAnnualOnly.test(windowText)) continue;
+                    return { type: 'annual', value };
+                }
+            }
+            return null;
+        }
+        function resolveMonthlyAsYearly(monthlyTotal, fallbackAnnual) {
+            const monthly = Number(monthlyTotal);
+            if (!Number.isFinite(monthly) || monthly <= 0) return 0;
+            const annualAsIs = monthly;
+            const annualized = monthly * 12;
+            const fallback = Number(fallbackAnnual);
+            if (Number.isFinite(fallback) && fallback > 0) {
+                const diffAsIs = Math.abs(annualAsIs - fallback);
+                const diffAnnualized = Math.abs(annualized - fallback);
+                return diffAnnualized < diffAsIs ? annualized : annualAsIs;
+            }
+            return annualized;
+        }
+        function sumTotalWastedYearlyFromImageText(summaryHtml, visibleTransformerCount = 0, fallbackAnnual = 0) {
+            const html = String(summaryHtml || '');
+            const entryCandidates = [];
+            const transformers = extractPatternDataTransformers(html);
+            if (transformers) {
+                for (const key of Object.keys(transformers)) {
+                    const entry = transformers[key];
+                    if (!entry || typeof entry !== 'object') continue;
+                    const candidate = extractTotalWastedCandidateFromPatternEntry(entry);
+                    if (!candidate) continue;
+                    const duplicate = entryCandidates.some((existing) => areCloseAnnualValues(existing.value, candidate.value));
+                    if (!duplicate) entryCandidates.push(candidate);
+                }
+            }
+
+            let cappedCandidates = entryCandidates;
+            if (visibleTransformerCount > 0 && cappedCandidates.length > visibleTransformerCount) {
+                cappedCandidates = cappedCandidates.slice(0, visibleTransformerCount);
+            }
+
+            let annualTotal = 0;
+            let monthlyTotal = 0;
+            cappedCandidates.forEach((candidate) => {
+                if (candidate.type === 'monthly') monthlyTotal += candidate.value;
+                else annualTotal += candidate.value;
+            });
+            const resolvedPatternTotal = annualTotal + resolveMonthlyAsYearly(monthlyTotal, fallbackAnnual);
+            if (resolvedPatternTotal > 0) {
+                return {
+                    total: resolvedPatternTotal,
+                    matchCount: cappedCandidates.length,
+                    annualCount: cappedCandidates.filter((item) => item.type === 'annual').length,
+                    monthlyCount: cappedCandidates.filter((item) => item.type === 'monthly').length
+                };
+            }
+
+            // HTML-only fallback for non-patterned pages.
+            const fallbackCandidates = [];
+            const totalWastedRegex = /total\s*wasted[^$\n\r]{0,140}\$\s*([0-9][\d,]*(?:\.\d+)?)\s*(?:\/\s*year|per\s*year|\/\s*yr|annually)/ig;
+            const imageWasteRegex = /image\s+(?:shows|values?)[^$\n\r]{0,100}\$\s*([0-9][\d,]*(?:\.\d+)?)[^\n\r]{0,60}(?:\/\s*yr|\/\s*year|per\s*year|annually|annual\s+waste)/ig;
+            let match;
+            while ((match = totalWastedRegex.exec(html)) !== null) {
+                const value = Number(String(match[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(value) && value > 0) fallbackCandidates.push(value);
+            }
+            while ((match = imageWasteRegex.exec(html)) !== null) {
+                const value = Number(String(match[1] || '').replace(/,/g, ''));
+                if (Number.isFinite(value) && value > 0) fallbackCandidates.push(value);
+            }
+            const uniqueFallbackCandidates = [];
+            fallbackCandidates.forEach((value) => {
+                const duplicate = uniqueFallbackCandidates.some((existing) => areCloseAnnualValues(existing, value));
+                if (!duplicate) uniqueFallbackCandidates.push(value);
+            });
+            const fallbackTotal = uniqueFallbackCandidates.reduce((sum, value) => sum + value, 0);
+            return {
+                total: fallbackTotal,
+                matchCount: uniqueFallbackCandidates.length,
+                annualCount: uniqueFallbackCandidates.length,
+                monthlyCount: 0
+            };
+        }
+        function formatAnnualConsequence(yearlyValue) {
+            const numeric = Number(yearlyValue);
+            if (!Number.isFinite(numeric) || numeric <= 0) {
+                return '<span class="site-annual-value">$--</span><span class="site-annual-unit">ANNUALLY</span>';
+            }
+            if (numeric >= 1000000) {
+                return `<span class="site-annual-value">$${(numeric / 1000000).toFixed(2)}M</span><span class="site-annual-unit">ANNUALLY</span>`;
+            }
+            if (numeric >= 1000) {
+                return `<span class="site-annual-value">$${(numeric / 1000).toFixed(0)}K</span><span class="site-annual-unit">ANNUALLY</span>`;
+            }
+            return `<span class="site-annual-value">$${numeric.toFixed(0)}</span><span class="site-annual-unit">ANNUALLY</span>`;
+        }
+        function parseMatchedMoneyValue(rawNumber, matchedText) {
+            const base = Number(String(rawNumber || '').replace(/,/g, ''));
+            if (!Number.isFinite(base) || base <= 0) return null;
+            const suffixMatch = String(matchedText || '').match(/\$\s*[0-9][\d,]*(?:\.\d+)?\s*([kKmM])\b/);
+            if (!suffixMatch) return base;
+            const suffix = String(suffixMatch[1] || '').toUpperCase();
+            if (suffix === 'M') return base * 1000000;
+            if (suffix === 'K') return base * 1000;
+            return base;
+        }
+
+        let livingstonCardUpdateVersion = 0;
+        async function updateLivingstonCard() {
+            // Dynamically compute Livingston combined efficiency from each unit group's
+            // latest available Summaryboard. Only named transformer slots are counted
+            // (empty xfmr-name = unused template slot, excluded).
+            // PROCESS NOTE: when Livingston group studies are advanced to a new month,
+            // keep Livingston_SIte/index.html study links current so this front-door card
+            // recalculates combined/high/low and refreshes card metadata from newest studies.
+            const pfEl   = document.getElementById('livingston-card-pf');
+            const highEl = document.getElementById('livingston-card-high');
+            const lowEl  = document.getElementById('livingston-card-low');
+            const annualEl = document.getElementById('livingston-card-annual');
+            const countEl = document.getElementById('livingston-card-count');
+            const reportNameEl = document.getElementById('livingston-card-report-name');
+            const reportDescEl = document.getElementById('livingston-card-report-desc');
+            if (!pfEl) return;
+
+            try {
+                const updateVersion = ++livingstonCardUpdateVersion;
+                const cb = Date.now();
+                const indexRes = await fetch(`./Livingston_SIte/index.html?cb=${cb}`);
+                if (!indexRes.ok) return;
+
+                const indexDoc = new DOMParser().parseFromString(await indexRes.text(), 'text/html');
+                const monthIndex = {
+                    jan: 0,
+                    feb: 1,
+                    mar: 2,
+                    apr: 3,
+                    may: 4,
+                    jun: 5,
+                    jul: 6,
+                    aug: 7,
+                    sep: 8,
+                    oct: 9,
+                    nov: 10,
+                    dec: 11
+                };
+
+                const parseMonthYear = (rawText) => {
+                    const text = String(rawText || '').trim();
+                    const m = text.match(/([A-Za-z]{3,9})\s+(\d{4})/);
+                    if (!m) return null;
+                    const key = m[1].slice(0, 3).toLowerCase();
+                    const year = parseInt(m[2], 10);
+                    if (monthIndex[key] == null || !Number.isFinite(year)) return null;
+                    return {
+                        label: `${m[1]} ${year}`,
+                        sortValue: new Date(year, monthIndex[key], 1).getTime()
+                    };
+                };
+                const parseMonthYearFromHref = (hrefText) => {
+                    const href = String(hrefText || '');
+                    const m = href.match(/\/(\d{2})_[A-Za-z]{3}(\d{2})\//);
+                    if (!m) return null;
+                    const monthNum = parseInt(m[1], 10);
+                    const year = 2000 + parseInt(m[2], 10);
+                    if (!Number.isFinite(monthNum) || monthNum < 1 || monthNum > 12 || !Number.isFinite(year)) return null;
+                    const monthKey = Object.keys(monthIndex).find((key) => monthIndex[key] === (monthNum - 1));
+                    if (!monthKey) return null;
+                    return {
+                        label: `${monthKey.charAt(0).toUpperCase()}${monthKey.slice(1)} ${year}`,
+                        sortValue: new Date(year, monthNum - 1, 1).getTime()
+                    };
+                };
+                const resolveStudyDate = (studyName, hrefText) => parseMonthYear(studyName) || parseMonthYearFromHref(hrefText);
+                const normalizePfPercent = (rawValue) => {
+                    const numeric = Number(rawValue);
+                    if (!Number.isFinite(numeric) || numeric <= 0) return null;
+                    const pct = numeric <= 1 ? numeric * 100 : numeric;
+                    return Math.max(0, Math.min(100, pct));
+                };
+                const resolveExpectedTransformerCount = (groupBlock, studyPeriodText, visibleCount) => {
+                    const visible = Number(visibleCount);
+                    const summaryEl = groupBlock?.querySelector('summary');
+                    const transformerSpec = String(summaryEl?.getAttribute('data-transformer-spec') || '');
+                    const combinedHintText = `${transformerSpec} ${String(studyPeriodText || '')}`;
+                    const parsedVisible = Number.isFinite(visible) && visible > 0 ? visible : 0;
+                    let expected = parsedVisible;
+
+                    const activeMatch = combinedHintText.match(/\b(\d+)\s*active\b/i);
+                    if (activeMatch) {
+                        const activeCount = parseInt(activeMatch[1], 10);
+                        if (Number.isFinite(activeCount) && activeCount > 0) {
+                            expected = parsedVisible > 0 ? Math.min(parsedVisible, activeCount) : activeCount;
+                        }
+                    }
+
+                    if (/\bsingle\s+(?:loaded\s+)?transformer\b/i.test(combinedHintText)) {
+                        expected = parsedVisible > 0 ? Math.min(parsedVisible, 1) : 1;
+                    }
+
+                    return expected;
+                };
+
+                // Sync measured field count from Livingston index overview metric.
+                if (countEl) {
+                    const measuredStat = Array.from(indexDoc.querySelectorAll('.highlight-card .number'))
+                        .map((el) => String(el.textContent || '').trim())
+                        .find((text) => /measured/i.test(text));
+                    const measuredMatch = measuredStat ? measuredStat.match(/(\d+)/) : null;
+                    if (measuredMatch) countEl.textContent = measuredMatch[1];
+                }
+
+                // Each <details> block = one unit group (Deli, Rendering, NCDC).
+                // Select the newest active study by parsed date, not link order in the DOM.
+                const allPfs = [];
+                let totalAnnualConsequence = 0;
+                let latestReport = null;
+
+                for (const block of Array.from(indexDoc.querySelectorAll('details.group-section, details[data-group-code]'))) {
+                    const studies = Array.from(block.querySelectorAll('.study-item'))
+                        .map((studyItem) => {
+                            const link = studyItem.querySelector('a.study-btn[href]');
+                            if (!link) return null;
+                            const hrefRaw = (link.getAttribute('href') || '').trim();
+                            if (!hrefRaw || hrefRaw === '#' || /^javascript:/i.test(hrefRaw)) return null;
+                            const href = hrefRaw.replace(/^\.\//, '');
+                            const studyName = String(studyItem.querySelector('.study-name')?.textContent || '').trim();
+                            const studyPeriodRaw = String(studyItem.querySelector('.study-period')?.textContent || '').trim();
+                            const parsedDate = resolveStudyDate(studyName, href);
+                            return {
+                                href,
+                                studyName,
+                                studyPeriodRaw,
+                                parsedDate,
+                                sortValue: parsedDate?.sortValue ?? Number.NEGATIVE_INFINITY
+                            };
+                        })
+                        .filter(Boolean);
+                    if (studies.length === 0) continue;
+                    const latestStudy = studies.reduce((best, current) => {
+                        if (!best) return current;
+                        return current.sortValue > best.sortValue ? current : best;
+                    }, null);
+                    const href = latestStudy?.href || '';
+                    if (!href) continue;
+
+                    const studyName = latestStudy?.studyName || '';
+                    const studyPeriodRaw = latestStudy?.studyPeriodRaw || '';
+                    const studyPeriodParts = String(studyPeriodRaw)
+                        .split(/[•·]/)
+                        .map((part) => part.trim())
+                        .filter(Boolean);
+                    const studyPeriod = studyPeriodParts.find((part) => /\bday\b/i.test(part)) || studyPeriodParts[0] || '';
+                    const parsedDate = latestStudy?.parsedDate || resolveStudyDate(studyName, href);
+                    if (parsedDate) {
+                        if (!latestReport || parsedDate.sortValue > latestReport.sortValue) {
+                            latestReport = {
+                                sortValue: parsedDate.sortValue,
+                                label: parsedDate.label,
+                                desc: studyPeriod
+                            };
+                        }
+                    }
+
+                    const summaryRes = await fetch(`./Livingston_SIte/${href}?cb=${cb}`);
+                    if (!summaryRes.ok) continue;
+                    const summaryHtml = await summaryRes.text();
+                    const summaryDoc = new DOMParser().parseFromString(summaryHtml, 'text/html');
+                    const pfNodes = summaryDoc.querySelectorAll('[id^="xfmr"][id$="-metric-pf"]');
+
+                    for (const pfNode of Array.from(pfNodes)) {
+                        const pfRaw = parseFloat(String(pfNode.textContent || '').replace('%', '').trim());
+                        const pf = normalizePfPercent(pfRaw);
+                        if (pf === null) continue;
+                        allPfs.push(pf);
+                    }
+                    const wasteHourlyAnnual = sumWasteCostPerHour(summaryDoc) * 8760;
+                    const visibleTransformerCount = getVisibleTransformerCount(summaryDoc);
+                    const expectedTransformerCount = resolveExpectedTransformerCount(
+                        block,
+                        studyPeriodRaw,
+                        visibleTransformerCount
+                    );
+                    const totalWastedResult = sumTotalWastedYearlyFromImageText(
+                        summaryHtml,
+                        expectedTransformerCount,
+                        wasteHourlyAnnual
+                    );
+                    const yearlyFromTotalWasted = Number(totalWastedResult.total) || 0;
+                    const hasCompleteTotalWastedCoverage =
+                        expectedTransformerCount > 0 &&
+                        Number(totalWastedResult.matchCount) >= expectedTransformerCount;
+                    const yearlyFromValuePotential = sumValuePotentialYearlyFromHtml(summaryHtml);
+                    if (yearlyFromTotalWasted > 0) {
+                        totalAnnualConsequence += hasCompleteTotalWastedCoverage
+                            ? yearlyFromTotalWasted
+                            : (wasteHourlyAnnual > 0 ? wasteHourlyAnnual : yearlyFromTotalWasted);
+                    } else if (yearlyFromValuePotential > 0) {
+                        totalAnnualConsequence += yearlyFromValuePotential;
+                    } else {
+                        if (wasteHourlyAnnual > 0) totalAnnualConsequence += wasteHourlyAnnual;
+                    }
+                }
+
+                if (updateVersion !== livingstonCardUpdateVersion) return;
+                if (allPfs.length > 0) {
+                    const avg  = allPfs.reduce((a, b) => a + b, 0) / allPfs.length;
+                    const high = Math.max(...allPfs);
+                    const low  = Math.min(...allPfs);
+                    pfEl.textContent  = `${avg.toFixed(1)}% PF`;
+                    if (highEl) highEl.textContent = `high = ${high.toFixed(1)}%`;
+                    if (lowEl)  lowEl.textContent  = `low = ${low.toFixed(1)}%`;
+                }
+
+                if (latestReport) {
+                    if (reportNameEl) reportNameEl.textContent = latestReport.label;
+                    if (reportDescEl && latestReport.desc) reportDescEl.textContent = latestReport.desc;
+                }
+                if (annualEl) {
+                    annualEl.innerHTML = formatAnnualConsequence(totalAnnualConsequence);
+                }
+            } catch (e) {
+                // Keep fallback values if fetch/parse fails
+            }
+        }
+
+        async function updateCherryAveCard() {
+            // Keep the Foster Farms portal card in-sync with the Cherry Ave site index.
+            // Source of truth: `Customers/FosterFarms/CherryAve_Site/index.html`
+            // - Latest month = first active full-study entry (supports year-split blocks)
+            // - PF = average of transformer PFs pulled from that month’s Summaryboard
+            const pfEl = document.getElementById('cherry-card-pf');
+            const annualEl = document.getElementById('cherry-card-annual');
+            const countEl = document.getElementById('cherry-card-count');
+            const reportNameEl = document.getElementById('cherry-card-report-name');
+            const reportDescEl = document.getElementById('cherry-card-report-desc');
+            if (!pfEl || !reportNameEl || !reportDescEl) return;
+
+            try {
+                const cb = Date.now();
+                const indexRes = await fetch(`./CherryAve_Site/index.html?cb=${cb}`);
+                if (!indexRes.ok) return;
+
+                const indexHtml = await indexRes.text();
+                const indexDoc = new DOMParser().parseFromString(indexHtml, 'text/html');
+                if (countEl) {
+                    const measuredStat = Array.from(indexDoc.querySelectorAll('.highlight-card .number'))
+                        .map((el) => String(el.textContent || '').trim())
+                        .find((text) => /measured/i.test(text));
+                    const measuredMatch = measuredStat ? measuredStat.match(/(\d+)/) : null;
+                    if (measuredMatch) countEl.textContent = measuredMatch[1];
+                }
+
+                // Collect full-study containers from both legacy and current structures.
+                const fullStudyBlocks = Array.from(indexDoc.querySelectorAll('details')).filter((d) => {
+                    const s = (d.querySelector('summary')?.textContent || '').toLowerCase();
+                    return (
+                        (s.includes('full') && s.includes('site') && (s.includes('studies') || s.includes('study'))) ||
+                        s.includes('full studies')
+                    );
+                });
+
+                // Select first active item in display order; skip pending placeholders.
+                const activeItem = fullStudyBlocks
+                    .flatMap((block) => Array.from(block.querySelectorAll('.study-item')))
+                    .find((item) => {
+                        const btn = item.querySelector('a.study-btn[href]');
+                        if (!btn) return false;
+                        const href = (btn.getAttribute('href') || '').trim();
+                        const isDisabled =
+                            btn.classList.contains('disabled') ||
+                            btn.hasAttribute('disabled') ||
+                            href === '#' ||
+                            href.toLowerCase().startsWith('javascript:');
+                        return !isDisabled;
+                    });
+
+                // Fallback allows name/description updates even if all studies are pending.
+                const selectedItem = activeItem || fullStudyBlocks[0]?.querySelector('.study-item');
+                const monthText = selectedItem?.querySelector('.study-name, .site-summary-name')?.textContent?.trim();
+                const periodTextRaw = selectedItem?.querySelector('.study-period, .study-month-meta')?.textContent?.trim();
+                const hrefRaw = selectedItem?.querySelector('a.study-btn[href]')?.getAttribute('href') || '';
+
+                if (monthText) {
+                    // Extract just "Month YYYY" — strip trailing text like "Site Summaryboard"
+                    const monthMatch = monthText.match(/^([A-Za-z]+ \d{4})/);
+                    reportNameEl.textContent = monthMatch ? monthMatch[1] : monthText;
+                }
+
+                if (periodTextRaw) {
+                    // Drop internal study name in parentheses and resolution suffix (e.g. " • 1minRES")
+                    reportDescEl.textContent = periodTextRaw
+                        .replace(/\s*\(.*\)\s*$/, '')
+                        .replace(/\s*[•·].*$/, '');
+                }
+
+                // Attempt to compute the card PF from the linked Summaryboard
+                const href = hrefRaw.replace(/^\.[\/]/, '');
+                if (!href || href === '#') return;
+
+                const summaryRes = await fetch(`./CherryAve_Site/${href}?cb=${cb}`);
+                if (!summaryRes.ok) return;
+
+                const summaryHtml = await summaryRes.text();
+                const summaryDoc = new DOMParser().parseFromString(summaryHtml, 'text/html');
+
+                let sum = 0;
+                let n = 0;
+                let minPf = Infinity;
+                let maxPf = -Infinity;
+
+                for (let i = 1; i <= 4; i++) {
+                    const el = summaryDoc.getElementById(`xfmr${i}-metric-pf`);
+                    if (!el) continue;
+                    const pf = parseFloat(String(el.textContent || '').replace('%', '').trim());
+                    if (!Number.isFinite(pf)) continue;
+                    sum += pf;
+                    n += 1;
+                    if (pf > maxPf) maxPf = pf;
+                    if (pf < minPf) minPf = pf;
+                }
+
+                if (n > 0) {
+                    const avg = sum / n;
+                    pfEl.textContent = `${avg.toFixed(1)}% PF`;
+                    const highEl = document.getElementById('cherry-card-high');
+                    const lowEl  = document.getElementById('cherry-card-low');
+                    if (highEl) highEl.textContent = `high = ${maxPf.toFixed(1)}%`;
+                    if (lowEl)  lowEl.textContent  = `low = ${minPf.toFixed(1)}%`;
+                }
+                if (annualEl) {
+                    const wasteHourlyAnnual = sumWasteCostPerHour(summaryDoc) * 8760;
+                    const visibleTransformerCount = getVisibleTransformerCount(summaryDoc);
+                    const totalWastedResult = sumTotalWastedYearlyFromImageText(
+                        summaryHtml,
+                        visibleTransformerCount,
+                        wasteHourlyAnnual
+                    );
+                    const yearlyFromTotalWasted = Number(totalWastedResult.total) || 0;
+                    const hasCompleteTotalWastedCoverage =
+                        visibleTransformerCount > 0 &&
+                        Number(totalWastedResult.matchCount) >= visibleTransformerCount;
+                    const yearlyFromValuePotential = sumValuePotentialYearlyFromHtml(summaryHtml);
+                    const totalAnnualConsequence = yearlyFromTotalWasted > 0
+                        ? (hasCompleteTotalWastedCoverage
+                            ? yearlyFromTotalWasted
+                            : (wasteHourlyAnnual > 0 ? wasteHourlyAnnual : yearlyFromTotalWasted))
+                        : (yearlyFromValuePotential > 0
+                            ? yearlyFromValuePotential
+                            : wasteHourlyAnnual);
+                    annualEl.innerHTML = formatAnnualConsequence(totalAnnualConsequence);
+                }
+            } catch (e) {
+                // Keep fallback values if fetch/parse fails
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
+            scrollToTopPosition();
+
+            // Keep site cards fresh automatically
+            updateLivingstonCard();
+            updateCherryAveCard();
+        });
+        // Keep top position even when browser restores from bfcache.
+        window.addEventListener('pageshow', () => {
+            try { sessionStorage.removeItem(FF_LOCK_KEY); } catch (e) {}
+            scrollToTopPosition();
+        });
+    </script>
+    <script>
+        (function () {
+            try {
+                const context = {
+                    customer_slug: "fosterfarms",
+                    customer_name: "Foster Farms",
+                    source_path: window.location.pathname,
+                    selected_at: new Date().toISOString()
+                };
+                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
+                window.maxwellianClerkCustomerContext = context;
+            } catch (_err) {
+                // ignore storage failures
+            }
+        })();
+    </script>
+</body>
+</html>

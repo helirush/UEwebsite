@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merced Irrigation District - Electricity Usage Summary</title>
+    <title>Merced Irrigation District - Electricity Usage Summary (Previous Month Reference)</title>
     <style>
         body {
             margin: 0;
@@ -39,11 +39,6 @@
         }
         .bill-control-btn--ghost {
             background: rgba(255, 248, 223, 1);
-        }
-        .bill-control-btn[disabled] {
-            opacity: 0.65;
-            cursor: default;
-            transform: none;
         }
         .bill-wrap {
             max-width: 980px;
@@ -120,8 +115,8 @@
     </style>
 </head>
 <body>
-    <div class="bill-controls" aria-label="Bill summary controls">
-        <button type="button" class="bill-control-btn bill-control-btn--ghost" onclick="goToPreviousMonth()">Previous Month</button>
+    <div class="bill-controls" aria-label="Previous month bill summary controls">
+        <button type="button" class="bill-control-btn bill-control-btn--ghost" onclick="returnBack()">Return Back</button>
         <button type="button" class="bill-control-btn" onclick="closeBillSummary()">Close</button>
     </div>
     <main class="bill-wrap">
@@ -131,7 +126,7 @@
         </header>
 
         <section class="bill-section">
-            <h2>Reference Bill A</h2>
+            <h2>Reference Bill A (Previous Month)</h2>
             <div class="bill-grid">
                 <article class="bill-card">
                     <h3>Service Account</h3>
@@ -141,27 +136,27 @@
                 </article>
                 <article class="bill-card">
                     <h3>Usage Summary</h3>
-                    <p><strong>kWh Delivered:</strong> 2,847,120</p>
-                    <p><strong>Peak Demand:</strong> 4,910 kW</p>
+                    <p><strong>kWh Delivered:</strong> 2,731,480</p>
+                    <p><strong>Peak Demand:</strong> 4,782 kW</p>
                     <p><strong>Power Factor Adj:</strong> Included</p>
                 </article>
                 <article class="bill-card">
                     <h3>Charge Summary</h3>
-                    <p><strong>Energy Charge:</strong> $416,973.21</p>
-                    <p><strong>Demand Charge:</strong> $108,744.82</p>
-                    <p><strong>Other Adjustments:</strong> $7,402.10</p>
+                    <p><strong>Energy Charge:</strong> $401,884.55</p>
+                    <p><strong>Demand Charge:</strong> $104,992.31</p>
+                    <p><strong>Other Adjustments:</strong> $7,118.44</p>
                 </article>
                 <article class="bill-card">
                     <h3>Total Due</h3>
-                    <p><strong>Total Current Charges:</strong> $533,120.13</p>
-                    <p><strong>Reference Date:</strong> 2026 Reference</p>
-                    <p><strong>Status:</strong> Reference Preview</p>
+                    <p><strong>Total Current Charges:</strong> $513,995.30</p>
+                    <p><strong>Reference Date:</strong> 2026 Prior Reference</p>
+                    <p><strong>Status:</strong> Previous Month Preview</p>
                 </article>
             </div>
         </section>
 
         <section class="bill-section">
-            <h2>Reference Bill B</h2>
+            <h2>Reference Bill B (Previous Month)</h2>
             <div class="bill-grid">
                 <article class="bill-card">
                     <h3>Service Account</h3>
@@ -171,21 +166,21 @@
                 </article>
                 <article class="bill-card">
                     <h3>Usage Summary</h3>
-                    <p><strong>kWh Delivered:</strong> 2,596,440</p>
-                    <p><strong>Peak Demand:</strong> 4,588 kW</p>
+                    <p><strong>kWh Delivered:</strong> 2,508,920</p>
+                    <p><strong>Peak Demand:</strong> 4,463 kW</p>
                     <p><strong>Power Factor Adj:</strong> Included</p>
                 </article>
                 <article class="bill-card">
                     <h3>Charge Summary</h3>
-                    <p><strong>Energy Charge:</strong> $392,504.67</p>
-                    <p><strong>Demand Charge:</strong> $101,833.19</p>
-                    <p><strong>Other Adjustments:</strong> $6,228.52</p>
+                    <p><strong>Energy Charge:</strong> $381,115.42</p>
+                    <p><strong>Demand Charge:</strong> $98,140.77</p>
+                    <p><strong>Other Adjustments:</strong> $5,980.11</p>
                 </article>
                 <article class="bill-card">
                     <h3>Total Due</h3>
-                    <p><strong>Total Current Charges:</strong> $500,566.38</p>
-                    <p><strong>Reference Date:</strong> 2026 Reference</p>
-                    <p><strong>Status:</strong> Reference Preview</p>
+                    <p><strong>Total Current Charges:</strong> $485,236.30</p>
+                    <p><strong>Reference Date:</strong> 2026 Prior Reference</p>
+                    <p><strong>Status:</strong> Previous Month Preview</p>
                 </article>
             </div>
         </section>
@@ -194,25 +189,29 @@
             <div class="bill-grid">
                 <article class="bill-card bill-card--site-total">
                     <h3>Combined Usage</h3>
-                    <p><strong>Total kWh Delivered:</strong> 5,443,560</p>
-                    <p><strong>Site Peak Demand (reference max):</strong> 4,910 kW</p>
+                    <p><strong>Total kWh Delivered:</strong> 5,240,400</p>
+                    <p><strong>Site Peak Demand (reference max):</strong> 4,782 kW</p>
                     <p><strong>Reference Bills Included:</strong> A and B</p>
                 </article>
                 <article class="bill-card bill-card--site-total">
                     <h3>Combined Charges</h3>
-                    <p><strong>Total Energy Charge:</strong> $809,477.88</p>
-                    <p><strong>Total Demand Charge:</strong> $210,578.01</p>
-                    <p><strong>Total Other Adjustments:</strong> $13,630.62</p>
-                    <p><strong>Combined Current Charges:</strong> $1,033,686.51</p>
+                    <p><strong>Total Energy Charge:</strong> $782,999.97</p>
+                    <p><strong>Total Demand Charge:</strong> $203,133.08</p>
+                    <p><strong>Total Other Adjustments:</strong> $13,098.55</p>
+                    <p><strong>Combined Current Charges:</strong> $999,231.60</p>
                 </article>
             </div>
         </section>
 
-        <p class="bill-note">This combined page is a reference preview. Replace values and/or attach final production bill files when ready.</p>
+        <p class="bill-note">This previous-month page is a placeholder reference preview. Replace values and/or attach final production bill files when ready.</p>
     </main>
     <script>
-        function goToPreviousMonth() {
-            window.location.href = "merced-irrigation-district-electricity-usage-summary-previous-month.html";
+        function returnBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+                return;
+            }
+            window.location.href = "merced-irrigation-district-electricity-industrial-electricity-service-bill.html";
         }
         function closeBillSummary() {
             try {
