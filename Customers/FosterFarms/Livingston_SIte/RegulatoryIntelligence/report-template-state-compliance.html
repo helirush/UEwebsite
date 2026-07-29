@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Compliance Report Template</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 24px 18px 36px;
+            font-family: Arial, sans-serif;
+            background: rgba(245, 247, 252, 1);
+            color: rgba(15, 23, 42, 1);
+        }
+        .shell {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 1);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .top {
+            padding: 14px 18px;
+            background: rgba(30, 64, 175, 1);
+            color: rgba(255, 255, 255, 1);
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid rgba(191, 219, 254, 0.7);
+            border-radius: 8px;
+            padding: 8px 11px;
+            background: rgba(239, 246, 255, 1);
+            color: rgba(30, 58, 138, 1);
+            font-weight: 800;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+        .body {
+            padding: 18px 20px 20px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 1.35rem;
+            color: rgba(30, 64, 175, 1);
+        }
+        h2 {
+            margin: 14px 0 8px;
+            font-size: 1rem;
+            color: rgba(30, 58, 138, 1);
+        }
+        .meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 8px;
+        }
+        .field {
+            border: 1px solid rgba(203, 213, 225, 1);
+            border-radius: 8px;
+            background: rgba(248, 250, 252, 1);
+            padding: 8px 10px;
+        }
+        .label {
+            display: block;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: rgba(71, 85, 105, 1);
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+        [contenteditable="true"] {
+            outline: none;
+            min-height: 20px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        .table th, .table td {
+            border: 1px solid rgba(203, 213, 225, 1);
+            padding: 8px 9px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+        .table th {
+            background: rgba(239, 246, 255, 1);
+            color: rgba(30, 58, 138, 1);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+        }
+        .note {
+            margin-top: 10px;
+            font-size: 0.86rem;
+            color: rgba(71, 85, 105, 1);
+        }
+        @media print {
+            .top { display: none; }
+            body { background: white; padding: 0; }
+            .shell { border: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="top">
+            <a class="btn" href="index.html">← Back to Regulatory Intelligence</a>
+            <button class="btn" type="button" onclick="window.print()">Print / Save PDF</button>
+        </div>
+        <div class="body">
+            <h1>California Benchmarking Compliance Report (Template)</h1>
+            <div class="meta">
+                <div class="field"><span class="label">Customer</span><div contenteditable="true">Foster Farms</div></div>
+                <div class="field"><span class="label">Facility</span><div contenteditable="true">Cherry Avenue</div></div>
+                <div class="field"><span class="label">Reporting Year</span><div contenteditable="true">2025</div></div>
+                <div class="field"><span class="label">Submission Due Date</span><div contenteditable="true">[Enter due date]</div></div>
+            </div>
+
+            <h2>Required Filing Fields</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Source</th>
+                        <th>Value</th>
+                        <th>Validation Rule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true">Facility Identifier</td>
+                        <td contenteditable="true">Customer</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Required, exact registry match</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Utility Account / Meter Group</td>
+                        <td contenteditable="true">Utility</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Must match utility records</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Annual Site Consumption (kWh)</td>
+                        <td contenteditable="true">Utility + Portfolio Manager</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Numeric, positive, annual period</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Gross Floor Area</td>
+                        <td contenteditable="true">Customer</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Unit-constrained, valid range</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Submission Status</td>
+                        <td contenteditable="true">Regulatory Workflow</td>
+                        <td contenteditable="true">Draft</td>
+                        <td contenteditable="true">Draft / Submitted / Accepted / Returned</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Compliance Notes</h2>
+            <div class="field">
+                <div contenteditable="true">[List assumptions, missing data, corrections, and final reviewer notes.]</div>
+            </div>
+            <p class="note">Template intent: exact state filing structure only. Keep this report compliance-focused and non-interpretive.</p>
+        </div>
+    </div>
+</body>
+</html>

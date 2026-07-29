@@ -1089,7 +1089,7 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "./hume_renderer/index.html?v=20260424r12",
+  embed_url: "./hume_renderer/index.html?v=20260727r13",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
   // Signal-stage portrait (must stay transparent Clerk asset).

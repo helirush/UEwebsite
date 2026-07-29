@@ -179,46 +179,107 @@
             margin-bottom: 14px;
             text-align: center;
         }
-        .group-grid {
+        .group-stack {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 18px;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 14px;
         }
-        .group-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(127, 9, 28, 0.22);
-            border-top: 6px solid #C8102E;
+        .group-stack-item {
+            border: 1px solid rgba(127, 9, 28, 0.26);
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(29, 37, 45, 0.08);
-            text-decoration: none;
-            color: inherit;
-            padding: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: block;
+            background: #FFFFFF;
+            box-shadow: 0 8px 20px rgba(29, 37, 45, 0.08);
+            overflow: hidden;
         }
-        .group-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(29, 37, 45, 0.14);
+        .group-stack-item > summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(127, 9, 28, 0.97) 0%, rgba(200, 16, 46, 0.95) 100%);
+            color: #FFF6D9;
+            border-left: 6px solid #FED34C;
         }
-        .group-card.coming-soon {
-            opacity: 0.46;
-            filter: saturate(0.65) grayscale(0.2);
-            border-top-color: #A88A90;
-            cursor: default;
-            pointer-events: none;
-        }
-        .group-name {
-            font-size: 1.36em;
-            color: #7F091C;
+        .group-stack-item > summary::-webkit-details-marker { display: none; }
+        .group-stack-title {
+            font-size: 1.34em;
             font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+        .group-stack-meta {
+            font-size: 0.88em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 240, 190, 0.95);
+            text-align: right;
+        }
+        .group-stack-body {
+            padding: 16px 18px 18px;
+            background: #FFFFFF;
+        }
+        .group-stack-impact-panel {
+            margin: 0 0 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(127, 9, 28, 0.24);
+            background: linear-gradient(180deg, rgba(252, 244, 223, 0.95) 0%, rgba(250, 239, 212, 0.95) 100%);
+            padding: 10px;
+        }
+        .group-stack-impact-label {
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #7F091C;
+            text-transform: uppercase;
             margin-bottom: 6px;
         }
-        .group-meta {
-            color: #4A5157;
+        .group-stack-impact-pill {
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid rgba(145, 17, 17, 0.45);
+            background: linear-gradient(135deg, rgba(204, 0, 0, 0.95) 0%, rgba(139, 0, 0, 0.95) 100%);
+            color: #FFF5D4;
             font-size: 0.96em;
-            margin-bottom: 14px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 8px 10px;
+            margin-bottom: 8px;
         }
-        .group-status {
+        .group-stack-actions {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .group-stack-link {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.84em;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 9px 14px;
+            border-radius: 8px;
+            border: 2px solid rgba(127, 9, 28, 1);
+            background: #FED34C;
+            color: #7F091C;
+            transition: all 0.2s ease;
+        }
+        .group-stack-link:hover {
+            background: #FFFFFF;
+            transform: translateY(-1px);
+        }
+        .group-stack-pending-note {
+            color: #7D666C;
+            font-size: 0.93em;
+            margin-bottom: 12px;
+        }
+        .group-stack-pending-badge {
             display: inline-block;
             padding: 4px 10px;
             border-radius: 999px;
@@ -229,36 +290,6 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-        .group-impact-panel {
-            margin: 14px 0;
-            border-radius: 12px;
-            border: 1px solid rgba(127, 9, 28, 0.24);
-            background: linear-gradient(180deg, rgba(252, 244, 223, 0.95) 0%, rgba(250, 239, 212, 0.95) 100%);
-            padding: 10px;
-        }
-        .group-impact-label {
-            font-size: 0.72em;
-            font-weight: 800;
-            letter-spacing: 0.6px;
-            color: #7F091C;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .group-impact-pill {
-            display: block;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid rgba(145, 17, 17, 0.45);
-            background: linear-gradient(135deg, rgba(204, 0, 0, 0.95) 0%, rgba(139, 0, 0, 0.95) 100%);
-            color: #FFF5D4;
-            font-size: 1em;
-            font-weight: 800;
-            letter-spacing: 0.2px;
-            text-transform: uppercase;
-            text-align: center;
-            padding: 8px 10px;
-            margin-bottom: 8px;
         }
         footer {
             text-align: center;
@@ -325,42 +356,44 @@
 
     <main class="container">
         <h2 class="section-title">Operating Groups</h2>
-        <div class="group-grid">
-            <a href="./Rendering/index.html" class="group-card">
-                <div class="group-name">Rendering Group</div>
-                <div class="group-meta">1 active facility • Scranton, Arkansas</div>
-                <div class="group-impact-panel">
-                    <div class="group-impact-label">UN-TUNED CONSEQUENCES</div>
-                    <span class="group-impact-pill">$-- Annually</span>
-                    <div class="group-impact-label">UN-TUNED EFFICIENCY</div>
-                    <span class="group-impact-pill">--% PF</span>
+        <div class="group-stack">
+            <details class="group-stack-item">
+                <summary>
+                    <span class="group-stack-title">Rendering Group</span>
+                    <span class="group-stack-meta">Active • Scranton</span>
+                </summary>
+                <div class="group-stack-body">
+                    <div class="group-stack-impact-panel">
+                        <div class="group-stack-impact-label">Un-Tuned Consequences</div>
+                        <span class="group-stack-impact-pill">$-- Annually</span>
+                        <div class="group-stack-impact-label">Un-Tuned Efficiency</div>
+                        <span class="group-stack-impact-pill">--% PF</span>
+                    </div>
+                    <div class="group-stack-actions">
+                        <a href="./Rendering/index.html" class="group-stack-link">Open Rendering Group</a>
+                    </div>
                 </div>
-                <span class="group-status">Active</span>
-            </a>
-
-            <div class="group-card coming-soon">
-                <div class="group-name">Processing Group</div>
-                <div class="group-meta">Future Tyson group slot</div>
-                <span class="group-status">Pending</span>
-            </div>
-
-            <div class="group-card coming-soon">
-                <div class="group-name">ParFry Group</div>
-                <div class="group-meta">Future Tyson group slot</div>
-                <span class="group-status">Pending</span>
-            </div>
-
-            <div class="group-card coming-soon">
-                <div class="group-name">FeedMeal Group</div>
-                <div class="group-meta">Future Tyson group slot</div>
-                <span class="group-status">Pending</span>
-            </div>
-
-            <div class="group-card coming-soon">
-                <div class="group-name">Hatchery Group</div>
-                <div class="group-meta">Future Tyson group slot</div>
-                <span class="group-status">Pending</span>
-            </div>
+            </details>
+            <details class="group-stack-item">
+                <summary>
+                    <span class="group-stack-title">Processing Group</span>
+                    <span class="group-stack-meta">Pending</span>
+                </summary>
+                <div class="group-stack-body">
+                    <p class="group-stack-pending-note">Processing operating-group studies are queued for Tyson calibration.</p>
+                    <span class="group-stack-pending-badge">Pending Release</span>
+                </div>
+            </details>
+            <details class="group-stack-item">
+                <summary>
+                    <span class="group-stack-title">Parfa (ParFry) Group</span>
+                    <span class="group-stack-meta">Pending</span>
+                </summary>
+                <div class="group-stack-body">
+                    <p class="group-stack-pending-note">Parfa/ParFry operating-group studies are queued for Tyson calibration.</p>
+                    <span class="group-stack-pending-badge">Pending Release</span>
+                </div>
+            </details>
         </div>
     </main>
 

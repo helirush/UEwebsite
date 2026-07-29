@@ -379,12 +379,13 @@
             display: block;
             text-align: left;
             font-weight: 500;
+            font-size: 0.9em;
             letter-spacing: 0.4px;
         }
         .hero-btn-line2 {
             display: block;
             text-align: center;
-            font-size: 1.6em;
+            font-size: 1.2em;
             font-weight: 700;
             color: rgba(255, 255, 255, 1);
             letter-spacing: 0.5px;
@@ -419,6 +420,14 @@
         }
         .hero-btn--consumption:hover {
             background: linear-gradient(135deg, rgba(108, 190, 255, 1) 0%, rgba(46, 139, 222, 1) 100%);
+        }
+        .hero-btn--compliance {
+            background: linear-gradient(135deg, rgba(153, 27, 27, 1) 0%, rgba(111, 20, 20, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(255, 215, 0, 0.95);
+        }
+        .hero-btn--compliance:hover {
+            background: linear-gradient(135deg, rgba(185, 35, 35, 1) 0%, rgba(133, 26, 26, 1) 100%);
         }
 
         .hero-btn:hover {
@@ -602,6 +611,30 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
         }
+        .utility-regulatory-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 330px;
+            padding: 8px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(56, 189, 248, 0.95);
+            background: rgba(30, 64, 175, 1);
+            color: rgba(239, 246, 255, 1);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            font-weight: 900;
+            font-size: 0.94rem;
+            transition: all 0.22s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+        }
+        .utility-regulatory-btn:hover {
+            background: rgba(29, 78, 216, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+        }
         .utility-bill-caption {
             margin: 0;
             color: rgba(255, 236, 176, 1);
@@ -672,6 +705,75 @@
             background: rgba(255, 255, 255, 1);
             transform: translateY(-2px);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+        .utility-regulatory-caption {
+            margin-top: -2px;
+        }
+        .regulatory-window {
+            margin: 0 auto 30px;
+            width: 100%;
+            max-width: var(--cherry-main-card-max);
+            padding: 24px 24px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 64, 175, 0.93) 100%);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.24);
+        }
+        .regulatory-kicker {
+            display: block;
+            margin: 0 0 8px;
+            color: rgba(147, 197, 253, 1);
+            font-weight: 900;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .regulatory-window h3 {
+            margin: 0 0 8px;
+            color: rgba(219, 234, 254, 1);
+            font-size: 1.48em;
+            line-height: 1.25;
+        }
+        .regulatory-intro {
+            margin: 0 0 14px;
+            color: rgba(219, 234, 254, 1);
+            max-width: 980px;
+            line-height: 1.5;
+        }
+        .regulatory-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .regulatory-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 240px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 2px solid rgba(191, 219, 254, 0.75);
+            background: rgba(219, 234, 254, 1);
+            color: rgba(30, 58, 138, 1);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            font-weight: 900;
+            font-size: 0.86rem;
+            transition: all 0.2s ease;
+        }
+        .regulatory-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+        }
+        .regulatory-note {
+            margin: 0;
+            color: rgba(191, 219, 254, 1);
+            font-size: 0.86rem;
+            font-weight: 700;
         }
 
         .expert-section {
@@ -796,6 +898,197 @@
             margin-bottom: 30px;
             font-weight: 700;
             text-align: left;
+        }
+        .library-title-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 26px;
+        }
+        .library-title-row .library-title {
+            margin: 0;
+            line-height: 1.12;
+            flex: 1;
+        }
+        .library-title-composite {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .library-title-composite-label {
+            font-size: 0.62em;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            color: rgba(69, 14, 8, 0.94);
+            text-transform: uppercase;
+            line-height: 1.05;
+            white-space: nowrap;
+        }
+        .library-title-composite-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            background: rgba(238, 238, 238, 0.92);
+            border: 1px solid rgba(182, 182, 182, 0.35);
+        }
+        .library-title-composite-month {
+            font-size: 0.98em;
+            font-weight: 900;
+            letter-spacing: 0.55px;
+            color: rgba(80, 10, 10, 0.94);
+            text-transform: uppercase;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .library-title-composite-value {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 196px;
+            padding: 8px 15px;
+            border-radius: 999px;
+            font-size: 1em;
+            font-weight: 900;
+            line-height: 1;
+            color: rgba(122, 0, 0, 0.95);
+            background: linear-gradient(135deg, rgba(255, 220, 110, 1) 0%, rgba(235, 185, 36, 1) 100%);
+            border: 2px solid rgba(168, 109, 0, 0.75);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+        }
+        .library-master-section {
+            margin: 0 0 22px;
+            border-color: rgba(158, 120, 24, 0.45);
+            background: linear-gradient(180deg, rgba(255, 252, 244, 0.98) 0%, rgba(247, 241, 225, 0.96) 100%);
+        }
+        .library-master-section > summary {
+            display: block;
+            border-left-color: rgba(139, 0, 0, 0.9);
+            background: linear-gradient(90deg, rgba(255, 215, 109, 0.42) 0%, rgba(248, 249, 250, 0.96) 24%, rgba(248, 249, 250, 1) 100%);
+        }
+        .library-master-title {
+            display: block;
+            font-size: 1.04em;
+            font-weight: 900;
+            letter-spacing: 0.45px;
+            color: rgba(58, 36, 15, 1);
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+        .library-master-title-primary {
+            font-size: 1.65em;
+            letter-spacing: 0.28px;
+            font-weight: 700;
+            color: rgba(40, 22, 8, 1);
+            line-height: 1.08;
+        }
+        .library-master-summary-bottom {
+            margin-top: 10px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .library-master-hint {
+            display: inline-block;
+            font-size: 0.98em;
+            font-weight: 700;
+            color: rgba(80, 69, 44, 0.98);
+            line-height: 1.2;
+            letter-spacing: 0.2px;
+        }
+        .library-master-insights {
+            margin-left: auto;
+            display: flex;
+            align-items: stretch;
+            gap: 30px;
+        }
+        .library-master-insight {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 220px;
+            text-align: center;
+            color: rgba(84, 11, 11, 0.98);
+        }
+        .library-master-insight-label {
+            font-size: 0.58em;
+            font-weight: 900;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(162, 98, 80, 0.58);
+            width: 100%;
+        }
+        .library-master-insight-value {
+            margin-top: 6px;
+            font-size: 1.75em;
+            font-weight: 900;
+            line-height: 1;
+            color: rgba(220, 0, 0, 1);
+            letter-spacing: 0.2px;
+        }
+        .library-master-insight-sub {
+            margin-top: 4px;
+            font-size: 0.56em;
+            font-weight: 900;
+            letter-spacing: 0.9px;
+            text-transform: uppercase;
+            color: rgba(84, 11, 11, 0.98);
+            line-height: 1.1;
+        }
+        .library-master-body {
+            padding: 10px 8px 6px;
+        }
+        .group-section summary {
+            grid-template-areas:
+                'summary-name'
+                'summary-meta';
+            row-gap: 8px;
+        }
+        .group-summary-name {
+            grid-area: summary-name;
+            font-size: 1.05em;
+            font-weight: 800;
+            color: rgba(50, 50, 50, 1);
+            letter-spacing: 0.45px;
+            text-transform: uppercase;
+            white-space: normal;
+            text-align: left;
+            line-height: 1.15;
+        }
+        .group-summary-meta {
+            grid-area: summary-meta;
+            color: rgba(0, 0, 0, 1);
+            font-style: normal;
+            font-weight: 500;
+            font-size: 0.98em;
+            line-height: 1.1;
+            white-space: nowrap;
+            text-align: right;
+        }
+        .study-history-folder summary {
+            font-size: 1.02em;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        .reference-library-note {
+            margin: 2px 8px 10px;
+            font-size: 0.93em;
+            color: rgba(84, 54, 22, 0.96);
+            line-height: 1.45;
+        }
+        .reference-library-list {
+            grid-template-columns: 1fr;
+            padding-left: 0;
         }
         .reference-library-section {
             border-top-color: rgba(236, 186, 28, 1);
@@ -931,14 +1224,13 @@
             display: none;
         }
 
-        details summary::before {
+        details > summary::before {
             content: '▶';
             font-size: 0.8em;
             transition: transform 0.3s;
             display: inline-block;
         }
-
-        details[open] summary::before {
+        details[open] > summary::before {
             transform: rotate(90deg);
         }
 
@@ -1108,7 +1400,7 @@
                 padding: 10px 18px;
             }
             .hero-btn-line2 {
-                font-size: 1.45em;
+                font-size: 1.1em;
             }
 
             section {
@@ -1122,6 +1414,41 @@
 
             .library-section {
                 padding: 30px 20px;
+            }
+            .library-title-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 14px;
+            }
+            .library-title-composite {
+                align-items: flex-start;
+            }
+            .library-title-composite-row {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            .library-title-composite-value {
+                min-width: 0;
+                width: 100%;
+            }
+            .library-master-insights {
+                width: 100%;
+                margin-left: 0;
+                gap: 8px;
+                flex-direction: column;
+            }
+            .library-master-insight {
+                min-width: 0;
+                align-items: flex-start;
+                text-align: left;
+            }
+            .library-master-insight-label {
+                text-align: left;
+            }
+            .library-master-insight-value,
+            .library-master-insight-sub {
+                text-align: left;
             }
             .overview-executive-strip {
                 padding: 14px 14px;
@@ -1200,6 +1527,15 @@
             .utility-links {
                 flex-direction: column;
             }
+            .regulatory-window {
+                padding: 22px 18px 20px;
+            }
+            .regulatory-actions {
+                align-items: stretch;
+            }
+            .regulatory-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -1242,6 +1578,7 @@
             <div class="hero-buttons">
                 <a href="#welcome" class="hero-btn hero-btn--consumption" data-scroll-target="welcome"><span class="hero-btn-icon">📈</span><span class="hero-btn-text"><span class="hero-btn-line1">How Cherry Avenue</span><span class="hero-btn-line2">Consumes Energy</span></span></a>
                 <a href="#utility-supply" class="hero-btn hero-btn--supply" data-scroll-target="utility-supply"><span class="hero-btn-icon">🔌</span><span class="hero-btn-text"><span class="hero-btn-line1">How Cherry Avenue</span><span class="hero-btn-line2">Is Supplied Energy</span></span></a>
+                <a href="RegulatoryIntelligence/index.html" class="hero-btn hero-btn--compliance"><span class="hero-btn-icon">📋</span><span class="hero-btn-text"><span class="hero-btn-line1">Cherry Avenue</span><span class="hero-btn-line2">Energy Regulatory Compliance</span></span></a>
             </div>
         </div>
         <video class="hero-chicken-video hero-chicken-left" id="chickenLeft" muted loop autoplay playsinline>
@@ -1271,12 +1608,12 @@
                 <div class="overview-executive-metrics">
                     <div class="overview-executive-metric">
                         <span class="overview-executive-label">Monitored Transformer Groups</span>
-                        <span class="overview-executive-value">4 of 4</span>
+                        <span class="overview-executive-value">4 of 8 groups</span>
                         <span class="overview-executive-sub">Primary 480v transformer groups with active high-resolution telemetry.</span>
                     </div>
                     <div class="overview-executive-metric">
                         <span class="overview-executive-label">Coverage Ratio</span>
-                        <span class="overview-executive-value">~80%</span>
+                        <span class="overview-executive-value">80%</span>
                         <span class="overview-executive-sub">Measured fields represent approximately eighty percent of Cherry Avenue operating site load.</span>
                     </div>
                     <div class="overview-executive-metric">
@@ -1288,160 +1625,311 @@
             </div>
         </section>
 
-        <!-- Livingston-Style Horizontal Library Flow -->
+        <!-- Livingston-Style Group Library Flow -->
         <section id="libraries">
             <div class="libraries-container">
                 <div class="library-section">
-                    <h2 class="library-title">📊 Cherry Avenue Site Transformer Group Library</h2>
+                    <div class="library-title-row">
+                        <h2 class="library-title">📊 Site 480v Energy Field Library</h2>
+                        <span class="library-title-composite">
+                            <span class="library-title-composite-label">Composite Cost - Electrical Energy</span>
+                            <span class="library-title-composite-row">
+                                <span class="library-title-composite-month">JUN 2026</span>
+                                <span class="library-title-composite-value">$0.335/kWh</span>
+                            </span>
+                        </span>
+                    </div>
 
-                    <details>
-                        <!-- MAINTENANCE RULE:
-                             Whenever a new monthly Cherry study is moved into eWebmaster,
-                             update this Full Studies section immediately:
-                             1) month status row (efficiency + label),
-                             2) summaryboard study link/button state,
-                             3) period/source text to match the published report,
-                             4) verify ../index.html Cherry card updates latest month + PF from the newest active full-site study. -->
-                        <summary>2026 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
-                        <div class="study-list month-study-list">
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">JUNE 2026</span>
-                                        <span class="site-summary-eff state-good">86.2% PF</span>
+                    <details class="library-master-section">
+                        <summary>
+                            <span class="library-master-title library-master-title-primary">Electrical Energy Fields (4 Analyzed)</span>
+                            <span class="library-master-summary-bottom">
+                                <span class="library-master-hint">Select to view transformer groups and monthly field reports.</span>
+                                <span class="library-master-insights">
+                                    <span class="library-master-insight">
+                                        <span class="library-master-insight-label">Releasable Capacity</span>
+                                        <span class="library-master-insight-value" id="cherryave-master-available-capacity">--.- MW</span>
+                                        <span class="library-master-insight-sub">Annual</span>
+                                    </span>
+                                    <span class="library-master-insight">
+                                        <span class="library-master-insight-label">Site Field Efficiency</span>
+                                        <span class="library-master-insight-value" id="cherryave-master-efficiency">--.-%</span>
+                                        <span class="library-master-insight-sub">Average</span>
+                                    </span>
+                                    <span class="library-master-insight">
+                                        <span class="library-master-insight-label">Untuned Consequences</span>
+                                        <span class="library-master-insight-value" id="cherryave-master-consequence">$---</span>
+                                        <span class="library-master-insight-sub">Annual</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </summary>
+                        <div class="library-master-body">
+                            <details class="group-section">
+                                <summary>
+                                    <span class="group-summary-name">T10 AIR CHILLER (AN53111387)</span>
+                                    <span class="group-summary-meta">Select to view monthly field reports.</span>
+                                </summary>
+                                <div class="study-list month-study-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">June 2026</div>
+                                            <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260601-260630_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
                                     </div>
-                                    <div class="study-month-meta">30-day Full Site Analysis • 1minRES • source: June Summaryboard</div>
-                                </div>
-                                <a href="./06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260601-260630_30d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">MAY 2026</span>
-                                        <span class="site-summary-eff state-good">85.4% PF</span>
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">May 2026</div>
+                                            <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260501-260531_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
                                     </div>
-                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: May Summaryboard</div>
+                                    <details class="study-history-folder">
+                                        <summary>2026/2025 Energy Field History</summary>
+                                        <div class="study-list month-study-list">
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">April 2026</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">March 2026</div>
+                                                    <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">February 2026</div>
+                                                    <div class="study-period">28-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">November 2025</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                        </div>
+                                    </details>
                                 </div>
-                                <a href="./05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260501-260531_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">APRIL 2026</span>
-                                        <span class="site-summary-eff state-good">86.5% PF</span>
-                                    </div>
-                                    <div class="study-month-meta">30-day Full Site Analysis • 1minRES • source: April Summaryboard</div>
-                                </div>
-                                <a href="./04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">MARCH 2026</span>
-                                        <span class="site-summary-eff state-good">86.3% PF</span>
-                                    </div>
-                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: March Summaryboard</div>
-                                </div>
-                                <a href="./03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">FEBRUARY 2026</span>
-                                        <span class="site-summary-eff state-good">86.7% PF</span>
-                                    </div>
-                                    <div class="study-month-meta">28-day Full Site Analysis • 1minRES • source: February Summaryboard</div>
-                                </div>
-                                <a href="./02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
+                            </details>
 
-                            <div class="study-item study-month-card placeholder">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">JANUARY 2026</span>
-                                        <span class="site-summary-eff state-unavailable">pending</span>
+                            <details class="group-section">
+                                <summary>
+                                    <span class="group-summary-name">T12 MAIN (AN54021613)</span>
+                                    <span class="group-summary-meta">Select to view monthly field reports.</span>
+                                </summary>
+                                <div class="study-list month-study-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">June 2026</div>
+                                            <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260601-260630_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
                                     </div>
-                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES</div>
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">May 2026</div>
+                                            <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260501-260531_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                    </div>
+                                    <details class="study-history-folder">
+                                        <summary>2026/2025 Energy Field History</summary>
+                                        <div class="study-list month-study-list">
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">April 2026</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">March 2026</div>
+                                                    <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">February 2026</div>
+                                                    <div class="study-period">28-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">November 2025</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                        </div>
+                                    </details>
                                 </div>
-                                <span class="study-btn disabled">pending</span>
-                            </div>
-                        </div>
-                    </details>
+                            </details>
 
-                    <details>
-                        <summary>2025 Monthly Studies - Full Site, 4 individual 480V-3ph Energy Field Behavior Studies</summary>
-                        <div class="study-list month-study-list">
-                            <div class="study-item study-month-card placeholder">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">DECEMBER 2025</span>
-                                        <span class="site-summary-eff state-unavailable">pending</span>
+                            <details class="group-section">
+                                <summary>
+                                    <span class="group-summary-name">T15 FILLET (AN53110845)</span>
+                                    <span class="group-summary-meta">Select to view monthly field reports.</span>
+                                </summary>
+                                <div class="study-list month-study-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">June 2026</div>
+                                            <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260601-260630_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
                                     </div>
-                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES</div>
-                                </div>
-                                <span class="study-btn disabled">pending</span>
-                            </div>
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">NOVEMBER 2025</span>
-                                        <span class="site-summary-eff state-good">85.9% PF</span>
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">May 2026</div>
+                                            <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260501-260531_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
                                     </div>
-                                    <div class="study-month-meta">30-day Full Site Analysis • 1minRES • source: November Summaryboard</div>
+                                    <details class="study-history-folder">
+                                        <summary>2026/2025 Energy Field History</summary>
+                                        <div class="study-list month-study-list">
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">April 2026</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">March 2026</div>
+                                                    <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">February 2026</div>
+                                                    <div class="study-period">28-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">November 2025</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                        </div>
+                                    </details>
                                 </div>
-                                <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
+                            </details>
 
-                            <div class="study-item study-month-card">
-                                <div class="study-info">
-                                    <div class="study-month-top">
-                                        <span class="site-summary-name">OCTOBER 2025</span>
-                                        <span class="site-summary-eff state-good">86.9% PF</span>
+                            <details class="group-section">
+                                <summary>
+                                    <span class="group-summary-name">T16 COMPRESSOR (AN54022983)</span>
+                                    <span class="group-summary-meta">Select to view monthly field reports.</span>
+                                </summary>
+                                <div class="study-list month-study-list">
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">June 2026</div>
+                                            <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./06_JUN26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260601-260630_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
                                     </div>
-                                    <div class="study-month-meta">31-day Full Site Analysis • 1minRES • source: October Summaryboard</div>
+                                    <div class="study-item">
+                                        <div class="study-info">
+                                            <div class="study-name">May 2026</div>
+                                            <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                        </div>
+                                        <a href="./05_MAY26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260501-260531_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                    </div>
+                                    <details class="study-history-folder">
+                                        <summary>2026/2025 Energy Field History</summary>
+                                        <div class="study-list month-study-list">
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">April 2026</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./04_APR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260401-260430_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">March 2026</div>
+                                                    <div class="study-period">31-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./03_MAR26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260301-260331_31d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">February 2026</div>
+                                                    <div class="study-period">28-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./02_FEB26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260201-260228_28d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                            <div class="study-item">
+                                                <div class="study-info">
+                                                    <div class="study-name">November 2025</div>
+                                                    <div class="study-period">30-day Full Site Summaryboard Analysis • 1minRES</div>
+                                                </div>
+                                                <a href="./November_2025/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_251101-251130_30d.html" class="study-btn">VIEW SUMMARYBOARD</a>
+                                            </div>
+                                        </div>
+                                    </details>
                                 </div>
-                                <a href="./SITE-FosterFarms-Summaryboard_CherryAve-4_1minRES_251001-251031_31d.html" class="study-btn">VIEW ENERGY FIELDS</a>
-                            </div>
-                        </div>
-                    </details>
-
-                    <details>
-                        <summary>Partial Studies (Individual Transformers)</summary>
-                        <div class="placeholder-text">
-                            Partial transformer studies will appear here as monthly transformer-specific views are released.
+                            </details>
                         </div>
                     </details>
                 </div>
 
                 <div class="library-section reference-library-section">
-                    <h2 class="library-title">📚 Cherry Avenue Reference Library</h2>
-                    <details>
-                        <summary>Reference Documents</summary>
-                        <div class="study-list month-study-list">
-                            <div class="study-item">
-                                <div class="study-info">
-                                    <div class="study-name">eBRIEF - Saturation Study</div>
-                                    <div class="study-period">April 8, 2024</div>
+                    <details class="library-master-section">
+                        <summary>
+                            <span class="library-master-title">📚 Cherry Avenue Reference Library</span>
+                            <span class="library-master-summary-bottom">
+                                <span class="library-master-hint">Select to expand and manage PDF documents, images, and alert-share references.</span>
+                            </span>
+                        </summary>
+                        <div class="library-master-body">
+                            <p class="reference-library-note">Use this library to stage and publish important Cherry Avenue references before sharing them with customer alert cards.</p>
+                            <div class="study-list reference-library-list">
+                                <div class="study-item">
+                                    <div class="study-info">
+                                        <div class="study-name">eBRIEF - Saturation Study</div>
+                                        <div class="study-period">April 8, 2024</div>
+                                    </div>
+                                    <a href="./ReferenceLibrary/eBRIEF_viewer.html" class="study-btn">View PDF →</a>
                                 </div>
-                                <a href="./ReferenceLibrary/eBRIEF_viewer.html" class="study-btn">View PDF →</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
-                                    <div class="study-name">eREPORT - 2023 Annual</div>
-                                    <div class="study-period">April 9, 2024</div>
+                                <div class="study-item">
+                                    <div class="study-info">
+                                        <div class="study-name">eREPORT - 2023 Annual</div>
+                                        <div class="study-period">April 9, 2024</div>
+                                    </div>
+                                    <a href="./ReferenceLibrary/eREPORT_viewer.html" class="study-btn">View PDF →</a>
                                 </div>
-                                <a href="./ReferenceLibrary/eREPORT_viewer.html" class="study-btn">View PDF →</a>
-                            </div>
-                            <div class="study-item">
-                                <div class="study-info">
-                                    <div class="study-name">eREVIEW - 30-Day Analysis</div>
-                                    <div class="study-period">April 20 - May 20, 2024</div>
+                                <div class="study-item">
+                                    <div class="study-info">
+                                        <div class="study-name">eREVIEW - 30-Day Analysis</div>
+                                        <div class="study-period">April 20 - May 20, 2024</div>
+                                    </div>
+                                    <a href="./ReferenceLibrary/eREVIEW_viewer.html" class="study-btn">View PDF →</a>
                                 </div>
-                                <a href="./ReferenceLibrary/eREVIEW_viewer.html" class="study-btn">View PDF →</a>
                             </div>
                         </div>
                     </details>
                 </div>
+            </div>
+        </section>
 
         <section id="utility-supply" class="utility-window">
             <p class="utility-kicker">Electrical Energy Service Overview</p>
@@ -1458,6 +1946,8 @@
                         <a href="#" class="utility-bill-btn js-utility-library-under-construction" role="button" aria-label="Utility Library Under Construction">Shell</a>
                     </div>
                     <p class="utility-bill-caption">Reference Utility Bills</p>
+                    <a href="RegulatoryIntelligence/index.html" class="utility-regulatory-btn">Regulatory Intelligence</a>
+                    <p class="utility-bill-caption utility-regulatory-caption">Annual Reporting Workspace</p>
                 </div>
             </div>
             <p class="utility-intro">
@@ -1491,10 +1981,6 @@
                 <a href="https://www.pge.com/tariffs/en.html?vnt=tariffs" class="utility-link-btn" target="_blank" rel="noopener noreferrer">PG&amp;E TARIFFS ↗</a>
                 <a href="https://www.shellenergy.com/why-shell/areas-we-serve/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Shell Energy ↗</a>
                 <a href="https://www.caiso.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California ISO (GRID) ↗</a>
-            </div>
-        </section>
-
-
             </div>
         </section>
 
@@ -1582,6 +2068,210 @@
                 window.alert('Utility Library Under Construction');
             });
         });
+        const CHERRY_MONTH_INDEX = Object.freeze({
+            jan: 0,
+            feb: 1,
+            mar: 2,
+            apr: 3,
+            may: 4,
+            jun: 5,
+            jul: 6,
+            aug: 7,
+            sep: 8,
+            oct: 9,
+            nov: 10,
+            dec: 11
+        });
+        const CHERRY_STUDY_TEXT_CACHE = new Map();
+
+        function normalizeCherryPfPercent(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric) || numeric <= 0) return null;
+            return numeric <= 1.25 ? numeric * 100 : numeric;
+        }
+        function parseCherryNumericValue(text) {
+            const match = String(text || '').match(/-?[0-9]+(?:,[0-9]{3})*(?:\.[0-9]+)?/);
+            if (!match) return null;
+            const numeric = Number(match[0].replace(/,/g, ''));
+            return Number.isFinite(numeric) ? numeric : null;
+        }
+        function parseCherryCurrencyValue(text) {
+            const match = String(text || '').match(/\$?\s*([0-9]+(?:,[0-9]{3})*(?:\.[0-9]+)?)/);
+            if (!match) return null;
+            const numeric = Number(match[1].replace(/,/g, ''));
+            return Number.isFinite(numeric) ? numeric : null;
+        }
+        function parseCherryStudyDate(studyName, href) {
+            const rawName = String(studyName || '').trim();
+            const monthYearMatch = rawName.match(/([A-Za-z]{3,9})\s+(\d{4})/);
+            if (monthYearMatch) {
+                const monthKey = monthYearMatch[1].slice(0, 3).toLowerCase();
+                const yearNum = parseInt(monthYearMatch[2], 10);
+                if (CHERRY_MONTH_INDEX[monthKey] != null && Number.isFinite(yearNum)) {
+                    return new Date(yearNum, CHERRY_MONTH_INDEX[monthKey], 1).getTime();
+                }
+            }
+            const hrefMatch = String(href || '').match(/\/(\d{2})_[A-Za-z]{3}(\d{2})\//);
+            if (hrefMatch) {
+                const monthNum = parseInt(hrefMatch[1], 10);
+                const yearNum = 2000 + parseInt(hrefMatch[2], 10);
+                if (monthNum >= 1 && monthNum <= 12) {
+                    return new Date(yearNum, monthNum - 1, 1).getTime();
+                }
+            }
+            return Number.NEGATIVE_INFINITY;
+        }
+        function findCherryGroupStudies(groupSection) {
+            if (!groupSection) return [];
+            const studies = [];
+            groupSection.querySelectorAll('.study-item .study-btn[href]').forEach((link) => {
+                const href = String(link.getAttribute('href') || '').trim();
+                if (!href || href === '#') return;
+                const studyItem = link.closest('.study-item');
+                const studyName = String(studyItem?.querySelector('.study-name')?.textContent || '').trim();
+                studies.push({
+                    href,
+                    sortValue: parseCherryStudyDate(studyName, href)
+                });
+            });
+            studies.sort((a, b) => b.sortValue - a.sortValue);
+            return studies;
+        }
+        function parseCherrySummaryboardMetrics(summaryboardHtmlText) {
+            const pfValues = [];
+            const availableCapacityValues = [];
+            const wasteCostPerHourValues = [];
+            try {
+                const doc = new DOMParser().parseFromString(String(summaryboardHtmlText || ''), 'text/html');
+                doc.querySelectorAll('[id$="-metric-pf"]').forEach((node) => {
+                    const numeric = parseCherryNumericValue(node.textContent);
+                    const normalized = normalizeCherryPfPercent(numeric);
+                    if (normalized !== null) pfValues.push(normalized);
+                });
+                doc.querySelectorAll('[id$="-metric-energy-waste"]').forEach((node) => {
+                    const numeric = parseCherryNumericValue(node.textContent);
+                    if (Number.isFinite(numeric) && numeric > 0) availableCapacityValues.push(numeric);
+                });
+                doc.querySelectorAll('[id$="-xfmr-waste-cost-hour"]').forEach((node) => {
+                    const numeric = parseCherryCurrencyValue(node.textContent);
+                    if (Number.isFinite(numeric) && numeric > 0) wasteCostPerHourValues.push(numeric);
+                });
+            } catch (e) {}
+
+            return {
+                pfValues,
+                availableCapacityKva: availableCapacityValues.length
+                    ? availableCapacityValues.reduce((sum, value) => sum + value, 0)
+                    : null,
+                annualConsequence: wasteCostPerHourValues.length
+                    ? wasteCostPerHourValues.reduce((sum, value) => sum + value, 0) * 8760
+                    : null
+            };
+        }
+        async function fetchCherryStudyText(url) {
+            const cacheKey = String(url || '');
+            if (!cacheKey) throw new Error('Missing study URL');
+            if (!CHERRY_STUDY_TEXT_CACHE.has(cacheKey)) {
+                const pending = (async () => {
+                    const response = await fetch(cacheKey, { cache: 'no-store' });
+                    if (!response.ok) throw new Error(`Failed to read study (${response.status})`);
+                    return response.text();
+                })();
+                CHERRY_STUDY_TEXT_CACHE.set(cacheKey, pending);
+            }
+            try {
+                return await CHERRY_STUDY_TEXT_CACHE.get(cacheKey);
+            } catch (error) {
+                CHERRY_STUDY_TEXT_CACHE.delete(cacheKey);
+                throw error;
+            }
+        }
+        function formatCherryAvailableCapacityMw(totalKva) {
+            const numeric = Number(totalKva);
+            if (!Number.isFinite(numeric) || numeric <= 0) return '--.- MW';
+            return `${(numeric / 1000).toFixed(1)} MW`;
+        }
+        function formatCherryConsequence(value) {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric) || numeric <= 0) return '$---';
+            if (numeric >= 1000000) return `$${(numeric / 1000000).toFixed(2)}M`;
+            if (numeric >= 1000) return `$${(numeric / 1000).toFixed(1)}K`;
+            return `$${Math.round(numeric).toLocaleString('en-US')}`;
+        }
+        function renderCherryMasterInsights({ pfPercent, availableCapacityKva, annualConsequence }) {
+            const masterCapacityEl = document.getElementById('cherryave-master-available-capacity');
+            const masterEfficiencyEl = document.getElementById('cherryave-master-efficiency');
+            const masterConsequenceEl = document.getElementById('cherryave-master-consequence');
+            const heroEfficiencyEl = document.getElementById('cherry-hero-site-efficiency');
+            const heroConsequenceEl = document.getElementById('cherry-hero-site-consequence');
+
+            if (masterCapacityEl) {
+                masterCapacityEl.textContent = formatCherryAvailableCapacityMw(availableCapacityKva);
+            }
+            if (masterEfficiencyEl) {
+                masterEfficiencyEl.textContent = Number.isFinite(pfPercent) && pfPercent > 0
+                    ? `${pfPercent.toFixed(1)}%`
+                    : '--.-%';
+            }
+            if (masterConsequenceEl) {
+                masterConsequenceEl.textContent = formatCherryConsequence(annualConsequence);
+            }
+            if (heroEfficiencyEl && Number.isFinite(pfPercent) && pfPercent > 0) {
+                heroEfficiencyEl.textContent = `${pfPercent.toFixed(1)}% PF`;
+            }
+            if (heroConsequenceEl && Number.isFinite(annualConsequence) && annualConsequence > 0) {
+                heroConsequenceEl.textContent = formatCherryConsequence(annualConsequence);
+            }
+        }
+        async function updateCherryMasterInsights() {
+            const groupSections = Array.from(document.querySelectorAll('#libraries .group-section'));
+            const latestStudyUrls = new Set();
+            groupSections.forEach((groupSection) => {
+                const latestStudy = findCherryGroupStudies(groupSection)[0];
+                if (!latestStudy?.href) return;
+                try {
+                    const resolvedUrl = new URL(latestStudy.href, window.location.href).toString();
+                    latestStudyUrls.add(resolvedUrl);
+                } catch (e) {}
+            });
+
+            if (!latestStudyUrls.size) {
+                renderCherryMasterInsights({ pfPercent: null, availableCapacityKva: null, annualConsequence: null });
+                return;
+            }
+
+            const pfValues = [];
+            const capacityTotals = [];
+            const annualConsequenceTotals = [];
+
+            await Promise.all(Array.from(latestStudyUrls).map(async (studyUrl) => {
+                try {
+                    const htmlText = await fetchCherryStudyText(studyUrl);
+                    const metrics = parseCherrySummaryboardMetrics(htmlText);
+                    if (Array.isArray(metrics.pfValues) && metrics.pfValues.length) {
+                        pfValues.push(...metrics.pfValues);
+                    }
+                    if (Number.isFinite(metrics.availableCapacityKva) && metrics.availableCapacityKva > 0) {
+                        capacityTotals.push(metrics.availableCapacityKva);
+                    }
+                    if (Number.isFinite(metrics.annualConsequence) && metrics.annualConsequence > 0) {
+                        annualConsequenceTotals.push(metrics.annualConsequence);
+                    }
+                } catch (e) {}
+            }));
+
+            const pfPercent = pfValues.length
+                ? (pfValues.reduce((sum, value) => sum + value, 0) / pfValues.length)
+                : null;
+            const availableCapacityKva = capacityTotals.length
+                ? capacityTotals.reduce((sum, value) => sum + value, 0)
+                : null;
+            const annualConsequence = annualConsequenceTotals.length
+                ? annualConsequenceTotals.reduce((sum, value) => sum + value, 0)
+                : null;
+
+            renderCherryMasterInsights({ pfPercent, availableCapacityKva, annualConsequence });
+        }
 
 
         // Offset the right chicken video so they're not synchronized
@@ -1631,6 +2321,9 @@
                     chickenRight.currentTime = 10;
                 });
             }
+            updateCherryMasterInsights().catch(() => {
+                renderCherryMasterInsights({ pfPercent: null, availableCapacityKva: null, annualConsequence: null });
+            });
             // Full-study links return to Cherry's secondary home position.
             document.querySelectorAll('#libraries .library-section:first-child a.study-btn[href]:not(.disabled)').forEach((link) => {
                 link.addEventListener('click', () => {

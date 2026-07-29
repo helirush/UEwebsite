@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Compliance Report</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 24px 18px 36px;
+            font-family: Arial, sans-serif;
+            background: rgba(245, 247, 252, 1);
+            color: rgba(15, 23, 42, 1);
+        }
+        .shell {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 1);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .top {
+            padding: 14px 18px;
+            background: rgba(30, 64, 175, 1);
+            color: rgba(255, 255, 255, 1);
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid rgba(191, 219, 254, 0.7);
+            border-radius: 8px;
+            padding: 8px 11px;
+            background: rgba(239, 246, 255, 1);
+            color: rgba(30, 58, 138, 1);
+            font-weight: 800;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .status-select {
+            border: 1px solid rgba(147, 197, 253, 1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 1);
+            color: rgba(30, 58, 138, 1);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 7px 8px;
+        }
+        .status-pill {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: rgba(30, 58, 138, 1);
+            background: rgba(219, 234, 254, 1);
+            border: 1px solid rgba(147, 197, 253, 1);
+            border-radius: 999px;
+            padding: 5px 8px;
+        }
+        .body {
+            padding: 18px 20px 20px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 1.35rem;
+            color: rgba(30, 64, 175, 1);
+        }
+        h2 {
+            margin: 14px 0 8px;
+            font-size: 1rem;
+            color: rgba(30, 58, 138, 1);
+        }
+        .meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 8px;
+        }
+        .field {
+            border: 1px solid rgba(203, 213, 225, 1);
+            border-radius: 8px;
+            background: rgba(248, 250, 252, 1);
+            padding: 8px 10px;
+        }
+        .label {
+            display: block;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: rgba(71, 85, 105, 1);
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+        [contenteditable="true"] {
+            outline: none;
+            min-height: 20px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        .table th, .table td {
+            border: 1px solid rgba(203, 213, 225, 1);
+            padding: 8px 9px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+        .table th {
+            background: rgba(239, 246, 255, 1);
+            color: rgba(30, 58, 138, 1);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+        }
+        .note {
+            margin-top: 10px;
+            font-size: 0.86rem;
+            color: rgba(71, 85, 105, 1);
+        }
+        @media print {
+            .top { display: none; }
+            body { background: white; padding: 0; }
+            .shell { border: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="top">
+            <a class="btn" href="index.html">← Back to Regulatory Intelligence</a>
+            <div class="top-actions">
+                <span id="saveStatus" class="status-pill">Draft Not Saved</span>
+                <select id="workflowStatus" class="status-select" aria-label="Report workflow status">
+                    <option value="in_progress">In Progress</option>
+                    <option value="waiting_approval">Waiting Approval</option>
+                    <option value="submitted">Submitted</option>
+                </select>
+                <button id="saveDraftBtn" class="btn" type="button">Save Draft</button>
+                <button id="clearDraftBtn" class="btn" type="button">Clear Draft</button>
+                <button class="btn" type="button" onclick="window.print()">Print / Save PDF</button>
+            </div>
+        </div>
+        <div class="body">
+            <h1>California Benchmarking Compliance Report</h1>
+            <div class="meta">
+                <div class="field"><span class="label">Customer</span><div contenteditable="true">Foster Farms</div></div>
+                <div class="field"><span class="label">Facility</span><div contenteditable="true">Cherry Avenue</div></div>
+                <div class="field"><span class="label">Reporting Year</span><div contenteditable="true">2025</div></div>
+                <div class="field"><span class="label">Submission Due Date</span><div contenteditable="true">[Enter due date]</div></div>
+            </div>
+
+            <h2>Required Filing Fields</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Source</th>
+                        <th>Value</th>
+                        <th>Validation Rule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true">Facility Identifier</td>
+                        <td contenteditable="true">Customer</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Required, exact registry match</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Utility Account / Meter Group</td>
+                        <td contenteditable="true">Utility</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Must match utility records</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Annual Site Consumption (kWh)</td>
+                        <td contenteditable="true">Utility + Portfolio Manager</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Numeric, positive, annual period</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Gross Floor Area</td>
+                        <td contenteditable="true">Customer</td>
+                        <td contenteditable="true">[Enter value]</td>
+                        <td contenteditable="true">Unit-constrained, valid range</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Submission Status</td>
+                        <td contenteditable="true">Regulatory Workflow</td>
+                        <td contenteditable="true">Draft</td>
+                        <td contenteditable="true">Draft / Submitted / Accepted / Returned</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Compliance Notes</h2>
+            <div class="field">
+                <div contenteditable="true">[List assumptions, missing data, corrections, and final reviewer notes.]</div>
+            </div>
+            <p class="note">Report intent: exact state filing structure only. Keep this report compliance-focused and non-interpretive.</p>
+        </div>
+    </div>
+    <script>
+        const DRAFT_KEY = 'cherry-2025-state-compliance-draft-v1';
+        const editableNodes = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+        const saveStatus = document.getElementById('saveStatus');
+        const saveDraftBtn = document.getElementById('saveDraftBtn');
+        const clearDraftBtn = document.getElementById('clearDraftBtn');
+        const workflowStatus = document.getElementById('workflowStatus');
+
+        const workflowLabels = {
+            in_progress: 'In Progress',
+            waiting_approval: 'Waiting Approval',
+            submitted: 'Submitted'
+        };
+
+        editableNodes.forEach((node, idx) => {
+            node.setAttribute('data-draft-key', `f-${idx}`);
+        });
+
+        function snapshotDraft() {
+            const now = new Date();
+            const payload = {
+                saved_at: now.toISOString(),
+                workflow_status: workflowStatus.value,
+                fields: editableNodes.map((node) => ({
+                    key: node.getAttribute('data-draft-key'),
+                    html: node.innerHTML
+                }))
+            };
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(payload));
+            saveStatus.textContent = `${workflowLabels[workflowStatus.value] || 'In Progress'} • Saved ${now.toLocaleTimeString()}`;
+        }
+
+        function restoreDraft() {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            try {
+                const data = JSON.parse(raw);
+                const byKey = new Map((data.fields || []).map((f) => [f.key, f.html]));
+                editableNodes.forEach((node) => {
+                    const key = node.getAttribute('data-draft-key');
+                    if (byKey.has(key)) node.innerHTML = byKey.get(key);
+                });
+                if (data.workflow_status && workflowLabels[data.workflow_status]) {
+                    workflowStatus.value = data.workflow_status;
+                }
+                saveStatus.textContent = `${workflowLabels[workflowStatus.value] || 'In Progress'} • Loaded ${new Date(data.saved_at).toLocaleString()}`;
+            } catch (_) {
+                saveStatus.textContent = 'Draft Load Error';
+            }
+        }
+
+        function clearDraft() {
+            localStorage.removeItem(DRAFT_KEY);
+            location.reload();
+        }
+
+        saveDraftBtn.addEventListener('click', snapshotDraft);
+        clearDraftBtn.addEventListener('click', clearDraft);
+        restoreDraft();
+    </script>
+</body>
+</html>

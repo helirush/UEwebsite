@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cherry Avenue Regulatory Intelligence</title>
+    <style>
+        :root {
+            --bg: rgba(243, 246, 252, 1);
+            --ink: rgba(15, 23, 42, 1);
+            --ink-soft: rgba(51, 65, 85, 1);
+            --card: rgba(255, 255, 255, 1);
+            --accent: rgba(30, 64, 175, 1);
+            --accent-soft: rgba(219, 234, 254, 1);
+            --line: rgba(148, 163, 184, 0.45);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.5;
+            padding: 28px 20px 36px;
+        }
+        .shell {
+            max-width: 1220px;
+            margin: 0 auto;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(37, 99, 235, 0.6);
+            background: var(--card);
+            color: var(--accent);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            padding: 9px 14px;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            background: rgba(239, 246, 255, 1);
+        }
+        .hero {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 64, 175, 0.94) 100%);
+            color: rgba(255, 255, 255, 1);
+            border-radius: 14px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            padding: 22px 24px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+            margin-bottom: 14px;
+        }
+        .hero h1 {
+            margin: 0 0 6px;
+            font-size: 1.6rem;
+        }
+        .hero p {
+            margin: 0;
+            color: rgba(219, 234, 254, 1);
+        }
+        .block {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px 16px 14px;
+            margin-bottom: 12px;
+        }
+        .block h2 {
+            margin: 0 0 8px;
+            font-size: 1.08rem;
+            color: var(--accent);
+        }
+        .block p {
+            margin: 0;
+            color: var(--ink-soft);
+        }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .template-card {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(248, 250, 252, 1);
+            padding: 12px;
+        }
+        .template-card h3 {
+            margin: 0 0 6px;
+            color: var(--ink);
+            font-size: 0.98rem;
+        }
+        .template-card p {
+            margin: 0 0 10px;
+            font-size: 0.92rem;
+            color: var(--ink-soft);
+        }
+        .template-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid rgba(30, 64, 175, 0.4);
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: rgba(30, 64, 175, 1);
+            background: rgba(239, 246, 255, 1);
+            font-weight: 800;
+            font-size: 0.84rem;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+        }
+        .template-link:hover {
+            background: rgba(219, 234, 254, 1);
+        }
+        .report-status {
+            margin: 0 0 10px;
+            padding: 8px 9px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(241, 245, 249, 0.9);
+            display: grid;
+            gap: 5px;
+        }
+        .report-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: rgba(51, 65, 85, 1);
+            background: rgba(226, 232, 240, 0.8);
+        }
+        .report-status-badge::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: currentColor;
+            opacity: 0.9;
+        }
+        .report-status-badge.in-progress {
+            color: rgba(185, 28, 28, 1);
+            border-color: rgba(252, 165, 165, 1);
+            background: rgba(254, 226, 226, 1);
+        }
+        .report-status-badge.waiting {
+            color: rgba(180, 83, 9, 1);
+            border-color: rgba(253, 186, 116, 1);
+            background: rgba(255, 237, 213, 1);
+        }
+        .report-status-badge.submitted {
+            color: rgba(22, 101, 52, 1);
+            border-color: rgba(134, 239, 172, 1);
+            background: rgba(220, 252, 231, 1);
+        }
+        .report-status-note {
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--ink-soft);
+        }
+        .year-folder {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(248, 250, 252, 1);
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .year-folder summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 11px 14px;
+            font-weight: 800;
+            color: var(--ink);
+            background: rgba(226, 232, 240, 0.7);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .year-folder summary::-webkit-details-marker { display: none; }
+        .year-folder summary::before {
+            content: "▶";
+            font-size: 0.92em;
+            line-height: 1;
+            color: rgba(15, 23, 42, 0.95);
+        }
+        .year-folder[open] summary::before {
+            content: "▼";
+        }
+        .year-list {
+            margin: 0;
+            padding: 12px 18px 12px 30px;
+            color: var(--ink-soft);
+        }
+        .section-label {
+            margin: 10px 14px 4px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: rgba(30, 58, 138, 1);
+        }
+        .year-list li + li {
+            margin-top: 6px;
+        }
+        .tag {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            background: var(--accent-soft);
+            color: rgba(30, 58, 138, 1);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        .action-row {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 14px 14px;
+        }
+        #year2025MapContainer {
+            display: none;
+            padding: 0 14px 14px;
+        }
+        #year2025RepoContainer {
+            display: none;
+            padding: 0 14px 14px;
+        }
+        .repo-box {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 12px;
+        }
+        .repo-box h3 {
+            margin: 0 0 6px;
+            font-size: 0.9rem;
+            color: var(--ink);
+        }
+        .repo-box ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--ink-soft);
+            font-size: 0.83rem;
+            line-height: 1.35;
+        }
+        .repo-upload {
+            margin-top: 10px;
+            border-top: 1px solid var(--line);
+            padding-top: 10px;
+        }
+        .repo-upload-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .repo-upload-note {
+            font-size: 0.76rem;
+            color: var(--ink-soft);
+        }
+        .repo-file-list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--ink-soft);
+            font-size: 0.82rem;
+            line-height: 1.3;
+        }
+        .repo-file-list li + li {
+            margin-top: 4px;
+        }
+        .review-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 300px;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .review-card {
+            position: relative;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(248, 250, 252, 1);
+            cursor: zoom-in;
+        }
+        .review-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 8.9;
+            object-fit: cover;
+            border-bottom: 1px solid var(--line);
+        }
+        .review-card-meta {
+            padding: 8px 10px 9px;
+            background: rgba(255, 255, 255, 0.98);
+        }
+        .review-card-title {
+            margin: 0;
+            color: var(--ink);
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+        .review-card-subtitle {
+            margin: 2px 0 0;
+            color: var(--ink-soft);
+            font-size: 0.73rem;
+        }
+        .review-tooltip {
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            bottom: 54px;
+            background: rgba(15, 23, 42, 0.95);
+            color: rgba(241, 245, 249, 1);
+            border: 1px solid rgba(147, 197, 253, 0.6);
+            border-radius: 8px;
+            padding: 8px 9px;
+            font-size: 0.7rem;
+            line-height: 1.34;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            pointer-events: none;
+        }
+        .review-tooltip b {
+            color: rgba(191, 219, 254, 1);
+        }
+        .review-card:hover .review-tooltip,
+        .review-card:focus-visible .review-tooltip,
+        .review-card:focus-within .review-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .year-summary {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(248, 250, 252, 1);
+            padding: 12px;
+        }
+        .year-summary h3 {
+            margin: 0 0 8px;
+            font-size: 0.94rem;
+            color: var(--ink);
+        }
+        .year-summary ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--ink-soft);
+            font-size: 0.84rem;
+            line-height: 1.38;
+        }
+        .field-totals {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+        }
+        .field-totals h4 {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+            color: var(--ink);
+        }
+        .field-block + .field-block {
+            margin-top: 8px;
+        }
+        .field-block-title {
+            margin: 0 0 4px;
+            font-size: 0.82rem;
+            color: var(--ink);
+            font-weight: 800;
+        }
+        .field-block ul {
+            margin: 0;
+            padding-left: 16px;
+            color: var(--ink-soft);
+            font-size: 0.78rem;
+            line-height: 1.34;
+        }
+        .review-fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            background: rgba(2, 6, 23, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 26px;
+        }
+        .review-fullscreen.open {
+            display: flex;
+        }
+        .review-fullscreen-content {
+            max-width: min(1240px, 96vw);
+            width: 100%;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+        .review-fullscreen img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            background: rgba(255, 255, 255, 0.96);
+        }
+        .review-fullscreen-caption {
+            color: rgba(226, 232, 240, 1);
+            font-size: 0.92rem;
+            text-align: center;
+            line-height: 1.35;
+        }
+        .review-fullscreen-close {
+            align-self: flex-end;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(248, 250, 252, 1);
+            border-radius: 8px;
+            padding: 7px 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        @media (max-width: 1080px) {
+            .review-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 860px) {
+            .review-grid {
+                grid-template-columns: repeat(2, minmax(160px, 1fr));
+            }
+        }
+        @media (max-width: 540px) {
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="controls">
+            <a class="btn" href="../index.html">← Return to Cherry Avenue Board</a>
+            <span class="tag">Regulatory Reporting</span>
+        </div>
+
+        <section class="hero">
+            <h1>Regulatory Intelligence</h1>
+            <p>Compliance becomes the starting point. Intelligence becomes the product.</p>
+        </section>
+
+        <section class="block">
+            <h2>Foster Farms Regulatory Reporting Program</h2>
+            <p>This workspace is reserved for California Building Energy Benchmarking research, requirement mapping, annual compliance reporting, form validation, and Maxwellian Executive Intelligence reporting.</p>
+        </section>
+
+        <section class="block">
+            <h2>Report Creation Workspace</h2>
+            <p>Use these report layouts to generate each report package quickly from the same reporting period.</p>
+            <div class="template-grid">
+                <article class="template-card">
+                    <h3>Report 1 • State Compliance Report</h3>
+                    <p>Exact regulatory filing structure for state submission fields, validation notes, and compliance status.</p>
+                    <div id="stateReportStatus" class="report-status" aria-live="polite">
+                        <span id="stateReportStatusBadge" class="report-status-badge in-progress">In Progress</span>
+                        <p id="stateReportStatusNote" class="report-status-note">No draft has been saved yet.</p>
+                    </div>
+                    <a class="template-link" href="report-template-state-compliance.html">Open Compliance Report</a>
+                </article>
+                <article class="template-card">
+                    <h3>Report 2 • Maxwellian Executive Template</h3>
+                    <p>Electrical-intelligence narrative for performance, burden, reliability, financial impact, and tuning opportunities.</p>
+                    <a class="template-link" href="report-template-maxwellian-executive.html">Open Executive Template</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="block">
+            <h2>Regulatory Archive</h2>
+            <p>Baseline begins in 2025.</p>
+            <div class="action-row">
+                <a class="template-link" href="report-template-state-compliance.html">Open 2025 Compliance</a>
+                <button id="toggleMapBtn" class="template-link" type="button">Review 2025 Energy Thumbnail Map</button>
+            </div>
+            <div id="year2025MapContainer">
+                <p>Hover a thumbnail to see key values. Click a thumbnail to expand full-screen and review that quarter field image.</p>
+                <div class="review-layout">
+                    <div id="quarterReviewGrid" class="review-grid" aria-label="Cherry Avenue 2025 quarter review thumbnails"></div>
+                    <aside id="yearSummaryPanel" class="year-summary">
+                        <h3>2025 Full-Year Summary</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><b>Foster Farms</b></li>
+                            <li><b>Cherry Avenue facility</b></li>
+                        </ul>
+                        <ul>
+                            <li><b>463.18 V</b>: Voltage</li>
+                            <li><b>1121.03 A</b>: Amperage</li>
+                            <li><b>2,812,389 kVAh/mo</b>: Supplied</li>
+                            <li><b>2,411,735 kWh/mo</b>: Consumed</li>
+                            <li><b>548.8 kVA/hr</b>: Recoverable Capacity</li>
+                            <li><b>85.1%</b>: Field Efficiency</li>
+                            <li><b>28.94 GWh</b>: 2025 Energy Usage</li>
+                            <li><b>4078 MTCO2e/yr</b>: 2025 Emissions</li>
+                        </ul>
+                        <div class="field-totals">
+                            <h4>2025 Energy Field Totals</h4>
+                            <div class="field-block">
+                                <p class="field-block-title">T10 Air Chiller (3000kVA)</p>
+                                <ul>
+                                    <li><b>88.0%</b>: Field Efficiency</li>
+                                    <li><b>726.4 kW/hr</b>: Usage</li>
+                                    <li><b>530,308 kW/mo</b>: Usage</li>
+                                    <li><b>6.36 GWh/yr</b>: 2025 Energy Usage</li>
+                                    <li><b>897 MTCO2e/yr</b>: Emissions</li>
+                                </ul>
+                            </div>
+                            <div class="field-block">
+                                <p class="field-block-title">T12 Main (2,500kVA)</p>
+                                <ul>
+                                    <li><b>82.3%</b>: Field Efficiency</li>
+                                    <li><b>959.3 kW/hr</b>: Usage</li>
+                                    <li><b>700,296 kW/mo</b>: Usage</li>
+                                    <li><b>8.40 GWh/yr</b>: 2025 Energy Usage</li>
+                                    <li><b>1,184 MTCO2e/yr</b>: Emissions</li>
+                                </ul>
+                            </div>
+                            <div class="field-block">
+                                <p class="field-block-title">T15 Fillet (2,500kVA)</p>
+                                <ul>
+                                    <li><b>82.3%</b>: Field Efficiency</li>
+                                    <li><b>810.8 kW/hr</b>: Usage</li>
+                                    <li><b>591,862 kW/mo</b>: Usage</li>
+                                    <li><b>7.10 GWh/yr</b>: 2025 Energy Usage</li>
+                                    <li><b>1,001 MTCO2e/yr</b>: Emissions</li>
+                                </ul>
+                            </div>
+                            <div class="field-block">
+                                <p class="field-block-title">T16 Compressor (2,500kVA)</p>
+                                <ul>
+                                    <li><b>87.7%</b>: Field Efficiency</li>
+                                    <li><b>807.2 kW/hr</b>: Usage</li>
+                                    <li><b>589,263 kW/mo</b>: Usage</li>
+                                    <li><b>7.07 GWh/yr</b>: 2025 Energy Usage</li>
+                                    <li><b>997 MTCO2e/yr</b>: Emissions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="reviewFullscreen" class="review-fullscreen" role="dialog" aria-modal="true" aria-label="Expanded quarter review image">
+        <div class="review-fullscreen-content">
+            <button id="reviewFullscreenClose" class="review-fullscreen-close" type="button">Close ✕</button>
+            <img id="reviewFullscreenImage" src="" alt="">
+            <div id="reviewFullscreenCaption" class="review-fullscreen-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        const quarterReviewItems = [{"src": "assets/cherry_2025_quarters/T10b_1Q25.png", "title": "T10 \u2022 1st QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 647.96 \u2022 Avg PF: 0.875 \u2022 Avg kVA: 745.50 \u2022 Energy: 1400.00 MWh \u2022 CO2: 522.54 t"}, {"src": "assets/cherry_2025_quarters/T10b_2Q25.png", "title": "T10 \u2022 2nd QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 766.92 \u2022 Avg PF: 0.879 \u2022 Avg kVA: 877.63 \u2022 Energy: 1670.00 MWh \u2022 CO2: 625.35 t"}, {"src": "assets/cherry_2025_quarters/T10b_3Q25.png", "title": "T10 \u2022 3rd QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 833.33 \u2022 Avg PF: 0.879 \u2022 Avg kVA: 948.59 \u2022 Energy: 1840.00 MWh \u2022 CO2: 686.97 t"}, {"src": "assets/cherry_2025_quarters/T10b_4Q25.png", "title": "T10 \u2022 4th QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 656.03 \u2022 Avg PF: 0.886 \u2022 Avg kVA: 750.02 \u2022 Energy: 1450.00 MWh \u2022 CO2: 541.05 t"}, {"src": "assets/cherry_2025_quarters/T12b_1Q25.png", "title": "T12 \u2022 1st QTR 2025", "subtitle": "Main", "metric": "Avg kW: 922.13 \u2022 Avg PF: 0.830 \u2022 Avg kVA: 1107.43 \u2022 Energy: 1990.00 MWh \u2022 CO2: 743.64 t"}, {"src": "assets/cherry_2025_quarters/T12b_2Q25.png", "title": "T12 \u2022 2nd QTR 2025", "subtitle": "Main", "metric": "Avg kW: 943.11 \u2022 Avg PF: 0.817 \u2022 Avg kVA: 1144.83 \u2022 Energy: 2060.00 MWh \u2022 CO2: 769.01 t"}, {"src": "assets/cherry_2025_quarters/T12b_3Q25.png", "title": "T12 \u2022 3rd QTR 2025", "subtitle": "Main", "metric": "Avg kW: 982.46 \u2022 Avg PF: 0.815 \u2022 Avg kVA: 1195.53 \u2022 Energy: 2170.00 MWh \u2022 CO2: 809.91 t"}, {"src": "assets/cherry_2025_quarters/T12b_4Q25.png", "title": "T12 \u2022 4th QTR 2025", "subtitle": "Main", "metric": "Avg kW: 988.11 \u2022 Avg PF: 0.828 \u2022 Avg kVA: 1184.19 \u2022 Energy: 2180.00 MWh \u2022 CO2: 814.93 t"}, {"src": "assets/cherry_2025_quarters/T15b_1Q25.png", "title": "T15 \u2022 1st QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 800.33 \u2022 Avg PF: 0.844 \u2022 Avg kVA: 929.40 \u2022 Energy: 1730.00 MWh \u2022 CO2: 645.42 t"}, {"src": "assets/cherry_2025_quarters/T15b_2Q25.png", "title": "T15 \u2022 2nd QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 819.44 \u2022 Avg PF: 0.809 \u2022 Avg kVA: 971.61 \u2022 Energy: 1790.00 MWh \u2022 CO2: 668.17 t"}, {"src": "assets/cherry_2025_quarters/T15b_3Q25.png", "title": "T15 \u2022 3rd QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 798.95 \u2022 Avg PF: 0.802 \u2022 Avg kVA: 954.35 \u2022 Energy: 1760.00 MWh \u2022 CO2: 658.62 t"}, {"src": "assets/cherry_2025_quarters/T15b_4Q25.png", "title": "T15 \u2022 4th QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 823.87 \u2022 Avg PF: 0.836 \u2022 Avg kVA: 964.62 \u2022 Energy: 1820.00 MWh \u2022 CO2: 679.48 t"}, {"src": "assets/cherry_2025_quarters/T16b_1Q25.png", "title": "T16 \u2022 1st QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 652.43 \u2022 Avg PF: 0.887 \u2022 Avg kVA: 732.25 \u2022 Energy: 1410.00 MWh \u2022 CO2: 526.14 t"}, {"src": "assets/cherry_2025_quarters/T16b_2Q25.png", "title": "T16 \u2022 2nd QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 688.58 \u2022 Avg PF: 0.878 \u2022 Avg kVA: 775.63 \u2022 Energy: 1500.00 MWh \u2022 CO2: 561.47 t"}, {"src": "assets/cherry_2025_quarters/T16b_3Q25.png", "title": "T16 \u2022 3rd QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 994.01 \u2022 Avg PF: 0.875 \u2022 Avg kVA: 1117.49 \u2022 Energy: 2190.00 MWh \u2022 CO2: 819.42 t"}, {"src": "assets/cherry_2025_quarters/T16b_4Q25.png", "title": "T16 \u2022 4th QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 888.77 \u2022 Avg PF: 0.868 \u2022 Avg kVA: 1001.26 \u2022 Energy: 1960.00 MWh \u2022 CO2: 733.00 t"}];
+
+        const reviewGrid = document.getElementById('quarterReviewGrid');
+        const fullscreen = document.getElementById('reviewFullscreen');
+        const fullscreenImage = document.getElementById('reviewFullscreenImage');
+        const fullscreenCaption = document.getElementById('reviewFullscreenCaption');
+        const fullscreenClose = document.getElementById('reviewFullscreenClose');
+        const toggleMapBtn = document.getElementById('toggleMapBtn');
+        const year2025MapContainer = document.getElementById('year2025MapContainer');
+        const stateReportStatusBadge = document.getElementById('stateReportStatusBadge');
+        const stateReportStatusNote = document.getElementById('stateReportStatusNote');
+        const COMPLIANCE_DRAFT_KEY = 'cherry-2025-state-compliance-draft-v1';
+        const annualConsumedMwhByTx = {
+            T10: 6363.72,
+            T12: 8403.56,
+            T15: 7102.38,
+            T16: 7071.16
+        };
+        const annualCo2MtByTx = {
+            T10: 896.92,
+            T12: 1184.42,
+            T15: 1001.02,
+            T16: 996.62
+        };
+        function updateStateReportStatus() {
+            const statusClassByValue = {
+                in_progress: 'in-progress',
+                waiting_approval: 'waiting',
+                submitted: 'submitted'
+            };
+            const statusLabelByValue = {
+                in_progress: 'In Progress',
+                waiting_approval: 'Waiting Approval',
+                submitted: 'Submitted'
+            };
+            const raw = localStorage.getItem(COMPLIANCE_DRAFT_KEY);
+            if (!raw) {
+                stateReportStatusBadge.className = 'report-status-badge in-progress';
+                stateReportStatusBadge.textContent = 'In Progress';
+                stateReportStatusNote.textContent = 'No draft has been saved yet.';
+                return;
+            }
+            try {
+                const data = JSON.parse(raw);
+                const workflowStatus = data.workflow_status || 'in_progress';
+                const className = statusClassByValue[workflowStatus] || 'in-progress';
+                const label = statusLabelByValue[workflowStatus] || 'In Progress';
+                stateReportStatusBadge.className = `report-status-badge ${className}`;
+                stateReportStatusBadge.textContent = label;
+                if (data.saved_at) {
+                    stateReportStatusNote.textContent = `Last saved: ${new Date(data.saved_at).toLocaleString()}`;
+                } else {
+                    stateReportStatusNote.textContent = 'Draft saved.';
+                }
+            } catch (_) {
+                stateReportStatusBadge.className = 'report-status-badge in-progress';
+                stateReportStatusBadge.textContent = 'In Progress';
+                stateReportStatusNote.textContent = 'Unable to read saved draft.';
+            }
+        }
+        function formatMetricForDisplay(item) {
+            const metric = item.metric;
+            const parsed = {};
+            metric.split(' • ').forEach((entry) => {
+                const [rawLabel, rawValue] = entry.split(':').map((part) => part.trim());
+                if (rawLabel && rawValue) parsed[rawLabel] = rawValue;
+            });
+            const tx = (item.title || '').split('•')[0].trim();
+            const avgPf = Number(parsed['Avg PF']);
+            const avgKw = Number(parsed['Avg kW']);
+            const energyNumeric = Number((parsed['Energy'] || '').replace(/[^0-9.\-]/g, ''));
+            const lines = [];
+            if (!Number.isNaN(avgPf)) lines.push(`${(avgPf * 100).toFixed(1)}%: Field Efficiency`);
+            if (!Number.isNaN(avgKw)) lines.push(`${avgKw.toFixed(2)} kW/hr: Consumed`);
+            if (parsed['Avg kVA']) lines.push(`${parsed['Avg kVA']} kVA/hr: Apparent Power`);
+            if (!Number.isNaN(energyNumeric)) lines.push(`${energyNumeric.toFixed(1)} MWh/QTR: Energy`);
+            if (!Number.isNaN(energyNumeric) && annualConsumedMwhByTx[tx] && annualCo2MtByTx[tx]) {
+                const quarterCo2Mt = annualCo2MtByTx[tx] * (energyNumeric / annualConsumedMwhByTx[tx]);
+                lines.push(`${quarterCo2Mt.toFixed(2)} MT/QTR: CO2e`);
+            } else if (parsed['CO2']) {
+                lines.push(`${parsed['CO2']}: CO2`);
+            }
+            return lines.length ? lines.join(' • ') : metric;
+        }
+
+        function openFullscreen(item) {
+            fullscreenImage.src = item.src;
+            fullscreenImage.alt = `${item.title} ${item.subtitle}`;
+            fullscreenCaption.textContent = `${item.title} • ${item.subtitle} • ${item.displayMetric ?? item.metric}`;
+            fullscreen.classList.add('open');
+        }
+
+        function closeFullscreen() {
+            fullscreen.classList.remove('open');
+            fullscreenImage.src = '';
+            fullscreenImage.alt = '';
+            fullscreenCaption.textContent = '';
+        }
+
+        quarterReviewItems.forEach((item) => {
+            item.displayMetric = formatMetricForDisplay(item);
+            const card = document.createElement('article');
+            card.className = 'review-card';
+            card.tabIndex = 0;
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', `${item.title} ${item.subtitle}`);
+            card.innerHTML = `
+                <img src="${item.src}" alt="${item.title} ${item.subtitle}">
+                <div class="review-tooltip"><b>${item.title.split('•')[0].trim()} ${item.subtitle}</b><br>${item.displayMetric.replaceAll(' • ', '<br>')}</div>
+                <div class="review-card-meta">
+                    <p class="review-card-title">${item.title}</p>
+                    <p class="review-card-subtitle">${item.subtitle}</p>
+                </div>
+            `;
+            card.addEventListener('click', () => openFullscreen(item));
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openFullscreen(item);
+                }
+            });
+            reviewGrid.appendChild(card);
+        });
+
+        fullscreenClose.addEventListener('click', closeFullscreen);
+        fullscreen.addEventListener('click', (e) => {
+            if (e.target === fullscreen) closeFullscreen();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && fullscreen.classList.contains('open')) closeFullscreen();
+        });
+
+        toggleMapBtn.addEventListener('click', () => {
+            const isOpen = year2025MapContainer.style.display === 'block';
+            year2025MapContainer.style.display = isOpen ? 'none' : 'block';
+            toggleMapBtn.textContent = isOpen ? 'Review 2025 Energy Thumbnail Map' : 'Hide 2025 Energy Thumbnail Map';
+            if (!isOpen) {
+                year2025MapContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+
+
+        updateStateReportStatus();
+    </script>
+</body>
+</html>

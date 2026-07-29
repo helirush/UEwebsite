@@ -2491,6 +2491,217 @@ summary.map(point => `<div style="background: #f8f9fa; border-left: 4px solid #5
     modal.style.display = 'block';
   }
 
+  // Enhanced Site Summary Modal (untuned consequence breakdown)
+  function showSiteSummaryModal() {
+    const modal = document.getElementById('siteSummaryModal');
+    const body = document.getElementById('siteSummaryBody');
+    
+    // Calculate site-level aggregated metrics from all transformers
+    let totalActivePower = 0;
+    let totalWaste = 0;
+    let totalCost = 0;
+    let totalWasteCost = 0;
+    let pfSum = 0;
+    let transformerCount = 0;
+    let totalCapacity = 0;
+    
+    // Iterate through transformer cards to aggregate data
+    for (let i = 1; i <= 4; i++) {
+      const card = document.getElementById(`xfmr${i}-card`);
+      const nameElement = document.getElementById(`xfmr${i}-name`);
+      
+      // Skip if card doesn't exist or transformer name is empty
+      if (!card || !nameElement || !nameElement.textContent.trim()) continue;
+      
+      transformerCount++;
+      
+      // Get transformer capacity (kVA)
+      const kvaElement = document.getElementById(`xfmr${i}-kva`);
+      if (kvaElement) {
+        const kva = parseFloat(kvaElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kva)) totalCapacity += kva;
+      }
+      
+      // Get active power (kW)
+      const avgKwElement = document.getElementById(`xfmr${i}-avg-kw`);
+      if (avgKwElement) {
+        const kw = parseFloat(avgKwElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kw)) totalActivePower += kw;
+      }
+      
+      // Get reactive waste (kW)
+      const wasteElement = document.getElementById(`xfmr${i}-metric-energy-waste`);
+      if (wasteElement) {
+        const waste = parseFloat(wasteElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(waste)) totalWaste += waste;
+      }
+      
+      // Get active cost per hour
+      const costElement = document.getElementById(`xfmr${i}-xfmr-cost-hour`);
+      if (costElement) {
+        const cost = parseFloat(costElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(cost)) totalCost += cost;
+      }
+      
+      // Get waste cost per hour
+      const wasteCostElement = document.getElementById(`xfmr${i}-xfmr-waste-cost-hour`);
+      if (wasteCostElement) {
+        const wasteCost = parseFloat(wasteCostElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(wasteCost)) totalWasteCost += wasteCost;
+      }
+      
+      // Get power factor
+      const pfElement = document.getElementById(`xfmr${i}-metric-pf`);
+      if (pfElement) {
+        const pf = parseFloat(pfElement.textContent.replace('%', ''));
+        if (!isNaN(pf)) pfSum += pf;
+      }
+    }
+
+    const avgPowerFactor = transformerCount > 0 ? (pfSum / transformerCount) : null;
+    const total480V = totalActivePower + totalWaste; // Total 480V supply = active + reactive
+    const totalCoolingKw = 344.32; // Cooling waste embedded in active power
+    const pfGapToUnity = Number.isFinite(avgPowerFactor) ? Math.max(0, 100 - avgPowerFactor) : null;
+
+    // Financial consequence rollups (untuned condition)
+    const blendedRatePerKwh = totalActivePower > 0 ? (totalCost / totalActivePower) : 0;
+    const reactiveWasteCostPerHour = totalWasteCost;
+    const coolingWasteCostPerHour = totalCoolingKw * blendedRatePerKwh;
+    const untunedConsequencePerHour = reactiveWasteCostPerHour + coolingWasteCostPerHour;
+    const untunedConsequencePerMonth = untunedConsequencePerHour * 730;
+    const untunedConsequencePerYear = untunedConsequencePerHour * 8760;
+    const tuningRecoveryOpportunityPerYear = untunedConsequencePerYear * 0.95;
+
+    const formatMoney = (value) => {
+      const numeric = Number.isFinite(value) ? value : 0;
+      return `$${numeric.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    };
+    const formatPct = (value, digits = 1) => Number.isFinite(value) ? `${value.toFixed(digits)}%` : '--.-%';
+    
+    // Extract data resolution from filename
+    const filename = window.location.pathname.split('/').pop();
+    const resolutionMatch = filename.match(/(\d+min)RES/);
+    const dataResolution = resolutionMatch ? resolutionMatch[1] : '1min';
+    
+    // Format the content with expanded consequence view
+    body.innerHTML = `
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <!-- Left Column -->
+        <div>
+          <h3>Site Overview</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Transformers Monitored</span>
+            <span class="site-metric-value">${transformerCount}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Analysis Period</span>
+            <span class="site-metric-value">${document.getElementById('param-period')?.textContent || 'N/A'}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Data Resolution</span>
+            <span class="site-metric-value">${dataResolution}</span>
+          </div>
+          
+          <h3>Aggregated Power Metrics</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Site Capacity</span>
+            <span class="site-metric-value">${totalCapacity.toLocaleString('en-US')} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Active Power</span>
+            <span class="site-metric-value">${totalActivePower.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Supply (Active + Reactive)</span>
+            <span class="site-metric-value">${total480V.toFixed(1)} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Site Average Power Factor</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <h3>Energy Waste & Consequences</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Unconsumed Energy (Waste)</span>
+            <span class="site-metric-value">${totalWaste.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Waste (embedded in active)</span>
+            <span class="site-metric-value">${totalCoolingKw.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Waste as % of Total Supply</span>
+            <span class="site-metric-value">${total480V > 0 ? ((totalWaste / total480V) * 100).toFixed(1) : 0}%</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Untuned Field Efficiency (PF)</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">PF Gap to Unity</span>
+            <span class="site-metric-value">${formatPct(pfGapToUnity)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Reactive Waste Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(reactiveWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Burden Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(coolingWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Untuned Consequence per Hour</span>
+            <span class="site-metric-value">${formatMoney(untunedConsequencePerHour)}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(93, 112, 26, 0.08) 0%, rgba(178, 210, 53, 0.05) 100%); border: 2px solid #5D701A; border-radius: 10px;">
+        <h3 style="text-align: center; color: #314100; margin-bottom: 15px; font-weight: 700;">Untuned Energy Field Consequences</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; text-align: center;">
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Untuned Field Efficiency</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatPct(avgPowerFactor)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(PF gap ${formatPct(pfGapToUnity)})</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Unconsumed Energy (Hourly)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${totalWaste.toFixed(1)} kW</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive waste)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Reactive Waste Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(reactiveWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(8760 hrs/year)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Cooling Burden Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(coolingWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(derived from active blend rate)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Total Untuned Consequence (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(untunedConsequencePerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive + cooling)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Recovery Opportunity @95% Tuning</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(tuningRecoveryOpportunityPerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(${formatMoney(untunedConsequencePerMonth)}/month untuned)</p>
+          </div>
+        </div>
+        <p style="text-align: center; color: #6b7280; margin-top: 15px; font-size: 10pt; font-style: italic;">
+          All-in consequence tracks the financial burden of current untuned PF behavior (reactive waste + cooling burden).
+        </p>
+      </div>
+    `;
+    
+    modal.style.display = 'block';
+  }
+
   // Close Site Summary Modal
   function closeSiteSummaryModal() {
     document.getElementById('siteSummaryModal').style.display = 'none';

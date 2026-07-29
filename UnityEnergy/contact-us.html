@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
-    <script src="hume_character_config.js?v=20260614r22"></script>
-    <script src="clerk_voice_widget.js?v=20260701r28"></script>
+    <script src="hume_character_config.js?v=20260727r32"></script>
+    <script src="clerk_voice_widget.js?v=20260727r29"></script>
     <script src="public_release_flags.js?v=20260721a"></script>
     <title>Contact Us - Unity Energy</title>
     <style>
@@ -892,8 +892,27 @@
                 sourcePage: 'contact-us',
                 entryPoint: 'contact-us-meet-with-clerk-button',
                 likelyUserIntent: 'Visitor requested concierge support from the contact details page and wants guided help.',
-                sessionContext: 'User selected Meet with Clerk from the contact details concierge panel.',
+                sessionContext:
+                    'User selected Meet with Clerk from the Contact Details page concierge panel. Keep responses page-aware and guide intake support clearly.',
+                openingLine:
+                    'I see you have come in from our Contact Details page through Work with Clerk Concierge. I can help you fill out the Start a Guide form, connect you with our team, or subscribe you to Maxwellian updates. What would you like to do first?',
+                nameRequestLine:
+                    'Would you like help with the Start a Guide intake fields (company, location, top power-quality challenge, timeline), meeting our team, or subscribing to Maxwellian updates?',
                 responseStyleHint: 'guided intake with concise practical questions',
+                extraPayload: {
+                    contact_concierge_entry: true,
+                    contact_intake_form_name: 'Start a Guide',
+                    contact_intake_fields: ['company', 'location', 'top power-quality challenge', 'timeline'],
+                    contact_available_actions: ['start-a-guide-intake', 'meet-agentic-team', 'maxwellian-updates-signup'],
+                    page_context_opening_line:
+                        'I see you have come in from our Contact Details page through Work with Clerk Concierge. I can help you fill out the Start a Guide form, connect you with our team, or subscribe you to Maxwellian updates. What would you like to do first?',
+                    page_context_name_request_line:
+                        'Would you like help with the Start a Guide intake fields (company, location, top power-quality challenge, timeline), meeting our team, or subscribing to Maxwellian updates?',
+                    page_context_followup_prompt:
+                        'After answering, ask whether they want help filling Start a Guide details, meeting the agentic team, or joining Maxwellian updates.',
+                    openai_auto_greeting_text:
+                        'I see you have come in from our Contact Details page through Work with Clerk Concierge. I can help you fill out the Start a Guide form, connect you with our team, or subscribe you to Maxwellian updates. What would you like to do first?'
+                },
                 uiMode: 'modal'
             };
             if (typeof window.launchClerkWithPageContext === 'function') {

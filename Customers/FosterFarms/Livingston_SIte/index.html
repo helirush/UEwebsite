@@ -365,12 +365,13 @@
             display: block;
             text-align: left;
             font-weight: 500;
+            font-size: 0.9em;
             letter-spacing: 0.4px;
         }
         .hero-btn-line2 {
             display: block;
             text-align: center;
-            font-size: 1.6em;
+            font-size: 1.2em;
             font-weight: 700;
             color: rgba(255, 255, 255, 1);
             letter-spacing: 0.5px;
@@ -405,6 +406,14 @@
         }
         .hero-btn--consumption:hover {
             background: linear-gradient(135deg, rgba(108, 190, 255, 1) 0%, rgba(46, 139, 222, 1) 100%);
+        }
+        .hero-btn--compliance {
+            background: linear-gradient(135deg, rgba(153, 27, 27, 1) 0%, rgba(111, 20, 20, 1) 100%);
+            color: rgba(255, 255, 255, 1);
+            border-color: rgba(255, 215, 0, 0.95);
+        }
+        .hero-btn--compliance:hover {
+            background: linear-gradient(135deg, rgba(185, 35, 35, 1) 0%, rgba(133, 26, 26, 1) 100%);
         }
 
         .hero-btn:hover {
@@ -1831,6 +1840,71 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
+        .regulatory-window {
+            margin: 0 auto 30px;
+            max-width: var(--livingston-main-card-max);
+            padding: 24px 24px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 64, 175, 0.93) 100%);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.24);
+        }
+        .regulatory-kicker {
+            display: block;
+            margin: 0 0 8px;
+            color: rgba(147, 197, 253, 1);
+            font-weight: 900;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .regulatory-window h3 {
+            margin: 0 0 8px;
+            color: rgba(219, 234, 254, 1);
+            font-size: 1.48em;
+            line-height: 1.25;
+        }
+        .regulatory-intro {
+            margin: 0 0 14px;
+            color: rgba(219, 234, 254, 1);
+            max-width: 980px;
+            line-height: 1.5;
+        }
+        .regulatory-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .regulatory-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 240px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 2px solid rgba(191, 219, 254, 0.75);
+            background: rgba(219, 234, 254, 1);
+            color: rgba(30, 58, 138, 1);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            font-weight: 900;
+            font-size: 0.86rem;
+            transition: all 0.2s ease;
+        }
+        .regulatory-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+        }
+        .regulatory-note {
+            margin: 0;
+            color: rgba(191, 219, 254, 1);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
         .livingston-health-board {
             margin: 18px 0 38px;
         }
@@ -2226,7 +2300,7 @@
                 padding: 10px 18px;
             }
             .hero-btn-line2 {
-                font-size: 1.45em;
+                font-size: 1.1em;
             }
             .health-board-shell::before {
                 height: 14px;
@@ -2297,6 +2371,15 @@
             .utility-links {
                 flex-direction: column;
             }
+            .regulatory-window {
+                padding: 22px 18px 20px;
+            }
+            .regulatory-actions {
+                align-items: stretch;
+            }
+            .regulatory-btn {
+                width: 100%;
+            }
 
             .areas-grid {
                 grid-template-columns: 1fr;
@@ -2342,6 +2425,7 @@
             <div class="hero-buttons">
                 <a href="#libraries" class="hero-btn hero-btn--consumption" data-scroll-target="libraries"><span class="hero-btn-icon">📈</span><span class="hero-btn-text"><span class="hero-btn-line1">How Livingston</span><span class="hero-btn-line2">Consumes Energy</span></span></a>
                 <a href="#utility-supply" class="hero-btn hero-btn--supply" data-scroll-target="utility-supply"><span class="hero-btn-icon">🔌</span><span class="hero-btn-text"><span class="hero-btn-line1">How Livingston</span><span class="hero-btn-line2">Is Supplied Energy</span></span></a>
+                <a href="RegulatoryIntelligence/index.html" class="hero-btn hero-btn--compliance"><span class="hero-btn-icon">📋</span><span class="hero-btn-text"><span class="hero-btn-line1">Livingston</span><span class="hero-btn-line2">Energy Regulatory Compliance</span></span></a>
             </div>
         </div>
         <video class="hero-chicken-video hero-chicken-left" id="chickenLeft" muted loop autoplay playsinline>
@@ -3001,6 +3085,17 @@
                 <a href="https://www.mercedid.org/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">Merced Irrigation District Utility ↗</a>
                 <a href="https://www.caiso.com/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California ISO (Grid) ↗</a>
                 <a href="https://www.energy.ca.gov/" class="utility-link-btn" target="_blank" rel="noopener noreferrer">California Energy ↗</a>
+            </div>
+        </section>
+        <section id="regulatory-intelligence" class="regulatory-window">
+            <p class="regulatory-kicker">Energy Regulatory Intelligence</p>
+            <h3>Regulatory Intelligence Framework</h3>
+            <p class="regulatory-intro">
+                Access the Foster Farms regulatory reporting workspace for annual filing history, requirement mapping, form validation, and submission-ready compliance and executive intelligence packaging.
+            </p>
+            <div class="regulatory-actions">
+                <a href="RegulatoryIntelligence/index.html" class="regulatory-btn">Open Regulatory Intelligence</a>
+                <p class="regulatory-note">Regulatory Reporting Workspace • Livingston Utility Portal</p>
             </div>
         </section>
 

@@ -2411,6 +2411,25 @@
     );
   }
 
+  function isContactConciergeLaunch(profileId, payload) {
+    if (profileId !== "contact-us") return false;
+    const source = payload && typeof payload === "object" ? payload : {};
+    if (source.contact_concierge_entry === true) return true;
+    const signature = [
+      source.context,
+      source.mode,
+      source.conversation_mode,
+      source.entry_point,
+      source.session_context,
+      source.likely_user_intent,
+    ]
+      .map(function (value) { return coerceText(value).toLowerCase(); })
+      .filter(Boolean)
+      .join(" ");
+    if (!signature) return false;
+    return /(contact-concierge|guided-intake|meet-with-clerk|concierge)/.test(signature);
+  }
+
   function buildPageAwareOpeningLine(profile, payload) {
     const profileId = resolvePageContextProfileId(profile, payload);
     const explicit = coerceText(payload && payload.page_context_opening_line);
@@ -2440,7 +2459,10 @@
       return "I see you're on the Electrical Energy Story page. Which part of the field story should we break down first?";
     }
     if (profileId === "contact-us") {
-      return "Oh, I see you've reached the Clerk concierge. How can I help you?";
+      if (isContactConciergeLaunch(profileId, payload)) {
+        return "I see you have come in from our Contact Details page through Work with Clerk Concierge. I can help you fill out the Start a Guide form, connect you with our team, or subscribe you to Maxwellian updates. What would you like to do first?";
+      }
+      return "I see you're on our Contact Details page. How can I help before handoff?";
     }
     if (profileId === "maxwellian") {
       return "I see you're in the Maxwellian library. Which brief or eInsights story would you like to discuss?";
@@ -2476,6 +2498,9 @@
       return "After answering, ask which field-era transition or operational implication they want unpacked next.";
     }
     if (profileId === "contact-us") {
+      if (isContactConciergeLaunch(profileId, payload)) {
+        return "After answering, ask whether they want help filling Start a Guide details, meeting the agentic team, or joining Maxwellian updates.";
+      }
       return "After answering, ask one concise closeout question before contact handoff.";
     }
     if (profileId.startsWith("customer-")) {
@@ -2506,6 +2531,9 @@
       return "Which section of this Electrical Energy Story page should we break down first?";
     }
     if (profileId === "contact-us") {
+      if (isContactConciergeLaunch(profileId, payload)) {
+        return "Would you like help with the Start a Guide intake fields (company, location, top power-quality challenge, timeline), meeting our team, or subscribing to Maxwellian updates?";
+      }
       return "Before handoff, what should we prioritize from this contact page?";
     }
     if (profileId === "maxwellian") {
@@ -8215,9 +8243,11 @@
     if (!normalized) return false;
     if (
       normalized === "resize_frame" ||
-      normalized === "expand_widget" ||
       normalized === "collapse_widget" ||
       normalized === "minimize_widget" ||
+      normalized === "mic_error" ||
+      normalized === "socket_error" ||
+      normalized === "audio_error" ||
       normalized === "error"
     ) {
       return false;
@@ -8237,6 +8267,9 @@
       normalized === "expand_widget" ||
       normalized === "collapse_widget" ||
       normalized === "minimize_widget" ||
+      normalized === "mic_error" ||
+      normalized === "socket_error" ||
+      normalized === "audio_error" ||
       normalized === "transcript_message" ||
       normalized === "audio_output" ||
       normalized === "error"
@@ -9229,6 +9262,117 @@
     }
     return "Microphone is unavailable. Tap Waiting on Clerk, verify browser microphone access, and try again.";
   }
+  function getWidgetIframeLaunchDiagnostic() {
+    const frame = document.getElementById("clerkVoiceFrame");
+    if (!frame) return null;
+    try {
+      const doc = frame.contentDocument || (frame.contentWindow && frame.contentWindow.document);
+      if (!doc || !doc.body) return null;
+      const bodyText = coerceText(doc.body.innerText).replace(/\s+/g, " ").trim();
+      const controls = Array.from(
+        doc.querySelectorAll("button, [role=\"button\"], input[type=\"button\"], input[type=\"submit\"]")
+      ).slice(0, 16);
+      const controlSignatures = controls.map(function (element) {
+        return buildStartConversationCandidateSignature(element);
+      });
+      const disabledConnectingControl = controls.some(function (element) {
+        const signatureText = buildStartConversationCandidateSignature(element);
+        return /connecting|starting/.test(signatureText) && isStartGateInteractiveElementDisabled(element);
+      });
+      const combinedSignature = [bodyText, controlSignatures.join(" | ")]
+        .map(function (chunk) {
+          return coerceText(chunk).toLowerCase();
+        })
+        .filter(Boolean)
+        .join(" ");
+      if (!combinedSignature) return null;
+      if (
+        isLikelyMicrophoneError(combinedSignature) ||
+        /allow microphone|microphone permission denied|microphone access|permission blocked|notallowederror|securityerror/.test(
+          combinedSignature
+        )
+      ) {
+        return {
+          kind: "microphone",
+          detail:
+            coerceText(bodyText).slice(0, 320) ||
+            coerceText(controlSignatures.join(" | ")).slice(0, 240) ||
+            "Microphone permission denied",
+        };
+      }
+      if (
+        /could not connect to (the )?voice|could not connect to audio|socket[_\s-]?error|audio[_\s-]?error|voice session error/.test(
+          combinedSignature
+        )
+      ) {
+        return {
+          kind: "connection",
+          detail:
+            coerceText(bodyText).slice(0, 320) ||
+            coerceText(controlSignatures.join(" | ")).slice(0, 240) ||
+            "Voice session connection failed",
+        };
+      }
+      if (disabledConnectingControl) {
+        return { kind: "connecting", detail: "Connecting..." };
+      }
+      return null;
+    } catch (_err) {
+      return null;
+    }
+  }
+  function handleWidgetRuntimeErrorSignal(payloadOrMessage, fallbackType) {
+    const payload =
+      payloadOrMessage &&
+      typeof payloadOrMessage === "object" &&
+      payloadOrMessage.payload &&
+      typeof payloadOrMessage.payload === "object"
+        ? payloadOrMessage.payload
+        : payloadOrMessage;
+    const detail =
+      coerceText(
+        payload &&
+          (payload.message ||
+            payload.detail ||
+            payload.reason ||
+            payload.slug ||
+            payload.error ||
+            payload.code)
+      ) || coerceText(fallbackType) || "Voice session error.";
+    resetSignalStage();
+    clearUnityStartGateLaunchTimers();
+    noteUnityStartGateProgress("runtime-error");
+    if (isLikelyMicrophoneError(payload || detail)) {
+      const recoveryMessage = getMicrophoneRecoveryMessage(payload || detail);
+      const retryBtn = document.getElementById("clerkVoiceStartBtn");
+      if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
+      unityStartGatePreflightReady = false;
+      unityStartGatePreflightAttempted = true;
+      unityStartGatePreflightFailed = true;
+      unityStartGatePending = true;
+      unityStartGatePendingRequiresRecovery = true;
+      unityStartGatePreflightStatusMessage = recoveryMessage;
+      setWidgetFrameVisible(true);
+      setStartButtonVisible(true);
+      setLaunchEmblemVisible(false);
+      setPanelMode("centered");
+      setStatus(recoveryMessage, true, true);
+      return;
+    }
+
+    if (!hasConversationStarted) {
+      unityStartGatePending = true;
+      unityStartGatePendingRequiresRecovery = false;
+      unityStartGatePreflightStatusMessage = detail;
+      const retryBtn = document.getElementById("clerkVoiceStartBtn");
+      if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
+      setWidgetFrameVisible(true);
+      setStartButtonVisible(true);
+      setLaunchEmblemVisible(false);
+      setPanelMode("centered");
+    }
+    setStatus(`Voice session error: ${detail}`, true, true);
+  }
   function handleWidgetReadySignal(progressEventType) {
     if (widgetReady) return;
     widgetReady = true;
@@ -9325,15 +9469,27 @@
         handleWidgetReadySignal("widget-iframe-ready");
         return;
       }
+      if (
+        eventType === "error" ||
+        eventType === "mic_error" ||
+        eventType === "socket_error" ||
+        eventType === "audio_error"
+      ) {
+        handleWidgetRuntimeErrorSignal(data && data.payload ? data.payload : data, eventType);
+        return;
+      }
       if (eventType === "resize_frame" && data.payload) {
         setWidgetFrameSize(data.payload.width, data.payload.height);
         return;
       }
       if (eventType === "expand_widget") {
         if (!hasConversationStarted) {
-          setWidgetFrameVisible(false);
+          if (!unityStartGatePending) {
+            setStatus("", false);
+          }
+          setWidgetFrameVisible(true);
           setStartButtonVisible(Boolean(unityStartGatePending));
-          setLaunchEmblemVisible(true);
+          setLaunchEmblemVisible(false);
           setPanelMode("centered");
           return;
         }
@@ -9345,9 +9501,13 @@
       }
       if (eventType === "collapse_widget" || eventType === "minimize_widget") {
         if (!hasConversationStarted) {
-          setWidgetFrameVisible(false);
+          const shouldKeepRendererVisible =
+            !unityStartGatePending ||
+            unityStartGatePreflightAttempted ||
+            unityStartGatePreflightReady;
+          setWidgetFrameVisible(shouldKeepRendererVisible);
           setStartButtonVisible(Boolean(unityStartGatePending));
-          setLaunchEmblemVisible(true);
+          setLaunchEmblemVisible(!shouldKeepRendererVisible);
           setPanelMode("centered");
           return;
         }
@@ -9358,17 +9518,20 @@
       }
 
       if (eventType === "transcript_message") {
-        markConversationStartedFromWidgetSignal();
         const transcriptPayload = data && data.payload ? data.payload : null;
         if (transcriptPayload && typeof transcriptPayload === "object") {
           const transcriptType = coerceText(transcriptPayload.type).toLowerCase();
-          if (transcriptType === "error") {
-            const detail = coerceText(transcriptPayload.message || transcriptPayload.slug) || "Voice session error.";
-            resetSignalStage();
-            setStatus(`Voice session error: ${detail}`, true, true);
+          if (
+            transcriptType === "error" ||
+            transcriptType === "mic_error" ||
+            transcriptType === "socket_error" ||
+            transcriptType === "audio_error"
+          ) {
+            handleWidgetRuntimeErrorSignal(transcriptPayload, transcriptType || "transcript_error");
             return;
           }
         }
+        markConversationStartedFromWidgetSignal();
         const transcriptRole = extractTranscriptRole(transcriptPayload);
         const transcriptTextRaw = extractTranscriptText(transcriptPayload);
         const transcriptText = normalizeMptsSpeechText(transcriptTextRaw);
@@ -9561,7 +9724,10 @@
     if (!rawUrl) return "";
     let url;
     try {
-      url = new URL(rawUrl, window.location.href);
+      const baseHref =
+        getUnityEnergyAssetBaseHref() ||
+        window.location.href;
+      url = new URL(rawUrl, baseHref);
     } catch (_err) {
       return "";
     }
@@ -10558,6 +10724,14 @@
         true
       );
       setStartButtonVisible(false);
+      window.setTimeout(function () {
+        const modalEl = document.getElementById("clerkVoiceModal");
+        if (!modalEl || !modalEl.classList.contains("active")) return;
+        if (hasConversationStarted) return;
+        if (unityStartGatePendingRequiresRecovery) return;
+        setWidgetFrameVisible(true);
+        setLaunchEmblemVisible(false);
+      }, 900);
       const resendDelayMs = getUnityStartGateResendDelayMs(cfg);
       unityStartGateResendTimer = window.setTimeout(function () {
         unityStartGateResendTimer = null;
@@ -10716,7 +10890,15 @@
   }
   function setWidgetFrameVisible(visible) {
     const frame = document.getElementById("clerkVoiceFrame");
-    const shouldExposeRenderer = Boolean(visible && !hasConversationStarted);
+    const keepRendererVisibleAfterStartGateTap = Boolean(
+      !hasConversationStarted &&
+        unityStartGatePreflightAttempted &&
+        !unityStartGatePendingRequiresRecovery
+    );
+    const shouldExposeRenderer = Boolean(
+      (visible || keepRendererVisibleAfterStartGateTap) &&
+        !hasConversationStarted
+    );
     const shouldShowSignalStage = Boolean(hasConversationStarted || preConversationSignalVisible);
     if (frame) {
       frame.style.opacity = shouldExposeRenderer ? "1" : "0";
@@ -10888,6 +11070,21 @@
     const modalEl = document.getElementById("clerkVoiceModal");
     if (!modalEl || !modalEl.classList.contains("active")) return;
     if (hasConversationStarted) return;
+    const iframeDiagnostic = getWidgetIframeLaunchDiagnostic();
+    if (iframeDiagnostic && iframeDiagnostic.kind === "microphone") {
+      handleWidgetRuntimeErrorSignal(
+        { type: "mic_error", message: iframeDiagnostic.detail },
+        "iframe-microphone-error"
+      );
+      return;
+    }
+    if (iframeDiagnostic && iframeDiagnostic.kind === "connection") {
+      handleWidgetRuntimeErrorSignal(
+        { type: "socket_error", message: iframeDiagnostic.detail },
+        "iframe-connection-error"
+      );
+      return;
+    }
     const progressGraceMs = getUnityStartGateProgressGraceMs(cfg);
     const progressAgeMs =
       unityStartGateLastProgressAt > 0
@@ -10935,8 +11132,9 @@
       unityStartGatePending = true;
       unityStartGatePendingRequiresRecovery = false;
       unityStartGatePreflightStatusMessage = retryMessage;
+      setWidgetFrameVisible(true);
       setStartButtonVisible(true);
-      setLaunchEmblemVisible(true);
+      setLaunchEmblemVisible(false);
       setStatus(retryMessage, false, true);
     };
 

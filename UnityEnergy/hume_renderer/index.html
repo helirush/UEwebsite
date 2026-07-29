@@ -7,6 +7,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite + React + TS</title>
   <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      const originalConsoleError = console.error;
+      let lastForwardedSignature = "";
+      let lastForwardedAt = 0;
+
+      function buildErrorPayload(args) {
+        if (!Array.isArray(args) || args.length === 0) return null;
+        const firstArg = args[0];
+        if (firstArg && typeof firstArg === "object") {
+          const type = String(firstArg.type || "").toLowerCase();
+          if (type === "mic_error" || type === "socket_error" || type === "audio_error" || type === "error") {
+            return {
+              type: type || "error",
+              message: String(firstArg.message || firstArg.detail || firstArg.reason || "Voice session error"),
+            };
+          }
+        }
+        const flattened = args
+          .map(function (value) {
+            if (value == null) return "";
+            if (typeof value === "string") return value;
+            if (typeof value === "object") {
+              try {
+                return JSON.stringify(value);
+              } catch (_err) {
+                return String(value);
+              }
+            }
+            return String(value);
+          })
+          .join(" ")
+          .toLowerCase();
+        if (/mic_error|socket_error|audio_error/.test(flattened)) {
+          const inferredType = /mic_error/.test(flattened)
+            ? "mic_error"
+            : /socket_error/.test(flattened)
+              ? "socket_error"
+              : "audio_error";
+          return {
+            type: inferredType,
+            message:
+              inferredType === "mic_error"
+                ? "Microphone permission denied"
+                : inferredType === "socket_error"
+                  ? "Voice connection error"
+                  : "Audio initialization error",
+          };
+        }
+        return null;
+      }
+
+      function maybeForwardToParent(payload) {
+        if (!payload || typeof payload !== "object") return;
+        if (!window.parent || window.parent === window || typeof window.parent.postMessage !== "function") return;
+        const signature = `${payload.type || "error"}::${payload.message || ""}`;
+        const now = Date.now();
+        if (signature === lastForwardedSignature && now - lastForwardedAt < 1200) return;
+        lastForwardedSignature = signature;
+        lastForwardedAt = now;
+        window.parent.postMessage(
+          {
+            type: payload.type || "error",
+            message: payload.message || "Voice session error",
+          },
+          "*"
+        );
+      }
+
+      console.error = function () {
+        try {
+          const args = Array.prototype.slice.call(arguments);
+          const payload = buildErrorPayload(args);
+          if (payload) maybeForwardToParent(payload);
+        } catch (_err) {}
+        return originalConsoleError.apply(this, arguments);
+      };
+    })();
+  </script>
   <script type="module" crossorigin src="./assets/index-C5TD8TH6-r1.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-fIou9ls5.css">
 </head>

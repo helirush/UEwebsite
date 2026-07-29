@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livingston Regulatory Intelligence</title>
+    <style>
+        :root {
+            --bg: rgba(243, 246, 252, 1);
+            --ink: rgba(15, 23, 42, 1);
+            --ink-soft: rgba(51, 65, 85, 1);
+            --card: rgba(255, 255, 255, 1);
+            --accent: rgba(30, 64, 175, 1);
+            --accent-soft: rgba(219, 234, 254, 1);
+            --line: rgba(148, 163, 184, 0.45);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.5;
+            padding: 28px 20px 36px;
+        }
+        .shell {
+            max-width: 1020px;
+            margin: 0 auto;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(37, 99, 235, 0.6);
+            background: var(--card);
+            color: var(--accent);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            padding: 9px 14px;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            background: rgba(239, 246, 255, 1);
+        }
+        .hero {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 64, 175, 0.94) 100%);
+            color: rgba(255, 255, 255, 1);
+            border-radius: 14px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            padding: 22px 24px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+            margin-bottom: 14px;
+        }
+        .hero h1 {
+            margin: 0 0 6px;
+            font-size: 1.6rem;
+        }
+        .hero p {
+            margin: 0;
+            color: rgba(219, 234, 254, 1);
+        }
+        .block {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px 16px 14px;
+            margin-bottom: 12px;
+        }
+        .block h2 {
+            margin: 0 0 8px;
+            font-size: 1.08rem;
+            color: var(--accent);
+        }
+        .block p {
+            margin: 0;
+            color: var(--ink-soft);
+        }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .template-card {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(248, 250, 252, 1);
+            padding: 12px;
+        }
+        .template-card h3 {
+            margin: 0 0 6px;
+            color: var(--ink);
+            font-size: 0.98rem;
+        }
+        .template-card p {
+            margin: 0 0 10px;
+            font-size: 0.92rem;
+            color: var(--ink-soft);
+        }
+        .template-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid rgba(30, 64, 175, 0.4);
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: rgba(30, 64, 175, 1);
+            background: rgba(239, 246, 255, 1);
+            font-weight: 800;
+            font-size: 0.84rem;
+            letter-spacing: 0.01em;
+        }
+        .template-link:hover {
+            background: rgba(219, 234, 254, 1);
+        }
+        .year-folder {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(248, 250, 252, 1);
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .year-folder summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 11px 14px;
+            font-weight: 800;
+            color: var(--ink);
+            background: rgba(226, 232, 240, 0.7);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .year-folder summary::-webkit-details-marker { display: none; }
+        .year-folder summary::before {
+            content: "▶";
+            font-size: 0.92em;
+            line-height: 1;
+            color: rgba(15, 23, 42, 0.95);
+        }
+        .year-folder[open] summary::before {
+            content: "▼";
+        }
+        .year-list {
+            margin: 0;
+            padding: 12px 18px 12px 30px;
+            color: var(--ink-soft);
+        }
+        .year-list li + li {
+            margin-top: 6px;
+        }
+        .tag {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            background: var(--accent-soft);
+            color: rgba(30, 58, 138, 1);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="controls">
+            <a class="btn" href="../index.html">← Return to Livingston Board</a>
+            <span class="tag">Regulatory Reporting</span>
+        </div>
+
+        <section class="hero">
+            <h1>Energy Regulatory Intelligence</h1>
+            <p>Compliance becomes the starting point. Intelligence becomes the product.</p>
+        </section>
+
+        <section class="block">
+            <h2>Foster Farms Energy Regulatory Reporting Program</h2>
+            <p>This workspace is reserved for California Building Energy Benchmarking research, requirement mapping, annual compliance reporting, form validation, and Maxwellian Executive Intelligence reporting.</p>
+        </section>
+        <section class="block">
+            <h2>Report Creation Workspace</h2>
+            <p>Use these templates to generate each report package quickly from the same reporting period.</p>
+            <div class="template-grid">
+                <article class="template-card">
+                    <h3>Report 1 • State Compliance Template</h3>
+                    <p>Exact regulatory filing structure for state submission fields, validation notes, and compliance status.</p>
+                    <a class="template-link" href="report-template-state-compliance.html">Open Compliance Template</a>
+                </article>
+                <article class="template-card">
+                    <h3>Report 2 • Maxwellian Executive Template</h3>
+                    <p>Electrical-intelligence narrative for performance, burden, reliability, financial impact, and tuning opportunities.</p>
+                    <a class="template-link" href="report-template-maxwellian-executive.html">Open Executive Template</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="block">
+            <h2>Annual Reports Repository</h2>
+            <p>Regulatory archive baseline begins in 2025.</p>
+
+
+            <details class="year-folder" open>
+                <summary>2025</summary>
+                <ul class="year-list">
+                    <li>Cherry Avenue compliance package (state-required report)</li>
+                    <li>Maxwellian Executive Intelligence report</li>
+                    <li>Validation rules and submission workflow notes</li>
+                    <li>Utility-sourced vs customer-sourced vs Maxwellian-sourced data mapping</li>
+                    <li>Lessons learned and automation opportunities</li>
+                </ul>
+            </details>
+            <details class="year-folder">
+                <summary>2026</summary>
+                <ul class="year-list">
+                    <li>Regulatory notices</li>
+                    <li>Required forms</li>
+                    <li>Submitted reports</li>
+                    <li>Maxwellian Intelligence report</li>
+                    <li>Executive summary, calculations, correspondence, and compliance status</li>
+                </ul>
+            </details>
+
+
+            <details class="year-folder">
+                <summary>2027</summary>
+                <ul class="year-list">
+                    <li>Regulatory notices</li>
+                    <li>Required forms</li>
+                    <li>Submitted reports</li>
+                    <li>Maxwellian Intelligence report</li>
+                    <li>Executive summary, calculations, correspondence, and compliance status</li>
+                </ul>
+            </details>
+        </section>
+    </div>
+</body>
+</html>
