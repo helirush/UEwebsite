@@ -1893,7 +1893,7 @@
                 </div>
 
                 <div class="library-section reference-library-section">
-                    <details class="library-master-section">
+                    <details class="library-master-section reference-library-master" open>
                         <summary>
                             <span class="library-master-title">📚 Cherry Avenue Reference Library</span>
                             <span class="library-master-summary-bottom">
@@ -2297,6 +2297,13 @@
             }
         }
 
+        function openReferenceLibraryDetail() {
+            const referenceDetail = document.querySelector('#libraries .reference-library-section .library-master-section');
+            if (referenceDetail) {
+                referenceDetail.open = true;
+            }
+        }
+
         function scrollToSecondaryHomePosition() {
             const librariesSection = document.getElementById('libraries');
             if (!librariesSection) return;
@@ -2324,6 +2331,7 @@
             updateCherryMasterInsights().catch(() => {
                 renderCherryMasterInsights({ pfPercent: null, availableCapacityKva: null, annualConsequence: null });
             });
+            openReferenceLibraryDetail();
             // Full-study links return to Cherry's secondary home position.
             document.querySelectorAll('#libraries .library-section:first-child a.study-btn[href]:not(.disabled)').forEach((link) => {
                 link.addEventListener('click', () => {
@@ -2355,6 +2363,7 @@
             if (openPrimaryGroupLibrary) {
                 openPrimaryGroupLibraryDetail();
             }
+            openReferenceLibraryDetail();
             scrollToSecondaryHomePosition();
         });
     </script>
