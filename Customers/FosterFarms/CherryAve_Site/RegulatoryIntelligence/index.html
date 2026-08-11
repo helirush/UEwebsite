@@ -243,8 +243,27 @@
             gap: 8px;
             padding: 0 14px 14px;
         }
+        .action-row.current-year-actions {
+            justify-content: flex-end;
+        }
+        .current-year-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .current-year-header h2 {
+            margin: 0;
+        }
+        .current-year-toggle {
+            margin-top: -4px;
+        }
+        .current-year-note {
+            margin: 0 0 10px;
+        }
         #year2025MapContainer {
-            display: none;
+            display: block;
             padding: 0 14px 14px;
         }
         #year2025RepoContainer {
@@ -508,12 +527,11 @@
         </section>
 
         <section class="block">
-            <h2>Regulatory Archive</h2>
-            <p>Baseline begins in 2025.</p>
-            <div class="action-row">
-                <a class="template-link" href="report-template-state-compliance.html">Open 2025 Compliance</a>
-                <button id="toggleMapBtn" class="template-link" type="button">Review 2025 Energy Thumbnail Map</button>
+            <div class="current-year-header">
+                <h2>Most Current Year: 2025</h2>
+                <button id="toggleMapBtn" class="template-link current-year-toggle" type="button">Hide</button>
             </div>
+            <p class="current-year-note">Displaying the latest year in quarter segments at 1-minute resolution across the four measured Foster Farms energy fields (T10, T12, T15, T16).</p>
             <div id="year2025MapContainer">
                 <p>Hover a thumbnail to see key values. Click a thumbnail to expand full-screen and review that quarter field image.</p>
                 <div class="review-layout">
@@ -591,6 +609,7 @@
         </div>
     </div>
 
+    <script src="../../../../UnityEnergy/founder_share_panel.js?v=20260805a"></script>
     <script>
         const quarterReviewItems = [{"src": "assets/cherry_2025_quarters/T10b_1Q25.png", "title": "T10 \u2022 1st QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 647.96 \u2022 Avg PF: 0.875 \u2022 Avg kVA: 745.50 \u2022 Energy: 1400.00 MWh \u2022 CO2: 522.54 t"}, {"src": "assets/cherry_2025_quarters/T10b_2Q25.png", "title": "T10 \u2022 2nd QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 766.92 \u2022 Avg PF: 0.879 \u2022 Avg kVA: 877.63 \u2022 Energy: 1670.00 MWh \u2022 CO2: 625.35 t"}, {"src": "assets/cherry_2025_quarters/T10b_3Q25.png", "title": "T10 \u2022 3rd QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 833.33 \u2022 Avg PF: 0.879 \u2022 Avg kVA: 948.59 \u2022 Energy: 1840.00 MWh \u2022 CO2: 686.97 t"}, {"src": "assets/cherry_2025_quarters/T10b_4Q25.png", "title": "T10 \u2022 4th QTR 2025", "subtitle": "Air Chiller", "metric": "Avg kW: 656.03 \u2022 Avg PF: 0.886 \u2022 Avg kVA: 750.02 \u2022 Energy: 1450.00 MWh \u2022 CO2: 541.05 t"}, {"src": "assets/cherry_2025_quarters/T12b_1Q25.png", "title": "T12 \u2022 1st QTR 2025", "subtitle": "Main", "metric": "Avg kW: 922.13 \u2022 Avg PF: 0.830 \u2022 Avg kVA: 1107.43 \u2022 Energy: 1990.00 MWh \u2022 CO2: 743.64 t"}, {"src": "assets/cherry_2025_quarters/T12b_2Q25.png", "title": "T12 \u2022 2nd QTR 2025", "subtitle": "Main", "metric": "Avg kW: 943.11 \u2022 Avg PF: 0.817 \u2022 Avg kVA: 1144.83 \u2022 Energy: 2060.00 MWh \u2022 CO2: 769.01 t"}, {"src": "assets/cherry_2025_quarters/T12b_3Q25.png", "title": "T12 \u2022 3rd QTR 2025", "subtitle": "Main", "metric": "Avg kW: 982.46 \u2022 Avg PF: 0.815 \u2022 Avg kVA: 1195.53 \u2022 Energy: 2170.00 MWh \u2022 CO2: 809.91 t"}, {"src": "assets/cherry_2025_quarters/T12b_4Q25.png", "title": "T12 \u2022 4th QTR 2025", "subtitle": "Main", "metric": "Avg kW: 988.11 \u2022 Avg PF: 0.828 \u2022 Avg kVA: 1184.19 \u2022 Energy: 2180.00 MWh \u2022 CO2: 814.93 t"}, {"src": "assets/cherry_2025_quarters/T15b_1Q25.png", "title": "T15 \u2022 1st QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 800.33 \u2022 Avg PF: 0.844 \u2022 Avg kVA: 929.40 \u2022 Energy: 1730.00 MWh \u2022 CO2: 645.42 t"}, {"src": "assets/cherry_2025_quarters/T15b_2Q25.png", "title": "T15 \u2022 2nd QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 819.44 \u2022 Avg PF: 0.809 \u2022 Avg kVA: 971.61 \u2022 Energy: 1790.00 MWh \u2022 CO2: 668.17 t"}, {"src": "assets/cherry_2025_quarters/T15b_3Q25.png", "title": "T15 \u2022 3rd QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 798.95 \u2022 Avg PF: 0.802 \u2022 Avg kVA: 954.35 \u2022 Energy: 1760.00 MWh \u2022 CO2: 658.62 t"}, {"src": "assets/cherry_2025_quarters/T15b_4Q25.png", "title": "T15 \u2022 4th QTR 2025", "subtitle": "Fillet", "metric": "Avg kW: 823.87 \u2022 Avg PF: 0.836 \u2022 Avg kVA: 964.62 \u2022 Energy: 1820.00 MWh \u2022 CO2: 679.48 t"}, {"src": "assets/cherry_2025_quarters/T16b_1Q25.png", "title": "T16 \u2022 1st QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 652.43 \u2022 Avg PF: 0.887 \u2022 Avg kVA: 732.25 \u2022 Energy: 1410.00 MWh \u2022 CO2: 526.14 t"}, {"src": "assets/cherry_2025_quarters/T16b_2Q25.png", "title": "T16 \u2022 2nd QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 688.58 \u2022 Avg PF: 0.878 \u2022 Avg kVA: 775.63 \u2022 Energy: 1500.00 MWh \u2022 CO2: 561.47 t"}, {"src": "assets/cherry_2025_quarters/T16b_3Q25.png", "title": "T16 \u2022 3rd QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 994.01 \u2022 Avg PF: 0.875 \u2022 Avg kVA: 1117.49 \u2022 Energy: 2190.00 MWh \u2022 CO2: 819.42 t"}, {"src": "assets/cherry_2025_quarters/T16b_4Q25.png", "title": "T16 \u2022 4th QTR 2025", "subtitle": "Compressor", "metric": "Avg kW: 888.77 \u2022 Avg PF: 0.868 \u2022 Avg kVA: 1001.26 \u2022 Energy: 1960.00 MWh \u2022 CO2: 733.00 t"}];
 
@@ -727,7 +746,7 @@
         toggleMapBtn.addEventListener('click', () => {
             const isOpen = year2025MapContainer.style.display === 'block';
             year2025MapContainer.style.display = isOpen ? 'none' : 'block';
-            toggleMapBtn.textContent = isOpen ? 'Review 2025 Energy Thumbnail Map' : 'Hide 2025 Energy Thumbnail Map';
+            toggleMapBtn.textContent = isOpen ? 'Show' : 'Hide';
             if (!isOpen) {
                 year2025MapContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }

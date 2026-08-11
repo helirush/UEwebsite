@@ -1,0 +1,61 @@
+{
+  "transformers": {
+    "BNR-1": {
+      "field_voltage": 473.1,
+      "power_factor_percent": 89.6,
+      "field_consequence_annual": 310630,
+      "voltage_min": 456.4,
+      "voltage_max": 489.2,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050325-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "BNR 1": {
+      "field_voltage": 473.1,
+      "power_factor_percent": 89.6,
+      "field_consequence_annual": 310630,
+      "voltage_min": 456.4,
+      "voltage_max": 489.2,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050325-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "BNR1": {
+      "field_voltage": 473.1,
+      "power_factor_percent": 89.7,
+      "field_consequence_annual": 275555,
+      "voltage_min": 456.4,
+      "voltage_max": 489.2,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050325-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "BNR2": {
+      "field_voltage": 483.4,
+      "power_factor_percent": 96.4,
+      "field_consequence_annual": 1055,
+      "voltage_min": 466.7,
+      "voltage_max": 499.5,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050299-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "BNR-2": {
+      "field_voltage": 483.4,
+      "power_factor_percent": 96.4,
+      "field_consequence_annual": 1226,
+      "voltage_min": 466.7,
+      "voltage_max": 499.5,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050299-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "BNR 2": {
+      "field_voltage": 483.4,
+      "power_factor_percent": 96.4,
+      "field_consequence_annual": 1226,
+      "voltage_min": 466.7,
+      "voltage_max": 499.5,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050299-V-1minRES_44640CLP_260701-260731c.csv"
+    }
+  },
+  "month": "07_JUL26",
+  "rebuilt_at": "2026-08-05",
+  "note": "Analysis-complete rebuild; independent of William/Unity audio"
+}

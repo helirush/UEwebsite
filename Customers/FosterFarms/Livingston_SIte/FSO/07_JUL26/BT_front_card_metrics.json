@@ -1,0 +1,61 @@
+{
+  "transformers": {
+    "FSO-1": {
+      "field_voltage": 482.1,
+      "power_factor_percent": 86.1,
+      "field_consequence_annual": 141562,
+      "voltage_min": 465.4,
+      "voltage_max": 498.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050366-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "FSO1": {
+      "field_voltage": 482.1,
+      "power_factor_percent": 86.2,
+      "field_consequence_annual": 125563,
+      "voltage_min": 465.4,
+      "voltage_max": 498.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050366-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "FSO2": {
+      "field_voltage": 480.1,
+      "power_factor_percent": 91.3,
+      "field_consequence_annual": 37765,
+      "voltage_min": 462.0,
+      "voltage_max": 497.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050316-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "FSO-2": {
+      "field_voltage": 480.1,
+      "power_factor_percent": 91.2,
+      "field_consequence_annual": 42574,
+      "voltage_min": 462.0,
+      "voltage_max": 497.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050316-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "FSO3": {
+      "field_voltage": 481.2,
+      "power_factor_percent": 91.8,
+      "field_consequence_annual": 69623,
+      "voltage_min": 465.2,
+      "voltage_max": 497.5,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050439-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "FSO-3": {
+      "field_voltage": 481.2,
+      "power_factor_percent": 91.7,
+      "field_consequence_annual": 78490,
+      "voltage_min": 465.2,
+      "voltage_max": 497.5,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050439-V-1minRES_44640CLP_260701-260731c.csv"
+    }
+  },
+  "month": "07_JUL26",
+  "rebuilt_at": "2026-08-05",
+  "note": "Analysis-complete rebuild; independent of William/Unity audio"
+}

@@ -1,0 +1,115 @@
+{
+  "transformers": {
+    "PL2-1South": {
+      "field_voltage": 482.5,
+      "power_factor_percent": 86.2,
+      "field_consequence_annual": 289606,
+      "voltage_min": 453.0,
+      "voltage_max": 503.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050400-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL2-1SOUTH": {
+      "field_voltage": 482.5,
+      "power_factor_percent": 86.2,
+      "field_consequence_annual": 289606,
+      "voltage_min": 453.0,
+      "voltage_max": 503.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050400-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL21SOUTH": {
+      "field_voltage": 482.5,
+      "power_factor_percent": 86.2,
+      "field_consequence_annual": 289606,
+      "voltage_min": 453.0,
+      "voltage_max": 503.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050400-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL21South": {
+      "field_voltage": 482.5,
+      "power_factor_percent": 86.2,
+      "field_consequence_annual": 289606,
+      "voltage_min": 453.0,
+      "voltage_max": 503.4,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050400-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL22Center": {
+      "field_voltage": 485.9,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 68328,
+      "voltage_min": 469.0,
+      "voltage_max": 503.9,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050368-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL2-2Center": {
+      "field_voltage": 485.9,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 68328,
+      "voltage_min": 469.0,
+      "voltage_max": 503.9,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050368-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL22CENTER": {
+      "field_voltage": 485.9,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 68328,
+      "voltage_min": 469.0,
+      "voltage_max": 503.9,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050368-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL2-2CENTER": {
+      "field_voltage": 485.9,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 68328,
+      "voltage_min": 469.0,
+      "voltage_max": 503.9,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050368-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL2-3NORTH": {
+      "field_voltage": 488.7,
+      "power_factor_percent": 60.4,
+      "field_consequence_annual": 133765,
+      "voltage_min": 450.8,
+      "voltage_max": 506.3,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050286-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL2-3North": {
+      "field_voltage": 488.7,
+      "power_factor_percent": 60.4,
+      "field_consequence_annual": 133765,
+      "voltage_min": 450.8,
+      "voltage_max": 506.3,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050286-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL23North": {
+      "field_voltage": 488.7,
+      "power_factor_percent": 60.4,
+      "field_consequence_annual": 133765,
+      "voltage_min": 450.8,
+      "voltage_max": 506.3,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050286-V-1minRES_44640CLP_260701-260731c.csv"
+    },
+    "PL23NORTH": {
+      "field_voltage": 488.7,
+      "power_factor_percent": 60.4,
+      "field_consequence_annual": 133765,
+      "voltage_min": 450.8,
+      "voltage_max": 506.3,
+      "source": "rebuilt_from_july_c_csv_VIavg_V",
+      "csv_file": "AN55050286-V-1minRES_44640CLP_260701-260731c.csv"
+    }
+  },
+  "month": "07_JUL26",
+  "rebuilt_at": "2026-08-05",
+  "note": "Analysis-complete rebuild; independent of William/Unity audio"
+}
