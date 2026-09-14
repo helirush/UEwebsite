@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** Deli G  
-**Generated:** 2026-08-02 21:24:00  
+**Generated:** 2026-09-10 19:27:42  
 **Data Source:** AN55050305-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period
@@ -30,14 +30,14 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 50,553.02
+- **Device Zone BTU/hr:** 50,552.87
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 7,944.06
+- **Field Zone BTU/hr:** 7,940.10
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 58,497.08 BTU/hr
+- **Total Heat Generated:** 58,492.97 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
@@ -55,11 +55,11 @@
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $13,124.98
+- **Electrical-Energy Waste Cost:** $13,125.86
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $29,144.71/year
+- **Cooling Cost Avoided:** $29,142.66/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-5,205.59/year climate/impedance bonus)
+  (Includes $-5,204.87/year climate/impedance bonus)
 
 ---
 

@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img src="Patterns/NCDC3b_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()">
+            <img id="patternImageInline" src="Patterns/NCDC3bt_jun26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>NCDC3-North-E - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -546,14 +546,14 @@
                 <div class="markdown-content">
                     <h1>BASELINE ELECTRICAL ENERGY USAGE AND COST</h1>
 <p><strong>Transformer Baseline :</strong>
-- <strong>Consumption Usage:</strong> 344,643.8 kWh (Usage per period)
+- <strong>Consumption Usage:</strong> 341,951.1 kWh (Usage per period)
 - <strong>Consumption Cost per unit:</strong> $0.175/kWh (Cost per kWh)
-- <strong>Consumption Total Cost:</strong> $60,209.26 (Cost per period)
-- <strong>Consumption Total Cost:</strong> $81.09 (Cost per hour)</p>
+- <strong>Consumption Total Cost:</strong> $59,738.86 (Cost per period)
+- <strong>Consumption Total Cost:</strong> $81.00 (Cost per hour)</p>
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> NCDC3 North E<br />
-<strong>Generated:</strong> 2026-04-23 14:39:57<br />
+<strong>Generated:</strong> 2026-09-10 22:47:45<br />
 <strong>Data Source:</strong> AN55050395-V-1minRES_44550CLP_260301-260331c.csv  </p>
 <h2>Time Period</h2>
 <ul>
@@ -561,7 +561,7 @@
 <li><strong>Number of Days:</strong> 31 Days</li>
 <li><strong>Data Resolution:</strong> 1-minute</li>
 <li>
-<p><strong>Total Data Points:</strong> 44,550</p>
+<p><strong>Total Data Points:</strong> 44,252</p>
 </li>
 <li>
 <p><strong>Dataset Coverage:</strong> Complete month (100.0% of 31-day month)</p>
@@ -581,8 +581,8 @@
 <ul>
 <li><strong>Transformer:</strong> NCDC3 North E</li>
 <li><strong>Power Factor:</strong> 0.856</li>
-<li><strong>Total Energy (Actual):</strong> 344,643.75 kWh (per period), 464.17 kW (per hour)</li>
-<li><strong>Total Waste (Actual):</strong> 57,898.99 kWh (per period), 77.98 kW (per hour)</li>
+<li><strong>Total Energy (Actual):</strong> 341,951.12 kWh (per period), 463.64 kW (per hour)</li>
+<li><strong>Total Waste (Actual):</strong> 57,536.32 kWh (per period), 78.01 kW (per hour)</li>
 </ul>
 <hr />
 <h2>Additional Analysis</h2>
@@ -593,40 +593,41 @@
 <p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
 <h3>Element 1: Reactive Energy Offset Savings</h3>
 <ul>
-<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 77.98 kW/hr</li>
+<li><strong>Total Non-Active Field Burden (kVA - kW):</strong> 78.01 kW/hr</li>
+<li><strong>Heat-Coupled Burden Used in Thermal Model:</strong> 47.09 kW/hr (modeled_non_active_field_burden)</li>
 <li><strong>Blended Electricity Rate:</strong> $0.1747/kWh (all-inclusive)</li>
-<li><strong>NCDC3 North E Utility Cost Offset:</strong> $13.62/hour</li>
-<li><strong>Annual Offset Savings:</strong> $119336/year</li>
+<li><strong>NCDC3 North E Utility Cost Offset:</strong> $13.63/hour</li>
+<li><strong>Annual Offset Savings:</strong> $119387/year</li>
 </ul>
 <h3>Element 2: Cooling Elimination Savings</h3>
 <ul>
-<li><strong>Total Heat No Longer Generated:</strong> 282,602 BTU/hr</li>
-<li><strong>Total Cooling kW No Longer Needed:</strong> 24.76 kW</li>
-<li><strong>Cooling Energy Cost Avoided:</strong> $4.33/hour</li>
-<li><strong>Annual Cooling Savings:</strong> $37890/year</li>
+<li><strong>Total Heat No Longer Generated:</strong> 170,666 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 14.95 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $2.61/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $22882/year</li>
 </ul>
 <h3>Element 3: CO2e Emissions Reduction Value</h3>
 <ul>
-<li><strong>Total kW Waste Eliminated:</strong> 102.74 kW</li>
-<li><strong>CO2e Emissions Avoided:</strong> 335.97 metric tons/year</li>
-<li><strong>Monthly CO2e Reduction:</strong> 28.00 metric tons/month</li>
-<li><strong>Hourly CO2e Reduction:</strong> 0.0384 metric tons/hour</li>
+<li><strong>Total kW Waste Eliminated:</strong> 92.96 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 304.01 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 25.33 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0347 metric tons/hour</li>
 <li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
-<li><strong>Annual CO2e Value:</strong> $12935/year</li>
+<li><strong>Annual CO2e Value:</strong> $11704/year</li>
 </ul>
 <h3>Total NCDC3 North E Unity Savings</h3>
 <ul>
-<li><strong>Per Hour:</strong> $19.42</li>
-<li><strong>Per Day:</strong> $466.19</li>
-<li><strong>Per Month:</strong> $13985.84</li>
-<li><strong>Per Year:</strong> $170161</li>
+<li><strong>Per Hour:</strong> $17.58</li>
+<li><strong>Per Day:</strong> $421.85</li>
+<li><strong>Per Month:</strong> $12655.37</li>
+<li><strong>Per Year:</strong> $153974</li>
 </ul>
 <h3>NCDC3 North E Savings Breakdown</h3>
 <h3>Unity System (MPTS) Installation Considerations</h3>
 <ul>
-<li><strong>Max Reactive Energy:</strong> 478.2 kVAR Max (Avg: 280.1 kVAR/hr ; 201,691 kVAR/mo)</li>
+<li><strong>Max Reactive Energy:</strong> 432.4 kVAR Max (Avg: 280.0 kVAR/hr ; 201,632 kVAR/mo)</li>
 <li><strong>Max Harmonic Distortion:</strong> 30.1% Max (range: 3.0% - 30.1%)</li>
-<li><strong>Max Amperage:</strong> 991A Max (range: 0A - 991A)</li>
+<li><strong>Max Amperage:</strong> 884A Max (range: 420A - 884A)</li>
 </ul>
 <hr />
 <h1>NCDC3 North E DETAILED PERFORMANCE ANALYSIS</h1>
@@ -654,31 +655,31 @@
 <tbody>
 <tr>
 <td>Line to Neutral Voltage (277v)</td>
-<td>277.31</td>
-<td>0.00</td>
+<td>277.36</td>
+<td>267.92</td>
 <td>287.22</td>
 </tr>
 <tr>
 <td>Line to Line Voltage (480v)</td>
-<td>480.32</td>
-<td>0.00</td>
+<td>480.40</td>
+<td>464.04</td>
 <td>497.49</td>
 </tr>
 <tr>
 <td>Current (AMPS)</td>
-<td>651.51</td>
-<td>0.00</td>
-<td>991.44</td>
+<td>650.91</td>
+<td>419.91</td>
+<td>884.04</td>
 </tr>
 <tr>
 <td>Phase Angle (degrees)</td>
-<td>31.04</td>
+<td>31.05</td>
 <td>20.12</td>
-<td>90.00</td>
+<td>40.54</td>
 </tr>
 <tr>
 <td>Total Harmonic Distortion (PCT)</td>
-<td>15.69</td>
+<td>15.68</td>
 <td>3.01</td>
 <td>30.11</td>
 </tr>
@@ -747,30 +748,30 @@
 <p>⚠️ <strong>Note on THD Composite</strong>: Unity's THD Composite is not a scalar addition per IEEE. It is a field-behavior indicator that helps us track total harmonic impact across all three phases — a core component of transformer-level heat modeling.</p>
 <h2>Capacity Utilization</h2>
 <ul>
-<li><strong>Maximum UtilityDemand:</strong> 753.59 kW</li>
-<li><strong>Maximum Load:</strong> 827.18 kVA</li>
-<li><strong>Percentage of Capacity (MAX):</strong> 33.1%</li>
-<li><strong>Average Load:</strong> 542.15 kVA</li>
+<li><strong>Maximum UtilityDemand:</strong> 627.59 kW</li>
+<li><strong>Maximum Load:</strong> 732.78 kVA</li>
+<li><strong>Percentage of Capacity (MAX):</strong> 29.3%</li>
+<li><strong>Average Load:</strong> 541.65 kVA</li>
 <li><strong>Percentage of Capacity (Avg):</strong> 21.7%</li>
 </ul>
 <h2>kVA and Power Factor Analysis (Measured vs Calculated)</h2>
 <h3>Measured Values (PRIMARY - Used for All Analysis)</h3>
 <ul>
-<li><strong>Average kVA (Ssum_kVA):</strong> 542.15 kVA</li>
+<li><strong>Average kVA (Ssum_kVA):</strong> 541.65 kVA</li>
 <li><strong>Average Power Factor (PF):</strong> 0.856</li>
 </ul>
 <p><strong>Source:</strong> Direct meter measurements (instantaneous values averaged over time)</p>
 <h3>Calculated Values (VERIFICATION ONLY)</h3>
 <ul>
-<li><strong>Calculated kVA (V×I×√3/1000):</strong> 542.01 kVA</li>
+<li><strong>Calculated kVA (V×I×√3/1000):</strong> 541.61 kVA</li>
 </ul>
 <p><strong>Calculation Inputs:</strong>
-- Average Voltage (VIavg_V): 480.32 V
-- Average Current (Iavg_A): 651.51 A
-- Average kW (Psum_kW): 464.17 kW</p>
+- Average Voltage (VIavg_V): 480.40 V
+- Average Current (Iavg_A): 650.91 A
+- Average kW (Psum_kW): 463.64 kW</p>
 <h3>Differences (Measured vs Calculated)</h3>
 <ul>
-<li><strong>kVA Difference:</strong> 0.13 kVA (0.0%)</li>
+<li><strong>kVA Difference:</strong> 0.04 kVA (0.0%)</li>
 <li><strong>Calculated PF (kW/kVA from averages):</strong> 0.856</li>
 <li><strong>Power Factor Difference:</strong> 0.000 (0.0%)</li>
 </ul>
@@ -781,7 +782,7 @@
 <p>The meter's instantaneous measurements capture these variations correctly, while
 calculations from averaged values systematically underestimate reactive effects.</p>
 <p><strong>Analysis Method:</strong> All heat calculations, thermal burden, and cost analysis use
-the measured kVA (542.15) and measured PF (0.856) values.
+the measured kVA (541.65) and measured PF (0.856) values.
 Calculated values are shown above for verification and engineering transparency.</p>
 <h2>Overall Power Metrics (FPC)</h2>
 <table>
@@ -797,41 +798,41 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>kVA</td>
-<td>542.15</td>
+<td>541.65</td>
 <td>21.7%</td>
-<td>402,542.74 kVA</td>
-<td>1,583,802.60 TOTAL-HEAT</td>
+<td>399,487.44 kVA</td>
+<td>1,582,010.92 TOTAL-HEAT</td>
 </tr>
 <tr>
 <td>kW</td>
-<td>464.17</td>
-<td>18.6%</td>
-<td>344,643.75 kWh</td>
-<td>227,803.30 Load-Heat</td>
+<td>463.64</td>
+<td>18.5%</td>
+<td>341,951.12 kWh</td>
+<td>227,849.69 Load-Heat</td>
 </tr>
 <tr>
 <td>kVAR</td>
-<td>280.13</td>
+<td>280.04</td>
 <td>11.2%</td>
-<td>207,993.61 kVARh</td>
+<td>206,542.12 kVARh</td>
 <td>-</td>
 </tr>
 <tr>
 <td>WASTE</td>
-<td>77.98</td>
+<td>78.01</td>
 <td>3.1%</td>
-<td>57,898.99 WASTE</td>
-<td>38,270.19 Field-Heat</td>
+<td>57,536.32 WASTE</td>
+<td>38,337.74 Field-Heat</td>
 </tr>
 </tbody>
 </table>
 <h3>Heat Unit Notes</h3>
 <ul>
-<li><strong>TOTAL-HEAT (BTU/hr):</strong> 1,583,802.60</li>
-<li><strong>Load-Heat (BTU/hr):</strong> 227,803.30</li>
-<li><strong>Field-Heat (BTU/hr):</strong> 38,270.19</li>
-<li><strong>Load-Heat (BTU, period total):</strong> 169,143,951.93</li>
-<li><strong>Field-Heat (BTU, period total):</strong> 28,415,612.69</li>
+<li><strong>TOTAL-HEAT (BTU/hr):</strong> 1,582,010.92</li>
+<li><strong>Load-Heat (BTU/hr):</strong> 227,849.69</li>
+<li><strong>Field-Heat (BTU/hr):</strong> 38,337.74</li>
+<li><strong>Load-Heat (BTU, period total):</strong> 168,046,738.47</li>
+<li><strong>Field-Heat (BTU, period total):</strong> 28,275,360.25</li>
 </ul>
 <h2>Measured Monthly Averages</h2>
 <table>
@@ -848,9 +849,9 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>3</td>
-<td>542.15</td>
-<td>464.17</td>
-<td>279.44</td>
+<td>541.65</td>
+<td>463.64</td>
+<td>279.37</td>
 <td>0.86</td>
 <td>21.7%</td>
 </tr>
@@ -879,145 +880,145 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>01</td>
-<td>531.49</td>
-<td>454.30</td>
-<td>275.17</td>
+<td>531.98</td>
+<td>454.71</td>
+<td>275.43</td>
 <td>0.85</td>
 <td>21.3%</td>
 </tr>
 <tr>
 <td>02</td>
-<td>532.84</td>
-<td>459.92</td>
-<td>268.13</td>
+<td>534.87</td>
+<td>461.52</td>
+<td>269.40</td>
 <td>0.86</td>
-<td>21.3%</td>
+<td>21.4%</td>
 </tr>
 <tr>
 <td>03</td>
-<td>515.65</td>
-<td>441.51</td>
-<td>265.88</td>
+<td>515.52</td>
+<td>441.41</td>
+<td>265.79</td>
 <td>0.86</td>
 <td>20.6%</td>
 </tr>
 <tr>
 <td>04</td>
-<td>528.34</td>
-<td>456.68</td>
-<td>264.44</td>
+<td>527.97</td>
+<td>456.28</td>
+<td>264.42</td>
 <td>0.86</td>
 <td>21.1%</td>
 </tr>
 <tr>
 <td>05</td>
-<td>485.26</td>
-<td>416.58</td>
-<td>248.07</td>
+<td>486.47</td>
+<td>417.49</td>
+<td>248.90</td>
 <td>0.86</td>
-<td>19.4%</td>
+<td>19.5%</td>
 </tr>
 <tr>
 <td>06</td>
-<td>517.93</td>
-<td>444.08</td>
-<td>265.67</td>
+<td>517.71</td>
+<td>443.89</td>
+<td>265.56</td>
 <td>0.86</td>
 <td>20.7%</td>
 </tr>
 <tr>
 <td>07</td>
-<td>511.46</td>
-<td>434.40</td>
-<td>269.41</td>
+<td>511.26</td>
+<td>434.20</td>
+<td>269.35</td>
 <td>0.85</td>
 <td>20.5%</td>
 </tr>
 <tr>
 <td>08</td>
-<td>494.24</td>
-<td>421.92</td>
-<td>256.70</td>
+<td>495.54</td>
+<td>422.94</td>
+<td>257.52</td>
 <td>0.85</td>
 <td>19.8%</td>
 </tr>
 <tr>
 <td>09</td>
-<td>523.61</td>
-<td>445.33</td>
-<td>274.88</td>
+<td>523.80</td>
+<td>445.47</td>
+<td>275.03</td>
 <td>0.85</td>
-<td>20.9%</td>
+<td>21.0%</td>
 </tr>
 <tr>
 <td>10</td>
-<td>544.38</td>
-<td>465.83</td>
-<td>281.16</td>
+<td>544.11</td>
+<td>465.56</td>
+<td>281.07</td>
 <td>0.86</td>
 <td>21.8%</td>
 </tr>
 <tr>
 <td>11</td>
-<td>558.47</td>
-<td>478.98</td>
-<td>286.42</td>
+<td>557.22</td>
+<td>477.76</td>
+<td>286.04</td>
 <td>0.86</td>
 <td>22.3%</td>
 </tr>
 <tr>
 <td>12</td>
-<td>539.65</td>
-<td>460.88</td>
-<td>280.29</td>
+<td>539.14</td>
+<td>460.37</td>
+<td>280.16</td>
 <td>0.85</td>
 <td>21.6%</td>
 </tr>
 <tr>
 <td>13</td>
-<td>578.93</td>
-<td>499.77</td>
-<td>291.42</td>
+<td>570.63</td>
+<td>491.85</td>
+<td>288.58</td>
 <td>0.86</td>
-<td>23.2%</td>
+<td>22.8%</td>
 </tr>
 <tr>
 <td>14</td>
-<td>573.93</td>
-<td>485.56</td>
-<td>305.53</td>
+<td>572.60</td>
+<td>484.28</td>
+<td>305.08</td>
 <td>0.85</td>
-<td>23.0%</td>
+<td>22.9%</td>
 </tr>
 <tr>
 <td>15</td>
-<td>588.71</td>
-<td>499.24</td>
-<td>311.50</td>
+<td>586.83</td>
+<td>497.36</td>
+<td>310.99</td>
 <td>0.85</td>
 <td>23.5%</td>
 </tr>
 <tr>
 <td>16</td>
-<td>558.34</td>
-<td>471.84</td>
-<td>298.24</td>
+<td>558.15</td>
+<td>471.66</td>
+<td>298.16</td>
 <td>0.85</td>
 <td>22.3%</td>
 </tr>
 <tr>
 <td>17</td>
-<td>567.78</td>
-<td>481.99</td>
+<td>567.65</td>
+<td>481.84</td>
 <td>299.73</td>
 <td>0.85</td>
 <td>22.7%</td>
 </tr>
 <tr>
 <td>18</td>
-<td>550.02</td>
-<td>471.61</td>
-<td>282.70</td>
+<td>549.92</td>
+<td>471.52</td>
+<td>282.66</td>
 <td>0.86</td>
 <td>22.0%</td>
 </tr>
@@ -1031,27 +1032,27 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>20</td>
-<td>550.53</td>
-<td>476.60</td>
-<td>274.91</td>
+<td>552.13</td>
+<td>477.87</td>
+<td>275.92</td>
 <td>0.87</td>
-<td>22.0%</td>
+<td>22.1%</td>
 </tr>
 <tr>
 <td>21</td>
-<td>533.01</td>
-<td>459.38</td>
-<td>270.01</td>
+<td>533.30</td>
+<td>459.62</td>
+<td>270.16</td>
 <td>0.86</td>
 <td>21.3%</td>
 </tr>
 <tr>
 <td>22</td>
-<td>595.44</td>
-<td>514.94</td>
-<td>298.15</td>
+<td>593.49</td>
+<td>513.12</td>
+<td>297.40</td>
 <td>0.86</td>
-<td>23.8%</td>
+<td>23.7%</td>
 </tr>
 <tr>
 <td>23</td>
@@ -1080,7 +1081,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img src="Patterns/NCDC3b_mar26.png" alt="Pattern Analysis">
+            <img id="patternImageFullscreen" src="Patterns/NCDC3bt_jun26.png" alt="Pattern Analysis">
             <p>NCDC3-North-E - ENERGY Pattern</p>
         </div>
     </div>    
@@ -1105,6 +1106,73 @@ Calculated values are shown above for verification and engineering transparency.
     
     
     <script>
+        function tryPatternImageReload() {
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            if (!inlineImg) return false;
+
+            const currentSrcAttr = (inlineImg.getAttribute('src') || '').trim();
+            if (!currentSrcAttr || currentSrcAttr === '#') return false;
+
+            const retryCount = Number(inlineImg.dataset.patternRetryCount || '0');
+            if (retryCount >= 1) return false;
+
+            const separator = currentSrcAttr.includes('?') ? '&' : '?';
+            const refreshedSrc = `${currentSrcAttr}${separator}v=${Date.now()}`;
+            inlineImg.dataset.patternRetryCount = String(retryCount + 1);
+            inlineImg.setAttribute('src', refreshedSrc);
+            if (fullscreenImg) {
+                fullscreenImg.setAttribute('src', refreshedSrc);
+            }
+            return true;
+        }
+
+        function handlePatternMissing(event) {
+            const container = document.querySelector('.pattern-image-container');
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            const fullsizeBtn = container ? container.querySelector('.fullsize-btn') : null;
+            const caption = container ? container.querySelector('p') : null;
+            const trigger = event && event.target;
+
+            if (trigger && trigger.id && trigger.id !== 'patternImageInline') {
+                return;
+            }
+
+            if (inlineImg && tryPatternImageReload()) {
+                return;
+            }
+
+            if (inlineImg) {
+                inlineImg.style.display = 'none';
+                inlineImg.dataset.patternMissing = 'true';
+            }
+            if (fullscreenImg) {
+                fullscreenImg.style.display = 'none';
+            }
+            if (fullsizeBtn) {
+                fullsizeBtn.style.display = 'none';
+            }
+            if (caption) {
+                caption.textContent = 'Patterns are currently unavailable.';
+            }
+            if (container && !container.querySelector('.pattern-missing-note')) {
+                const note = document.createElement('p');
+                note.className = 'pattern-missing-note';
+                note.style.cssText = 'margin-top: 14px; color: #f3d67a; font-size: 13px;';
+                note.textContent = 'Patterns are currently unavailable.';
+                container.appendChild(note);
+            }
+        }
+
+        (function hidePatternIfMissing() {
+            const inlineImg = document.getElementById('patternImageInline');
+            if (!inlineImg) return;
+            const src = (inlineImg.getAttribute('src') || '').trim();
+            if (!src || src === '#') {
+                handlePatternMissing();
+            }
+        })();
         // If the dashboard HTML isn't available (iframe src is "#"), hide the empty pane.
         (function hideDashboardIfMissing() {
             const iframe = document.querySelector('.dashboard-pane iframe');
@@ -1130,6 +1198,8 @@ Calculated values are shown above for verification and engineering transparency.
         })();
 
         function showFullscreen() {
+            const inlineImg = document.getElementById('patternImageInline');
+            if (!inlineImg || inlineImg.dataset.patternMissing === 'true' || inlineImg.style.display === 'none') return;
             document.getElementById('imageFullscreenOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }

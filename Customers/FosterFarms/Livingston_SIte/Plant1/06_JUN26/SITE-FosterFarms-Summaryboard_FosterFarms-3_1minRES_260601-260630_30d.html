@@ -1654,9 +1654,9 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">142.9 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$31.40</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">30.0 kW</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">142.7 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$31.37</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">29.9 kW</span></div>
 <div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$6.58</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
@@ -1740,8 +1740,8 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">555.6 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$122.12</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">555.7 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$122.14</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">81.4 kW</span></div>
 <div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$17.90</span></div>
 </div>
@@ -1799,7 +1799,7 @@
   <div class="uptime-target" id="xfmr3-target-pattern">690kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
-    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">43.2%</span></div>
+    <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">43.3%</span></div>
     <!-- ElecOps Bar Gauge -->
     <div class="elecops-bar-container">
       <div class="elecops-bar-track">
@@ -1828,8 +1828,8 @@
 <div class="stats">
 <div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">341.3 kW</span></div>
 <div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$75.01</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">50.5 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$11.10</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">50.4 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$11.08</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -2174,8 +2174,8 @@
       
     });
     
-    // Note: Production uptime percentage is now injected by inject_bird_metrics.py
-    // The old energy waste calculation that was overwriting uptime has been removed
+    // Note: Electric Operations (% vs opening-week production baseline) is injected by inject_bird_metrics.py
+    // Legacy energy-waste overwrite behavior has been removed
     
       // Initialize gauges for up to 4 transformers
       for (let i = 1; i <= 4; i++) {
@@ -2313,9 +2313,9 @@
 
   function getAutoSelectionContext(selectionType) {
     if (selectionType === 'baseline' || selectionType === 'mpts') {
-      return currentHowToPath || '';
+      return `${currentHowToPath || ''}|${currentTransformerId || ''}`;
     }
-    if (selectionType === 'summary' || selectionType === 'narrative') {
+    if (selectionType === 'narrative') {
       return currentTransformerId || '';
     }
     return '';
@@ -2703,6 +2703,7 @@
 
       // Use routing helper to resolve filename-safe transformer IDs
       const routing = getTransformerRoutingInfo(transformerName);
+      currentTransformerId = routing.fileIds[0] || transformerId;
 
       // Get month suffix dynamically from the displayed month-year
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
@@ -2742,12 +2743,12 @@
       if (unityHowToBtn) {
         if (type === 'baseline') {
           unityHowToBtn.textContent = '🎧 How to Read the Baseline';
-          currentHowToPath = '../../../../../assets/audio/unity/how-to-read-waste-chart.mp3';
+          currentHowToPath = resolveSharedHowToAudioPath('baseline');
           currentHowToText = FIXED_BASELINE_RESULTS_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else if (type === 'mpts') {
           unityHowToBtn.textContent = '🎧 Understanding the Tuned Energy Field';
-          currentHowToPath = '../../../../../assets/audio/unity/how-to-read-savings-chart.mp3';
+          currentHowToPath = resolveSharedHowToAudioPath('tuned');
           currentHowToText = FIXED_TUNED_FIELD_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else {
@@ -2921,7 +2922,6 @@
   let siteOverviewPlaybackToken = 0;
   let lastAutoSelectionType = '';
   let lastAutoSelectionContext = '';
-  let baselineAutoNarrationPlayed = false;
   const FIXED_BASELINE_RESULTS_TEXT = `Welcome. Before we begin, I'd like to reassure you that this dashboard is much simpler than it may first appear.
 
 Every electrical energy field tells the same basic story.
@@ -2974,6 +2974,33 @@ This tuned field represents the operating condition your facility can achieve wi
 Every future comparison begins with the baseline and demonstrates the measurable improvements shown here.
 
 Thank you for learning with Unity.`;
+  const SHARED_HOWTO_FILENAMES = {
+    baseline: 'how-to-read-waste-chart.mp3',
+    tuned: 'how-to-read-savings-chart.mp3'
+  };
+  function resolveSharedHowToAudioPath(mode) {
+    const normalizedMode = String(mode || '').toLowerCase();
+    const filename = normalizedMode === 'tuned' || normalizedMode === 'savings'
+      ? SHARED_HOWTO_FILENAMES.tuned
+      : SHARED_HOWTO_FILENAMES.baseline;
+    try {
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const sourceScript = scripts.reverse().find((script) => {
+        const src = String(script.getAttribute('src') || '');
+        return src.includes('unity-howto-toggle.js');
+      });
+      const src = String(sourceScript && sourceScript.getAttribute('src') ? sourceScript.getAttribute('src') : '');
+      if (src) {
+        const scriptUrl = new URL(src, window.location.href);
+        return new URL(`../audio/unity/${filename}`, scriptUrl).toString();
+      }
+    } catch (error) {
+      console.warn('Unable to resolve shared how-to audio path from script source:', error);
+    }
+    return normalizedMode === 'tuned'
+      ? 'Audio/unity_tuned_energy_field.mp3'
+      : 'Audio/unity_baseline_results.mp3';
+  }
   const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
 
   function isPlaybackActive() {
@@ -3215,13 +3242,13 @@ Thank you for learning with Unity.`;
 
   function getHowToOpeningText(path) {
     const source = String(path || '').toLowerCase();
-    if (source.includes('unity_baseline_results.mp3')) {
+    if (source.includes('unity_baseline_results.mp3') || source.includes('how-to-read-waste-chart.mp3')) {
       return '';
     }
     if (source.includes('_waste_howto')) {
       return "How to read the baseline view: first orient to layout and operating window, then focus on trend direction, then connect drift to operational strain before planning correction.";
     }
-    if (source.includes('_savings_howto')) {
+    if (source.includes('_savings_howto') || source.includes('how-to-read-savings-chart.mp3') || source.includes('unity_tuned_energy_field.mp3')) {
       return "Understanding the tuned energy field: first orient to the tuned-energy chart, then compare before and after field behavior, then focus on recovery and reliability signals before planning rollout.";
     }
     return "How to read this view: first orient to layout, then review trend direction, then connect that pattern to operational impact.";
@@ -3262,8 +3289,16 @@ Thank you for learning with Unity.`;
     const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
     let howToLabel = 'How to Read';
     if (!currentHowToPath && currentHowToText === FIXED_BASELINE_RESULTS_TEXT) howToLabel = 'How to Read the Baseline';
-    if (currentHowToPath && (currentHowToPath.includes('_waste_howto') || currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3'))) howToLabel = 'How to Read the Baseline';
-    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'Understanding the Tuned Energy Field';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_waste_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-waste-chart.mp3')
+    )) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_savings_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_tuned_energy_field.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-savings-chart.mp3')
+    )) howToLabel = 'Understanding the Tuned Energy Field';
     showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
   }
   function playHowToAudio() {
@@ -3329,10 +3364,7 @@ Thank you for learning with Unity.`;
     }
     if (selectionType === 'baseline') {
       if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
-      if (!baselineAutoNarrationPlayed) {
-        playHowToAudio();
-        baselineAutoNarrationPlayed = true;
-      }
+      playHowToAudio();
       lastAutoSelectionType = selectionType;
       lastAutoSelectionContext = context;
       return;
@@ -3346,9 +3378,9 @@ Thank you for learning with Unity.`;
       return;
     }
 
-    if (selectionType === 'summary' || selectionType === 'narrative') {
+    if (selectionType === 'narrative') {
       if (!currentTransformerId) return;
-      playUnityBrief();
+      speakNarrative();
       lastAutoSelectionType = selectionType;
       lastAutoSelectionContext = context;
     }
@@ -3508,14 +3540,6 @@ Thank you for learning with Unity.`;
       title = `${transformerName} - Energy Field Summary`;
       const summary = (xfmrData && xfmrData.pattern_summary) ? xfmrData.pattern_summary : [];
       content = renderUnityFieldSummaryCard(xfmrNum, transformerName, summary);
-      currentTransformerId = tid;
-      currentNarrativeText = Array.isArray(summary) ? summary.join('\n') : '';
-      currentBriefText =
-        ((xfmrData && (xfmrData.pattern_brief || xfmrData.energy_field_summary_brief)) ||
-         (xfmrData && xfmrData.site_overview_state && xfmrData.site_overview_state.story_blocks && xfmrData.site_overview_state.story_blocks.brief) ||
-         currentNarrativeText ||
-         '');
-      showAudioBtn = true;
     } else {
       title = `${transformerName} - Detailed Narrative`;
       // Prefer new three-part narrative if available
@@ -3539,11 +3563,6 @@ Thank you for learning with Unity.`;
       
       // Store plain text for speech synthesis and transformer ID for MP3
       currentNarrativeText = narrative;
-      currentBriefText =
-        ((xfmrData && (xfmrData.pattern_brief || xfmrData.energy_field_summary_brief)) ||
-         (xfmrData && xfmrData.site_overview_state && xfmrData.site_overview_state.story_blocks && xfmrData.site_overview_state.story_blocks.brief) ||
-         currentNarrativeText ||
-         '');
       currentTransformerId = tid;
       showAudioBtn = true;
       
@@ -3691,7 +3710,7 @@ Thank you for learning with Unity.`;
     const unityHowToBtn = document.getElementById('unityHowToBtn');
     if (showAudioBtn) {
       if (unityBriefBtn) unityBriefBtn.style.display = 'inline-block';
-      if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
+      if (unityExplainsBtn) unityExplainsBtn.style.display = 'inline-block';
       if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     } else {
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
@@ -3703,7 +3722,7 @@ Thank you for learning with Unity.`;
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
-    if (type === 'summary' || type === 'narrative') {
+    if (type === 'narrative') {
       autoStartVoiceForSelection(type);
     }
   }
@@ -3903,6 +3922,217 @@ Thank you for learning with Unity.`;
         </div>
         <p style="text-align: center; color: #6b7280; margin-top: 15px; font-size: 10pt; font-style: italic;">
           Based on eliminating reactive waste through MPTS optimization
+        </p>
+      </div>
+    `;
+    
+    modal.style.display = 'block';
+  }
+
+  // Enhanced Site Summary Modal (untuned consequence breakdown)
+  function showSiteSummaryModal() {
+    const modal = document.getElementById('siteSummaryModal');
+    const body = document.getElementById('siteSummaryBody');
+    
+    // Calculate site-level aggregated metrics from all transformers
+    let totalActivePower = 0;
+    let totalWaste = 0;
+    let totalCost = 0;
+    let totalWasteCost = 0;
+    let pfSum = 0;
+    let transformerCount = 0;
+    let totalCapacity = 0;
+    
+    // Iterate through transformer cards to aggregate data
+    for (let i = 1; i <= 4; i++) {
+      const card = document.getElementById(`xfmr${i}-card`);
+      const nameElement = document.getElementById(`xfmr${i}-name`);
+      
+      // Skip if card doesn't exist or transformer name is empty
+      if (!card || !nameElement || !nameElement.textContent.trim()) continue;
+      
+      transformerCount++;
+      
+      // Get transformer capacity (kVA)
+      const kvaElement = document.getElementById(`xfmr${i}-kva`);
+      if (kvaElement) {
+        const kva = parseFloat(kvaElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kva)) totalCapacity += kva;
+      }
+      
+      // Get active power (kW)
+      const avgKwElement = document.getElementById(`xfmr${i}-avg-kw`);
+      if (avgKwElement) {
+        const kw = parseFloat(avgKwElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kw)) totalActivePower += kw;
+      }
+      
+      // Get reactive waste (kW)
+      const wasteElement = document.getElementById(`xfmr${i}-metric-energy-waste`);
+      if (wasteElement) {
+        const waste = parseFloat(wasteElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(waste)) totalWaste += waste;
+      }
+      
+      // Get active cost per hour
+      const costElement = document.getElementById(`xfmr${i}-xfmr-cost-hour`);
+      if (costElement) {
+        const cost = parseFloat(costElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(cost)) totalCost += cost;
+      }
+      
+      // Get waste cost per hour
+      const wasteCostElement = document.getElementById(`xfmr${i}-xfmr-waste-cost-hour`);
+      if (wasteCostElement) {
+        const wasteCost = parseFloat(wasteCostElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(wasteCost)) totalWasteCost += wasteCost;
+      }
+      
+      // Get power factor
+      const pfElement = document.getElementById(`xfmr${i}-metric-pf`);
+      if (pfElement) {
+        const pf = parseFloat(pfElement.textContent.replace('%', ''));
+        if (!isNaN(pf)) pfSum += pf;
+      }
+    }
+
+    const avgPowerFactor = transformerCount > 0 ? (pfSum / transformerCount) : null;
+    const total480V = totalActivePower + totalWaste; // Total 480V supply = active + reactive
+    const totalCoolingKw = 344.32; // Cooling waste embedded in active power
+    const pfGapToUnity = Number.isFinite(avgPowerFactor) ? Math.max(0, 100 - avgPowerFactor) : null;
+
+    // Financial consequence rollups (untuned condition)
+    const blendedRatePerKwh = totalActivePower > 0 ? (totalCost / totalActivePower) : 0;
+    const reactiveWasteCostPerHour = totalWasteCost;
+    const coolingWasteCostPerHour = totalCoolingKw * blendedRatePerKwh;
+    const untunedConsequencePerHour = reactiveWasteCostPerHour + coolingWasteCostPerHour;
+    const untunedConsequencePerMonth = untunedConsequencePerHour * 730;
+    const untunedConsequencePerYear = untunedConsequencePerHour * 8760;
+    const tuningRecoveryOpportunityPerYear = untunedConsequencePerYear * 0.95;
+
+    const formatMoney = (value) => {
+      const numeric = Number.isFinite(value) ? value : 0;
+      return `$${numeric.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    };
+    const formatPct = (value, digits = 1) => Number.isFinite(value) ? `${value.toFixed(digits)}%` : '--.-%';
+    
+    // Extract data resolution from filename
+    const filename = window.location.pathname.split('/').pop();
+    const resolutionMatch = filename.match(/(\d+min)RES/);
+    const dataResolution = resolutionMatch ? resolutionMatch[1] : '1min';
+    
+    // Format the content with expanded consequence view
+    body.innerHTML = `
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <!-- Left Column -->
+        <div>
+          <h3>Site Overview</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Transformers Monitored</span>
+            <span class="site-metric-value">${transformerCount}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Analysis Period</span>
+            <span class="site-metric-value">${document.getElementById('param-period')?.textContent || 'N/A'}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Data Resolution</span>
+            <span class="site-metric-value">${dataResolution}</span>
+          </div>
+          
+          <h3>Aggregated Power Metrics</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Site Capacity</span>
+            <span class="site-metric-value">${totalCapacity.toLocaleString('en-US')} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Active Power</span>
+            <span class="site-metric-value">${totalActivePower.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Supply (Active + Reactive)</span>
+            <span class="site-metric-value">${total480V.toFixed(1)} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Site Average Power Factor</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <h3>Energy Waste & Consequences</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Unconsumed Energy (Waste)</span>
+            <span class="site-metric-value">${totalWaste.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Waste (embedded in active)</span>
+            <span class="site-metric-value">${totalCoolingKw.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Waste as % of Total Supply</span>
+            <span class="site-metric-value">${total480V > 0 ? ((totalWaste / total480V) * 100).toFixed(1) : 0}%</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Untuned Field Efficiency (PF)</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">PF Gap to Unity</span>
+            <span class="site-metric-value">${formatPct(pfGapToUnity)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Reactive Waste Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(reactiveWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Burden Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(coolingWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Untuned Consequence per Hour</span>
+            <span class="site-metric-value">${formatMoney(untunedConsequencePerHour)}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(93, 112, 26, 0.08) 0%, rgba(178, 210, 53, 0.05) 100%); border: 2px solid #5D701A; border-radius: 10px;">
+        <h3 style="text-align: center; color: #314100; margin-bottom: 15px; font-weight: 700;">Untuned Energy Field Consequences</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; text-align: center;">
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Untuned Field Efficiency</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatPct(avgPowerFactor)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(PF gap ${formatPct(pfGapToUnity)})</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Unconsumed Energy (Hourly)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${totalWaste.toFixed(1)} kW</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive waste)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Reactive Waste Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(reactiveWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(8760 hrs/year)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Cooling Burden Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(coolingWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(derived from active blend rate)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Total Untuned Consequence (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(untunedConsequencePerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive + cooling)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Recovery Opportunity @95% Tuning</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(tuningRecoveryOpportunityPerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(${formatMoney(untunedConsequencePerMonth)}/month untuned)</p>
+          </div>
+        </div>
+        <p style="text-align: center; color: #6b7280; margin-top: 15px; font-size: 10pt; font-style: italic;">
+          All-in consequence tracks the financial burden of current untuned PF behavior (reactive waste + cooling burden).
         </p>
       </div>
     `;
@@ -4353,7 +4583,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
       jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
       jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
-    var periodEl = document.querySelector('.period-value');
+    var periodEl = document.querySelector('.period-value, #month-year');
     var labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
     if (!labelText) labelText = document.title || '';
     var m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
@@ -4371,6 +4601,23 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     var mm = String(dateObj.getMonth() + 1).padStart(2, '0');
     var code = Number(yy + mm);
     return Number.isFinite(code) ? code : null;
+  }
+
+  function normalizeMonthCode(value) {
+    if (value === null || value === undefined) return null;
+    var asText = String(value).trim();
+    if (!/^\d+$/.test(asText)) return null;
+    if (asText.length >= 8) {
+      asText = /^20\d{6}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    } else if (asText.length === 6) {
+      asText = /^20\d{4}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    }
+    var numeric = Number(asText);
+    if (!Number.isFinite(numeric)) return null;
+    var code = Math.floor(numeric);
+    var month = code % 100;
+    if (code < 1000 || month < 1 || month > 12) return null;
+    return code;
   }
 
   function resolveRetentionMonths() {
@@ -4412,21 +4659,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return labels.join(' and ');
   }
 
-  var reportMonthCode = null;
-  if (policy.reportMonthCode !== null && policy.reportMonthCode !== undefined) {
-    var rawPolicyMonthCode = String(policy.reportMonthCode).trim();
-    if (/^\d+$/.test(rawPolicyMonthCode)) {
-      if (rawPolicyMonthCode.length >= 8) rawPolicyMonthCode = rawPolicyMonthCode.slice(0, 6);
-      if (rawPolicyMonthCode.length === 6 && /^20\d{4}$/.test(rawPolicyMonthCode)) {
-        rawPolicyMonthCode = rawPolicyMonthCode.slice(2, 6);
-      }
-      var parsedPolicyMonthCode = Number(rawPolicyMonthCode);
-      var parsedPolicyMonth = parsedPolicyMonthCode % 100;
-      if (Number.isFinite(parsedPolicyMonthCode) && parsedPolicyMonthCode >= 1000 && parsedPolicyMonth >= 1 && parsedPolicyMonth <= 12) {
-        reportMonthCode = parsedPolicyMonthCode;
-      }
-    }
-  }
+  var reportMonthCode = normalizeMonthCode(policy.reportMonthCode);
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||

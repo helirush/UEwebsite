@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** PL1-MShop  
-**Generated:** 2026-05-10 11:11:47  
+**Generated:** 2026-09-10 22:43:45  
 **Data Source:** AN55050287-V-1minRES_43200CLP_260401-260430c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 44.49 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 44.49 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 25.83 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **PL1-MShop Utility Cost Offset:** $8.68/hour
 - **Annual Offset Savings:** $75999/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 159,532 BTU/hr
-- **Total Cooling kW No Longer Needed:** 13.97 kW
-- **Cooling Energy Cost Avoided:** $2.72/hour
-- **Annual Cooling Savings:** $23863/year
+- **Total Heat No Longer Generated:** 92,614 BTU/hr
+- **Total Cooling kW No Longer Needed:** 8.11 kW
+- **Cooling Energy Cost Avoided:** $1.58/hour
+- **Annual Cooling Savings:** $13853/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 58.46 kW
-- **CO2e Emissions Avoided:** 191.18 metric tons/year
-- **Monthly CO2e Reduction:** 15.93 metric tons/month
-- **Hourly CO2e Reduction:** 0.0218 metric tons/hour
+- **Total kW Waste Eliminated:** 52.60 kW
+- **CO2e Emissions Avoided:** 172.01 metric tons/year
+- **Monthly CO2e Reduction:** 14.33 metric tons/month
+- **Hourly CO2e Reduction:** 0.0196 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $7360/year
+- **Annual CO2e Value:** $6623/year
 
 ### Total PL1-MShop Unity Savings
 
-- **Per Hour:** $12.24
-- **Per Day:** $293.76
-- **Per Month:** $8812.79
-- **Per Year:** $107222
+- **Per Hour:** $11.01
+- **Per Day:** $264.31
+- **Per Month:** $7929.45
+- **Per Year:** $96475
 
 ### PL1-MShop Savings Breakdown
 

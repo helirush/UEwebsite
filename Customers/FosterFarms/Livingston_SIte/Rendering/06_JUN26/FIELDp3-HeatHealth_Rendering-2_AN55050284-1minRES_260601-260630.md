@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** Rendering-2  
-**Generated:** 2026-07-06 12:41:48  
+**Generated:** 2026-09-10 20:07:15  
 **Data Source:** AN55050284-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 340,430.26
+- **Device Zone BTU/hr:** 265,494.97
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 132,774.78
+- **Field Zone BTU/hr:** 103,548.48
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 473,205.04 BTU/hr
+- **Total Heat Generated:** 369,043.44 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 429.07 kW
+- **Baseline Cooling Load:** 334.63 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 138.02 kW
+- **Climate Adjusted Cooling:** 107.64 kW
   - *Cooling load adjusted for temperature (77.1°F) and humidity (41.9%)*
 - **Climate Burden Multiplier:** 1.005
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 138.02 kW
+- **Total Cooling Load Avoided:** 107.64 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $34,914.29
+- **Electrical-Energy Waste Cost:** $56,735.71
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $145,084.67/year
+- **Cooling Cost Avoided:** $183,866.67/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-19,173.30/year climate/impedance bonus)
+  (Includes $-24,298.44/year climate/impedance bonus)
 
 ---
 

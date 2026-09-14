@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** Rendering-2  
-**Generated:** 2026-08-02 22:17:34  
+**Generated:** 2026-09-10 19:33:39  
 **Data Source:** AN55050284-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 223,886.95
+- **Device Zone BTU/hr:** 242,055.32
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 82,067.24
+- **Field Zone BTU/hr:** 94,342.99
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 305,954.19 BTU/hr
+- **Total Heat Generated:** 336,398.31 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 274.39 kW
+- **Baseline Cooling Load:** 301.20 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 89.24 kW
+- **Climate Adjusted Cooling:** 98.12 kW
   - *Cooling load adjusted for temperature (82.5°F) and humidity (31.4%)*
 - **Climate Burden Multiplier:** 1.019
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 89.24 kW
+- **Total Cooling Load Avoided:** 98.12 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $49,206.91
+- **Electrical-Energy Waste Cost:** $53,537.00
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $152,434.02/year
+- **Cooling Cost Avoided:** $167,602.05/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-24,900.62/year climate/impedance bonus)
+  (Includes $-24,557.54/year climate/impedance bonus)
 
 ---
 

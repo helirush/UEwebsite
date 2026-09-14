@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** T12 Main  
-**Generated:** 2026-07-18 11:54:12  
+**Generated:** 2026-09-10 20:03:41  
 **Data Source:** AN54021613-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 202.27 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 202.27 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 135.33 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.3500/kWh (all-inclusive)
 - **T12 Main Utility Cost Offset:** $70.80/hour
 - **Annual Offset Savings:** $620169/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 806,628 BTU/hr
-- **Total Cooling kW No Longer Needed:** 71.83 kW
-- **Cooling Energy Cost Avoided:** $25.14/hour
-- **Annual Cooling Savings:** $220220/year
+- **Total Heat No Longer Generated:** 539,677 BTU/hr
+- **Total Cooling kW No Longer Needed:** 48.06 kW
+- **Cooling Energy Cost Avoided:** $16.82/hour
+- **Annual Cooling Savings:** $147339/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 274.10 kW
-- **CO2e Emissions Avoided:** 896.35 metric tons/year
-- **Monthly CO2e Reduction:** 74.70 metric tons/month
-- **Hourly CO2e Reduction:** 0.1023 metric tons/hour
+- **Total kW Waste Eliminated:** 250.33 kW
+- **CO2e Emissions Avoided:** 818.62 metric tons/year
+- **Monthly CO2e Reduction:** 68.22 metric tons/month
+- **Hourly CO2e Reduction:** 0.0934 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $34510/year
+- **Annual CO2e Value:** $31517/year
 
 ### Total T12 Main Unity Savings
 
-- **Per Hour:** $99.87
-- **Per Day:** $2396.98
-- **Per Month:** $71909.45
-- **Per Year:** $874898
+- **Per Hour:** $91.21
+- **Per Day:** $2189.11
+- **Per Month:** $65673.24
+- **Per Year:** $799024
 
 ### T12 Main Savings Breakdown
 

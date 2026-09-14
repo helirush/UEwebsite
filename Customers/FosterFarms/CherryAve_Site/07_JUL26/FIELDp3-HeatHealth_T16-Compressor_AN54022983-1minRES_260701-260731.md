@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** T16 Compressor  
-**Generated:** 2026-08-04 12:55:01  
+**Generated:** 2026-09-10 19:24:16  
 **Data Source:** AN54022983-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period

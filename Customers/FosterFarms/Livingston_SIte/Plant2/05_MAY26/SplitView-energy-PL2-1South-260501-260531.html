@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="patterns/PL2Sbt_may26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
+            <img id="patternImageInline" src="Patterns/PL21bt_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>PL2-1South - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -553,7 +553,7 @@
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> PL2-1South<br />
-<strong>Generated:</strong> 2026-06-18 23:49:44<br />
+<strong>Generated:</strong> 2026-09-10 21:11:34<br />
 <strong>Data Source:</strong> AN55050400-V-1minRES_44640CLP_260501-260531c.csv  </p>
 <h2>Time Period</h2>
 <ul>
@@ -593,33 +593,34 @@
 <p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
 <h3>Element 1: Reactive Energy Offset Savings</h3>
 <ul>
-<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 144.73 kW/hr</li>
+<li><strong>Total Non-Active Field Burden (kVA - kW):</strong> 144.73 kW/hr</li>
+<li><strong>Heat-Coupled Burden Used in Thermal Model:</strong> 86.57 kW/hr (modeled_non_active_field_burden)</li>
 <li><strong>Blended Electricity Rate:</strong> $0.1950/kWh (all-inclusive)</li>
 <li><strong>PL2-1South Utility Cost Offset:</strong> $28.22/hour</li>
 <li><strong>Annual Offset Savings:</strong> $247235/year</li>
 </ul>
 <h3>Element 2: Cooling Elimination Savings</h3>
 <ul>
-<li><strong>Total Heat No Longer Generated:</strong> 523,989 BTU/hr</li>
-<li><strong>Total Cooling kW No Longer Needed:</strong> 45.85 kW</li>
-<li><strong>Cooling Energy Cost Avoided:</strong> $8.94/hour</li>
-<li><strong>Annual Cooling Savings:</strong> $78319/year</li>
+<li><strong>Total Heat No Longer Generated:</strong> 313,415 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 27.42 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $5.35/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $46845/year</li>
 </ul>
 <h3>Element 3: CO2e Emissions Reduction Value</h3>
 <ul>
-<li><strong>Total kW Waste Eliminated:</strong> 190.58 kW</li>
-<li><strong>CO2e Emissions Avoided:</strong> 623.24 metric tons/year</li>
-<li><strong>Monthly CO2e Reduction:</strong> 51.94 metric tons/month</li>
-<li><strong>Hourly CO2e Reduction:</strong> 0.0711 metric tons/hour</li>
+<li><strong>Total kW Waste Eliminated:</strong> 172.16 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 562.99 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 46.92 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0643 metric tons/hour</li>
 <li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
-<li><strong>Annual CO2e Value:</strong> $23995/year</li>
+<li><strong>Annual CO2e Value:</strong> $21675/year</li>
 </ul>
 <h3>Total PL2-1South Unity Savings</h3>
 <ul>
-<li><strong>Per Hour:</strong> $39.90</li>
-<li><strong>Per Day:</strong> $957.67</li>
-<li><strong>Per Month:</strong> $28730.08</li>
-<li><strong>Per Year:</strong> $349549</li>
+<li><strong>Per Hour:</strong> $36.05</li>
+<li><strong>Per Day:</strong> $865.08</li>
+<li><strong>Per Month:</strong> $25952.52</li>
+<li><strong>Per Year:</strong> $315756</li>
 </ul>
 <h3>PL2-1South Savings Breakdown</h3>
 <h3>Unity System (MPTS) Installation Considerations</h3>
@@ -1080,7 +1081,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="patterns/PL2Sbt_may26.png" alt="Pattern Analysis">
+            <img id="patternImageFullscreen" src="Patterns/PL21bt_apr26.png" alt="Pattern Analysis">
             <p>PL2-1South - ENERGY Pattern</p>
         </div>
     </div>    

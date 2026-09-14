@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** NCDC3 North E  
-**Generated:** 2026-08-02 22:15:17  
+**Generated:** 2026-09-10 19:29:20  
 **Data Source:** AN55050395-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 50,768.83
+- **Device Zone BTU/hr:** 50,624.88
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 9,377.49
+- **Field Zone BTU/hr:** 9,352.88
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 60,146.32 BTU/hr
+- **Total Heat Generated:** 59,977.77 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 54.04 kW
+- **Baseline Cooling Load:** 53.91 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 17.54 kW
-  - *Cooling load adjusted for temperature (82.5°F) and humidity (31.4%)*
-- **Climate Burden Multiplier:** 1.019
+- **Climate Adjusted Cooling:** 17.49 kW
+  - *Cooling load adjusted for temperature (82.3°F) and humidity (31.5%)*
+- **Climate Burden Multiplier:** 1.018
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 17.54 kW
+- **Total Cooling Load Avoided:** 17.49 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $12,614.79
+- **Electrical-Energy Waste Cost:** $12,595.49
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $29,966.40/year
+- **Cooling Cost Avoided:** $29,882.42/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-5,264.54/year climate/impedance bonus)
+  (Includes $-5,210.23/year climate/impedance bonus)
 
 ---
 

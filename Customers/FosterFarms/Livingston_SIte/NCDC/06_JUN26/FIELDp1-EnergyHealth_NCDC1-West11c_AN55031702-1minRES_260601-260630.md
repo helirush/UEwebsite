@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** NCDC1 West11c  
-**Generated:** 2026-07-07 01:38:59  
+**Generated:** 2026-09-10 20:05:41  
 **Data Source:** AN55031702-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 77.93 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 77.93 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 47.49 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **NCDC1 West11c Utility Cost Offset:** $15.20/hour
 - **Annual Offset Savings:** $133123/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 284,289 BTU/hr
-- **Total Cooling kW No Longer Needed:** 25.03 kW
-- **Cooling Energy Cost Avoided:** $4.88/hour
-- **Annual Cooling Savings:** $42760/year
+- **Total Heat No Longer Generated:** 173,224 BTU/hr
+- **Total Cooling kW No Longer Needed:** 15.25 kW
+- **Cooling Energy Cost Avoided:** $2.97/hour
+- **Annual Cooling Savings:** $26055/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 102.96 kW
-- **CO2e Emissions Avoided:** 336.71 metric tons/year
-- **Monthly CO2e Reduction:** 28.06 metric tons/month
-- **Hourly CO2e Reduction:** 0.0384 metric tons/hour
+- **Total kW Waste Eliminated:** 93.18 kW
+- **CO2e Emissions Avoided:** 304.73 metric tons/year
+- **Monthly CO2e Reduction:** 25.39 metric tons/month
+- **Hourly CO2e Reduction:** 0.0348 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $12795/year
+- **Annual CO2e Value:** $11580/year
 
 ### Total NCDC1 West11c Unity Savings
 
-- **Per Hour:** $21.54
-- **Per Day:** $516.93
-- **Per Month:** $15507.80
-- **Per Year:** $188678
+- **Per Hour:** $19.49
+- **Per Day:** $467.83
+- **Per Month:** $14034.87
+- **Per Year:** $170758
 
 ### NCDC1 West11c Savings Breakdown
 

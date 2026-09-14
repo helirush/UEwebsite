@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** Deli F  
-**Generated:** 2026-08-02 21:24:19  
+**Generated:** 2026-09-10 19:27:52  
 **Data Source:** AN55050323-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period

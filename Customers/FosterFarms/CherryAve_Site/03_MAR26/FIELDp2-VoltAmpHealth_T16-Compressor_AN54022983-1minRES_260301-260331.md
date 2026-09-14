@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** T16 Compressor  
-**Generated:** 2026-04-17 11:16:37  
+**Generated:** 2026-09-10 22:46:27  
 **Data Source:** AN54022983-V-1minRES_44580CLP_260301-260331c.csv  
 
 ## 📊 Analysis Period
@@ -28,16 +28,16 @@
 <summary><strong>Basic Voltage Metrics</strong></summary>
 
 - **Total Voltage Readings Analyzed:** 44,580
-- **Average Voltage:** 475.0V
-- **Minimum Voltage:** 455.9V
-- **Maximum Voltage:** 501.7V
-- **Standard Deviation:** 11.09V
+- **Average Voltage:** 480.0V
+- **Minimum Voltage:** 480.0V
+- **Maximum Voltage:** 480.0V
+- **Standard Deviation:** 0.00V
 
 </details>
 
 ### Operating Mean Voltage vs Nominal (480V)
 
-- **Operating Mean:** 475.0V (5.0V, 1.05% below nominal)
+- **Operating Mean:** 480.0V (0.0V, 0.00% at nominal)
 
 *📌 Note: Lower mean voltage for the same kW raises current, increasing BTU/hr and contributing to higher VHI.*
 

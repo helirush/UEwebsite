@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** T10 Air Chiller  
-**Generated:** 2026-05-08 17:41:11  
+**Generated:** 2026-09-10 22:41:52  
 **Data Source:** AN53111387-V-1minRES_43200CLP_260401-260430c.csv  
 
 ## 📊 Analysis Period
@@ -28,16 +28,16 @@
 <summary><strong>Basic Voltage Metrics</strong></summary>
 
 - **Total Voltage Readings Analyzed:** 43,200
-- **Average Voltage:** 457.0V
-- **Minimum Voltage:** 0.0V
-- **Maximum Voltage:** 485.4V
-- **Standard Deviation:** 16.95V
+- **Average Voltage:** 480.0V
+- **Minimum Voltage:** 480.0V
+- **Maximum Voltage:** 480.0V
+- **Standard Deviation:** 0.00V
 
 </details>
 
 ### Operating Mean Voltage vs Nominal (480V)
 
-- **Operating Mean:** 457.0V (23.0V, 4.78% below nominal)
+- **Operating Mean:** 480.0V (0.0V, 0.00% at nominal)
 
 *📌 Note: Lower mean voltage for the same kW raises current, increasing BTU/hr and contributing to higher VHI.*
 

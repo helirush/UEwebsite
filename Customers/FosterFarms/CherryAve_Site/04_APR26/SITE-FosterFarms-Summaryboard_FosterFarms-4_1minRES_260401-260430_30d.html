@@ -11,6 +11,7 @@
 <head>
 <meta charset="utf-8"/>
 <title id="page-title">Unity Energy – Summaryboard – FosterFarms</title>
+<!-- MEDIA POLICY: archive >60 days; Audio/Images removed; Unity placeholder in Audio/site_overview.* -->
 <style>
     :root {
       --unity-ltylo: rgba(250, 240, 160, 1);
@@ -434,6 +435,34 @@
       text-transform: lowercase;
       letter-spacing: 1px;
       pointer-events: none;
+    }
+    /* Side metric readability tuning (Rendering May) */
+    .siteboard-container .gauge-side-metric {
+      top: calc(50% + 40px) !important;
+      transform: translateY(-50%) !important;
+      min-width: 138px !important;
+      gap: 6px !important;
+    }
+    .siteboard-container .gauge-side-left {
+      left: -120px !important;
+    }
+    .siteboard-container .gauge-side-right {
+      right: -120px !important;
+    }
+    .siteboard-container .gauge-side-label {
+      line-height: 1.02 !important;
+      white-space: normal !important;
+      text-align: center !important;
+    }
+    .siteboard-container .gauge-side-label span {
+      display: block;
+      white-space: nowrap;
+    }
+    .siteboard-container .gauge-side-value {
+      width: 100%;
+      text-align: center;
+      border-top: 1.5px solid rgba(255, 255, 255, 0.78);
+      padding-top: 6px;
     }
 
     .gauge-unit {
@@ -1583,7 +1612,7 @@
   <!-- Back Navigation - Top -->
 <div style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 18px; padding: 10px 0; margin-bottom: 10px;">
   <a id="groupBackLink" href="../../../index.html?group=deli#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Groups</a>
-  <a id="cherrySiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Cherry Avenue</a>
+  <a id="livingstonSiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Livingston</a>
   <a id="siteBackLink" href="../../../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Foster Farms</a>
   <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; Unity Home</a>
 </div>
@@ -1612,8 +1641,8 @@
     const groupLink = document.getElementById('groupBackLink');
     if (groupLink) groupLink.href = `${siteBase}index.html?group=${encodeURIComponent(groupSegment)}#libraries`;
 
-    const cherryLink = document.getElementById('cherrySiteLink');
-    if (cherryLink) cherryLink.href = `${siteBase}index.html#page-top`;
+    const livingstonLink = document.getElementById('livingstonSiteLink');
+    if (livingstonLink) livingstonLink.href = `${siteBase}index.html#page-top`;
 
     const backLink = document.getElementById('siteBackLink');
     if (backLink) backLink.href = `${siteBase}../index.html`;
@@ -1725,12 +1754,12 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">88.0%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">89.0%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">1200kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">1105.7kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr1-production-direction">↑</span> <span id="xfmr1-uptime-pct">3.4%</span></div>
@@ -1748,10 +1777,10 @@
   </div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">133.7 Watts</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr1-energy-per-bird">133.8 Watts</span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr1-cost-per-bird">2.6¢</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr1-production-birds">802,763 birds</span></div>
+  <div class="bird-metric"><span id="xfmr1-production-birds">802,795 birds</span></div>
   <div class="bird-metric site-output-pct"><span id="xfmr1-site-percent">19% of site output</span></div>
 </div>
 <div class="pattern-buttons">
@@ -1760,10 +1789,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">668.1 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$233.83</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">91.1 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$31.89</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">668.6 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$234.00</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">91.2 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$31.91</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1850,12 +1879,12 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">84.8%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">84.3%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">1702.6kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">1567.3kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr2-production-direction">→</span> <span id="xfmr2-uptime-pct">0.2%</span></div>
@@ -1873,10 +1902,10 @@
   </div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">223.3 Watts</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr2-energy-per-bird">223.5 Watts</span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr2-cost-per-bird">4.2¢</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr2-production-birds">1,292,907 birds</span></div>
+  <div class="bird-metric"><span id="xfmr2-production-birds">1,293,055 birds</span></div>
   <div class="bird-metric site-output-pct"><span id="xfmr2-site-percent">30% of site output</span></div>
 </div>
 <div class="pattern-buttons">
@@ -1885,10 +1914,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">1076.0 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$376.60</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">192.0 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$67.21</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">1076.9 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$376.90</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">192.2 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$67.27</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1975,12 +2004,12 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">84.5%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">82.0%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">1470.3kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr3-target-pattern">1273.9kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr3-production-direction">→</span> <span id="xfmr3-uptime-pct">0.9%</span></div>
@@ -1998,10 +2027,10 @@
   </div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird">164.3 Watts</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr3-energy-per-bird">164.4 Watts</span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr3-cost-per-bird">3.1¢</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr3-production-birds">946,018 birds</span></div>
+  <div class="bird-metric"><span id="xfmr3-production-birds">945,950 birds</span></div>
   <div class="bird-metric site-output-pct"><span id="xfmr3-site-percent">22% of site output</span></div>
 </div>
 <div class="pattern-buttons">
@@ -2010,10 +2039,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">787.3 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$275.55</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">145.6 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$50.96</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">787.8 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$275.73</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">145.7 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$51.00</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -2105,7 +2134,7 @@
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr4-target-pattern">1473.9kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr4-target-pattern">1354.2kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr4-production-direction">→</span> <span id="xfmr4-uptime-pct">0.2%</span></div>
@@ -2123,10 +2152,10 @@
   </div>
 </div>
 <div class="bird-metrics">
-  <div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird">195.6 Watts</span></div>
+  <div class="bird-metric">Energy per Bird: <span id="xfmr4-energy-per-bird">195.8 Watts</span></div>
   <div class="bird-metric">Cost per Bird: <span id="xfmr4-cost-per-bird">3.8¢</span></div>
   <div class="bird-metric">Production Level</div>
-  <div class="bird-metric"><span id="xfmr4-production-birds">1,183,310 birds</span></div>
+  <div class="bird-metric"><span id="xfmr4-production-birds">1,183,197 birds</span></div>
   <div class="bird-metric site-output-pct"><span id="xfmr4-site-percent">28% of site output</span></div>
 </div>
 <div class="pattern-buttons">
@@ -2135,10 +2164,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr4-avg-kw">984.8 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr4-xfmr-cost-hour">$344.67</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr4-metric-energy-waste">126.2 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr4-xfmr-waste-cost-hour">$44.17</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr4-avg-kw">985.4 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr4-xfmr-cost-hour">$344.88</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr4-metric-energy-waste">126.3 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr4-xfmr-waste-cost-hour">$44.20</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -2183,11 +2212,11 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
-  const scriptVersion = '20260712b';
+  const scriptVersion = window.__unitySideMetricsVersion || '20260712a';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-    candidateSrcs.push(`${prefix}assets/js/${scriptName}?v=${scriptVersion}`);
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
   }
   const head = document.head || document.getElementsByTagName('head')[0];
   if (!head) return;
@@ -2195,7 +2224,8 @@
     if (index >= candidateSrcs.length) return;
     const src = candidateSrcs[index];
     const script = document.createElement('script');
-    script.src = src;
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
     script.async = false;
     script.onload = () => {
       window.__unitySideMetricsLoaderSrc = src;
@@ -2396,8 +2426,8 @@
       
     });
     
-    // Note: Production uptime percentage is now injected by inject_bird_metrics.py
-    // The old energy waste calculation that was overwriting uptime has been removed
+    // Note: Electric Operations (% vs opening-week production baseline) is injected by inject_bird_metrics.py
+    // Legacy energy-waste overwrite behavior has been removed
     
       // Initialize gauges for up to 4 transformers
       for (let i = 1; i <= 4; i++) {
@@ -2418,8 +2448,8 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
-      // Dynamically bind PF bubble value (prevents stale hardcoded text).
-      if (pfEl) {
+      // Legacy PF fallback only when shared side-metrics enhancer is unavailable.
+      if (pfEl && !window.__unitySideMetricsEnhancerLoaded) {
         const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
         if (resolvedPfPct !== null) {
           pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
@@ -2627,6 +2657,16 @@
     } else {
       pfEl.style.color = 'rgba(245, 248, 255, 0.96)';
     }
+  }
+
+  function getAutoSelectionContext(selectionType) {
+    if (selectionType === 'baseline' || selectionType === 'mpts') {
+      return `${currentHowToPath || ''}|${currentTransformerId || ''}`;
+    }
+    if (selectionType === 'narrative') {
+      return currentTransformerId || '';
+    }
+    return '';
   }
 
   // Apply EFSI color classes based on percentage values
@@ -2997,21 +3037,22 @@
 
       // Use routing helper to resolve filename-safe transformer IDs
       const routing = getTransformerRoutingInfo(transformerName);
+      currentTransformerId = routing.fileIds[0] || transformerId;
 
       // Get month suffix dynamically from the displayed month-year
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
       // Prefix mapping:
-      // baseline -> bt first, then b fallback
-      // mpts -> s first, then m fallback
-      // mpts-vars -> bt
-      // voltage -> v
-      let prefixCandidates = ['bt', 'b'];
+      // baseline -> tuned baseline chain (tbt/tb), then legacy fallbacks
+      // mpts -> tuned simulator/harmonized (sb/tm), then legacy fallbacks
+      // mpts-vars -> Base Target (BT family only; no baseline fallback)
+      // voltage -> tuned voltage (tv), then legacy fallback
+      let prefixCandidates = ['tbt', 'tb', 'bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
-      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['sb', 'tm', 's', 'm']; patternLabel = 'Tuned Energy'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt', 'tbt', 'tb']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['tv', 'v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
       let candidates = buildPatternCandidates(
@@ -3033,15 +3074,18 @@
       const howToBtn = document.getElementById('unityHowToBtn');
       if (howToBtn) {
         if (type === 'baseline') {
-          howToBtn.textContent = '🎧 How to Read Waste';
-          currentHowToPath = `Patterns/${routing.keys[0]}_waste_howto.mp3`;
+          howToBtn.textContent = '🎧 How to Read the Baseline';
+          currentHowToPath = resolveSharedHowToAudioPath('baseline');
+          currentHowToText = FIXED_BASELINE_RESULTS_TEXT;
           howToBtn.style.display = 'inline-block';
         } else if (type === 'mpts') {
-          howToBtn.textContent = '🎧 How to Read Savings';
-          currentHowToPath = `Patterns/${routing.keys[0]}_savings_howto.mp3`;
+          howToBtn.textContent = '🎧 Understanding the Tuned Energy Field';
+          currentHowToPath = resolveSharedHowToAudioPath('tuned');
+          currentHowToText = FIXED_TUNED_FIELD_TEXT;
           howToBtn.style.display = 'inline-block';
         } else {
           currentHowToPath = '';
+          currentHowToText = '';
           howToBtn.style.display = 'none';
         }
       }
@@ -3071,6 +3115,9 @@
       initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
+      if (type === 'baseline' || type === 'mpts') {
+        autoStartVoiceForSelection(type);
+      }
     } catch (error) {
       console.error('Error in viewPattern:', error);
       alert('Error opening pattern: ' + error.message);
@@ -3110,6 +3157,7 @@
       overlay.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
+    if (isPlaybackActive()) stopCurrentPlayback();
   }
   
   // Close fullscreen on ESC key
@@ -3117,6 +3165,12 @@
     if (event.key === 'Escape') {
       closePatternFullscreen();
     }
+  });
+  window.addEventListener('pagehide', function() {
+    if (isPlaybackActive()) stopCurrentPlayback();
+  });
+  window.addEventListener('beforeunload', function() {
+    if (isPlaybackActive()) stopCurrentPlayback();
   });
 
   function viewDetail(transformerId, detailType) {
@@ -3157,184 +3211,7 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-  "transformers": {
-    "T10": {
-      "pattern_text": "PART 1: NARRATION READY\nLooking at your T10 air chiller field, you're operating at 88.9% power factor with approximately 576 kVAR of reactive demand creating about $23,000 in annual electromagnetic waste. The voltage stays stable at 468.5 volts, but you're seeing significant current spikes above 1,800 amps during cooling cycles \u2014 that's reactive stress showing up as electromagnetic turbulence.\n\nYour field operates with classic food processing refrigeration behavior. Consistent weekday production blocks running well above your supply target, complete shutdown on weekends. During peak cooling periods, roughly 45% of your transformer's work is electromagnetic overhead rather than productive refrigeration.\n\nThe reactive component creates 5.4% harmonic distortion with peaks reaching 10.3% during high-demand cycles. This electromagnetic turbulence adds thermal burden to your transformer and represents energy your cooling equipment processes but can't use productively.\n\nMPTS correction would elevate your power factor to 99.5%, essentially eliminating that reactive stress. You'd need approximately two H490 units \u2014 estimated installed investment of about $400,000 with roughly 17-month payback on waste elimination. The field would operate in electromagnetic harmony, with supplied power closely matching consumed power.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nYour T10 air chiller runs at 88.9% power factor, burning about $23,000 annually in electromagnetic waste through reactive power demands hitting 576 kVAR maximum. You're seeing classic industrial refrigeration stress \u2014 current spikes during cooling cycles, harmonic distortion at 5.4%, and roughly 45% of transformer work going to electromagnetic overhead rather than productive cooling. MPTS correction with two H490 units would cost approximately $400,000 installed, eliminate reactive stress, and pay back in roughly 17 months through waste elimination. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: ENGINEERING DETAILED\nYour T10 air chiller field presents a textbook case of industrial refrigeration electromagnetic inefficiency. Operating at 88.9% power factor with approximately 576 kVAR maximum reactive demand, you're experiencing about $23,000 in annual electromagnetic waste costs \u2014 manageable but completely unnecessary.\n\nThe voltage quality analysis shows 468.5-volt operation with moderate amplitude variability that directly tracks your cooling load cycles. Those current traces reveal the story \u2014 significant amperage spikes exceeding 1,800 amps during peak cooling events. These surges aren't random; they're reactive stress signatures correlating precisely with refrigeration equipment startup and cycling patterns.\n\nYour reactive and harmonic profile shows the electromagnetic turbulence beneath the surface. That 576 kVAR reactive component dominates during cooling cycles, creating 5.4% iTHD harmonic distortion with peaks reaching 10.3% during high-demand periods. This represents electromagnetic overhead \u2014 energy your transformer must process but your cooling equipment cannot use productively.\n\nOperationally, you're running about 75% Electric Operations efficiency during production periods, consistently 200-400 kVA above your supply target when cooling demands peak. The weekend shutdown valleys provide perfect baseline reference, showing clean operation when reactive loads disappear.\n\nMPTS correction would transform this electromagnetic landscape completely. Power factor elevation to 99.5% eliminates reactive stress, bringing supplied power into harmony with consumed power. Based on your 576 kVAR peak demand, you'd need approximately two H490 units with an estimated installed investment of about $400,000. The payback runs roughly 17 months through waste elimination \u2014 not including thermal burden reduction and equipment longevity benefits.\n\nEngineering attention should focus on reactive power compensation during those peak demand cycles and transformer thermal loading assessment during equipment startup sequences. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Looking at your T10 air chiller field, you're operating at 88.9% power factor with approximately 576 kVAR of reactive demand creating about $23,000 in annual electromagnetic waste. The voltage stays stable at 468.5 volts, but you're seeing significant current spikes above 1,800 amps during cooling cycles \u2014 that's reactive stress showing up as electromagnetic turbulence.\n\nYour field operates with classic food processing refrigeration behavior. Consistent weekday production blocks running well above your supply target, complete shutdown on weekends. During peak cooling periods, roughly 45% of your transformer's work is electromagnetic overhead rather than productive refrigeration.\n\nThe reactive component creates 5.4% harmonic distortion with peaks reaching 10.3% during high-demand cycles. This electromagnetic turbulence adds thermal burden to your transformer and represents energy your cooling equipment processes but can't use productively.\n\nMPTS correction would elevate your power factor to 99.5%, essentially eliminating that reactive stress. You'd need approximately two H490 units \u2014 estimated installed investment of about $400,000 with roughly 17-month payback on waste elimination. The field would operate in electromagnetic harmony, with supplied power closely matching consumed power.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part2": "Your T10 air chiller runs at 88.9% power factor, burning about $23,000 annually in electromagnetic waste through reactive power demands hitting 576 kVAR maximum. You're seeing classic industrial refrigeration stress \u2014 current spikes during cooling cycles, harmonic distortion at 5.4%, and roughly 45% of transformer work going to electromagnetic overhead rather than productive cooling. MPTS correction with two H490 units would cost approximately $400,000 installed, eliminate reactive stress, and pay back in roughly 17 months through waste elimination. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "pattern_part3": "Your T10 air chiller field presents a textbook case of industrial refrigeration electromagnetic inefficiency. Operating at 88.9% power factor with approximately 576 kVAR maximum reactive demand, you're experiencing about $23,000 in annual electromagnetic waste costs \u2014 manageable but completely unnecessary.\n\nThe voltage quality analysis shows 468.5-volt operation with moderate amplitude variability that directly tracks your cooling load cycles. Those current traces reveal the story \u2014 significant amperage spikes exceeding 1,800 amps during peak cooling events. These surges aren't random; they're reactive stress signatures correlating precisely with refrigeration equipment startup and cycling patterns.\n\nYour reactive and harmonic profile shows the electromagnetic turbulence beneath the surface. That 576 kVAR reactive component dominates during cooling cycles, creating 5.4% iTHD harmonic distortion with peaks reaching 10.3% during high-demand periods. This represents electromagnetic overhead \u2014 energy your transformer must process but your cooling equipment cannot use productively.\n\nOperationally, you're running about 75% Electric Operations efficiency during production periods, consistently 200-400 kVA above your supply target when cooling demands peak. The weekend shutdown valleys provide perfect baseline reference, showing clean operation when reactive loads disappear.\n\nMPTS correction would transform this electromagnetic landscape completely. Power factor elevation to 99.5% eliminates reactive stress, bringing supplied power into harmony with consumed power. Based on your 576 kVAR peak demand, you'd need approximately two H490 units with an estimated installed investment of about $400,000. The payback runs roughly 17 months through waste elimination \u2014 not including thermal burden reduction and equipment longevity benefits.\n\nEngineering attention should focus on reactive power compensation during those peak demand cycles and transformer thermal loading assessment during equipment startup sequences. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "**Field Condition Summary:** Your T10 air chiller operates at 88.9% power factor with approximately $23,000 annual electromagnetic waste costs \u2014 typical industrial refrigeration inefficiency but fully correctable.\n\n**Voltage Stability Findings:** Voltage maintains 468.5 volts with moderate variability tracking cooling cycles. Current spikes above 1,800 amps during peak events indicate reactive stress during equipment cycling.\n\n**Reactive Harmonic Findings:** Field carries approximately 576 kVAR maximum reactive demand with 5.4% harmonic distortion. This reactive component creates electromagnetic turbulence and transformer thermal stress.\n\n**Operational Stress Interpretation:** Running 75% Electric Operations efficiency with 45% of transformer work as electromagnetic overhead rather than productive cooling during peak periods.\n\n**Simulated MPTS Outcome:** Power factor elevation to 99.5% would eliminate reactive stress, reducing annual waste by 80-85%. Estimated two H490 units, about $400,000 installed, roughly 17-month payback.\n\n**Engineering Attention Areas:** Reactive compensation for 576 kVAR peak demand, transformer thermal monitoring during startup sequences, power quality assessment during surge events.",
-      "field_condition_summary": "Your T10 air chiller field operates at 88.9% power factor with approximately 576 kVAR maximum reactive demand against a 1,381.8 kVA supply target. You're experiencing roughly $23,000 in annual electromagnetic waste costs \u2014 typical for industrial refrigeration but correctable. The field shows classic food processing cooling behavior with substantial reactive component stress during peak demand cycles.",
-      "voltage_stability_findings": "The voltage field maintains 468.5 volts with moderate amplitude variability that tracks your cooling load cycles. You're seeing consistent voltage delivery with periodic fluctuations during equipment cycling. Current traces reveal significant load turbulence with amperage spikes above 1,800 amps during peak cooling events \u2014 these surges indicate reactive stress moments correlating with your refrigeration equipment startup and cycling patterns.",
-      "reactive_harmonic_findings": "Your field carries approximately 576 kVAR maximum reactive demand with 5.4% iTHD harmonic distortion, reaching peaks of 10.3% during high-demand periods. The reactive component dominates during cooling cycles, creating electromagnetic turbulence that adds thermal stress to your transformer. This reactive power represents electromagnetic overhead \u2014 energy your transformer processes but your cooling equipment can't use productively.",
-      "operational_stress_interpretation": "The field operates with roughly 75% Electric Operations efficiency during production periods, running 200-400 kVA above your supply target when cooling demands peak. Your 88.9% power factor means approximately 45% of transformer work is electromagnetic overhead rather than productive cooling. Weekend shutdown valleys show clean operation, but weekday production blocks reveal the electromagnetic burden of industrial refrigeration cycling.",
-      "simulated_mpts_outcome": "MPTS correction would elevate power factor to 99.5%, eliminating reactive stress and reducing annual waste costs by an estimated 80-85%. The field would operate in electromagnetic harmony \u2014 supplied power closely matching consumed power with minimal reactive interference. Based on approximately 576 kVAR maximum demand, you'd need roughly two H490 units with an estimated installed investment of about $400,000, suggesting approximately 17-month payback on waste elimination.",
-      "recommended_engineering_attention_areas": "Priority attention on reactive power compensation for your peak 576 kVAR demand cycles. Focus engineering assessment on transformer thermal loading during cooling equipment startup sequences. Consider power quality monitoring during those high-amperage surge events. The consistent weekend shutdown pattern provides excellent baseline reference for measuring correction effectiveness post-installation.",
-      "narration_ready_text": "Looking at your T10 air chiller field, you're operating at 88.9% power factor with approximately 576 kVAR of reactive demand creating about $23,000 in annual electromagnetic waste. The voltage stays stable at 468.5 volts, but you're seeing significant current spikes above 1,800 amps during cooling cycles \u2014 that's reactive stress showing up as electromagnetic turbulence.\n\nYour field operates with classic food processing refrigeration behavior. Consistent weekday production blocks running well above your supply target, complete shutdown on weekends. During peak cooling periods, roughly 45% of your transformer's work is electromagnetic overhead rather than productive refrigeration.\n\nThe reactive component creates 5.4% harmonic distortion with peaks reaching 10.3% during high-demand cycles. This electromagnetic turbulence adds thermal burden to your transformer and represents energy your cooling equipment processes but can't use productively.\n\nMPTS correction would elevate your power factor to 99.5%, essentially eliminating that reactive stress. You'd need approximately two H490 units \u2014 estimated installed investment of about $400,000 with roughly 17-month payback on waste elimination. The field would operate in electromagnetic harmony, with supplied power closely matching consumed power.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "executive_summary_short": "Your T10 air chiller runs at 88.9% power factor, burning about $23,000 annually in electromagnetic waste through reactive power demands hitting 576 kVAR maximum. You're seeing classic industrial refrigeration stress \u2014 current spikes during cooling cycles, harmonic distortion at 5.4%, and roughly 45% of transformer work going to electromagnetic overhead rather than productive cooling. MPTS correction with two H490 units would cost approximately $400,000 installed, eliminate reactive stress, and pay back in roughly 17 months through waste elimination. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "engineering_narration_detailed": "Your T10 air chiller field presents a textbook case of industrial refrigeration electromagnetic inefficiency. Operating at 88.9% power factor with approximately 576 kVAR maximum reactive demand, you're experiencing about $23,000 in annual electromagnetic waste costs \u2014 manageable but completely unnecessary.\n\nThe voltage quality analysis shows 468.5-volt operation with moderate amplitude variability that directly tracks your cooling load cycles. Those current traces reveal the story \u2014 significant amperage spikes exceeding 1,800 amps during peak cooling events. These surges aren't random; they're reactive stress signatures correlating precisely with refrigeration equipment startup and cycling patterns.\n\nYour reactive and harmonic profile shows the electromagnetic turbulence beneath the surface. That 576 kVAR reactive component dominates during cooling cycles, creating 5.4% iTHD harmonic distortion with peaks reaching 10.3% during high-demand periods. This represents electromagnetic overhead \u2014 energy your transformer must process but your cooling equipment cannot use productively.\n\nOperationally, you're running about 75% Electric Operations efficiency during production periods, consistently 200-400 kVA above your supply target when cooling demands peak. The weekend shutdown valleys provide perfect baseline reference, showing clean operation when reactive loads disappear.\n\nMPTS correction would transform this electromagnetic landscape completely. Power factor elevation to 99.5% eliminates reactive stress, bringing supplied power into harmony with consumed power. Based on your 576 kVAR peak demand, you'd need approximately two H490 units with an estimated installed investment of about $400,000. The payback runs roughly 17 months through waste elimination \u2014 not including thermal burden reduction and equipment longevity benefits.\n\nEngineering attention should focus on reactive power compensation during those peak demand cycles and transformer thermal loading assessment during equipment startup sequences. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "voltage_baseline_notes": "The voltage traces show your T10 air chiller maintaining stable 468.5 volts, but those current spikes above 1,800 amps during cooling cycles reveal reactive stress. At 88.9% power factor with 576 kVAR reactive demand, roughly 45% of your transformer's work becomes electromagnetic overhead rather than productive cooling, creating about $23,000 in annual waste through reactive losses and thermal burden.",
-      "reactive_mpts_notes": "MPTS correction eliminates reactive stress by elevating power factor from 88.9% to 99.5%. Your 576 kVAR reactive demand essentially disappears, reducing annual electromagnetic waste by 80-85%. Two H490 units would cost approximately $400,000 installed with roughly 17-month payback, transforming your field into electromagnetic harmony where supplied power matches consumed power with minimal reactive interference.",
-      "energy_field_summary_brief": "**Field Condition Summary:** Your T10 air chiller operates at 88.9% power factor with approximately $23,000 annual electromagnetic waste costs \u2014 typical industrial refrigeration inefficiency but fully correctable.\n\n**Voltage Stability Findings:** Voltage maintains 468.5 volts with moderate variability tracking cooling cycles. Current spikes above 1,800 amps during peak events indicate reactive stress during equipment cycling.\n\n**Reactive Harmonic Findings:** Field carries approximately 576 kVAR maximum reactive demand with 5.4% harmonic distortion. This reactive component creates electromagnetic turbulence and transformer thermal stress.\n\n**Operational Stress Interpretation:** Running 75% Electric Operations efficiency with 45% of transformer work as electromagnetic overhead rather than productive cooling during peak periods.\n\n**Simulated MPTS Outcome:** Power factor elevation to 99.5% would eliminate reactive stress, reducing annual waste by 80-85%. Estimated two H490 units, about $400,000 installed, roughly 17-month payback.\n\n**Engineering Attention Areas:** Reactive compensation for 576 kVAR peak demand, transformer thermal monitoring during startup sequences, power quality assessment during surge events.",
-      "clerk_text_files": {
-        "structured_brief": "T10_brief.txt",
-        "narration_ready": "T10_explains_p1.txt",
-        "executive_short": "T10_explains_p2.txt",
-        "engineering_detailed": "T10_explains_p3.txt",
-        "voltage_baseline_notes": "T10_waste_howto.txt",
-        "reactive_mpts_notes": "T10_savings_howto.txt",
-        "field_condition_summary": "T10_field_condition_summary.txt",
-        "voltage_stability_findings": "T10_voltage_stability_findings.txt",
-        "reactive_harmonic_findings": "T10_reactive_harmonic_findings.txt",
-        "operational_stress_interpretation": "T10_operational_stress_interpretation.txt",
-        "simulated_mpts_outcome": "T10_simulated_mpts_outcome.txt",
-        "recommended_engineering_attention_areas": "T10_recommended_engineering_attention_areas.txt"
-      },
-      "cross_check": "\u26a0\ufe0f SIGNIFICANT DISCREPANCIES DETECTED - CSV values are ground truth:\n- Target kVA: IMAGE 1,200 vs CSV 1,381.8 kVA (+15% variance)\n- kVAR MAX: IMAGE 717.5 vs CSV ~576 kVAR (-20% variance) \n- Monthly waste: IMAGE $577,898/yr vs CSV $22,960/yr (-96% variance - major error)\n- Power factor matches at 88.9%\nUsing CSV values as authoritative for all technical analysis.",
-      "william_version": "eeWILLIAM-4view-holistic-v1",
-      "analyzed_at": "2026-05-08 17:53:14",
-      "tmax_supply": 1381.83,
-      "power_factor": 0.889374,
-      "avg_kvar": 360.01,
-      "waste_cost": 22960.23,
-      "transformer_name": "T10 Air Chiller",
-      "avg_kva": 759.19,
-      "waste_kw": 91.11,
-      "capacity": 3000.0
-    },
-    "T12": {
-      "pattern_text": "PART 1: NARRATION READY\nLooking at your T12 Main transformer field, you're operating a substantial refrigeration facility with really excellent voltage stability. Your system is holding steady around 472 volts with clean electrical infrastructure - that tells me this is a well-maintained operation.\n\nBut here's what's costing you money. You're running at 84.3% power factor, which means you're carrying over 1,000 kVAR of reactive burden during your peak refrigeration periods. That reactive stress is creating about $48,400 in waste energy costs annually through reactive losses and the extra thermal burden on your transformer.\n\nThe pattern is classic industrial refrigeration - strong weekday production blocks with deep weekend valleys. About 75% of your electric operations are running above the optimal supply line, and that reactive demand is completely predictable. It's coming from your motor-driven compressor systems, creating persistent harmonic content that's stable but continuous.\n\nHere's the transformation opportunity. Magnetic power correction would take your power factor from 84.3% to 99.5%, essentially eliminating that reactive stress. You'd need approximately three H490 units at an estimated investment of roughly $600,000. With the waste energy recovery, you're looking at about a 12-month payback on that electromagnetic efficiency improvement.\n\nYour voltage health is excellent, so no infrastructure concerns. This is exactly the type of industrial refrigeration facility where MPTS delivers maximum value. That's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nYour T12 Main shows excellent voltage stability but significant reactive burden at 84.3% power factor. You're carrying over 1,000 kVAR during refrigeration peaks, costing about $48,400 annually. Magnetic power transformation could eliminate this reactive stress, improving to 99.5% power factor with roughly 12-month payback on estimated $600,000 investment. Classic refrigeration load profile - prime candidate for electromagnetic efficiency improvement. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $510,000 to $690,000.\n\nPART 3: ENGINEERING DETAILED\nLet me walk you through the complete electromagnetic picture of your T12 Main transformer field. Starting with voltage health - you're seeing exceptionally clean operation at 472.4 volts nominal. Those voltage dips to approximately 440V during low-demand periods are normal transformer tap-changing behavior, not system disturbances. This indicates well-maintained electrical infrastructure with no stability concerns.\n\nMoving to your baseline energy consumption, you're operating at 84.3% power factor with approximately 1,071 kVAR maximum reactive demand. The load profile shows classic industrial refrigeration cycling - strong weekday production blocks running from roughly 750 to 1,750 kVA, with dramatic weekend valleys dropping to 250-500 kVA. About 75% of your electric operations run above the optimal supply line during production periods.\n\nThe reactive and harmonic analysis reveals substantial kVAR demand reaching over 1,000 during peaks, with persistent harmonic content around 300 kVAR throughout operations. This harmonic signature is characteristic of motor-driven refrigeration compressors - stable but continuous, rather than the turbulent patterns you'd see from variable frequency drives or switching loads.\n\nYour current waste energy costs are running about $48,400 annually from reactive losses and thermal burden. That reactive stress is creating extra heat in your transformer and requiring additional cooling capacity during peak operations.\n\nThe MPTS simulation shows dramatic field transformation. Magnetic power correction would eliminate the reactive stress, taking your power factor from 84.3% to 99.5%. Based on your 1,071 kVAR maximum demand, you'd need approximately three H490 units. The estimated installed investment would be roughly $600,000, with payback running about 12 months from the waste energy recovery.\n\nThis is exactly the application profile where magnetic power transformation delivers maximum value - substantial motor loads with predictable reactive burden and excellent electrical infrastructure. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Looking at your T12 Main transformer field, you're operating a substantial refrigeration facility with really excellent voltage stability. Your system is holding steady around 472 volts with clean electrical infrastructure - that tells me this is a well-maintained operation.\n\nBut here's what's costing you money. You're running at 84.3% power factor, which means you're carrying over 1,000 kVAR of reactive burden during your peak refrigeration periods. That reactive stress is creating about $48,400 in waste energy costs annually through reactive losses and the extra thermal burden on your transformer.\n\nThe pattern is classic industrial refrigeration - strong weekday production blocks with deep weekend valleys. About 75% of your electric operations are running above the optimal supply line, and that reactive demand is completely predictable. It's coming from your motor-driven compressor systems, creating persistent harmonic content that's stable but continuous.\n\nHere's the transformation opportunity. Magnetic power correction would take your power factor from 84.3% to 99.5%, essentially eliminating that reactive stress. You'd need approximately three H490 units at an estimated investment of roughly $600,000. With the waste energy recovery, you're looking at about a 12-month payback on that electromagnetic efficiency improvement.\n\nYour voltage health is excellent, so no infrastructure concerns. This is exactly the type of industrial refrigeration facility where MPTS delivers maximum value. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part2": "Your T12 Main shows excellent voltage stability but significant reactive burden at 84.3% power factor. You're carrying over 1,000 kVAR during refrigeration peaks, costing about $48,400 annually. Magnetic power transformation could eliminate this reactive stress, improving to 99.5% power factor with roughly 12-month payback on estimated $600,000 investment. Classic refrigeration load profile - prime candidate for electromagnetic efficiency improvement. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $510,000 to $690,000.",
-      "pattern_part3": "Let me walk you through the complete electromagnetic picture of your T12 Main transformer field. Starting with voltage health - you're seeing exceptionally clean operation at 472.4 volts nominal. Those voltage dips to approximately 440V during low-demand periods are normal transformer tap-changing behavior, not system disturbances. This indicates well-maintained electrical infrastructure with no stability concerns.\n\nMoving to your baseline energy consumption, you're operating at 84.3% power factor with approximately 1,071 kVAR maximum reactive demand. The load profile shows classic industrial refrigeration cycling - strong weekday production blocks running from roughly 750 to 1,750 kVA, with dramatic weekend valleys dropping to 250-500 kVA. About 75% of your electric operations run above the optimal supply line during production periods.\n\nThe reactive and harmonic analysis reveals substantial kVAR demand reaching over 1,000 during peaks, with persistent harmonic content around 300 kVAR throughout operations. This harmonic signature is characteristic of motor-driven refrigeration compressors - stable but continuous, rather than the turbulent patterns you'd see from variable frequency drives or switching loads.\n\nYour current waste energy costs are running about $48,400 annually from reactive losses and thermal burden. That reactive stress is creating extra heat in your transformer and requiring additional cooling capacity during peak operations.\n\nThe MPTS simulation shows dramatic field transformation. Magnetic power correction would eliminate the reactive stress, taking your power factor from 84.3% to 99.5%. Based on your 1,071 kVAR maximum demand, you'd need approximately three H490 units. The estimated installed investment would be roughly $600,000, with payback running about 12 months from the waste energy recovery.\n\nThis is exactly the application profile where magnetic power transformation delivers maximum value - substantial motor loads with predictable reactive burden and excellent electrical infrastructure. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "**Field Condition Summary:** Your T12 Main transformer operates a substantial refrigeration facility with excellent voltage stability but 84.3% power factor creating about $48,400 in annual waste energy costs from approximately 1,071 kVAR reactive burden.\n\n**Voltage Stability Findings:** Exceptionally clean voltage health at 472.4V nominal with normal tap-changing behavior. No electrical infrastructure concerns - your system is well-maintained and stable.\n\n**Reactive Harmonic Findings:** Substantial reactive demand over 1,000 kVAR during peaks with persistent 300 kVAR harmonic content typical of motor-driven refrigeration compressors. Stable but continuous harmonic pattern.\n\n**Operational Stress Interpretation:** About 75% of electric operations run above optimal supply line during weekday production, creating predictable thermal burden and cooling overhead from reactive stress.\n\n**Simulated MPTS Outcome:** Magnetic power transformation would eliminate reactive stress, improving power factor from 84.3% to 99.5%. Estimated investment roughly $600,000 for three H490 units with approximately 12-month payback.\n\n**Recommended Engineering Attention Areas:** Prime candidate for reactive power compensation given industrial refrigeration load profile. Voltage infrastructure excellent - focus on the electromagnetic efficiency opportunity.",
-      "field_condition_summary": "Your T12 Main transformer is operating a substantial refrigeration facility with excellent voltage stability but carrying significant reactive burden. You're seeing an 84.3% power factor with approximately 1,071 kVAR of reactive demand during peak operations. The field pattern shows classic industrial refrigeration cycling with strong weekday production blocks and deep weekend valleys. Your current waste energy costs are running about $48,400 annually from reactive losses and thermal burden.",
-      "voltage_stability_findings": "The voltage health is exceptionally clean. You're maintaining steady operation around 472.4 volts nominal with normal transformer tap-changing behavior during low-demand periods. Those voltage dips to approximately 440V correlate with reduced loads and represent proper system response, not disturbances. This tells us your electrical infrastructure is well-maintained and stable.",
-      "reactive_harmonic_findings": "Your reactive component is substantial - reaching over 1,000 kVAR during peak refrigeration periods. The harmonic signature shows persistent content running around 300 kVAR throughout operations. This is the characteristic fingerprint of motor-driven refrigeration compressors rather than variable frequency drives or switching loads causing turbulence. The harmonic pattern is stable but continuous.",
-      "operational_stress_interpretation": "You're running approximately 75% of your electric operations above the optimal supply line during weekday production periods. That reactive stress is creating thermal burden in your transformer and requiring additional cooling capacity. The load profile shows excellent consistency week over week, which means this reactive penalty is predictable and addressable through magnetic power transformation.",
-      "simulated_mpts_outcome": "MPTS correction would transform your field from 84.3% to 99.5% power factor, essentially eliminating that reactive stress. Based on your 1,071 kVAR maximum demand, you'd need approximately three H490 units. The estimated installed investment would be roughly $600,000, with payback running about 12 months from the approximately $48,400 in annual waste energy recovery.",
-      "recommended_engineering_attention_areas": "Focus on the reactive power compensation opportunity - this is exactly the type of industrial refrigeration facility where MPTS delivers maximum value. The voltage stability is excellent, so no electrical infrastructure concerns. Monitor the consistent harmonic content from your compressor systems, though it's within normal operating parameters for this application type.",
-      "narration_ready_text": "Looking at your T12 Main transformer field, you're operating a substantial refrigeration facility with really excellent voltage stability. Your system is holding steady around 472 volts with clean electrical infrastructure - that tells me this is a well-maintained operation.\n\nBut here's what's costing you money. You're running at 84.3% power factor, which means you're carrying over 1,000 kVAR of reactive burden during your peak refrigeration periods. That reactive stress is creating about $48,400 in waste energy costs annually through reactive losses and the extra thermal burden on your transformer.\n\nThe pattern is classic industrial refrigeration - strong weekday production blocks with deep weekend valleys. About 75% of your electric operations are running above the optimal supply line, and that reactive demand is completely predictable. It's coming from your motor-driven compressor systems, creating persistent harmonic content that's stable but continuous.\n\nHere's the transformation opportunity. Magnetic power correction would take your power factor from 84.3% to 99.5%, essentially eliminating that reactive stress. You'd need approximately three H490 units at an estimated investment of roughly $600,000. With the waste energy recovery, you're looking at about a 12-month payback on that electromagnetic efficiency improvement.\n\nYour voltage health is excellent, so no infrastructure concerns. This is exactly the type of industrial refrigeration facility where MPTS delivers maximum value. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "executive_summary_short": "Your T12 Main shows excellent voltage stability but significant reactive burden at 84.3% power factor. You're carrying over 1,000 kVAR during refrigeration peaks, costing about $48,400 annually. Magnetic power transformation could eliminate this reactive stress, improving to 99.5% power factor with roughly 12-month payback on estimated $600,000 investment. Classic refrigeration load profile - prime candidate for electromagnetic efficiency improvement. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $510,000 to $690,000.",
-      "engineering_narration_detailed": "Let me walk you through the complete electromagnetic picture of your T12 Main transformer field. Starting with voltage health - you're seeing exceptionally clean operation at 472.4 volts nominal. Those voltage dips to approximately 440V during low-demand periods are normal transformer tap-changing behavior, not system disturbances. This indicates well-maintained electrical infrastructure with no stability concerns.\n\nMoving to your baseline energy consumption, you're operating at 84.3% power factor with approximately 1,071 kVAR maximum reactive demand. The load profile shows classic industrial refrigeration cycling - strong weekday production blocks running from roughly 750 to 1,750 kVA, with dramatic weekend valleys dropping to 250-500 kVA. About 75% of your electric operations run above the optimal supply line during production periods.\n\nThe reactive and harmonic analysis reveals substantial kVAR demand reaching over 1,000 during peaks, with persistent harmonic content around 300 kVAR throughout operations. This harmonic signature is characteristic of motor-driven refrigeration compressors - stable but continuous, rather than the turbulent patterns you'd see from variable frequency drives or switching loads.\n\nYour current waste energy costs are running about $48,400 annually from reactive losses and thermal burden. That reactive stress is creating extra heat in your transformer and requiring additional cooling capacity during peak operations.\n\nThe MPTS simulation shows dramatic field transformation. Magnetic power correction would eliminate the reactive stress, taking your power factor from 84.3% to 99.5%. Based on your 1,071 kVAR maximum demand, you'd need approximately three H490 units. The estimated installed investment would be roughly $600,000, with payback running about 12 months from the waste energy recovery.\n\nThis is exactly the application profile where magnetic power transformation delivers maximum value - substantial motor loads with predictable reactive burden and excellent electrical infrastructure. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "voltage_baseline_notes": "The voltage stays very stable around 472 volts, which is excellent. Those dips to 440V happen during low demand periods and are just normal transformer behavior - nothing to worry about there. The real issue is the power factor at 84.3%. This means the facility is pulling a lot of reactive power - over 1,000 kVAR during peak times - which doesn't do any actual work but still costs money. It's like having the engine running but the car in neutral. That reactive burden creates extra heat and waste, costing about $48,400 per year in inefficiency.",
-      "reactive_mpts_notes": "The magnetic power transformation system would essentially eliminate that reactive power waste. Instead of 84.3% power factor, you'd get 99.5% - nearly perfect efficiency. The system would need about three units to handle the 1,071 kVAR correction needed. For roughly $600,000 investment, you'd recover that about $48,400 annual waste cost, plus eliminate the extra thermal stress on the transformer. The payback works out to about 12 months, and after that it's pure savings every year.",
-      "energy_field_summary_brief": "**Field Condition Summary:** Your T12 Main transformer operates a substantial refrigeration facility with excellent voltage stability but 84.3% power factor creating about $48,400 in annual waste energy costs from approximately 1,071 kVAR reactive burden.\n\n**Voltage Stability Findings:** Exceptionally clean voltage health at 472.4V nominal with normal tap-changing behavior. No electrical infrastructure concerns - your system is well-maintained and stable.\n\n**Reactive Harmonic Findings:** Substantial reactive demand over 1,000 kVAR during peaks with persistent 300 kVAR harmonic content typical of motor-driven refrigeration compressors. Stable but continuous harmonic pattern.\n\n**Operational Stress Interpretation:** About 75% of electric operations run above optimal supply line during weekday production, creating predictable thermal burden and cooling overhead from reactive stress.\n\n**Simulated MPTS Outcome:** Magnetic power transformation would eliminate reactive stress, improving power factor from 84.3% to 99.5%. Estimated investment roughly $600,000 for three H490 units with approximately 12-month payback.\n\n**Recommended Engineering Attention Areas:** Prime candidate for reactive power compensation given industrial refrigeration load profile. Voltage infrastructure excellent - focus on the electromagnetic efficiency opportunity.",
-      "clerk_text_files": {
-        "structured_brief": "T12_brief.txt",
-        "narration_ready": "T12_explains_p1.txt",
-        "executive_short": "T12_explains_p2.txt",
-        "engineering_detailed": "T12_explains_p3.txt",
-        "voltage_baseline_notes": "T12_waste_howto.txt",
-        "reactive_mpts_notes": "T12_savings_howto.txt",
-        "field_condition_summary": "T12_field_condition_summary.txt",
-        "voltage_stability_findings": "T12_voltage_stability_findings.txt",
-        "reactive_harmonic_findings": "T12_reactive_harmonic_findings.txt",
-        "operational_stress_interpretation": "T12_operational_stress_interpretation.txt",
-        "simulated_mpts_outcome": "T12_simulated_mpts_outcome.txt",
-        "recommended_engineering_attention_areas": "T12_recommended_engineering_attention_areas.txt"
-      },
-      "cross_check": "\u26a0\ufe0f MAJOR DISCREPANCY: Image shows target kVA as 2,500 while CSV indicates 1,702.6 kVA (47% variance). Using CSV as ground truth.\n\u26a0\ufe0f MAJOR DISCREPANCY: Image shows monthly waste at $923,759/yr while CSV shows $48,396.48 (1,809% variance). Using CSV as ground truth.\nMinor variance: kVAR MAX image 988.3 vs CSV estimate 1,071 kVAR (8% variance - acceptable).\nPower factor matches: 84.3% consistent across sources.",
-      "william_version": "eeWILLIAM-4view-holistic-v1",
-      "analyzed_at": "2026-05-08 17:54:21",
-      "tmax_supply": 1702.64,
-      "power_factor": 0.842802,
-      "avg_kvar": 669.36,
-      "waste_cost": 48396.48,
-      "transformer_name": "T12 Main",
-      "avg_kva": 1268.03,
-      "waste_kw": 192.05,
-      "capacity": 2500.0
-    },
-    "T15": {
-      "pattern_text": "PART 1: NARRATION READY\nLooking at your T15 fillet transformer, you're seeing a classic food processing electromagnetic signature. Your field is running at 81.9% power factor, which means nearly twenty percent of your electrical capacity is tied up fighting reactive ghosts instead of doing productive work.\n\nThose voltage dips from 478 down to 397 volts? They're happening every time your facility pulls heavy reactive power. Your electrical system is essentially having to compensate for electromagnetic chaos - that's why you're seeing those amperage spikes in the red trace.\n\nYour reactive burden peaks at 790 kVAR during production cycles. That's substantial electromagnetic waste - roughly $36,700 annually, plus the thermal burden that requires additional cooling throughout your facility.\n\nThe operational pattern tells the story clearly. About 75 to 80 percent of your weekday operations push above that 1470 kVA supply target. You've got distinct production blocks during the week, then weekend valleys when the facility runs minimal baseline.\n\nMPTS correction projects 99.5% power factor - essentially eliminating that reactive waste. The preliminary engineering suggests approximately two H490 units with an estimated installed investment around $400,000. The projected payback is eleven months based on your electromagnetic waste patterns.\n\nWhat you're looking at is electromagnetic stewardship opportunity. Instead of your transformers fighting reactive compensation, they'd be delivering clean, efficient power aligned with your actual production demand.\n\nPART 2: EXECUTIVE SHORT\nYour T15 facility shows 81.9% power factor with 790 kVAR reactive peaks costing approximately $36,700 annually. Those voltage dips correlate directly to reactive stress - your electrical system fighting electromagnetic chaos instead of delivering efficient power. MPTS correction projects 99.5% power factor with two H490 units, estimated $400,000 investment, eleven-month payback. Clean electromagnetic field aligned with production demand rather than reactive waste. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: ENGINEERING DETAILED\nLet's examine your T15 fillet transformer's electromagnetic behavior in detail. You're operating at 81.9% power factor with a 1470 kVA supply target, but the reactive signature tells a more complex story.\n\nThe voltage field shows consistent amplitude cycling between 397 and 478 volts. Those aren't random fluctuations - they're discrete voltage dip events that correlate directly with your reactive power demand. When your facility pulls that 790 kVAR peak, the grid responds with momentary voltage depression. Your red amperage trace shows the compensation spikes - your electrical system working overtime to maintain power delivery.\n\nThe reactive layer builds to 600-plus kVAR during production hours, creating electromagnetic turbulence throughout your facility. This isn't just inefficiency - it's thermal stress on your transformers, additional cooling load, and amperage chaos that degrades equipment over time.\n\nYour operational pattern shows classic Electric Operations behavior. Approximately 75 to 80 percent of weekday operations exceed your supply target, with distinct production blocks contrasting weekend valleys around 250 kVA baseline. This consistency makes reactive power compensation highly predictable and effective.\n\nThe harmonic signature shows concentrated content during peak production - process-driven electromagnetic interference from your industrial equipment during full production cycles. This compounds the reactive stress and contributes to that amperage turbulence.\n\nMPTS harmonization addresses this systematically. The simulation shows 99.5% power factor with your supply profile aligning closely to actual consumption rather than fighting reactive ghosts. Preliminary engineering suggests two H490 units - 800 kVAR total capacity to handle your 790 kVAR peak with appropriate margin.\n\nThe estimated installed investment is approximately $400,000 with projected eleven-month payback based on your about $36,700 annual electromagnetic waste. But the real value extends beyond direct savings - voltage stability improvement, thermal burden reduction, equipment longevity, and operational reliability.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Looking at your T15 fillet transformer, you're seeing a classic food processing electromagnetic signature. Your field is running at 81.9% power factor, which means nearly twenty percent of your electrical capacity is tied up fighting reactive ghosts instead of doing productive work.\n\nThose voltage dips from 478 down to 397 volts? They're happening every time your facility pulls heavy reactive power. Your electrical system is essentially having to compensate for electromagnetic chaos - that's why you're seeing those amperage spikes in the red trace.\n\nYour reactive burden peaks at 790 kVAR during production cycles. That's substantial electromagnetic waste - roughly $36,700 annually, plus the thermal burden that requires additional cooling throughout your facility.\n\nThe operational pattern tells the story clearly. About 75 to 80 percent of your weekday operations push above that 1470 kVA supply target. You've got distinct production blocks during the week, then weekend valleys when the facility runs minimal baseline.\n\nMPTS correction projects 99.5% power factor - essentially eliminating that reactive waste. The preliminary engineering suggests approximately two H490 units with an estimated installed investment around $400,000. The projected payback is eleven months based on your electromagnetic waste patterns.\n\nWhat you're looking at is electromagnetic stewardship opportunity. Instead of your transformers fighting reactive compensation, they'd be delivering clean, efficient power aligned with your actual production demand.",
-      "pattern_part2": "Your T15 facility shows 81.9% power factor with 790 kVAR reactive peaks costing approximately $36,700 annually. Those voltage dips correlate directly to reactive stress - your electrical system fighting electromagnetic chaos instead of delivering efficient power. MPTS correction projects 99.5% power factor with two H490 units, estimated $400,000 investment, eleven-month payback. Clean electromagnetic field aligned with production demand rather than reactive waste. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "pattern_part3": "Let's examine your T15 fillet transformer's electromagnetic behavior in detail. You're operating at 81.9% power factor with a 1470 kVA supply target, but the reactive signature tells a more complex story.\n\nThe voltage field shows consistent amplitude cycling between 397 and 478 volts. Those aren't random fluctuations - they're discrete voltage dip events that correlate directly with your reactive power demand. When your facility pulls that 790 kVAR peak, the grid responds with momentary voltage depression. Your red amperage trace shows the compensation spikes - your electrical system working overtime to maintain power delivery.\n\nThe reactive layer builds to 600-plus kVAR during production hours, creating electromagnetic turbulence throughout your facility. This isn't just inefficiency - it's thermal stress on your transformers, additional cooling load, and amperage chaos that degrades equipment over time.\n\nYour operational pattern shows classic Electric Operations behavior. Approximately 75 to 80 percent of weekday operations exceed your supply target, with distinct production blocks contrasting weekend valleys around 250 kVA baseline. This consistency makes reactive power compensation highly predictable and effective.\n\nThe harmonic signature shows concentrated content during peak production - process-driven electromagnetic interference from your industrial equipment during full production cycles. This compounds the reactive stress and contributes to that amperage turbulence.\n\nMPTS harmonization addresses this systematically. The simulation shows 99.5% power factor with your supply profile aligning closely to actual consumption rather than fighting reactive ghosts. Preliminary engineering suggests two H490 units - 800 kVAR total capacity to handle your 790 kVAR peak with appropriate margin.\n\nThe estimated installed investment is approximately $400,000 with projected eleven-month payback based on your about $36,700 annual electromagnetic waste. But the real value extends beyond direct savings - voltage stability improvement, thermal burden reduction, equipment longevity, and operational reliability.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "**Field Condition Summary:** Your T15 fillet transformer operates at 81.9% power factor with 790 kVAR reactive peaks creating approximately $36,700 annual electromagnetic waste.\n\n**Voltage Stability Findings:** Voltage cycling between 397V-478V with discrete dip events correlating to reactive compensation responses throughout production periods.\n\n**Reactive Harmonic Findings:** Substantial reactive concentration during production hours with harmonic turbulence indicating electromagnetic stress throughout your electrical system.\n\n**Operational Stress Interpretation:** 75-80% of weekday operations exceed 1470 kVA supply target, creating consistent Electric Operations pattern with significant transformer reactive burden.\n\n**Simulated MPTS Outcome:** 99.5% power factor correction with approximately two H490 units, estimated $400,000 installed investment, 11-month payback period.\n\n**Recommended Engineering Attention Areas:** Focus on voltage-reactive correlation events, harmonic turbulence during peak cycles, and thermal burden reduction potential through systematic power factor correction.",
-      "field_condition_summary": "Your T15 fillet transformer is operating at 81.9% power factor with a 1470 kVA supply target, creating significant reactive burden throughout your production cycles. The electromagnetic field shows classic food processing signatures - substantial reactive demand peaks hitting 790 kVAR during operations, with voltage instability events correlating directly to these reactive spikes. You're carrying approximately $36,700 in annual electromagnetic waste costs, plus thermal burden requiring additional cooling overhead.",
-      "voltage_stability_findings": "The voltage field reveals consistent cycling between 397V and 478V with multiple discrete voltage dip events throughout the monitoring period. These voltage disturbances correspond directly to reactive compensation events - when your facility draws heavy reactive power, the grid responds with momentary voltage depressions. The red amperage trace shows significant spiking during these events, indicating your electrical system is fighting reactive ghosts rather than efficiently delivering productive power.",
-      "reactive_harmonic_findings": "Your reactive layer shows substantial kVAR concentration during production hours, building to 600+ kVAR levels that create electromagnetic turbulence throughout the facility. The harmonic signature displays consistent presence with notable concentration during peak production periods. This reactive stress manifests as amperage chaos - significant turbulence and spiking behavior that indicates your electrical system is working much harder than necessary to deliver the same productive output.",
-      "operational_stress_interpretation": "The field pattern shows approximately 75-80% of weekday operations exceed your 1470 kVA supply target, with clear industrial production scheduling creating distinct operational blocks above target versus weekend valleys. This Electric Operations pattern combined with 81.9% power factor means your transformers are carrying substantial reactive burden - that 790 kVAR peak represents electromagnetic waste that translates to thermal stress and cooling overhead throughout your facility.",
-      "simulated_mpts_outcome": "MPTS harmonization projects 99.5% power factor correction, dramatically reducing reactive burden and stabilizing your electromagnetic field. The simulation shows your supply profile aligning closely with actual production demand rather than fighting reactive compensation. Based on your facility's reactive signature, preliminary engineering suggests approximately two H490 units (800 kVAR total capacity) with an estimated installed investment around $400,000 and projected 11-month payback period.",
-      "recommended_engineering_attention_areas": "Priority focus on voltage stability correlation with reactive events - those 397V dips are symptomatic of reactive stress that MPTS correction addresses directly. The harmonic turbulence during peak production cycles indicates process equipment contributing to electromagnetic chaos. Engineering assessment should evaluate thermal burden reduction potential and cooling system efficiency gains. The consistent weekday operational pattern makes this facility an excellent candidate for systematic reactive power compensation.",
-      "narration_ready_text": "Looking at your T15 fillet transformer, you're seeing a classic food processing electromagnetic signature. Your field is running at 81.9% power factor, which means nearly twenty percent of your electrical capacity is tied up fighting reactive ghosts instead of doing productive work.\n\nThose voltage dips from 478 down to 397 volts? They're happening every time your facility pulls heavy reactive power. Your electrical system is essentially having to compensate for electromagnetic chaos - that's why you're seeing those amperage spikes in the red trace.\n\nYour reactive burden peaks at 790 kVAR during production cycles. That's substantial electromagnetic waste - roughly $36,700 annually, plus the thermal burden that requires additional cooling throughout your facility.\n\nThe operational pattern tells the story clearly. About 75 to 80 percent of your weekday operations push above that 1470 kVA supply target. You've got distinct production blocks during the week, then weekend valleys when the facility runs minimal baseline.\n\nMPTS correction projects 99.5% power factor - essentially eliminating that reactive waste. The preliminary engineering suggests approximately two H490 units with an estimated installed investment around $400,000. The projected payback is eleven months based on your electromagnetic waste patterns.\n\nWhat you're looking at is electromagnetic stewardship opportunity. Instead of your transformers fighting reactive compensation, they'd be delivering clean, efficient power aligned with your actual production demand.",
-      "executive_summary_short": "Your T15 facility shows 81.9% power factor with 790 kVAR reactive peaks costing approximately $36,700 annually. Those voltage dips correlate directly to reactive stress - your electrical system fighting electromagnetic chaos instead of delivering efficient power. MPTS correction projects 99.5% power factor with two H490 units, estimated $400,000 investment, eleven-month payback. Clean electromagnetic field aligned with production demand rather than reactive waste. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "engineering_narration_detailed": "Let's examine your T15 fillet transformer's electromagnetic behavior in detail. You're operating at 81.9% power factor with a 1470 kVA supply target, but the reactive signature tells a more complex story.\n\nThe voltage field shows consistent amplitude cycling between 397 and 478 volts. Those aren't random fluctuations - they're discrete voltage dip events that correlate directly with your reactive power demand. When your facility pulls that 790 kVAR peak, the grid responds with momentary voltage depression. Your red amperage trace shows the compensation spikes - your electrical system working overtime to maintain power delivery.\n\nThe reactive layer builds to 600-plus kVAR during production hours, creating electromagnetic turbulence throughout your facility. This isn't just inefficiency - it's thermal stress on your transformers, additional cooling load, and amperage chaos that degrades equipment over time.\n\nYour operational pattern shows classic Electric Operations behavior. Approximately 75 to 80 percent of weekday operations exceed your supply target, with distinct production blocks contrasting weekend valleys around 250 kVA baseline. This consistency makes reactive power compensation highly predictable and effective.\n\nThe harmonic signature shows concentrated content during peak production - process-driven electromagnetic interference from your industrial equipment during full production cycles. This compounds the reactive stress and contributes to that amperage turbulence.\n\nMPTS harmonization addresses this systematically. The simulation shows 99.5% power factor with your supply profile aligning closely to actual consumption rather than fighting reactive ghosts. Preliminary engineering suggests two H490 units - 800 kVAR total capacity to handle your 790 kVAR peak with appropriate margin.\n\nThe estimated installed investment is approximately $400,000 with projected eleven-month payback based on your about $36,700 annual electromagnetic waste. But the real value extends beyond direct savings - voltage stability improvement, thermal burden reduction, equipment longevity, and operational reliability.\n\nThat's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "voltage_baseline_notes": "Your voltage shows cycling between 397V and 478V with discrete dip events. These aren't random - they happen when your facility draws heavy reactive power, forcing the electrical system to compensate. The baseline shows 81.9% power factor with 790 kVAR reactive peaks during production. This means roughly 20% of your electrical capacity fights electromagnetic waste instead of doing productive work, costing approximately $36,700 annually plus thermal burden requiring additional cooling.",
-      "reactive_mpts_notes": "The reactive layer shows substantial kVAR concentration during production with harmonic turbulence creating amperage chaos throughout your electrical system. MPTS correction eliminates this waste by achieving 99.5% power factor. Two H490 units (approximately $400,000 installed) would handle your 790 kVAR peak, projecting eleven-month payback. Your supply profile would align with actual production demand rather than fighting reactive compensation, delivering clean, efficient power throughout your facility.",
-      "energy_field_summary_brief": "**Field Condition Summary:** Your T15 fillet transformer operates at 81.9% power factor with 790 kVAR reactive peaks creating approximately $36,700 annual electromagnetic waste.\n\n**Voltage Stability Findings:** Voltage cycling between 397V-478V with discrete dip events correlating to reactive compensation responses throughout production periods.\n\n**Reactive Harmonic Findings:** Substantial reactive concentration during production hours with harmonic turbulence indicating electromagnetic stress throughout your electrical system.\n\n**Operational Stress Interpretation:** 75-80% of weekday operations exceed 1470 kVA supply target, creating consistent Electric Operations pattern with significant transformer reactive burden.\n\n**Simulated MPTS Outcome:** 99.5% power factor correction with approximately two H490 units, estimated $400,000 installed investment, 11-month payback period.\n\n**Recommended Engineering Attention Areas:** Focus on voltage-reactive correlation events, harmonic turbulence during peak cycles, and thermal burden reduction potential through systematic power factor correction.",
-      "clerk_text_files": {
-        "structured_brief": "T15_brief.txt",
-        "narration_ready": "T15_explains_p1.txt",
-        "executive_short": "T15_explains_p2.txt",
-        "engineering_detailed": "T15_explains_p3.txt",
-        "voltage_baseline_notes": "T15_waste_howto.txt",
-        "reactive_mpts_notes": "T15_savings_howto.txt",
-        "field_condition_summary": "T15_field_condition_summary.txt",
-        "voltage_stability_findings": "T15_voltage_stability_findings.txt",
-        "reactive_harmonic_findings": "T15_reactive_harmonic_findings.txt",
-        "operational_stress_interpretation": "T15_operational_stress_interpretation.txt",
-        "simulated_mpts_outcome": "T15_simulated_mpts_outcome.txt",
-        "recommended_engineering_attention_areas": "T15_recommended_engineering_attention_areas.txt"
-      },
-      "cross_check": "\u26a0\ufe0f MAJOR DISCREPANCY in monetary waste values: Image shows $819,106/yr while CSV shows $36,692.43 - variance of >2000%. Using CSV ground truth for financial calculations. Target kVA variance acceptable (1500 vs 1470.3). Power factor matches at 81.9%. kVAR MAX close (764.1 vs ~790). Install estimate approximately $400,000 with 11-month payback per CSV analysis.",
-      "william_version": "eeWILLIAM-4view-holistic-v1",
-      "analyzed_at": "2026-05-08 17:55:34",
-      "tmax_supply": 1470.34,
-      "power_factor": 0.819164,
-      "avg_kvar": 493.51,
-      "waste_cost": 36692.43,
-      "transformer_name": "T15 Fillet",
-      "avg_kva": 932.91,
-      "waste_kw": 145.6,
-      "capacity": 2500.0
-    },
-    "T16": {
-      "pattern_text": "PART 1: NARRATION READY\nYour T16 compressor field tells a clear electromagnetic story. You're operating at 88.5% power factor with an estimated 822 kVAR reactive demand that's costing you approximately $31,800 annually in waste heat and cooling overhead.\n\nWhat you're seeing in that voltage pattern is significant \u2014 those 4-5% voltage sags during startup aren't just measurement artifacts. They're your field responding to massive 1747-amp inrush currents. That voltage instability indicates your supply infrastructure is working at capacity limits every time that compressor cycles.\n\nThe reactive burden creates compound stress throughout your electromagnetic field. You're dealing with 6.8% harmonic distortion during switching sequences, which amplifies heating stress on your transformer windings. That translates to approximately 513,000 BTU per hour of waste heat \u2014 requiring about 30 kilowatts of additional cooling just to manage the electromagnetic losses.\n\nBut here's what MPTS correction reveals for your field. Power factor jumps to 99.5%, virtually eliminating that reactive demand. Based on your 822 kVAR maximum, you'd need approximately two H490 units \u2014 roughly $400,000 installed investment. With annual savings around $31,800, you're looking at about 19 months estimated payback.\n\nThe field transformation is dramatic \u2014 from electromagnetic chaos during those startup sequences to controlled industrial power delivery. That's electromagnetic stewardship \u2014 and that's the Unity standard.\n\nPART 2: EXECUTIVE SHORT\nYour T16 compressor runs at 88.5% power factor, creating approximately $31,800 in annual electromagnetic waste costs. Those voltage sags during startup \u2014 dropping 4-5% with 1747-amp inrush currents \u2014 indicate supply stress every cycle.\n\nMPTS correction with approximately two H490 units projects 99.5% power factor and roughly 19-month payback at an estimated $400,000 installed investment. You'd eliminate that 822 kVAR reactive burden and reduce cooling demand by about 30 kilowatts. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $510,000 to $690,000.\n\nPART 3: ENGINEERING DETAILED\nLet me walk you through the complete electromagnetic signature of your T16 compressor field, because what you're seeing here represents classic industrial reactive stress under heavy cycling loads.\n\nStarting with voltage health \u2014 you're operating at 476.7 volts baseline, but those periodic sags down to 456-458 volts during startup tell the real story. That's a 4-5% voltage depression correlating directly with compressor inrush events reaching 1747 amps maximum. These aren't just transient spikes \u2014 they're sustained electromagnetic stress indicating your supply infrastructure operates at capacity limits during every cycle.\n\nYour baseline energy pattern shows an 88.5% power factor with estimated 822 kVAR maximum reactive demand. That reactive burden translates into approximately $31,800 annual waste costs when you factor in thermal losses, cooling overhead, and demand charges. You're generating about 513,000 BTU per hour of waste heat that requires approximately 30 kilowatts of additional cooling capacity.\n\nThe active-reactive-harmonic breakdown exposes compound electromagnetic stress. That 6.8% total harmonic distortion during switching sequences isn't isolated \u2014 it amplifies during high-current inrush periods, creating additional heating stress on transformer windings beyond the baseline reactive losses. You're seeing purple harmonic signatures that coincide with red amperage spikes, indicating electromagnetic turbulence throughout your switching events.\n\nBut the MPTS simulation reveals your field's potential. Power factor correction to 99.5% with approximately two H490 units \u2014 roughly $400,000 installed investment \u2014 eliminates that reactive burden entirely. Annual savings around $31,800 project about 19 months estimated payback. The field transforms from electromagnetic chaos during startup sequences into controlled industrial power delivery with minimal kVA overhead.\n\nYour engineering priorities are clear: reactive power compensation addresses the root cause, soft-start solutions could minimize voltage instability, and thermal management systems benefit from reduced cooling load post-correction. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Your T16 compressor field tells a clear electromagnetic story. You're operating at 88.5% power factor with an estimated 822 kVAR reactive demand that's costing you approximately $31,800 annually in waste heat and cooling overhead.\n\nWhat you're seeing in that voltage pattern is significant \u2014 those 4-5% voltage sags during startup aren't just measurement artifacts. They're your field responding to massive 1747-amp inrush currents. That voltage instability indicates your supply infrastructure is working at capacity limits every time that compressor cycles.\n\nThe reactive burden creates compound stress throughout your electromagnetic field. You're dealing with 6.8% harmonic distortion during switching sequences, which amplifies heating stress on your transformer windings. That translates to approximately 513,000 BTU per hour of waste heat \u2014 requiring about 30 kilowatts of additional cooling just to manage the electromagnetic losses.\n\nBut here's what MPTS correction reveals for your field. Power factor jumps to 99.5%, virtually eliminating that reactive demand. Based on your 822 kVAR maximum, you'd need approximately two H490 units \u2014 roughly $400,000 installed investment. With annual savings around $31,800, you're looking at about 19 months estimated payback.\n\nThe field transformation is dramatic \u2014 from electromagnetic chaos during those startup sequences to controlled industrial power delivery. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part2": "Your T16 compressor runs at 88.5% power factor, creating approximately $31,800 in annual electromagnetic waste costs. Those voltage sags during startup \u2014 dropping 4-5% with 1747-amp inrush currents \u2014 indicate supply stress every cycle.\n\nMPTS correction with approximately two H490 units projects 99.5% power factor and roughly 19-month payback at an estimated $400,000 installed investment. You'd eliminate that 822 kVAR reactive burden and reduce cooling demand by about 30 kilowatts. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $510,000 to $690,000.",
-      "pattern_part3": "Let me walk you through the complete electromagnetic signature of your T16 compressor field, because what you're seeing here represents classic industrial reactive stress under heavy cycling loads.\n\nStarting with voltage health \u2014 you're operating at 476.7 volts baseline, but those periodic sags down to 456-458 volts during startup tell the real story. That's a 4-5% voltage depression correlating directly with compressor inrush events reaching 1747 amps maximum. These aren't just transient spikes \u2014 they're sustained electromagnetic stress indicating your supply infrastructure operates at capacity limits during every cycle.\n\nYour baseline energy pattern shows an 88.5% power factor with estimated 822 kVAR maximum reactive demand. That reactive burden translates into approximately $31,800 annual waste costs when you factor in thermal losses, cooling overhead, and demand charges. You're generating about 513,000 BTU per hour of waste heat that requires approximately 30 kilowatts of additional cooling capacity.\n\nThe active-reactive-harmonic breakdown exposes compound electromagnetic stress. That 6.8% total harmonic distortion during switching sequences isn't isolated \u2014 it amplifies during high-current inrush periods, creating additional heating stress on transformer windings beyond the baseline reactive losses. You're seeing purple harmonic signatures that coincide with red amperage spikes, indicating electromagnetic turbulence throughout your switching events.\n\nBut the MPTS simulation reveals your field's potential. Power factor correction to 99.5% with approximately two H490 units \u2014 roughly $400,000 installed investment \u2014 eliminates that reactive burden entirely. Annual savings around $31,800 project about 19 months estimated payback. The field transforms from electromagnetic chaos during startup sequences into controlled industrial power delivery with minimal kVA overhead.\n\nYour engineering priorities are clear: reactive power compensation addresses the root cause, soft-start solutions could minimize voltage instability, and thermal management systems benefit from reduced cooling load post-correction. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "**FIELD CONDITION SUMMARY:** Your T16 compressor operates at 88.5% power factor with estimated 822 kVAR reactive demand creating approximately $31,800 annual waste costs.\n\n**VOLTAGE STABILITY FINDINGS:** Voltage sags 4-5% during compressor startup, indicating supply stress during 1747-amp inrush events.\n\n**REACTIVE HARMONIC FINDINGS:** Heavy reactive burden with 6.8% THD during switching sequences creates compound electromagnetic stress.\n\n**OPERATIONAL STRESS INTERPRETATION:** Five-day cycling pattern generates 513,000 BTU/hr thermal burden requiring 30 kW additional cooling.\n\n**SIMULATED MPTS OUTCOME:** Power factor correction to 99.5% with estimated two H490 units (roughly $400,000 installed) projects 19-month payback.\n\n**RECOMMENDED ENGINEERING ATTENTION AREAS:** Reactive compensation priority, voltage stability during startup, harmonic monitoring, thermal management optimization.",
-      "field_condition_summary": "Your T16 compressor field is operating under significant reactive stress with an 88.5% power factor. You're dealing with an estimated 822 kVAR maximum reactive demand creating approximately $31,800 in annual waste costs. The field shows classic compressor cycling behavior with voltage instability during startup sequences \u2014 those 4-5% voltage sags aren't just measurement noise, they're your electromagnetic signature responding to massive inrush currents reaching 1747 amps.",
-      "voltage_stability_findings": "Voltage operates at 476.7V baseline but experiences periodic sags down to the 456-458V range during compressor startup events. These voltage depressions correlate directly with high inrush current demands, creating visible electromagnetic stress patterns throughout your monitoring period. The voltage instability indicates your supply infrastructure is working at capacity limits during cycling operations.",
-      "reactive_harmonic_findings": "Heavy reactive burden dominates your electromagnetic field with that estimated 822 kVAR maximum demand creating compound stress. Harmonic distortion reaches 6.8% THD during startup sequences, with purple harmonic signatures amplifying during high-current switching events. This creates additional heating stress on transformer windings beyond the baseline reactive losses.",
-      "operational_stress_interpretation": "Your compressor cycling creates a predictable five-day weekday production pattern with consistent electromagnetic stress. During active periods, you're seeing regular oscillation between high-load operation around 1400+ kW and lower standby periods. The reactive demand translates into thermal burden of approximately 513,000 BTU/hr, requiring about 30 kW of additional cooling capacity to manage the waste heat.",
-      "simulated_mpts_outcome": "MPTS correction projects your power factor to 99.5%, virtually eliminating that reactive demand. Based on the estimated 822 kVAR maximum, you'd need approximately two H490 units \u2014 roughly $400,000 installed investment. With annual savings of approximately $31,800, you're looking at about 19 months estimated payback. The field transforms from electromagnetic chaos into controlled industrial power delivery.",
-      "recommended_engineering_attention_areas": "Priority focus on reactive power compensation to address that 88.5% power factor. The voltage stability issues during startup require attention \u2014 consider soft-start solutions alongside MPTS installation. Monitor harmonic content at 6.8% THD, particularly during switching events. Thermal management systems may benefit from the reduced cooling load post-correction.",
-      "narration_ready_text": "Your T16 compressor field tells a clear electromagnetic story. You're operating at 88.5% power factor with an estimated 822 kVAR reactive demand that's costing you approximately $31,800 annually in waste heat and cooling overhead.\n\nWhat you're seeing in that voltage pattern is significant \u2014 those 4-5% voltage sags during startup aren't just measurement artifacts. They're your field responding to massive 1747-amp inrush currents. That voltage instability indicates your supply infrastructure is working at capacity limits every time that compressor cycles.\n\nThe reactive burden creates compound stress throughout your electromagnetic field. You're dealing with 6.8% harmonic distortion during switching sequences, which amplifies heating stress on your transformer windings. That translates to approximately 513,000 BTU per hour of waste heat \u2014 requiring about 30 kilowatts of additional cooling just to manage the electromagnetic losses.\n\nBut here's what MPTS correction reveals for your field. Power factor jumps to 99.5%, virtually eliminating that reactive demand. Based on your 822 kVAR maximum, you'd need approximately two H490 units \u2014 roughly $400,000 installed investment. With annual savings around $31,800, you're looking at about 19 months estimated payback.\n\nThe field transformation is dramatic \u2014 from electromagnetic chaos during those startup sequences to controlled industrial power delivery. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "executive_summary_short": "Your T16 compressor runs at 88.5% power factor, creating approximately $31,800 in annual electromagnetic waste costs. Those voltage sags during startup \u2014 dropping 4-5% with 1747-amp inrush currents \u2014 indicate supply stress every cycle.\n\nMPTS correction with approximately two H490 units projects 99.5% power factor and roughly 19-month payback at an estimated $400,000 installed investment. You'd eliminate that 822 kVAR reactive burden and reduce cooling demand by about 30 kilowatts. Pricing note: these figures are planning-level estimates, not final quotes. Final installed pricing depends on engineering scope, labor, and site conditions. For planning, estimated installed investment is roughly $510,000 to $690,000.",
-      "engineering_narration_detailed": "Let me walk you through the complete electromagnetic signature of your T16 compressor field, because what you're seeing here represents classic industrial reactive stress under heavy cycling loads.\n\nStarting with voltage health \u2014 you're operating at 476.7 volts baseline, but those periodic sags down to 456-458 volts during startup tell the real story. That's a 4-5% voltage depression correlating directly with compressor inrush events reaching 1747 amps maximum. These aren't just transient spikes \u2014 they're sustained electromagnetic stress indicating your supply infrastructure operates at capacity limits during every cycle.\n\nYour baseline energy pattern shows an 88.5% power factor with estimated 822 kVAR maximum reactive demand. That reactive burden translates into approximately $31,800 annual waste costs when you factor in thermal losses, cooling overhead, and demand charges. You're generating about 513,000 BTU per hour of waste heat that requires approximately 30 kilowatts of additional cooling capacity.\n\nThe active-reactive-harmonic breakdown exposes compound electromagnetic stress. That 6.8% total harmonic distortion during switching sequences isn't isolated \u2014 it amplifies during high-current inrush periods, creating additional heating stress on transformer windings beyond the baseline reactive losses. You're seeing purple harmonic signatures that coincide with red amperage spikes, indicating electromagnetic turbulence throughout your switching events.\n\nBut the MPTS simulation reveals your field's potential. Power factor correction to 99.5% with approximately two H490 units \u2014 roughly $400,000 installed investment \u2014 eliminates that reactive burden entirely. Annual savings around $31,800 project about 19 months estimated payback. The field transforms from electromagnetic chaos during startup sequences into controlled industrial power delivery with minimal kVA overhead.\n\nYour engineering priorities are clear: reactive power compensation addresses the root cause, soft-start solutions could minimize voltage instability, and thermal management systems benefit from reduced cooling load post-correction. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "voltage_baseline_notes": "The voltage sags you see \u2014 dropping 4-5% from 476.7V down to 456-458V \u2014 happen every time your compressor starts up. Those 1747-amp inrush currents create electromagnetic stress that your supply infrastructure struggles to handle. At 88.5% power factor with estimated 822 kVAR reactive demand, you're generating approximately 513,000 BTU per hour of waste heat that costs about $31,800 annually in cooling and thermal losses.",
-      "reactive_mpts_notes": "MPTS correction eliminates that 822 kVAR reactive burden by installing approximately two H490 units. Power factor jumps to 99.5%, voltage stability improves, and you save roughly $31,800 annually in electromagnetic waste costs. At an estimated $400,000 installed investment, you're looking at about 19 months payback while reducing cooling demand by approximately 30 kilowatts.",
-      "energy_field_summary_brief": "**FIELD CONDITION SUMMARY:** Your T16 compressor operates at 88.5% power factor with estimated 822 kVAR reactive demand creating approximately $31,800 annual waste costs.\n\n**VOLTAGE STABILITY FINDINGS:** Voltage sags 4-5% during compressor startup, indicating supply stress during 1747-amp inrush events.\n\n**REACTIVE HARMONIC FINDINGS:** Heavy reactive burden with 6.8% THD during switching sequences creates compound electromagnetic stress.\n\n**OPERATIONAL STRESS INTERPRETATION:** Five-day cycling pattern generates 513,000 BTU/hr thermal burden requiring 30 kW additional cooling.\n\n**SIMULATED MPTS OUTCOME:** Power factor correction to 99.5% with estimated two H490 units (roughly $400,000 installed) projects 19-month payback.\n\n**RECOMMENDED ENGINEERING ATTENTION AREAS:** Reactive compensation priority, voltage stability during startup, harmonic monitoring, thermal management optimization.",
-      "clerk_text_files": {
-        "structured_brief": "T16_brief.txt",
-        "narration_ready": "T16_explains_p1.txt",
-        "executive_short": "T16_explains_p2.txt",
-        "engineering_detailed": "T16_explains_p3.txt",
-        "voltage_baseline_notes": "T16_waste_howto.txt",
-        "reactive_mpts_notes": "T16_savings_howto.txt",
-        "field_condition_summary": "T16_field_condition_summary.txt",
-        "voltage_stability_findings": "T16_voltage_stability_findings.txt",
-        "reactive_harmonic_findings": "T16_reactive_harmonic_findings.txt",
-        "operational_stress_interpretation": "T16_operational_stress_interpretation.txt",
-        "simulated_mpts_outcome": "T16_simulated_mpts_outcome.txt",
-        "recommended_engineering_attention_areas": "T16_recommended_engineering_attention_areas.txt"
-      },
-      "cross_check": "\u26a0\ufe0f DISCREPANCY: Major variance detected between image and CSV values:\n- Target kVA: Image shows 2250 kVA vs CSV 1,473.9 kVA (-34% variance)\n- kVAR MAX: Image shows 697.3 kVAR vs CSV estimated 822 kVAR (+18% variance)\n- Monthly waste: Image shows $528,427/yr vs CSV $31,804.40 (-94% variance)\nUsing CSV as ground truth for all numerical references. Power factor alignment at 88.5% confirms data correlation.",
-      "william_version": "eeWILLIAM-4view-holistic-v1",
-      "analyzed_at": "2026-05-08 17:56:38",
-      "tmax_supply": 1473.88,
-      "power_factor": 0.885459,
-      "avg_kvar": 513.67,
-      "waste_cost": 31804.4,
-      "transformer_name": "T16 Compressor",
-      "avg_kva": 1110.99,
-      "waste_kw": 126.21,
-      "capacity": 2500.0
-    }
-  }
+  "transformers": {}
 };
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
@@ -3372,8 +3249,90 @@
   let currentTransformerId = '';
   let isSpeaking = false;
   let currentHowToPath = '';
+  let currentHowToText = '';
   let currentExplainsPartIndex = 0;
   let siteOverviewPlaybackToken = 0;
+  let lastAutoSelectionType = '';
+  let lastAutoSelectionContext = '';
+  const FIXED_BASELINE_RESULTS_TEXT = `Welcome. Before we begin, I'd like to reassure you that this dashboard is much simpler than it may first appear.
+
+Every electrical energy field tells the same basic story.
+
+Electrical energy enters your facility through the transformer and flows to the equipment performing the work. A portion of that energy is converted into useful work. The remaining energy stays within the electrical energy field, where it contributes to heat, electrical congestion, and other operating consequences.
+
+This dashboard allows you to see both parts of that story.
+
+The information on the left shows how your electrical energy field is behaving. The information on the right translates that behavior into thermal burden, cooling demand, emissions, and ultimately the financial consequences affecting your operation.
+
+The chart below is a window into your electrical energy field over time. Its height represents the relative size of the field, while its width represents the passage of time. Thousands of individual measurements are combined to create this continuous picture of your electrical energy field.
+
+Begin with the legend in the upper-left corner. It is your guide for reading the energy flow from left to right.
+
+Notice that these colors always have the same meaning throughout Unity. Once you learn this legend, you'll know how to read every electrical energy field we present.
+
+Dark Blue represents the electrical energy supplied by the utility.
+
+Light Blue represents the portion of that energy being converted into useful work.
+
+Because no electrical component is one hundred percent efficient, the remaining energy from every conversion combines to create the Green area.
+
+Green represents the recoverable energy within the electrical energy field. This is the energy that contributes to additional heat, electrical congestion, and the operating consequences measured throughout your facility.
+
+Rather than focusing on individual numbers, begin by looking for patterns in the colors. Those patterns reveal how your electrical energy field responds to the changing demands placed on your facility throughout the day.
+
+This baseline represents the natural behavior of your electrical energy field before tuning. It becomes the reference point for every future comparison and every improvement that follows.
+
+I hope this introduction has helped you better understand how to read your baseline energy field.
+
+Thank you for learning with Unity.`;
+  const FIXED_TUNED_FIELD_TEXT = `Welcome back.
+
+Before we begin, I’d like to reassure you that this view builds directly on the baseline you’ve already learned. The same colors, layout, and legend apply here, making it easy to see what has changed after tuning.
+
+The baseline showed the natural behavior of your electrical energy field before tuning. This view shows how that same field behaves after the Unity MPTS has been introduced.
+
+Notice that the Dark Blue utility supply remains essentially the same. Your facility still requires the same amount of useful work, so the Light Blue portion changes very little.
+
+The greatest change occurs in the Green portion of the field.
+
+As the Unity MPTS organizes the electrical energy field, less energy remains trapped within the system. That means less heat, less electrical congestion, and fewer operating consequences throughout your facility.
+
+Those improvements are reflected throughout the dashboard. The values on the right translate those electrical improvements into reduced thermal burden, lower cooling demand, reduced emissions, increased electrical capacity, and improved operating efficiency.
+
+Because you’ve already learned the legend, your attention can now shift from understanding the graph to observing the changes. Compare the size of the Green area with the baseline and notice how the overall field becomes more organized and efficient.
+
+This tuned field represents the operating condition your facility can achieve with Unity MPTS.
+
+Every future comparison begins with the baseline and demonstrates the measurable improvements shown here.
+
+Thank you for learning with Unity.`;
+  const SHARED_HOWTO_FILENAMES = {
+    baseline: 'how-to-read-waste-chart.mp3',
+    tuned: 'how-to-read-savings-chart.mp3'
+  };
+  function resolveSharedHowToAudioPath(mode) {
+    const normalizedMode = String(mode || '').toLowerCase();
+    const filename = normalizedMode === 'tuned' || normalizedMode === 'savings'
+      ? SHARED_HOWTO_FILENAMES.tuned
+      : SHARED_HOWTO_FILENAMES.baseline;
+    try {
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const sourceScript = scripts.reverse().find((script) => {
+        const src = String(script.getAttribute('src') || '');
+        return src.includes('unity-howto-toggle.js');
+      });
+      const src = String(sourceScript && sourceScript.getAttribute('src') ? sourceScript.getAttribute('src') : '');
+      if (src) {
+        const scriptUrl = new URL(src, window.location.href);
+        return new URL(`../audio/unity/${filename}`, scriptUrl).toString();
+      }
+    } catch (error) {
+      console.warn('Unable to resolve shared how-to audio path from script source:', error);
+    }
+    return normalizedMode === 'tuned'
+      ? 'Audio/unity_tuned_energy_field.mp3'
+      : 'Audio/unity_baseline_results.mp3';
+  }
   const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
   function isPlaybackActive() {
     const speechActive = !!(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
@@ -3406,6 +3365,8 @@
     currentAudioElement = null;
     isSpeaking = false;
     currentExplainsPartIndex = 0;
+    lastAutoSelectionType = '';
+    lastAutoSelectionContext = '';
   }
 
   function getSiteOverviewFallbackText() {
@@ -3413,11 +3374,16 @@
     const period = document.getElementById('month-year')?.textContent?.trim() ||
                    document.getElementById('param-period')?.textContent?.trim() ||
                    'the current reporting period';
-    const transformerCount = document.getElementById('transformer-count')?.textContent?.trim() || 'multiple transformers';
-    const temp = document.getElementById('env-temp')?.textContent?.trim();
-    const humidity = document.getElementById('env-humidity')?.textContent?.trim();
-    const envText = (temp && humidity) ? ` Environmental conditions are ${temp} and ${humidity}.` : '';
-    return `Unity site overview for ${siteName}. This summary covers ${period}, with ${transformerCount}.${envText} Use the site summary and transformer cards for baseline and Unity optimization details.`;
+    return `Unity site overview for ${siteName}. This summary covers ${period} and highlights field behavior, stability, and Unity optimization priorities. Use the site summary and transformer cards for baseline and Unity optimization details.`;
+  }
+
+  function getPreferredSpeechVoice() {
+    const voices = window.speechSynthesis && window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    let preferredVoice = voices.find(v => v.name && v.name.toLowerCase().includes('unity faraday'));
+    if (!preferredVoice) {
+      preferredVoice = voices.find(v => (v.name && (v.name.includes('Samantha') || v.name.includes('Female'))) || v.lang === 'en-US');
+    }
+    return preferredVoice || null;
   }
 
   function speakWithPreferredVoice(text) {
@@ -3425,11 +3391,7 @@
       return false;
     }
     currentSpeech = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
-    let preferredVoice = voices.find(v => v.name && v.name.toLowerCase().includes('unity faraday'));
-    if (!preferredVoice) {
-      preferredVoice = voices.find(v => (v.name && (v.name.includes('Samantha') || v.name.includes('Female'))) || v.lang === 'en-US');
-    }
+    const preferredVoice = getPreferredSpeechVoice();
     if (preferredVoice) currentSpeech.voice = preferredVoice;
     currentSpeech.rate = 0.95;
     currentSpeech.pitch = 1.0;
@@ -3439,6 +3401,46 @@
     isSpeaking = true;
     window.speechSynthesis.speak(currentSpeech);
     return true;
+  }
+
+  function getHowToOpeningText(path) {
+    const source = String(path || '').toLowerCase();
+    if (source.includes('unity_baseline_results.mp3') || source.includes('how-to-read-waste-chart.mp3')) {
+      return '';
+    }
+    if (source.includes('_waste_howto')) {
+      return "How to read the baseline view: first orient to layout and operating window, then focus on trend direction, then connect drift to operational strain before planning correction.";
+    }
+    if (source.includes('_savings_howto') || source.includes('how-to-read-savings-chart.mp3') || source.includes('unity_tuned_energy_field.mp3')) {
+      return "Understanding the tuned energy field: first orient to the tuned-energy chart, then compare before and after field behavior, then focus on recovery and reliability signals before planning rollout.";
+    }
+    return "How to read this view: first orient to layout, then review trend direction, then connect that pattern to operational impact.";
+  }
+
+  function stageHowToOpeningThenPlay(openingText, startMainPlayback) {
+    if (!openingText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      startMainPlayback();
+      return;
+    }
+    const openingSpeech = new SpeechSynthesisUtterance(openingText);
+    const preferredVoice = getPreferredSpeechVoice();
+    if (preferredVoice) openingSpeech.voice = preferredVoice;
+    openingSpeech.rate = 0.95;
+    openingSpeech.pitch = 1.0;
+    openingSpeech.volume = 1.0;
+    openingSpeech.onend = function() {
+      if (currentSpeech === openingSpeech) currentSpeech = null;
+      isSpeaking = false;
+      startMainPlayback();
+    };
+    openingSpeech.onerror = function() {
+      if (currentSpeech === openingSpeech) currentSpeech = null;
+      isSpeaking = false;
+      startMainPlayback();
+    };
+    currentSpeech = openingSpeech;
+    isSpeaking = true;
+    window.speechSynthesis.speak(openingSpeech);
   }
 
   function tryPlayAudioSource(src) {
@@ -3527,8 +3529,7 @@
       console.error('No transformer selected for Unity Explains');
       return;
     }
-
-    if (isSpeaking) {
+    if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
     }
@@ -3598,8 +3599,7 @@
       console.error('No transformer selected for Unity Brief');
       return;
     }
-
-    if (isSpeaking) {
+    if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
     }
@@ -3642,33 +3642,90 @@
     if (!imageEl || !imageEl.src) return;
     const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
     let howToLabel = 'How to Read';
-    if (currentHowToPath && currentHowToPath.includes('_waste_howto')) howToLabel = 'How to Read Waste';
-    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
+    if (!currentHowToPath && currentHowToText === FIXED_BASELINE_RESULTS_TEXT) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_waste_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-waste-chart.mp3')
+    )) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_savings_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_tuned_energy_field.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-savings-chart.mp3')
+    )) howToLabel = 'Understanding the Tuned Energy Field';
     showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
   }
   function playHowToAudio() {
-    if (isSpeaking) {
+    if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
     }
-    if (!currentHowToPath) {
+    const hasTtsNarration = !!String(currentHowToText || '').trim();
+    if (!currentHowToPath && !hasTtsNarration) {
       alert('How to Read audio not available for this view.');
       return;
     }
-    openHowToFullscreenFromCurrentView();
-    currentAudioElement = new Audio(currentHowToPath);
-    currentAudioElement.onended = function() { isSpeaking = false; };
-    currentAudioElement.onerror = function() {
-      console.warn('How To Read MP3 not available.');
-      isSpeaking = false;
-      alert('How to Read audio is not available.');
+    const startHowToTTS = () => {
+      if (!speakWithPreferredVoice((currentHowToText || '').trim() || `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`)) {
+        alert('How to Read audio is not available.');
+      }
     };
-    isSpeaking = true;
-    currentAudioElement.play().catch(() => {
-      console.warn('How To Read playback failed.');
-      isSpeaking = false;
-      alert('How to Read audio is not available.');
-    });
+    if (!currentHowToPath && hasTtsNarration) {
+      startHowToTTS();
+      return;
+    }
+    const startHowToPlayback = () => {
+      currentAudioElement = new Audio(currentHowToPath);
+      currentAudioElement.onended = function() { isSpeaking = false; };
+      currentAudioElement.onerror = function() {
+        console.warn('How To Read MP3 not available.');
+        isSpeaking = false;
+        startHowToTTS();
+      };
+      isSpeaking = true;
+      currentAudioElement.play().catch(() => {
+        console.warn('How To Read playback failed.');
+        isSpeaking = false;
+        startHowToTTS();
+      });
+    };
+    startHowToPlayback();
+  }
+
+  function autoStartVoiceForSelection(selectionType) {
+    if (!selectionType) return;
+    const context = getAutoSelectionContext(selectionType);
+    const sameSelection =
+      isPlaybackActive() &&
+      lastAutoSelectionType === selectionType &&
+      lastAutoSelectionContext === context;
+
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
+      if (sameSelection) return;
+    }
+    if (selectionType === 'baseline') {
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+      return;
+    }
+
+    if (selectionType === 'mpts') {
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+      return;
+    }
+
+    if (selectionType === 'narrative') {
+      if (!currentTransformerId) return;
+      speakNarrative();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+    }
   }
 
   // Show pattern modal with summary or narrative
@@ -3696,7 +3753,7 @@
         }
       }
     }
-    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
+    const tid = matchedPatternKey || routing.fileIds[0] || routing.keys[0];
     
     let content = '';
     let title = '';
@@ -3907,9 +3964,9 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      baselineCandidates = buildPatternCandidates(routing.fileIds, ['tbt', 'tb', 'bt', 'b'], monthSuffix, monthSuffixLong);
       part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
-      const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
+      const simulatorCandidates = buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
         .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
@@ -4005,7 +4062,7 @@
       );
       attachPatternFallback(
         document.getElementById('simulatorPatternImg'),
-        buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong),
+        buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong),
         `${transformerName} simulator`
       );
       const part2PatternImg = document.getElementById('part2PatternImg');
@@ -4033,9 +4090,13 @@
     const unityHowToBtn = document.getElementById('unityHowToBtn');
     if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     currentHowToPath = '';
+    currentHowToText = '';
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
+    if (type === 'narrative') {
+      autoStartVoiceForSelection(type);
+    }
   }
   
   // Scroll to narrative text section
@@ -4063,6 +4124,7 @@
     } catch (e) {}
     currentTransformerId = '';
     currentHowToPath = '';
+    currentHowToText = '';
     const howToBtn = document.getElementById('unityHowToBtn');
     if (howToBtn) howToBtn.style.display = 'none';
     const unityBtn = document.getElementById('unityExplainsBtn');
@@ -4593,10 +4655,10 @@
         
         <div>
           <h3 style="color: #5D701A;">UNITY MANAGEMENT w/MPTS</h3>
-          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Harmonized Energy Behavior with MPTS Technology</p>
+          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Tuned Energy Behavior with MPTS Technology</p>
           
           <div class="site-metric">
-            <span class="site-metric-label">Transformers Harmonized</span>
+            <span class="site-metric-label">Transformers Tuned</span>
             <span class="site-metric-value">${transformerCount}</span>
           </div>
           <div class="site-metric">
@@ -4604,7 +4666,7 @@
             <span class="site-metric-value" style="color: #15803d;">${mptsAvgPF}%</span>
           </div>
           <div class="site-metric">
-            <span class="site-metric-label">Harmonized Active Power (per hour)</span>
+            <span class="site-metric-label">Tuned Active Power (per hour)</span>
             <span class="site-metric-value" style="color: #15803d;">${mptsOptimizedActivePower.toFixed(1)} kW</span>
           </div>
           <div class="site-metric">
@@ -4810,7 +4872,7 @@
           Reach out to our Team and let's start the conversation.
         </p>
         <div style="background: rgba(70, 95, 20, 0.5); border-radius: 12px; padding: 25px; border: 2px solid rgba(178, 210, 53, 0.4); margin-bottom: 25px;">
-          <p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Harmonized Energy?</p>
+          <p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Tuned Energy?</p>
           <a href="mailto:info@UnityEnergy.com" 
              style="display: inline-block; background: #fff; color: #314100; padding: 12px 30px; 
                     border-radius: 50px; font-weight: 600; text-decoration: none; 
@@ -4841,19 +4903,50 @@
 </div>
 
 
+<script>
+(function loadUnityHowToToggle() {
+  if (window.__unityHowToToggleLoaderInjected) return;
+  window.__unityHowToToggleLoaderInjected = true;
+  const scriptName = 'unity-howto-toggle.js';
+  const scriptVersion = '20260701a';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 10; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unityHowToToggleLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
 <script id="unity-narration-retention-config">
-window.__UNITY_NARRATION_ARCHIVED__ = false;
+window.__UNITY_NARRATION_ARCHIVED__ = (window.__UNITY_NARRATION_ARCHIVED__ === true);
 window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
-  policyStartMonthCode: 2603,
-  reportMonthCode: 2604
+  retentionMonths: 2,
+  includeCurrentMonth: false,
+  reportMonthCode: null
 }, window.__UNITY_NARRATION_RETENTION_POLICY__ || {});
 </script>
 <script id="unity-narration-retention-guard">
 (function(){
-  if (window.__UNITY_NARRATION_ARCHIVED__ !== true) return;
 
   var policy = window.__UNITY_NARRATION_RETENTION_POLICY__ || {};
-  var startCode = Number(policy.policyStartMonthCode || 2603);
 
   function parseMonthCodeFromDateToken(token) {
     var clean = String(token || '').trim();
@@ -4886,7 +4979,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
       jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
       jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
-    var periodEl = document.querySelector('.period-value');
+    var periodEl = document.querySelector('.period-value, #month-year');
     var labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
     if (!labelText) labelText = document.title || '';
     var m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
@@ -4898,30 +4991,86 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return Number.isFinite(labelCode) ? labelCode : null;
   }
 
-  var reportMonthCodeRaw = String(policy.reportMonthCode == null ? '' : policy.reportMonthCode).trim();
-  var reportMonthCode = reportMonthCodeRaw ? Number(reportMonthCodeRaw) : NaN;
-  if (/^\d{8}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = Number(reportMonthCodeRaw.slice(2, 6));
-  } else if (/^\d{6}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = /^20\d{4}$/.test(reportMonthCodeRaw)
-      ? Number(reportMonthCodeRaw.slice(2, 6))
-      : Number(reportMonthCodeRaw.slice(0, 4));
+  function monthCodeFromDate(dateObj) {
+    if (!(dateObj instanceof Date)) return null;
+    var yy = String(dateObj.getFullYear() % 100).padStart(2, '0');
+    var mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    var code = Number(yy + mm);
+    return Number.isFinite(code) ? code : null;
   }
+
+  function normalizeMonthCode(value) {
+    if (value === null || value === undefined) return null;
+    var asText = String(value).trim();
+    if (!/^\d+$/.test(asText)) return null;
+    if (asText.length >= 8) {
+      asText = /^20\d{6}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    } else if (asText.length === 6) {
+      asText = /^20\d{4}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    }
+    var numeric = Number(asText);
+    if (!Number.isFinite(numeric)) return null;
+    var code = Math.floor(numeric);
+    var month = code % 100;
+    if (code < 1000 || month < 1 || month > 12) return null;
+    return code;
+  }
+
+  function resolveRetentionMonths() {
+    var maxMonths = Number(policy.retentionMonths || 2);
+    if (!Number.isFinite(maxMonths) || maxMonths < 1) maxMonths = 2;
+    return Math.floor(maxMonths);
+  }
+
+  function isWithinRetentionWindow(reportCode) {
+    if (!Number.isFinite(reportCode)) return false;
+    var now = new Date();
+    var cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+
+    var maxMonths = resolveRetentionMonths();
+    for (var i = 0; i < maxMonths; i++) {
+      var code = monthCodeFromDate(cursor);
+      if (Number.isFinite(code) && code === reportCode) return true;
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    return false;
+  }
+
+  function describeRetentionWindow() {
+    var labels = [];
+    var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var now = new Date();
+    var cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    var maxMonths = resolveRetentionMonths();
+    for (var i = 0; i < maxMonths; i++) {
+      labels.push(monthNames[cursor.getMonth()] + ' ' + cursor.getFullYear());
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    return labels.join(' and ');
+  }
+
+  var reportMonthCode = normalizeMonthCode(policy.reportMonthCode);
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||
       parseMonthCodeFromPath(window.location.href) ||
       parseMonthCodeFromLabel();
   }
-
-  var inScope = true;
-  if (Number.isFinite(reportMonthCode) && Number.isFinite(startCode)) {
-    inScope = reportMonthCode >= startCode;
-  }
-  if (!inScope) return;
+  var forcedArchived = (window.__UNITY_NARRATION_ARCHIVED__ === true);
+  if (!forcedArchived && !Number.isFinite(reportMonthCode)) return;
+  if (!forcedArchived && isWithinRetentionWindow(reportMonthCode)) return;
 
   var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
+  var retentionLabel = describeRetentionWindow();
+  var audioMsg = retentionLabel
+    ? ("Audio is maintained only for the last two months (" + retentionLabel + ").")
+    : "Audio is maintained only for the last two months (retention policy).";
 
   function hideNarrativeAudioButtons() {
     ['unityBriefBtn', 'unityExplainsBtn', 'unityHowToBtn', 'narrativeAudioBtn'].forEach(function(id){
@@ -4979,38 +5128,5 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   }
 })();
 </script>
-<script src="../../unity-april-baseline-retention.js"></script>
-  <script>
-  (function loadUnityHowToToggle() {
-    if (window.__unityHowToToggleLoaderInjected) return;
-    window.__unityHowToToggleLoaderInjected = true;
-    const scriptName = 'unity-howto-toggle.js';
-    const scriptVersion = '20260701a';
-    const candidateSrcs = [];
-    for (let depth = 0; depth <= 10; depth += 1) {
-      const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-      candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
-    }
-    const head = document.head || document.getElementsByTagName('head')[0];
-    if (!head) return;
-    const tryLoad = (index) => {
-      if (index >= candidateSrcs.length) return;
-      const src = candidateSrcs[index];
-      const script = document.createElement('script');
-      const separator = src.includes('?') ? '&' : '?';
-      script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
-      script.async = false;
-      script.onload = () => {
-        window.__unityHowToToggleLoaderSrc = src;
-      };
-      script.onerror = () => {
-        script.remove();
-        tryLoad(index + 1);
-      };
-      head.appendChild(script);
-    };
-    tryLoad(0);
-  })();
-  </script>
-  </body>
-  </html>
+</body>
+</html>

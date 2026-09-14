@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** NCDC2 South D  
-**Generated:** 2026-05-08 12:06:17  
+**Generated:** 2026-09-10 22:43:11  
 **Data Source:** AN55050318-V-1minRES_43200CLP_260401-260430c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 67.44 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 67.44 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 35.72 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **NCDC2 South D Utility Cost Offset:** $13.15/hour
 - **Annual Offset Savings:** $115194/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 244,787 BTU/hr
-- **Total Cooling kW No Longer Needed:** 21.44 kW
-- **Cooling Energy Cost Avoided:** $4.18/hour
-- **Annual Cooling Savings:** $36615/year
+- **Total Heat No Longer Generated:** 129,668 BTU/hr
+- **Total Cooling kW No Longer Needed:** 11.35 kW
+- **Cooling Energy Cost Avoided:** $2.21/hour
+- **Annual Cooling Savings:** $19396/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 88.87 kW
-- **CO2e Emissions Avoided:** 290.62 metric tons/year
-- **Monthly CO2e Reduction:** 24.22 metric tons/month
-- **Hourly CO2e Reduction:** 0.0332 metric tons/hour
+- **Total kW Waste Eliminated:** 78.79 kW
+- **CO2e Emissions Avoided:** 257.66 metric tons/year
+- **Monthly CO2e Reduction:** 21.47 metric tons/month
+- **Hourly CO2e Reduction:** 0.0294 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $11189/year
+- **Annual CO2e Value:** $9920/year
 
 ### Total NCDC2 South D Unity Savings
 
-- **Per Hour:** $18.61
-- **Per Day:** $446.57
-- **Per Month:** $13397.13
-- **Per Year:** $162998
+- **Per Hour:** $16.50
+- **Per Day:** $395.92
+- **Per Month:** $11877.51
+- **Per Year:** $144510
 
 ### NCDC2 South D Savings Breakdown
 

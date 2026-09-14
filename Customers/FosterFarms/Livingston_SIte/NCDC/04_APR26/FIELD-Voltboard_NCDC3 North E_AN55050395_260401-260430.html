@@ -244,20 +244,20 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 480.4525200462963,
+  "nominal_voltage": 480.0,
   "transformer_name": "NCDC3 North E",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 480.5415092146694,
-  "min_voltage": 464.228,
-  "max_voltage": 497.724,
-  "voltage_std": 1.5547813166781572,
-  "voltage_spread": 33.49599999999998,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
   "power_factor": 0.8499936804794439,
-  "vhi_avg": 1.00018521948509,
-  "vhi_max": 1.0359483595840842,
+  "vhi_avg": 1.0,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
   "voltage_dip_count": 0,
-  "pct_below_nominal": 36.625236107548446,
+  "pct_below_nominal": 0.0,
   "estimated_running_amps": 656.3972339738359,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
@@ -266,31 +266,31 @@
   "time_period_hours": 744,
   "analysis_period": "260401-260430",
   "file_name": "AN55050395-V-1minRES_43200CLP_260401-260430c.csv",
-  "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/NCND/AN55050395-V-1minRES_43200CLP_260401-260430c.csv",
+  "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/NCDC/AN55050395-V-1minRES_43200CLP_260401-260430c.csv",
   "drop_groups": [
     {
       "id": "G1",
       "group_id": "G1",
       "drop_count": 0,
-      "voltage_range": "464.2-497.7V",
+      "voltage_range": "480.0-480.0V",
       "amp_range": "471.5-860.6A",
-      "delta_v": 0.08898916837313209,
+      "delta_v": 0.0,
       "est_stall_amps": 656.3972339738359,
       "estimated_hp": 0,
       "classification": "Normal",
       "risk": "Normal",
       "days": 30,
-      "center_v": 480.5415092146694,
-      "min_v": 464.228,
-      "max_v": 497.724,
+      "center_v": 480.0,
+      "min_v": 480.0,
+      "max_v": 480.0,
       "avg_amps": 656.3972339738359,
       "lrc_factor": 6.0,
       "power_factor": 0.8499936804794439,
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 480.5415092146694,
-  "delta_v_primary": 0.08898916837313209
+  "voltage_center": 480.0,
+  "delta_v_primary": 0.0
 };
 </script>
 </head>
@@ -316,22 +316,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">480.5 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">464.2 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">497.7 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">33.5 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -341,7 +341,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.04</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -351,7 +351,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">36.6%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -463,7 +463,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_NCDC3_North_E.json');
+      const response = await fetch('volt_dashboard_data_NCDC3_North_E.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

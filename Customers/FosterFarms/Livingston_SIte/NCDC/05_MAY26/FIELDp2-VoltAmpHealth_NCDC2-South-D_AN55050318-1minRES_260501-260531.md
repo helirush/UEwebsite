@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** NCDC2 South D  
-**Generated:** 2026-06-18 23:51:32  
+**Generated:** 2026-09-10 21:10:40  
 **Data Source:** AN55050318-V-1minRES_44640CLP_260501-260531c.csv  
 
 ## 📊 Analysis Period
@@ -28,16 +28,16 @@
 <summary><strong>Basic Voltage Metrics</strong></summary>
 
 - **Total Voltage Readings Analyzed:** 44,640
-- **Average Voltage:** 481.1V
-- **Minimum Voltage:** 0.0V
-- **Maximum Voltage:** 497.8V
-- **Standard Deviation:** 7.00V
+- **Average Voltage:** 480.0V
+- **Minimum Voltage:** 480.0V
+- **Maximum Voltage:** 480.0V
+- **Standard Deviation:** 0.00V
 
 </details>
 
 ### Operating Mean Voltage vs Nominal (480V)
 
-- **Operating Mean:** 481.1V (1.1V, 0.24% above nominal)
+- **Operating Mean:** 480.0V (0.0V, 0.00% at nominal)
 
 *📌 Note: Lower mean voltage for the same kW raises current, increasing BTU/hr and contributing to higher VHI.*
 

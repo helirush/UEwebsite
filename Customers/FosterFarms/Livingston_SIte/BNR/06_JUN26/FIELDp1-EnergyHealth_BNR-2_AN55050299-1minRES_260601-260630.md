@@ -2,16 +2,16 @@
 
 **Transformer Baseline :**
 - **Consumption Usage:** 11,903.0 kWh (Usage per period)
-- **Consumption Cost per unit:** $0.120/kWh (Cost per kWh)
-- **Consumption Total Cost:** $1,428.36 (Cost per period)
-- **Consumption Total Cost:** $2.00 (Cost per hour)
+- **Consumption Cost per unit:** $0.195/kWh (Cost per kWh)
+- **Consumption Total Cost:** $2,321.09 (Cost per period)
+- **Consumption Total Cost:** $3.26 (Cost per hour)
 
 ---
 
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** BNR-2  
-**Generated:** 2026-07-06 11:07:58  
+**Generated:** 2026-09-10 20:04:31  
 **Data Source:** AN55050299-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 0.61 kW/hr
-- **Blended Electricity Rate:** $0.1200/kWh (all-inclusive)
-- **BNR-2 Utility Cost Offset:** $0.07/hour
-- **Annual Offset Savings:** $645/year
+- **Total Non-Active Field Burden (kVA - kW):** 0.61 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 0.28 kW/hr (modeled_non_active_field_burden)
+- **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
+- **BNR-2 Utility Cost Offset:** $0.12/hour
+- **Annual Offset Savings:** $1048/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 2,247 BTU/hr
-- **Total Cooling kW No Longer Needed:** 0.20 kW
+- **Total Heat No Longer Generated:** 1,030 BTU/hr
+- **Total Cooling kW No Longer Needed:** 0.09 kW
 - **Cooling Energy Cost Avoided:** $0.02/hour
-- **Annual Cooling Savings:** $208/year
+- **Annual Cooling Savings:** $155/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 0.81 kW
-- **CO2e Emissions Avoided:** 2.65 metric tons/year
-- **Monthly CO2e Reduction:** 0.22 metric tons/month
+- **Total kW Waste Eliminated:** 0.70 kW
+- **CO2e Emissions Avoided:** 2.30 metric tons/year
+- **Monthly CO2e Reduction:** 0.19 metric tons/month
 - **Hourly CO2e Reduction:** 0.0003 metric tons/hour
-- **CO2e Value Rate:** $35/metric ton
-- **Annual CO2e Value:** $93/year
+- **CO2e Value Rate:** $38/metric ton
+- **Annual CO2e Value:** $87/year
 
 ### Total BNR-2 Unity Savings
 
-- **Per Hour:** $0.11
-- **Per Day:** $2.59
-- **Per Month:** $77.70
-- **Per Year:** $945
+- **Per Hour:** $0.15
+- **Per Day:** $3.53
+- **Per Month:** $106.02
+- **Per Year:** $1290
 
 ### BNR-2 Savings Breakdown
 

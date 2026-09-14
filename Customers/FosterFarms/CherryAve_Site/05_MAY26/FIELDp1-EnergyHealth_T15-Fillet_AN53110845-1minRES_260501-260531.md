@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** T15 Fillet  
-**Generated:** 2026-07-10 12:10:53  
+**Generated:** 2026-09-10 21:09:10  
 **Data Source:** AN53110845-V-1minRES_44640CLP_260501-260531c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 142.76 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 142.76 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 95.22 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.3500/kWh (all-inclusive)
 - **T15 Fillet Utility Cost Offset:** $49.97/hour
 - **Annual Offset Savings:** $437715/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 515,148 BTU/hr
-- **Total Cooling kW No Longer Needed:** 45.08 kW
-- **Cooling Energy Cost Avoided:** $15.78/hour
-- **Annual Cooling Savings:** $138201/year
+- **Total Heat No Longer Generated:** 343,606 BTU/hr
+- **Total Cooling kW No Longer Needed:** 30.07 kW
+- **Cooling Energy Cost Avoided:** $10.52/hour
+- **Annual Cooling Savings:** $92181/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 187.84 kW
-- **CO2e Emissions Avoided:** 614.27 metric tons/year
-- **Monthly CO2e Reduction:** 51.19 metric tons/month
-- **Hourly CO2e Reduction:** 0.0701 metric tons/hour
+- **Total kW Waste Eliminated:** 172.83 kW
+- **CO2e Emissions Avoided:** 565.18 metric tons/year
+- **Monthly CO2e Reduction:** 47.10 metric tons/month
+- **Hourly CO2e Reduction:** 0.0645 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $23649/year
+- **Annual CO2e Value:** $21760/year
 
 ### Total T15 Fillet Unity Savings
 
-- **Per Hour:** $68.44
-- **Per Day:** $1642.65
-- **Per Month:** $49279.40
-- **Per Year:** $599566
+- **Per Hour:** $62.97
+- **Per Day:** $1511.39
+- **Per Month:** $45341.57
+- **Per Year:** $551656
 
 ### T15 Fillet Savings Breakdown
 

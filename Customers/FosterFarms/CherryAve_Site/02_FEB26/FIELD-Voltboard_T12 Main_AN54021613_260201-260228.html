@@ -244,21 +244,21 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 467.85286036706344,
+  "nominal_voltage": 480.0,
   "transformer_name": "T12 Main",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 467.85286036706344,
-  "min_voltage": 438.776,
-  "max_voltage": 494.237,
-  "voltage_std": 10.911711904871,
-  "voltage_spread": 55.46100000000001,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
   "power_factor": 0.8386934771825396,
   "vhi_avg": 1.0,
-  "vhi_max": 1.0621495834058823,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
-  "voltage_dip_count": 38976,
-  "pct_below_nominal": 79.85119047619048,
-  "estimated_running_amps": 1794.5176137267476,
+  "voltage_dip_count": 271,
+  "pct_below_nominal": 0.0,
+  "estimated_running_amps": 1942.5590216631301,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
   "data_resolution": "1minRES",
@@ -271,19 +271,19 @@
     {
       "id": "G1",
       "group_id": "G1",
-      "drop_count": 38975,
-      "voltage_range": "445.8-468.1V",
-      "amp_range": "912.2-2356.6A",
-      "delta_v": 25.7,
-      "est_stall_amps": 345.0,
-      "estimated_hp": 230,
+      "drop_count": 270,
+      "voltage_range": "445.8-460.8V",
+      "amp_range": "1125.3-2356.6A",
+      "delta_v": 21.9,
+      "est_stall_amps": 465.0,
+      "estimated_hp": 310,
       "classification": "SIGNIFICANT",
       "risk": "SIGNIFICANT",
-      "days": 26,
-      "center_v": 456.933,
+      "days": 24,
+      "center_v": 453.28049999999996,
       "min_v": 445.762,
-      "max_v": 468.104,
-      "avg_amps": 1794.5176137267476,
+      "max_v": 460.799,
+      "avg_amps": 1942.5590216631301,
       "lrc_factor": 6.0,
       "power_factor": 0.8386934771825396,
       "efficiency": 0.92
@@ -294,9 +294,9 @@
       "drop_count": 1,
       "voltage_range": "438.8-438.8V",
       "amp_range": "2005.7-2005.7A",
-      "delta_v": 48.8,
-      "est_stall_amps": 330.0,
-      "estimated_hp": 220,
+      "delta_v": 41.2,
+      "est_stall_amps": 390.0,
+      "estimated_hp": 260,
       "classification": "SEVERE",
       "risk": "SEVERE",
       "days": 1,
@@ -309,8 +309,8 @@
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 456.933,
-  "delta_v_primary": 25.7
+  "voltage_center": 453.28049999999996,
+  "delta_v_primary": 21.9
 };
 </script>
 </head>
@@ -336,22 +336,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">467.9 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">438.8 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">494.2 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">55.5 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -361,7 +361,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.06</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -371,7 +371,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">79.9%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -416,7 +416,7 @@
       
       <div class="param-item">
         <div class="param-label">Total Voltage Drops</div>
-        <div class="param-value" id="param-volt-drops">38976</div>
+        <div class="param-value" id="param-volt-drops">271</div>
       </div>
       
       <div class="param-item">
@@ -483,7 +483,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_T12_Main.json');
+      const response = await fetch('volt_dashboard_data_T12_Main.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

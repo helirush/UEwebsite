@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** PL1-Proc2  
-**Generated:** 2026-04-25 17:56:56  
+**Generated:** 2026-09-10 22:48:21  
 **Data Source:** AN55050338-V-1minRES_26460CLP_260313-260331c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 99,548.01
+- **Device Zone BTU/hr:** 70,766.38
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 17,663.54
+- **Field Zone BTU/hr:** 12,544.41
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 117,211.55 BTU/hr
+- **Total Heat Generated:** 83,310.79 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 107.55 kW
+- **Baseline Cooling Load:** 76.44 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 34.19 kW
+- **Climate Adjusted Cooling:** 24.30 kW
   - *Cooling load adjusted for temperature (69.9°F) and humidity (50.3%)*
 - **Climate Burden Multiplier:** 1.001
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 34.19 kW
+- **Total Cooling Load Avoided:** 24.30 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost (Monthly Equivalent):** $10,451.94
+- **Electrical-Energy Waste Cost (Monthly Equivalent):** $10,448.71
   - *Normalized monthly cost of wasted energy consumption*
-- **Cooling Cost Avoided (Annual):** $58,397.72/year
+- **Cooling Cost Avoided (Annual):** $41,507.52/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-3,225.73/year climate/impedance bonus)
+  (Includes $-2,292.05/year climate/impedance bonus)
 
 ---
 

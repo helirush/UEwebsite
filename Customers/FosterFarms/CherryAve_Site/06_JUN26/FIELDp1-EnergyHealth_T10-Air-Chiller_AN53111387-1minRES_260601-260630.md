@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** T10 Air Chiller  
-**Generated:** 2026-07-18 11:54:05  
+**Generated:** 2026-09-10 20:03:28  
 **Data Source:** AN53111387-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 103.86 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 103.86 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 63.81 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.3500/kWh (all-inclusive)
 - **T10 Air Chiller Utility Cost Offset:** $36.35/hour
 - **Annual Offset Savings:** $318427/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 433,105 BTU/hr
-- **Total Cooling kW No Longer Needed:** 38.57 kW
-- **Cooling Energy Cost Avoided:** $13.50/hour
-- **Annual Cooling Savings:** $118243/year
+- **Total Heat No Longer Generated:** 266,097 BTU/hr
+- **Total Cooling kW No Longer Needed:** 23.69 kW
+- **Cooling Energy Cost Avoided:** $8.29/hour
+- **Annual Cooling Savings:** $72648/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 142.42 kW
-- **CO2e Emissions Avoided:** 465.75 metric tons/year
-- **Monthly CO2e Reduction:** 38.81 metric tons/month
-- **Hourly CO2e Reduction:** 0.0532 metric tons/hour
+- **Total kW Waste Eliminated:** 127.55 kW
+- **CO2e Emissions Avoided:** 417.12 metric tons/year
+- **Monthly CO2e Reduction:** 34.76 metric tons/month
+- **Hourly CO2e Reduction:** 0.0476 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $17931/year
+- **Annual CO2e Value:** $16059/year
 
 ### Total T10 Air Chiller Unity Savings
 
-- **Per Hour:** $51.90
-- **Per Day:** $1245.48
-- **Per Month:** $37364.51
-- **Per Year:** $454602
+- **Per Hour:** $46.48
+- **Per Day:** $1115.43
+- **Per Month:** $33463.04
+- **Per Year:** $407134
 
 ### T10 Air Chiller Savings Breakdown
 

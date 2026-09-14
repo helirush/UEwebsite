@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** Rendering-2  
-**Generated:** 2026-05-09 20:16:43  
+**Generated:** 2026-09-10 22:44:40  
 **Data Source:** AN55050284-V-1minRES_43200CLP_260401-260430c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 423.70 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 423.70 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 330.73 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **Rendering-2 Utility Cost Offset:** $82.62/hour
 - **Annual Offset Savings:** $723772/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 1,647,117 BTU/hr
-- **Total Cooling kW No Longer Needed:** 144.24 kW
-- **Cooling Energy Cost Avoided:** $28.13/hour
-- **Annual Cooling Savings:** $246388/year
+- **Total Heat No Longer Generated:** 1,285,669 BTU/hr
+- **Total Cooling kW No Longer Needed:** 112.59 kW
+- **Cooling Energy Cost Avoided:** $21.95/hour
+- **Annual Cooling Savings:** $192320/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 567.94 kW
-- **CO2e Emissions Avoided:** 1857.27 metric tons/year
-- **Monthly CO2e Reduction:** 154.77 metric tons/month
-- **Hourly CO2e Reduction:** 0.2120 metric tons/hour
+- **Total kW Waste Eliminated:** 536.29 kW
+- **CO2e Emissions Avoided:** 1753.76 metric tons/year
+- **Monthly CO2e Reduction:** 146.15 metric tons/month
+- **Hourly CO2e Reduction:** 0.2002 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $71505/year
+- **Annual CO2e Value:** $67520/year
 
 ### Total Rendering-2 Unity Savings
 
-- **Per Hour:** $118.91
-- **Per Day:** $2853.88
-- **Per Month:** $85616.27
-- **Per Year:** $1041665
+- **Per Hour:** $112.28
+- **Per Day:** $2694.83
+- **Per Month:** $80844.78
+- **Per Year:** $983611
 
 ### Rendering-2 Savings Breakdown
 

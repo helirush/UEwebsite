@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** FSO-1  
-**Generated:** 2026-08-02 21:22:53  
+**Generated:** 2026-09-10 19:28:42  
 **Data Source:** AN55050366-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period

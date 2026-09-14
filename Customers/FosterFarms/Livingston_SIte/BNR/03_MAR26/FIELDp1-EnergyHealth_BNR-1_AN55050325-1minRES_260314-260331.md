@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** BNR-1  
-**Generated:** 2026-04-23 13:44:26  
+**Generated:** 2026-09-10 22:47:00  
 **Data Source:** AN55050325-V-1minRES_25410CLP_260314-260331c.csv  
 
 ## Time Period
@@ -58,7 +58,8 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 156.13 kW/hr (actual)
+- **Total Non-Active Field Burden (kVA - kW):** 156.13 kW/hr (actual)
+- **Heat-Coupled Burden Used in Thermal Model:** 88.68 kW/hr (modeled_non_active_field_burden)
 - **Monthly Equivalent Waste:** 268.89 kW/hr
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **BNR-1 Utility Cost Offset (Monthly Equivalent):** $52.43/hour
@@ -66,26 +67,26 @@
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 594,389 BTU/hr
-- **Total Cooling kW No Longer Needed:** 52.06 kW
-- **Cooling Energy Cost Avoided:** $10.15/hour
-- **Annual Cooling Savings:** $88936/year
+- **Total Heat No Longer Generated:** 337,615 BTU/hr
+- **Total Cooling kW No Longer Needed:** 29.57 kW
+- **Cooling Energy Cost Avoided:** $5.77/hour
+- **Annual Cooling Savings:** $50516/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 208.19 kW
-- **CO2e Emissions Avoided:** 680.82 metric tons/year
-- **Monthly CO2e Reduction:** 56.74 metric tons/month
-- **Hourly CO2e Reduction:** 0.0777 metric tons/hour
+- **Total kW Waste Eliminated:** 185.70 kW
+- **CO2e Emissions Avoided:** 607.27 metric tons/year
+- **Monthly CO2e Reduction:** 50.61 metric tons/month
+- **Hourly CO2e Reduction:** 0.0693 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $26212/year
+- **Annual CO2e Value:** $23380/year
 
 ### Total BNR-1 Unity Savings
 
-- **Per Hour:** $43.59
-- **Per Day:** $1046.15
-- **Per Month:** $31384.42
-- **Per Year:** $381844
+- **Per Hour:** $38.88
+- **Per Day:** $933.13
+- **Per Month:** $27993.86
+- **Per Year:** $340592
 
 ### BNR-1 Savings Breakdown
 

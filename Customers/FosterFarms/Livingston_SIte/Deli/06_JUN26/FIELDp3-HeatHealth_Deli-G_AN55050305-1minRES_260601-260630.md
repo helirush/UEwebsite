@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** Deli G  
-**Generated:** 2026-07-04 14:57:03  
+**Generated:** 2026-09-10 20:04:59  
 **Data Source:** AN55050305-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 70,629.47
+- **Device Zone BTU/hr:** 41,635.41
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 11,248.29
+- **Field Zone BTU/hr:** 6,630.76
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 81,877.76 BTU/hr
+- **Total Heat Generated:** 48,266.17 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 75.21 kW
+- **Baseline Cooling Load:** 44.33 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 23.88 kW
+- **Climate Adjusted Cooling:** 14.08 kW
   - *Cooling load adjusted for temperature (77.1°F) and humidity (41.7%)*
 - **Climate Burden Multiplier:** 1.005
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 23.88 kW
+- **Total Cooling Load Avoided:** 14.08 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $6,526.97
+- **Electrical-Energy Waste Cost:** $10,606.33
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $25,103.72/year
+- **Cooling Cost Avoided:** $24,047.41/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-4,431.66/year climate/impedance bonus)
+  (Includes $-4,245.18/year climate/impedance bonus)
 
 ---
 

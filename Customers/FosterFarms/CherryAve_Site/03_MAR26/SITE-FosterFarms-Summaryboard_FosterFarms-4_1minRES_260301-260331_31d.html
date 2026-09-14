@@ -11,6 +11,7 @@
 <head>
 <meta charset="utf-8"/>
 <title id="page-title">Unity Energy – Summaryboard – FosterFarms</title>
+<!-- MEDIA POLICY: archive >60 days; Audio/Images removed; Unity placeholder in Audio/site_overview.* -->
 <style>
     :root {
       --unity-ltylo: rgba(250, 240, 160, 1);
@@ -434,6 +435,34 @@
       text-transform: lowercase;
       letter-spacing: 1px;
       pointer-events: none;
+    }
+    /* Side metric readability tuning (Rendering May) */
+    .siteboard-container .gauge-side-metric {
+      top: calc(50% + 40px) !important;
+      transform: translateY(-50%) !important;
+      min-width: 138px !important;
+      gap: 6px !important;
+    }
+    .siteboard-container .gauge-side-left {
+      left: -120px !important;
+    }
+    .siteboard-container .gauge-side-right {
+      right: -120px !important;
+    }
+    .siteboard-container .gauge-side-label {
+      line-height: 1.02 !important;
+      white-space: normal !important;
+      text-align: center !important;
+    }
+    .siteboard-container .gauge-side-label span {
+      display: block;
+      white-space: nowrap;
+    }
+    .siteboard-container .gauge-side-value {
+      width: 100%;
+      text-align: center;
+      border-top: 1.5px solid rgba(255, 255, 255, 0.78);
+      padding-top: 6px;
     }
 
     .gauge-unit {
@@ -1583,7 +1612,7 @@
   <!-- Back Navigation - Top -->
 <div style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 18px; padding: 10px 0; margin-bottom: 10px;">
   <a id="groupBackLink" href="../../../index.html?group=deli#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Groups</a>
-  <a id="cherrySiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Cherry Avenue</a>
+  <a id="livingstonSiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Livingston</a>
   <a id="siteBackLink" href="../../../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Foster Farms</a>
   <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; Unity Home</a>
 </div>
@@ -1612,8 +1641,8 @@
     const groupLink = document.getElementById('groupBackLink');
     if (groupLink) groupLink.href = `${siteBase}index.html?group=${encodeURIComponent(groupSegment)}#libraries`;
 
-    const cherryLink = document.getElementById('cherrySiteLink');
-    if (cherryLink) cherryLink.href = `${siteBase}index.html#page-top`;
+    const livingstonLink = document.getElementById('livingstonSiteLink');
+    if (livingstonLink) livingstonLink.href = `${siteBase}index.html#page-top`;
 
     const backLink = document.getElementById('siteBackLink');
     if (backLink) backLink.href = `${siteBase}../index.html`;
@@ -1725,7 +1754,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">87.9%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">89.3%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -1850,7 +1879,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">84.3%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">83.6%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -1975,7 +2004,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">84.5%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">82.0%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -2100,7 +2129,7 @@
 <span class="pf-marker pf-marker-pill pf-marker-707">70.7%</span>
 <span class="pf-marker pf-marker-pill pf-marker-100">100.0%</span>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr4-metric-pf">88.6%</div>
+<div class="gauge-value" id="xfmr4-metric-pf">88.5%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
@@ -2183,11 +2212,11 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
-  const scriptVersion = '20260712b';
+  const scriptVersion = window.__unitySideMetricsVersion || '20260712a';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-    candidateSrcs.push(`${prefix}assets/js/${scriptName}?v=${scriptVersion}`);
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
   }
   const head = document.head || document.getElementsByTagName('head')[0];
   if (!head) return;
@@ -2195,7 +2224,8 @@
     if (index >= candidateSrcs.length) return;
     const src = candidateSrcs[index];
     const script = document.createElement('script');
-    script.src = src;
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
     script.async = false;
     script.onload = () => {
       window.__unitySideMetricsLoaderSrc = src;
@@ -2396,8 +2426,8 @@
       
     });
     
-    // Note: Production uptime percentage is now injected by inject_bird_metrics.py
-    // The old energy waste calculation that was overwriting uptime has been removed
+    // Note: Electric Operations (% vs opening-week production baseline) is injected by inject_bird_metrics.py
+    // Legacy energy-waste overwrite behavior has been removed
     
       // Initialize gauges for up to 4 transformers
       for (let i = 1; i <= 4; i++) {
@@ -2418,8 +2448,8 @@
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
-      // Dynamically bind PF bubble value (prevents stale hardcoded text).
-      if (pfEl) {
+      // Legacy PF fallback only when shared side-metrics enhancer is unavailable.
+      if (pfEl && !window.__unitySideMetricsEnhancerLoaded) {
         const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
         if (resolvedPfPct !== null) {
           pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
@@ -2627,6 +2657,16 @@
     } else {
       pfEl.style.color = 'rgba(245, 248, 255, 0.96)';
     }
+  }
+
+  function getAutoSelectionContext(selectionType) {
+    if (selectionType === 'baseline' || selectionType === 'mpts') {
+      return `${currentHowToPath || ''}|${currentTransformerId || ''}`;
+    }
+    if (selectionType === 'narrative') {
+      return currentTransformerId || '';
+    }
+    return '';
   }
 
   // Apply EFSI color classes based on percentage values
@@ -2997,21 +3037,22 @@
 
       // Use routing helper to resolve filename-safe transformer IDs
       const routing = getTransformerRoutingInfo(transformerName);
+      currentTransformerId = routing.fileIds[0] || transformerId;
 
       // Get month suffix dynamically from the displayed month-year
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
       // Prefix mapping:
-      // baseline -> bt first, then b fallback
-      // mpts -> s first, then m fallback
-      // mpts-vars -> bt
-      // voltage -> v
-      let prefixCandidates = ['bt', 'b'];
+      // baseline -> tuned baseline chain (tbt/tb), then legacy fallbacks
+      // mpts -> tuned simulator/harmonized (sb/tm), then legacy fallbacks
+      // mpts-vars -> Base Target (BT family only; no baseline fallback)
+      // voltage -> tuned voltage (tv), then legacy fallback
+      let prefixCandidates = ['tbt', 'tb', 'bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
-      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['sb', 'tm', 's', 'm']; patternLabel = 'Tuned Energy'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt', 'tbt', 'tb']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['tv', 'v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
       let candidates = buildPatternCandidates(
@@ -3033,15 +3074,18 @@
       const howToBtn = document.getElementById('unityHowToBtn');
       if (howToBtn) {
         if (type === 'baseline') {
-          howToBtn.textContent = '🎧 How to Read Waste';
-          currentHowToPath = `Patterns/${routing.keys[0]}_waste_howto.mp3`;
+          howToBtn.textContent = '🎧 How to Read the Baseline';
+          currentHowToPath = resolveSharedHowToAudioPath('baseline');
+          currentHowToText = FIXED_BASELINE_RESULTS_TEXT;
           howToBtn.style.display = 'inline-block';
         } else if (type === 'mpts') {
-          howToBtn.textContent = '🎧 How to Read Savings';
-          currentHowToPath = `Patterns/${routing.keys[0]}_savings_howto.mp3`;
+          howToBtn.textContent = '🎧 Understanding the Tuned Energy Field';
+          currentHowToPath = resolveSharedHowToAudioPath('tuned');
+          currentHowToText = FIXED_TUNED_FIELD_TEXT;
           howToBtn.style.display = 'inline-block';
         } else {
           currentHowToPath = '';
+          currentHowToText = '';
           howToBtn.style.display = 'none';
         }
       }
@@ -3071,6 +3115,9 @@
       initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
+      if (type === 'baseline' || type === 'mpts') {
+        autoStartVoiceForSelection(type);
+      }
     } catch (error) {
       console.error('Error in viewPattern:', error);
       alert('Error opening pattern: ' + error.message);
@@ -3110,6 +3157,7 @@
       overlay.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
+    if (isPlaybackActive()) stopCurrentPlayback();
   }
   
   // Close fullscreen on ESC key
@@ -3117,6 +3165,12 @@
     if (event.key === 'Escape') {
       closePatternFullscreen();
     }
+  });
+  window.addEventListener('pagehide', function() {
+    if (isPlaybackActive()) stopCurrentPlayback();
+  });
+  window.addEventListener('beforeunload', function() {
+    if (isPlaybackActive()) stopCurrentPlayback();
   });
 
   function viewDetail(transformerId, detailType) {
@@ -3157,68 +3211,7 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-  "transformers": {
-    "T10": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your March baseline energy field for T10. The dark blue area shows total apparent power \u2014 what you're paying for. Light blue underneath is your actual productive work. That green reactive layer on top \u2014 that's the electromagnetic waste costing you money every hour. Orange traces your power factor fluctuations throughout the month. You've got a heavy industrial rhythm here \u2014 five clear production blocks per week with clean weekend valleys. Your supply target sits at 1433 kVA, but you're running above that line about 75% of your operating days. The waste breakdown is significant: reactive demand averaging 398 kVAR, spiking to 754 kVAR at peak. Power factor hovering around 89%. Thermal burden of 414,615 BTU per hour. Monthly waste cost running approximately $50,400. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand hits 754 kVAR \u2014 that's what we need to compensate. Take 754 divided by 400, round up \u2014 that gives us two H490 units for 800 kVAR of total capacity. Estimated installed investment runs approximately $400,000, though final pricing depends on engineering scope, labor requirements, and site conditions. Here's what MPTS does in plain language: it injects precisely calibrated reactive power to cancel your inductive loading. Power factor jumps from 89.3% to 99.5%. Visually, you'll see that green reactive layer collapse, your conductors run cooler, and significant capacity freed up on your transformer. The field harmonizes \u2014 apparent power drops toward actual productive demand. Now let's move into what you should expect to see. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That green reactive waste layer has virtually disappeared \u2014 you're seeing the electromagnetic field compress to align with your actual production demand. Dark blue kVA drops close to light blue kW. Power factor locks at 99.5%. The savings are substantial: approximately $50,400 per month, roughly $605,000 annually. Against an estimated $400,000 installation investment, you're looking at about an 8-month payback period. After that breakeven point, every operating hour is recovered value flowing directly to your bottom line. Your production rhythm stays exactly the same \u2014 five weekday blocks, weekend valleys \u2014 but the efficiency transformation is dramatic. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your March baseline energy field for T10. The dark blue area shows total apparent power \u2014 what you're paying for. Light blue underneath is your actual productive work. That green reactive layer on top \u2014 that's the electromagnetic waste costing you money every hour. Orange traces your power factor fluctuations throughout the month. You've got a heavy industrial rhythm here \u2014 five clear production blocks per week with clean weekend valleys. Your supply target sits at 1433 kVA, but you're running above that line about 75% of your operating days. The waste breakdown is significant: reactive demand averaging 398 kVAR, spiking to 754 kVAR at peak. Power factor hovering around 89%. Thermal burden of 414,615 BTU per hour. Monthly waste cost running approximately $50,400. Now let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand hits 754 kVAR \u2014 that's what we need to compensate. Take 754 divided by 400, round up \u2014 that gives us two H490 units for 800 kVAR of total capacity. Estimated installed investment runs approximately $400,000, though final pricing depends on engineering scope, labor requirements, and site conditions. Here's what MPTS does in plain language: it injects precisely calibrated reactive power to cancel your inductive loading. Power factor jumps from 89.3% to 99.5%. Visually, you'll see that green reactive layer collapse, your conductors run cooler, and significant capacity freed up on your transformer. The field harmonizes \u2014 apparent power drops toward actual productive demand. Now let's move into what you should expect to see. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. That green reactive waste layer has virtually disappeared \u2014 you're seeing the electromagnetic field compress to align with your actual production demand. Dark blue kVA drops close to light blue kW. Power factor locks at 99.5%. The savings are substantial: approximately $50,400 per month, roughly $605,000 annually. Against an estimated $400,000 installation investment, you're looking at about an 8-month payback period. After that breakeven point, every operating hour is recovered value flowing directly to your bottom line. Your production rhythm stays exactly the same \u2014 five weekday blocks, weekend valleys \u2014 but the efficiency transformation is dramatic. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer T10 \u2014 and there's substantial value hiding in this electromagnetic field. Your baseline power factor is running at 89.3%, with reactive demand spiking up to 754 kVAR during peak production. That reactive burden is costing you approximately $50,400 per month in wasted energy and thermal overhead. We're recommending two H490 MPTS units \u2014 about 800 kVAR of compensation capacity for roughly $400,000 installed. This drives your power factor to 99.5% and delivers an estimated payback of about 8 months. After that, every operating hour becomes recovered value \u2014 approximately $605,000 annually. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 89.3% | match: \u26a0\ufe0f DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: 1433.0 kVA | match: \u26a0\ufe0f DISCREPANCY  \nkvar_max_csv_est: 0 kVAR | kvar_max_image: 753.7 kVAR | variance: MISSING CSV DATA\nmonthly_waste_csv: $0.00 | monthly_waste_image: $605,177/yr | match: \u26a0\ufe0f DISCREPANCY\nSIZING USED: 2\u00d7 H490 = 800 kVAR capacity | ~$400,000 installed\nPAYBACK: ~$50,400/month | ~8 months",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-04-17 13:43:44",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "T10"
-    },
-    "T12": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your March baseline energy field for transformer T12. Let me walk you through what you're seeing here. The dark blue represents your total kVA supply \u2014 that's the raw electromagnetic capacity your utility is delivering. The light blue underneath shows your actual consumed power in kilowatts \u2014 the energy doing useful work in your facility. That thick green layer? That's reactive kVAR \u2014 magnetic energy that's cycling back and forth but not contributing to production. And the orange line tracking your power factor sits at 83.6%. Your production rhythm shows a classic five-day industrial cycle. Those strong weekday demand blocks reaching into the 1400 to 1700 kVA range, then dropping to weekend valleys around 400 to 500 kVA. You're running about 70 to 75% of weekdays at high utilization \u2014 solid production scheduling. But here's what's costing you. Your reactive component peaks at over 1000 kVAR. That's creating a thermal burden of 782,383 BTU per hour, driving cooling costs of about $32 per hour, and wasting approximately $78,545 every month. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your reactive demand peaks at 1005 kVAR. Using our standard sizing calculation \u2014 that's 1005 divided by 400, rounded up \u2014 we recommend three H490 units. That gives you 1200 kVAR of compensating capacity, roughly $600,000 installed. Now, these are planning-level estimates \u2014 final installed pricing will depend on engineering scope, labor requirements, and your specific site conditions. Here's what MPTS does in plain language. Those three units inject precisely compensating reactive power, neutralizing that green waste layer you saw in the baseline. Your power factor jumps from 83.6% to 99.5%. The visual result is dramatic. That thick green reactive layer collapses. Your conductors run cooler. Your transformer capacity gets freed up for actual production work. Same production output, but now you're drawing it efficiently instead of cycling all that wasted magnetic energy. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $510,000 to $690,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared. Your kVA profile now closely tracks your actual kilowatt consumption \u2014 that dark blue supply line drops much closer to the light blue consumed power. Power factor sits at 99.5%. Same production schedule, same weekday blocks, same weekend valleys \u2014 but now you're drawing power efficiently. Your estimated monthly recovery is approximately $78,545. That's roughly $942,000 per year flowing back to your operation instead of disappearing as electromagnetic waste. With an estimated $600,000 installed investment, you're looking at about an 8-month payback. After that 8-month mark, every hour is recovered value. Every kilowatt-hour you're no longer wasting, every degree of cooling load you've eliminated, every amp of capacity you've freed up \u2014 that's all working for your bottom line now. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your March baseline energy field for transformer T12. Let me walk you through what you're seeing here. The dark blue represents your total kVA supply \u2014 that's the raw electromagnetic capacity your utility is delivering. The light blue underneath shows your actual consumed power in kilowatts \u2014 the energy doing useful work in your facility. That thick green layer? That's reactive kVAR \u2014 magnetic energy that's cycling back and forth but not contributing to production. And the orange line tracking your power factor sits at 83.6%. Your production rhythm shows a classic five-day industrial cycle. Those strong weekday demand blocks reaching into the 1400 to 1700 kVA range, then dropping to weekend valleys around 400 to 500 kVA. You're running about 70 to 75% of weekdays at high utilization \u2014 solid production scheduling. But here's what's costing you. Your reactive component peaks at over 1000 kVAR. That's creating a thermal burden of 782,383 BTU per hour, driving cooling costs of about $32 per hour, and wasting approximately $78,545 every month. Now let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your reactive demand peaks at 1005 kVAR. Using our standard sizing calculation \u2014 that's 1005 divided by 400, rounded up \u2014 we recommend three H490 units. That gives you 1200 kVAR of compensating capacity, roughly $600,000 installed. Now, these are planning-level estimates \u2014 final installed pricing will depend on engineering scope, labor requirements, and your specific site conditions. Here's what MPTS does in plain language. Those three units inject precisely compensating reactive power, neutralizing that green waste layer you saw in the baseline. Your power factor jumps from 83.6% to 99.5%. The visual result is dramatic. That thick green reactive layer collapses. Your conductors run cooler. Your transformer capacity gets freed up for actual production work. Same production output, but now you're drawing it efficiently instead of cycling all that wasted magnetic energy. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $510,000 to $690,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. The green reactive layer has virtually disappeared. Your kVA profile now closely tracks your actual kilowatt consumption \u2014 that dark blue supply line drops much closer to the light blue consumed power. Power factor sits at 99.5%. Same production schedule, same weekday blocks, same weekend valleys \u2014 but now you're drawing power efficiently. Your estimated monthly recovery is approximately $78,545. That's roughly $942,000 per year flowing back to your operation instead of disappearing as electromagnetic waste. With an estimated $600,000 installed investment, you're looking at about an 8-month payback. After that 8-month mark, every hour is recovered value. Every kilowatt-hour you're no longer wasting, every degree of cooling load you've eliminated, every amp of capacity you've freed up \u2014 that's all working for your bottom line now. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer T12 \u2014 and you have a significant electromagnetic efficiency opportunity here. Your baseline shows an 83.6% power factor with reactive peaks hitting over 1000 kVAR. That reactive burden is costing you approximately $78,545 per month in waste \u2014 energy you're paying for but can't use for production. Your field shows classic high-utilization industrial patterns with strong weekday demand blocks, but that green reactive layer is eating into your capacity and driving up thermal losses. We recommend three H490 MPTS units \u2014 that's roughly $600,000 installed \u2014 to bring you to 99.5% power factor. At approximately $78,545 monthly recovery, you're looking at about an 8-month payback, then every hour after that is recovered value flowing straight to your bottom line. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 83.6% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f NO DATA\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 1005.5 kVAR | variance: INFINITE \u26a0\ufe0f\nmonthly_waste_csv: $0.00 | monthly_waste_image: $942,544/yr | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 3\u00d7 H490 = 1200 kVAR capacity | $600,000 installed\nPAYBACK: $78,545/month | ~8 months",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-04-17 13:44:33",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "T12"
-    },
-    "T15": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your March baseline energy field for T15. Let me walk you through what each color tells us. The dark blue layer shows your total kilovolt-ampere supply \u2014 that's what the utility delivers. The teal layer underneath is your actual consumed kilowatts \u2014 the productive work you're paying for. That green reactive layer \u2014 the kilovars \u2014 that's the electromagnetic waste we need to eliminate. And the orange power factor line shows you're running between seventy and ninety percent efficiency. Your production rhythm is classic industrial \u2014 five strong weekday blocks with weekend valleys dropping to minimal levels. During production, you're consistently pulling one thousand to twelve-fifty kilowatts of real work, but those reactive spikes are hitting fifteen hundred kilovars or more. Your electric operations percentage is running about seventy-five to eighty percent above sustainable transformer loading. The waste cost? Over six hundred thousand dollars annually. That's reactive losses, thermal burden from six hundred thousand BTUs per hour, plus the cooling overhead to handle that heat. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive demand hits seven hundred ninety-one kilovars. Take that, divide by four hundred, round up \u2014 you need two H490 units. That's eight hundred kilovars of correction capacity at approximately four hundred thousand dollars installed. These figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site conditions. Here's what MPTS does in plain language. It injects precisely compensating reactive current at the transformer, canceling out the chaotic reactive field your motors and drives create. Power factor jumps to ninety-nine point five percent. Visually, you'll see that green reactive layer collapse, your conductors run cooler, and you free up massive transformer capacity for productive work. The electromagnetic chaos becomes disciplined delivery. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That chaotic green reactive layer has virtually disappeared. Your dark blue supply line now runs clean and stable, tracking closely with your actual production load. The orange power factor line holds steady at ninety-nine point five percent \u2014 no more oscillating between seventy and ninety. Based on the waste elimination, you're looking at approximately sixty-nine thousand dollars recovered every month \u2014 that's about eight hundred thirty thousand annually. With an estimated four hundred thousand dollar installation investment, your payback is roughly six months. After that, every hour is recovered value flowing directly to your bottom line. Your electromagnetic field went from wasteful and erratic to efficient and predictable. Same production output, dramatically lower supply requirements, cooler operation, extended equipment life. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your March baseline energy field for T15. Let me walk you through what each color tells us. The dark blue layer shows your total kilovolt-ampere supply \u2014 that's what the utility delivers. The teal layer underneath is your actual consumed kilowatts \u2014 the productive work you're paying for. That green reactive layer \u2014 the kilovars \u2014 that's the electromagnetic waste we need to eliminate. And the orange power factor line shows you're running between seventy and ninety percent efficiency. Your production rhythm is classic industrial \u2014 five strong weekday blocks with weekend valleys dropping to minimal levels. During production, you're consistently pulling one thousand to twelve-fifty kilowatts of real work, but those reactive spikes are hitting fifteen hundred kilovars or more. Your electric operations percentage is running about seventy-five to eighty percent above sustainable transformer loading. The waste cost? Over six hundred thousand dollars annually. That's reactive losses, thermal burden from six hundred thousand BTUs per hour, plus the cooling overhead to handle that heat. Now let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive demand hits seven hundred ninety-one kilovars. Take that, divide by four hundred, round up \u2014 you need two H490 units. That's eight hundred kilovars of correction capacity at approximately four hundred thousand dollars installed. These figures are planning-level estimates \u2014 final installed pricing depends on engineering scope, labor requirements, and site conditions. Here's what MPTS does in plain language. It injects precisely compensating reactive current at the transformer, canceling out the chaotic reactive field your motors and drives create. Power factor jumps to ninety-nine point five percent. Visually, you'll see that green reactive layer collapse, your conductors run cooler, and you free up massive transformer capacity for productive work. The electromagnetic chaos becomes disciplined delivery. Now let's move into what you should expect to see. For planning, estimated installed investment is roughly $340,000 to $460,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. That chaotic green reactive layer has virtually disappeared. Your dark blue supply line now runs clean and stable, tracking closely with your actual production load. The orange power factor line holds steady at ninety-nine point five percent \u2014 no more oscillating between seventy and ninety. Based on the waste elimination, you're looking at approximately sixty-nine thousand dollars recovered every month \u2014 that's about eight hundred thirty thousand annually. With an estimated four hundred thousand dollar installation investment, your payback is roughly six months. After that, every hour is recovered value flowing directly to your bottom line. Your electromagnetic field went from wasteful and erratic to efficient and predictable. Same production output, dramatically lower supply requirements, cooler operation, extended equipment life. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer T15 \u2014 and there's significant electromagnetic inefficiency here that's costing you real money. Your power factor is running at just eighty-two percent, with reactive demand spiking as high as seven hundred ninety-one kilovars. That chaotic reactive field is generating over six hundred thousand BTUs per hour of thermal waste, and it's costing you approximately sixty-nine thousand dollars every month in combined losses. Based on your peak reactive of seven ninety-one kilovars, you'd need two H490 MPTS units \u2014 that's about four hundred thousand dollars installed. At sixty-nine thousand monthly recovery, you're looking at roughly six months payback. After that, every month delivers pure recovered value to your operations. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 82.0% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f DATA MISSING\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 791.1 kVAR | variance: COMPLETE MISMATCH\nmonthly_waste_csv: $0.00 | monthly_waste_image: $829,618 | match: \u26a0\ufe0f COMPLETE MISMATCH\nSIZING USED: 2\u00d7 H490 = 800 kVAR capacity | ~$400,000 installed\nPAYBACK: $69,135/month | ~6 months",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-04-17 13:45:22",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "T15"
-    },
-    "T16": {
-      "pattern_text": "PART 1: CURRENT STATE\nWelcome. I'm Unity. You're looking at your March baseline energy field for T16. Let me walk you through what these colors mean. The dark blue layer shows your total supplied power in kVA \u2014 that's what your transformer is delivering. The light blue underneath is your consumed power in kW \u2014 actual work being done. That green band between them? That's reactive kVAR \u2014 magnetic waste that's not doing productive work but still heating your conductors. The orange line tracks your power factor percentage. Your facility runs a clear five-day production cycle. Strong weekday blocks at fourteen hundred kVA, then weekend valleys near zero. What concerns me is that roughly seventy to eighty percent of your electric operations are running above optimal field parameters. You're carrying an average of five forty-seven kVAR, peaking at over a thousand kVAR during heavy compressor loads. That reactive burden generates over five hundred thousand BTU per hour of waste heat, costing you nearly eleven dollars every operating hour just in cooling overhead. Total electromagnetic waste: approximately five hundred thirty-nine thousand dollars annually. Now let me show you how we clean this up.\n\nPART 2: MPTS SOLUTION\nAlright \u2014 now we move from observation to correction. Your peak reactive load hits ten twenty-eight kVAR during heavy compressor operations. Using our sizing protocol \u2014 ten twenty-eight divided by four hundred, rounded up \u2014 that calls for three H490 units delivering twelve hundred kVAR of compensating capacity. Estimated installed investment runs approximately six hundred thousand dollars, though final pricing depends on engineering scope, labor requirements, and site-specific installation conditions. Here's what MPTS does in simple terms: it injects precisely timed compensating reactive power that neutralizes your magnetic inefficiency. Your power factor jumps to ninety-nine point five percent. Visually, you'll see that thick green reactive layer collapse to almost nothing. Your supplied power drops from fourteen hundred kVA down closer to your actual consumption around a thousand kVA. Same production capacity, but your conductors run cooler and your transformer capacity gets freed up for future growth. Now let's move into what you should expect to see. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $510,000 to $690,000.\n\nPART 3: EXPECTED RESULTS\nNow look at the post-MPTS field. This is what harmonized looks like. That thick green reactive band has virtually disappeared \u2014 reduced from over five hundred kVAR average down to less than a hundred. Your supplied power drops dramatically closer to your consumed power, meaning your conductors are delivering the same work with significantly less current. Power factor now reads ninety-nine point five percent. The savings are substantial: approximately forty-two thousand five hundred dollars monthly, or roughly five hundred eleven thousand annually in recovered value. With an estimated six hundred thousand dollar installation investment, you're looking at approximately fourteen months to full payback. After that break-even point, every operating hour is recovered value flowing directly to your operational budget. Your compressor loads will run more efficiently, your cooling costs drop significantly, and you've freed up transformer capacity for future expansion without upsizing equipment. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_part1": "Welcome. I'm Unity. You're looking at your March baseline energy field for T16. Let me walk you through what these colors mean. The dark blue layer shows your total supplied power in kVA \u2014 that's what your transformer is delivering. The light blue underneath is your consumed power in kW \u2014 actual work being done. That green band between them? That's reactive kVAR \u2014 magnetic waste that's not doing productive work but still heating your conductors. The orange line tracks your power factor percentage. Your facility runs a clear five-day production cycle. Strong weekday blocks at fourteen hundred kVA, then weekend valleys near zero. What concerns me is that roughly seventy to eighty percent of your electric operations are running above optimal field parameters. You're carrying an average of five forty-seven kVAR, peaking at over a thousand kVAR during heavy compressor loads. That reactive burden generates over five hundred thousand BTU per hour of waste heat, costing you nearly eleven dollars every operating hour just in cooling overhead. Total electromagnetic waste: approximately five hundred thirty-nine thousand dollars annually. Now let me show you how we clean this up.",
-      "pattern_part2": "Alright \u2014 now we move from observation to correction. Your peak reactive load hits ten twenty-eight kVAR during heavy compressor operations. Using our sizing protocol \u2014 ten twenty-eight divided by four hundred, rounded up \u2014 that calls for three H490 units delivering twelve hundred kVAR of compensating capacity. Estimated installed investment runs approximately six hundred thousand dollars, though final pricing depends on engineering scope, labor requirements, and site-specific installation conditions. Here's what MPTS does in simple terms: it injects precisely timed compensating reactive power that neutralizes your magnetic inefficiency. Your power factor jumps to ninety-nine point five percent. Visually, you'll see that thick green reactive layer collapse to almost nothing. Your supplied power drops from fourteen hundred kVA down closer to your actual consumption around a thousand kVA. Same production capacity, but your conductors run cooler and your transformer capacity gets freed up for future growth. Now let's move into what you should expect to see. Pricing note: these figures are planning-level estimates, not final quotes. For planning, estimated installed investment is roughly $510,000 to $690,000.",
-      "pattern_part3": "Now look at the post-MPTS field. This is what harmonized looks like. That thick green reactive band has virtually disappeared \u2014 reduced from over five hundred kVAR average down to less than a hundred. Your supplied power drops dramatically closer to your consumed power, meaning your conductors are delivering the same work with significantly less current. Power factor now reads ninety-nine point five percent. The savings are substantial: approximately forty-two thousand five hundred dollars monthly, or roughly five hundred eleven thousand annually in recovered value. With an estimated six hundred thousand dollar installation investment, you're looking at approximately fourteen months to full payback. After that break-even point, every operating hour is recovered value flowing directly to your operational budget. Your compressor loads will run more efficiently, your cooling costs drop significantly, and you've freed up transformer capacity for future expansion without upsizing equipment. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "pattern_brief": "Welcome. I'm Unity. You're looking at transformer T16 \u2014 and we need to talk about what's happening to your electromagnetic field. Your power factor is sitting at eighty-eight point five percent, which means you're carrying over a thousand kVAR of reactive burden during peak operations. That magnetic inefficiency is costing you approximately five hundred thirty-nine thousand dollars annually in waste heat, cooling overhead, and conductor losses. Based on your reactive signature, I'm recommending three H490 MPTS units \u2014 roughly six hundred thousand dollars installed \u2014 to bring your field to ninety-nine point five percent efficiency. That delivers approximately forty-two thousand in monthly savings with a fourteen-month payback. After that, every operating hour is recovered value flowing straight to your bottom line. That's electromagnetic stewardship \u2014 and that's the Unity standard.",
-      "cross_check": "power_factor_csv: 0.0% | power_factor_image: 88.5% | match: \u26a0\ufe0f MAJOR DISCREPANCY\ntarget_kva_csv: 0.0 kVA | target_kva_image: Not visible | match: \u26a0\ufe0f NO DATA\nkvar_max_csv_est: 0 kVAR | kvar_max_image: 1027.9 kVAR | variance: INFINITE%\nmonthly_waste_csv: $0.00 | monthly_waste_image: $538,961 | match: \u26a0\ufe0f MAJOR DISCREPANCY\nSIZING USED: 3\u00d7 H490 = 1200 kVAR capacity | ~$600,000 installed\nPAYBACK: Based on image data: ~$42,500/month | ~14 months",
-      "william_version": "eeWILLIAM-3step",
-      "analyzed_at": "2026-04-17 13:46:12",
-      "tmax_supply": 0.0,
-      "power_factor": 0.0,
-      "avg_kvar": 0.0,
-      "waste_cost": 0.0,
-      "transformer_name": "T16"
-    }
-  }
+  "transformers": {}
 };
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
@@ -3256,8 +3249,90 @@
   let currentTransformerId = '';
   let isSpeaking = false;
   let currentHowToPath = '';
+  let currentHowToText = '';
   let currentExplainsPartIndex = 0;
   let siteOverviewPlaybackToken = 0;
+  let lastAutoSelectionType = '';
+  let lastAutoSelectionContext = '';
+  const FIXED_BASELINE_RESULTS_TEXT = `Welcome. Before we begin, I'd like to reassure you that this dashboard is much simpler than it may first appear.
+
+Every electrical energy field tells the same basic story.
+
+Electrical energy enters your facility through the transformer and flows to the equipment performing the work. A portion of that energy is converted into useful work. The remaining energy stays within the electrical energy field, where it contributes to heat, electrical congestion, and other operating consequences.
+
+This dashboard allows you to see both parts of that story.
+
+The information on the left shows how your electrical energy field is behaving. The information on the right translates that behavior into thermal burden, cooling demand, emissions, and ultimately the financial consequences affecting your operation.
+
+The chart below is a window into your electrical energy field over time. Its height represents the relative size of the field, while its width represents the passage of time. Thousands of individual measurements are combined to create this continuous picture of your electrical energy field.
+
+Begin with the legend in the upper-left corner. It is your guide for reading the energy flow from left to right.
+
+Notice that these colors always have the same meaning throughout Unity. Once you learn this legend, you'll know how to read every electrical energy field we present.
+
+Dark Blue represents the electrical energy supplied by the utility.
+
+Light Blue represents the portion of that energy being converted into useful work.
+
+Because no electrical component is one hundred percent efficient, the remaining energy from every conversion combines to create the Green area.
+
+Green represents the recoverable energy within the electrical energy field. This is the energy that contributes to additional heat, electrical congestion, and the operating consequences measured throughout your facility.
+
+Rather than focusing on individual numbers, begin by looking for patterns in the colors. Those patterns reveal how your electrical energy field responds to the changing demands placed on your facility throughout the day.
+
+This baseline represents the natural behavior of your electrical energy field before tuning. It becomes the reference point for every future comparison and every improvement that follows.
+
+I hope this introduction has helped you better understand how to read your baseline energy field.
+
+Thank you for learning with Unity.`;
+  const FIXED_TUNED_FIELD_TEXT = `Welcome back.
+
+Before we begin, I’d like to reassure you that this view builds directly on the baseline you’ve already learned. The same colors, layout, and legend apply here, making it easy to see what has changed after tuning.
+
+The baseline showed the natural behavior of your electrical energy field before tuning. This view shows how that same field behaves after the Unity MPTS has been introduced.
+
+Notice that the Dark Blue utility supply remains essentially the same. Your facility still requires the same amount of useful work, so the Light Blue portion changes very little.
+
+The greatest change occurs in the Green portion of the field.
+
+As the Unity MPTS organizes the electrical energy field, less energy remains trapped within the system. That means less heat, less electrical congestion, and fewer operating consequences throughout your facility.
+
+Those improvements are reflected throughout the dashboard. The values on the right translate those electrical improvements into reduced thermal burden, lower cooling demand, reduced emissions, increased electrical capacity, and improved operating efficiency.
+
+Because you’ve already learned the legend, your attention can now shift from understanding the graph to observing the changes. Compare the size of the Green area with the baseline and notice how the overall field becomes more organized and efficient.
+
+This tuned field represents the operating condition your facility can achieve with Unity MPTS.
+
+Every future comparison begins with the baseline and demonstrates the measurable improvements shown here.
+
+Thank you for learning with Unity.`;
+  const SHARED_HOWTO_FILENAMES = {
+    baseline: 'how-to-read-waste-chart.mp3',
+    tuned: 'how-to-read-savings-chart.mp3'
+  };
+  function resolveSharedHowToAudioPath(mode) {
+    const normalizedMode = String(mode || '').toLowerCase();
+    const filename = normalizedMode === 'tuned' || normalizedMode === 'savings'
+      ? SHARED_HOWTO_FILENAMES.tuned
+      : SHARED_HOWTO_FILENAMES.baseline;
+    try {
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const sourceScript = scripts.reverse().find((script) => {
+        const src = String(script.getAttribute('src') || '');
+        return src.includes('unity-howto-toggle.js');
+      });
+      const src = String(sourceScript && sourceScript.getAttribute('src') ? sourceScript.getAttribute('src') : '');
+      if (src) {
+        const scriptUrl = new URL(src, window.location.href);
+        return new URL(`../audio/unity/${filename}`, scriptUrl).toString();
+      }
+    } catch (error) {
+      console.warn('Unable to resolve shared how-to audio path from script source:', error);
+    }
+    return normalizedMode === 'tuned'
+      ? 'Audio/unity_tuned_energy_field.mp3'
+      : 'Audio/unity_baseline_results.mp3';
+  }
   const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
   function isPlaybackActive() {
     const speechActive = !!(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
@@ -3290,6 +3365,8 @@
     currentAudioElement = null;
     isSpeaking = false;
     currentExplainsPartIndex = 0;
+    lastAutoSelectionType = '';
+    lastAutoSelectionContext = '';
   }
 
   function getSiteOverviewFallbackText() {
@@ -3297,11 +3374,16 @@
     const period = document.getElementById('month-year')?.textContent?.trim() ||
                    document.getElementById('param-period')?.textContent?.trim() ||
                    'the current reporting period';
-    const transformerCount = document.getElementById('transformer-count')?.textContent?.trim() || 'multiple transformers';
-    const temp = document.getElementById('env-temp')?.textContent?.trim();
-    const humidity = document.getElementById('env-humidity')?.textContent?.trim();
-    const envText = (temp && humidity) ? ` Environmental conditions are ${temp} and ${humidity}.` : '';
-    return `Unity site overview for ${siteName}. This summary covers ${period}, with ${transformerCount}.${envText} Use the site summary and transformer cards for baseline and Unity optimization details.`;
+    return `Unity site overview for ${siteName}. This summary covers ${period} and highlights field behavior, stability, and Unity optimization priorities. Use the site summary and transformer cards for baseline and Unity optimization details.`;
+  }
+
+  function getPreferredSpeechVoice() {
+    const voices = window.speechSynthesis && window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    let preferredVoice = voices.find(v => v.name && v.name.toLowerCase().includes('unity faraday'));
+    if (!preferredVoice) {
+      preferredVoice = voices.find(v => (v.name && (v.name.includes('Samantha') || v.name.includes('Female'))) || v.lang === 'en-US');
+    }
+    return preferredVoice || null;
   }
 
   function speakWithPreferredVoice(text) {
@@ -3309,11 +3391,7 @@
       return false;
     }
     currentSpeech = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
-    let preferredVoice = voices.find(v => v.name && v.name.toLowerCase().includes('unity faraday'));
-    if (!preferredVoice) {
-      preferredVoice = voices.find(v => (v.name && (v.name.includes('Samantha') || v.name.includes('Female'))) || v.lang === 'en-US');
-    }
+    const preferredVoice = getPreferredSpeechVoice();
     if (preferredVoice) currentSpeech.voice = preferredVoice;
     currentSpeech.rate = 0.95;
     currentSpeech.pitch = 1.0;
@@ -3323,6 +3401,46 @@
     isSpeaking = true;
     window.speechSynthesis.speak(currentSpeech);
     return true;
+  }
+
+  function getHowToOpeningText(path) {
+    const source = String(path || '').toLowerCase();
+    if (source.includes('unity_baseline_results.mp3') || source.includes('how-to-read-waste-chart.mp3')) {
+      return '';
+    }
+    if (source.includes('_waste_howto')) {
+      return "How to read the baseline view: first orient to layout and operating window, then focus on trend direction, then connect drift to operational strain before planning correction.";
+    }
+    if (source.includes('_savings_howto') || source.includes('how-to-read-savings-chart.mp3') || source.includes('unity_tuned_energy_field.mp3')) {
+      return "Understanding the tuned energy field: first orient to the tuned-energy chart, then compare before and after field behavior, then focus on recovery and reliability signals before planning rollout.";
+    }
+    return "How to read this view: first orient to layout, then review trend direction, then connect that pattern to operational impact.";
+  }
+
+  function stageHowToOpeningThenPlay(openingText, startMainPlayback) {
+    if (!openingText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      startMainPlayback();
+      return;
+    }
+    const openingSpeech = new SpeechSynthesisUtterance(openingText);
+    const preferredVoice = getPreferredSpeechVoice();
+    if (preferredVoice) openingSpeech.voice = preferredVoice;
+    openingSpeech.rate = 0.95;
+    openingSpeech.pitch = 1.0;
+    openingSpeech.volume = 1.0;
+    openingSpeech.onend = function() {
+      if (currentSpeech === openingSpeech) currentSpeech = null;
+      isSpeaking = false;
+      startMainPlayback();
+    };
+    openingSpeech.onerror = function() {
+      if (currentSpeech === openingSpeech) currentSpeech = null;
+      isSpeaking = false;
+      startMainPlayback();
+    };
+    currentSpeech = openingSpeech;
+    isSpeaking = true;
+    window.speechSynthesis.speak(openingSpeech);
   }
 
   function tryPlayAudioSource(src) {
@@ -3411,8 +3529,7 @@
       console.error('No transformer selected for Unity Explains');
       return;
     }
-
-    if (isSpeaking) {
+    if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
     }
@@ -3482,8 +3599,7 @@
       console.error('No transformer selected for Unity Brief');
       return;
     }
-
-    if (isSpeaking) {
+    if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
     }
@@ -3526,33 +3642,90 @@
     if (!imageEl || !imageEl.src) return;
     const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
     let howToLabel = 'How to Read';
-    if (currentHowToPath && currentHowToPath.includes('_waste_howto')) howToLabel = 'How to Read Waste';
-    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
+    if (!currentHowToPath && currentHowToText === FIXED_BASELINE_RESULTS_TEXT) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_waste_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-waste-chart.mp3')
+    )) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_savings_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_tuned_energy_field.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-savings-chart.mp3')
+    )) howToLabel = 'Understanding the Tuned Energy Field';
     showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
   }
   function playHowToAudio() {
-    if (isSpeaking) {
+    if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
     }
-    if (!currentHowToPath) {
+    const hasTtsNarration = !!String(currentHowToText || '').trim();
+    if (!currentHowToPath && !hasTtsNarration) {
       alert('How to Read audio not available for this view.');
       return;
     }
-    openHowToFullscreenFromCurrentView();
-    currentAudioElement = new Audio(currentHowToPath);
-    currentAudioElement.onended = function() { isSpeaking = false; };
-    currentAudioElement.onerror = function() {
-      console.warn('How To Read MP3 not available.');
-      isSpeaking = false;
-      alert('How to Read audio is not available.');
+    const startHowToTTS = () => {
+      if (!speakWithPreferredVoice((currentHowToText || '').trim() || `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`)) {
+        alert('How to Read audio is not available.');
+      }
     };
-    isSpeaking = true;
-    currentAudioElement.play().catch(() => {
-      console.warn('How To Read playback failed.');
-      isSpeaking = false;
-      alert('How to Read audio is not available.');
-    });
+    if (!currentHowToPath && hasTtsNarration) {
+      startHowToTTS();
+      return;
+    }
+    const startHowToPlayback = () => {
+      currentAudioElement = new Audio(currentHowToPath);
+      currentAudioElement.onended = function() { isSpeaking = false; };
+      currentAudioElement.onerror = function() {
+        console.warn('How To Read MP3 not available.');
+        isSpeaking = false;
+        startHowToTTS();
+      };
+      isSpeaking = true;
+      currentAudioElement.play().catch(() => {
+        console.warn('How To Read playback failed.');
+        isSpeaking = false;
+        startHowToTTS();
+      });
+    };
+    startHowToPlayback();
+  }
+
+  function autoStartVoiceForSelection(selectionType) {
+    if (!selectionType) return;
+    const context = getAutoSelectionContext(selectionType);
+    const sameSelection =
+      isPlaybackActive() &&
+      lastAutoSelectionType === selectionType &&
+      lastAutoSelectionContext === context;
+
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
+      if (sameSelection) return;
+    }
+    if (selectionType === 'baseline') {
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+      return;
+    }
+
+    if (selectionType === 'mpts') {
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+      return;
+    }
+
+    if (selectionType === 'narrative') {
+      if (!currentTransformerId) return;
+      speakNarrative();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+    }
   }
 
   // Show pattern modal with summary or narrative
@@ -3580,7 +3753,7 @@
         }
       }
     }
-    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
+    const tid = matchedPatternKey || routing.fileIds[0] || routing.keys[0];
     
     let content = '';
     let title = '';
@@ -3791,9 +3964,9 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      baselineCandidates = buildPatternCandidates(routing.fileIds, ['tbt', 'tb', 'bt', 'b'], monthSuffix, monthSuffixLong);
       part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
-      const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
+      const simulatorCandidates = buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
         .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
@@ -3889,7 +4062,7 @@
       );
       attachPatternFallback(
         document.getElementById('simulatorPatternImg'),
-        buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong),
+        buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong),
         `${transformerName} simulator`
       );
       const part2PatternImg = document.getElementById('part2PatternImg');
@@ -3917,9 +4090,13 @@
     const unityHowToBtn = document.getElementById('unityHowToBtn');
     if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     currentHowToPath = '';
+    currentHowToText = '';
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
+    if (type === 'narrative') {
+      autoStartVoiceForSelection(type);
+    }
   }
   
   // Scroll to narrative text section
@@ -3947,6 +4124,7 @@
     } catch (e) {}
     currentTransformerId = '';
     currentHowToPath = '';
+    currentHowToText = '';
     const howToBtn = document.getElementById('unityHowToBtn');
     if (howToBtn) howToBtn.style.display = 'none';
     const unityBtn = document.getElementById('unityExplainsBtn');
@@ -4477,10 +4655,10 @@
         
         <div>
           <h3 style="color: #5D701A;">UNITY MANAGEMENT w/MPTS</h3>
-          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Harmonized Energy Behavior with MPTS Technology</p>
+          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Tuned Energy Behavior with MPTS Technology</p>
           
           <div class="site-metric">
-            <span class="site-metric-label">Transformers Harmonized</span>
+            <span class="site-metric-label">Transformers Tuned</span>
             <span class="site-metric-value">${transformerCount}</span>
           </div>
           <div class="site-metric">
@@ -4488,7 +4666,7 @@
             <span class="site-metric-value" style="color: #15803d;">${mptsAvgPF}%</span>
           </div>
           <div class="site-metric">
-            <span class="site-metric-label">Harmonized Active Power (per hour)</span>
+            <span class="site-metric-label">Tuned Active Power (per hour)</span>
             <span class="site-metric-value" style="color: #15803d;">${mptsOptimizedActivePower.toFixed(1)} kW</span>
           </div>
           <div class="site-metric">
@@ -4694,7 +4872,7 @@
           Reach out to our Team and let's start the conversation.
         </p>
         <div style="background: rgba(70, 95, 20, 0.5); border-radius: 12px; padding: 25px; border: 2px solid rgba(178, 210, 53, 0.4); margin-bottom: 25px;">
-          <p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Harmonized Energy?</p>
+          <p style="color: rgba(255,255,255,0.85); margin-bottom: 15px;">Ready to learn about Tuned Energy?</p>
           <a href="mailto:info@UnityEnergy.com" 
              style="display: inline-block; background: #fff; color: #314100; padding: 12px 30px; 
                     border-radius: 50px; font-weight: 600; text-decoration: none; 
@@ -4725,9 +4903,40 @@
 </div>
 
 
+<script>
+(function loadUnityHowToToggle() {
+  if (window.__unityHowToToggleLoaderInjected) return;
+  window.__unityHowToToggleLoaderInjected = true;
+  const scriptName = 'unity-howto-toggle.js';
+  const scriptVersion = '20260701a';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 10; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unityHowToToggleLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
 <script id="unity-narration-retention-config">
 window.__UNITY_NARRATION_ARCHIVED__ = (window.__UNITY_NARRATION_ARCHIVED__ === true);
-window.__UNITY_NARRATION_AUDIO_ARCHIVED__ = false;
 window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   retentionMonths: 2,
   includeCurrentMonth: false,
@@ -4736,6 +4945,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
 </script>
 <script id="unity-narration-retention-guard">
 (function(){
+
   var policy = window.__UNITY_NARRATION_RETENTION_POLICY__ || {};
 
   function parseMonthCodeFromDateToken(token) {
@@ -4769,7 +4979,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
       jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
       jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
-    var periodEl = document.querySelector('.period-value');
+    var periodEl = document.querySelector('.period-value, #month-year');
     var labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
     if (!labelText) labelText = document.title || '';
     var m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
@@ -4789,6 +4999,23 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return Number.isFinite(code) ? code : null;
   }
 
+  function normalizeMonthCode(value) {
+    if (value === null || value === undefined) return null;
+    var asText = String(value).trim();
+    if (!/^\d+$/.test(asText)) return null;
+    if (asText.length >= 8) {
+      asText = /^20\d{6}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    } else if (asText.length === 6) {
+      asText = /^20\d{4}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    }
+    var numeric = Number(asText);
+    if (!Number.isFinite(numeric)) return null;
+    var code = Math.floor(numeric);
+    var month = code % 100;
+    if (code < 1000 || month < 1 || month > 12) return null;
+    return code;
+  }
+
   function resolveRetentionMonths() {
     var maxMonths = Number(policy.retentionMonths || 2);
     if (!Number.isFinite(maxMonths) || maxMonths < 1) maxMonths = 2;
@@ -4802,6 +5029,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     if (!(policy.includeCurrentMonth === true)) {
       cursor.setMonth(cursor.getMonth() - 1);
     }
+
     var maxMonths = resolveRetentionMonths();
     for (var i = 0; i < maxMonths; i++) {
       var code = monthCodeFromDate(cursor);
@@ -4827,31 +5055,17 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return labels.join(' and ');
   }
 
-  var reportMonthCodeRaw = String(policy.reportMonthCode == null ? '' : policy.reportMonthCode).trim();
-  var reportMonthCode = reportMonthCodeRaw ? Number(reportMonthCodeRaw) : NaN;
-  if (/^\d{8}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = Number(reportMonthCodeRaw.slice(2, 6));
-  } else if (/^\d{6}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = /^20\d{4}$/.test(reportMonthCodeRaw)
-      ? Number(reportMonthCodeRaw.slice(2, 6))
-      : Number(reportMonthCodeRaw.slice(0, 4));
-  }
+  var reportMonthCode = normalizeMonthCode(policy.reportMonthCode);
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||
       parseMonthCodeFromPath(window.location.href) ||
       parseMonthCodeFromLabel();
   }
-
   var forcedArchived = (window.__UNITY_NARRATION_ARCHIVED__ === true);
-  var shouldArchive = forcedArchived;
-  if (!shouldArchive) {
-    if (!Number.isFinite(reportMonthCode)) return;
-    shouldArchive = !isWithinRetentionWindow(reportMonthCode);
-  }
-  if (!shouldArchive) return;
+  if (!forcedArchived && !Number.isFinite(reportMonthCode)) return;
+  if (!forcedArchived && isWithinRetentionWindow(reportMonthCode)) return;
 
-  window.__UNITY_NARRATION_AUDIO_ARCHIVED__ = true;
   var textMsg = "Pattern text is archived for this report period (retention policy).";
   var retentionLabel = describeRetentionWindow();
   var audioMsg = retentionLabel
@@ -4906,7 +5120,6 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   window.speakNarrative = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
   window.playUnityBrief = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
   window.playHowToAudio = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
-  window.playUnityHowToChart = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', hideNarrativeAudioButtons, { once: true });
@@ -4915,38 +5128,5 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   }
 })();
 </script>
-<script src="../../unity-april-baseline-retention.js"></script>
-  <script>
-  (function loadUnityHowToToggle() {
-    if (window.__unityHowToToggleLoaderInjected) return;
-    window.__unityHowToToggleLoaderInjected = true;
-    const scriptName = 'unity-howto-toggle.js';
-    const scriptVersion = '20260701a';
-    const candidateSrcs = [];
-    for (let depth = 0; depth <= 10; depth += 1) {
-      const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-      candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
-    }
-    const head = document.head || document.getElementsByTagName('head')[0];
-    if (!head) return;
-    const tryLoad = (index) => {
-      if (index >= candidateSrcs.length) return;
-      const src = candidateSrcs[index];
-      const script = document.createElement('script');
-      const separator = src.includes('?') ? '&' : '?';
-      script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
-      script.async = false;
-      script.onload = () => {
-        window.__unityHowToToggleLoaderSrc = src;
-      };
-      script.onerror = () => {
-        script.remove();
-        tryLoad(index + 1);
-      };
-      head.appendChild(script);
-    };
-    tryLoad(0);
-  })();
-  </script>
-  </body>
-  </html>
+</body>
+</html>

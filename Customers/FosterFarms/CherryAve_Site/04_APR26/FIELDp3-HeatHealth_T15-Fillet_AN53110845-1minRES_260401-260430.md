@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** T15 Fillet  
-**Generated:** 2026-05-08 17:40:18  
+**Generated:** 2026-09-10 22:41:38  
 **Data Source:** AN53110845-V-1minRES_43200CLP_260401-260430c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 145,914.05
+- **Device Zone BTU/hr:** 101,514.77
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 32,211.53
+- **Field Zone BTU/hr:** 22,332.63
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 178,125.58 BTU/hr
+- **Total Heat Generated:** 123,847.40 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 147.12 kW
+- **Baseline Cooling Load:** 102.28 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 51.95 kW
+- **Climate Adjusted Cooling:** 36.12 kW
   - *Cooling load adjusted for temperature (69.9°F) and humidity (50.0%)*
 - **Climate Burden Multiplier:** 1.000
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 51.95 kW
+- **Total Cooling Load Avoided:** 36.12 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $36,692.43
+- **Electrical-Energy Waste Cost:** $36,715.37
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $159,288.80/year
+- **Cooling Cost Avoided:** $110,750.53/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-23,424.37/year climate/impedance bonus)
+  (Includes $-16,322.83/year climate/impedance bonus)
 
 ---
 

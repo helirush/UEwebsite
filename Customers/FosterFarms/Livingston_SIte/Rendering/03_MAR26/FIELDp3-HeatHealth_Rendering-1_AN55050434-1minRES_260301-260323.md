@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** Rendering-1  
-**Generated:** 2026-04-25 17:51:41  
+**Generated:** 2026-09-10 22:49:46  
 **Data Source:** AN55050434-V-1minRES_32730CLP_260301-260323c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 196,992.44
+- **Device Zone BTU/hr:** 156,024.27
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 37,688.78
+- **Field Zone BTU/hr:** 33,145.20
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 234,681.22 BTU/hr
+- **Total Heat Generated:** 189,169.47 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 213.58 kW
+- **Baseline Cooling Load:** 171.65 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 68.45 kW
-  - *Cooling load adjusted for temperature (69.9°F) and humidity (50.4%)*
+- **Climate Adjusted Cooling:** 55.17 kW
+  - *Cooling load adjusted for temperature (69.8°F) and humidity (50.4%)*
 - **Climate Burden Multiplier:** 1.002
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 68.45 kW
+- **Total Cooling Load Avoided:** 55.17 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost (Monthly Equivalent):** $26,713.26
+- **Electrical-Energy Waste Cost (Monthly Equivalent):** $35,168.44
   - *Normalized monthly cost of wasted energy consumption*
-- **Cooling Cost Avoided (Annual):** $104,751.96/year
+- **Cooling Cost Avoided (Annual):** $94,248.96/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-12,969.20/year climate/impedance bonus)
+  (Includes $-8,706.98/year climate/impedance bonus)
 
 ---
 

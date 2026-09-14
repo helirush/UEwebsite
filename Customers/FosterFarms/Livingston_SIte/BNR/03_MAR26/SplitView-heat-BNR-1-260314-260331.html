@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="Patterns/BNR1m_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
+            <img id="patternImageInline" src="Patterns/BNR1m_jun26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>BNR-1 - HEAT Pattern</p>
         </div>
         <div class="bottom-section">
@@ -547,7 +547,7 @@
                     <h1>HEAT HEALTH ANALYSIS</h1>
 <p><em>Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery</em></p>
 <p><strong>Transformer:</strong> BNR-1<br />
-<strong>Generated:</strong> 2026-04-23 13:44:28<br />
+<strong>Generated:</strong> 2026-09-10 22:47:01<br />
 <strong>Data Source:</strong> AN55050325-V-1minRES_25410CLP_260314-260331c.csv  </p>
 <h2>📊 Analysis Period</h2>
 <ul>
@@ -570,36 +570,36 @@
 <em>the corresponding cooling load that must be removed from conditioned spaces.</em></p>
 <h3>Heat Generation Analysis</h3>
 <ul>
-<li><strong>Device Zone BTU/hr:</strong> 160,046.55</li>
+<li><strong>Device Zone BTU/hr:</strong> 90,907.18</li>
 <li><em>Heat generated within transformer enclosure and immediately adjacent area</em></li>
-<li><strong>Field Zone BTU/hr:</strong> 18,459.70</li>
+<li><strong>Field Zone BTU/hr:</strong> 10,485.19</li>
 <li><em>Heat radiated into surrounding field area and electrical room</em></li>
 </ul>
 <h3>Conditioned Space Impact</h3>
 <ul>
-<li><strong>Total Heat Generated:</strong> 178,506.25 BTU/hr</li>
+<li><strong>Total Heat Generated:</strong> 101,392.37 BTU/hr</li>
 <li><em>Combined device and field zone thermal output requiring removal</em></li>
 <li><strong>Air-Conditioned Percentage:</strong> 30.00%</li>
 <li><em>Portion of facility space requiring active cooling and temperature control</em></li>
 </ul>
 <h3>Cooling Load Analysis</h3>
 <ul>
-<li><strong>Baseline Cooling Load:</strong> 161.51 kW</li>
+<li><strong>Baseline Cooling Load:</strong> 91.74 kW</li>
 <li><em>Standard cooling requirement without climate burden factors</em></li>
-<li><strong>Climate Adjusted Cooling:</strong> 52.06 kW</li>
+<li><strong>Climate Adjusted Cooling:</strong> 29.57 kW</li>
 <li><em>Cooling load adjusted for temperature (69.9°F) and humidity (50.3%)</em></li>
 <li><strong>Climate Burden Multiplier:</strong> 1.001</li>
 <li><em>Thermal load increase factor due to environmental conditions</em></li>
-<li><strong>Total Cooling Load Avoided:</strong> 52.06 kW</li>
+<li><strong>Total Cooling Load Avoided:</strong> 29.57 kW</li>
 <li><em>Net cooling capacity that would be required without Unity energy management</em></li>
 </ul>
 <h3>Economic Impact</h3>
 <ul>
 <li><strong>Electrical-Energy Waste Cost (Monthly Equivalent):</strong> $22,650.88</li>
 <li><em>Normalized monthly cost of wasted energy consumption</em></li>
-<li><strong>Cooling Cost Avoided (Annual):</strong> $88,936.27/year</li>
+<li><strong>Cooling Cost Avoided (Annual):</strong> $50,516.21/year</li>
 <li><em>Annual savings from eliminated cooling equipment operation</em>
-  (Includes $-7,378.58/year climate/impedance bonus)</li>
+  (Includes $-4,191.07/year climate/impedance bonus)</li>
 </ul>
 <hr />
 <h2>💡 Heat Health Recommendations</h2>
@@ -623,7 +623,7 @@
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="Patterns/BNR1m_mar26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
+            <img id="patternImageFullscreen" src="Patterns/BNR1m_jun26.png" alt="Pattern Analysis">
             <p>BNR-1 - HEAT Pattern</p>
         </div>
     </div>    
@@ -648,12 +648,42 @@
     
     
     <script>
-        function handlePatternMissing() {
+        function tryPatternImageReload() {
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            if (!inlineImg) return false;
+
+            const currentSrcAttr = (inlineImg.getAttribute('src') || '').trim();
+            if (!currentSrcAttr || currentSrcAttr === '#') return false;
+
+            const retryCount = Number(inlineImg.dataset.patternRetryCount || '0');
+            if (retryCount >= 1) return false;
+
+            const separator = currentSrcAttr.includes('?') ? '&' : '?';
+            const refreshedSrc = `${currentSrcAttr}${separator}v=${Date.now()}`;
+            inlineImg.dataset.patternRetryCount = String(retryCount + 1);
+            inlineImg.setAttribute('src', refreshedSrc);
+            if (fullscreenImg) {
+                fullscreenImg.setAttribute('src', refreshedSrc);
+            }
+            return true;
+        }
+
+        function handlePatternMissing(event) {
             const container = document.querySelector('.pattern-image-container');
             const inlineImg = document.getElementById('patternImageInline');
             const fullscreenImg = document.getElementById('patternImageFullscreen');
             const fullsizeBtn = container ? container.querySelector('.fullsize-btn') : null;
             const caption = container ? container.querySelector('p') : null;
+            const trigger = event && event.target;
+
+            if (trigger && trigger.id && trigger.id !== 'patternImageInline') {
+                return;
+            }
+
+            if (inlineImg && tryPatternImageReload()) {
+                return;
+            }
 
             if (inlineImg) {
                 inlineImg.style.display = 'none';

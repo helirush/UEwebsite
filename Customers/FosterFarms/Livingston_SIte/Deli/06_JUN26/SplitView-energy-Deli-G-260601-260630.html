@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="Patterns/DeliGbt_jun26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
+            <img id="patternImageInline" src="Patterns/DeliGbt_mar26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>Deli-G - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -547,13 +547,13 @@
                     <h1>BASELINE ELECTRICAL ENERGY USAGE AND COST</h1>
 <p><strong>Transformer Baseline :</strong>
 - <strong>Consumption Usage:</strong> 469,436.3 kWh (Usage per period)
-- <strong>Consumption Cost per unit:</strong> $0.120/kWh (Cost per kWh)
-- <strong>Consumption Total Cost:</strong> $56,332.35 (Cost per period)
-- <strong>Consumption Total Cost:</strong> $78.25 (Cost per hour)</p>
+- <strong>Consumption Cost per unit:</strong> $0.195/kWh (Cost per kWh)
+- <strong>Consumption Total Cost:</strong> $91,540.07 (Cost per period)
+- <strong>Consumption Total Cost:</strong> $127.16 (Cost per hour)</p>
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> Deli G<br />
-<strong>Generated:</strong> 2026-07-04 14:56:57<br />
+<strong>Generated:</strong> 2026-09-10 20:04:54<br />
 <strong>Data Source:</strong> AN55050305-V-1minRES_43200CLP_260601-260630c.csv  </p>
 <h2>Time Period</h2>
 <ul>
@@ -593,33 +593,34 @@
 <p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
 <h3>Element 1: Reactive Energy Offset Savings</h3>
 <ul>
-<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 75.54 kW/hr</li>
-<li><strong>Blended Electricity Rate:</strong> $0.1200/kWh (all-inclusive)</li>
-<li><strong>Deli G Utility Cost Offset:</strong> $9.07/hour</li>
-<li><strong>Annual Offset Savings:</strong> $79412/year</li>
+<li><strong>Total Non-Active Field Burden (kVA - kW):</strong> 75.54 kW/hr</li>
+<li><strong>Heat-Coupled Burden Used in Thermal Model:</strong> 44.53 kW/hr (modeled_non_active_field_burden)</li>
+<li><strong>Blended Electricity Rate:</strong> $0.1950/kWh (all-inclusive)</li>
+<li><strong>Deli G Utility Cost Offset:</strong> $14.73/hour</li>
+<li><strong>Annual Offset Savings:</strong> $129044/year</li>
 </ul>
 <h3>Element 2: Cooling Elimination Savings</h3>
 <ul>
-<li><strong>Total Heat No Longer Generated:</strong> 271,522 BTU/hr</li>
-<li><strong>Total Cooling kW No Longer Needed:</strong> 23.88 kW</li>
-<li><strong>Cooling Energy Cost Avoided:</strong> $2.87/hour</li>
-<li><strong>Annual Cooling Savings:</strong> $25104/year</li>
+<li><strong>Total Heat No Longer Generated:</strong> 160,060 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 14.08 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $2.75/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $24047/year</li>
 </ul>
 <h3>Element 3: CO2e Emissions Reduction Value</h3>
 <ul>
-<li><strong>Total kW Waste Eliminated:</strong> 99.42 kW</li>
-<li><strong>CO2e Emissions Avoided:</strong> 325.14 metric tons/year</li>
-<li><strong>Monthly CO2e Reduction:</strong> 27.09 metric tons/month</li>
-<li><strong>Hourly CO2e Reduction:</strong> 0.0371 metric tons/hour</li>
-<li><strong>CO2e Value Rate:</strong> $35/metric ton</li>
-<li><strong>Annual CO2e Value:</strong> $11380/year</li>
+<li><strong>Total kW Waste Eliminated:</strong> 89.62 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 293.08 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 24.42 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0335 metric tons/hour</li>
+<li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
+<li><strong>Annual CO2e Value:</strong> $11137/year</li>
 </ul>
 <h3>Total Deli G Unity Savings</h3>
 <ul>
-<li><strong>Per Hour:</strong> $13.23</li>
-<li><strong>Per Day:</strong> $317.52</li>
-<li><strong>Per Month:</strong> $9525.61</li>
-<li><strong>Per Year:</strong> $115895</li>
+<li><strong>Per Hour:</strong> $18.75</li>
+<li><strong>Per Day:</strong> $449.94</li>
+<li><strong>Per Month:</strong> $13498.19</li>
+<li><strong>Per Year:</strong> $164228</li>
 </ul>
 <h3>Deli G Savings Breakdown</h3>
 <h3>Unity System (MPTS) Installation Considerations</h3>
@@ -1080,7 +1081,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="Patterns/DeliGbt_jun26.png" alt="Pattern Analysis">
+            <img id="patternImageFullscreen" src="Patterns/DeliGbt_mar26.png" alt="Pattern Analysis">
             <p>Deli-G - ENERGY Pattern</p>
         </div>
     </div>    

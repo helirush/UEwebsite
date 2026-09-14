@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="Patterns/PL1MSbt_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
+            <img id="patternImageInline" src="Patterns/PL1MSbt_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>PL1-MShop - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -553,7 +553,7 @@
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> PL1-MShop<br />
-<strong>Generated:</strong> 2026-05-10 11:11:47<br />
+<strong>Generated:</strong> 2026-09-10 22:43:45<br />
 <strong>Data Source:</strong> AN55050287-V-1minRES_43200CLP_260401-260430c.csv  </p>
 <h2>Time Period</h2>
 <ul>
@@ -593,33 +593,34 @@
 <p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
 <h3>Element 1: Reactive Energy Offset Savings</h3>
 <ul>
-<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 44.49 kW/hr</li>
+<li><strong>Total Non-Active Field Burden (kVA - kW):</strong> 44.49 kW/hr</li>
+<li><strong>Heat-Coupled Burden Used in Thermal Model:</strong> 25.83 kW/hr (modeled_non_active_field_burden)</li>
 <li><strong>Blended Electricity Rate:</strong> $0.1950/kWh (all-inclusive)</li>
 <li><strong>PL1-MShop Utility Cost Offset:</strong> $8.68/hour</li>
 <li><strong>Annual Offset Savings:</strong> $75999/year</li>
 </ul>
 <h3>Element 2: Cooling Elimination Savings</h3>
 <ul>
-<li><strong>Total Heat No Longer Generated:</strong> 159,532 BTU/hr</li>
-<li><strong>Total Cooling kW No Longer Needed:</strong> 13.97 kW</li>
-<li><strong>Cooling Energy Cost Avoided:</strong> $2.72/hour</li>
-<li><strong>Annual Cooling Savings:</strong> $23863/year</li>
+<li><strong>Total Heat No Longer Generated:</strong> 92,614 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 8.11 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $1.58/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $13853/year</li>
 </ul>
 <h3>Element 3: CO2e Emissions Reduction Value</h3>
 <ul>
-<li><strong>Total kW Waste Eliminated:</strong> 58.46 kW</li>
-<li><strong>CO2e Emissions Avoided:</strong> 191.18 metric tons/year</li>
-<li><strong>Monthly CO2e Reduction:</strong> 15.93 metric tons/month</li>
-<li><strong>Hourly CO2e Reduction:</strong> 0.0218 metric tons/hour</li>
+<li><strong>Total kW Waste Eliminated:</strong> 52.60 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 172.01 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 14.33 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0196 metric tons/hour</li>
 <li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
-<li><strong>Annual CO2e Value:</strong> $7360/year</li>
+<li><strong>Annual CO2e Value:</strong> $6623/year</li>
 </ul>
 <h3>Total PL1-MShop Unity Savings</h3>
 <ul>
-<li><strong>Per Hour:</strong> $12.24</li>
-<li><strong>Per Day:</strong> $293.76</li>
-<li><strong>Per Month:</strong> $8812.79</li>
-<li><strong>Per Year:</strong> $107222</li>
+<li><strong>Per Hour:</strong> $11.01</li>
+<li><strong>Per Day:</strong> $264.31</li>
+<li><strong>Per Month:</strong> $7929.45</li>
+<li><strong>Per Year:</strong> $96475</li>
 </ul>
 <h3>PL1-MShop Savings Breakdown</h3>
 <h3>Unity System (MPTS) Installation Considerations</h3>
@@ -1080,7 +1081,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="Patterns/PL1MSbt_apr26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
+            <img id="patternImageFullscreen" src="Patterns/PL1MSbt_apr26.png" alt="Pattern Analysis">
             <p>PL1-MShop - ENERGY Pattern</p>
         </div>
     </div>    
@@ -1105,12 +1106,42 @@ Calculated values are shown above for verification and engineering transparency.
     
     
     <script>
-        function handlePatternMissing() {
+        function tryPatternImageReload() {
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            if (!inlineImg) return false;
+
+            const currentSrcAttr = (inlineImg.getAttribute('src') || '').trim();
+            if (!currentSrcAttr || currentSrcAttr === '#') return false;
+
+            const retryCount = Number(inlineImg.dataset.patternRetryCount || '0');
+            if (retryCount >= 1) return false;
+
+            const separator = currentSrcAttr.includes('?') ? '&' : '?';
+            const refreshedSrc = `${currentSrcAttr}${separator}v=${Date.now()}`;
+            inlineImg.dataset.patternRetryCount = String(retryCount + 1);
+            inlineImg.setAttribute('src', refreshedSrc);
+            if (fullscreenImg) {
+                fullscreenImg.setAttribute('src', refreshedSrc);
+            }
+            return true;
+        }
+
+        function handlePatternMissing(event) {
             const container = document.querySelector('.pattern-image-container');
             const inlineImg = document.getElementById('patternImageInline');
             const fullscreenImg = document.getElementById('patternImageFullscreen');
             const fullsizeBtn = container ? container.querySelector('.fullsize-btn') : null;
             const caption = container ? container.querySelector('p') : null;
+            const trigger = event && event.target;
+
+            if (trigger && trigger.id && trigger.id !== 'patternImageInline') {
+                return;
+            }
+
+            if (inlineImg && tryPatternImageReload()) {
+                return;
+            }
 
             if (inlineImg) {
                 inlineImg.style.display = 'none';

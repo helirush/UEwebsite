@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** NCDC3 North E  
-**Generated:** 2026-08-02 22:15:17  
+**Generated:** 2026-09-10 19:29:20  
 **Data Source:** AN55050395-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period

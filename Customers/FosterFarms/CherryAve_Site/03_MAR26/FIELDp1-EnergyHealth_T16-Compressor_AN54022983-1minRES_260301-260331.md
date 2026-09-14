@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** T16 Compressor  
-**Generated:** 2026-04-17 11:16:28  
+**Generated:** 2026-09-10 22:46:24  
 **Data Source:** AN54022983-V-1minRES_44580CLP_260301-260331c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 129.60 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 129.60 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 75.52 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.3500/kWh (all-inclusive)
 - **T16 Compressor Utility Cost Offset:** $45.36/hour
 - **Annual Offset Savings:** $397350/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 490,606 BTU/hr
-- **Total Cooling kW No Longer Needed:** 42.96 kW
-- **Cooling Energy Cost Avoided:** $15.04/hour
-- **Annual Cooling Savings:** $131725/year
+- **Total Heat No Longer Generated:** 285,874 BTU/hr
+- **Total Cooling kW No Longer Needed:** 25.03 kW
+- **Cooling Energy Cost Avoided:** $8.76/hour
+- **Annual Cooling Savings:** $76756/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 172.56 kW
-- **CO2e Emissions Avoided:** 564.31 metric tons/year
-- **Monthly CO2e Reduction:** 47.03 metric tons/month
-- **Hourly CO2e Reduction:** 0.0644 metric tons/hour
+- **Total kW Waste Eliminated:** 154.63 kW
+- **CO2e Emissions Avoided:** 505.68 metric tons/year
+- **Monthly CO2e Reduction:** 42.14 metric tons/month
+- **Hourly CO2e Reduction:** 0.0577 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $21726/year
+- **Annual CO2e Value:** $19469/year
 
 ### Total T16 Compressor Unity Savings
 
-- **Per Hour:** $62.88
-- **Per Day:** $1509.04
-- **Per Month:** $45271.34
-- **Per Year:** $550801
+- **Per Hour:** $56.34
+- **Per Day:** $1352.26
+- **Per Month:** $40567.77
+- **Per Year:** $493575
 
 ### T16 Compressor Savings Breakdown
 

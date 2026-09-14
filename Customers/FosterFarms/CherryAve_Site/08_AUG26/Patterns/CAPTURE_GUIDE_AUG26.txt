@@ -1,0 +1,30 @@
+Cherry Avenue — August 2026 pattern capture
+Study: Study260910CherryAug26
+Drop images HERE for William.
+
+Per transformer, shoot 5 images (pre-MPTS order):
+  bt  = Baseline/Target
+  b   = Baseline companion
+  s   = MPTS Savings / simulated
+  v   = Voltage
+  m   = companion pattern
+
+Transformers:
+  T10  Air Chiller
+  T12  Main
+  T15  Fillet
+  T16  Compressor
+
+Preferred naming (eePATTERN style / July convention):
+  T10bt_aug26.png   T10b_aug26.png   T10s_aug26.png   T10v_aug26.png   T10m_aug26.png
+  T12bt_aug26.png   ...
+  T15bt_aug26.png   ...
+  T16bt_aug26.png   ...
+
+Total expected: 20 images (4 fields × 5)
+When done, tell Clerk — then William scripts-only.
+
+Boards to shoot from (study package):
+  eReports/Study260910CherryAug26/FIELD-Energyboard_*.html
+  eReports/Study260910CherryAug26/FIELD-Voltboard_*.html
+  (also mirrored under eWebmaster/.../08_AUG26/)

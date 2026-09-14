@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** Rendering-3  
-**Generated:** 2026-08-02 22:17:15  
+**Generated:** 2026-09-10 19:33:23  
 **Data Source:** AN55050429-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 116,750.30
+- **Device Zone BTU/hr:** 117,342.81
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 35,886.89
+- **Field Zone BTU/hr:** 35,829.86
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 152,637.19 BTU/hr
+- **Total Heat Generated:** 153,172.67 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 136.80 kW
+- **Baseline Cooling Load:** 137.24 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 44.52 kW
+- **Climate Adjusted Cooling:** 44.68 kW
   - *Cooling load adjusted for temperature (82.5°F) and humidity (31.4%)*
 - **Climate Burden Multiplier:** 1.019
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 44.52 kW
+- **Total Cooling Load Avoided:** 44.68 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $26,171.39
+- **Electrical-Energy Waste Cost:** $26,305.12
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $76,047.67/year
+- **Cooling Cost Avoided:** $76,314.45/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-12,885.57/year climate/impedance bonus)
+  (Includes $-12,675.05/year climate/impedance bonus)
 
 ---
 

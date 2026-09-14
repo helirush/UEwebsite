@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** T16 Compressor  
-**Generated:** 2026-07-10 12:10:36  
+**Generated:** 2026-09-10 21:08:54  
 **Data Source:** AN54022983-V-1minRES_44640CLP_260501-260531c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 109,933.95
+- **Device Zone BTU/hr:** 62,914.56
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 15,938.42
+- **Field Zone BTU/hr:** 9,121.46
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 125,872.37 BTU/hr
+- **Total Heat Generated:** 72,036.02 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 118.85 kW
+- **Baseline Cooling Load:** 68.02 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 36.71 kW
+- **Climate Adjusted Cooling:** 21.01 kW
   - *Cooling load adjusted for temperature (70.0°F) and humidity (49.8%)*
 - **Climate Burden Multiplier:** 1.000
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 36.71 kW
+- **Total Cooling Load Avoided:** 21.01 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
 - **Electrical-Energy Waste Cost:** $30,048.61
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $112,561.37/year
+- **Cooling Cost Avoided:** $64,418.21/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-20,344.61/year climate/impedance bonus)
+  (Includes $-11,643.10/year climate/impedance bonus)
 
 ---
 

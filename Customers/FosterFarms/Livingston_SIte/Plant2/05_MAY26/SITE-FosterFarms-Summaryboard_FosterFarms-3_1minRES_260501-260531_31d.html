@@ -380,53 +380,6 @@
       pointer-events: none;
     }
 
-    .gauge-side-metric {
-      position: absolute;
-      top: calc(50% + 0.5in);
-      width: 110px;
-      transform: translateY(-50%);
-      text-align: center;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .gauge-side-left {
-      left: -110px;
-    }
-
-    .gauge-side-right {
-      right: -110px;
-    }
-
-    .gauge-side-label {
-      font-size: 8pt;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: rgba(218, 218, 218, 0.95);
-      line-height: 1.2;
-    }
-
-    .gauge-side-value {
-      margin-top: 4px;
-      font-size: 11pt;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 1);
-      line-height: 1.15;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.45);
-    }
-
-    .dashboard-grid.layout-1 .gauge-side-metric {
-      width: 132px;
-    }
-
-    .dashboard-grid.layout-1 .gauge-side-left {
-      left: -156px;
-    }
-
-    .dashboard-grid.layout-1 .gauge-side-right {
-      right: -156px;
-    }
-
     .uptime {
       margin: 12px 0;
       text-align: center;
@@ -1636,7 +1589,7 @@
 
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's group-level site overview across all transformers">
+  <button id="siteOverviewBtn" class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's group-level site overview across all transformers">
     🔊 LISTEN: GROUP SITE OVERVIEW
   </button>
   <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
@@ -2007,7 +1960,7 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
-    const scriptVersion = window.__unitySideMetricsVersion || '20260707a';
+  const scriptVersion = window.__unitySideMetricsVersion || '20260712a';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
@@ -2191,249 +2144,6 @@
 
       return null;
     }
-
-    function parseCurrencyValue(value) {
-      const n = parseFloat(String(value || '').replace(/[^0-9.]/g, ''));
-      return isFinite(n) ? n : null;
-    }
-
-    function formatCurrencyWhole(value) {
-      const n = Number(value);
-      if (!isFinite(n) || n <= 0) return '—';
-      return `$${Math.round(n).toLocaleString('en-US')}`;
-    }
-
-    function formatVoltageValue(value) {
-      const n = Number(value);
-      if (!isFinite(n) || n <= 0) return '—';
-      const rounded = Math.round(n * 10) / 10;
-      return `${rounded.toFixed(1)}V`;
-    }
-
-    function findPatternEntryForTransformer(transformerName) {
-      try {
-        const routing = getTransformerRoutingInfo(transformerName || '');
-        const tData = (PATTERN_DATA && PATTERN_DATA.transformers) ? PATTERN_DATA.transformers : null;
-        if (!tData) return null;
-
-        if (routing && Array.isArray(routing.keys)) {
-          for (const k of routing.keys) {
-            if (tData[k]) return tData[k];
-          }
-        }
-
-        const normalizeKey = (value) => String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-        const target = normalizeKey(transformerName);
-        if (!target) return null;
-
-        for (const [key, entry] of Object.entries(tData)) {
-          const candidates = [key, entry?.transformer_name, entry?.display_name, entry?.source_transformer_id];
-          if (candidates.some((candidate) => normalizeKey(candidate) === target)) {
-            return entry;
-          }
-        }
-      } catch (e) {}
-
-      return null;
-    }
-
-    function extractVoltageFromText(text) {
-      const raw = String(text || '').replace(/\s+/g, ' ').trim();
-      if (!raw) return null;
-
-      const patterns = [
-        /voltage[^0-9]{0,25}([0-9]{2,4}(?:\.[0-9]+)?)\s*(?:v|volts?)/i,
-        /([0-9]{2,4}(?:\.[0-9]+)?)\s*-\s*volt/i,
-        /([0-9]{2,4}(?:\.[0-9]+)?)\s*(?:v|volts?)/i
-      ];
-
-      for (const pattern of patterns) {
-        const m = raw.match(pattern);
-        if (!m) continue;
-        const parsed = parseFloat(m[1]);
-        if (isFinite(parsed) && parsed >= 100 && parsed <= 1000) return parsed;
-      }
-
-      return null;
-    }
-
-    function resolveFieldVoltageFromPatternEntry(entry) {
-      if (!entry || typeof entry !== 'object') return null;
-
-      const directCandidates = [
-        entry.voltage_avg,
-        entry.avg_voltage,
-        entry.average_voltage,
-        entry.voltage,
-        entry.site_overview_state?.metrics?.voltage_avg,
-        entry.site_overview_state?.metrics?.avg_voltage
-      ];
-      for (const candidate of directCandidates) {
-        const n = Number(candidate);
-        if (isFinite(n) && n >= 100 && n <= 1000) return n;
-      }
-
-      const textCandidates = [];
-      const prioritizedFields = [
-        'voltage_stability_findings',
-        'voltage_baseline_notes',
-        'narration_ready_text',
-        'field_condition_summary',
-        'pattern_part1',
-        'pattern_text',
-        'cross_check',
-        'pattern_brief'
-      ];
-      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
-      if (!textCandidates.length) collectTextFragments(textCandidates, entry);
-
-      for (const text of textCandidates) {
-        const parsed = extractVoltageFromText(text);
-        if (parsed !== null) return parsed;
-      }
-
-      return null;
-    }
-
-    function extractAnnualConsequenceFromText(text) {
-      const raw = String(text || '').replace(/\s+/g, ' ').trim();
-      if (!raw) return null;
-
-      const patterns = [
-        /ANNUAL_SAVINGS_VALIDATED\s*:\s*\$?\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
-        /annual(?:ized)?[^$]{0,80}waste[^$]{0,40}\$?\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
-        /\$\s*([0-9][0-9,]*(?:\.[0-9]+)?)[^.\n]{0,80}annual(?:ized)?[^.\n]{0,40}waste/i,
-        /annual[^$]{0,80}savings[^$]{0,40}\$?\s*([0-9][0-9,]*(?:\.[0-9]+)?)/i,
-        /\$\s*([0-9][0-9,]*(?:\.[0-9]+)?)[^.\n]{0,40}(?:annually|per\s*year|\/yr)/i
-      ];
-
-      for (const pattern of patterns) {
-        const m = raw.match(pattern);
-        if (!m) continue;
-        const parsed = parseCurrencyValue(m[1]);
-        if (parsed !== null && parsed > 0) return parsed;
-      }
-
-      return null;
-    }
-
-    function resolveFieldConsequenceFromPatternEntry(entry) {
-      if (!entry || typeof entry !== 'object') return null;
-
-      const directCandidates = [
-        entry.annual_waste_validated,
-        entry.annual_waste,
-        entry.annual_savings_validated,
-        entry.annual_savings,
-        entry.site_overview_state?.metrics?.annual_waste,
-        entry.site_overview_state?.metrics?.annual_savings,
-        entry.waste_cost
-      ];
-      for (const candidate of directCandidates) {
-        const n = Number(candidate);
-        if (isFinite(n) && n > 0) return n;
-      }
-
-      const textCandidates = [];
-      const prioritizedFields = [
-        'cross_check',
-        'field_condition_summary',
-        'simulated_mpts_outcome',
-        'executive_summary_short',
-        'narration_ready_text',
-        'pattern_part2',
-        'pattern_part1',
-        'pattern_text',
-        'pattern_brief',
-        'pattern_summary'
-      ];
-      prioritizedFields.forEach((field) => collectTextFragments(textCandidates, entry[field]));
-      if (!textCandidates.length) collectTextFragments(textCandidates, entry);
-
-      for (const text of textCandidates) {
-        const parsed = extractAnnualConsequenceFromText(text);
-        if (parsed !== null) return parsed;
-      }
-
-      return null;
-    }
-
-    function resolveFieldVoltageForTransformer(transformerName) {
-      const entry = findPatternEntryForTransformer(transformerName || '');
-      return resolveFieldVoltageFromPatternEntry(entry);
-    }
-
-    function resolveFieldConsequenceForTransformer(transformerName) {
-      const entry = findPatternEntryForTransformer(transformerName || '');
-      return resolveFieldConsequenceFromPatternEntry(entry);
-    }
-
-    function ensureGaugeSideMetrics(xfmrId) {
-      const gaugeContainer = document.querySelector(`#xfmr${xfmrId}-card .gauge-container`);
-      if (!gaugeContainer) return;
-
-      const voltageId = `xfmr${xfmrId}-field-voltage`;
-      if (!document.getElementById(voltageId)) {
-        const leftMetric = document.createElement('div');
-        leftMetric.className = 'gauge-side-metric gauge-side-left';
-        leftMetric.innerHTML = `
-          <div class="gauge-side-label">Field Voltage</div>
-          <div class="gauge-side-value" id="${voltageId}">—</div>
-        `;
-        gaugeContainer.appendChild(leftMetric);
-      }
-
-      const consequenceId = `xfmr${xfmrId}-field-consequence`;
-      if (!document.getElementById(consequenceId)) {
-        const rightMetric = document.createElement('div');
-        rightMetric.className = 'gauge-side-metric gauge-side-right';
-        rightMetric.innerHTML = `
-          <div class="gauge-side-label">Field Consequence</div>
-          <div class="gauge-side-value" id="${consequenceId}">—</div>
-        `;
-        gaugeContainer.appendChild(rightMetric);
-      }
-    }
-
-    function bindGaugeSideMetrics(xfmrId, transformerName) {
-      ensureGaugeSideMetrics(xfmrId);
-      const voltageEl = document.getElementById(`xfmr${xfmrId}-field-voltage`);
-      const consequenceEl = document.getElementById(`xfmr${xfmrId}-field-consequence`);
-      if (!voltageEl || !consequenceEl) return;
-
-      const voltage = resolveFieldVoltageForTransformer(transformerName || '');
-      const consequence = resolveFieldConsequenceForTransformer(transformerName || '');
-      voltageEl.textContent = formatVoltageValue(voltage);
-      consequenceEl.textContent = consequence !== null ? `${formatCurrencyWhole(consequence)}/yr` : '—';
-    }
-
-    function normalizeCardNameForOrdering(name) {
-      return String(name || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-    }
-
-    function enforcePl2CardOrder() {
-      const dashboardGrid = document.querySelector('.dashboard-grid');
-      if (!dashboardGrid) return;
-
-      const desiredOrder = ['PL21SOUTH', 'PL22CENTER', 'PL23NORTH'];
-      const cards = Array.from(dashboardGrid.querySelectorAll('.xfmr-card'));
-      if (!cards.length) return;
-
-      const rankedCards = cards.map((card, originalIndex) => {
-        const nameEl = card.querySelector('span[id$="-name"]');
-        const normalizedName = normalizeCardNameForOrdering(nameEl?.textContent || '');
-        const rank = desiredOrder.indexOf(normalizedName);
-        return {
-          card,
-          rank: rank === -1 ? Number.MAX_SAFE_INTEGER : rank,
-          originalIndex
-        };
-      });
-
-      rankedCards
-        .sort((a, b) => (a.rank - b.rank) || (a.originalIndex - b.originalIndex))
-        .forEach(({ card }) => dashboardGrid.appendChild(card));
-    }
     
     // Calculate minimum targets dynamically
     transformerData.forEach(data => {
@@ -2464,9 +2174,8 @@
       
     });
     
-    // Note: Production uptime percentage is now injected by inject_bird_metrics.py
-    // The old energy waste calculation that was overwriting uptime has been removed
-    enforcePl2CardOrder();
+    // Note: Electric Operations (% vs opening-week production baseline) is injected by inject_bird_metrics.py
+    // Legacy energy-waste overwrite behavior has been removed
     
       // Initialize gauges for up to 4 transformers
       for (let i = 1; i <= 4; i++) {
@@ -2484,15 +2193,13 @@
         continue;
       }
 
-      // Dynamically bind PF bubble value (prevents stale hardcoded text).
-      if (pfEl) {
+      // Legacy PF fallback only when shared side-metrics enhancer is unavailable.
+      if (pfEl && !window.__unitySideMetricsEnhancerLoaded) {
         const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
         if (resolvedPfPct !== null) {
           pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
         }
       }
-
-      bindGaugeSideMetrics(i, transformerName);
 
       // Show/hide (kVA) wrapper depending on value
       const hasKva = (kvaEl?.textContent || '').trim().length > 0;
@@ -2561,27 +2268,6 @@
       }
     }
 
-    ensurePatternDataReady()
-      .then(() => {
-        for (let i = 1; i <= 4; i++) {
-          const nameEl = document.getElementById(`xfmr${i}-name`);
-          const transformerName = (nameEl?.textContent || '').trim();
-          if (!transformerName) continue;
-
-          const pfEl = document.getElementById(`xfmr${i}-metric-pf`);
-          if (pfEl) {
-            const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
-            if (resolvedPfPct !== null) {
-              pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
-            }
-          }
-
-          bindGaugeSideMetrics(i, transformerName);
-        }
-        applyEfsiColors();
-      })
-      .catch(() => {});
-
     // Energy mode always displays EFSI front line derived from PF.
     applyEfsiColors();
 
@@ -2627,7 +2313,7 @@
 
   function getAutoSelectionContext(selectionType) {
     if (selectionType === 'baseline' || selectionType === 'mpts') {
-      return currentHowToPath || '';
+      return `${currentHowToPath || ''}|${currentTransformerId || ''}`;
     }
     if (selectionType === 'narrative') {
       return currentTransformerId || '';
@@ -2726,18 +2412,8 @@
     const suffix = parts.slice(1).join('');
     if (!base || !suffix) return '';
 
-    let digitPrefix = '';
-    let suffixIndex = 0;
-    while (suffixIndex < suffix.length && suffix[suffixIndex] >= '0' && suffix[suffixIndex] <= '9') {
-      digitPrefix += suffix[suffixIndex];
-      suffixIndex += 1;
-    }
-    if (digitPrefix) {
-      const trailingLettersMatch = suffix.slice(suffixIndex).match(/^[A-Z]+/);
-      const trailingLetters = trailingLettersMatch ? trailingLettersMatch[0] : '';
-      if (trailingLetters) return `${base}${trailingLetters[0]}`;
-      return `${base}${digitPrefix}`;
-    }
+    const leadingDigits = suffix.match(/^(\d+)/);
+    if (leadingDigits) return `${base}${leadingDigits[1]}`;
 
     const lettersThenDigits = suffix.match(/^([A-Z]+)(\d+)/);
     if (lettersThenDigits) return `${base}${lettersThenDigits[1][0]}${lettersThenDigits[2]}`;
@@ -2774,10 +2450,9 @@
     const ncdcMatch = compactUpper.match(/^(NCDC\d+)/);
     if (ncdcMatch) {
       const ncdc = ncdcMatch[1];
-      const ncnd = ncdc.replace('NCDC', 'NCND');
       return {
-        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), ncnd, ncnd.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
-        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), ncnd, ncnd.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
+        keys: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compactUpper, compact, cleanAlnumUpper, cleanAlnum]),
+        fileIds: uniqueRoutingValues([ncdc, ncdc.toLowerCase(), compact, compactUpper, cleanAlnum, cleanAlnumUpper])
       };
     }
 
@@ -2811,38 +2486,16 @@
   function buildPatternCandidates(fileIds, prefixes, monthSuffixShort, monthSuffixLong, extensions = ['png']) {
     const out = [];
     const seen = new Set();
-    const providedExts = (extensions && extensions.length) ? extensions : ['png'];
-    const exts = uniqueRoutingValues([
-      ...providedExts,
-      ...providedExts
-        .map((ext) => (ext || '').toString().trim())
-        .filter((ext) => /^png$/i.test(ext))
-        .map((ext) => `${ext}.png`)
-    ]);
+    const exts = (extensions && extensions.length) ? extensions : ['png'];
     const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
-    const monthSuffixes = uniqueRoutingValues([monthSuffixShort, monthSuffixLong]);
-    const roots = ['Patterns', 'patterns'];
-    const addCandidate = (relativePath) => {
-      roots.forEach((root) => {
-        const fullPath = `${root}/${relativePath}`;
-        if (!seen.has(fullPath)) {
-          seen.add(fullPath);
-          out.push(fullPath);
-        }
-      });
-    };
     fileIds.forEach(id => {
-      const token = (id || '').toString().trim();
-      if (!token) return;
       prefixList.forEach(prefix => {
-        const p = (prefix || '').toString().trim();
-        if (!p) return;
         exts.forEach(ext => {
-          const extToken = (ext || '').toString().trim();
-          if (!extToken) return;
-          monthSuffixes.forEach(monthSuffix => {
-            addCandidate(`${token}${p}_${monthSuffix}.${extToken}`);
-            addCandidate(`${token}${p}-${monthSuffix}.${extToken}`);
+          [`${id}${prefix}_${monthSuffixShort}.${ext}`, `${id}${prefix}_${monthSuffixLong}.${ext}`].forEach(fn => {
+            if (!seen.has(fn)) {
+              seen.add(fn);
+              out.push(`Patterns/${fn}`);
+            }
           });
         });
       });
@@ -3041,7 +2694,6 @@
 
   function viewPattern(transformerId, type) {
     try {
-      ensurePatternDataReady().catch(() => {});
       // transformerId is like 'xfmr1', 'xfmr2', etc.
       const xfmrNum = transformerId.replace('xfmr', '');
       const nameElement = document.getElementById(`xfmr${xfmrNum}-name`);
@@ -3051,8 +2703,7 @@
 
       // Use routing helper to resolve filename-safe transformer IDs
       const routing = getTransformerRoutingInfo(transformerName);
-      const routingPatternEntry = getPatternEntryForRouting(routing, transformerName, xfmrNum);
-      const audioStemCandidates = resolveAudioStemCandidates(routing, routingPatternEntry, routing.keys[0] || routing.fileIds[0]);
+      currentTransformerId = routing.fileIds[0] || transformerId;
 
       // Get month suffix dynamically from the displayed month-year
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
@@ -3061,18 +2712,17 @@
       // Prefix mapping:
       // baseline -> tuned baseline chain (tbt/tb), then legacy fallbacks
       // mpts -> tuned simulator/harmonized (sb/tm), then legacy fallbacks
-      // mpts-vars -> tuned base target (tbt), then legacy fallbacks
+      // mpts-vars -> Base Target (BT family only; no baseline fallback)
       // voltage -> tuned voltage (tv), then legacy fallback
-      let prefixCandidates = ['b', 'bt', 'tbt', 'tb'];
+      let prefixCandidates = ['tbt', 'tb', 'bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefixCandidates = ['s', 'm', 'sb', 'tm']; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefixCandidates = ['bt', 'b', 'tbt', 'tb']; patternLabel = 'Base Target'; }
+      if (type === 'mpts') { prefixCandidates = ['sb', 'tm', 's', 'm']; patternLabel = 'Tuned Energy'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt', 'tbt', 'tb']; patternLabel = 'Base Target'; }
       else if (type === 'voltage') { prefixCandidates = ['tv', 'v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
-      const imageStemCandidates = (audioStemCandidates && audioStemCandidates.length) ? audioStemCandidates : routing.fileIds;
       let candidates = buildPatternCandidates(
-        imageStemCandidates,
+        routing.fileIds,
         prefixCandidates,
         monthSuffixShort,
         monthSuffixLong,
@@ -3090,24 +2740,18 @@
       const unityHowToBtn = document.getElementById('unityHowToBtn');
       if (unityBriefBtn) unityBriefBtn.style.display = 'none';
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
-      currentAudioStemCandidates = audioStemCandidates;
       if (unityHowToBtn) {
         if (type === 'baseline') {
           unityHowToBtn.textContent = '🎧 How to Read the Baseline';
-          const baselineSharedCandidates = ['../../../../../assets/audio/unity/how-to-read-waste-chart.mp3'];
-          currentHowToCandidates = uniqueRoutingValues(baselineSharedCandidates);
-          currentHowToPath = currentHowToCandidates[0] || '';
+          currentHowToPath = resolveSharedHowToAudioPath('baseline');
           currentHowToText = FIXED_BASELINE_RESULTS_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else if (type === 'mpts') {
           unityHowToBtn.textContent = '🎧 Understanding the Tuned Energy Field';
-          const tunedSharedCandidates = ['../../../../../assets/audio/unity/how-to-read-savings-chart.mp3'];
-          currentHowToCandidates = uniqueRoutingValues(tunedSharedCandidates);
-          currentHowToPath = currentHowToCandidates[0] || '';
+          currentHowToPath = resolveSharedHowToAudioPath('tuned');
           currentHowToText = FIXED_TUNED_FIELD_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else {
-          currentHowToCandidates = [];
           currentHowToPath = '';
           currentHowToText = '';
           unityHowToBtn.style.display = 'none';
@@ -3235,10 +2879,8 @@
   // NOTE: This is injected at render-time by working_renderer.generate_site_dashboard()
   // from SET1_PatternAnalysisData.json (or an empty structure if not present).
   let PATTERN_DATA = {
-    "transformers": {},
-    "group_overview": {},
-    "site_overview_state": {}
-  };
+  "transformers": {}
+};
   let patternDataLoadPromise = null;
   function hasPatternDataReady() {
     return !!(PATTERN_DATA && PATTERN_DATA.transformers && Object.keys(PATTERN_DATA.transformers).length > 0);
@@ -3276,13 +2918,10 @@
   let isSpeaking = false;
   let currentHowToPath = '';
   let currentHowToText = '';
-  let currentHowToCandidates = [];
   let currentExplainsPartIndex = 0;
-  let currentAudioStemCandidates = [];
   let siteOverviewPlaybackToken = 0;
   let lastAutoSelectionType = '';
   let lastAutoSelectionContext = '';
-  let baselineAutoNarrationPlayed = false;
   const FIXED_BASELINE_RESULTS_TEXT = `Welcome. Before we begin, I'd like to reassure you that this dashboard is much simpler than it may first appear.
 
 Every electrical energy field tells the same basic story.
@@ -3335,169 +2974,34 @@ This tuned field represents the operating condition your facility can achieve wi
 Every future comparison begins with the baseline and demonstrates the measurable improvements shown here.
 
 Thank you for learning with Unity.`;
-  const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
-  function exposeAudioStateProperty(name, getter, setter) {
+  const SHARED_HOWTO_FILENAMES = {
+    baseline: 'how-to-read-waste-chart.mp3',
+    tuned: 'how-to-read-savings-chart.mp3'
+  };
+  function resolveSharedHowToAudioPath(mode) {
+    const normalizedMode = String(mode || '').toLowerCase();
+    const filename = normalizedMode === 'tuned' || normalizedMode === 'savings'
+      ? SHARED_HOWTO_FILENAMES.tuned
+      : SHARED_HOWTO_FILENAMES.baseline;
     try {
-      Object.defineProperty(window, name, {
-        configurable: true,
-        get: getter,
-        set: setter
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const sourceScript = scripts.reverse().find((script) => {
+        const src = String(script.getAttribute('src') || '');
+        return src.includes('unity-howto-toggle.js');
       });
-    } catch (_e) {
-      try { window[name] = getter(); } catch (__e) {}
-    }
-  }
-  exposeAudioStateProperty('currentSpeech', () => currentSpeech, (v) => { currentSpeech = v || null; });
-  exposeAudioStateProperty('currentNarrativeText', () => currentNarrativeText, (v) => { currentNarrativeText = String(v || ''); });
-  exposeAudioStateProperty('currentBriefText', () => currentBriefText, (v) => { currentBriefText = String(v || ''); });
-  exposeAudioStateProperty('currentAudioElement', () => currentAudioElement, (v) => { currentAudioElement = v || null; });
-  exposeAudioStateProperty('currentTransformerId', () => currentTransformerId, (v) => { currentTransformerId = String(v || ''); });
-  exposeAudioStateProperty('isSpeaking', () => isSpeaking, (v) => { isSpeaking = !!v; });
-  exposeAudioStateProperty('currentHowToPath', () => currentHowToPath, (v) => { currentHowToPath = String(v || ''); });
-  exposeAudioStateProperty('currentHowToText', () => currentHowToText, (v) => { currentHowToText = String(v || ''); });
-  exposeAudioStateProperty('currentHowToCandidates', () => currentHowToCandidates, (v) => { currentHowToCandidates = Array.isArray(v) ? v : []; });
-  exposeAudioStateProperty('currentExplainsPartIndex', () => currentExplainsPartIndex, (v) => { currentExplainsPartIndex = Number.isFinite(Number(v)) ? Number(v) : 0; });
-  exposeAudioStateProperty('currentAudioStemCandidates', () => currentAudioStemCandidates, (v) => { currentAudioStemCandidates = Array.isArray(v) ? v : []; });
-
-  function normalizeTransformerToken(value) {
-    return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-  }
-
-  function findPatternEntryByDisplayName(transformerName) {
-    const transformers = PATTERN_DATA && PATTERN_DATA.transformers ? PATTERN_DATA.transformers : null;
-    if (!transformers || !transformerName) return null;
-    const target = normalizeTransformerToken(transformerName);
-    if (!target) return null;
-    for (const key of Object.keys(transformers)) {
-      const entry = transformers[key];
-      const displayName = entry && (entry.display_name || entry.transformer_name || key);
-      if (normalizeTransformerToken(displayName) === target) return entry;
-    }
-    return null;
-  }
-
-  function findPatternEntryByCardIndex(cardIndex) {
-    const transformers = PATTERN_DATA && PATTERN_DATA.transformers ? PATTERN_DATA.transformers : null;
-    const idx = parseInt(cardIndex, 10);
-    if (!transformers || !Number.isFinite(idx) || idx < 1) return null;
-    const entries = Object.values(transformers);
-    return entries[idx - 1] || null;
-  }
-
-  function getPatternEntryForRouting(routing, transformerName, cardIndex) {
-    const transformers = PATTERN_DATA && PATTERN_DATA.transformers ? PATTERN_DATA.transformers : null;
-    if (!transformers || !routing || !Array.isArray(routing.keys)) return null;
-    for (const key of routing.keys) {
-      if (transformers[key]) return transformers[key];
-    }
-    return findPatternEntryByDisplayName(transformerName) || findPatternEntryByCardIndex(cardIndex);
-  }
-
-  function resolveAudioStemCandidates(routing, entry, fallbackStem = '') {
-    const values = [];
-    const addStem = (value) => {
-      const v = (value || '').toString().trim();
-      if (!v) return;
-      values.push(v);
-      const compact = v.replace(/\s+/g, '');
-      if (compact && compact !== v) values.push(compact);
-      const clean = compact.replace(/[^A-Za-z0-9]/g, '');
-      if (clean && clean !== compact) values.push(clean);
-    };
-    if (entry && typeof entry === 'object') {
-      addStem(entry.source_transformer_id);
-      addStem(entry.transformer_name);
-      addStem(entry.display_name);
-      if (entry.site_overview_state && typeof entry.site_overview_state === 'object') {
-        addStem(entry.site_overview_state.transformer_name);
+      const src = String(sourceScript && sourceScript.getAttribute('src') ? sourceScript.getAttribute('src') : '');
+      if (src) {
+        const scriptUrl = new URL(src, window.location.href);
+        return new URL(`../audio/unity/${filename}`, scriptUrl).toString();
       }
+    } catch (error) {
+      console.warn('Unable to resolve shared how-to audio path from script source:', error);
     }
-    if (routing && Array.isArray(routing.fileIds)) routing.fileIds.forEach(addStem);
-    if (routing && Array.isArray(routing.keys)) routing.keys.forEach(addStem);
-    addStem(fallbackStem);
-    return uniqueRoutingValues(values);
+    return normalizedMode === 'tuned'
+      ? 'Audio/unity_tuned_energy_field.mp3'
+      : 'Audio/unity_baseline_results.mp3';
   }
-
-  function buildAudioAssetCandidates(stems, suffix) {
-    const out = [];
-    const seen = new Set();
-    const roots = ['Patterns', 'patterns', 'Audio', 'audio'];
-    const suffixValue = (suffix || '').toString().trim();
-    (Array.isArray(stems) ? stems : []).forEach((stem) => {
-      const token = (stem || '').toString().trim();
-      if (!token || !suffixValue) return;
-      roots.forEach((root) => {
-        const candidate = `${root}/${token}${suffixValue}`;
-        if (!seen.has(candidate)) {
-          seen.add(candidate);
-          out.push(candidate);
-        }
-      });
-    });
-    return out;
-  }
-
-  function playAudioCandidateList(candidates, onPlay, onAllFailed) {
-    const list = uniqueRoutingValues(Array.isArray(candidates) ? candidates : []);
-    let idx = 0;
-    const tryNext = () => {
-      if (idx >= list.length) {
-        if (typeof onAllFailed === 'function') onAllFailed();
-        return;
-      }
-      const src = list[idx++];
-      const audio = new Audio(src);
-      currentAudioElement = audio;
-      onPlay(audio, src, () => {
-        if (currentAudioElement === audio) currentAudioElement = null;
-        try {
-          audio.pause();
-          audio.currentTime = 0;
-        } catch (e) {}
-        tryNext();
-      });
-    };
-    tryNext();
-  }
-
-  function resolveHowToNarrationText(entry, type) {
-    if (!entry || typeof entry !== 'object') return '';
-    const storyBlocks = entry.site_overview_state && entry.site_overview_state.story_blocks
-      ? entry.site_overview_state.story_blocks
-      : {};
-    if (type === 'baseline') {
-      return String(
-        entry.voltage_baseline_notes ||
-        storyBlocks.baseline_notes ||
-        entry.pattern_part1 ||
-        entry.pattern_brief ||
-        entry.pattern_interpretation ||
-        ''
-      ).trim();
-    }
-    if (type === 'mpts') {
-      return String(
-        entry.reactive_mpts_notes ||
-        storyBlocks.mpts_notes ||
-        entry.pattern_part2 ||
-        entry.pattern_brief ||
-        entry.pattern_interpretation ||
-        ''
-      ).trim();
-    }
-    return '';
-  }
-
-  function resolveSiteOverviewNarrationText() {
-    const groupOverview = PATTERN_DATA && PATTERN_DATA.group_overview ? PATTERN_DATA.group_overview : null;
-    if (groupOverview && groupOverview.narrative) {
-      return String(groupOverview.narrative).trim();
-    }
-    const siteName = (document.getElementById('site-name')?.textContent || '').trim();
-    const monthYear = (document.getElementById('month-year')?.textContent || '').trim();
-    if (!siteName && !monthYear) return '';
-    return `${siteName || 'Site'} overview${monthYear ? ` for ${monthYear}` : ''}.`;
-  }
+  const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
 
   function isPlaybackActive() {
     const speechActive = !!(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
@@ -3535,7 +3039,6 @@ Thank you for learning with Unity.`;
   }
   // Play site overview Unity audio only; second click stops playback
   async function playSiteOverview() {
-    await ensurePatternDataReady();
     if (isPlaybackActive()) {
       stopCurrentPlayback();
       return;
@@ -3590,21 +3093,7 @@ Thank you for learning with Unity.`;
     if (playbackToken !== siteOverviewPlaybackToken) {
       return;
     }
-    const siteOverviewText = resolveSiteOverviewNarrationText();
-    if (siteOverviewText && window.speechSynthesis && typeof SpeechSynthesisUtterance !== 'undefined') {
-      currentSpeech = new SpeechSynthesisUtterance(siteOverviewText);
-      const preferredVoice = getPreferredSpeechVoice();
-      if (preferredVoice) currentSpeech.voice = preferredVoice;
-      currentSpeech.rate = 0.95;
-      currentSpeech.pitch = 1.0;
-      currentSpeech.volume = 1.0;
-      currentSpeech.onend = function() { isSpeaking = false; };
-      currentSpeech.onerror = function() { isSpeaking = false; };
-      isSpeaking = true;
-      window.speechSynthesis.speak(currentSpeech);
-      return;
-    }
-    console.warn('Unity site overview audio not found and no site overview narration text was available.');
+    console.warn('Unity site overview audio not found (expected Audio/site_overview.mp3).');
     alert('Unity site overview audio is not available yet. Please generate Audio/site_overview.mp3 for this study.');
   }
 
@@ -3641,11 +3130,7 @@ Thank you for learning with Unity.`;
     }
 
     scrollToNarrativeImage(currentExplainsPartIndex + 1);
-    const explainsSuffix = explainsParts[currentExplainsPartIndex];
-    const explainsCandidates = buildAudioAssetCandidates(
-      (currentAudioStemCandidates && currentAudioStemCandidates.length) ? currentAudioStemCandidates : [currentTransformerId],
-      explainsSuffix
-    );
+    const mp3File = `Patterns/${currentTransformerId}${explainsParts[currentExplainsPartIndex]}`;
 
     let triedTTS = false;
     const startTTS = () => {
@@ -3671,37 +3156,26 @@ Thank you for learning with Unity.`;
       window.speechSynthesis.speak(currentSpeech);
     };
 
-    playAudioCandidateList(
-      explainsCandidates,
-      (audio, src, tryNextCandidate) => {
-        audio.onended = function() {
-          currentExplainsPartIndex++;
-          playExplainsPart();
-        };
-        audio.onerror = function() {
-          isSpeaking = false;
-          console.warn('Unity Explains MP3 not available:', src);
-          tryNextCandidate();
-        };
-        isSpeaking = true;
-        const playPromise = audio.play();
-        if (playPromise && typeof playPromise.then === 'function') {
-          playPromise.catch(() => {
-            isSpeaking = false;
-            tryNextCandidate();
-          });
-        }
-      },
-      () => {
-        if (currentExplainsPartIndex === 0) {
-          startTTS();
-          currentExplainsPartIndex = 0;
-        } else {
-          currentExplainsPartIndex++;
-          playExplainsPart();
-        }
+    currentAudioElement = new Audio(mp3File);
+    currentAudioElement.onended = function() {
+      currentExplainsPartIndex++;
+      playExplainsPart();
+    };
+    currentAudioElement.onerror = function() {
+      console.warn('Unity Explains MP3 not available:', mp3File);
+      if (currentExplainsPartIndex === 0) {
+        startTTS();
+        currentExplainsPartIndex = 0;
+      } else {
+        currentExplainsPartIndex++;
+        playExplainsPart();
       }
-    );
+    };
+
+    isSpeaking = true;
+    currentAudioElement.play().catch(() => {
+      startTTS();
+    });
   }
 
   // Play Unity Brief (single-file summary); fall back to TTS
@@ -3716,10 +3190,7 @@ Thank you for learning with Unity.`;
       return;
     }
 
-    const briefCandidates = buildAudioAssetCandidates(
-      (currentAudioStemCandidates && currentAudioStemCandidates.length) ? currentAudioStemCandidates : [currentTransformerId],
-      '_brief.mp3'
-    );
+    const mp3File = `Patterns/${currentTransformerId}_brief.mp3`;
     const startBriefTTS = () => {
       const text = (currentBriefText || currentNarrativeText || '').trim();
       if (!text) {
@@ -3744,30 +3215,20 @@ Thank you for learning with Unity.`;
 
     scrollToNarrativeImage(1);
 
-    playAudioCandidateList(
-      briefCandidates,
-      (audio, src, tryNextCandidate) => {
-        audio.onended = function() { isSpeaking = false; };
-        audio.onerror = function() {
-          isSpeaking = false;
-          console.warn('Unity Brief MP3 not available:', src);
-          tryNextCandidate();
-        };
-        isSpeaking = true;
-        const playPromise = audio.play();
-        if (playPromise && typeof playPromise.then === 'function') {
-          playPromise.catch(() => {
-            isSpeaking = false;
-            tryNextCandidate();
-          });
-        }
-      },
-      () => {
-        console.warn('Unity Brief MP3 not available, using TTS.');
-        isSpeaking = false;
-        startBriefTTS();
-      }
-    );
+    currentAudioElement = new Audio(mp3File);
+    currentAudioElement.onended = function() { isSpeaking = false; };
+    currentAudioElement.onerror = function() {
+      console.warn('Unity Brief MP3 not available, using TTS.');
+      isSpeaking = false;
+      startBriefTTS();
+    };
+
+    isSpeaking = true;
+    currentAudioElement.play().catch(() => {
+      console.warn('Unity Brief playback failed, using TTS.');
+      isSpeaking = false;
+      startBriefTTS();
+    });
   }
 
   function getPreferredSpeechVoice() {
@@ -3781,11 +3242,14 @@ Thank you for learning with Unity.`;
 
   function getHowToOpeningText(path) {
     const source = String(path || '').toLowerCase();
+    if (source.includes('unity_baseline_results.mp3') || source.includes('how-to-read-waste-chart.mp3')) {
+      return '';
+    }
     if (source.includes('_waste_howto')) {
       return "How to read the baseline view: first orient to layout and operating window, then focus on trend direction, then connect drift to operational strain before planning correction.";
     }
-    if (source.includes('_savings_howto')) {
-      return "How to read the M P T S savings view: first orient to the harmonized chart, then compare before and after field behavior, then focus on recovery and reliability signals before planning rollout.";
+    if (source.includes('_savings_howto') || source.includes('how-to-read-savings-chart.mp3') || source.includes('unity_tuned_energy_field.mp3')) {
+      return "Understanding the tuned energy field: first orient to the tuned-energy chart, then compare before and after field behavior, then focus on recovery and reliability signals before planning rollout.";
     }
     return "How to read this view: first orient to layout, then review trend direction, then connect that pattern to operational impact.";
   }
@@ -3825,8 +3289,16 @@ Thank you for learning with Unity.`;
     const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
     let howToLabel = 'How to Read';
     if (!currentHowToPath && currentHowToText === FIXED_BASELINE_RESULTS_TEXT) howToLabel = 'How to Read the Baseline';
-    if (currentHowToPath && (currentHowToPath.includes('_waste_howto') || currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3'))) howToLabel = 'How to Read the Baseline';
-    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_waste_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-waste-chart.mp3')
+    )) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_savings_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_tuned_energy_field.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-savings-chart.mp3')
+    )) howToLabel = 'Understanding the Tuned Energy Field';
     showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
   }
   function playHowToAudio() {
@@ -3834,15 +3306,12 @@ Thank you for learning with Unity.`;
       stopCurrentPlayback();
       return;
     }
-    const mp3Candidates = (currentHowToCandidates && currentHowToCandidates.length)
-      ? currentHowToCandidates
-      : (currentHowToPath ? [currentHowToPath] : []);
+
     const hasTtsNarration = !!String(currentHowToText || '').trim();
-    if (!mp3Candidates.length && !hasTtsNarration) {
+    if (!currentHowToPath && !hasTtsNarration) {
       alert('How to Read audio not available for this view.');
       return;
     }
-    openHowToFullscreenFromCurrentView();
     const startHowToTTS = () => {
       const text = (currentHowToText || '').trim() || `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
       currentSpeech = new SpeechSynthesisUtterance(text);
@@ -3856,37 +3325,28 @@ Thank you for learning with Unity.`;
       isSpeaking = true;
       window.speechSynthesis.speak(currentSpeech);
     };
-    if (!mp3Candidates.length && hasTtsNarration) {
+    if (!currentHowToPath && hasTtsNarration) {
       startHowToTTS();
       return;
     }
+    const mp3File = currentHowToPath;
     const startHowToPlayback = () => {
-      playAudioCandidateList(
-        mp3Candidates,
-        (audio, src, tryNextCandidate) => {
-          audio.onended = function() { isSpeaking = false; };
-          audio.onerror = function() {
-            isSpeaking = false;
-            console.warn('How-to MP3 not available, trying next candidate:', src);
-            tryNextCandidate();
-          };
+      currentAudioElement = new Audio(mp3File);
+      currentAudioElement.onended = function() { isSpeaking = false; };
+      currentAudioElement.onerror = function() {
+        console.warn('How-to MP3 not available, using TTS:', mp3File);
+        isSpeaking = false;
+        startHowToTTS();
+      };
 
-          isSpeaking = true;
-          const playPromise = audio.play();
-          if (playPromise && typeof playPromise.then === 'function') {
-            playPromise.catch(() => {
-              isSpeaking = false;
-              tryNextCandidate();
-            });
-          }
-        },
-        () => {
-          console.warn('How-to MP3 not available, using TTS.');
-          isSpeaking = false;
-          startHowToTTS();
-        }
-      );
+      isSpeaking = true;
+      currentAudioElement.play().catch(() => {
+        console.warn('How-to playback failed, using TTS.');
+        isSpeaking = false;
+        startHowToTTS();
+      });
     };
+
     startHowToPlayback();
   }
 
@@ -3903,18 +3363,15 @@ Thank you for learning with Unity.`;
       if (sameSelection) return;
     }
     if (selectionType === 'baseline') {
-      if (!String(currentHowToText || '').trim() && !currentHowToPath && (!currentHowToCandidates || !currentHowToCandidates.length)) return;
-      if (!baselineAutoNarrationPlayed) {
-        playHowToAudio();
-        baselineAutoNarrationPlayed = true;
-      }
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
       lastAutoSelectionType = selectionType;
       lastAutoSelectionContext = context;
       return;
     }
 
     if (selectionType === 'mpts') {
-      if (!currentHowToPath && (!currentHowToCandidates || !currentHowToCandidates.length) && !String(currentHowToText || '').trim()) return;
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
       playHowToAudio();
       lastAutoSelectionType = selectionType;
       lastAutoSelectionContext = context;
@@ -3953,9 +3410,6 @@ Thank you for learning with Unity.`;
           break;
         }
       }
-    }
-    if (!xfmrData) {
-      xfmrData = findPatternEntryByDisplayName(transformerName) || findPatternEntryByCardIndex(xfmrNum);
     }
     const tid = matchedPatternKey || routing.fileIds[0] || routing.keys[0];
     
@@ -4092,7 +3546,6 @@ Thank you for learning with Unity.`;
       const p1 = (xfmrData && xfmrData.pattern_part1) || '';
       const p2 = (xfmrData && xfmrData.pattern_part2) || '';
       const p3 = (xfmrData && xfmrData.pattern_part3) || '';
-      const briefText = (xfmrData && (xfmrData.pattern_brief || (xfmrData.site_overview_state && xfmrData.site_overview_state.story_blocks && xfmrData.site_overview_state.story_blocks.brief))) || '';
       let narrative;
       if (p1 || p2 || p3) {
         narrative = `PART 1: CURRENT STATE\n${p1}\n\nPART 2: MPTS SOLUTION\n${p2}\n\nPART 3: EXPECTED RESULTS\n${p3}`.trim();
@@ -4110,10 +3563,7 @@ Thank you for learning with Unity.`;
       
       // Store plain text for speech synthesis and transformer ID for MP3
       currentNarrativeText = narrative;
-      currentBriefText = briefText || narrative;
       currentTransformerId = tid;
-      currentAudioStemCandidates = resolveAudioStemCandidates(routing, xfmrData, tid);
-      const visualStemCandidates = (currentAudioStemCandidates && currentAudioStemCandidates.length) ? currentAudioStemCandidates : routing.fileIds;
       showAudioBtn = true;
       
       // Get the power factor value for baseline image from displayed metric
@@ -4136,9 +3586,9 @@ Thank you for learning with Unity.`;
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      baselineCandidates = buildPatternCandidates(visualStemCandidates, ['tbt', 'tb', 'b', 'bt'], monthSuffix, monthSuffixLong);
+      baselineCandidates = buildPatternCandidates(routing.fileIds, ['tbt', 'tb', 'bt', 'b'], monthSuffix, monthSuffixLong);
       part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
-      const simulatorCandidates = buildPatternCandidates(visualStemCandidates, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong);
+      const simulatorCandidates = buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
         .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
@@ -4239,7 +3689,7 @@ Thank you for learning with Unity.`;
       );
       attachPatternFallback(
         document.getElementById('simulatorPatternImg'),
-        buildPatternCandidates(visualStemCandidates, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong),
+        buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong),
         `${transformerName} simulator`
       );
       const part2PatternImg = document.getElementById('part2PatternImg');
@@ -4269,7 +3719,6 @@ Thank you for learning with Unity.`;
     }
     currentHowToPath = '';
     currentHowToText = '';
-    currentHowToCandidates = [];
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
@@ -4298,8 +3747,6 @@ Thank you for learning with Unity.`;
     currentExplainsPartIndex = 0;
     currentHowToPath = '';
     currentHowToText = '';
-    currentHowToCandidates = [];
-    currentAudioStemCandidates = [];
     const howToBtn = document.getElementById('unityHowToBtn');
     if (howToBtn) howToBtn.style.display = 'none';
     const unityBriefBtn = document.getElementById('unityBriefBtn');
@@ -4482,6 +3929,217 @@ Thank you for learning with Unity.`;
     modal.style.display = 'block';
   }
 
+  // Enhanced Site Summary Modal (untuned consequence breakdown)
+  function showSiteSummaryModal() {
+    const modal = document.getElementById('siteSummaryModal');
+    const body = document.getElementById('siteSummaryBody');
+    
+    // Calculate site-level aggregated metrics from all transformers
+    let totalActivePower = 0;
+    let totalWaste = 0;
+    let totalCost = 0;
+    let totalWasteCost = 0;
+    let pfSum = 0;
+    let transformerCount = 0;
+    let totalCapacity = 0;
+    
+    // Iterate through transformer cards to aggregate data
+    for (let i = 1; i <= 4; i++) {
+      const card = document.getElementById(`xfmr${i}-card`);
+      const nameElement = document.getElementById(`xfmr${i}-name`);
+      
+      // Skip if card doesn't exist or transformer name is empty
+      if (!card || !nameElement || !nameElement.textContent.trim()) continue;
+      
+      transformerCount++;
+      
+      // Get transformer capacity (kVA)
+      const kvaElement = document.getElementById(`xfmr${i}-kva`);
+      if (kvaElement) {
+        const kva = parseFloat(kvaElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kva)) totalCapacity += kva;
+      }
+      
+      // Get active power (kW)
+      const avgKwElement = document.getElementById(`xfmr${i}-avg-kw`);
+      if (avgKwElement) {
+        const kw = parseFloat(avgKwElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kw)) totalActivePower += kw;
+      }
+      
+      // Get reactive waste (kW)
+      const wasteElement = document.getElementById(`xfmr${i}-metric-energy-waste`);
+      if (wasteElement) {
+        const waste = parseFloat(wasteElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(waste)) totalWaste += waste;
+      }
+      
+      // Get active cost per hour
+      const costElement = document.getElementById(`xfmr${i}-xfmr-cost-hour`);
+      if (costElement) {
+        const cost = parseFloat(costElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(cost)) totalCost += cost;
+      }
+      
+      // Get waste cost per hour
+      const wasteCostElement = document.getElementById(`xfmr${i}-xfmr-waste-cost-hour`);
+      if (wasteCostElement) {
+        const wasteCost = parseFloat(wasteCostElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(wasteCost)) totalWasteCost += wasteCost;
+      }
+      
+      // Get power factor
+      const pfElement = document.getElementById(`xfmr${i}-metric-pf`);
+      if (pfElement) {
+        const pf = parseFloat(pfElement.textContent.replace('%', ''));
+        if (!isNaN(pf)) pfSum += pf;
+      }
+    }
+
+    const avgPowerFactor = transformerCount > 0 ? (pfSum / transformerCount) : null;
+    const total480V = totalActivePower + totalWaste; // Total 480V supply = active + reactive
+    const totalCoolingKw = 344.32; // Cooling waste embedded in active power
+    const pfGapToUnity = Number.isFinite(avgPowerFactor) ? Math.max(0, 100 - avgPowerFactor) : null;
+
+    // Financial consequence rollups (untuned condition)
+    const blendedRatePerKwh = totalActivePower > 0 ? (totalCost / totalActivePower) : 0;
+    const reactiveWasteCostPerHour = totalWasteCost;
+    const coolingWasteCostPerHour = totalCoolingKw * blendedRatePerKwh;
+    const untunedConsequencePerHour = reactiveWasteCostPerHour + coolingWasteCostPerHour;
+    const untunedConsequencePerMonth = untunedConsequencePerHour * 730;
+    const untunedConsequencePerYear = untunedConsequencePerHour * 8760;
+    const tuningRecoveryOpportunityPerYear = untunedConsequencePerYear * 0.95;
+
+    const formatMoney = (value) => {
+      const numeric = Number.isFinite(value) ? value : 0;
+      return `$${numeric.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    };
+    const formatPct = (value, digits = 1) => Number.isFinite(value) ? `${value.toFixed(digits)}%` : '--.-%';
+    
+    // Extract data resolution from filename
+    const filename = window.location.pathname.split('/').pop();
+    const resolutionMatch = filename.match(/(\d+min)RES/);
+    const dataResolution = resolutionMatch ? resolutionMatch[1] : '1min';
+    
+    // Format the content with expanded consequence view
+    body.innerHTML = `
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <!-- Left Column -->
+        <div>
+          <h3>Site Overview</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Transformers Monitored</span>
+            <span class="site-metric-value">${transformerCount}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Analysis Period</span>
+            <span class="site-metric-value">${document.getElementById('param-period')?.textContent || 'N/A'}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Data Resolution</span>
+            <span class="site-metric-value">${dataResolution}</span>
+          </div>
+          
+          <h3>Aggregated Power Metrics</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Site Capacity</span>
+            <span class="site-metric-value">${totalCapacity.toLocaleString('en-US')} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Active Power</span>
+            <span class="site-metric-value">${totalActivePower.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Supply (Active + Reactive)</span>
+            <span class="site-metric-value">${total480V.toFixed(1)} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Site Average Power Factor</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <h3>Energy Waste & Consequences</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Unconsumed Energy (Waste)</span>
+            <span class="site-metric-value">${totalWaste.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Waste (embedded in active)</span>
+            <span class="site-metric-value">${totalCoolingKw.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Waste as % of Total Supply</span>
+            <span class="site-metric-value">${total480V > 0 ? ((totalWaste / total480V) * 100).toFixed(1) : 0}%</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Untuned Field Efficiency (PF)</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">PF Gap to Unity</span>
+            <span class="site-metric-value">${formatPct(pfGapToUnity)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Reactive Waste Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(reactiveWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Burden Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(coolingWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Untuned Consequence per Hour</span>
+            <span class="site-metric-value">${formatMoney(untunedConsequencePerHour)}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(93, 112, 26, 0.08) 0%, rgba(178, 210, 53, 0.05) 100%); border: 2px solid #5D701A; border-radius: 10px;">
+        <h3 style="text-align: center; color: #314100; margin-bottom: 15px; font-weight: 700;">Untuned Energy Field Consequences</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; text-align: center;">
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Untuned Field Efficiency</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatPct(avgPowerFactor)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(PF gap ${formatPct(pfGapToUnity)})</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Unconsumed Energy (Hourly)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${totalWaste.toFixed(1)} kW</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive waste)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Reactive Waste Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(reactiveWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(8760 hrs/year)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Cooling Burden Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(coolingWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(derived from active blend rate)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Total Untuned Consequence (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(untunedConsequencePerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive + cooling)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Recovery Opportunity @95% Tuning</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(tuningRecoveryOpportunityPerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(${formatMoney(untunedConsequencePerMonth)}/month untuned)</p>
+          </div>
+        </div>
+        <p style="text-align: center; color: #6b7280; margin-top: 15px; font-size: 10pt; font-style: italic;">
+          All-in consequence tracks the financial burden of current untuned PF behavior (reactive waste + cooling burden).
+        </p>
+      </div>
+    `;
+    
+    modal.style.display = 'block';
+  }
+
   // Close Site Summary Modal
   function closeSiteSummaryModal() {
     document.getElementById('siteSummaryModal').style.display = 'none';
@@ -4624,10 +4282,10 @@ Thank you for learning with Unity.`;
         
         <div>
           <h3 style="color: #5D701A;">UNITY MANAGEMENT w/MPTS</h3>
-          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Harmonized Energy Behavior with MPTS Technology</p>
+          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Tuned Energy Behavior with MPTS Technology</p>
           
           <div class="site-metric">
-            <span class="site-metric-label">Transformers Harmonized</span>
+            <span class="site-metric-label">Transformers Tuned</span>
             <span class="site-metric-value">${transformerCount}</span>
           </div>
           <div class="site-metric">
@@ -4635,7 +4293,7 @@ Thank you for learning with Unity.`;
             <span class="site-metric-value" style="color: #15803d;">${mptsAvgPF}%</span>
           </div>
           <div class="site-metric">
-            <span class="site-metric-label">Harmonized Active Power (per hour)</span>
+            <span class="site-metric-label">Tuned Active Power (per hour)</span>
             <span class="site-metric-value" style="color: #15803d;">${mptsOptimizedActivePower.toFixed(1)} kW</span>
           </div>
           <div class="site-metric">
@@ -4882,18 +4540,17 @@ Thank you for learning with Unity.`;
 })();
 </script>
 <script id="unity-narration-retention-config">
-window.__UNITY_NARRATION_ARCHIVED__ = false;
+window.__UNITY_NARRATION_ARCHIVED__ = (window.__UNITY_NARRATION_ARCHIVED__ === true);
 window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
-  policyStartMonthCode: 2603,
+  retentionMonths: 2,
+  includeCurrentMonth: false,
   reportMonthCode: null
 }, window.__UNITY_NARRATION_RETENTION_POLICY__ || {});
 </script>
 <script id="unity-narration-retention-guard">
 (function(){
-  if (window.__UNITY_NARRATION_ARCHIVED__ !== true) return;
 
   var policy = window.__UNITY_NARRATION_RETENTION_POLICY__ || {};
-  var startCode = Number(policy.policyStartMonthCode || 2603);
 
   function parseMonthCodeFromDateToken(token) {
     var clean = String(token || '').trim();
@@ -4926,7 +4583,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
       jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
       jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
-    var periodEl = document.querySelector('.period-value');
+    var periodEl = document.querySelector('.period-value, #month-year');
     var labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
     if (!labelText) labelText = document.title || '';
     var m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
@@ -4938,30 +4595,86 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return Number.isFinite(labelCode) ? labelCode : null;
   }
 
-  var reportMonthCodeRaw = String(policy.reportMonthCode == null ? '' : policy.reportMonthCode).trim();
-  var reportMonthCode = reportMonthCodeRaw ? Number(reportMonthCodeRaw) : NaN;
-  if (/^\d{8}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = Number(reportMonthCodeRaw.slice(2, 6));
-  } else if (/^\d{6}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = /^20\d{4}$/.test(reportMonthCodeRaw)
-      ? Number(reportMonthCodeRaw.slice(2, 6))
-      : Number(reportMonthCodeRaw.slice(0, 4));
+  function monthCodeFromDate(dateObj) {
+    if (!(dateObj instanceof Date)) return null;
+    var yy = String(dateObj.getFullYear() % 100).padStart(2, '0');
+    var mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    var code = Number(yy + mm);
+    return Number.isFinite(code) ? code : null;
   }
+
+  function normalizeMonthCode(value) {
+    if (value === null || value === undefined) return null;
+    var asText = String(value).trim();
+    if (!/^\d+$/.test(asText)) return null;
+    if (asText.length >= 8) {
+      asText = /^20\d{6}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    } else if (asText.length === 6) {
+      asText = /^20\d{4}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    }
+    var numeric = Number(asText);
+    if (!Number.isFinite(numeric)) return null;
+    var code = Math.floor(numeric);
+    var month = code % 100;
+    if (code < 1000 || month < 1 || month > 12) return null;
+    return code;
+  }
+
+  function resolveRetentionMonths() {
+    var maxMonths = Number(policy.retentionMonths || 2);
+    if (!Number.isFinite(maxMonths) || maxMonths < 1) maxMonths = 2;
+    return Math.floor(maxMonths);
+  }
+
+  function isWithinRetentionWindow(reportCode) {
+    if (!Number.isFinite(reportCode)) return false;
+    var now = new Date();
+    var cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+
+    var maxMonths = resolveRetentionMonths();
+    for (var i = 0; i < maxMonths; i++) {
+      var code = monthCodeFromDate(cursor);
+      if (Number.isFinite(code) && code === reportCode) return true;
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    return false;
+  }
+
+  function describeRetentionWindow() {
+    var labels = [];
+    var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var now = new Date();
+    var cursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!(policy.includeCurrentMonth === true)) {
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    var maxMonths = resolveRetentionMonths();
+    for (var i = 0; i < maxMonths; i++) {
+      labels.push(monthNames[cursor.getMonth()] + ' ' + cursor.getFullYear());
+      cursor.setMonth(cursor.getMonth() - 1);
+    }
+    return labels.join(' and ');
+  }
+
+  var reportMonthCode = normalizeMonthCode(policy.reportMonthCode);
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||
       parseMonthCodeFromPath(window.location.href) ||
       parseMonthCodeFromLabel();
   }
-
-  var inScope = true;
-  if (Number.isFinite(reportMonthCode) && Number.isFinite(startCode)) {
-    inScope = reportMonthCode >= startCode;
-  }
-  if (!inScope) return;
+  var forcedArchived = (window.__UNITY_NARRATION_ARCHIVED__ === true);
+  if (!forcedArchived && !Number.isFinite(reportMonthCode)) return;
+  if (!forcedArchived && isWithinRetentionWindow(reportMonthCode)) return;
 
   var textMsg = "Pattern text is archived for this report period (retention policy).";
-  var audioMsg = "Audio is no longer available for this report period (retention policy).";
+  var retentionLabel = describeRetentionWindow();
+  var audioMsg = retentionLabel
+    ? ("Audio is maintained only for the last two months (" + retentionLabel + ").")
+    : "Audio is maintained only for the last two months (retention policy).";
 
   function hideNarrativeAudioButtons() {
     ['unityBriefBtn', 'unityExplainsBtn', 'unityHowToBtn', 'narrativeAudioBtn'].forEach(function(id){
@@ -5019,6 +4732,5 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   }
 })();
 </script>
-<script src="../../../unity-april-baseline-retention.js"></script>
 </body>
 </html>

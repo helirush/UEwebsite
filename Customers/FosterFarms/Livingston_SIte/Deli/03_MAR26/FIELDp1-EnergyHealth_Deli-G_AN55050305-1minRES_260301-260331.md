@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** Deli G  
-**Generated:** 2026-04-19 22:03:30  
+**Generated:** 2026-09-10 22:47:14  
 **Data Source:** AN55050305-V-1minRES_44550CLP_260301-260331c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 70.08 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 70.08 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 40.43 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **Deli G Utility Cost Offset:** $13.67/hour
 - **Annual Offset Savings:** $119712/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 252,413 BTU/hr
-- **Total Cooling kW No Longer Needed:** 22.11 kW
-- **Cooling Energy Cost Avoided:** $4.31/hour
-- **Annual Cooling Savings:** $37775/year
+- **Total Heat No Longer Generated:** 145,632 BTU/hr
+- **Total Cooling kW No Longer Needed:** 12.76 kW
+- **Cooling Energy Cost Avoided:** $2.49/hour
+- **Annual Cooling Savings:** $21795/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 92.19 kW
-- **CO2e Emissions Avoided:** 301.49 metric tons/year
-- **Monthly CO2e Reduction:** 25.12 metric tons/month
-- **Hourly CO2e Reduction:** 0.0344 metric tons/hour
+- **Total kW Waste Eliminated:** 82.84 kW
+- **CO2e Emissions Avoided:** 270.90 metric tons/year
+- **Monthly CO2e Reduction:** 22.57 metric tons/month
+- **Hourly CO2e Reduction:** 0.0309 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $11607/year
+- **Annual CO2e Value:** $10430/year
 
 ### Total Deli G Unity Savings
 
-- **Per Hour:** $19.30
-- **Per Day:** $463.27
-- **Per Month:** $13898.14
-- **Per Year:** $169094
+- **Per Hour:** $17.34
+- **Per Day:** $416.26
+- **Per Month:** $12487.88
+- **Per Year:** $151936
 
 ### Deli G Savings Breakdown
 

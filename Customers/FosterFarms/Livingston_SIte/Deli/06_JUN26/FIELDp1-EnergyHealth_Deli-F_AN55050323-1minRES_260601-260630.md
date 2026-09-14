@@ -2,16 +2,16 @@
 
 **Transformer Baseline :**
 - **Consumption Usage:** 554,138.5 kWh (Usage per period)
-- **Consumption Cost per unit:** $0.120/kWh (Cost per kWh)
-- **Consumption Total Cost:** $66,496.62 (Cost per period)
-- **Consumption Total Cost:** $92.37 (Cost per hour)
+- **Consumption Cost per unit:** $0.195/kWh (Cost per kWh)
+- **Consumption Total Cost:** $108,057.01 (Cost per period)
+- **Consumption Total Cost:** $150.10 (Cost per hour)
 
 ---
 
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** Deli F  
-**Generated:** 2026-07-04 14:56:42  
+**Generated:** 2026-09-10 20:04:44  
 **Data Source:** AN55050323-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 98.22 kW/hr
-- **Blended Electricity Rate:** $0.1200/kWh (all-inclusive)
-- **Deli F Utility Cost Offset:** $11.79/hour
-- **Annual Offset Savings:** $103247/year
+- **Total Non-Active Field Burden (kVA - kW):** 98.22 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 58.33 kW/hr (modeled_non_active_field_burden)
+- **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
+- **Deli F Utility Cost Offset:** $19.15/hour
+- **Annual Offset Savings:** $167777/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 354,088 BTU/hr
-- **Total Cooling kW No Longer Needed:** 31.14 kW
-- **Cooling Energy Cost Avoided:** $3.74/hour
-- **Annual Cooling Savings:** $32737/year
+- **Total Heat No Longer Generated:** 210,297 BTU/hr
+- **Total Cooling kW No Longer Needed:** 18.50 kW
+- **Cooling Energy Cost Avoided:** $3.61/hour
+- **Annual Cooling Savings:** $31595/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 129.36 kW
-- **CO2e Emissions Avoided:** 423.03 metric tons/year
-- **Monthly CO2e Reduction:** 35.25 metric tons/month
-- **Hourly CO2e Reduction:** 0.0483 metric tons/hour
-- **CO2e Value Rate:** $35/metric ton
-- **Annual CO2e Value:** $14806/year
+- **Total kW Waste Eliminated:** 116.71 kW
+- **CO2e Emissions Avoided:** 381.68 metric tons/year
+- **Monthly CO2e Reduction:** 31.81 metric tons/month
+- **Hourly CO2e Reduction:** 0.0436 metric tons/hour
+- **CO2e Value Rate:** $38/metric ton
+- **Annual CO2e Value:** $14504/year
 
 ### Total Deli F Unity Savings
 
-- **Per Hour:** $17.21
-- **Per Day:** $413.13
-- **Per Month:** $12393.75
-- **Per Year:** $150791
+- **Per Hour:** $24.41
+- **Per Day:** $585.96
+- **Per Month:** $17578.79
+- **Per Year:** $213875
 
 ### Deli F Savings Breakdown
 

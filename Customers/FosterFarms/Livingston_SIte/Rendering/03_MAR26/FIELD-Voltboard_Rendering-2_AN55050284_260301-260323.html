@@ -244,20 +244,20 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 472.3400090742439,
+  "nominal_voltage": 480.0,
   "transformer_name": "Rendering-2",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 472.4121771428571,
-  "min_voltage": 451.077,
-  "max_voltage": 490.859,
-  "voltage_std": 8.466066511435237,
-  "voltage_spread": 39.78199999999998,
-  "power_factor": 0.7424141918728995,
-  "vhi_avg": 1.0001527883880823,
-  "vhi_max": 1.0450163201629226,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
+  "power_factor": 0.7425276241405653,
+  "vhi_avg": 1.0,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
   "voltage_dip_count": 15,
-  "pct_below_nominal": 79.46532233424992,
+  "pct_below_nominal": 0.0,
   "estimated_running_amps": 2187.1165,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
@@ -285,7 +285,7 @@
       "max_v": 460.68,
       "avg_amps": 2187.1165,
       "lrc_factor": 6.0,
-      "power_factor": 0.7424141918728995,
+      "power_factor": 0.7425276241405653,
       "efficiency": 0.92
     },
     {
@@ -305,7 +305,7 @@
       "max_v": 455.61,
       "avg_amps": 1885.4411428571427,
       "lrc_factor": 6.0,
-      "power_factor": 0.7424141918728995,
+      "power_factor": 0.7425276241405653,
       "efficiency": 0.92
     }
   ],
@@ -336,22 +336,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">472.4 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">451.1 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">490.9 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">39.8 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -361,7 +361,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.05</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -371,7 +371,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">79.5%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -426,12 +426,12 @@
 
       <div class="param-item">
         <div class="param-label">kWH Cost</div>
-        <div class="param-value" id="param-kwh-cost">0.1747 $/kWh</div>
+        <div class="param-value" id="param-kwh-cost">0.1950 $/kWh</div>
       </div>
       
       <div class="param-item">
         <div class="param-label">Power Factor Default</div>
-        <div class="param-value" id="param-power-factor">0.742</div>
+        <div class="param-value" id="param-power-factor">0.743</div>
       </div>
       
       <div class="param-item">
@@ -483,7 +483,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_Rendering-2.json');
+      const response = await fetch('volt_dashboard_data_Rendering-2.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

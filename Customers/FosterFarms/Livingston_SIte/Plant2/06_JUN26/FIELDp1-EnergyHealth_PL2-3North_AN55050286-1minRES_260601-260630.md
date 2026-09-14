@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** PL2-3North  
-**Generated:** 2026-07-07 05:23:35  
+**Generated:** 2026-09-10 20:06:39  
 **Data Source:** AN55050286-V-260630.2359c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 73.21 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 73.21 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 54.69 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **PL2-3North Utility Cost Offset:** $14.28/hour
 - **Annual Offset Savings:** $125062/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 263,055 BTU/hr
-- **Total Cooling kW No Longer Needed:** 23.14 kW
-- **Cooling Energy Cost Avoided:** $4.51/hour
-- **Annual Cooling Savings:** $39521/year
+- **Total Heat No Longer Generated:** 196,512 BTU/hr
+- **Total Cooling kW No Longer Needed:** 17.28 kW
+- **Cooling Energy Cost Avoided:** $3.37/hour
+- **Annual Cooling Savings:** $29524/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 96.35 kW
-- **CO2e Emissions Avoided:** 315.08 metric tons/year
-- **Monthly CO2e Reduction:** 26.26 metric tons/month
-- **Hourly CO2e Reduction:** 0.0360 metric tons/hour
+- **Total kW Waste Eliminated:** 90.50 kW
+- **CO2e Emissions Avoided:** 295.94 metric tons/year
+- **Monthly CO2e Reduction:** 24.66 metric tons/month
+- **Hourly CO2e Reduction:** 0.0338 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $11973/year
+- **Annual CO2e Value:** $11246/year
 
 ### Total PL2-3North Unity Savings
 
-- **Per Hour:** $20.15
-- **Per Day:** $483.72
-- **Per Month:** $14511.48
-- **Per Year:** $176556
+- **Per Hour:** $18.93
+- **Per Day:** $454.33
+- **Per Month:** $13630.00
+- **Per Year:** $165832
 
 ### PL2-3North Savings Breakdown
 

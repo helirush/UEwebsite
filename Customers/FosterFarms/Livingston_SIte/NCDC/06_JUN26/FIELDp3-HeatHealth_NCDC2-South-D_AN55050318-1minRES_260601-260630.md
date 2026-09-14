@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** NCDC2 South D  
-**Generated:** 2026-07-07 01:39:25  
+**Generated:** 2026-09-10 20:05:54  
 **Data Source:** AN55050318-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 59,556.75
+- **Device Zone BTU/hr:** 30,128.11
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 4,710.79
+- **Field Zone BTU/hr:** 2,383.06
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 64,267.54 BTU/hr
+- **Total Heat Generated:** 32,511.16 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 58.49 kW
+- **Baseline Cooling Load:** 29.59 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 18.74 kW
+- **Climate Adjusted Cooling:** 9.48 kW
   - *Cooling load adjusted for temperature (77.0°F) and humidity (41.7%)*
 - **Climate Burden Multiplier:** 1.005
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 18.74 kW
+- **Total Cooling Load Avoided:** 9.48 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
 - **Electrical-Energy Waste Cost:** $8,240.12
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $32,019.70/year
+- **Cooling Cost Avoided:** $16,197.87/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-5,540.01/year climate/impedance bonus)
+  (Includes $-2,802.53/year climate/impedance bonus)
 
 ---
 

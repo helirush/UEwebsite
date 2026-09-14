@@ -244,20 +244,20 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 464.7976188194445,
+  "nominal_voltage": 480.0,
   "transformer_name": "T12 Main",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 465.17449630487664,
-  "min_voltage": 434.905,
-  "max_voltage": 495.148,
-  "voltage_std": 17.508674043927538,
-  "voltage_spread": 60.24300000000005,
-  "power_factor": 0.8428016898148148,
-  "vhi_avg": 1.0008108421174562,
-  "vhi_max": 1.0652980565125172,
-  "vhi_high_events": 1,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
+  "power_factor": 0.84348506892158,
+  "vhi_avg": 1.0,
+  "vhi_max": 1.0,
+  "vhi_high_events": 0,
   "voltage_dip_count": 238,
-  "pct_below_nominal": 84.37037037037037,
+  "pct_below_nominal": 0.0,
   "estimated_running_amps": 1993.0524924117124,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
@@ -285,7 +285,7 @@
       "max_v": 460.799,
       "avg_amps": 1993.0524924117124,
       "lrc_factor": 6.0,
-      "power_factor": 0.8428016898148148,
+      "power_factor": 0.84348506892158,
       "efficiency": 0.92
     },
     {
@@ -305,7 +305,7 @@
       "max_v": 443.526,
       "avg_amps": 1962.1836666666666,
       "lrc_factor": 6.0,
-      "power_factor": 0.8428016898148148,
+      "power_factor": 0.84348506892158,
       "efficiency": 0.92
     },
     {
@@ -325,7 +325,7 @@
       "max_v": 436.059,
       "avg_amps": 2048.1655,
       "lrc_factor": 6.0,
-      "power_factor": 0.8428016898148148,
+      "power_factor": 0.84348506892158,
       "efficiency": 0.92
     }
   ],
@@ -356,22 +356,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">465.2 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">434.9 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">495.1 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">60.2 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -381,17 +381,17 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.07</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">High VHI Events (&gt;5)</div>
-        <div class="metric-value" id="metric-vhi-high-events">1</div>
+        <div class="metric-value" id="metric-vhi-high-events">0</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">84.4%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -503,7 +503,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_T12_Main.json');
+      const response = await fetch('volt_dashboard_data_T12_Main.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

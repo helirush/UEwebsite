@@ -1055,6 +1055,34 @@
       white-space: nowrap;
     }
   </style>
+<script>
+  window.__UNITY_ENERGY_DASHBOARD_DATA__ = {
+  "transformer_name": "PL1-MShop",
+  "analysis_period": "260401-260430",
+  "file_name": "AN55050287-V-1minRES_43200CLP_260401-260430c.csv",
+  "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/04_APR2026/Plant1/AN55050287-V-1minRES_43200CLP_260401-260430c.csv",
+  "avg_voltage": 480.0,
+  "avg_current": 380.0777297751117,
+  "power_factor": 0.8680193158394516,
+  "consumption_cost": 39511.0,
+  "consumption_cost_per_hour": 54.905621048243276,
+  "time_period_hours": 719.6166666666667,
+  "consumption_kw": 277.3548154920444,
+  "supply_kva": 321.84565256965516,
+  "energy_waste_kw": 44.49083707761076,
+  "electrical_waste_kw": 44.49083707761076,
+  "electricity_rate": 0.195,
+  "annual_waste_cost": 75999.24789597471,
+  "heat_forensics_btu": 154553.37683263732,
+  "heat_forensics_value": 46364,
+  "cooling_forensics_kw": 4.41645786670051,
+  "cooling_forensics_value": 13853,
+  "pollution_forensics_mtco2": 172.01306080390614,
+  "pollution_forensics_value": 6623,
+  "voltage_forensics_warnings": 0,
+  "voltage_forensics_value": "Priceless"
+};
+</script>
 </head>
 <body>
   <div class="dashboard-container">
@@ -1144,7 +1172,7 @@
       <!-- Voltage gauge  -->
       <div class="gauge-container voltage-gauge">
         <div class="gauge-label">VOLTAGE</div>
-        <div class="range-indicator">471 - 511V</div>
+        <div class="range-indicator">480 - 480V</div>
         <svg class="gauge-svg" viewBox="0 0 135 135">
           <!-- Radial gradient for spherical yellow-gold center -->
           <defs>
@@ -1165,7 +1193,7 @@
           <circle class="gauge-progress pf-progress" cx="67.5" cy="67.5" r="48" 
                   stroke="url(#pfGradient)" stroke-dasharray="503" stroke-dashoffset="276" transform="rotate(-90 67.5 67.5)"/>
         </svg>
-        <div class="gauge-value">489<span class="energy-waste-unit">V</span></div>
+        <div class="gauge-value">480<span class="energy-waste-unit">V</span></div>
         <div class="gauge-unit">voltage</div>
         <div class="gauge-subvalue" style="color: #ffffff;"></div>
       </div>
@@ -1298,7 +1326,7 @@
           44.49<span class="energy-waste-unit">kW /hr</span>
         </div>
         <div style="height: 20px;"></div>
-        <div class="waste-value" style="color: #ffffff; font-size: 16pt;">VALUE: $6,246 per year</div>
+        <div class="waste-value" style="color: #ffffff; font-size: 16pt;">VALUE: $75,999 per year</div>
       </div>
       
       <!-- Consumption gauge - moved 50pt left toward center, 25pt up -->
@@ -1335,16 +1363,16 @@
       <div class="forensic-gauge forensic-heat">
         <div class="forensic-label" style="color: #5e1b00ff;">Unconsumed Energy Heat</div>
         <div class="forensic-value" style="color: #5e1b00ff;">
-          151,353<span class="forensic-unit"> BTU /hr</span>
+          154,553<span class="forensic-unit"> BTU /hr</span>
         </div>
         <div style="height: 20px;"></div>
-        <div class="forensic-tvalues" style="color: #5e1b00ff;">VALUE: $79,865 per year</div>
+        <div class="forensic-tvalues" style="color: #5e1b00ff;">VALUE: $46,364 per year</div>
       </div>
       
       <div class="forensic-gauge forensic-cooling">
         <div class="forensic-label" style="color: #00335eff;">Waste Heat Cooling</div>
         <div class="forensic-value" style="color: #00335eff;">
-          4.33<span class="forensic-unit"> kW/hr</span>
+          4.42<span class="forensic-unit"> kW/hr</span>
         </div>
         <div style="height: 20px;"></div>
         <div class="forensic-tvalues" style="color: #00335eff; padding: 0px;">VALUE: $26,442 per year</div>
@@ -1354,7 +1382,7 @@
       <div class="forensic-gauge forensic-pollution">
         <div class="forensic-label">Energy Field Pollution</div>
         <div class="forensic-value">
-          191.18<span class="forensic-unit"> MTCO2e /yr</span>
+          172.01<span class="forensic-unit"> MTCO2e /yr</span>
         </div>
         <div style="height: 20px;"></div>
         <div class="forensic-tvalues">VALUE: $125,172 per year</div>
@@ -1387,12 +1415,78 @@
       
       async loadTransformerData() {
         try {
-          const response = await fetch('dashboard_data_PL1-MShop.json');
+          const inlineData = window.__UNITY_ENERGY_DASHBOARD_DATA__;
+          if (inlineData) {
+            this.data = inlineData;
+            console.log('Using inline energy data payload');
+            this.updateDashboard();
+            return;
+          }
+          const response = await fetch('energy_dashboard_data_PL1-MShop.json');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
           this.data = await response.json();
           this.updateDashboard();
         } catch (error) {
           console.log('Clean Rebuild Dashboard: Using static data');
         }
+      }
+
+      toNumber(value) {
+        if (typeof value === 'number' && Number.isFinite(value)) return value;
+        if (typeof value === 'string') {
+          const cleaned = value.replace(/,/g, '').replace(/\$/g, '').trim();
+          const parsed = Number.parseFloat(cleaned);
+          return Number.isFinite(parsed) ? parsed : NaN;
+        }
+        return NaN;
+      }
+
+      resolveTransformerPayload(data) {
+        if (!data || typeof data !== 'object') return { transformer: null, isFlat: false };
+        if (data.transformers && typeof data.transformers === 'object') {
+          const transformerKeys = Object.keys(data.transformers);
+          if (transformerKeys.length > 0) {
+            return { transformer: data.transformers[transformerKeys[0]], isFlat: false };
+          }
+        }
+        return { transformer: data, isFlat: true };
+      }
+
+      getAnnualWasteCost(transformer) {
+        const directAnnual = this.toNumber(
+          transformer.annual_waste_cost ??
+          transformer.energy_waste_cost_annual ??
+          transformer.waste_cost_annual ??
+          transformer.annual_offset_savings
+        );
+        if (Number.isFinite(directAnnual)) {
+          return directAnnual;
+        }
+
+        const wasteKw = this.toNumber(transformer.electrical_waste_kw ?? transformer.energy_waste_kw);
+        const electricityRate = this.toNumber(transformer.electricity_rate);
+        if (Number.isFinite(wasteKw) && Number.isFinite(electricityRate)) {
+          return wasteKw * electricityRate * 8760;
+        }
+
+        return NaN;
+      }
+      
+      formatNumber(value, options = {}) {
+        const {
+          minimumFractionDigits = 0,
+          maximumFractionDigits = 0,
+          useGrouping = true
+        } = options;
+        const parsed = this.toNumber(value);
+        if (!Number.isFinite(parsed)) return null;
+        return parsed.toLocaleString(undefined, {
+          minimumFractionDigits,
+          maximumFractionDigits,
+          useGrouping
+        });
       }
       
       
@@ -1412,17 +1506,7 @@
       updateDashboard() {
         if (!this.data) return;
         
-        let transformer = null;
-        let isFlatTransformerPayload = false;
-        if (this.data.transformers && typeof this.data.transformers === 'object') {
-          const transformerKeys = Object.keys(this.data.transformers);
-          if (transformerKeys.length > 0) {
-            transformer = this.data.transformers[transformerKeys[0]];
-          }
-        } else {
-          transformer = this.data;
-          isFlatTransformerPayload = true;
-        }
+        const { transformer, isFlat: isFlatTransformerPayload } = this.resolveTransformerPayload(this.data);
         if (!transformer) return;
         
         // Update basic gauge values
@@ -1444,74 +1528,129 @@
         
         // Update consumption cost
         const consumptionCost = document.querySelector('.consumption-value');
-        if (consumptionCost && transformer.consumption_cost) {
-          // Calculate cost per hour for August (31 days * 24 hours = 744 hours)
-          const hoursInPeriod = 744; // August 31-day month
-          const costPerHour = transformer.consumption_cost / hoursInPeriod;
-          consumptionCost.textContent = `Cost: $${costPerHour.toFixed(2)} /hour`;
+        if (consumptionCost) {
+          const explicitHourly = this.toNumber(transformer.consumption_cost_per_hour);
+          if (Number.isFinite(explicitHourly)) {
+            consumptionCost.textContent = `Cost: $${explicitHourly.toFixed(2)} /hour`;
+          } else {
+            const totalCost = this.toNumber(transformer.consumption_cost);
+            const hoursInPeriod = this.toNumber(transformer.time_period_hours);
+            if (Number.isFinite(totalCost) && Number.isFinite(hoursInPeriod) && hoursInPeriod > 0) {
+              const costPerHour = totalCost / hoursInPeriod;
+              consumptionCost.textContent = `Cost: $${costPerHour.toFixed(2)} /hour`;
+            }
+          }
         }
         
         // Update consumption kW value
         const consumptionValue = document.querySelector('.consumption-gauge .gauge-value');
-        if (consumptionValue && transformer.consumption_kw) {
-          consumptionValue.textContent = transformer.consumption_kw;
+        const consumptionKw = this.formatNumber(transformer.consumption_kw, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+          useGrouping: false
+        });
+        if (consumptionValue && consumptionKw !== null) {
+          consumptionValue.textContent = consumptionKw;
         }
         
         // Update supply kVA value
         const supplyValue = document.querySelector('.supply-gauge .gauge-value');
-        if (supplyValue && transformer.supply_kva) {
-          supplyValue.textContent = transformer.supply_kva;
+        const supplyKva = this.formatNumber(transformer.supply_kva, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+          useGrouping: false
+        });
+        if (supplyValue && supplyKva !== null) {
+          supplyValue.textContent = supplyKva;
         }
         
         // Update energy waste
         const wasteValue = document.querySelector('.energy-waste-value');
-        if (wasteValue && transformer.energy_waste_kw) {
-          wasteValue.innerHTML = `${transformer.energy_waste_kw}<span class="energy-waste-unit">kW per hour</span>`;
+        const wasteKw = this.formatNumber(transformer.energy_waste_kw ?? transformer.electrical_waste_kw, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+          useGrouping: false
+        });
+        if (wasteValue && wasteKw !== null) {
+          wasteValue.innerHTML = `${wasteKw}<span class="energy-waste-unit">kW per hour</span>`;
         }
         
-        // Update waste value cost (hourly rate)
+        // Update waste value cost (annual value)
         const wasteCostElement = document.querySelector('.waste-value');
-        if (wasteCostElement && transformer.electrical_waste_kw && transformer.electricity_rate) {
-          const costPerHour = transformer.electrical_waste_kw * transformer.electricity_rate;
-          wasteCostElement.textContent = `VALUE: $${costPerHour.toFixed(2)} per hour`;
+        if (wasteCostElement) {
+          const annualWasteCost = this.getAnnualWasteCost(transformer);
+          if (Number.isFinite(annualWasteCost)) {
+            wasteCostElement.textContent = `VALUE: $${Math.round(annualWasteCost).toLocaleString()} per year`;
+          }
         }
         
         // Update forensics values
         // Heat forensics
         const heatValue = document.querySelector('.forensic-heat .forensic-value');
         const heatCost = document.querySelector('.forensic-heat .forensic-tvalues');
-        if (heatValue && transformer.heat_forensics_btu) {
-          heatValue.innerHTML = `${transformer.heat_forensics_btu.toLocaleString()}<span class="forensic-unit"> BTU/hr</span>`;
+        const heatForensicsBtu = this.formatNumber(transformer.heat_forensics_btu, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+        if (heatValue && heatForensicsBtu !== null) {
+          heatValue.innerHTML = `${heatForensicsBtu}<span class="forensic-unit"> BTU/hr</span>`;
         }
-        if (heatCost && transformer.heat_forensics_value) {
-          heatCost.textContent = `VALUE: $${transformer.heat_forensics_value.toLocaleString()}/year`;
+        const heatForensicsValue = this.formatNumber(transformer.heat_forensics_value, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+        if (heatCost && heatForensicsValue !== null) {
+          heatCost.textContent = `VALUE: $${heatForensicsValue}/year`;
         }
         
         // Cooling forensics
         const coolingValue = document.querySelector('.forensic-cooling .forensic-value');
         const coolingCost = document.querySelector('.forensic-cooling .forensic-tvalues');
-        if (coolingValue && transformer.cooling_forensics_kw) {
-          coolingValue.innerHTML = `${transformer.cooling_forensics_kw}<span class="forensic-unit"> kW avoided per hour</span>`;
+        const coolingForensicsKw = this.formatNumber(transformer.cooling_forensics_kw, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+          useGrouping: false
+        });
+        if (coolingValue && coolingForensicsKw !== null) {
+          coolingValue.innerHTML = `${coolingForensicsKw}<span class="forensic-unit"> kW avoided per hour</span>`;
         }
-        if (coolingCost && transformer.cooling_forensics_value) {
-          coolingCost.textContent = `VALUE: $${transformer.cooling_forensics_value.toLocaleString()}/year`;
+        const coolingForensicsValue = this.formatNumber(transformer.cooling_forensics_value, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+        if (coolingCost && coolingForensicsValue !== null) {
+          coolingCost.textContent = `VALUE: $${coolingForensicsValue}/year`;
         }
         
         // Pollution forensics
         const pollutionValue = document.querySelector('.forensic-pollution .forensic-value');
         const pollutionCost = document.querySelector('.forensic-pollution .forensic-tvalues');
-        if (pollutionValue && transformer.pollution_forensics_mtco2) {
-          pollutionValue.innerHTML = `${transformer.pollution_forensics_mtco2}<span class="forensic-unit"> MTCO2e/yr</span>`;
+        const pollutionForensicsMtco2 = this.formatNumber(transformer.pollution_forensics_mtco2, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+          useGrouping: false
+        });
+        if (pollutionValue && pollutionForensicsMtco2 !== null) {
+          pollutionValue.innerHTML = `${pollutionForensicsMtco2}<span class="forensic-unit"> MTCO2e/yr</span>`;
         }
-        if (pollutionCost && transformer.pollution_forensics_value) {
-          pollutionCost.textContent = `VALUE: $${transformer.pollution_forensics_value.toLocaleString()}/year`;
+        const pollutionForensicsValue = this.formatNumber(transformer.pollution_forensics_value, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+        if (pollutionCost && pollutionForensicsValue !== null) {
+          pollutionCost.textContent = `VALUE: $${pollutionForensicsValue}/year`;
         }
         
         // Voltage forensics
         const voltageWarnings = document.querySelector('.forensic-voltage .forensic-value');
         const voltageCost = document.querySelector('.forensic-voltage .forensic-tvalues');
-        if (voltageWarnings && transformer.voltage_forensics_warnings) {
-          voltageWarnings.innerHTML = `${transformer.voltage_forensics_warnings}<span class="forensic-unit">  Early Voltage Warnings</span>`;
+        const voltageForensicsWarnings = this.formatNumber(transformer.voltage_forensics_warnings, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+          useGrouping: false
+        });
+        if (voltageWarnings && voltageForensicsWarnings !== null) {
+          voltageWarnings.innerHTML = `${voltageForensicsWarnings}<span class="forensic-unit">  Early Voltage Warnings</span>`;
         }
         if (voltageCost && transformer.voltage_forensics_value) {
           voltageCost.textContent = `VALUE: ${transformer.voltage_forensics_value}`;
@@ -1529,6 +1668,7 @@
       
       updateInputParameters() {
         if (!this.data) return;
+        const { transformer } = this.resolveTransformerPayload(this.data);
         
         const setText = (id, text) => {
           const element = document.getElementById(id);
@@ -1536,9 +1676,11 @@
         };
         
         console.log('Updating input parameters...');
-        setText('param-transformer-name', this.data.transformer_name || 'PL1-MShop');
-        if (this.data.analysis_period) setText('param-period', String(this.data.analysis_period));
-        if (this.data.file_name || this.data.csv_file_path) setText('param-file-name', `${this.data.file_name || this.data.csv_file_path}`);
+        setText('param-transformer-name', (transformer && transformer.transformer_name) || this.data.transformer_name || 'PL1-MShop');
+        if ((transformer && transformer.analysis_period) || this.data.analysis_period) setText('param-period', String((transformer && transformer.analysis_period) || this.data.analysis_period));
+        if ((transformer && (transformer.file_name || transformer.csv_file_path)) || this.data.file_name || this.data.csv_file_path) {
+          setText('param-file-name', `${(transformer && (transformer.file_name || transformer.csv_file_path)) || this.data.file_name || this.data.csv_file_path}`);
+        }
       }
     }
 

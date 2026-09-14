@@ -1,17 +1,17 @@
 # BASELINE ELECTRICAL ENERGY USAGE AND COST
 
 **Transformer Baseline :**
-- **Consumption Usage:** 299,925.3 kWh (Usage per period)
+- **Consumption Usage:** 299,910.2 kWh (Usage per period)
 - **Consumption Cost per unit:** $0.195/kWh (Cost per kWh)
-- **Consumption Total Cost:** $58,485.44 (Cost per period)
-- **Consumption Total Cost:** $78.61 (Cost per hour)
+- **Consumption Total Cost:** $58,482.49 (Cost per period)
+- **Consumption Total Cost:** $78.70 (Cost per hour)
 
 ---
 
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** PL1-MShop  
-**Generated:** 2026-08-02 22:15:59  
+**Generated:** 2026-09-10 19:30:35  
 **Data Source:** AN55050287-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## Time Period
@@ -19,7 +19,7 @@
 - **Period:** July 01, 2026 thru July 31, 2026
 - **Number of Days:** 31 Days
 - **Data Resolution:** 1-minute
-- **Total Data Points:** 44,640
+- **Total Data Points:** 44,589
 
 - **Dataset Coverage:** Complete month (100.0% of 31-day month)
 - **Billing Scale Factor:** 1.000x (no normalization needed)
@@ -38,9 +38,9 @@
 *Brief overview of key transformer performance metrics and energy consumption.*
 
 - **Transformer:** PL1-MShop
-- **Power Factor:** 0.868
-- **Total Energy (Actual):** 299,925.31 kWh (per period), 403.13 kW (per hour)
-- **Total Waste (Actual):** 42,696.73 kWh (per period), 57.39 kW (per hour)
+- **Power Factor:** 0.869
+- **Total Energy (Actual):** 299,910.23 kWh (per period), 403.57 kW (per hour)
+- **Total Waste (Actual):** 42,683.43 kWh (per period), 57.44 kW (per hour)
 
 ---
 
@@ -56,43 +56,43 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Non-Active Field Burden (kVA - kW):** 57.39 kW/hr
-- **Heat-Coupled Burden Used in Thermal Model:** 33.47 kW/hr (modeled_non_active_field_burden)
+- **Total Non-Active Field Burden (kVA - kW):** 57.44 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 33.42 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
-- **PL1-MShop Utility Cost Offset:** $11.19/hour
-- **Annual Offset Savings:** $98030/year
+- **PL1-MShop Utility Cost Offset:** $11.20/hour
+- **Annual Offset Savings:** $98112/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 120,530 BTU/hr
-- **Total Cooling kW No Longer Needed:** 10.74 kW
-- **Cooling Energy Cost Avoided:** $2.10/hour
-- **Annual Cooling Savings:** $18353/year
+- **Total Heat No Longer Generated:** 120,349 BTU/hr
+- **Total Cooling kW No Longer Needed:** 10.73 kW
+- **Cooling Energy Cost Avoided:** $2.09/hour
+- **Annual Cooling Savings:** $18325/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 68.13 kW
-- **CO2e Emissions Avoided:** 222.80 metric tons/year
-- **Monthly CO2e Reduction:** 18.57 metric tons/month
+- **Total kW Waste Eliminated:** 68.16 kW
+- **CO2e Emissions Avoided:** 222.91 metric tons/year
+- **Monthly CO2e Reduction:** 18.58 metric tons/month
 - **Hourly CO2e Reduction:** 0.0254 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $8467/year
+- **Annual CO2e Value:** $8470/year
 
 ### Total PL1-MShop Unity Savings
 
-- **Per Hour:** $14.25
-- **Per Day:** $342.05
-- **Per Month:** $10261.59
-- **Per Year:** $124849
+- **Per Hour:** $14.26
+- **Per Day:** $342.21
+- **Per Month:** $10266.38
+- **Per Year:** $124908
 
 ### PL1-MShop Savings Breakdown
 
 
 ### Unity System (MPTS) Installation Considerations
 
-- **Max Reactive Energy:** 1,442.5 kVAR Max (Avg: 222.6 kVAR/hr ; 160,291 kVAR/mo)
+- **Max Reactive Energy:** 476.8 kVAR Max (Avg: 222.8 kVAR/hr ; 160,444 kVAR/mo)
 - **Max Harmonic Distortion:** 30.2% Max (range: 3.1% - 30.2%)
-- **Max Amperage:** 1,844A Max (range: 0A - 1844A)
+- **Max Amperage:** 1,281A Max (range: 108A - 1281A)
 
 ---
 
@@ -113,10 +113,10 @@
 
 | Metric | Average | MIN | MAX |
 | ------ | ------- | --- | --- |
-| Line to Neutral Voltage (277v) |   281.77 |     0.00 |   292.37 |
-| Line to Line Voltage (480v) |   488.04 |     0.00 |   506.41 |
-| Current (AMPS) |   545.65 |     0.00 |  1844.13 |
-| Phase Angle (degrees) |    29.52 |    19.95 |    90.00 |
+| Line to Neutral Voltage (277v) |   282.09 |   273.45 |   292.37 |
+| Line to Line Voltage (480v) |   488.59 |   473.63 |   506.41 |
+| Current (AMPS) |   546.23 |   107.96 |  1280.69 |
+| Phase Angle (degrees) |    29.45 |    19.95 |    43.28 |
 | Total Harmonic Distortion (PCT) |    14.51 |     3.06 |    30.20 |
 
 ## 🔀 Total Harmonic Distortion — Unity Translation
@@ -164,33 +164,33 @@ If IEEE compliance is required, individual THD values remain visible and can be 
 ## Capacity Utilization
 
 - **Maximum UtilityDemand:** 968.17 kW
-  - **Maximum Load:** 1,702.76 kVA
-  - **Percentage of Capacity (MAX):** 68.1%
-- **Average Load:** 460.51 kVA
+  - **Maximum Load:** 1,075.91 kVA
+  - **Percentage of Capacity (MAX):** 43.0%
+- **Average Load:** 461.00 kVA
   - **Percentage of Capacity (Avg):** 18.4%
 
 ## kVA and Power Factor Analysis (Measured vs Calculated)
 
 ### Measured Values (PRIMARY - Used for All Analysis)
 
-- **Average kVA (Ssum_kVA):** 460.51 kVA
-- **Average Power Factor (PF):** 0.868
+- **Average kVA (Ssum_kVA):** 461.00 kVA
+- **Average Power Factor (PF):** 0.869
 
 **Source:** Direct meter measurements (instantaneous values averaged over time)
 
 ### Calculated Values (VERIFICATION ONLY)
 
-- **Calculated kVA (V×I×√3/1000):** 461.25 kVA
+- **Calculated kVA (V×I×√3/1000):** 462.26 kVA
 
 **Calculation Inputs:**
-- Average Voltage (VIavg_V): 488.04 V
-- Average Current (Iavg_A): 545.65 A
-- Average kW (Psum_kW): 403.13 kW
+- Average Voltage (VIavg_V): 488.59 V
+- Average Current (Iavg_A): 546.23 A
+- Average kW (Psum_kW): 403.57 kW
 
 ### Differences (Measured vs Calculated)
-- **kVA Difference:** 0.73 kVA (0.2%)
-- **Calculated PF (kW/kVA from averages):** 0.874
-- **Power Factor Difference:** 0.006 (0.7%)
+- **kVA Difference:** 1.26 kVA (0.3%)
+- **Calculated PF (kW/kVA from averages):** 0.873
+- **Power Factor Difference:** 0.004 (0.5%)
 
 ### Why Measured Values Are More Accurate
 
@@ -202,60 +202,60 @@ The meter's instantaneous measurements capture these variations correctly, while
 calculations from averaged values systematically underestimate reactive effects.
 
 **Analysis Method:** All heat calculations, thermal burden, and cost analysis use
-the measured kVA (460.51) and measured PF (0.868) values.
+the measured kVA (461.00) and measured PF (0.869) values.
 Calculated values are shown above for verification and engineering transparency.
 
 ## Overall Power Metrics (FPC)
 
 | Metric | Average | % of Capacity | Total Energy | HEAT (BTU/hr) |
 | ------ | ------- | ------------- | ------------------- | ------------- |
-| kVA |   460.51 |        18.4% | 342,622.04 kVA | 1,375,521.16 TOTAL-HEAT |
-| kW |   403.13 |        16.1% | 299,925.31 kWh | 171,414.12 Load-Heat |
-| kVAR |   222.63 |         8.9% | 165,634.14 kVARh | - |
-| WASTE |    57.39 |         2.3% | 42,696.73 WASTE | 24,402.15 Field-Heat |
+| kVA |   461.00 |        18.4% | 342,593.66 kVA | 1,377,025.21 TOTAL-HEAT |
+| kW |   403.57 |        16.1% | 299,910.23 kWh | 171,562.31 Load-Heat |
+| kVAR |   222.84 |         8.9% | 165,602.74 kVARh | - |
+| WASTE |    57.44 |         2.3% | 42,683.43 WASTE | 24,416.86 Field-Heat |
 
 ### Heat Unit Notes
 
-- **TOTAL-HEAT (BTU/hr):** 1,375,521.16
-- **Load-Heat (BTU/hr):** 171,414.12
-- **Field-Heat (BTU/hr):** 24,402.15
-- **Load-Heat (BTU, period total):** 127,532,101.87
-- **Field-Heat (BTU, period total):** 18,155,198.56
+- **TOTAL-HEAT (BTU/hr):** 1,377,025.21
+- **Load-Heat (BTU/hr):** 171,562.31
+- **Field-Heat (BTU/hr):** 24,416.86
+- **Load-Heat (BTU, period total):** 127,496,527.38
+- **Field-Heat (BTU, period total):** 18,145,392.99
 
 ## Measured Monthly Averages
 
 | Month | Avg kVA | Avg kW | Avg kVAR | Avg PF | % Capacity |
 | ----- | ------- | ------ | -------- | ------ | ---------- |
-| 7 |   460.51 |   403.13 |   220.90 |     0.88 |   18.4% |
+| 7 |   461.00 |   403.57 |   221.12 |     0.88 |   18.4% |
 
 ## Measured Hourly Averages
 
 | Hour | Avg kVA | Avg kW | Avg kVAR | Avg PF | % Capacity |
 | ---- | ------- | ------ | -------- | ------ | ---------- |
-| 00 |   541.51 |   477.01 |   254.72 |     0.88 |   21.7% |
+| 00 |   541.80 |   477.27 |   254.85 |     0.88 |   21.7% |
 | 01 |   526.75 |   462.09 |   251.41 |     0.88 |   21.1% |
 | 02 |   534.44 |   468.77 |   255.10 |     0.88 |   21.4% |
 | 03 |   528.90 |   461.73 |   256.38 |     0.87 |   21.2% |
 | 04 |   542.48 |   474.96 |   260.44 |     0.88 |   21.7% |
 | 05 |   540.13 |   473.55 |   258.06 |     0.88 |   21.6% |
 | 06 |   522.29 |   459.61 |   246.59 |     0.88 |   20.9% |
-| 07 |   529.77 |   466.61 |   249.50 |     0.88 |   21.2% |
-| 08 |   537.74 |   471.33 |   257.11 |     0.88 |   21.5% |
+| 07 |   532.06 |   468.62 |   250.58 |     0.88 |   21.3% |
+| 08 |   544.77 |   477.50 |   260.47 |     0.88 |   21.8% |
 | 09 |   519.20 |   452.18 |   253.26 |     0.87 |   20.8% |
 | 10 |   485.93 |   423.01 |   237.10 |     0.87 |   19.4% |
-| 11 |   487.55 |   426.90 |   233.70 |     0.88 |   19.5% |
-| 12 |   455.33 |   400.48 |   215.17 |     0.88 |   18.2% |
-| 13 |   432.09 |   381.77 |   200.91 |     0.88 |   17.3% |
-| 14 |   381.00 |   335.82 |   178.41 |     0.88 |   15.2% |
+| 11 |   487.81 |   427.13 |   233.82 |     0.88 |   19.5% |
+| 12 |   455.82 |   400.91 |   215.40 |     0.88 |   18.2% |
+| 13 |   432.33 |   381.98 |   201.02 |     0.88 |   17.3% |
+| 14 |   381.21 |   336.00 |   178.51 |     0.88 |   15.2% |
 | 15 |   356.41 |   313.39 |   168.34 |     0.88 |   14.3% |
 | 16 |   321.37 |   279.60 |   157.05 |     0.87 |   12.9% |
-| 17 |   283.17 |   241.99 |   145.64 |     0.85 |   11.3% |
+| 17 |   283.47 |   242.25 |   145.79 |     0.85 |   11.3% |
 | 18 |   263.04 |   221.11 |   141.26 |     0.84 |   10.5% |
-| 19 |   363.95 |   314.63 |   181.34 |     0.86 |   14.6% |
-| 20 |   424.68 |   369.96 |   206.80 |     0.87 |   17.0% |
-| 21 |   465.47 |   409.09 |   220.00 |     0.88 |   18.6% |
-| 22 |   489.35 |   432.36 |   227.38 |     0.88 |   19.6% |
-| 23 |   519.80 |   457.07 |   245.97 |     0.88 |   20.8% |
+| 19 |   363.23 |   314.31 |   180.66 |     0.87 |   14.5% |
+| 20 |   425.13 |   370.35 |   207.02 |     0.87 |   17.0% |
+| 21 |   466.47 |   409.97 |   220.48 |     0.88 |   18.7% |
+| 22 |   489.61 |   432.59 |   227.50 |     0.88 |   19.6% |
+| 23 |   520.64 |   457.81 |   246.37 |     0.88 |   20.8% |
 
 ---
 

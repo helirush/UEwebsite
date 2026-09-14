@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** NCDC3 North E  
-**Generated:** 2026-04-23 14:40:02  
+**Generated:** 2026-09-10 22:47:49  
 **Data Source:** AN55050395-V-1minRES_44550CLP_260301-260331c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 72,677.87
+- **Device Zone BTU/hr:** 43,890.03
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 12,209.70
+- **Field Zone BTU/hr:** 7,374.40
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 84,887.56 BTU/hr
+- **Total Heat Generated:** 51,264.43 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 77.60 kW
+- **Baseline Cooling Load:** 46.87 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 24.76 kW
+- **Climate Adjusted Cooling:** 14.95 kW
   - *Cooling load adjusted for temperature (69.9°F) and humidity (50.3%)*
 - **Climate Burden Multiplier:** 1.001
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 24.76 kW
+- **Total Cooling Load Avoided:** 14.95 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $10,135.39
+- **Electrical-Energy Waste Cost:** $10,139.73
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $37,890.29/year
+- **Cooling Cost Avoided:** $22,882.31/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-6,854.89/year climate/impedance bonus)
+  (Includes $-4,112.16/year climate/impedance bonus)
 
 ---
 

@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="../05_MAY26/Patterns/PL1P2bt_may26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
+            <img id="patternImageInline" src="Patterns/PL1MSv_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>PL1-Proc2 - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -546,14 +546,14 @@
                 <div class="markdown-content">
                     <h1>BASELINE ELECTRICAL ENERGY USAGE AND COST</h1>
 <p><strong>Transformer Baseline :</strong>
-- <strong>Consumption Usage:</strong> 200,904.2 kWh (Usage per period)
+- <strong>Consumption Usage:</strong> 200,870.8 kWh (Usage per period)
 - <strong>Consumption Cost per unit:</strong> $0.195/kWh (Cost per kWh)
-- <strong>Consumption Total Cost:</strong> $39,176.32 (Cost per period)
-- <strong>Consumption Total Cost:</strong> $88.84 (Cost per hour)</p>
+- <strong>Consumption Total Cost:</strong> $39,169.80 (Cost per period)
+- <strong>Consumption Total Cost:</strong> $88.85 (Cost per hour)</p>
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> PL1-Proc2<br />
-<strong>Generated:</strong> 2026-04-25 17:56:54<br />
+<strong>Generated:</strong> 2026-09-10 22:48:19<br />
 <strong>Data Source:</strong> AN55050338-V-1minRES_26460CLP_260313-260331c.csv  </p>
 <h2>Time Period</h2>
 <ul>
@@ -561,7 +561,7 @@
 <li><strong>Number of Days:</strong> 19 Days</li>
 <li><strong>Data Resolution:</strong> 1-minute</li>
 <li>
-<p><strong>Total Data Points:</strong> 26,460</p>
+<p><strong>Total Data Points:</strong> 26,452</p>
 </li>
 <li>
 <p><strong>Dataset Coverage:</strong> Partial month (61.3% of 31-day month)</p>
@@ -581,10 +581,10 @@
 <ul>
 <li><strong>Transformer:</strong> PL1-Proc2</li>
 <li><strong>Power Factor:</strong> 0.849</li>
-<li><strong>Total Energy (Actual):</strong> 200,904.19 kWh (19 days), 455.57 kW (per hour)</li>
-<li><strong>Total Energy (Monthly Equivalent):</strong> 327,791.04 kWh</li>
-<li><strong>Total Waste (Actual):</strong> 31,770.79 kWh (19 days), 72.04 kW (per hour)</li>
-<li><strong>Total Waste (Monthly Equivalent):</strong> 51,836.56 kWh</li>
+<li><strong>Total Energy (Actual):</strong> 200,870.77 kWh (19 days), 455.63 kW (per hour)</li>
+<li><strong>Total Energy (Monthly Equivalent):</strong> 327,736.52 kWh</li>
+<li><strong>Total Waste (Actual):</strong> 31,751.37 kWh (19 days), 72.02 kW (per hour)</li>
+<li><strong>Total Waste (Monthly Equivalent):</strong> 51,804.86 kWh</li>
 </ul>
 <hr />
 <h2>Additional Analysis</h2>
@@ -595,41 +595,42 @@
 <p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
 <h3>Element 1: Reactive Energy Offset Savings</h3>
 <ul>
-<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 72.04 kW/hr (actual)</li>
-<li><strong>Monthly Equivalent Waste:</strong> 117.54 kW/hr</li>
+<li><strong>Total Non-Active Field Burden (kVA - kW):</strong> 72.02 kW/hr (actual)</li>
+<li><strong>Heat-Coupled Burden Used in Thermal Model:</strong> 51.21 kW/hr (modeled_non_active_field_burden)</li>
+<li><strong>Monthly Equivalent Waste:</strong> 117.51 kW/hr</li>
 <li><strong>Blended Electricity Rate:</strong> $0.1950/kWh (all-inclusive)</li>
-<li><strong>PL1-Proc2 Utility Cost Offset (Monthly Equivalent):</strong> $22.92/hour</li>
-<li><strong>Annual Offset Savings:</strong> $123063/year</li>
+<li><strong>PL1-Proc2 Utility Cost Offset (Monthly Equivalent):</strong> $22.91/hour</li>
+<li><strong>Annual Offset Savings:</strong> $123025/year</li>
 </ul>
 <h3>Element 2: Cooling Elimination Savings</h3>
 <ul>
-<li><strong>Total Heat No Longer Generated:</strong> 390,270 BTU/hr</li>
-<li><strong>Total Cooling kW No Longer Needed:</strong> 34.19 kW</li>
-<li><strong>Cooling Energy Cost Avoided:</strong> $6.67/hour</li>
-<li><strong>Annual Cooling Savings:</strong> $58398/year</li>
+<li><strong>Total Heat No Longer Generated:</strong> 277,393 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 24.30 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $4.74/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $41508/year</li>
 </ul>
 <h3>Element 3: CO2e Emissions Reduction Value</h3>
 <ul>
-<li><strong>Total kW Waste Eliminated:</strong> 106.23 kW</li>
-<li><strong>CO2e Emissions Avoided:</strong> 347.39 metric tons/year</li>
-<li><strong>Monthly CO2e Reduction:</strong> 28.95 metric tons/month</li>
-<li><strong>Hourly CO2e Reduction:</strong> 0.0397 metric tons/hour</li>
+<li><strong>Total kW Waste Eliminated:</strong> 96.32 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 314.98 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 26.25 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0360 metric tons/hour</li>
 <li><strong>CO2e Value Rate:</strong> $38/metric ton</li>
-<li><strong>Annual CO2e Value:</strong> $13374/year</li>
+<li><strong>Annual CO2e Value:</strong> $12127/year</li>
 </ul>
 <h3>Total PL1-Proc2 Unity Savings</h3>
 <ul>
-<li><strong>Per Hour:</strong> $22.24</li>
-<li><strong>Per Day:</strong> $533.80</li>
-<li><strong>Per Month:</strong> $16013.86</li>
-<li><strong>Per Year:</strong> $194835</li>
+<li><strong>Per Hour:</strong> $20.17</li>
+<li><strong>Per Day:</strong> $484.00</li>
+<li><strong>Per Month:</strong> $14519.95</li>
+<li><strong>Per Year:</strong> $176659</li>
 </ul>
 <h3>PL1-Proc2 Savings Breakdown</h3>
 <h3>Unity System (MPTS) Installation Considerations</h3>
 <ul>
-<li><strong>Max Reactive Energy:</strong> 929.4 kVAR Max (Avg: 266.1 kVAR/hr ; 191,621 kVAR/mo)</li>
+<li><strong>Max Reactive Energy:</strong> 646.1 kVAR Max (Avg: 266.1 kVAR/hr ; 191,601 kVAR/mo)</li>
 <li><strong>Max Harmonic Distortion:</strong> 30.6% Max (range: 3.0% - 30.6%)</li>
-<li><strong>Max Amperage:</strong> 1,603A Max (range: 0A - 1603A)</li>
+<li><strong>Max Amperage:</strong> 1,477A Max (range: 237A - 1477A)</li>
 </ul>
 <hr />
 <h1>PL1-Proc2 DETAILED PERFORMANCE ANALYSIS</h1>
@@ -657,27 +658,27 @@
 <tbody>
 <tr>
 <td>Line to Neutral Voltage (277v)</td>
-<td>184.60</td>
-<td>0.00</td>
+<td>184.62</td>
+<td>181.31</td>
 <td>192.37</td>
 </tr>
 <tr>
 <td>Line to Line Voltage (480v)</td>
-<td>319.73</td>
-<td>0.00</td>
+<td>319.77</td>
+<td>314.03</td>
 <td>333.20</td>
 </tr>
 <tr>
 <td>Current (AMPS)</td>
-<td>766.20</td>
-<td>0.00</td>
-<td>1603.07</td>
+<td>766.25</td>
+<td>237.12</td>
+<td>1476.78</td>
 </tr>
 <tr>
 <td>Phase Angle (degrees)</td>
 <td>31.70</td>
 <td>26.36</td>
-<td>90.00</td>
+<td>66.98</td>
 </tr>
 <tr>
 <td>Total Harmonic Distortion (PCT)</td>
@@ -751,29 +752,29 @@
 <h2>Capacity Utilization</h2>
 <ul>
 <li><strong>Maximum UtilityDemand:</strong> 895.88 kW</li>
-<li><strong>Maximum Load:</strong> 1,065.34 kVA</li>
-<li><strong>Percentage of Capacity (MAX):</strong> 42.6%</li>
-<li><strong>Average Load:</strong> 527.61 kVA</li>
+<li><strong>Maximum Load:</strong> 1,013.09 kVA</li>
+<li><strong>Percentage of Capacity (MAX):</strong> 40.5%</li>
+<li><strong>Average Load:</strong> 527.65 kVA</li>
 <li><strong>Percentage of Capacity (Avg):</strong> 21.1%</li>
 </ul>
 <h2>kVA and Power Factor Analysis (Measured vs Calculated)</h2>
 <h3>Measured Values (PRIMARY - Used for All Analysis)</h3>
 <ul>
-<li><strong>Average kVA (Ssum_kVA):</strong> 527.61 kVA</li>
+<li><strong>Average kVA (Ssum_kVA):</strong> 527.65 kVA</li>
 <li><strong>Average Power Factor (PF):</strong> 0.849</li>
 </ul>
 <p><strong>Source:</strong> Direct meter measurements (instantaneous values averaged over time)</p>
 <h3>Calculated Values (VERIFICATION ONLY)</h3>
 <ul>
-<li><strong>Calculated kVA (V×I×√3/1000):</strong> 424.32 kVA</li>
+<li><strong>Calculated kVA (V×I×√3/1000):</strong> 424.40 kVA</li>
 </ul>
 <p><strong>Calculation Inputs:</strong>
-- Average Voltage (VIavg_V): 319.73 V
-- Average Current (Iavg_A): 766.20 A
-- Average kW (Psum_kW): 455.57 kW</p>
+- Average Voltage (VIavg_V): 319.77 V
+- Average Current (Iavg_A): 766.25 A
+- Average kW (Psum_kW): 455.63 kW</p>
 <h3>Differences (Measured vs Calculated)</h3>
 <ul>
-<li><strong>kVA Difference:</strong> 103.29 kVA (19.6%)</li>
+<li><strong>kVA Difference:</strong> 103.25 kVA (19.6%)</li>
 <li><strong>Calculated PF (kW/kVA from averages):</strong> 1.074</li>
 <li><strong>Power Factor Difference:</strong> 0.224 (26.4%)</li>
 </ul>
@@ -784,7 +785,7 @@
 <p>The meter's instantaneous measurements capture these variations correctly, while
 calculations from averaged values systematically underestimate reactive effects.</p>
 <p><strong>Analysis Method:</strong> All heat calculations, thermal burden, and cost analysis use
-the measured kVA (527.61) and measured PF (0.849) values.
+the measured kVA (527.65) and measured PF (0.849) values.
 Calculated values are shown above for verification and engineering transparency.</p>
 <h2>Overall Power Metrics (FPC)</h2>
 <table>
@@ -800,41 +801,41 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>kVA</td>
-<td>527.61</td>
+<td>527.65</td>
 <td>21.1%</td>
-<td>232,674.98 kVA</td>
-<td>1,554,452.65 TOTAL-HEAT</td>
+<td>232,622.14 kVA</td>
+<td>1,554,664.13 TOTAL-HEAT</td>
 </tr>
 <tr>
 <td>kW</td>
-<td>455.57</td>
+<td>455.63</td>
 <td>18.2%</td>
-<td>200,904.19 kWh</td>
-<td>212,254.00 Load-Heat</td>
+<td>200,870.77 kWh</td>
+<td>212,201.27 Load-Heat</td>
 </tr>
 <tr>
 <td>kVAR</td>
-<td>266.14</td>
+<td>266.11</td>
 <td>10.6%</td>
-<td>117,367.61 kVARh</td>
+<td>117,320.05 kVARh</td>
 <td>-</td>
 </tr>
 <tr>
 <td>WASTE</td>
-<td>72.04</td>
+<td>72.02</td>
 <td>2.9%</td>
-<td>31,770.79 WASTE</td>
-<td>33,565.64 Field-Heat</td>
+<td>31,751.37 WASTE</td>
+<td>33,542.36 Field-Heat</td>
 </tr>
 </tbody>
 </table>
 <h3>Heat Unit Notes</h3>
 <ul>
-<li><strong>TOTAL-HEAT (BTU/hr):</strong> 1,554,452.65</li>
-<li><strong>Load-Heat (BTU/hr):</strong> 212,254.00</li>
-<li><strong>Field-Heat (BTU/hr):</strong> 33,565.64</li>
-<li><strong>Load-Heat (BTU, period total):</strong> 93,604,014.36</li>
-<li><strong>Field-Heat (BTU, period total):</strong> 14,802,448.58</li>
+<li><strong>TOTAL-HEAT (BTU/hr):</strong> 1,554,664.13</li>
+<li><strong>Load-Heat (BTU/hr):</strong> 212,201.27</li>
+<li><strong>Field-Heat (BTU/hr):</strong> 33,542.36</li>
+<li><strong>Load-Heat (BTU, period total):</strong> 93,552,466.58</li>
+<li><strong>Field-Heat (BTU, period total):</strong> 14,787,710.56</li>
 </ul>
 <h2>Measured Monthly Averages</h2>
 <table>
@@ -851,9 +852,9 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>3</td>
-<td>527.61</td>
-<td>455.57</td>
-<td>265.08</td>
+<td>527.65</td>
+<td>455.63</td>
+<td>265.07</td>
 <td>0.86</td>
 <td>21.1%</td>
 </tr>
@@ -882,17 +883,17 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>01</td>
-<td>566.50</td>
-<td>489.87</td>
-<td>283.56</td>
+<td>566.55</td>
+<td>489.90</td>
+<td>283.62</td>
 <td>0.86</td>
 <td>22.7%</td>
 </tr>
 <tr>
 <td>02</td>
-<td>562.85</td>
-<td>486.72</td>
-<td>281.73</td>
+<td>563.37</td>
+<td>487.17</td>
+<td>281.99</td>
 <td>0.86</td>
 <td>22.5%</td>
 </tr>
@@ -930,9 +931,9 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>07</td>
-<td>560.43</td>
-<td>483.94</td>
-<td>281.32</td>
+<td>560.15</td>
+<td>484.02</td>
+<td>280.87</td>
 <td>0.86</td>
 <td>22.4%</td>
 </tr>
@@ -994,9 +995,9 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>15</td>
-<td>465.43</td>
-<td>399.92</td>
-<td>237.18</td>
+<td>466.25</td>
+<td>400.62</td>
+<td>237.60</td>
 <td>0.86</td>
 <td>18.6%</td>
 </tr>
@@ -1026,9 +1027,9 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>19</td>
-<td>383.48</td>
-<td>327.09</td>
-<td>198.98</td>
+<td>382.88</td>
+<td>326.92</td>
+<td>198.34</td>
 <td>0.85</td>
 <td>15.3%</td>
 </tr>
@@ -1058,11 +1059,11 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>23</td>
-<td>595.93</td>
-<td>517.65</td>
-<td>294.32</td>
+<td>596.30</td>
+<td>517.98</td>
+<td>294.49</td>
 <td>0.87</td>
-<td>23.8%</td>
+<td>23.9%</td>
 </tr>
 </tbody>
 </table>
@@ -1083,7 +1084,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="../05_MAY26/Patterns/PL1P2bt_may26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
+            <img id="patternImageFullscreen" src="Patterns/PL1MSv_apr26.png" alt="Pattern Analysis">
             <p>PL1-Proc2 - ENERGY Pattern</p>
         </div>
     </div>    
@@ -1108,12 +1109,42 @@ Calculated values are shown above for verification and engineering transparency.
     
     
     <script>
-        function handlePatternMissing() {
+        function tryPatternImageReload() {
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            if (!inlineImg) return false;
+
+            const currentSrcAttr = (inlineImg.getAttribute('src') || '').trim();
+            if (!currentSrcAttr || currentSrcAttr === '#') return false;
+
+            const retryCount = Number(inlineImg.dataset.patternRetryCount || '0');
+            if (retryCount >= 1) return false;
+
+            const separator = currentSrcAttr.includes('?') ? '&' : '?';
+            const refreshedSrc = `${currentSrcAttr}${separator}v=${Date.now()}`;
+            inlineImg.dataset.patternRetryCount = String(retryCount + 1);
+            inlineImg.setAttribute('src', refreshedSrc);
+            if (fullscreenImg) {
+                fullscreenImg.setAttribute('src', refreshedSrc);
+            }
+            return true;
+        }
+
+        function handlePatternMissing(event) {
             const container = document.querySelector('.pattern-image-container');
             const inlineImg = document.getElementById('patternImageInline');
             const fullscreenImg = document.getElementById('patternImageFullscreen');
             const fullsizeBtn = container ? container.querySelector('.fullsize-btn') : null;
             const caption = container ? container.querySelector('p') : null;
+            const trigger = event && event.target;
+
+            if (trigger && trigger.id && trigger.id !== 'patternImageInline') {
+                return;
+            }
+
+            if (inlineImg && tryPatternImageReload()) {
+                return;
+            }
 
             if (inlineImg) {
                 inlineImg.style.display = 'none';

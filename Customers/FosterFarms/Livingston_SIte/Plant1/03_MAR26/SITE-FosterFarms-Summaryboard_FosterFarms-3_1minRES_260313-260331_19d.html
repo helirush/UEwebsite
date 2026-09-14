@@ -232,8 +232,8 @@
     /* Power Factor Gauge Container */
     .gauge-container {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 162px;
+      height: 162px;
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
@@ -329,15 +329,44 @@
 
     .gauge-label {
       position: absolute;
-      top: 70px;
+      top: 53px;
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 10pt;
       color: rgba(255, 255, 255, 1);
       text-transform: lowercase;
       letter-spacing: 1px;
+      white-space: nowrap;
       opacity: 0.9;
       pointer-events: none;
+    }
+    /* Side metric readability tuning (Rendering May) */
+    .siteboard-container .gauge-side-metric {
+      top: calc(50% + 40px) !important;
+      transform: translateY(-50%) !important;
+      min-width: 138px !important;
+      gap: 6px !important;
+    }
+    .siteboard-container .gauge-side-left {
+      left: -120px !important;
+    }
+    .siteboard-container .gauge-side-right {
+      right: -120px !important;
+    }
+    .siteboard-container .gauge-side-label {
+      line-height: 1.02 !important;
+      white-space: normal !important;
+      text-align: center !important;
+    }
+    .siteboard-container .gauge-side-label span {
+      display: block;
+      white-space: nowrap;
+    }
+    .siteboard-container .gauge-side-value {
+      width: 100%;
+      text-align: center;
+      border-top: 1.5px solid rgba(255, 255, 255, 0.78);
+      padding-top: 6px;
     }
 
     .gauge-unit {
@@ -604,6 +633,99 @@
       background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
       border-radius: 0 0 10px 10px;
     }
+    .pattern-image-frame {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(120, 144, 96, 0.44);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 239, 223, 0.94) 100%);
+      box-shadow: 0 14px 28px rgba(45, 59, 29, 0.18);
+      padding: 10px;
+    }
+    .pattern-image-top-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .pattern-image-viewport {
+      width: 100%;
+      min-height: 62vh;
+      max-height: 74vh;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(16, 22, 13, 0.94);
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    .pattern-image-viewport.is-dragging {
+      cursor: grabbing;
+    }
+    .pattern-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .pattern-view-tools {
+      border-top: 1px solid rgba(73, 101, 47, 0.24);
+      padding: 10px 4px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-zoom-help {
+      color: rgba(56, 74, 41, 0.96);
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .pattern-view-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pattern-reset-view {
+      border: 1px solid rgba(74, 104, 54, 0.44);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 230, 212, 0.94) 100%);
+      color: rgba(47, 74, 31, 0.98);
+      font-size: 9.5pt;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .pattern-reset-view:hover {
+      border-color: rgba(102, 136, 74, 0.76);
+      background: linear-gradient(180deg, rgba(247, 250, 239, 0.98) 0%, rgba(228, 236, 207, 0.94) 100%);
+      transform: translateY(-1px);
+    }
+    .pattern-zoom-indicator {
+      border-radius: 10px;
+      border: 1px solid rgba(74, 104, 54, 0.32);
+      background: rgba(247, 243, 228, 0.86);
+      color: rgba(48, 67, 35, 0.98);
+      padding: 7px 11px;
+      font-size: 9.2pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
 
     .pattern-modal-body ul {
       list-style: none;
@@ -696,10 +818,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
+      position: relative;
+      z-index: 5;
     }
 
     .pattern-fullsize-btn:hover {
@@ -1394,12 +1514,54 @@
 <body data-summary-mode="energy">
 <div class="siteboard-container">
   <!-- Back Navigation - Top -->
-<div style="text-align: right; padding: 10px 0; margin-bottom: 10px;">
-  <a href="../../index.html#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">← BACK TO FosterFarms</a>
-  <a href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none; margin-left: 10px;">Unity Energy Home</a>
+<div style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 18px; padding: 10px 0; margin-bottom: 10px;">
+  <a id="groupBackLink" href="../../../index.html?group=deli#libraries" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Groups</a>
+  <a id="livingstonSiteLink" href="../../../index.html#page-top" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Livingston</a>
+  <a id="siteBackLink" href="../../../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; to Foster Farms</a>
+  <a id="unityHomeLink" href="../../index.html" class="header-info-btn" style="display: inline-block; text-decoration: none;">&gt; Unity Home</a>
 </div>
+<script>
+  (function normalizeSummaryboardHomeLinks() {
+    const parts = (window.location.pathname || '').split('/').filter(Boolean);
+    const customersIdx = parts.lastIndexOf('Customers');
+    const eWebmasterIdx = parts.lastIndexOf('eWebmaster');
+
+    let siteBase = '../';
+    if (customersIdx >= 0) {
+      const partsAfterCustomers = parts.length - customersIdx - 1; // includes filename
+      const upLevels = Math.max(1, partsAfterCustomers - 3);
+      siteBase = '../'.repeat(upLevels);
+    }
+
+    const monthTokenRe = /^\d{2}_[A-Z]{3}\d{2}$/;
+    let groupSegment = 'all';
+    if (parts.length >= 3) {
+      const maybeMonth = parts[parts.length - 2];
+      if (monthTokenRe.test(maybeMonth)) {
+        groupSegment = (parts[parts.length - 3] || '').toLowerCase();
+      }
+    }
+
+    const groupLink = document.getElementById('groupBackLink');
+    if (groupLink) groupLink.href = `${siteBase}index.html?group=${encodeURIComponent(groupSegment)}#libraries`;
+
+    const livingstonLink = document.getElementById('livingstonSiteLink');
+    if (livingstonLink) livingstonLink.href = `${siteBase}index.html#page-top`;
+
+    const backLink = document.getElementById('siteBackLink');
+    if (backLink) backLink.href = `${siteBase}../index.html`;
+
+    let unityHref = `${siteBase}index.html`;
+    if (eWebmasterIdx >= 0) {
+      const dirsAfterEWebmaster = Math.max(0, parts.length - eWebmasterIdx - 2);
+      unityHref = `${'../'.repeat(dirsAfterEWebmaster)}UnityEnergy/index.html`;
+    }
+    const unityLink = document.getElementById('unityHomeLink');
+    if (unityLink) unityLink.href = unityHref;
+  })();
+</script>
 <div class="siteboard-title">
-<span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, PL GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
+<span class="siteboard-title-main" id="site-facility-name">LIVINGSTON HQ, PL1 GROUP - </span><span class="siteboard-title-voltage">480V ELECTRICAL ENERGY SUMMARY</span>
 </div>
 <hr style="border: 3px solid rgb(161, 188, 26); width: 95%; margin-bottom: 25px; margin-top: 0px;"/>
 <div class="siteboard-sub">
@@ -1427,8 +1589,8 @@
 
 <!-- Header Info Buttons -->
 <div class="header-buttons">
-  <button class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's site-wide energy overview">
-    🔊 LISTEN: SITE OVERVIEW
+  <button id="siteOverviewBtn" class="header-info-btn unity-audio-btn" onclick="playSiteOverview()" title="Listen to Unity's group-level site overview across all transformers">
+    🔊 LISTEN: GROUP SITE OVERVIEW
   </button>
   <button class="header-info-btn" onclick="showSiteSummaryModal()" title="View baseline site-level aggregated metrics">
     📊 SITE SUMMARY - BASELINE
@@ -1457,12 +1619,12 @@
 <g class="tick-marks" id="xfmr1-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr1-metric-pf">84.7%</div>
+<div class="gauge-value" id="xfmr1-metric-pf">85.0%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr1-target-pattern">2116kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr1-target-pattern">240kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr1-production-direction">↓</span> <span id="xfmr1-uptime-pct">25.7%</span></div>
@@ -1492,10 +1654,10 @@
   </button>
 </div>
 <div class="stats">
-<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">151.1 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$33.22</span></div>
+<div><span class="label">Active Usage:</span><span class="value active" id="xfmr1-avg-kw">151.2 kW</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr1-xfmr-cost-hour">$33.24</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr1-metric-energy-waste">27.4 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$6.02</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr1-xfmr-waste-cost-hour">$6.03</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1543,12 +1705,12 @@
 <g class="tick-marks" id="xfmr2-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr2-metric-pf">86.9%</div>
+<div class="gauge-value" id="xfmr2-metric-pf">87.4%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr2-target-pattern">2173kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr2-target-pattern">645kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr2-production-direction">↓</span> <span id="xfmr2-uptime-pct">57.1%</span></div>
@@ -1580,8 +1742,8 @@
 <div class="stats">
 <div><span class="label">Active Usage:</span><span class="value active" id="xfmr2-avg-kw">240.7 kW</span></div>
 <div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr2-xfmr-cost-hour">$52.90</span></div>
-<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">36.2 kW</span></div>
-<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$7.95</span></div>
+<div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr2-metric-energy-waste">36.1 kW</span></div>
+<div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr2-xfmr-waste-cost-hour">$7.94</span></div>
 </div>
 <!-- Navigation Buttons - Comparison button on top, then 2 rows: Row 1 has 2, Row 2 has 3 -->
 <div class="nav-buttons">
@@ -1629,12 +1791,12 @@
 <g class="tick-marks" id="xfmr3-ticks"></g>
 </svg>
 <div class="gauge-label">Power Factor</div>
-<div class="gauge-value" id="xfmr3-metric-pf">86.3%</div>
+<div class="gauge-value" id="xfmr3-metric-pf">84.9%</div>
 <div class="gauge-unit">efficiency</div>
 </div>
 <div class="uptime">
   <div class="uptime-label">TRANSFORMER ENERGY FIELD</div>
-  <div class="uptime-target" id="xfmr3-target-pattern">2158kVA STD DAILY PATTERN</div>
+  <div class="uptime-target" id="xfmr3-target-pattern">923kVA STD DAILY PATTERN</div>
   <div class="elecops-section">
     <div class="uptime-value">Electric Operations:</div>
     <div class="uptime-value"><span id="xfmr3-production-direction">↓</span> <span id="xfmr3-uptime-pct">42.9%</span></div>
@@ -1665,7 +1827,7 @@
 </div>
 <div class="stats">
 <div><span class="label">Active Usage:</span><span class="value active" id="xfmr3-avg-kw">455.6 kW</span></div>
-<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$100.13</span></div>
+<div><span class="label">Active Cost/hr:</span><span class="value active" id="xfmr3-xfmr-cost-hour">$100.15</span></div>
 <div><span class="label">Reactive Waste:</span><span class="value waste" id="xfmr3-metric-energy-waste">72.0 kW</span></div>
 <div><span class="label">Waste Cost/hr:</span><span class="value waste" id="xfmr3-xfmr-waste-cost-hour">$15.83</span></div>
 </div>
@@ -1798,7 +1960,7 @@
   if (window.__unitySideMetricsLoaderInjected) return;
   window.__unitySideMetricsLoaderInjected = true;
   const scriptName = 'summaryboard-side-metrics.js';
-    const scriptVersion = window.__unitySideMetricsVersion || '20260624d';
+  const scriptVersion = window.__unitySideMetricsVersion || '20260712a';
   const candidateSrcs = [];
   for (let depth = 0; depth <= 8; depth += 1) {
     const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
@@ -2012,8 +2174,8 @@
       
     });
     
-    // Note: Production uptime percentage is now injected by inject_bird_metrics.py
-    // The old energy waste calculation that was overwriting uptime has been removed
+    // Note: Electric Operations (% vs opening-week production baseline) is injected by inject_bird_metrics.py
+    // Legacy energy-waste overwrite behavior has been removed
     
       // Initialize gauges for up to 4 transformers
       for (let i = 1; i <= 4; i++) {
@@ -2031,8 +2193,8 @@
         continue;
       }
 
-      // Dynamically bind PF bubble value (prevents stale hardcoded text).
-      if (pfEl) {
+      // Legacy PF fallback only when shared side-metrics enhancer is unavailable.
+      if (pfEl && !window.__unitySideMetricsEnhancerLoaded) {
         const resolvedPfPct = resolvePfPercentForTransformer(i, transformerName);
         if (resolvedPfPct !== null) {
           pfEl.textContent = `${resolvedPfPct.toFixed(1)}%`;
@@ -2044,7 +2206,7 @@
       if (kvaWrap) kvaWrap.style.display = hasKva ? 'inline' : 'none';
     }
     
-    // Add click handler to power factor gauge circles to open MPTS variables (M) image
+    // Add click handler to power factor gauge circles to open Base Target (BT) image
     for (let i = 1; i <= 4; i++) {
       const gaugeContainer = document.querySelector(`#xfmr${i}-card .gauge-container`);
       const nameEl = document.getElementById(`xfmr${i}-name`);
@@ -2053,7 +2215,7 @@
       if (gaugeContainer && nameEl && nameEl.textContent.trim().length > 0) {
         gaugeContainer.style.cursor = 'pointer'; // Show it's clickable
         gaugeContainer.addEventListener('click', function() {
-          // Open MPTS variables (M) pattern image
+          // Open Base Target (BT) pattern image
           viewPattern(`xfmr${i}`, 'mpts-vars');
         });
       }
@@ -2147,6 +2309,16 @@
         ticksContainer.appendChild(tick);
       }
     }
+  }
+
+  function getAutoSelectionContext(selectionType) {
+    if (selectionType === 'baseline' || selectionType === 'mpts') {
+      return `${currentHowToPath || ''}|${currentTransformerId || ''}`;
+    }
+    if (selectionType === 'narrative') {
+      return currentTransformerId || '';
+    }
+    return '';
   }
   
   // Call tick drawing after DOM loads
@@ -2330,57 +2502,6 @@
     });
     return out;
   }
-  function buildPart2InstallationCandidatesLegacyUnused(fileIds, monthSuffixShort, monthSuffixLong, slot = 1) {
-    const out = [];
-    const seen = new Set();
-    const exts = ['png', 'jpg', 'jpeg'];
-    const ids = [...new Set((fileIds || []).map((id) => (id || '').toString().toLowerCase()).filter(Boolean))].slice(0, 2);
-    const monthTokens = [...new Set([monthSuffixShort, monthSuffixLong].filter(Boolean))];
-    monthTokens.push('');
-    const slotStems = slot === 1
-      ? ['p2a', 'install1', 'installation1', 'solution1']
-      : ['p2b', 'install2', 'installation2', 'meter2', 'metering2'];
-    const globalStems = slot === 1
-      ? ['part2a', 'installation_1']
-      : ['part2b', 'installation_2', 'metering_2'];
-
-    const pushCandidate = (filename) => {
-      if (!seen.has(filename)) {
-        seen.add(filename);
-        out.push(`Patterns/${filename}`);
-      }
-    };
-
-    const pushStemVariants = (base, stem) => {
-      monthTokens.forEach((token) => {
-        exts.forEach((ext) => {
-          if (token) {
-            pushCandidate(`${base}${stem}_${token}.${ext}`);
-            pushCandidate(`${base}_${stem}_${token}.${ext}`);
-          } else {
-            pushCandidate(`${base}${stem}.${ext}`);
-            pushCandidate(`${base}_${stem}.${ext}`);
-          }
-        });
-      });
-    };
-
-    // Prefer shared/global Part 2 images so every transformer uses the same installation pair by default.
-
-    globalStems.forEach((stem) => {
-      exts.forEach((ext) => {
-        monthTokens.forEach((token) => {
-          if (token) pushCandidate(`${stem}_${token}.${ext}`);
-          else pushCandidate(`${stem}.${ext}`);
-        });
-      });
-    });
-    ids.forEach((id) => {
-      slotStems.forEach((stem) => pushStemVariants(id, stem));
-    });
-
-    return out;
-  }
 
   function attachPatternFallback(imgEl, candidates, patternLabel, options = {}) {
     if (!imgEl || !candidates || !candidates.length) {
@@ -2408,6 +2529,169 @@
     applySrc();
   }
 
+  const PATTERN_VIEW_MIN_SCALE = 1;
+  const PATTERN_VIEW_MAX_SCALE = 5;
+  let patternViewState = null;
+
+  function clearPatternImageView() {
+    patternViewState = null;
+  }
+  function updatePatternBaseScale() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || 0;
+    const naturalHeight = state.image.naturalHeight || 0;
+    if (!viewportWidth || !viewportHeight || !naturalWidth || !naturalHeight) {
+      state.baseScale = 1;
+      return;
+    }
+    state.baseScale = Math.min(viewportWidth / naturalWidth, viewportHeight / naturalHeight);
+    if (!isFinite(state.baseScale) || state.baseScale <= 0) {
+      state.baseScale = 1;
+    }
+  }
+
+  function getPatternRenderScale() {
+    if (!patternViewState) return 1;
+    return patternViewState.baseScale * patternViewState.scale;
+  }
+
+  function clampPatternImagePosition() {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    const state = patternViewState;
+    const viewportWidth = state.viewport.clientWidth;
+    const viewportHeight = state.viewport.clientHeight;
+    const naturalWidth = state.image.naturalWidth || viewportWidth;
+    const naturalHeight = state.image.naturalHeight || viewportHeight;
+    const renderScale = getPatternRenderScale();
+    const scaledWidth = naturalWidth * renderScale;
+    const scaledHeight = naturalHeight * renderScale;
+    if (scaledWidth <= viewportWidth) {
+      state.translateX = (viewportWidth - scaledWidth) / 2;
+    } else {
+      const minX = viewportWidth - scaledWidth;
+      state.translateX = Math.max(minX, Math.min(0, state.translateX));
+    }
+    if (scaledHeight <= viewportHeight) {
+      state.translateY = (viewportHeight - scaledHeight) / 2;
+    } else {
+      const minY = viewportHeight - scaledHeight;
+      state.translateY = Math.max(minY, Math.min(0, state.translateY));
+    }
+  }
+
+  function applyPatternImageTransform() {
+    if (!patternViewState || !patternViewState.image) return;
+    const state = patternViewState;
+    state.image.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${getPatternRenderScale()})`;
+    if (state.zoomIndicator) {
+      state.zoomIndicator.textContent = `Zoom ${Math.round(state.scale * 100)}%`;
+    }
+  }
+
+  function resetPatternImageView() {
+    if (!patternViewState) return;
+    const state = patternViewState;
+    state.scale = PATTERN_VIEW_MIN_SCALE;
+    updatePatternBaseScale();
+    state.translateX = 0;
+    state.translateY = 0;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function handlePatternImageWheel(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.image) return;
+    event.preventDefault();
+    const state = patternViewState;
+    const rect = state.viewport.getBoundingClientRect();
+    const pointerX = event.clientX - rect.left;
+    const pointerY = event.clientY - rect.top;
+    const zoomFactor = event.deltaY < 0 ? 1.12 : (1 / 1.12);
+    const nextScale = Math.max(PATTERN_VIEW_MIN_SCALE, Math.min(PATTERN_VIEW_MAX_SCALE, state.scale * zoomFactor));
+    if (nextScale === state.scale) return;
+    const currentRenderScale = getPatternRenderScale();
+    if (!currentRenderScale) return;
+    const nextRenderScale = state.baseScale * nextScale;
+    const scaleRatio = nextRenderScale / currentRenderScale;
+    state.translateX = pointerX - ((pointerX - state.translateX) * scaleRatio);
+    state.translateY = pointerY - ((pointerY - state.translateY) * scaleRatio);
+    state.scale = nextScale;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function startPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport) return;
+    const state = patternViewState;
+    if (state.scale <= PATTERN_VIEW_MIN_SCALE) return;
+    state.isDragging = true;
+    state.dragOffsetX = event.clientX - state.translateX;
+    state.dragOffsetY = event.clientY - state.translateY;
+    state.viewport.classList.add('is-dragging');
+    if (typeof state.viewport.setPointerCapture === 'function') {
+      state.viewport.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function movePatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.translateX = event.clientX - state.dragOffsetX;
+    state.translateY = event.clientY - state.dragOffsetY;
+    clampPatternImagePosition();
+    applyPatternImageTransform();
+  }
+
+  function stopPatternImageDrag(event) {
+    if (!patternViewState || !patternViewState.viewport || !patternViewState.isDragging) return;
+    const state = patternViewState;
+    state.isDragging = false;
+    state.viewport.classList.remove('is-dragging');
+    if (event && typeof state.viewport.releasePointerCapture === 'function') {
+      try {
+        state.viewport.releasePointerCapture(event.pointerId);
+      } catch (_) {}
+    }
+  }
+
+  function initializePatternImageView() {
+    const viewport = document.getElementById('patternImageViewport');
+    const image = document.getElementById('patternImage');
+    const zoomIndicator = document.getElementById('patternZoomIndicator');
+    if (!viewport || !image) return;
+    patternViewState = {
+      viewport,
+      image,
+      zoomIndicator,
+      baseScale: 1,
+      scale: PATTERN_VIEW_MIN_SCALE,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      dragOffsetX: 0,
+      dragOffsetY: 0
+    };
+    viewport.addEventListener('wheel', handlePatternImageWheel, { passive: false });
+    viewport.addEventListener('pointerdown', startPatternImageDrag);
+    viewport.addEventListener('pointermove', movePatternImageDrag);
+    viewport.addEventListener('pointerup', stopPatternImageDrag);
+    viewport.addEventListener('pointercancel', stopPatternImageDrag);
+    viewport.addEventListener('pointerleave', stopPatternImageDrag);
+    viewport.addEventListener('dblclick', resetPatternImageView);
+    image.addEventListener('load', () => {
+      resetPatternImageView();
+    });
+    resetPatternImageView();
+  }
+
+  window.addEventListener('resize', function () {
+    if (!patternViewState) return;
+    resetPatternImageView();
+  });
+
   function viewPattern(transformerId, type) {
     try {
       // transformerId is like 'xfmr1', 'xfmr2', etc.
@@ -2419,21 +2703,22 @@
 
       // Use routing helper to resolve filename-safe transformer IDs
       const routing = getTransformerRoutingInfo(transformerName);
+      currentTransformerId = routing.fileIds[0] || transformerId;
 
       // Get month suffix dynamically from the displayed month-year
       const monthSuffixShort = getMonthSuffix(); // e.g., jan26
       const monthSuffixLong = monthSuffixShort.length === 5 ? (monthSuffixShort.slice(0, 3) + '20' + monthSuffixShort.slice(-2)) : monthSuffixShort; // e.g., jan2026
 
       // Prefix mapping:
-      // baseline -> bt first, then b fallback
-      // mpts -> s first, then m fallback
-      // mpts-vars -> bt
-      // voltage -> v
-      let prefixCandidates = ['bt', 'b'];
+      // baseline -> tuned baseline chain (tbt/tb), then legacy fallbacks
+      // mpts -> tuned simulator/harmonized (sb/tm), then legacy fallbacks
+      // mpts-vars -> Base Target (BT family only; no baseline fallback)
+      // voltage -> tuned voltage (tv), then legacy fallback
+      let prefixCandidates = ['tbt', 'tb', 'bt', 'b'];
       let patternLabel = 'Baseline';
-      if (type === 'mpts') { prefixCandidates = ['s', 'm']; patternLabel = 'Harmonized'; }
-      else if (type === 'mpts-vars') { prefixCandidates = ['bt']; patternLabel = 'Base Target'; }
-      else if (type === 'voltage') { prefixCandidates = ['v']; patternLabel = 'Voltage'; }
+      if (type === 'mpts') { prefixCandidates = ['sb', 'tm', 's', 'm']; patternLabel = 'Tuned Energy'; }
+      else if (type === 'mpts-vars') { prefixCandidates = ['bt', 'tbt', 'tb']; patternLabel = 'Base Target'; }
+      else if (type === 'voltage') { prefixCandidates = ['tv', 'v']; patternLabel = 'Voltage'; }
 
       // Build candidate filenames to support T##, Rend#, and rendering-# naming variants
       let candidates = buildPatternCandidates(
@@ -2457,34 +2742,50 @@
       if (unityExplainsBtn) unityExplainsBtn.style.display = 'none';
       if (unityHowToBtn) {
         if (type === 'baseline') {
-          unityHowToBtn.textContent = '🎧 How to Read Waste';
-          currentHowToPath = `Patterns/${routing.keys[0]}_waste_howto.mp3`;
+          unityHowToBtn.textContent = '🎧 How to Read the Baseline';
+          currentHowToPath = resolveSharedHowToAudioPath('baseline');
+          currentHowToText = FIXED_BASELINE_RESULTS_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else if (type === 'mpts') {
-          unityHowToBtn.textContent = '🎧 How to Read Savings';
-          currentHowToPath = `Patterns/${routing.keys[0]}_savings_howto.mp3`;
+          unityHowToBtn.textContent = '🎧 Understanding the Tuned Energy Field';
+          currentHowToPath = resolveSharedHowToAudioPath('tuned');
+          currentHowToText = FIXED_TUNED_FIELD_TEXT;
           unityHowToBtn.style.display = 'inline-block';
         } else {
           currentHowToPath = '';
+          currentHowToText = '';
           unityHowToBtn.style.display = 'none';
         }
       }
       modalTitle.textContent = `${transformerName} - ${patternLabel}`;
 
       // Render with short-suffix first (jan26), then fall back to long-suffix (jan2026) if needed
+      clearPatternImageView();
       modalBody.innerHTML = `
-        <div style="background:#000; padding:20px; border-radius:8px; position:relative; min-height:60vh; overflow:auto;" id="imageContainer">
-          <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
-          <div style="display:flex; align-items:center; justify-content:center; min-height:60vh;">
-            <img id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
-                 style="max-width:100%; max-height:70vh; object-fit:contain; border-radius:4px; cursor:pointer;"
+        <div class="pattern-image-frame" id="imageContainer">
+          <div class="pattern-image-top-actions">
+            <button class="pattern-fullsize-btn" onclick="showPatternFullscreen(document.getElementById('patternImage')?.src || '', '${transformerName} ${patternLabel}')">Full Size</button>
+          </div>
+          <div class="pattern-image-viewport" id="patternImageViewport" aria-label="Zoomable ${transformerName} ${patternLabel} pattern image">
+            <img class="pattern-image" id="patternImage" src="" alt="${transformerName} ${patternLabel} Pattern"
                  onclick="showPatternFullscreen(this.src, '${transformerName} ${patternLabel}')"
-                 >
+                 draggable="false">
+          </div>
+          <div class="pattern-view-tools">
+            <p class="pattern-zoom-help">Use mouse wheel to zoom, then click-drag to pan across the image.</p>
+            <div class="pattern-view-actions">
+              <button class="pattern-reset-view" type="button" onclick="resetPatternImageView()">Reset View</button>
+              <span class="pattern-zoom-indicator" id="patternZoomIndicator">Zoom 100%</span>
+            </div>
           </div>
         </div>`;
 
+      initializePatternImageView();
       attachPatternFallback(document.getElementById('patternImage'), candidates, `${transformerName} ${patternLabel}`);
       modal.style.display = 'block';
+      if (type === 'baseline' || type === 'mpts') {
+        autoStartVoiceForSelection(type);
+      }
     } catch (error) {
       console.error('Error in viewPattern:', error);
       alert('Error opening pattern: ' + error.message);
@@ -2524,6 +2825,7 @@
       overlay.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
+    if (isPlaybackActive()) stopCurrentPlayback();
   }
   
   // Close fullscreen on ESC key
@@ -2531,6 +2833,12 @@
     if (event.key === 'Escape') {
       closePatternFullscreen();
     }
+  });
+  window.addEventListener('pagehide', function() {
+    if (isPlaybackActive()) stopCurrentPlayback();
+  });
+  window.addEventListener('beforeunload', function() {
+    if (isPlaybackActive()) stopCurrentPlayback();
   });
 
   function viewDetail(transformerId, detailType) {
@@ -2609,32 +2917,130 @@
   let currentTransformerId = '';
   let isSpeaking = false;
   let currentHowToPath = '';
+  let currentHowToText = '';
   let currentExplainsPartIndex = 0;
   let siteOverviewPlaybackToken = 0;
+  let lastAutoSelectionType = '';
+  let lastAutoSelectionContext = '';
+  const FIXED_BASELINE_RESULTS_TEXT = `Welcome. Before we begin, I'd like to reassure you that this dashboard is much simpler than it may first appear.
+
+Every electrical energy field tells the same basic story.
+
+Electrical energy enters your facility through the transformer and flows to the equipment performing the work. A portion of that energy is converted into useful work. The remaining energy stays within the electrical energy field, where it contributes to heat, electrical congestion, and other operating consequences.
+
+This dashboard allows you to see both parts of that story.
+
+The information on the left shows how your electrical energy field is behaving. The information on the right translates that behavior into thermal burden, cooling demand, emissions, and ultimately the financial consequences affecting your operation.
+
+The chart below is a window into your electrical energy field over time. Its height represents the relative size of the field, while its width represents the passage of time. Thousands of individual measurements are combined to create this continuous picture of your electrical energy field.
+
+Begin with the legend in the upper-left corner. It is your guide for reading the energy flow from left to right.
+
+Notice that these colors always have the same meaning throughout Unity. Once you learn this legend, you'll know how to read every electrical energy field we present.
+
+Dark Blue represents the electrical energy supplied by the utility.
+
+Light Blue represents the portion of that energy being converted into useful work.
+
+Because no electrical component is one hundred percent efficient, the remaining energy from every conversion combines to create the Green area.
+
+Green represents the recoverable energy within the electrical energy field. This is the energy that contributes to additional heat, electrical congestion, and the operating consequences measured throughout your facility.
+
+Rather than focusing on individual numbers, begin by looking for patterns in the colors. Those patterns reveal how your electrical energy field responds to the changing demands placed on your facility throughout the day.
+
+This baseline represents the natural behavior of your electrical energy field before tuning. It becomes the reference point for every future comparison and every improvement that follows.
+
+I hope this introduction has helped you better understand how to read your baseline energy field.
+
+Thank you for learning with Unity.`;
+  const FIXED_TUNED_FIELD_TEXT = `Welcome back.
+
+Before we begin, I’d like to reassure you that this view builds directly on the baseline you’ve already learned. The same colors, layout, and legend apply here, making it easy to see what has changed after tuning.
+
+The baseline showed the natural behavior of your electrical energy field before tuning. This view shows how that same field behaves after the Unity MPTS has been introduced.
+
+Notice that the Dark Blue utility supply remains essentially the same. Your facility still requires the same amount of useful work, so the Light Blue portion changes very little.
+
+The greatest change occurs in the Green portion of the field.
+
+As the Unity MPTS organizes the electrical energy field, less energy remains trapped within the system. That means less heat, less electrical congestion, and fewer operating consequences throughout your facility.
+
+Those improvements are reflected throughout the dashboard. The values on the right translate those electrical improvements into reduced thermal burden, lower cooling demand, reduced emissions, increased electrical capacity, and improved operating efficiency.
+
+Because you’ve already learned the legend, your attention can now shift from understanding the graph to observing the changes. Compare the size of the Green area with the baseline and notice how the overall field becomes more organized and efficient.
+
+This tuned field represents the operating condition your facility can achieve with Unity MPTS.
+
+Every future comparison begins with the baseline and demonstrates the measurable improvements shown here.
+
+Thank you for learning with Unity.`;
+  const SHARED_HOWTO_FILENAMES = {
+    baseline: 'how-to-read-waste-chart.mp3',
+    tuned: 'how-to-read-savings-chart.mp3'
+  };
+  function resolveSharedHowToAudioPath(mode) {
+    const normalizedMode = String(mode || '').toLowerCase();
+    const filename = normalizedMode === 'tuned' || normalizedMode === 'savings'
+      ? SHARED_HOWTO_FILENAMES.tuned
+      : SHARED_HOWTO_FILENAMES.baseline;
+    try {
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const sourceScript = scripts.reverse().find((script) => {
+        const src = String(script.getAttribute('src') || '');
+        return src.includes('unity-howto-toggle.js');
+      });
+      const src = String(sourceScript && sourceScript.getAttribute('src') ? sourceScript.getAttribute('src') : '');
+      if (src) {
+        const scriptUrl = new URL(src, window.location.href);
+        return new URL(`../audio/unity/${filename}`, scriptUrl).toString();
+      }
+    } catch (error) {
+      console.warn('Unable to resolve shared how-to audio path from script source:', error);
+    }
+    return normalizedMode === 'tuned'
+      ? 'Audio/unity_tuned_energy_field.mp3'
+      : 'Audio/unity_baseline_results.mp3';
+  }
   const explainsParts = ['_explains_p1.mp3', '_explains_p2.mp3', '_explains_p3.mp3'];
-  // Play site overview Unity audio only; second click stops playback
-  async function playSiteOverview() {
+
+  function isPlaybackActive() {
     const speechActive = !!(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
     const audioActive = !!(currentAudioElement && !currentAudioElement.paused && !currentAudioElement.ended);
-    if (isSpeaking || speechActive || audioActive) {
-      siteOverviewPlaybackToken += 1;
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-      if (currentSpeech) {
-        try {
-          currentSpeech.onend = null;
-          currentSpeech.onerror = null;
-        } catch (e) {}
-        currentSpeech = null;
-      }
-      if (currentAudioElement) {
+    return isSpeaking || speechActive || audioActive;
+  }
+
+  function stopCurrentPlayback() {
+    siteOverviewPlaybackToken += 1;
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    if (currentSpeech) {
+      try {
+        currentSpeech.onend = null;
+        currentSpeech.onerror = null;
+      } catch (e) {}
+      currentSpeech = null;
+    }
+    if (currentAudioElement) {
+      try {
+        currentAudioElement.onended = null;
+        currentAudioElement.onerror = null;
         currentAudioElement.pause();
         currentAudioElement.currentTime = 0;
+      } catch (e) {
+        console.warn('Unable to stop current audio playback.', e);
       }
-      currentAudioElement = null;
-      isSpeaking = false;
-      currentExplainsPartIndex = 0;
+    }
+    currentAudioElement = null;
+    isSpeaking = false;
+    currentExplainsPartIndex = 0;
+    lastAutoSelectionType = '';
+    lastAutoSelectionContext = '';
+  }
+  // Play site overview Unity audio only; second click stops playback
+  async function playSiteOverview() {
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
       return;
     }
     const playbackToken = ++siteOverviewPlaybackToken;
@@ -2708,14 +3114,8 @@
 
   // Play Unity Explains audio in three parts; fall back to TTS
   function speakNarrative() {
-    if (isSpeaking) {
-      if (currentAudioElement) {
-        currentAudioElement.pause();
-        currentAudioElement.currentTime = 0;
-      }
-      window.speechSynthesis.cancel();
-      isSpeaking = false;
-      currentExplainsPartIndex = 0;
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
       return;
     }
     currentExplainsPartIndex = 0;
@@ -2784,13 +3184,8 @@
       console.error('No transformer selected for Unity Brief');
       return;
     }
-
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      if (currentAudioElement) {
-        currentAudioElement.pause();
-        currentAudioElement.currentTime = 0;
-      }
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
       isSpeaking = false;
       return;
     }
@@ -2836,6 +3231,52 @@
     });
   }
 
+  function getPreferredSpeechVoice() {
+    const voices = window.speechSynthesis && window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    let preferredVoice = voices.find(v => v.name && v.name.toLowerCase().includes('unity faraday'));
+    if (!preferredVoice) {
+      preferredVoice = voices.find(v => (v.name && (v.name.includes('Samantha') || v.name.includes('Female'))) || v.lang === 'en-US');
+    }
+    return preferredVoice || null;
+  }
+
+  function getHowToOpeningText(path) {
+    const source = String(path || '').toLowerCase();
+    if (source.includes('unity_baseline_results.mp3') || source.includes('how-to-read-waste-chart.mp3')) {
+      return '';
+    }
+    if (source.includes('_waste_howto')) {
+      return "How to read the baseline view: first orient to layout and operating window, then focus on trend direction, then connect drift to operational strain before planning correction.";
+    }
+    if (source.includes('_savings_howto') || source.includes('how-to-read-savings-chart.mp3') || source.includes('unity_tuned_energy_field.mp3')) {
+      return "Understanding the tuned energy field: first orient to the tuned-energy chart, then compare before and after field behavior, then focus on recovery and reliability signals before planning rollout.";
+    }
+    return "How to read this view: first orient to layout, then review trend direction, then connect that pattern to operational impact.";
+  }
+
+  function stageHowToOpeningThenPlay(openingText, startMainPlayback) {
+    if (!openingText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      startMainPlayback();
+      return;
+    }
+    currentSpeech = new SpeechSynthesisUtterance(openingText);
+    const preferredVoice = getPreferredSpeechVoice();
+    if (preferredVoice) currentSpeech.voice = preferredVoice;
+    currentSpeech.rate = 0.95;
+    currentSpeech.pitch = 1.0;
+    currentSpeech.volume = 1.0;
+    currentSpeech.onend = function() {
+      isSpeaking = false;
+      startMainPlayback();
+    };
+    currentSpeech.onerror = function() {
+      isSpeaking = false;
+      startMainPlayback();
+    };
+    isSpeaking = true;
+    window.speechSynthesis.speak(currentSpeech);
+  }
+
   // Play How to Read audio (waste or savings) for current pattern view
   function openHowToFullscreenFromCurrentView() {
     const imageEl =
@@ -2847,36 +3288,34 @@
     if (!imageEl || !imageEl.src) return;
     const modalTitle = (document.getElementById('patternModalTitle')?.textContent || 'Pattern').trim();
     let howToLabel = 'How to Read';
-    if (currentHowToPath && currentHowToPath.includes('_waste_howto')) howToLabel = 'How to Read Waste';
-    if (currentHowToPath && currentHowToPath.includes('_savings_howto')) howToLabel = 'How to Read Savings';
+    if (!currentHowToPath && currentHowToText === FIXED_BASELINE_RESULTS_TEXT) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_waste_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_baseline_results.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-waste-chart.mp3')
+    )) howToLabel = 'How to Read the Baseline';
+    if (currentHowToPath && (
+      currentHowToPath.includes('_savings_howto') ||
+      currentHowToPath.toLowerCase().includes('unity_tuned_energy_field.mp3') ||
+      currentHowToPath.toLowerCase().includes('how-to-read-savings-chart.mp3')
+    )) howToLabel = 'Understanding the Tuned Energy Field';
     showPatternFullscreen(imageEl.src, `${modalTitle} — ${howToLabel}`);
   }
   function playHowToAudio() {
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      if (currentAudioElement) {
-        currentAudioElement.pause();
-        currentAudioElement.currentTime = 0;
-      }
-      isSpeaking = false;
-      currentExplainsPartIndex = 0;
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
       return;
     }
 
-    if (!currentHowToPath) {
+    const hasTtsNarration = !!String(currentHowToText || '').trim();
+    if (!currentHowToPath && !hasTtsNarration) {
       alert('How to Read audio not available for this view.');
       return;
     }
-    openHowToFullscreenFromCurrentView();
-    const mp3File = currentHowToPath;
     const startHowToTTS = () => {
-      const text = `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
+      const text = (currentHowToText || '').trim() || `Welcome. I'm Unity. How to Read audio is not available for this view at this time.`;
       currentSpeech = new SpeechSynthesisUtterance(text);
-      const voices = window.speechSynthesis.getVoices();
-      let preferredVoice = voices.find(v => v.name.toLowerCase().includes('unity faraday'));
-      if (!preferredVoice) {
-        preferredVoice = voices.find(v => v.name.includes('Samantha') || v.name.includes('Female') || v.lang === 'en-US');
-      }
+      const preferredVoice = getPreferredSpeechVoice();
       if (preferredVoice) currentSpeech.voice = preferredVoice;
       currentSpeech.rate = 0.95;
       currentSpeech.pitch = 1.0;
@@ -2886,21 +3325,65 @@
       isSpeaking = true;
       window.speechSynthesis.speak(currentSpeech);
     };
-
-    currentAudioElement = new Audio(mp3File);
-    currentAudioElement.onended = function() { isSpeaking = false; };
-    currentAudioElement.onerror = function() {
-      console.warn('How-to MP3 not available, using TTS:', mp3File);
-      isSpeaking = false;
+    if (!currentHowToPath && hasTtsNarration) {
       startHowToTTS();
+      return;
+    }
+    const mp3File = currentHowToPath;
+    const startHowToPlayback = () => {
+      currentAudioElement = new Audio(mp3File);
+      currentAudioElement.onended = function() { isSpeaking = false; };
+      currentAudioElement.onerror = function() {
+        console.warn('How-to MP3 not available, using TTS:', mp3File);
+        isSpeaking = false;
+        startHowToTTS();
+      };
+
+      isSpeaking = true;
+      currentAudioElement.play().catch(() => {
+        console.warn('How-to playback failed, using TTS.');
+        isSpeaking = false;
+        startHowToTTS();
+      });
     };
 
-    isSpeaking = true;
-    currentAudioElement.play().catch(() => {
-      console.warn('How-to playback failed, using TTS.');
-      isSpeaking = false;
-      startHowToTTS();
-    });
+    startHowToPlayback();
+  }
+
+  function autoStartVoiceForSelection(selectionType) {
+    if (!selectionType) return;
+    const context = getAutoSelectionContext(selectionType);
+    const sameSelection =
+      isPlaybackActive() &&
+      lastAutoSelectionType === selectionType &&
+      lastAutoSelectionContext === context;
+
+    if (isPlaybackActive()) {
+      stopCurrentPlayback();
+      if (sameSelection) return;
+    }
+    if (selectionType === 'baseline') {
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+      return;
+    }
+
+    if (selectionType === 'mpts') {
+      if (!currentHowToPath && !String(currentHowToText || '').trim()) return;
+      playHowToAudio();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+      return;
+    }
+
+    if (selectionType === 'narrative') {
+      if (!currentTransformerId) return;
+      speakNarrative();
+      lastAutoSelectionType = selectionType;
+      lastAutoSelectionContext = context;
+    }
   }
 
   // Show pattern modal with summary or narrative
@@ -2928,7 +3411,7 @@
         }
       }
     }
-    const tid = routing.fileIds[0] || matchedPatternKey || routing.keys[0];
+    const tid = matchedPatternKey || routing.fileIds[0] || routing.keys[0];
     
     let content = '';
     let title = '';
@@ -3103,9 +3586,9 @@
         monthSuffix = monthYear.slice(0, 3) + monthYear.slice(-2); // e.g., "october2025" -> "oct25"
       }
       const monthSuffixLong = monthSuffix.length === 5 ? (monthSuffix.slice(0, 3) + '20' + monthSuffix.slice(-2)) : monthSuffix;
-      baselineCandidates = [...buildPatternCandidates(routing.fileIds, 'bt', monthSuffix, monthSuffixLong), ...buildPatternCandidates(routing.fileIds, 'b', monthSuffix, monthSuffixLong)];
+      baselineCandidates = buildPatternCandidates(routing.fileIds, ['tbt', 'tb', 'bt', 'b'], monthSuffix, monthSuffixLong);
       part2EquipmentCandidates = ['/UnityEnergy/assets/images/MPTS-Example.png', '../../../../../UnityEnergy/assets/images/MPTS-Example.png'];
-      const simulatorCandidates = buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong);
+      const simulatorCandidates = buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong);
       console.log(`Loading images for ${tid}:`, baselineCandidates, part2EquipmentCandidates, simulatorCandidates, `(PF: ${pfValue}, Month: ${monthSuffix})`);
       const formatNarrativeText = (text) => (text || '')
         .replace(/(overperformance|underperformance)/gi, '<strong>$1</strong>')
@@ -3206,7 +3689,7 @@
       );
       attachPatternFallback(
         document.getElementById('simulatorPatternImg'),
-        buildPatternCandidates(routing.fileIds, 's', monthSuffix, monthSuffixLong),
+        buildPatternCandidates(routing.fileIds, ['sb', 'tm', 's', 'm'], monthSuffix, monthSuffixLong),
         `${transformerName} simulator`
       );
       const part2PatternImg = document.getElementById('part2PatternImg');
@@ -3235,9 +3718,13 @@
     if (unityHowToBtn) unityHowToBtn.style.display = 'none';
     }
     currentHowToPath = '';
+    currentHowToText = '';
     
     // Show modal
     document.getElementById('patternModal').style.display = 'block';
+    if (type === 'narrative') {
+      autoStartVoiceForSelection(type);
+    }
   }
   
   // Scroll to narrative text section
@@ -3252,19 +3739,14 @@
   // Close pattern modal
   function closePatternModal() {
     // Stop any active speech or audio
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      if (currentAudioElement) {
-        currentAudioElement.pause();
-        currentAudioElement.currentTime = 0;
-      }
-      isSpeaking = false;
-    }
+    if (isPlaybackActive()) stopCurrentPlayback();
     currentNarrativeText = '';
     currentBriefText = '';
+    clearPatternImageView();
     currentTransformerId = '';
     currentExplainsPartIndex = 0;
     currentHowToPath = '';
+    currentHowToText = '';
     const howToBtn = document.getElementById('unityHowToBtn');
     if (howToBtn) howToBtn.style.display = 'none';
     const unityBriefBtn = document.getElementById('unityBriefBtn');
@@ -3447,6 +3929,217 @@
     modal.style.display = 'block';
   }
 
+  // Enhanced Site Summary Modal (untuned consequence breakdown)
+  function showSiteSummaryModal() {
+    const modal = document.getElementById('siteSummaryModal');
+    const body = document.getElementById('siteSummaryBody');
+    
+    // Calculate site-level aggregated metrics from all transformers
+    let totalActivePower = 0;
+    let totalWaste = 0;
+    let totalCost = 0;
+    let totalWasteCost = 0;
+    let pfSum = 0;
+    let transformerCount = 0;
+    let totalCapacity = 0;
+    
+    // Iterate through transformer cards to aggregate data
+    for (let i = 1; i <= 4; i++) {
+      const card = document.getElementById(`xfmr${i}-card`);
+      const nameElement = document.getElementById(`xfmr${i}-name`);
+      
+      // Skip if card doesn't exist or transformer name is empty
+      if (!card || !nameElement || !nameElement.textContent.trim()) continue;
+      
+      transformerCount++;
+      
+      // Get transformer capacity (kVA)
+      const kvaElement = document.getElementById(`xfmr${i}-kva`);
+      if (kvaElement) {
+        const kva = parseFloat(kvaElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kva)) totalCapacity += kva;
+      }
+      
+      // Get active power (kW)
+      const avgKwElement = document.getElementById(`xfmr${i}-avg-kw`);
+      if (avgKwElement) {
+        const kw = parseFloat(avgKwElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(kw)) totalActivePower += kw;
+      }
+      
+      // Get reactive waste (kW)
+      const wasteElement = document.getElementById(`xfmr${i}-metric-energy-waste`);
+      if (wasteElement) {
+        const waste = parseFloat(wasteElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(waste)) totalWaste += waste;
+      }
+      
+      // Get active cost per hour
+      const costElement = document.getElementById(`xfmr${i}-xfmr-cost-hour`);
+      if (costElement) {
+        const cost = parseFloat(costElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(cost)) totalCost += cost;
+      }
+      
+      // Get waste cost per hour
+      const wasteCostElement = document.getElementById(`xfmr${i}-xfmr-waste-cost-hour`);
+      if (wasteCostElement) {
+        const wasteCost = parseFloat(wasteCostElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(wasteCost)) totalWasteCost += wasteCost;
+      }
+      
+      // Get power factor
+      const pfElement = document.getElementById(`xfmr${i}-metric-pf`);
+      if (pfElement) {
+        const pf = parseFloat(pfElement.textContent.replace('%', ''));
+        if (!isNaN(pf)) pfSum += pf;
+      }
+    }
+
+    const avgPowerFactor = transformerCount > 0 ? (pfSum / transformerCount) : null;
+    const total480V = totalActivePower + totalWaste; // Total 480V supply = active + reactive
+    const totalCoolingKw = 344.32; // Cooling waste embedded in active power
+    const pfGapToUnity = Number.isFinite(avgPowerFactor) ? Math.max(0, 100 - avgPowerFactor) : null;
+
+    // Financial consequence rollups (untuned condition)
+    const blendedRatePerKwh = totalActivePower > 0 ? (totalCost / totalActivePower) : 0;
+    const reactiveWasteCostPerHour = totalWasteCost;
+    const coolingWasteCostPerHour = totalCoolingKw * blendedRatePerKwh;
+    const untunedConsequencePerHour = reactiveWasteCostPerHour + coolingWasteCostPerHour;
+    const untunedConsequencePerMonth = untunedConsequencePerHour * 730;
+    const untunedConsequencePerYear = untunedConsequencePerHour * 8760;
+    const tuningRecoveryOpportunityPerYear = untunedConsequencePerYear * 0.95;
+
+    const formatMoney = (value) => {
+      const numeric = Number.isFinite(value) ? value : 0;
+      return `$${numeric.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    };
+    const formatPct = (value, digits = 1) => Number.isFinite(value) ? `${value.toFixed(digits)}%` : '--.-%';
+    
+    // Extract data resolution from filename
+    const filename = window.location.pathname.split('/').pop();
+    const resolutionMatch = filename.match(/(\d+min)RES/);
+    const dataResolution = resolutionMatch ? resolutionMatch[1] : '1min';
+    
+    // Format the content with expanded consequence view
+    body.innerHTML = `
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <!-- Left Column -->
+        <div>
+          <h3>Site Overview</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Transformers Monitored</span>
+            <span class="site-metric-value">${transformerCount}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Analysis Period</span>
+            <span class="site-metric-value">${document.getElementById('param-period')?.textContent || 'N/A'}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Data Resolution</span>
+            <span class="site-metric-value">${dataResolution}</span>
+          </div>
+          
+          <h3>Aggregated Power Metrics</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Site Capacity</span>
+            <span class="site-metric-value">${totalCapacity.toLocaleString('en-US')} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Active Power</span>
+            <span class="site-metric-value">${totalActivePower.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total 480V Supply (Active + Reactive)</span>
+            <span class="site-metric-value">${total480V.toFixed(1)} kVA</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Site Average Power Factor</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <h3>Energy Waste & Consequences</h3>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Unconsumed Energy (Waste)</span>
+            <span class="site-metric-value">${totalWaste.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Waste (embedded in active)</span>
+            <span class="site-metric-value">${totalCoolingKw.toFixed(1)} kW</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Waste as % of Total Supply</span>
+            <span class="site-metric-value">${total480V > 0 ? ((totalWaste / total480V) * 100).toFixed(1) : 0}%</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Untuned Field Efficiency (PF)</span>
+            <span class="site-metric-value">${formatPct(avgPowerFactor)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">PF Gap to Unity</span>
+            <span class="site-metric-value">${formatPct(pfGapToUnity)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Reactive Waste Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(reactiveWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Cooling Burden Cost per Hour</span>
+            <span class="site-metric-value">${formatMoney(coolingWasteCostPerHour)}</span>
+          </div>
+          <div class="site-metric">
+            <span class="site-metric-label">Total Untuned Consequence per Hour</span>
+            <span class="site-metric-value">${formatMoney(untunedConsequencePerHour)}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(93, 112, 26, 0.08) 0%, rgba(178, 210, 53, 0.05) 100%); border: 2px solid #5D701A; border-radius: 10px;">
+        <h3 style="text-align: center; color: #314100; margin-bottom: 15px; font-weight: 700;">Untuned Energy Field Consequences</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; text-align: center;">
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Untuned Field Efficiency</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatPct(avgPowerFactor)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(PF gap ${formatPct(pfGapToUnity)})</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Unconsumed Energy (Hourly)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${totalWaste.toFixed(1)} kW</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive waste)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Reactive Waste Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(reactiveWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(8760 hrs/year)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Cooling Burden Cost (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(coolingWasteCostPerHour * 8760)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(derived from active blend rate)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Total Untuned Consequence (Annual)</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(untunedConsequencePerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(reactive + cooling)</p>
+          </div>
+          <div>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px; font-weight: 500;">Recovery Opportunity @95% Tuning</p>
+            <p style="font-size: 18pt; color: #314100; font-weight: 700;">${formatMoney(tuningRecoveryOpportunityPerYear)}</p>
+            <p style="font-size: 9pt; color: #5D701A;">(${formatMoney(untunedConsequencePerMonth)}/month untuned)</p>
+          </div>
+        </div>
+        <p style="text-align: center; color: #6b7280; margin-top: 15px; font-size: 10pt; font-style: italic;">
+          All-in consequence tracks the financial burden of current untuned PF behavior (reactive waste + cooling burden).
+        </p>
+      </div>
+    `;
+    
+    modal.style.display = 'block';
+  }
+
   // Close Site Summary Modal
   function closeSiteSummaryModal() {
     document.getElementById('siteSummaryModal').style.display = 'none';
@@ -3456,6 +4149,11 @@
   function showSiteSummaryMPTSModal() {
     const modal = document.getElementById('siteSummaryMPTSModal');
     const body = document.getElementById('siteSummaryMPTSBody');
+    const titleEl = modal ? modal.querySelector('.info-modal-title') : null;
+    const facilityLabel = String(document.getElementById('site-facility-name')?.textContent || 'Site')
+      .replace(/\s*-\s*$/, '')
+      .trim();
+    if (titleEl) titleEl.textContent = `${facilityLabel} — Site Summary - Unity/MPTS Optimization`;
     
     // Calculate BASELINE (current) site-level metrics
     let baselineTotalActivePower = 0;
@@ -3474,9 +4172,8 @@
       if (!card || !nameElement || !nameElement.textContent.trim()) continue;
       
       const transformerName = nameElement.textContent.trim();
-      const tidMatch = transformerName.match(/^(T\d+)/);
-      if (!tidMatch) continue;
-      const tid = tidMatch[1].toLowerCase();
+      const tidMatch = transformerName.match(/^(T\d+)/i);
+      const tid = tidMatch ? tidMatch[1].toLowerCase() : `xfmr${i}`;
       
       transformerCount++;
       
@@ -3585,10 +4282,10 @@
         
         <div>
           <h3 style="color: #5D701A;">UNITY MANAGEMENT w/MPTS</h3>
-          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Harmonized Energy Behavior with MPTS Technology</p>
+          <p style="font-size: 10pt; color: #6b7280; margin-bottom: 15px;">Tuned Energy Behavior with MPTS Technology</p>
           
           <div class="site-metric">
-            <span class="site-metric-label">Transformers Harmonized</span>
+            <span class="site-metric-label">Transformers Tuned</span>
             <span class="site-metric-value">${transformerCount}</span>
           </div>
           <div class="site-metric">
@@ -3596,7 +4293,7 @@
             <span class="site-metric-value" style="color: #15803d;">${mptsAvgPF}%</span>
           </div>
           <div class="site-metric">
-            <span class="site-metric-label">Harmonized Active Power (per hour)</span>
+            <span class="site-metric-label">Tuned Active Power (per hour)</span>
             <span class="site-metric-value" style="color: #15803d;">${mptsOptimizedActivePower.toFixed(1)} kW</span>
           </div>
           <div class="site-metric">
@@ -3810,9 +4507,40 @@
 </div>
 
 
+<script>
+(function loadUnityHowToToggle() {
+  if (window.__unityHowToToggleLoaderInjected) return;
+  window.__unityHowToToggleLoaderInjected = true;
+  const scriptName = 'unity-howto-toggle.js';
+  const scriptVersion = '20260701a';
+  const candidateSrcs = [];
+  for (let depth = 0; depth <= 10; depth += 1) {
+    const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
+    candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
+  }
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+  const tryLoad = (index) => {
+    if (index >= candidateSrcs.length) return;
+    const src = candidateSrcs[index];
+    const script = document.createElement('script');
+    const separator = src.includes('?') ? '&' : '?';
+    script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
+    script.async = false;
+    script.onload = () => {
+      window.__unityHowToToggleLoaderSrc = src;
+    };
+    script.onerror = () => {
+      script.remove();
+      tryLoad(index + 1);
+    };
+    head.appendChild(script);
+  };
+  tryLoad(0);
+})();
+</script>
 <script id="unity-narration-retention-config">
 window.__UNITY_NARRATION_ARCHIVED__ = (window.__UNITY_NARRATION_ARCHIVED__ === true);
-window.__UNITY_NARRATION_AUDIO_ARCHIVED__ = false;
 window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   retentionMonths: 2,
   includeCurrentMonth: false,
@@ -3821,6 +4549,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
 </script>
 <script id="unity-narration-retention-guard">
 (function(){
+
   var policy = window.__UNITY_NARRATION_RETENTION_POLICY__ || {};
 
   function parseMonthCodeFromDateToken(token) {
@@ -3854,7 +4583,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
       jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
       jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
-    var periodEl = document.querySelector('.period-value');
+    var periodEl = document.querySelector('.period-value, #month-year');
     var labelText = (periodEl && periodEl.textContent) ? periodEl.textContent : '';
     if (!labelText) labelText = document.title || '';
     var m = String(labelText).match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/i);
@@ -3874,6 +4603,23 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return Number.isFinite(code) ? code : null;
   }
 
+  function normalizeMonthCode(value) {
+    if (value === null || value === undefined) return null;
+    var asText = String(value).trim();
+    if (!/^\d+$/.test(asText)) return null;
+    if (asText.length >= 8) {
+      asText = /^20\d{6}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    } else if (asText.length === 6) {
+      asText = /^20\d{4}$/.test(asText) ? asText.slice(2, 6) : asText.slice(0, 4);
+    }
+    var numeric = Number(asText);
+    if (!Number.isFinite(numeric)) return null;
+    var code = Math.floor(numeric);
+    var month = code % 100;
+    if (code < 1000 || month < 1 || month > 12) return null;
+    return code;
+  }
+
   function resolveRetentionMonths() {
     var maxMonths = Number(policy.retentionMonths || 2);
     if (!Number.isFinite(maxMonths) || maxMonths < 1) maxMonths = 2;
@@ -3887,6 +4633,7 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     if (!(policy.includeCurrentMonth === true)) {
       cursor.setMonth(cursor.getMonth() - 1);
     }
+
     var maxMonths = resolveRetentionMonths();
     for (var i = 0; i < maxMonths; i++) {
       var code = monthCodeFromDate(cursor);
@@ -3912,31 +4659,17 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
     return labels.join(' and ');
   }
 
-  var reportMonthCodeRaw = String(policy.reportMonthCode == null ? '' : policy.reportMonthCode).trim();
-  var reportMonthCode = reportMonthCodeRaw ? Number(reportMonthCodeRaw) : NaN;
-  if (/^\d{8}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = Number(reportMonthCodeRaw.slice(2, 6));
-  } else if (/^\d{6}$/.test(reportMonthCodeRaw)) {
-    reportMonthCode = /^20\d{4}$/.test(reportMonthCodeRaw)
-      ? Number(reportMonthCodeRaw.slice(2, 6))
-      : Number(reportMonthCodeRaw.slice(0, 4));
-  }
+  var reportMonthCode = normalizeMonthCode(policy.reportMonthCode);
   if (!Number.isFinite(reportMonthCode)) {
     reportMonthCode =
       parseMonthCodeFromPath(window.location.pathname) ||
       parseMonthCodeFromPath(window.location.href) ||
       parseMonthCodeFromLabel();
   }
-
   var forcedArchived = (window.__UNITY_NARRATION_ARCHIVED__ === true);
-  var shouldArchive = forcedArchived;
-  if (!shouldArchive) {
-    if (!Number.isFinite(reportMonthCode)) return;
-    shouldArchive = !isWithinRetentionWindow(reportMonthCode);
-  }
-  if (!shouldArchive) return;
+  if (!forcedArchived && !Number.isFinite(reportMonthCode)) return;
+  if (!forcedArchived && isWithinRetentionWindow(reportMonthCode)) return;
 
-  window.__UNITY_NARRATION_AUDIO_ARCHIVED__ = true;
   var textMsg = "Pattern text is archived for this report period (retention policy).";
   var retentionLabel = describeRetentionWindow();
   var audioMsg = retentionLabel
@@ -3991,7 +4724,6 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   window.speakNarrative = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
   window.playUnityBrief = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
   window.playHowToAudio = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
-  window.playUnityHowToChart = function() { hideNarrativeAudioButtons(); alert(audioMsg); };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', hideNarrativeAudioButtons, { once: true });
@@ -4000,38 +4732,5 @@ window.__UNITY_NARRATION_RETENTION_POLICY__ = Object.assign({
   }
 })();
 </script>
-<script src="../../../unity-april-baseline-retention.js"></script>
-  <script>
-  (function loadUnityHowToToggle() {
-    if (window.__unityHowToToggleLoaderInjected) return;
-    window.__unityHowToToggleLoaderInjected = true;
-    const scriptName = 'unity-howto-toggle.js';
-    const scriptVersion = '20260701a';
-    const candidateSrcs = [];
-    for (let depth = 0; depth <= 10; depth += 1) {
-      const prefix = depth === 0 ? './' : `${'../'.repeat(depth)}`;
-      candidateSrcs.push(`${prefix}assets/js/${scriptName}`);
-    }
-    const head = document.head || document.getElementsByTagName('head')[0];
-    if (!head) return;
-    const tryLoad = (index) => {
-      if (index >= candidateSrcs.length) return;
-      const src = candidateSrcs[index];
-      const script = document.createElement('script');
-      const separator = src.includes('?') ? '&' : '?';
-      script.src = `${src}${separator}v=${encodeURIComponent(scriptVersion)}`;
-      script.async = false;
-      script.onload = () => {
-        window.__unityHowToToggleLoaderSrc = src;
-      };
-      script.onerror = () => {
-        script.remove();
-        tryLoad(index + 1);
-      };
-      head.appendChild(script);
-    };
-    tryLoad(0);
-  })();
-  </script>
-  </body>
-  </html>
+</body>
+</html>

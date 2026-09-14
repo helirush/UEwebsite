@@ -244,21 +244,21 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 480.31521627384967,
+  "nominal_voltage": 480.0,
   "transformer_name": "NCDC3 North E",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 480.4014836558754,
-  "min_voltage": 464.044,
-  "max_voltage": 497.487,
-  "voltage_std": 6.634220721145397,
-  "voltage_spread": 33.44300000000004,
-  "power_factor": 0.8561662626262627,
-  "vhi_avg": 1.000179605765345,
-  "vhi_max": 1.0357510716803107,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
+  "power_factor": 0.8561497333453856,
+  "vhi_avg": 1.0,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
   "voltage_dip_count": 0,
-  "pct_below_nominal": 41.75308641975309,
-  "estimated_running_amps": 651.513754433221,
+  "pct_below_nominal": 0.0,
+  "estimated_running_amps": 650.9088676218024,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
   "data_resolution": "1minRES",
@@ -266,31 +266,31 @@
   "time_period_hours": 744,
   "analysis_period": "260301-260331",
   "file_name": "AN55050395-V-1minRES_44550CLP_260301-260331c.csv",
-  "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/03_MAR2026/NCND/AN55050395-V-1minRES_44550CLP_260301-260331c.csv",
+  "csv_file_path": "/Users/mdhowell/eeclips/FosterFarms/Livingston/aSITE2026/03_MAR2026/NCDC/AN55050395-V-1minRES_44550CLP_260301-260331c.csv",
   "drop_groups": [
     {
       "id": "G1",
       "group_id": "G1",
       "drop_count": 0,
-      "voltage_range": "464.0-497.5V",
-      "amp_range": "0.0-991.4A",
-      "delta_v": 0.08626738202571005,
-      "est_stall_amps": 651.513754433221,
+      "voltage_range": "480.0-480.0V",
+      "amp_range": "419.9-884.0A",
+      "delta_v": 0.0,
+      "est_stall_amps": 650.9088676218024,
       "estimated_hp": 0,
       "classification": "Normal",
       "risk": "Normal",
       "days": 31,
-      "center_v": 480.4014836558754,
-      "min_v": 464.044,
-      "max_v": 497.487,
-      "avg_amps": 651.513754433221,
+      "center_v": 480.0,
+      "min_v": 480.0,
+      "max_v": 480.0,
+      "avg_amps": 650.9088676218024,
       "lrc_factor": 6.0,
-      "power_factor": 0.8561662626262627,
+      "power_factor": 0.8561497333453856,
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 480.4014836558754,
-  "delta_v_primary": 0.08626738202571005
+  "voltage_center": 480.0,
+  "delta_v_primary": 0.0
 };
 </script>
 </head>
@@ -316,22 +316,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">480.4 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">464.0 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">497.5 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">33.4 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -341,7 +341,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.04</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -351,7 +351,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">41.8%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -463,7 +463,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_NCDC3_North_E.json');
+      const response = await fetch('volt_dashboard_data_NCDC3_North_E.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

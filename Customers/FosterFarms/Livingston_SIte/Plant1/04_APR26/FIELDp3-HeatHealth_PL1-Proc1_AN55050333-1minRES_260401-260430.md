@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** PL1-Proc1  
-**Generated:** 2026-05-10 11:11:33  
+**Generated:** 2026-09-10 22:43:45  
 **Data Source:** AN55050333-V-1minRES_43200CLP_260401-260430c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 26,177.35
+- **Device Zone BTU/hr:** 15,519.87
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 4,159.43
+- **Field Zone BTU/hr:** 2,466.02
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 30,336.78 BTU/hr
+- **Total Heat Generated:** 17,985.89 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 27.81 kW
+- **Baseline Cooling Load:** 16.49 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 8.85 kW
+- **Climate Adjusted Cooling:** 5.25 kW
   - *Cooling load adjusted for temperature (69.9°F) and humidity (50.2%)*
 - **Climate Burden Multiplier:** 1.001
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 8.85 kW
+- **Total Cooling Load Avoided:** 5.25 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
 - **Electrical-Energy Waste Cost:** $3,923.51
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $15,114.54/year
+- **Cooling Cost Avoided:** $8,961.02/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-2,657.18/year climate/impedance bonus)
+  (Includes $-1,575.37/year climate/impedance bonus)
 
 ---
 

@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** PL2-1South  
-**Generated:** 2026-08-02 22:16:33  
+**Generated:** 2026-09-10 19:31:27  
 **Data Source:** AN55050400-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period
@@ -30,36 +30,36 @@
 
 ### Heat Generation Analysis
 
-- **Device Zone BTU/hr:** 85,461.40
+- **Device Zone BTU/hr:** 85,461.46
   - *Heat generated within transformer enclosure and immediately adjacent area*
-- **Field Zone BTU/hr:** 13,642.10
+- **Field Zone BTU/hr:** 13,617.69
   - *Heat radiated into surrounding field area and electrical room*
 
 ### Conditioned Space Impact
 
-- **Total Heat Generated:** 99,103.50 BTU/hr
+- **Total Heat Generated:** 99,079.15 BTU/hr
   - *Combined device and field zone thermal output requiring removal*
 - **Air-Conditioned Percentage:** 30.00%
   - *Portion of facility space requiring active cooling and temperature control*
 
 ### Cooling Load Analysis
 
-- **Baseline Cooling Load:** 89.06 kW
+- **Baseline Cooling Load:** 89.04 kW
   - *Standard cooling requirement without climate burden factors*
-- **Climate Adjusted Cooling:** 28.91 kW
+- **Climate Adjusted Cooling:** 28.90 kW
   - *Cooling load adjusted for temperature (82.5°F) and humidity (31.4%)*
 - **Climate Burden Multiplier:** 1.019
   - *Thermal load increase factor due to environmental conditions*
-- **Total Cooling Load Avoided:** 28.91 kW
+- **Total Cooling Load Avoided:** 28.90 kW
   - *Net cooling capacity that would be required without Unity energy management*
 
 ### Economic Impact
 
-- **Electrical-Energy Waste Cost:** $21,822.40
+- **Electrical-Energy Waste Cost:** $21,827.78
   - *Direct cost of wasted energy consumption during analysis period*
-- **Cooling Cost Avoided:** $49,375.84/year
+- **Cooling Cost Avoided:** $49,363.71/year
   - *Annual savings from eliminated cooling equipment operation*
-  (Includes $-8,727.06/year climate/impedance bonus)
+  (Includes $-8,722.72/year climate/impedance bonus)
 
 ---
 

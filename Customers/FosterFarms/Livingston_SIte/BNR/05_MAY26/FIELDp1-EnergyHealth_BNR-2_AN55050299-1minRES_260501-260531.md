@@ -11,7 +11,7 @@
 # TRANSFORMER PERFORMANCE ANALYSIS REPORT
 
 **Transformer Name:** BNR-2  
-**Generated:** 2026-06-18 23:45:43  
+**Generated:** 2026-09-10 21:09:35  
 **Data Source:** AN55050299-V-1minRES_44640CLP_260501-260531c.csv  
 
 ## Time Period
@@ -56,33 +56,34 @@
 
 ### Element 1: Reactive Energy Offset Savings
 
-- **Total Electrical-Energy Waste (calc_kVA - measured_kW):** 0.58 kW/hr
+- **Total Non-Active Field Burden (kVA - kW):** 0.58 kW/hr
+- **Heat-Coupled Burden Used in Thermal Model:** 0.27 kW/hr (modeled_non_active_field_burden)
 - **Blended Electricity Rate:** $0.1950/kWh (all-inclusive)
 - **BNR-2 Utility Cost Offset:** $0.11/hour
 - **Annual Offset Savings:** $996/year
 
 ### Element 2: Cooling Elimination Savings
 
-- **Total Heat No Longer Generated:** 2,134 BTU/hr
-- **Total Cooling kW No Longer Needed:** 0.19 kW
-- **Cooling Energy Cost Avoided:** $0.04/hour
-- **Annual Cooling Savings:** $319/year
+- **Total Heat No Longer Generated:** 976 BTU/hr
+- **Total Cooling kW No Longer Needed:** 0.09 kW
+- **Cooling Energy Cost Avoided:** $0.02/hour
+- **Annual Cooling Savings:** $146/year
 
 ### Element 3: CO2e Emissions Reduction Value
 
-- **Total kW Waste Eliminated:** 0.77 kW
-- **CO2e Emissions Avoided:** 2.52 metric tons/year
-- **Monthly CO2e Reduction:** 0.21 metric tons/month
-- **Hourly CO2e Reduction:** 0.0003 metric tons/hour
+- **Total kW Waste Eliminated:** 0.67 kW
+- **CO2e Emissions Avoided:** 2.19 metric tons/year
+- **Monthly CO2e Reduction:** 0.18 metric tons/month
+- **Hourly CO2e Reduction:** 0.0002 metric tons/hour
 - **CO2e Value Rate:** $38/metric ton
-- **Annual CO2e Value:** $97/year
+- **Annual CO2e Value:** $84/year
 
 ### Total BNR-2 Unity Savings
 
-- **Per Hour:** $0.16
-- **Per Day:** $3.87
-- **Per Month:** $116.08
-- **Per Year:** $1412
+- **Per Hour:** $0.14
+- **Per Day:** $3.36
+- **Per Month:** $100.81
+- **Per Year:** $1226
 
 ### BNR-2 Savings Breakdown
 

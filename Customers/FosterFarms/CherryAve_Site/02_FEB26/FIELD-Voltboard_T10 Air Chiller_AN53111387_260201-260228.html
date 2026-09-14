@@ -244,21 +244,21 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 459.80043890855904,
+  "nominal_voltage": 480.0,
   "transformer_name": "T10 Air Chiller",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 459.80043890855904,
-  "min_voltage": 440.2392950819672,
-  "max_voltage": 485.2778292682927,
-  "voltage_std": 11.240446131782491,
-  "voltage_spread": 45.03853418632548,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
   "power_factor": 0.8882187311761034,
   "vhi_avg": 1.0,
-  "vhi_max": 1.055409669508385,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
-  "voltage_dip_count": 34482,
-  "pct_below_nominal": 95.49851190476191,
-  "estimated_running_amps": 1344.45934970171,
+  "voltage_dip_count": 67,
+  "pct_below_nominal": 0.0,
+  "estimated_running_amps": 1338.2782390450566,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
   "data_resolution": "1minRES",
@@ -271,26 +271,26 @@
     {
       "id": "G1",
       "group_id": "G1",
-      "drop_count": 34482,
-      "voltage_range": "440.2-460.3V",
-      "amp_range": "162.0-2075.9A",
-      "delta_v": 26.3,
-      "est_stall_amps": 240.0,
-      "estimated_hp": 160,
+      "drop_count": 67,
+      "voltage_range": "440.2-460.8V",
+      "amp_range": "161.9-2075.9A",
+      "delta_v": 26.7,
+      "est_stall_amps": 255.0,
+      "estimated_hp": 170,
       "classification": "SIGNIFICANT",
       "risk": "SIGNIFICANT",
       "days": 26,
-      "center_v": 450.28674590163934,
+      "center_v": 450.51931967213113,
       "min_v": 440.2392950819672,
-      "max_v": 460.33419672131146,
-      "avg_amps": 1344.45934970171,
+      "max_v": 460.7993442622951,
+      "avg_amps": 1338.2782390450566,
       "lrc_factor": 6.0,
       "power_factor": 0.8882187311761034,
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 450.28674590163934,
-  "delta_v_primary": 26.3
+  "voltage_center": 450.51931967213113,
+  "delta_v_primary": 26.7
 };
 </script>
 </head>
@@ -316,22 +316,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">459.8 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">440.2 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">485.3 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">45.0 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -341,7 +341,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.06</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -351,7 +351,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">95.5%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -396,7 +396,7 @@
       
       <div class="param-item">
         <div class="param-label">Total Voltage Drops</div>
-        <div class="param-value" id="param-volt-drops">34482</div>
+        <div class="param-value" id="param-volt-drops">67</div>
       </div>
       
       <div class="param-item">
@@ -463,7 +463,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_T10_Air_Chiller.json');
+      const response = await fetch('volt_dashboard_data_T10_Air_Chiller.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

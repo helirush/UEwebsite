@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** T10 Air Chiller  
-**Generated:** 2026-08-04 12:55:08  
+**Generated:** 2026-09-10 19:24:22  
 **Data Source:** AN53111387-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period

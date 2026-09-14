@@ -244,21 +244,21 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 488.50306080876794,
+  "nominal_voltage": 480.0,
   "transformer_name": "PL2-3North",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 488.61385760187494,
-  "min_voltage": 470.903,
-  "max_voltage": 502.742,
-  "voltage_std": 7.922301998520843,
-  "voltage_spread": 31.839,
-  "power_factor": 0.6074005102040817,
-  "vhi_avg": 1.0002268088001813,
-  "vhi_max": 1.0360285578960942,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
+  "power_factor": 0.6075382739850306,
+  "vhi_avg": 1.0,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
   "voltage_dip_count": 0,
-  "pct_below_nominal": 0.049130763416477694,
-  "estimated_running_amps": 251.6415688208617,
+  "pct_below_nominal": 0.0,
+  "estimated_running_amps": 251.69864334316173,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
   "data_resolution": "1minRES",
@@ -272,25 +272,25 @@
       "id": "G1",
       "group_id": "G1",
       "drop_count": 0,
-      "voltage_range": "470.9-502.7V",
-      "amp_range": "0.0-609.1A",
-      "delta_v": 0.1107967931069993,
-      "est_stall_amps": 251.6415688208617,
+      "voltage_range": "480.0-480.0V",
+      "amp_range": "15.6-609.1A",
+      "delta_v": 0.0,
+      "est_stall_amps": 251.69864334316173,
       "estimated_hp": 0,
       "classification": "Normal",
       "risk": "Normal",
       "days": 19,
-      "center_v": 488.61385760187494,
-      "min_v": 470.903,
-      "max_v": 502.742,
-      "avg_amps": 251.6415688208617,
+      "center_v": 480.0,
+      "min_v": 480.0,
+      "max_v": 480.0,
+      "avg_amps": 251.69864334316173,
       "lrc_factor": 6.0,
-      "power_factor": 0.6074005102040817,
+      "power_factor": 0.6075382739850306,
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 488.61385760187494,
-  "delta_v_primary": 0.1107967931069993
+  "voltage_center": 480.0,
+  "delta_v_primary": 0.0
 };
 </script>
 </head>
@@ -316,22 +316,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">488.6 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">470.9 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">502.7 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">31.8 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -341,7 +341,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.04</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -411,7 +411,7 @@
       
       <div class="param-item">
         <div class="param-label">Power Factor Default</div>
-        <div class="param-value" id="param-power-factor">0.607</div>
+        <div class="param-value" id="param-power-factor">0.608</div>
       </div>
       
       <div class="param-item">
@@ -463,7 +463,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_PL2-3North.json');
+      const response = await fetch('volt_dashboard_data_PL2-3North.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

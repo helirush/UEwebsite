@@ -3,7 +3,7 @@
 *Thermal Burden Assessment: Heat Generation, Cooling Requirements, and Energy Recovery*
 
 **Transformer:** T15 Fillet  
-**Generated:** 2026-08-04 12:54:45  
+**Generated:** 2026-09-10 19:24:01  
 **Data Source:** AN53110845-V-1minRES_44640CLP_260701-260731c.csv  
 
 ## 📊 Analysis Period

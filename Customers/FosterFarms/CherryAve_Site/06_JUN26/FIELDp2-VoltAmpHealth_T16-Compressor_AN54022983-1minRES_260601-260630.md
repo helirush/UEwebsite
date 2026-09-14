@@ -3,7 +3,7 @@
 *Electromagnetic Field Analysis: Voltage (E-field), Current (H-field), and Thermal Burden*
 
 **Transformer:** T16 Compressor  
-**Generated:** 2026-07-18 11:54:23  
+**Generated:** 2026-09-10 20:03:37  
 **Data Source:** AN54022983-V-1minRES_43200CLP_260601-260630c.csv  
 
 ## 📊 Analysis Period

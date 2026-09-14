@@ -244,20 +244,20 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 479.53641025206935,
+  "nominal_voltage": 480.0,
   "transformer_name": "T15 Fillet",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 479.53641025206935,
-  "min_voltage": 395.735551724138,
-  "max_voltage": 502.7153770491803,
-  "voltage_std": 9.848456131378363,
-  "voltage_spread": 106.97982532504227,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
   "power_factor": 0.8201611573906785,
   "vhi_avg": 1.0,
-  "vhi_max": 1.174753901343761,
+  "vhi_max": 1.0,
   "vhi_high_events": 14,
   "voltage_dip_count": 169,
-  "pct_below_nominal": 57.6401973979363,
+  "pct_below_nominal": 0.0,
   "estimated_running_amps": 1539.6857881372462,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
@@ -496,22 +496,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">479.5 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">395.7 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">502.7 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">107.0 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -521,7 +521,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.17</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -531,7 +531,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">57.6%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -643,7 +643,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_T15_Fillet.json');
+      const response = await fetch('volt_dashboard_data_T15_Fillet.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
