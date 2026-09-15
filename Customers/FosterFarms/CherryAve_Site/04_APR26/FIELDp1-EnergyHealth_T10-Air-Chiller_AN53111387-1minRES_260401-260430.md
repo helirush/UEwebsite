@@ -106,7 +106,7 @@
 
 ## Transformer Specifications
 
-- **Capacity:** 2,500 kVA
+- **Capacity:** 3,000 kVA
 - **Voltage:** 480V, 3-Phase
 
 ## Fundamental Energy Values
@@ -165,9 +165,9 @@ If IEEE compliance is required, individual THD values remain visible and can be 
 
 - **Maximum UtilityDemand:** 1,387.39 kW
   - **Maximum Load:** 1,561.96 kVA
-  - **Percentage of Capacity (MAX):** 62.5%
+  - **Percentage of Capacity (MAX):** 52.1%
 - **Average Load:** 759.75 kVA
-  - **Percentage of Capacity (Avg):** 30.4%
+  - **Percentage of Capacity (Avg):** 25.3%
 
 ## kVA and Power Factor Analysis (Measured vs Calculated)
 

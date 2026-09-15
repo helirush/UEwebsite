@@ -15,7 +15,7 @@
 
 ## 🔋 Facility Information
 
-- **Transformer Capacity:** 2,500 kVA
+- **Transformer Capacity:** 3,000 kVA
 - **Nominal Voltage:** 480V (3-Phase)
 - **Analysis Type:** Voltage & Current Health + Thermal Burden Assessment
 - **Technology Focus:** Unity Energy MPTS Solutions
