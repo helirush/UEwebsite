@@ -1,42 +1,16 @@
 // Unity Energy Customer Portal - Access Configuration
 // =====================================================
-// 
-// DEVELOPMENT MODE (devMode = true):
-//   - User only enters company name, no password required
-//   - Use this while working locally on eWebmaster
-//
-// PRODUCTION MODE (devMode = false):
-//   - User must enter both company name AND password
-//   - Set this BEFORE uploading to GitHub
-//
-// To prepare for GitHub deployment:
-//   1. Set devMode = false
-//   2. Verify accessPolicy passwords are set as needed
-//   3. Push to GitHub
+// Passwordless portal access:
+//   - Visitor completes profile (when required)
+//   - Selects company or Guest
+//   - Selects Access Unity Portal
+// No portal passwords are required.
 
 window.portalConfig = {
-    
-    // SET TO false BEFORE PUSHING TO GITHUB
-    devMode: false,
-    
-    // Legacy fallback password for older scripts/pages.
-    // New portal logic should use accessPolicy below.
-    password: "oHeaviside",
-    accessPolicy: {
-        // Founder / all-access domains only.
-        allAccessPassword: "oHeaviside",
-        // Default password for standard customer and guest access.
-        defaultPassword: "Default",
-        // Per-customer overrides.
-        customerPasswordOverrides: {
-            fosterfarms: "FosterFarms!"
-        },
-        // Domain-based auto-routing (domain -> customer key).
-        domainCustomerOverrides: {
-            "fosterfarms.com": "fosterfarms"
-        }
-    },
-    
+    // Kept for older pages that still read this flag.
+    // Customer Access Portal is passwordless regardless of this value.
+    devMode: true,
+
     // Customer accounts - add new customers here
     customers: {
         // NOTE: keys should match the normalization rule in UnityEnergy/index.html
@@ -113,6 +87,13 @@ window.portalConfig = {
             name: 'Investor Center (Private and Confidential)',
             path: './customer-portal/investor-center/index.html',
             allowAnyDomain: true
+        }
+    },
+
+    accessPolicy: {
+        // Domain-based auto-routing (domain -> customer key).
+        domainCustomerOverrides: {
+            "fosterfarms.com": "fosterfarms"
         }
     }
 };
