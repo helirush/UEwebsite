@@ -10,6 +10,11 @@
   var DAILY_STAMP_COUNTER_KEY = "ue_exec_share_daily_counter_v1";
   var TITLE_PRESET_STORAGE_KEY = "ue_founder_share_panel_title_presets_v1";
   var TITLE_PRESET_STORAGE_LIMIT = 24;
+  var TARGET_FREEZE_FLAG_PARAM = "ue_freeze";
+  var TARGET_FREEZE_SCROLL_X_PARAM = "ue_scroll_x";
+  var TARGET_FREEZE_SCROLL_Y_PARAM = "ue_scroll_y";
+  var TARGET_FREEZE_OPEN_DETAILS_PARAM = "ue_open_details";
+  var TARGET_FREEZE_STATUS_VALUE = "1";
   var FOUNDER_ACCESS_ID_HASHES = new Set([
     "64b4d0f47c93ce23d157e68a58767356283dc9b63c459d45d0e0e39b3a64b9b9",
     "ec4f2dbb3b140095550c9afbbb69b5d6fd9e814b9da82fad0b34e9fcbe56f1cb",
@@ -116,6 +121,10 @@
     "Electrical Infrastructure Review": "update-electrical-infrastructure-review",
     "Operational Energy Review": "update-operational-energy-review"
   });
+  var PROJECT_UPDATE_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
+    "Cherry Ave Electrical Energy Intelligence": "update-cherry-ave-electrical-energy-intelligence",
+    "Cherry Avenue Electrical Energy Intelligence": "update-cherry-ave-electrical-energy-intelligence"
+  });
   var MAXWELLIAN_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
     "Foster Farms Electrical Intelligence": "maxwellian",
     "Unity Energy Electrical Intelligence": "maxwellian-unity-energy-electrical-intelligence",
@@ -129,6 +138,10 @@
     "Foster Farms June2026 Data": "monthly-report",
     "Foster Farms June2026 Electrical Data": "monthly-report",
     "Foster Farms June 2026 Electrical Data": "monthly-report"
+  });
+  var PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
+    "Foster Farms Electrical Intelligence": "private",
+    "2025 Cherry Energy Regulatory": "private"
   });
   // Maps runtime kind keys to master base-card assets in:
   // UnityEnergy/assets/images/share-card-bases/
@@ -153,10 +166,10 @@
     sizeMobilePx: 40
   });
   var GLOBAL_HOTSPOT = Object.freeze({
-    top: "18px",
-    right: "20px",
-    sizeDesktopPx: 24,
-    sizeMobilePx: 40
+    top: "6px",
+    right: "6px",
+    sizeDesktopPx: 50,
+    sizeMobilePx: 50
   });
 
   function nowMs() {
@@ -433,6 +446,159 @@
     return normalizeTitlePreset(value).toLowerCase();
   }
 
+  function parseIntegerValue(rawValue) {
+    var parsed = Number.parseInt(rawValue, 10);
+    return Number.isFinite(parsed) ? parsed : NaN;
+  }
+
+  function parseOpenDetailsIndexList(rawValue) {
+    var value = String(rawValue || "").trim();
+    if (!value) return [];
+    var segments = value.split(",");
+    var indexes = [];
+    var seen = new Set();
+    for (var i = 0; i < segments.length; i += 1) {
+      var parsed = parseIntegerValue(segments[i]);
+      if (!Number.isFinite(parsed) || parsed < 0 || seen.has(parsed)) continue;
+      seen.add(parsed);
+      indexes.push(parsed);
+    }
+    return indexes;
+  }
+
+  function serializeOpenDetailsIndexList(indexes) {
+    if (!Array.isArray(indexes) || !indexes.length) return "";
+    return indexes.join(",");
+  }
+
+  function collectOpenDetailsIndexes() {
+    var openIndexes = [];
+    var detailsNodes = Array.prototype.slice.call(document.querySelectorAll("details"));
+    for (var i = 0; i < detailsNodes.length; i += 1) {
+      if (detailsNodes[i] && detailsNodes[i].open) {
+        openIndexes.push(i);
+      }
+    }
+    return openIndexes;
+  }
+
+  function applyOpenDetailsIndexes(indexes) {
+    if (!Array.isArray(indexes) || !indexes.length) return false;
+    var detailsNodes = Array.prototype.slice.call(document.querySelectorAll("details"));
+    if (!detailsNodes.length) return false;
+    var openIndexSet = new Set(indexes);
+    for (var i = 0; i < detailsNodes.length; i += 1) {
+      detailsNodes[i].open = openIndexSet.has(i);
+    }
+    return true;
+  }
+
+  function clearFreezeTargetParams(urlObj) {
+    if (!urlObj || !(urlObj instanceof URL)) return;
+    urlObj.searchParams.delete(TARGET_FREEZE_FLAG_PARAM);
+    urlObj.searchParams.delete(TARGET_FREEZE_SCROLL_X_PARAM);
+    urlObj.searchParams.delete(TARGET_FREEZE_SCROLL_Y_PARAM);
+    urlObj.searchParams.delete(TARGET_FREEZE_OPEN_DETAILS_PARAM);
+  }
+
+  function buildCurrentPageTargetLink(options) {
+    var opts = options && typeof options === "object" ? options : {};
+    var freeze = opts.freeze === true;
+    var pageUrl = null;
+    try {
+      pageUrl = new URL(window.location.href);
+    } catch (_err) {
+      return window.location.href;
+    }
+    clearFreezeTargetParams(pageUrl);
+    if (freeze) {
+      var scrollX = Math.max(0, Math.round(window.scrollX || window.pageXOffset || 0));
+      var scrollY = Math.max(0, Math.round(window.scrollY || window.pageYOffset || 0));
+      pageUrl.searchParams.set(TARGET_FREEZE_FLAG_PARAM, TARGET_FREEZE_STATUS_VALUE);
+      pageUrl.searchParams.set(TARGET_FREEZE_SCROLL_X_PARAM, String(scrollX));
+      pageUrl.searchParams.set(TARGET_FREEZE_SCROLL_Y_PARAM, String(scrollY));
+      var openDetailsIndexes = collectOpenDetailsIndexes();
+      if (openDetailsIndexes.length) {
+        pageUrl.searchParams.set(
+          TARGET_FREEZE_OPEN_DETAILS_PARAM,
+          serializeOpenDetailsIndexList(openDetailsIndexes)
+        );
+      }
+    }
+    return pageUrl.toString();
+  }
+
+  function readFreezeTargetStateFromCurrentUrl() {
+    var pageUrl = null;
+    try {
+      pageUrl = new URL(window.location.href);
+    } catch (_err) {
+      return null;
+    }
+    var freezeFlagRaw = String(pageUrl.searchParams.get(TARGET_FREEZE_FLAG_PARAM) || "")
+      .trim()
+      .toLowerCase();
+    var hasFreezeSignal =
+      freezeFlagRaw === TARGET_FREEZE_STATUS_VALUE ||
+      freezeFlagRaw === "true" ||
+      pageUrl.searchParams.has(TARGET_FREEZE_SCROLL_X_PARAM) ||
+      pageUrl.searchParams.has(TARGET_FREEZE_SCROLL_Y_PARAM) ||
+      pageUrl.searchParams.has(TARGET_FREEZE_OPEN_DETAILS_PARAM);
+    if (!hasFreezeSignal) return null;
+    var scrollX = parseIntegerValue(pageUrl.searchParams.get(TARGET_FREEZE_SCROLL_X_PARAM));
+    var scrollY = parseIntegerValue(pageUrl.searchParams.get(TARGET_FREEZE_SCROLL_Y_PARAM));
+    var openDetailIndexes = parseOpenDetailsIndexList(
+      pageUrl.searchParams.get(TARGET_FREEZE_OPEN_DETAILS_PARAM)
+    );
+    return {
+      scrollX: scrollX,
+      scrollY: scrollY,
+      openDetailIndexes: openDetailIndexes
+    };
+  }
+
+  function applyFreezeTargetState(state) {
+    if (!state) return;
+    if (state.openDetailIndexes && state.openDetailIndexes.length) {
+      applyOpenDetailsIndexes(state.openDetailIndexes);
+    }
+    var hasScrollX = Number.isFinite(state.scrollX);
+    var hasScrollY = Number.isFinite(state.scrollY);
+    if (!hasScrollX && !hasScrollY) return;
+    var nextX = hasScrollX
+      ? Math.max(0, state.scrollX)
+      : Math.max(0, Math.round(window.scrollX || window.pageXOffset || 0));
+    var nextY = hasScrollY
+      ? Math.max(0, state.scrollY)
+      : Math.max(0, Math.round(window.scrollY || window.pageYOffset || 0));
+    window.scrollTo({ left: nextX, top: nextY, behavior: "auto" });
+  }
+
+  function scheduleFreezeTargetRestore() {
+    var state = readFreezeTargetStateFromCurrentUrl();
+    if (!state) return;
+    var restore = function () {
+      applyFreezeTargetState(state);
+    };
+    window.setTimeout(restore, 0);
+    window.setTimeout(restore, 40);
+    window.setTimeout(restore, 180);
+    window.setTimeout(restore, 420);
+  }
+
+  function initializeFreezeTargetRestore() {
+    var schedule = function () {
+      window.setTimeout(scheduleFreezeTargetRestore, 0);
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", schedule);
+    } else {
+      schedule();
+    }
+    window.addEventListener("load", schedule);
+    window.addEventListener("pageshow", schedule);
+  }
+
   function readSavedTitlePresets() {
     try {
       var raw = window.localStorage.getItem(TITLE_PRESET_STORAGE_KEY);
@@ -520,6 +686,18 @@
   function resolveProjectUpdateTemplateSlugForTitle(titleText) {
     var normalizedTitle = String(titleText || "").trim().toLowerCase();
     if (!normalizedTitle) return "update";
+    var normalizedTitleKey = buildTemplateRoutingTitleKey(normalizedTitle);
+    var titleKeys = Object.keys(PROJECT_UPDATE_PRESET_TEMPLATE_SLUG_BY_TITLE);
+    for (var titleIdx = 0; titleIdx < titleKeys.length; titleIdx += 1) {
+      var titleKey = normalizeTitlePreset(titleKeys[titleIdx]);
+      if (!titleKey) continue;
+      if (
+        normalizedTitle === titleKey.toLowerCase() ||
+        normalizedTitleKey === buildTemplateRoutingTitleKey(titleKey)
+      ) {
+        return PROJECT_UPDATE_PRESET_TEMPLATE_SLUG_BY_TITLE[titleKey] || "update";
+      }
+    }
     for (var i = 0; i < ELECTRICAL_TITLE_VARIANTS.length; i += 1) {
       var variant = String(ELECTRICAL_TITLE_VARIANTS[i] || "").trim();
       if (!variant) continue;
@@ -527,6 +705,13 @@
       if (normalizedTitle === normalizedVariant || normalizedTitle.endsWith(" " + normalizedVariant)) {
         return PROJECT_UPDATE_PRESET_TEMPLATE_SLUG_BY_VARIANT[variant] || "update";
       }
+    }
+    if (
+      normalizedTitleKey.indexOf("cherry") !== -1 &&
+      normalizedTitleKey.indexOf("electrical") !== -1 &&
+      normalizedTitleKey.indexOf("intelligence") !== -1
+    ) {
+      return "update-cherry-ave-electrical-energy-intelligence";
     }
     return "update";
   }
@@ -566,6 +751,30 @@
       return "monthly-report";
     }
     return "monthly";
+  }
+  function resolvePrivateTemplateSlugForTitle(titleText) {
+    var normalizedTitle = normalizeTitlePreset(titleText).toLowerCase();
+    if (!normalizedTitle) return "private";
+    var normalizedTitleKey = buildTemplateRoutingTitleKey(normalizedTitle);
+    var titleKeys = Object.keys(PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE);
+    for (var i = 0; i < titleKeys.length; i += 1) {
+      var titleKey = normalizeTitlePreset(titleKeys[i]);
+      if (!titleKey) continue;
+      if (
+        normalizedTitle === titleKey.toLowerCase() ||
+        normalizedTitleKey === buildTemplateRoutingTitleKey(titleKey)
+      ) {
+        return PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE[titleKey] || "private";
+      }
+    }
+    if (
+      normalizedTitleKey.indexOf("2025") !== -1 &&
+      normalizedTitleKey.indexOf("cherry") !== -1 &&
+      normalizedTitleKey.indexOf("regulatory") !== -1
+    ) {
+      return "private";
+    }
+    return "private";
   }
 
   function normalizeAccessId(value) {
@@ -674,6 +883,8 @@
       templateSlug = resolveProjectUpdateTemplateSlugForTitle(selectedTitle);
     } else if (selected.key === "monthly-report") {
       templateSlug = resolveMonthlyTemplateSlugForTitle(selectedTitle);
+    } else if (selected.key === "private-confidential") {
+      templateSlug = resolvePrivateTemplateSlugForTitle(selectedTitle);
     } else if (selected.key === "maxwellian-news") {
       templateSlug = resolveMaxwellianTemplateSlugForTitle(selectedTitle);
     }
@@ -829,7 +1040,7 @@
     hotspot.style.top = GLOBAL_HOTSPOT.top;
     hotspot.style.width = GLOBAL_HOTSPOT.sizeDesktopPx + "px";
     hotspot.style.height = GLOBAL_HOTSPOT.sizeDesktopPx + "px";
-    hotspot.style.borderRadius = "999px";
+    hotspot.style.borderRadius = "8px";
     hotspot.style.border = "0";
     hotspot.style.padding = "0";
     hotspot.style.margin = "0";
@@ -892,6 +1103,7 @@
       + "  </div>"
       + "  <div class=\"uefsp-actions\">"
       + "    <button type=\"button\" class=\"uefsp-btn\" id=\"uefspUseCurrentBtn\">Use current page</button>"
+      + "    <button type=\"button\" class=\"uefsp-btn\" id=\"uefspFreezePageBtn\">Freeze page here</button>"
       + "  </div>"
       + "  <div class=\"uefsp-row\">"
       + "    <label class=\"uefsp-label\" for=\"uefspTitlePresetSelect\">Title preset</label>"
@@ -920,6 +1132,7 @@
     var typeSelect = document.getElementById("uefspTypeSelect");
     var targetInput = document.getElementById("uefspTargetInput");
     var useCurrentBtn = document.getElementById("uefspUseCurrentBtn");
+    var freezePageBtn = document.getElementById("uefspFreezePageBtn");
     var titlePresetSelect = document.getElementById("uefspTitlePresetSelect");
     var titleInput = document.getElementById("uefspTitleInput");
     var copyLinkBtn = document.getElementById("uefspCopyLinkBtn");
@@ -1005,7 +1218,7 @@
       return didSave;
     }
 
-    targetInput.value = window.location.href;
+    targetInput.value = buildCurrentPageTargetLink({ freeze: false });
     typeSelect.value = "website";
     syncPresetStateFromTarget({ preserveCurrentTitle: false });
     seedDailyCounterFromCurrentPage();
@@ -1181,11 +1394,19 @@
     });
 
     useCurrentBtn.addEventListener("click", function () {
-      targetInput.value = window.location.href;
+      targetInput.value = buildCurrentPageTargetLink({ freeze: false });
       seedDailyCounterFromCurrentPage();
       syncPresetStateFromTarget({ preserveCurrentTitle: true });
       setStatus("Target set to current page.");
     });
+    if (freezePageBtn) {
+      freezePageBtn.addEventListener("click", function () {
+        targetInput.value = buildCurrentPageTargetLink({ freeze: true });
+        seedDailyCounterFromCurrentPage();
+        syncPresetStateFromTarget({ preserveCurrentTitle: true });
+        setStatus("Target frozen at this page position.");
+      });
+    }
 
     targetInput.addEventListener("change", function () {
       syncPresetStateFromTarget({ preserveCurrentTitle: true });
@@ -1247,6 +1468,8 @@
         openPanelFromHiddenHotspot();
       });
     }
+    // Unity Hero page keeps the special in-hero hotspot only.
+    // Every other page gets the global fixed 50x50 top-right hotspot.
     if (requireStealthUnlock) {
       var homepageHotspot = createHomepageFounderHotspot();
       if (homepageHotspot) {
@@ -1263,6 +1486,7 @@
     refreshUiState();
   }
 
+  initializeFreezeTargetRestore();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", mountPanel);
   } else {

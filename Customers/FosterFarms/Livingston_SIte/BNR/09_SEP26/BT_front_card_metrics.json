@@ -1,0 +1,107 @@
+{
+  "month": "09_SEP26",
+  "group": "BNR",
+  "source_policy": "energy_dashboard annual_waste_cost + avg_voltage/PF; aliases for resolver",
+  "transformers": {
+    "BNR-1": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 88.9,
+      "field_consequence_annual": 301406,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-1.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "BNR1": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 88.9,
+      "field_consequence_annual": 301406,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-1.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "BNR_1": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 88.9,
+      "field_consequence_annual": 301406,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-1.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "bnr-1": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 88.9,
+      "field_consequence_annual": 301406,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-1.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "bnr1": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 88.9,
+      "field_consequence_annual": 301406,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-1.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "BNR-2": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 96.0,
+      "field_consequence_annual": 1194,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-2.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "BNR2": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 96.0,
+      "field_consequence_annual": 1194,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-2.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "BNR_2": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 96.0,
+      "field_consequence_annual": 1194,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-2.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "bnr-2": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 96.0,
+      "field_consequence_annual": 1194,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-2.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "bnr2": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 96.0,
+      "field_consequence_annual": 1194,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_BNR-2.json",
+      "built_at": "2026-10-13T14:46:16"
+    }
+  }
+}

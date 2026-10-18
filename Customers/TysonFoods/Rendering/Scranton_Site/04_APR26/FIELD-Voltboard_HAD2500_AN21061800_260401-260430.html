@@ -244,21 +244,21 @@
   </style>
 <script>
   window.__UNITY_VOLT_DASHBOARD_DATA__ = {
-  "nominal_voltage": 475.6853930780692,
+  "nominal_voltage": 480.0,
   "transformer_name": "HAD2500",
   "transformer_capacity": 2500.0,
-  "voltage_avg": 476.49057390898025,
-  "min_voltage": 467.4386,
-  "max_voltage": 492.4451666666666,
-  "voltage_std": 19.98818472758853,
-  "voltage_spread": 25.006566666666572,
-  "power_factor": 0.9632333303601083,
-  "vhi_avg": 1.0016926751223132,
-  "vhi_max": 1.0352328951707936,
+  "voltage_avg": 480.0,
+  "min_voltage": 480.0,
+  "max_voltage": 480.0,
+  "voltage_std": 0.0,
+  "voltage_spread": 0.0,
+  "power_factor": 0.9649438817361267,
+  "vhi_avg": 1.0,
+  "vhi_max": 1.0,
   "vhi_high_events": 0,
   "voltage_dip_count": 0,
-  "pct_below_nominal": 75.75925925925927,
-  "estimated_running_amps": 1577.112121486216,
+  "pct_below_nominal": 0.0,
+  "estimated_running_amps": 1579.7816599393543,
   "vhi_threshold": 5.0,
   "lrc_multiplier": 6.0,
   "data_resolution": "1minRES",
@@ -272,25 +272,25 @@
       "id": "G1",
       "group_id": "G1",
       "drop_count": 0,
-      "voltage_range": "467.4-492.4V",
-      "amp_range": "0.0-2211.0A",
-      "delta_v": 0.8051808309110697,
-      "est_stall_amps": 1577.112121486216,
+      "voltage_range": "480.0-480.0V",
+      "amp_range": "154.5-2211.0A",
+      "delta_v": 0.0,
+      "est_stall_amps": 1579.7816599393543,
       "estimated_hp": 0,
       "classification": "Normal",
       "risk": "Normal",
       "days": 30,
-      "center_v": 476.49057390898025,
-      "min_v": 467.4386,
-      "max_v": 492.4451666666666,
-      "avg_amps": 1577.112121486216,
+      "center_v": 480.0,
+      "min_v": 480.0,
+      "max_v": 480.0,
+      "avg_amps": 1579.7816599393543,
       "lrc_factor": 6.0,
-      "power_factor": 0.9632333303601083,
+      "power_factor": 0.9649438817361267,
       "efficiency": 0.92
     }
   ],
-  "voltage_center": 476.49057390898025,
-  "delta_v_primary": 0.8051808309110697
+  "voltage_center": 480.0,
+  "delta_v_primary": 0.0
 };
 </script>
 </head>
@@ -316,22 +316,22 @@
     <div class="metrics-grid" id="metricsGrid">
       <div class="metric-item">
         <div class="metric-label">Average Voltage</div>
-        <div class="metric-value" id="metric-avg-voltage">476.5 V</div>
+        <div class="metric-value" id="metric-avg-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Minimum Voltage</div>
-        <div class="metric-value" id="metric-min-voltage">467.4 V</div>
+        <div class="metric-value" id="metric-min-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Maximum Voltage</div>
-        <div class="metric-value" id="metric-max-voltage">492.4 V</div>
+        <div class="metric-value" id="metric-max-voltage">480.0 V</div>
       </div>
       
       <div class="metric-item">
         <div class="metric-label">Voltage Spread</div>
-        <div class="metric-value" id="metric-voltage-std">25.0 V</div>
+        <div class="metric-value" id="metric-voltage-std">0.0 V</div>
       </div>
 
       <div class="metric-item">
@@ -341,7 +341,7 @@
       
       <div class="metric-item">
         <div class="metric-label">VHI (Max)</div>
-        <div class="metric-value" id="metric-vhi-max">1.04</div>
+        <div class="metric-value" id="metric-vhi-max">1.00</div>
       </div>
       
       <div class="metric-item">
@@ -351,7 +351,7 @@
       
       <div class="metric-item">
         <div class="metric-label">% Below Nominal (480V)</div>
-        <div class="metric-value" id="metric-below-nominal">75.8%</div>
+        <div class="metric-value" id="metric-below-nominal">0.0%</div>
       </div>
     </div>
   </div>
@@ -411,7 +411,7 @@
       
       <div class="param-item">
         <div class="param-label">Power Factor Default</div>
-        <div class="param-value" id="param-power-factor">0.963</div>
+        <div class="param-value" id="param-power-factor">0.965</div>
       </div>
       
       <div class="param-item">
@@ -463,7 +463,7 @@
       }
 
       console.log('Loading voltage data from JSON...');
-      const response = await fetch('dashboard_data_HAD2500.json');
+      const response = await fetch('volt_dashboard_data_HAD2500.json');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

@@ -17,7 +17,10 @@ window.MAXWELLIAN_HUME = {
   default_context_source: "general",
   default_ui_mode: "modal",
   // Voice stack selector for widget routing.
-  voice_engine: "hume",
+  // COVE_INSTRUCT_261004r0 — Phase 1 eWebmaster only: GPT Live default.
+  // Hume path retained for A/B/rollback (set voice_engine: "openai" or launch preference).
+  // DO NOT PROMOTE to uewebsite without Mike command.
+  voice_engine: "openai",
   // Diagnostics can be re-enabled for troubleshooting, but default is off in normal operation.
   show_session_diagnostics: false,
   // Optional: show one subtle Unity message at the bottom of the modal.
@@ -33,7 +36,7 @@ window.MAXWELLIAN_HUME = {
   ],
   unity_footer_rotate_seconds: 15,
   floating_launcher_enabled: true,
-  floating_launcher_blocked_pages: ["contact-us"],
+  floating_launcher_blocked_pages: [],
   floating_launcher_tooltip: "Meet with Clerk",
   floating_launcher_icon_url: "assets/images/ClerkMaxwell_60423t.png",
   floating_launcher_context_mode: "technical-follow-up",
@@ -88,6 +91,13 @@ window.MAXWELLIAN_HUME = {
   knowledge_reference_spine:
     "Canonical MPTS definition: M P T S (Maximum Power Transfer Solution) is Unity Energy’s AC field harmonization method that lives in the Manage layer of Measure-Manage-Exchange. M P T S uses dynamic tuner architecture ('copper-computer' tuners) distributed in the energy field to reduce reactive burden and harmonic distortion at the load, stabilize power factor, recover usable capacity, and lower thermal burden without disruptive infrastructure replacement.",
   content_awareness_mode: true,
+  clerk_onboard_enabled: true,
+  clerk_onboard_refresh_on_launch: true,
+  clerk_onboard_primer_url:
+    "maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md?v=20260803r1",
+  clerk_onboard_primer_file:
+    "eestream/eWebmaster/UnityEnergy/maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md",
+  clerk_onboard_primer_char_limit: 2600,
   content_grounding_policy:
     "Treat launch context, active page context, and selected skill-pack excerpts as the only authoritative sources for factual Unity claims. Do not invent customer names, deployment outcomes, pricing terms, performance guarantees, utility commitments, policy claims, or statistics that are not present in provided context.",
   unknown_answer_fallback:
@@ -98,6 +108,7 @@ window.MAXWELLIAN_HUME = {
   content_awareness_allowed_files: [
     "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
     "eestream/eWebmaster/UnityEnergy/hume_character_config.js",
+    "eestream/eWebmaster/UnityEnergy/maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md",
   ],
   content_awareness_page_source_files: {
     index: [
@@ -1050,23 +1061,27 @@ window.MAXWELLIAN_HUME = {
   // Lock this modal to Clerk only (ignore runtime character overrides).
   lock_character_to_default: true,
   // Use branded launch gate so the renderer pre-session card stays hidden behind Clerk UI.
-  use_unity_start_gate: true,
+  use_unity_start_gate: false, // Live/Vesper: desktop simple path — renderer requests mic
   unity_launch_ring_image_url: "assets/images/ClerkMaxwell_60423t.png",
   // Keep desktop launch simple: let the realtime renderer request mic directly.
-  preflight_microphone_on_launch: true,
+  preflight_microphone_on_launch: false, // renderer getUserMedia on connect
   // OpenAI cognition defaults (used as text-generation guidance).
   // Keep false unless a production OpenAI realtime session backend is available.
   // Emergency public fallback: allow direct Hume connect attempts when runtime auth bootstrap is unavailable.
-  hume_runtime_auth_endpoint: "/api/hume/runtime-auth",
+  // Absolute production endpoint first so Cognition Partner pathing cannot resolve relative /api to a 404.
+  hume_runtime_auth_endpoint: "https://unityenergy.com/api/hume/runtime-auth",
   allow_hume_authless_connect: true,
   allow_openai_fallback: false,
   openai_session_endpoint: "/api/openai/realtime/session",
-  openai_realtime_model: "gpt-4o-realtime-preview",
-  openai_voice: "ash",
-  openai_voice_instruction_set:
-    "Cognition-text mode only. Produce clear speech-ready text for downstream voice rendering. Do not include performance directions, pseudo-voice punctuation, or accent instructions in generated responses.",
-  openai_voice_style_hint:
-    "Generate clean, calm, instructional response text suitable for spoken delivery by the voice layer.",
+  openai_embed_url: "./openai_renderer/index.html?v=20261011-vesper-live-15",
+  openai_realtime_model: "gpt-live-1",
+  // Phase 1 native OpenAI live voice: ash = credible mature male (not final Clerk acoustic lock).
+  openai_voice: "vesper",
+  cognition_text_mode: true,
+  cognition_text_mod_source: "assets/clerk/knowledge/CLERK_VOICE_TEXT_MOD.md",
+  openai_voice_instruction_set: "Clerk Maxwell is an exceptionally intelligent, thoughtful, charming, and quietly humorous Scottish gentleman, born in Edinburgh in 1831 and raised at Glenlair, his family's country estate in southwestern Scotland. His full name is James Clerk Maxwell. His identity draws from one of history's most extraordinary scientific minds, yet he is approachable, naturally curious, modest, and deeply interested in the people around him.\n\nAs a child he was fascinated by how things worked. Educated in Edinburgh and at Cambridge, he became a mathematician, physicist, teacher, and philosopher of nature. His great insight revealed the unity of electricity, magnetism, and light. But Clerk does not lead with accomplishments: he would rather discuss an observation, explore an unusual question, or help another person discover an answer.\n\nHe is a nineteenth-century gentleman with the conversational freedom of the twenty-first century. His voice has the cultivated character of Edinburgh, gentle Scottish musicality, precise diction, warmth, and unhurried confidence. His wit is dry, spontaneous, and understated; he appreciates irony and can laugh at himself. He never performs comedy.\n\nClerk is fond of curious minds: engineers, entrepreneurs, scientists, historians, students, and anyone trying to understand the world. When explaining complex topics he begins with familiar observations and physical examples, then adds mathematics only when useful. He enjoys Faraday, electromagnetism, electrical load fields, motors, transformers, the history of science, literature, poetry, and philosophy.\n\nClerk serves as Unity Energy's intellectual host, helping people understand industrial electrical behavior through measurement, observation, engineering, and careful reasoning. He is intrigued by today's ability to continuously observe phenomena that his historical inspiration could investigate only through experiments, instruments, and mathematics. He distinguishes physical laws, measured evidence, engineering interpretation, and hypothesis. He never exaggerates Unity Energy's capabilities or implies that its technology changes physics. He is not a salesman.\n\nHe listens attentively, allows others to finish, understands humor, and follows the conversation rather than delivering prepared speeches. He does not constantly offer help or end every answer with a question. He is comfortable with thoughtful pauses. When uncertain, he admits it and investigates. He is a modern AI character inspired by the historical Maxwell, not Maxwell resurrected; he does not invent firsthand memories or experiences.\n\nVOICE DIRECTION: Mature educated Edinburgh Scottish male; warm, resonant, articulate, lightly amused, naturally conversational. Measured, not slow or theatrical. Subtle humor and curiosity; no caricatured dialect, repetitive pleasantries, lecturing, or artificial enthusiasm.",
+  openai_voice_style_hint: "Speak as Clerk Maxwell (Vesper): mature educated Edinburgh Scottish male; warm, resonant, articulate, lightly amused, naturally conversational; measured not theatrical; dry understated wit; no caricatured dialect or artificial enthusiasm.",
+
   openai_center_visual_url: "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
   contact_page_auto_greeting_text:
     "I hope you enjoyed the visit. Is there anything else I can show you before you contact our team?",
@@ -1110,7 +1125,8 @@ window.MAXWELLIAN_HUME = {
       character_name: "Clerk Maxwell",
       character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "assets/images/ClerkMaxwell_60423t.png",
-      config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
+      hume_config_id: "316eb863-97d3-4708-9dba-ccd6e3d21265",
+      config_id: "316eb863-97d3-4708-9dba-ccd6e3d21265",
       voice_id: "316eb863-97d3-4708-9dba-ccd6e3d21265",
 
       session_variables: {

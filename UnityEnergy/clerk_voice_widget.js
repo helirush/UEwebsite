@@ -1,3 +1,161 @@
+
+  function resolveLiveSessionEndpoint(preferred) {
+    var preferredText = (preferred && String(preferred).trim()) || "";
+    var path = preferredText || "/api/openai/live/session";
+    try {
+      var host = (window.location && window.location.hostname) || "127.0.0.1";
+      var port = (window.location && window.location.port) || "";
+      var protocol = (window.location && window.location.protocol) || "http:";
+      // file:// or plain static ports should hit the realtime server on 8600
+      if (protocol === "file:" || (port && port !== "8600" && (host === "127.0.0.1" || host === "localhost"))) {
+        if (path.charAt(0) === "/") {
+          return "http://127.0.0.1:8600" + path;
+        }
+      }
+    } catch (_e) {}
+    return path;
+  }
+
+  // CLERK_TRAVELER_FLOAT_V1 — persistent traveler across Unity pages
+  const CLERK_TRAVELER_FLOAT_V1 = true;
+  const CLERK_TRAVELER_ACTIVE_KEY = "maxwellian_clerk_traveler_active_v1";
+  const CLERK_TRAVELER_ACTIVE_TTL_MS = 1000 * 60 * 45;
+
+  function markClerkTravelerActive(extra) {
+    try {
+      const payload = Object.assign(
+        {
+          active: true,
+          updatedAtMs: Date.now(),
+          page: String((window.location && window.location.pathname) || ""),
+        },
+        extra && typeof extra === "object" ? extra : {}
+      );
+      window.sessionStorage.setItem(CLERK_TRAVELER_ACTIVE_KEY, JSON.stringify(payload));
+      try {
+        window.localStorage.setItem(CLERK_TRAVELER_ACTIVE_KEY, JSON.stringify(payload));
+      } catch (_e) {}
+    } catch (_err) {}
+  }
+
+  function clearClerkTravelerActive() {
+    try { window.sessionStorage.removeItem(CLERK_TRAVELER_ACTIVE_KEY); } catch (_e) {}
+    try { window.localStorage.removeItem(CLERK_TRAVELER_ACTIVE_KEY); } catch (_e) {}
+  }
+
+  function readClerkTravelerActive() {
+    const parse = function (raw) {
+      if (!raw) return null;
+      try {
+        const obj = JSON.parse(raw);
+        if (!obj || obj.active !== true) return null;
+        const ts = Number(obj.updatedAtMs || 0);
+        if (!Number.isFinite(ts) || Date.now() - ts > CLERK_TRAVELER_ACTIVE_TTL_MS) return null;
+        return obj;
+      } catch (_e) {
+        return null;
+      }
+    };
+    try {
+      const s = parse(window.sessionStorage.getItem(CLERK_TRAVELER_ACTIVE_KEY));
+      if (s) return s;
+    } catch (_e) {}
+    try {
+      return parse(window.localStorage.getItem(CLERK_TRAVELER_ACTIVE_KEY));
+    } catch (_e2) {
+      return null;
+    }
+  }
+
+  function resolveMaxwellianLibraryApiBase() {
+    try {
+      const host = (window.location && window.location.hostname) || "127.0.0.1";
+      const port = (window.location && window.location.port) || "";
+      const protocol = (window.location && window.location.protocol) || "http:";
+      if (protocol === "file:" || (port && port !== "8600" && (host === "127.0.0.1" || host === "localhost"))) {
+        return "http://127.0.0.1:8600";
+      }
+      if (port === "8600") return protocol + "//" + host + ":" + port;
+      return "";
+    } catch (_e) {
+      return "http://127.0.0.1:8600";
+    }
+  }
+
+  let maxwellianMasterBriefCache = null;
+  let maxwellianMasterBriefFetchedAtMs = 0;
+  let maxwellianMasterBriefPromise = null;
+  const MAXWELLIAN_MASTER_BRIEF_TTL_MS = 1000 * 60 * 10;
+
+  function fetchMaxwellianMasterBrief(options) {
+    const opts = options && typeof options === "object" ? options : {};
+    const force = Boolean(opts.force);
+    const now = Date.now();
+    if (
+      !force &&
+      maxwellianMasterBriefCache &&
+      maxwellianMasterBriefCache.text &&
+      now - maxwellianMasterBriefFetchedAtMs < MAXWELLIAN_MASTER_BRIEF_TTL_MS
+    ) {
+      return Promise.resolve(maxwellianMasterBriefCache);
+    }
+    if (!force && maxwellianMasterBriefPromise) return maxwellianMasterBriefPromise;
+    const bases = [];
+    const primaryBase = resolveMaxwellianLibraryApiBase();
+    if (primaryBase) bases.push(primaryBase);
+    bases.push("");
+    bases.push("http://127.0.0.1:8600");
+    const paths = [];
+    bases.forEach(function (b) {
+      const p = (b || "") + "/api/maxwellian/library/master-brief";
+      if (paths.indexOf(p) < 0) paths.push(p);
+    });
+    paths.push("maxwellian/briefs/LIVING_Unity_What_We_Do.md");
+    paths.push("/UnityEnergy/maxwellian/briefs/LIVING_Unity_What_We_Do.md");
+    paths.push("./maxwellian/briefs/LIVING_Unity_What_We_Do.md");
+
+    maxwellianMasterBriefPromise = paths
+      .reduce(function (chain, url) {
+        return chain.catch(function () {
+          return fetch(url, { credentials: "same-origin" }).then(function (resp) {
+            if (!resp || !resp.ok) throw new Error("brief_http_" + (resp && resp.status));
+            const ctype = String((resp.headers && resp.headers.get("content-type")) || "");
+            if (ctype.indexOf("application/json") >= 0) {
+              return resp.json().then(function (payload) {
+                if (!payload || !payload.ok || !payload.text) throw new Error("brief_json_invalid");
+                return {
+                  text: String(payload.text),
+                  source: payload.source || url,
+                  authority: payload.authority || "MaxwellianLibrary_master",
+                };
+              });
+            }
+            return resp.text().then(function (text) {
+              const body = String(text || "").trim();
+              if (!body || body.length < 40) throw new Error("brief_empty");
+              return { text: body.slice(0, 12000), source: url, authority: "static_mirror" };
+            });
+          });
+        });
+      }, Promise.reject(new Error("start")))
+      .then(function (result) {
+        maxwellianMasterBriefCache = result;
+        maxwellianMasterBriefFetchedAtMs = Date.now();
+        maxwellianMasterBriefPromise = null;
+        return result;
+      })
+      .catch(function (err) {
+        maxwellianMasterBriefPromise = null;
+        return {
+          text: "",
+          source: "",
+          authority: "unavailable",
+          error: String((err && err.message) || err || "brief_fetch_failed"),
+        };
+      });
+    return maxwellianMasterBriefPromise;
+  }
+
 (function () {
   let frameLoadTimer = null;
   let frameMessagingBound = false;
@@ -59,6 +217,9 @@
   let activePagePatternContextCacheKey = "";
   let activePagePatternContextFetchedAtMs = 0;
   let activePagePatternContextPromise = null;
+  let clerkOnboardPrimerCache = null;
+  let clerkOnboardPrimerCacheFetchedAtMs = 0;
+  let clerkOnboardPrimerPromise = null;
   let electricalStoryQuestionCount = 0;
   let electricalStoryQuestionCap = 0;
   let electricalStoryExitPromptActive = false;
@@ -89,6 +250,8 @@
   const PAGE_CONTEXT_MEMORY_STORAGE_KEY_PREFIX = "maxwellian_clerk_page_context_memory_v1";
   const PATTERN_CONTEXT_PREFETCH_TTL_MS = 1000 * 60 * 10;
   const PATTERN_CONTEXT_PREFETCH_LAUNCH_BUDGET_MS = 360;
+  const CLERK_ONBOARD_PRIMER_TTL_MS = 1000 * 60 * 10;
+  const CLERK_ONBOARD_PRIMER_CONTEXT_CHAR_LIMIT = 2600;
   const CROSS_PAGE_ROAMING_MAX_TRANSCRIPT_ENTRIES = 10;
   const CROSS_PAGE_ROAMING_STATE_TTL_MS = 1000 * 60 * 45;
   const CROSS_PAGE_ROAMING_RESUME_DELAY_MS = 180;
@@ -919,7 +1082,11 @@
         prefixes.push(firstSegmentPrefix);
       }
     }
-    return prefixes;
+    // FILTER_CP_PREFIXES: avoid /CognitionPartner/api and /UnityEnergy/api 404s on local static host
+    return prefixes.filter(function (p) {
+      const s = String(p || "");
+      return s.indexOf("/CognitionPartner") === -1 && s.indexOf("/UnityEnergy") === -1;
+    });
   }
 
   function buildRuntimeAuthEndpointCandidates(cfgOrOptions) {
@@ -954,10 +1121,11 @@
         coerceText(window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT)
       );
     }
-    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth");
-    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth.json");
+    // Prefer root-absolute auth first. Relative ../api resolves under /CognitionPartner and 404s.
     appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth");
     appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth.json");
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth");
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth.json");
     const pathPrefixes = getRuntimeAuthEndpointPathPrefixes();
     pathPrefixes.forEach(function (prefix) {
       appendRuntimeAuthEndpointCandidate(candidates, `${prefix}/api/hume/runtime-auth`);
@@ -1264,10 +1432,10 @@
       ],
       character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "",
-      embed_url: "/UnityEnergy/openai_renderer/index.html?v=20260423r5",
+      embed_url: "./openai_renderer/index.html?v=20261011-vesper-live-15",
       openai_session_endpoint: "/api/openai/realtime/session",
-      openai_realtime_model: "gpt-4o-realtime-preview",
-      openai_voice: "ash",
+      openai_realtime_model: "gpt-live-1",
+      openai_voice: "vesper",
       allow_openai_fallback: false,
       allow_openai_voice_fallback: false,
       openai_center_visual_url: "/UnityEnergy/assets/images/ClerkMaxwell_60423t.png",
@@ -1539,7 +1707,7 @@
     if (embedUrl && /\/hume_renderer\//i.test(embedUrl)) {
       return embedUrl.replace(/\/hume_renderer\//i, "/openai_renderer/");
     }
-    return "/UnityEnergy/openai_renderer/index.html?v=20260423r5";
+    return "./openai_renderer/index.html?v=20261011-vesper-live-15";
   }
 
   function buildOpenAiFallbackConfig(cfg) {
@@ -4175,6 +4343,11 @@
     };
   }
 
+  function resolveGuideScope(cfg, scopeRef) {
+    // Compatibility wrapper (traveler-float call sites used cfg-first order).
+    return resolveGuideScopeReference(scopeRef, cfg);
+  }
+
   function resolveGuideScopeReference(scopeInput, cfg) {
     const source = scopeInput && typeof scopeInput === "object" ? scopeInput : {};
     const payload =
@@ -4267,11 +4440,18 @@
   }
 
   function shouldEnableCrossPageRoaming(cfg, scopeRef) {
+    // Traveler float: default ON for Unity site unless explicitly disabled.
+    if (cfg && cfg.cross_page_roaming_enabled === false) return false;
+    if (cfg && cfg.clerk_traveler_float_enabled === false) return false;
     const scope = resolveGuideScopeReference(scopeRef, cfg);
-    if (scope.guideMode === "customer") {
+    if (scope === "customer") {
+      // Customer guides still roam when customer guide is enabled.
+      if (isCustomerGuideEnabled(cfg)) return true;
+      // If traveler already active, keep following even when guide flags lag.
+      if (readClerkTravelerActive()) return true;
       return isCustomerGuideEnabled(cfg);
     }
-    return !cfg || cfg.cross_page_roaming_enabled !== false;
+    return true;
   }
 
   function shouldAutoResumeCrossPageRoaming(cfg, scopeRef) {
@@ -4639,6 +4819,7 @@
       transcriptEntries: previous && Array.isArray(previous.transcriptEntries) ? previous.transcriptEntries : [],
       updatedAt: new Date().toISOString(),
     };
+    try { markClerkTravelerActive({ reason: "roaming_activated" }); } catch (_e) {}
     writeCrossPageRoamingState(nextState, scope, cfg);
   }
 
@@ -4677,6 +4858,7 @@
     state.context = context;
     state.mode = mode;
     state.updatedAt = new Date().toISOString();
+    try { markClerkTravelerActive({ reason: "page_transition" }); } catch (_e) {}
     writeCrossPageRoamingState(state, launchSession, cfg);
   }
 
@@ -4750,28 +4932,65 @@
 
   function maybeResumeCrossPageRoamingOnLoad() {
     const cfg = getVoiceConfig();
-    if (!shouldAutoResumeCrossPageRoaming(cfg)) return false;
-    if (!isClerkVoiceFeatureEnabled()) return false;
-    if (isHomePageClerkDisabled()) return false;
-    const scope = resolveGuideScopeReference({}, cfg);
-    const state = readCrossPageRoamingState(scope, cfg);
-    if (!state || !state.active || !state.resumeAfterNavigation) return false;
-    const currentPage = getCurrentPageSlug();
-    const targetPage = coerceText(state.nextPage);
-    if (targetPage && targetPage !== currentPage) return false;
-    const launchOptions = buildCrossPageRoamingLaunchOptions(cfg, state);
-    if (!launchOptions) return false;
-    state.resumeAfterNavigation = false;
-    state.nextPage = "";
-    state.lastPage = currentPage;
-    state.updatedAt = new Date().toISOString();
-    writeCrossPageRoamingState(state, scope, cfg);
-    window.setTimeout(function () {
-      const modal = document.getElementById("clerkVoiceModal");
-      if (modal && modal.classList.contains("active")) return;
-      openClerkWithPageContext(launchOptions);
-    }, CROSS_PAGE_ROAMING_RESUME_DELAY_MS);
-    return true;
+    if (!shouldAutoResumeCrossPageRoaming(cfg)) {
+      // fall through to traveler-float path below
+    } else if (!isClerkVoiceFeatureEnabled()) {
+      return false;
+    } else if (isHomePageClerkDisabled()) {
+      return false;
+    } else {
+      const scope = resolveGuideScopeReference({}, cfg);
+      const state = readCrossPageRoamingState(scope, cfg);
+      if (state && state.active && state.resumeAfterNavigation) {
+        const currentPage = getCurrentPageSlug();
+        const targetPage = coerceText(state.nextPage);
+        if (!targetPage || targetPage === currentPage) {
+          const launchOptions = buildCrossPageRoamingLaunchOptions(cfg, state);
+          if (launchOptions) {
+            state.resumeAfterNavigation = false;
+            state.nextPage = "";
+            state.lastPage = currentPage;
+            state.updatedAt = new Date().toISOString();
+            writeCrossPageRoamingState(state, scope, cfg);
+            try { markClerkTravelerActive({ reason: "roaming_resume", page: currentPage }); } catch (_e) {}
+            window.setTimeout(function () {
+              const modal = document.getElementById("clerkVoiceModal");
+              if (modal && modal.classList.contains("active")) return;
+              openClerkWithPageContext(launchOptions);
+            }, CROSS_PAGE_ROAMING_RESUME_DELAY_MS);
+            return true;
+          }
+        }
+      }
+    }
+
+    // CLERK_TRAVELER_FLOAT_V1_RESUME — keep Clerk traveling with customer across pages
+    try {
+      if (typeof readClerkTravelerActive !== "function") return false;
+      const traveler = readClerkTravelerActive();
+      if (!traveler || !traveler.active) return false;
+      if (!isClerkVoiceFeatureEnabled()) return false;
+      if (isHomePageClerkDisabled()) return false;
+      window.setTimeout(function () {
+        try {
+          const modal = document.getElementById("clerkVoiceModal");
+          if (modal && modal.classList.contains("active")) return;
+          openClerkWithPageContext({
+            source: "traveler_float_resume",
+            preserveRoaming: true,
+            closeExistingSession: false,
+            contextNote:
+              "Traveler float resume. Customer moved with you to this page. Continue the same conversation; acknowledge the new page briefly, then answer without making them restart.",
+          });
+          markClerkTravelerActive({
+            reason: "float_resumed",
+            page: String((window.location && window.location.pathname) || ""),
+          });
+        } catch (_e) {}
+      }, Math.max(220, Number(CROSS_PAGE_ROAMING_RESUME_DELAY_MS) || 180));
+      return true;
+    } catch (_err) {}
+    return false;
   }
 
   function bindCrossPageRoamingNavigation() {
@@ -4864,11 +5083,163 @@
     return openClerkWithPageContext(launchOptions);
   }
 
+
+  function getClerkOnboardPrimerConfig(cfg) {
+    const enabled = !cfg || cfg.clerk_onboard_enabled !== false;
+    const configuredPath = coerceText(
+      cfg &&
+        (cfg.clerk_onboard_primer_url ||
+          cfg.clerk_onboard_primer_path ||
+          cfg.clerk_onboard_primer)
+    );
+    const normalizedPath = resolveRelativeUrlFromCurrentPath(
+      configuredPath || "maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md"
+    );
+    const sourceFile = coerceText(
+      cfg && (cfg.clerk_onboard_primer_file || cfg.clerk_onboard_primer_source_file)
+    );
+    const refreshOnLaunch = Boolean(cfg && cfg.clerk_onboard_refresh_on_launch === true);
+    const primerCharLimit = clampNumber(
+      cfg && cfg.clerk_onboard_primer_char_limit,
+      900,
+      6000,
+      CLERK_ONBOARD_PRIMER_CONTEXT_CHAR_LIMIT
+    );
+    return {
+      enabled: enabled,
+      path: normalizedPath,
+      sourceFile: sourceFile,
+      refreshOnLaunch: refreshOnLaunch,
+      charLimit: primerCharLimit,
+    };
+  }
+
+  function normalizeClerkOnboardPrimerText(value, maxChars) {
+    const normalized = coerceText(value).replace(/\r/g, "\n").trim();
+    if (!normalized) return "";
+    const limit = Number.isFinite(Number(maxChars))
+      ? Math.max(900, Math.floor(Number(maxChars)))
+      : CLERK_ONBOARD_PRIMER_CONTEXT_CHAR_LIMIT;
+    return normalized.length > limit ? `${normalized.slice(0, limit).trim()}…` : normalized;
+  }
+
+  async function fetchClerkOnboardPrimer(cfg, options) {
+    const primerCfg = getClerkOnboardPrimerConfig(cfg);
+    if (!primerCfg.enabled || !primerCfg.path || typeof window.fetch !== "function") {
+      return clerkOnboardPrimerCache;
+    }
+    const opts = options && typeof options === "object" ? options : {};
+    const forceRefresh = opts.force === true || primerCfg.refreshOnLaunch;
+    const cached =
+      clerkOnboardPrimerCache &&
+      clerkOnboardPrimerCache.path === primerCfg.path &&
+      Number.isFinite(clerkOnboardPrimerCacheFetchedAtMs) &&
+      Date.now() - clerkOnboardPrimerCacheFetchedAtMs <= CLERK_ONBOARD_PRIMER_TTL_MS;
+    if (!forceRefresh && cached) {
+      return clerkOnboardPrimerCache;
+    }
+    if (clerkOnboardPrimerPromise) {
+      return clerkOnboardPrimerPromise;
+    }
+    clerkOnboardPrimerPromise = (async function () {
+      try {
+        const response = await window.fetch(primerCfg.path, { credentials: "same-origin" });
+        if (!response || !response.ok) return clerkOnboardPrimerCache;
+        const text = await response.text();
+        const normalizedText = normalizeClerkOnboardPrimerText(text, primerCfg.charLimit);
+        if (!normalizedText) return clerkOnboardPrimerCache;
+        clerkOnboardPrimerCache = {
+          path: primerCfg.path,
+          sourceFile: primerCfg.sourceFile,
+          text: normalizedText,
+          fetchedAt: new Date().toISOString(),
+        };
+        clerkOnboardPrimerCacheFetchedAtMs = Date.now();
+        return clerkOnboardPrimerCache;
+      } catch (_err) {
+        return clerkOnboardPrimerCache;
+      } finally {
+        clerkOnboardPrimerPromise = null;
+      }
+    })();
+    return clerkOnboardPrimerPromise;
+  }
+
+  function buildClerkOnboardPrimerContextBlock(primerData) {
+    const primerText = coerceText(primerData && primerData.text);
+    if (!primerText) return "";
+    return combineContextBlocks(
+      [
+        "Clerk onboard primer (refresh this first before page-specific answering):",
+        primerText,
+        "Onboard execution rule: internalize this primer first, then answer from active page context and allowed files.",
+      ],
+      CLERK_ONBOARD_PRIMER_CONTEXT_CHAR_LIMIT
+    );
+  }
+
+  function applyClerkOnboardPrimerToLaunch(launchSession, cfg) {
+    if (!launchSession || typeof launchSession !== "object") return;
+    if (!launchSession.contextPayload || typeof launchSession.contextPayload !== "object") {
+      launchSession.contextPayload = {};
+    }
+    const payload = launchSession.contextPayload;
+    const primerCfg = getClerkOnboardPrimerConfig(cfg);
+    if (!primerCfg.enabled) {
+      payload.clerk_onboard_active = false;
+      return;
+    }
+    const primerData =
+      clerkOnboardPrimerCache && clerkOnboardPrimerCache.path === primerCfg.path
+        ? clerkOnboardPrimerCache
+        : null;
+    payload.clerk_onboard_active = true;
+    payload.clerk_onboard_primer_path = primerCfg.path;
+    if (primerCfg.sourceFile) {
+      payload.clerk_onboard_primer_file = primerCfg.sourceFile;
+    }
+    if (primerData && coerceText(primerData.fetchedAt)) {
+      payload.clerk_onboard_primer_fetched_at = coerceText(primerData.fetchedAt);
+    }
+    if (primerCfg.sourceFile) {
+      const allowedFiles = normalizeStringArray(payload.allowed_source_files, 32);
+      if (!allowedFiles.includes(primerCfg.sourceFile)) {
+        allowedFiles.unshift(primerCfg.sourceFile);
+        payload.allowed_source_files = allowedFiles.slice(0, 32);
+      }
+    }
+    const primerContextBlock = buildClerkOnboardPrimerContextBlock(primerData);
+    if (!primerContextBlock) {
+      payload.clerk_onboard_primer_status = "unavailable";
+      return;
+    }
+    payload.clerk_onboard_primer_status = "loaded";
+    payload.clerk_onboard_primer_excerpt = normalizeClerkOnboardPrimerText(
+      primerData.text,
+      1200
+    );
+    const sessionContextCharLimitRaw =
+      payload.session_context_char_limit !== undefined
+        ? payload.session_context_char_limit
+        : cfg && cfg.session_context_char_limit;
+    payload.session_context = combineContextBlocks(
+      [primerContextBlock, coerceText(payload.session_context)],
+      clampNumber(sessionContextCharLimitRaw, 800, 8000, 3600)
+    );
+    appendSessionDecision(launchSession, "clerk-onboard-primer-applied", {
+      primer_path: primerCfg.path,
+      primer_file: primerCfg.sourceFile,
+      primer_status: payload.clerk_onboard_primer_status,
+    });
+  }
   async function launchClerkWithPageContext(rawInput, fallbackInput) {
     if (!isClerkVoiceFeatureEnabled()) return false;
     const cfg = getVoiceConfig();
     try {
       await runUnityStartGatePreflight(cfg);
+    } catch (_err) {}
+    try {
+      await fetchClerkOnboardPrimer(cfg, { force: true });
     } catch (_err) {}
     try {
       const patternPrefetchPromise = prefetchActivePagePatternContext().catch(function (_err) {
@@ -5011,15 +5382,31 @@
     image.src = candidates[0];
   }
 
+  function isClerkHostModalActive() {
+    try {
+      const modal = document.getElementById("clerkVoiceModal");
+      if (modal && modal.classList.contains("active")) return true;
+      if (document.body && document.body.classList.contains("clerk-host-active")) return true;
+    } catch (_e) {}
+    return false;
+  }
+
   function setFloatingLauncherVisible(visible) {
     const launcher = document.getElementById("clerkFloatingLauncherWrap");
     if (!launcher) return;
-    if (!visible) {
+    // ONE traveler only: never show the small float while docked/large Clerk is open.
+    if (!visible || isClerkHostModalActive()) {
       launcher.hidden = true;
+      launcher.style.display = "none";
+      launcher.setAttribute("aria-hidden", "true");
       return;
     }
     const cfg = getVoiceConfig();
-    launcher.hidden = !isFloatingLauncherEnabled(cfg);
+    const enabled = isFloatingLauncherEnabled(cfg);
+    launcher.hidden = !enabled;
+    launcher.style.display = enabled ? "" : "none";
+    if (enabled) launcher.removeAttribute("aria-hidden");
+    else launcher.setAttribute("aria-hidden", "true");
   }
 
   function buildFloatingLauncherLaunchOptions(cfg) {
@@ -5066,6 +5453,9 @@
     if (!isFloatingLauncherEnabled(cfg)) return false;
     const launchOptions = buildFloatingLauncherLaunchOptions(cfg);
     await runUnityStartGatePreflight(cfg);
+    await fetchClerkOnboardPrimer(cfg, { force: true }).catch(function () {
+      return null;
+    });
     return openClerkWithPageContext(launchOptions);
   }
 
@@ -5076,7 +5466,15 @@
     const tooltipText = getFloatingLauncherTooltip(cfg);
     const existing = document.getElementById("clerkFloatingLauncherWrap");
     if (existing) {
-      existing.hidden = !isFloatingLauncherEnabled(cfg);
+      // Do not resurrect the small float while the large Clerk host is open.
+      if (isClerkHostModalActive()) {
+        existing.hidden = true;
+        existing.style.display = "none";
+      } else {
+        const enabled = isFloatingLauncherEnabled(cfg);
+        existing.hidden = !enabled;
+        existing.style.display = enabled ? "" : "none";
+      }
       const tooltip = document.getElementById("clerkFloatingLauncherTooltip");
       if (tooltip) tooltip.textContent = tooltipText;
       const button = document.getElementById("clerkFloatingLauncherBtn");
@@ -7685,6 +8083,7 @@
     }
     applyLaunchContextPolicy(base, cfg);
     applyIntelligenceProfile(base, cfg);
+    applyClerkOnboardPrimerToLaunch(base, cfg);
     applySharedContextAwareness(base, cfg);
     const engagementProtocol = getTrimmedConfigText(cfg, "engagement_protocol");
     if (engagementProtocol) {
@@ -8378,7 +8777,9 @@
       if (profileConfigId) merged.config_id = profileConfigId;
       if (profileVoiceId) {
         merged.voice_id = profileVoiceId;
-        merged.openai_voice = profileVoiceId;
+        // Do not stomp GPT-Live voices (vesper/willow/...) with Hume UUIDs.
+        const looksUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(profileVoiceId);
+        if (!looksUuid) merged.openai_voice = profileVoiceId;
       }
       const profileId = coerceText(intelligenceProfile.id);
       const profileLabel = coerceText(intelligenceProfile.label);
@@ -8406,8 +8807,25 @@
     if (!coerceText(merged.config_id)) merged.config_id = coerceText(cfg.config_id);
     if (!coerceText(merged.voice_id)) merged.voice_id = coerceText(cfg.voice_id);
     if (!coerceText(merged.openai_voice)) {
-      merged.openai_voice = coerceText(cfg.openai_voice) || coerceText(merged.voice_id);
+      merged.openai_voice = coerceText(cfg.openai_voice) || "vesper";
     }
+    if (!coerceText(merged.openai_live_session_endpoint)) {
+      merged.openai_live_session_endpoint =
+        resolveLiveSessionEndpoint(coerceText(cfg.openai_live_session_endpoint));
+    }
+    merged.openai_live_api = cfg.openai_live_api !== false;
+    if (detectVoiceEngine(merged) === "openai" || detectVoiceEngine(cfg) === "openai") {
+      const liveEmbed =
+        coerceText(cfg.openai_embed_url) ||
+        coerceText(merged.openai_embed_url) ||
+        "./openai_renderer/index.html?v=20261011-vesper-live-15";
+      merged.openai_embed_url = liveEmbed;
+      // Prefer openai renderer embed when Live engine selected.
+      if (!/openai_renderer/i.test(coerceText(merged.embed_url))) {
+        merged.embed_url = liveEmbed;
+      }
+    }
+
     if (!coerceText(merged.openai_realtime_model)) {
       merged.openai_realtime_model = coerceText(cfg.openai_realtime_model);
     }
@@ -8576,8 +8994,51 @@
     const stage = document.getElementById("clerkVoiceSignalStage");
     if (!stage) return;
     stage.hidden = !visible;
+    const content = document.querySelector(".clerk-voice-modal-content");
+    if (content) {
+      content.classList.toggle("signal-portrait-active", Boolean(visible));
+    }
+    // Hard-hide stacked Clerk art while waiting/SELECT portrait is up.
+    const backdrop = document.getElementById("clerkVoiceBackdrop");
+    const watermark = document.getElementById("clerkVoiceWatermark");
+    const chip = document.querySelector(".clerk-voice-presence-chip");
     if (visible) {
-      syncSignalPortraitContrastMode();
+      if (backdrop) {
+        backdrop.hidden = true;
+        backdrop.style.opacity = "0";
+        backdrop.style.display = "none";
+        backdrop.style.backgroundImage = "none";
+      }
+      if (watermark) {
+        watermark.hidden = true;
+        watermark.style.display = "none";
+      }
+      if (chip) chip.hidden = true;
+      const frame = document.getElementById("clerkVoiceFrame");
+      if (frame) {
+        frame.style.display = "block";
+        frame.style.opacity = "0";
+        frame.style.visibility = "hidden";
+        frame.style.pointerEvents = "none";
+        frame.style.position = "absolute";
+        frame.style.left = "-10000px";
+        frame.style.width = "1px";
+        frame.style.height = "1px";
+      }
+      const emblem = document.getElementById("clerkVoiceLaunchEmblem");
+      if (emblem) {
+        emblem.hidden = true;
+        emblem.style.display = "none";
+      }
+      // Hide floating traveler while docked Clerk is the active face
+      try { setFloatingLauncherVisible(false); } catch (_e) {}
+      try { document.body.classList.add("clerk-host-active"); } catch (_e) {}
+    } else {
+      if (backdrop) {
+        backdrop.hidden = false;
+        backdrop.style.opacity = "";
+      }
+      // watermark/chip stay managed by their own helpers
     }
   }
 
@@ -9001,16 +9462,26 @@
     const sessionEndpoint =
       coerceText(cfg.openai_session_endpoint || cfg.openai_session_url || cfg.session_endpoint) ||
       "/api/openai/realtime/session";
+    const liveSessionEndpoint = resolveLiveSessionEndpoint(
+      coerceText(
+        cfg.openai_live_session_endpoint ||
+          cfg.live_session_endpoint ||
+          cfg.openai_live_endpoint
+      )
+    );
     const model =
       coerceText(cfg.openai_realtime_model || cfg.openai_model || cfg.model) ||
-      "gpt-4o-realtime-preview";
+      "gpt-live-1";
     const voice =
       coerceText(cfg.openai_voice || cfg.voice_id || cfg.voice) ||
-      "ash";
+      "vesper";
     if (!sessionEndpoint || !model) return null;
     const connectConfig = {
       sessionEndpoint: sessionEndpoint,
       openai_session_endpoint: sessionEndpoint,
+      openai_live_session_endpoint: liveSessionEndpoint,
+      live_session_endpoint: liveSessionEndpoint,
+      openai_live_api: cfg.openai_live_api !== false,
       model: model,
       openai_realtime_model: model,
       voice: voice,
@@ -9042,6 +9513,26 @@
     }
     const debug = Boolean(cfg.debug);
     if (debug) connectConfig.debug = true;
+    try {
+      const brief = maxwellianMasterBriefCache && maxwellianMasterBriefCache.text ? maxwellianMasterBriefCache : null;
+      if (brief && brief.text) {
+        const seed = String(brief.text).slice(0, 6500);
+        connectConfig.maxwellian_knowledge_seed = seed;
+        connectConfig.knowledge_reference_spine =
+          "Primary first-memory: MaxwellianLibrary living Unity brief (" +
+          String(brief.authority || "master") +
+          "). Prefer this over improvisation. Site-specific claims still need page/field evidence.";
+        connectConfig.system_prompt_text = [
+          coerceText(connectConfig.system_prompt_text),
+          "UNITY LIVING MASTER BRIEF (first memory):\n" + seed,
+        ]
+          .filter(Boolean)
+          .join("\n\n")
+          .slice(0, 9000);
+      } else {
+        try { fetchMaxwellianMasterBrief({ force: false }); } catch (_e) {}
+      }
+    } catch (_e) {}
     return connectConfig;
   }
 
@@ -10054,6 +10545,80 @@
       .clerk-voice-signal-stage[hidden] {
         display: none;
       }
+      /* Prevent double Clerk portrait: backdrop + signal portrait stacked. */
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-backdrop {
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-watermark {
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-presence-chip {
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-backdrop,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-watermark,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-presence-chip {
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      
+      /* SINGLE_CLERK_NO_IFRAME_ORB_20261015
+         When signal portrait is the waiting/active face, iframe orb must not paint a second Clerk. */
+      /* Iframe is audio-only plumbing while host portrait is up — never a second face. */
+      .clerk-voice-modal.active .clerk-voice-frame,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-frame,
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-frame,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-frame.docked,
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-frame.docked {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -10000px !important;
+        top: 0 !important;
+        width: 1px !important;
+        height: 1px !important;
+        min-width: 1px !important;
+        min-height: 1px !important;
+        border: 0 !important;
+        z-index: -1 !important;
+      }
+      body.clerk-host-active .clerk-floating-launcher-wrap,
+      body:has(#clerkVoiceModal.active) .clerk-floating-launcher-wrap,
+      #clerkVoiceModal.active ~ .clerk-floating-launcher-wrap {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-backdrop,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-watermark,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-launch-emblem,
+      .clerk-voice-modal-content.signal-portrait-active .clerk-voice-launch-ring,
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-backdrop,
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-watermark,
+      .clerk-voice-modal-content:has(.clerk-voice-signal-stage:not([hidden])) .clerk-voice-launch-emblem {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        background-image: none !important;
+      }
+      /* Hide traveler float while modal is open — traveler becomes the docked Clerk */
+      body.clerk-host-active .clerk-floating-launcher-wrap,
+      body:has(#clerkVoiceModal.active) .clerk-floating-launcher-wrap {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      /* SINGLE_CLERK_PORTRAIT_FINAL_20261015
+         One face only. Later cascade must NOT reintroduce multiply/dark double-ghost. */
       .clerk-voice-signal-portrait {
         position: absolute;
         left: 50%;
@@ -10063,31 +10628,20 @@
         transform: translate(-50%, -50%);
         object-fit: contain;
         object-position: center;
-        opacity: 0.78;
-        filter:
-          brightness(0.34)
-          contrast(1.38)
-          saturate(0.96)
-          drop-shadow(0 12px 24px rgba(0, 0, 0, 0.48));
+        opacity: 0.92 !important;
+        mix-blend-mode: normal !important;
+        filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
+        -webkit-filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
+        animation: none !important;
       }
-      .clerk-voice-signal-stage.contrast-light-bg .clerk-voice-signal-portrait {
-        opacity: 0.82;
-        filter:
-          brightness(0.27)
-          contrast(1.52)
-          saturate(0.92)
-          drop-shadow(0 13px 26px rgba(0, 0, 0, 0.52));
-      }
-      .clerk-voice-signal-stage.contrast-dark-bg .clerk-voice-signal-portrait {
-        opacity: 0.76;
-        filter:
-          brightness(0.45)
-          contrast(1.22)
-          saturate(0.8)
-          drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
-      }
+      .clerk-voice-signal-stage.contrast-light-bg .clerk-voice-signal-portrait,
+      .clerk-voice-signal-stage.contrast-dark-bg .clerk-voice-signal-portrait,
       .clerk-voice-signal-stage.is-forming .clerk-voice-signal-portrait {
-        animation: clerkSignalPortraitFormIn ${SIGNAL_FORMATION_DURATION_MS}ms cubic-bezier(0.2, 0.62, 0.18, 1) forwards;
+        opacity: 0.92 !important;
+        mix-blend-mode: normal !important;
+        animation: none !important;
+        filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
+        -webkit-filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
       }
       .clerk-voice-signal-stage.is-forming .clerk-voice-signal-wave {
         animation: clerkSignalWaveFormIn ${SIGNAL_FORMATION_DURATION_MS}ms ease-out forwards;
@@ -10729,8 +11283,10 @@
         if (!modalEl || !modalEl.classList.contains("active")) return;
         if (hasConversationStarted) return;
         if (unityStartGatePendingRequiresRecovery) return;
-        setWidgetFrameVisible(true);
+        // Keep iframe hidden — portrait is the only face.
+        setWidgetFrameVisible(false);
         setLaunchEmblemVisible(false);
+        try { setFloatingLauncherVisible(false); } catch (_e) {}
       }, 900);
       const resendDelayMs = getUnityStartGateResendDelayMs(cfg);
       unityStartGateResendTimer = window.setTimeout(function () {
@@ -10890,26 +11446,39 @@
   }
   function setWidgetFrameVisible(visible) {
     const frame = document.getElementById("clerkVoiceFrame");
-    const keepRendererVisibleAfterStartGateTap = Boolean(
-      !hasConversationStarted &&
-        unityStartGatePreflightAttempted &&
-        !unityStartGatePendingRequiresRecovery
+    // SINGLE FACE CONTRACT:
+    // Parent signal portrait is the only visible Clerk art.
+    // Iframe stays mounted (tiny/off-screen) for audio/session — never a second face.
+    const shouldShowSignalStage = Boolean(
+      (!hasConversationStarted && preConversationSignalVisible) || hasConversationStarted
     );
-    const shouldExposeRenderer = Boolean(
-      (visible || keepRendererVisibleAfterStartGateTap) &&
-        !hasConversationStarted
-    );
-    const shouldShowSignalStage = Boolean(hasConversationStarted || preConversationSignalVisible);
     if (frame) {
-      frame.style.opacity = shouldExposeRenderer ? "1" : "0";
-      frame.style.pointerEvents = shouldExposeRenderer ? "auto" : "none";
+      frame.style.opacity = "0";
+      frame.style.pointerEvents = "none";
+      frame.style.visibility = "hidden";
+      // Keep display so WebRTC/audio in iframe is not torn down.
+      frame.style.display = "block";
+      frame.style.position = "absolute";
+      frame.style.left = "-10000px";
+      frame.style.top = "0";
+      frame.style.width = "1px";
+      frame.style.height = "1px";
+      frame.style.minWidth = "1px";
+      frame.style.minHeight = "1px";
+      frame.style.border = "0";
+      frame.setAttribute("aria-hidden", "true");
     }
-    if (!shouldShowSignalStage || (!visible && !preConversationSignalVisible)) {
+    if (isClerkHostModalActive()) {
+      try { setFloatingLauncherVisible(false); } catch (_e) {}
+    }
+    if (!shouldShowSignalStage) {
       setSignalStageVisible(false);
       return;
     }
+    setSignalStageVisible(true);
     syncSignalStageForConversation();
   }
+
 
   function applyFrameTransparencyOverrides(frame) {
     if (!frame) return;
@@ -10968,10 +11537,13 @@
     unityStartGatePending = false;
     unityStartGatePendingRequiresRecovery = false;
     unityStartGatePreflightStatusMessage = "";
-    hasConversationStarted = true;
+    hasConversationStarted = true; try { markClerkTravelerActive({ reason: "conversation_started" }); } catch (_e) {}
     noteUnityStartGateProgress("conversation-started");
+    try { document.body.classList.add("clerk-host-active"); } catch (_e) {}
+    try { setFloatingLauncherVisible(false); } catch (_e) {}
     syncSignalStageForConversation();
-    setWidgetFrameVisible(true);
+    // Keep iframe hidden; signal portrait remains the only face.
+    setWidgetFrameVisible(false);
     setStartButtonVisible(false);
     setLaunchEmblemVisible(false);
     setPanelMode("centered");
@@ -11242,6 +11814,7 @@
     const baseCfg = getVoiceConfig();
     if (!isClerkVoiceAllowedOnCurrentPage(baseCfg)) return;
     ensureModal();
+    try { document.body.classList.add("clerk-host-active"); } catch (_e) {}
     setFloatingLauncherVisible(false);
     pageTransitionInProgress = false;
     resetSignalStage();
@@ -11331,6 +11904,8 @@
     setPresence(cfg);
     setSignalPortraitSource(cfg);
     modal.classList.add("active");
+    try { document.body.classList.add("clerk-host-active"); } catch (_e) {}
+    try { setFloatingLauncherVisible(false); } catch (_e) {}
     modal.dataset.humeAuthRetryAttempted = "";
     modal.dataset.voiceEngineFallbackAttempted = "";
     clearFrameLoadTimer();
@@ -11563,6 +12138,7 @@
       clearDailyMeter();
     }
     pageTransitionInProgress = false;
+    try { document.body.classList.remove("clerk-host-active"); } catch (_e) {}
     setFloatingLauncherVisible(true);
     try {
       window.dispatchEvent(new CustomEvent("clerkVoiceModalClosed"));
@@ -11615,6 +12191,9 @@
         }
         const cfg = getVoiceConfig();
         await runUnityStartGatePreflight(cfg);
+        await fetchClerkOnboardPrimer(cfg, { force: true }).catch(function () {
+          return null;
+        });
         const patternPrefetchPromise = prefetchActivePagePatternContext().catch(function (_err) {
           return null;
         });
@@ -11640,11 +12219,17 @@
   window.openClerkWithPageContext = openClerkWithPageContext;
   window.launchClerkWithPageContext = launchClerkWithPageContext;
 
-  document.addEventListener("DOMContentLoaded", function () {
+  try { fetchMaxwellianMasterBrief({ force: false }); } catch (_e) {}
+document.addEventListener("DOMContentLoaded", function () {
+    try { fetchMaxwellianMasterBrief({ force: false }); } catch (_e) {}
+
     ensureModal();
     ensureFloatingLauncher();
     bindLaunchButtons();
     bindCrossPageRoamingNavigation();
+    fetchClerkOnboardPrimer(getVoiceConfig()).catch(function () {
+      return null;
+    });
     prefetchActivePagePatternContext().catch(function (_err) {});
     maybeResumeCrossPageRoamingOnLoad();
   });

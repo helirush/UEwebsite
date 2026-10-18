@@ -1,0 +1,13 @@
+**ARMI Manufacturing — Site Transformer | Voltage Stability Findings**
+
+The voltage field for August is running at an average of 492.7 volts — that is sitting above the 480-volt nominal line, and at first glance that looks comfortable. The utility is delivering on the high side of tolerance, which provides a small buffer. But the average value is not the story here. The story is the swing range.
+
+Measured across the full 31-day August dataset, the Site Transformer's voltage field ran a live swing range of 16.4 volts — from a measured maximum of 500.6 volts down to a minimum operating floor of 484.2 volts. For a 480-volt system, a 16.4-volt excursion range represents meaningful variability. The system never technically dropped below the 480-volt nominal floor based on the minimum callout value, but the visual trace in the V view tells a more nuanced story. The triangular dip clusters are repeatedly pressing the voltage toward that lower reference band during production peak events. The minimum of 484.2 volts is the charted floor — but the trajectory of those dips is consistently downward during the moments of maximum load stress.
+
+The triangular voltage-drop pattern is clearly present and it is not random. Approximately 20 to 22 distinct triangular dip clusters are visible across the 31-day span, aligned precisely to what appear to be shift-start load surges. The pattern is daily, rhythmic, and production-driven. Weekend intervals show shallower and less frequent dip events, confirming the source is on-site load behavior, not utility-side insturbance.
+
+The coupling between these voltage dips and the reactive demand events is the most important finding. Every time amperage peaks — confirmed in the M view at a maximum of 302.1 amps — the voltage trace compresses in a triangular profile and the power factor orange band visibly narrows and drops. This is a coupled electromagnetic stress event. Reactive demand is pulling voltage down at the precise moments when current is already at its highest. That combination — high current and low voltage simultaneously — is what accelerates insulation aging in motors, stresses variable frequency drives, and shortens the effective life of capacitor banks if any are present on this circuit.
+
+Device health risk rating for this field: **moderate to high**. The field is not in crisis, but it is absorbing these voltage excursions on every production workday. That is a 20-plus stress cycles per month pattern. Over a year, that is 240-plus coupled stress events absorbed by every device on this bus.
+
+---

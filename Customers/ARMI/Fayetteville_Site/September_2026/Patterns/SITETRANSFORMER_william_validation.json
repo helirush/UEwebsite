@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-10-13 12:51:58",
+  "transformer_id": "SITETRANSFORMER",
+  "transformer_name": "SITETRANSFORMER",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "untuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "numeric_source": "Vision Only (CSV unavailable)**",
+    "machine_readable_anchors": "**",
+    "target_kva_image": "248 kVA",
+    "bt_target_kva": "248 kVA",
+    "target_kva_csv": "unavailable",
+    "power_factor_csv": "unavailable",
+    "kvar_max_csv_est": "unavailable",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "cross_check_verdict": "** No CSV-to-image reconciliation possible \u2014 CSV not provided. All numeric values sourced exclusively from image extraction. No discrepancies flagged between internal image views (V/BT/M/S are mutually consistent). All dollar figures are planning-level estimates only.",
+    "monthly_savings_validated": "$358.00",
+    "annual_savings_validated": "$4,357.00",
+    "monthly_waste_validated_total": "$363.08",
+    "annual_waste_validated_total": "$4,357.00",
+    "annual_total_wasted_validated": "$4,357.00"
+  },
+  "packet_file": "SITETRANSFORMER_william_validation.json"
+}

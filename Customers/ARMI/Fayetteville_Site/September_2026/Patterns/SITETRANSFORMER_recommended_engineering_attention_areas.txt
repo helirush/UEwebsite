@@ -1,0 +1,13 @@
+**SiteTransformer — Engineering Attention Areas | September 2026**
+
+Given that this is an untuned field with no installed MPTS assets currently documented for SiteTransformer, the following attention areas are recommended as priorities for engineering review and remediation planning.
+
+**First: Reactive compensation scoping.** The 58.1 kVAR maximum and 89.2 percent baseline power factor establish a clear reactive correction need. An H240 unit at 200 kVAR nominal should be assessed as a right-sized first option for this transformer given the relatively modest reactive peak. If site-wide aggregation of reactive demand across multiple transformers supports a larger shared asset, that architecture should be evaluated. Engineering scope and final installed cost estimates will depend on available panel space, conduit routing, and control integration requirements.
+
+**Second: Harmonic characterization study.** The 24.4 percent iTHD maximum is a transient stress peak that warrants further investigation. A dedicated harmonic survey during a peak production shift would establish whether the harmonic source is a specific drive, rectifier bank, or combination of loads — and whether passive or active harmonic filtering is warranted in addition to reactive compensation. Without that characterization, there's residual uncertainty about whether reactive compensation alone fully addresses the peak stress events.
+
+**Third: Voltage monitoring continuity.** The 493.1-volt average and 18-volt swing range should be tracked monthly to establish a trend baseline. If the average continues to creep upward or the swing range widens, that's an early indicator of field degradation that warrants transformer tap adjustment or upstream voltage regulation review.
+
+**Fourth: Transformer thermal baseline.** Given the consistent above-target loading at 80 to 85 percent of production intervals exceeding 248 kVA, a thermal imaging inspection of the transformer enclosure and secondary conductors is advisable to establish a current condition baseline before reactive compensation is introduced.
+
+---

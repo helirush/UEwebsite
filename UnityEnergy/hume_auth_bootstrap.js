@@ -288,6 +288,11 @@
         prefixes.push(firstSegmentPrefix);
       }
     }
+    // FILTER_CP_PREFIXES: avoid /CognitionPartner/api and /UnityEnergy/api 404s on local static host
+    prefixes = (prefixes || []).filter(function (p) {
+      var s = String(p || '');
+      return s.indexOf('/CognitionPartner') === -1 && s.indexOf('/UnityEnergy') === -1;
+    });
     return prefixes;
   }
 
@@ -302,10 +307,11 @@
       candidates,
       coerceText(window.MAXWELLIAN_ACTIVE_RUNTIME_AUTH_ENDPOINT)
     );
-    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth");
-    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth.json");
+    // Prefer root-absolute auth first. Relative ../api resolves under /CognitionPartner and 404s.
     appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth");
     appendRuntimeAuthEndpointCandidate(candidates, "/api/hume/runtime-auth.json");
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth");
+    appendRuntimeAuthEndpointCandidate(candidates, "../api/hume/runtime-auth.json");
     var pathPrefixes = getRuntimeAuthEndpointPathPrefixes();
     pathPrefixes.forEach(function (prefix) {
       appendRuntimeAuthEndpointCandidate(candidates, prefix + "/api/hume/runtime-auth");

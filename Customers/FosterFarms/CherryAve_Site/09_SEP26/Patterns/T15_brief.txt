@@ -1,0 +1,34 @@
+# T15 Fillet at Foster Farms Cherry Ave - September 2026 - Untuned Field
+
+## Field Condition Summary
+- **Power Factor (PF):** 80.7%
+- **Consumption:** 750.1 kW
+- **Supply:** 897.3 kVA
+- **Waste:** 147.2 kW
+- **Annual Waste Cost:** $451,414.88
+- **Voltage:** Average 480.0V, Min 480.0V, Max 480.0V
+- **Dip Count:** 139
+
+## Coverage Note
+- Full September 1–30, 2026 (1-minute intervals)
+
+## Key Measured Values
+- **PF:** 80.69994077460177
+- **Consumption (kW):** 750.0893422196825
+- **Supply (kVA):** 897.321853051396
+- **Waste (kW):** 147.2325108317135
+- **Annual Waste Cost:** $451,414.8782100336
+- **Voltage Average (Vavg):** 480.0
+- **Voltage Minimum (Vmin):** 480.0
+- **Voltage Maximum (Vmax):** 480.0
+- **Dip Count:** 139
+
+## Image Findings
+- **BT:** The transformer shows moderate loading with a PF of 80.7%, slightly below optimal efficiency, resulting in significant electrical waste.
+- **B:** Supplied power frequently exceeds consumed power, highlighting inefficiencies and electrical waste despite stable consumption.
+- **S:** MPTS mode simulation suggests potential for improved efficiency with a target PF of 99.5%, indicating reduced waste.
+- **V:** Voltage remains stable at 480V, though 139 voltage dips suggest transient events or load changes.
+- **M:** Presence of harmonics at 4.7% THD may indicate potential issues despite stable voltage, contributing to inefficiencies.
+
+## Closing
+The Full Analysis should emphasize strategies for improving the power factor to reduce electrical waste and address harmonics and voltage dip occurrences to enhance overall transformer efficiency.

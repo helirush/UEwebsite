@@ -1,0 +1,13 @@
+**SiteTransformer Operational Stress Assessment — September 2026**
+
+Pulling the four views together into a coherent operational picture: SiteTransformer at ARMI Manufacturing is running a structured five-day production schedule with clear weekend load reduction, which is the expected and manageable pattern for an industrial manufacturing facility. The challenge isn't the production pattern itself — it's what the transformer is being asked to absorb every time that production load engages.
+
+Every weekday production startup, the transformer field does three things simultaneously: it absorbs the inrush current from motor startups that creates those recurring triangular voltage dip signatures in the V view, it begins carrying the reactive burden that pushes the BT power factor below 90 percent, and it begins accumulating the thermal burden that converts wasted reactive power into heat dissipating from the transformer core and windings. Those three phenomena aren't independent — they're additive. The reactive burden increases apparent current through the transformer, which increases I-squared-R losses, which increases heat generation, which accelerates winding insulation aging and reduces transformer service life.
+
+The monthly consequence totals from the BT header make this concrete: approximately $348 per month in energy waste consequence, $8 per month in thermal burden consequence, and $3 per month in cooling cost consequence — totaling roughly $358 per month and approximately $4,357 per year. Those numbers represent the measurable financial expression of the reactive and harmonic stress the field is accumulating every production month.
+
+The 80 to 85 percent rate at which active production blocks breach the 248 kVA daily target means the transformer is operating above its comfort ceiling for the substantial majority of its working life. Over time, that consistent above-target operation, combined with the voltage swing stress and the reactive burden, creates a compounding degradation trajectory. The field is not in immediate distress — no outage events were detected, the voltage minimum holds above nominal — but the trajectory without correction points toward accelerating asset wear and growing consequence costs month over month.
+
+The iTHD maximum of 24.4 percent and the minimum power factor excursion to 62.7 percent are the stress peaks to monitor. Those events, while not constant, represent the moments when the field is most vulnerable to cascading stress — drive faults, protection trips, or accelerated thermal damage in the transformer core.
+
+---

@@ -1,0 +1,207 @@
+{
+  "month": "09_SEP26",
+  "group": "Deli",
+  "source_policy": "energy_dashboard annual_waste_cost + avg_voltage/PF; aliases for resolver",
+  "transformers": {
+    "DELI F": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELI-F": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELIF": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELI_F": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "Deli F": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "Deli-F": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DeliF": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "Deli_F": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "deli f": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "delif": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 86.6,
+      "field_consequence_annual": 134197,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_F.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELI G": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELI-G": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELIG": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DELI_G": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "Deli G": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "Deli-G": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "DeliG": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "Deli_G": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "deli g": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "delig": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.8,
+      "field_consequence_annual": 129961,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_Deli_G.json",
+      "built_at": "2026-10-13T14:46:16"
+    }
+  }
+}

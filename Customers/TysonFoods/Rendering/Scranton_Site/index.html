@@ -1,373 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tyson Foods - Scranton Rendering Facility</title>
-    <script src="../../../../UnityEnergy/hume_auth_bootstrap.js"></script>
-    <script src="../../../../UnityEnergy/hume_character_config.js"></script>
-    <script src="../../../../UnityEnergy/clerk_voice_widget.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
-            color: #4A5157;
-            background: linear-gradient(180deg, #FBF9F4 0%, #F3EDE0 100%);
-        }
-        header {
-            background: linear-gradient(135deg, #7F091C 0%, #C8102E 100%);
-            color: #FFFFFF;
-            padding: 18px 30px;
-            border-bottom: 4px solid #FED34C;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 14px;
-        }
-        .logo { font-size: 1.35em; font-weight: 800; letter-spacing: 0.6px; }
-        .logo span { color: #FED34C; }
-        nav { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn {
-            display: inline-block;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.8em;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            padding: 8px 13px;
-            border-radius: 8px;
-            border: 2px solid #FFFFFF;
-            color: #FFFFFF;
-            transition: all 0.2s ease;
-        }
-        .btn:hover { background: #FFFFFF; color: #7F091C; transform: translateY(-1px); }
-        .hero {
-            position: relative;
-            padding: 92px 20px 84px;
-            min-height: 500px;
-            text-align: center;
-            background:
-                linear-gradient(180deg, rgba(29, 37, 45, 0.58) 0%, rgba(29, 37, 45, 0.46) 100%),
-                url('./images/scranton_site.png') center center / cover no-repeat;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top, rgba(200, 16, 46, 0.2) 0%, rgba(251, 249, 244, 0) 70%);
-        }
-        .hero > * { position: relative; z-index: 1; }
-        .hero-chicken-video {
-            position: absolute;
-            bottom: 20px;
-            width: 220px;
-            z-index: 2;
-            border: 4px solid #FED34C;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-            background: rgba(0, 0, 0, 0.45);
-        }
-        .hero-chicken-left { left: 30px; }
-        .hero-chicken-right { right: 30px; }
-        .hero-status-chip {
-            position: absolute;
-            top: 22px;
-            right: 24px;
-            z-index: 3;
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 999px;
-            border: 2px solid rgba(255, 215, 0, 0.95);
-            background: linear-gradient(135deg, rgba(163, 0, 0, 0.92) 0%, rgba(114, 0, 0, 0.92) 100%);
-            color: rgba(255, 247, 214, 1);
-            font-size: 0.84em;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.65);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
-            max-width: min(78vw, 560px);
-            text-align: right;
-        }
-        .hero h1 {
-            font-size: 4.2em;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #FED34C;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.55);
-        }
-        .hero .capacity-subtitle {
-            font-size: 1.8em;
-            font-weight: 600;
-            color: #FFE680;
-            margin: 10px 0 8px 0;
-            letter-spacing: 0.8px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-            text-transform: uppercase;
-        }
-        .hero-key-metrics {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 48px;
-            margin: 10px 0 14px 0;
-            flex-wrap: wrap;
-        }
-        .hero-key-metric {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            min-width: 250px;
-        }
-        .hero-key-metric-label {
-            font-size: 1em;
-            font-weight: 700;
-            color: #FFE99B;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-        }
-        .hero-key-metric-value {
-            font-size: 1.44em;
-            font-weight: 700;
-            color: #FFF6D9;
-            letter-spacing: 0.8px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-        }
-        .hero-secondary-metrics {
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            gap: 42px;
-            flex-wrap: wrap;
-            font-size: 1.28em;
-            font-weight: 600;
-            color: #FFE99B;
-            letter-spacing: 0.2px;
-            margin: 16px 0 10px 0;
-            text-shadow:
-                2px 2px 0px rgba(139, 0, 0, 1),
-                -1px -1px 0px rgba(139, 0, 0, 1),
-                1px -1px 0px rgba(139, 0, 0, 1),
-                -1px 1px 0px rgba(139, 0, 0, 1),
-                1px 1px 0px rgba(139, 0, 0, 1),
-                3px 3px 6px rgba(0,0,0,0.8);
-            text-transform: uppercase;
-        }
-        .hero-secondary-metrics span {
-            display: inline-flex;
-            align-items: baseline;
-            gap: 8px;
-        }
-        .hero-secondary-metrics strong {
-            color: #FFFFFF;
-            font-size: 1.4em;
-            font-weight: 700;
-        }
-        .hero .capacity-subtitle4 {
-            font-size: 1.22em;
-            font-weight: 700;
-            color: #FFE680;
-            margin: 10px 0 0 0;
-            letter-spacing: 0.5px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.72);
-            text-transform: uppercase;
-        }
-        .hero p {
-            max-width: 860px;
-            margin: 0 auto;
-            font-size: 1.06em;
-            font-weight: 500;
-            color: #FBF9F4;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.55);
-        }
-        .container {
-            max-width: 1030px;
-            margin: 0 auto;
-            padding: 18px 20px 44px;
-        }
-        .report-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(127, 9, 28, 0.22);
-            border-top: 6px solid #C8102E;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(29, 37, 45, 0.08);
-            padding: 22px;
-            margin-bottom: 16px;
-        }
-        .report-title {
-            font-size: 1.36em;
-            color: #7F091C;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-        .report-meta {
-            font-size: 0.96em;
-            margin-bottom: 14px;
-        }
-        .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .action-link {
-            display: inline-block;
-            text-decoration: none;
-            background: #C8102E;
-            color: #FFFFFF;
-            border: 2px solid #7F091C;
-            border-radius: 8px;
-            padding: 9px 14px;
-            font-weight: 700;
-            font-size: 0.84em;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            transition: all 0.2s ease;
-        }
-        .action-link:hover {
-            background: #7F091C;
-            transform: translateY(-1px);
-        }
-        .note {
-            margin-top: 10px;
-            font-size: 0.92em;
-            color: #4A5157;
-        }
-        footer {
-            margin-top: 22px;
-            text-align: center;
-            padding: 20px;
-            background: #1D252D;
-            color: #FBF9F4;
-            border-top: 3px solid #C8102E;
-        }
-        @media (max-width: 768px) {
-            .hero { padding: 66px 14px 56px; min-height: 330px; }
-            .hero-status-chip {
-                top: 12px;
-                right: 12px;
-                left: 12px;
-                max-width: none;
-                text-align: center;
-                font-size: 0.7em;
-                padding: 8px 10px;
-            }
-            .hero h1 { font-size: 2.3em; letter-spacing: 1px; }
-            .hero .capacity-subtitle { font-size: 1.05em; margin-bottom: 6px; }
-            .hero-key-metrics { gap: 20px; }
-            .hero-key-metric-label { font-size: 0.8em; }
-            .hero-key-metric-value { font-size: 1.12em; }
-            .hero-secondary-metrics { font-size: 0.84em; gap: 18px; }
-            .hero-secondary-metrics strong { font-size: 1.22em; }
-            .hero .capacity-subtitle4 { font-size: 0.88em; margin-top: 6px; }
-            .hero p { font-size: 0.92em; font-weight: 500; }
-            .hero-chicken-video { width: 120px; bottom: 12px; }
-            .hero-chicken-left { left: 12px; }
-            .hero-chicken-right { right: 12px; }
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tyson Foods — Scranton HAD2500 Energy Field</title>
+<!-- CLERK_SYNC 2026-09-12T17:56:33: Foster-like single-field library; active AUG+JUL 2026; 2025 full year + commissioning Jan25; archive media policy. -->
+<style>
+:root { --green:#B2D235; --ink:#1a1a1a; --muted:#666; --bg:#f7f8f5; --card:#fff; --line:#e2e6da; }
+* { box-sizing:border-box; }
+body { margin:0; font-family: Inter, system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+.wrap { max-width:1100px; margin:0 auto; padding:24px; }
+.hero { background:linear-gradient(135deg,#1b2a14,#2f4a1e); color:#fff; border-radius:16px; padding:28px 32px; margin-bottom:24px; }
+.hero h1 { margin:0 0 8px; font-size:1.8rem; }
+.hero p { margin:0; opacity:.9; line-height:1.5; }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; }
+.kpi { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:12px 14px; }
+.kpi b { display:block; color:var(--green); font-size:1.1rem; }
+.kpi span { font-size:.85rem; opacity:.85; }
+.section { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 22px; margin-bottom:18px; }
+.section h2 { margin:0 0 6px; }
+.sub { color:var(--muted); margin:0 0 16px; }
+.study-item { display:flex; justify-content:space-between; gap:16px; align-items:center; padding:14px 0; border-bottom:1px solid var(--line); }
+.study-item:last-child { border-bottom:0; }
+.study-name { font-weight:700; }
+.study-period { color:var(--muted); font-size:.9rem; margin-top:2px; }
+.study-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.study-btn { text-decoration:none; background:#1b2a14; color:#fff; padding:8px 12px; border-radius:8px; font-size:.85rem; white-space:nowrap; }
+.study-btn:hover { background:#2f4a1e; }
+details.history { margin-top:10px; border:1px solid var(--line); border-radius:12px; padding:8px 12px; background:#fafaf7; }
+details.history > summary { cursor:pointer; font-weight:600; padding:8px 0; }
+.badge { display:inline-block; background:var(--green); color:#1b2a14; font-weight:700; border-radius:999px; padding:2px 10px; font-size:.75rem; }
+@media (max-width:800px) { .kpis { grid-template-columns:1fr; } .study-item { flex-direction:column; align-items:flex-start; } }
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo"><span>TYSON</span> FOODS · Scranton Rendering Facility</div>
-        <nav>
-            <a href="../index.html" class="btn">Rendering Group</a>
-            <a href="../../index.html" class="btn">Tyson Home</a>
-            <a href="../../../../UnityEnergy/customer-portals.html" class="btn">Customer Portals</a>
-        </nav>
-    </header>
+<div class="wrap">
+  <div class="hero">
+    <div class="badge">Unity Energy • eWebmaster proofing</div>
+    <h1>Tyson Foods — Scranton Facility</h1>
+    <p>Single commissioned energy field <b>HAD2500</b> (meter AN21061800, 2500 kVA, 480V). 
+    Consequence-era Energy / Heat / Voltage boards. Active media pair: <b>August + July 2026</b>. 
+    January 2025 is the commissioning dataset for this field.</p>
+    <div class="kpis">
+      <div class="kpi"><b>1 field</b><span>HAD2500 monitored continuously</span></div>
+      <div class="kpi"><b>Aug 2026</b><span>Current active month (boards ready; images pending)</span></div>
+      <div class="kpi"><b>Jan 2025+</b><span>Commissioning through present library</span></div>
+    </div>
+  </div>
 
-    <section class="hero">
-        <span class="hero-status-chip">Placeholder Mode · Consequence &amp; Efficiency Values Pending Tyson Calibration</span>
-        <p class="capacity-subtitle">480v Industrial Electricity Data</p>
-        <h1>Scranton Rendering Facility</h1>
-        <div class="hero-key-metrics">
-            <div class="hero-key-metric">
-                <span class="hero-key-metric-label">Site Connected Capacity</span>
-                <span class="hero-key-metric-value">-- kVA</span>
-            </div>
-            <div class="hero-key-metric">
-                <span class="hero-key-metric-label">Average Site Consumption</span>
-                <span class="hero-key-metric-value">-- kW</span>
-            </div>
-        </div>
-        <div class="hero-secondary-metrics">
-            <span>Untuned Energy Consequence<strong>$--</strong></span>
-            <span>Site Efficiency<strong>--% PF</strong></span>
-        </div>
-        <p class="capacity-subtitle4">Placeholder values pending Tyson calibration input.</p>
-        <p>Facility-level entry page for Scranton, Arkansas. Use the links below to enter the latest published energy field analysis bundle.</p>
-        <video id="heroChickenLeft" class="hero-chicken-video hero-chicken-left" muted loop autoplay playsinline>
-            <source src="../../../FosterFarms/ChickenFootball.mp4" type="video/mp4">
-        </video>
-        <video id="heroChickenRight" class="hero-chicken-video hero-chicken-right" muted loop autoplay playsinline>
-            <source src="../../../FosterFarms/ChickenFootball.mp4" type="video/mp4">
-        </video>
-    </section>
+  <div class="section">
+    <h2>HAD2500 Energy Field Library</h2>
+    <p class="sub">Composite electrical energy cost context shown on boards. Active months hold pending Patterns/Audio until operator screenshots + William/Unity narration.</p>
+    
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">August 2026</div>
+                    <div class="study-period">31-day • 1minRES • Patterns/Audio pending — current active month</div>
+                  </div>
+                  <div class="study-actions">
+                    <a class="study-btn" href="./08_AUG26/FIELD-Summaryboard_TysonFoods_260801-260831.html">SUMMARY</a>
+                    <a class="study-btn" href="./08_AUG26/FIELD-Energyboard_HAD2500_AN21061800_260801-260831.html">ENERGY</a>
+                    <a class="study-btn" href="./08_AUG26/FIELD-Heatboard_HAD2500_AN21061800_260801-260831.html">HEAT</a>
+                    <a class="study-btn" href="./08_AUG26/FIELD-Voltboard_HAD2500_AN21061800_260801-260831.html">VOLTAGE</a>
+                  </div>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">July 2026</div>
+                    <div class="study-period">31-day • 1minRES • Patterns/Audio pending — active pair</div>
+                  </div>
+                  <div class="study-actions">
+                    <a class="study-btn" href="./07_JUL26/FIELD-Summaryboard_TysonFoods_260701-260731.html">SUMMARY</a>
+                    <a class="study-btn" href="./07_JUL26/FIELD-Energyboard_HAD2500_AN21061800_260701-260731.html">ENERGY</a>
+                    <a class="study-btn" href="./07_JUL26/FIELD-Heatboard_HAD2500_AN21061800_260701-260731.html">HEAT</a>
+                    <a class="study-btn" href="./07_JUL26/FIELD-Voltboard_HAD2500_AN21061800_260701-260731.html">VOLTAGE</a>
+                  </div>
+                </div>
+    <details class="history" open>
+      <summary>2026 History (archived media)</summary>
+      
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">June 2026</div>
+                    <div class="study-period">30-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./06_JUN26/FIELD-Summaryboard_TysonFoods_260601-260630.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">May 2026</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./05_MAY26/FIELD-Summaryboard_TysonFoods_260501-260531.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">April 2026</div>
+                    <div class="study-period">30-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./04_APR26/FIELD-Summaryboard_TysonFoods_260401-260430.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">March 2026</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./03_MAR26/FIELD-Summaryboard_TysonFoods_260301-260331.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">February 2026</div>
+                    <div class="study-period">28-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./02_FEB26/FIELD-Summaryboard_TysonFoods_260201-260228.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">January 2026</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./01_JAN26/FIELD-Summaryboard_TysonFoods_260101-260131.html">VIEW BOARDS</a>
+                </div>
+    </details>
+    <details class="history">
+      <summary>2025 History — Commissioning Year (archived media)</summary>
+      
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">December 2025</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./12_DEC25/FIELD-Summaryboard_TysonFoods_251201-251231.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">November 2025</div>
+                    <div class="study-period">30-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./11_NOV25/FIELD-Summaryboard_TysonFoods_251101-251130.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">October 2025</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./10_OCT25/FIELD-Summaryboard_TysonFoods_251001-251031.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">September 2025</div>
+                    <div class="study-period">30-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./09_SEP25/FIELD-Summaryboard_TysonFoods_250901-250930.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">August 2025</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./08_AUG25/FIELD-Summaryboard_TysonFoods_250801-250831.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">July 2025</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./07_JUL25/FIELD-Summaryboard_TysonFoods_250701-250731.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">June 2025</div>
+                    <div class="study-period">30-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./06_JUN25/FIELD-Summaryboard_TysonFoods_250601-250630.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">May 2025</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./05_MAY25/FIELD-Summaryboard_TysonFoods_250501-250531.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">April 2025</div>
+                    <div class="study-period">30-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./04_APR25/FIELD-Summaryboard_TysonFoods_250401-250430.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">March 2025</div>
+                    <div class="study-period">31-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./03_MAR25/FIELD-Summaryboard_TysonFoods_250301-250331.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">February 2025</div>
+                    <div class="study-period">28-day • 1minRES • Audio/Images Archived (>60 days) — request via Clerk</div>
+                  </div>
+                  <a class="study-btn" href="./02_FEB25/FIELD-Summaryboard_TysonFoods_250201-250228.html">VIEW BOARDS</a>
+                </div>
+                <div class="study-item">
+                  <div class="study-info">
+                    <div class="study-name">January 2025 (Commissioning)</div>
+                    <div class="study-period">31-day • 1minRES • Commissioning window — Audio/Images Archived (>60 days)</div>
+                  </div>
+                  <a class="study-btn" href="./01_JAN25/FIELD-Summaryboard_TysonFoods_250101-250131.html">VIEW BOARDS</a>
+                </div>
+    </details>
+  </div>
 
-    <main class="container">
-        <article class="report-card">
-            <h2 class="report-title">May 2026 Monthly Study</h2>
-            <div class="report-meta">31-day report window · 260501–260531 · Tyson Rendering / Scranton</div>
-            <div class="actions">
-                <a href="./05_MAY26/FIELD-Summaryboard_TysonFoods_260501-260531.html" class="action-link">Open Summaryboard</a>
-                <a href="./05_MAY26/FIELD-Energyboard_HAD2500_AN21061800_260501-260531.html" class="action-link">Energy Board</a>
-                <a href="./05_MAY26/FIELD-Heatboard_HAD2500_AN21061800_260501-260531.html" class="action-link">Heat Board</a>
-                <a href="./05_MAY26/FIELD-Voltboard_HAD2500_AN21061800_260501-260531.html" class="action-link">Volt Board</a>
-            </div>
-            <p class="note">Pattern images and William script artifacts are published under `05_MAY26/Patterns`.</p>
-        </article>
-        <article class="report-card">
-            <h2 class="report-title">April 2026 Monthly Study</h2>
-            <div class="report-meta">30-day report window · 260401–260430 · Tyson Rendering / Scranton</div>
-            <div class="actions">
-                <a href="./04_APR26/FIELD-Summaryboard_TysonFoods_260401-260430.html" class="action-link">Open Summaryboard</a>
-                <a href="./04_APR26/FIELD-Energyboard_HAD2500_AN21061800_260401-260430.html" class="action-link">Energy Board</a>
-                <a href="./04_APR26/FIELD-Heatboard_HAD2500_AN21061800_260401-260430.html" class="action-link">Heat Board</a>
-                <a href="./04_APR26/FIELD-Voltboard_HAD2500_AN21061800_260401-260430.html" class="action-link">Volt Board</a>
-            </div>
-            <p class="note">Audio package and pattern artifacts are published within the same study bundle under `04_APR26/Audio` and `04_APR26/Patterns`.</p>
-        </article>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Unity Energy · Tyson Foods Scranton Facility</p>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const rightVideo = document.getElementById('heroChickenRight');
-            if (!rightVideo) return;
-
-            const applyOffset = function () {
-                const duration = Number(rightVideo.duration);
-                if (!Number.isFinite(duration) || duration <= 0) return;
-                try {
-                    rightVideo.currentTime = Math.max(0, Math.min(duration * 0.5, duration - 0.1));
-                } catch (_err) {}
-            };
-
-            if (rightVideo.readyState >= 1) applyOffset();
-            rightVideo.addEventListener('loadedmetadata', applyOffset, { once: true });
-        });
-        (function () {
-            try {
-                const context = {
-                    customer_slug: "tysonfoods",
-                    customer_name: "Tyson Foods",
-                    group_slug: "rendering",
-                    group_name: "Rendering Group",
-                    site_slug: "scranton-site",
-                    site_name: "Scranton Rendering Facility",
-                    source_path: window.location.pathname,
-                    selected_at: new Date().toISOString()
-                };
-                window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
-                window.maxwellianClerkCustomerContext = context;
-            } catch (_err) {}
-        })();
-    </script>
+  <div class="section">
+    <h2>Media policy</h2>
+    <p class="sub">This data exceeds 60 days old, and the audios and images have been removed to conserve space. If a data set older than 60 days is needed from the library, Clerk can prepare what is needed upon formal request. Please review the current active months, July and August 2026, for pattern images and Unity narration when available. January 2025 captures commissioning of the Scranton HAD2500 energy field.</p>
+  </div>
+</div>
 </body>
 </html>

@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
-    <script src="hume_character_config.js?v=20260727r32"></script>
-    <script src="clerk_voice_widget.js?v=20260727r29"></script>
-    <script src="public_release_flags.js?v=20260721a"></script>
+    <!-- ABOUT_UNITY_NO_CLERK_MOUNT (2026-10-17)
+         Do not load Clerk widget/config on About page entry.
+         Heavy widget + roaming auto-resume + narration autoplay was locking the tab.
+         Meet with Clerk → speak-with-clerk.html (CP gold one-page). -->
+    <script>
+    (function () {
+      window.__UE_ABOUT_NO_FLOATING_CLERK__ = true;
+      window.MAXWELLIAN_HUME = window.MAXWELLIAN_HUME || {};
+      window.MAXWELLIAN_HUME.floating_launcher_enabled = false;
+      window.MAXWELLIAN_HUME.auto_launch_on_load = false;
+      window.MAXWELLIAN_HUME.cross_page_roaming_auto_resume = false;
+    })();
+    </script>
+    <script src="public_release_flags.js?v=20260901a"></script>
     <title>About Unity Energy</title>
     <style>
         * {
@@ -1260,7 +1270,7 @@
                 </button>
                 <button type="button" class="action-button secondary clerk-side" onclick="openClerkFromAbout()">Meet with Clerk</button>
             </div>
-            <p class="hero-audio-note" id="aboutUnityNarrationNote">Unity narration can play here while you browse the About Unity page.</p>
+            <p class="hero-audio-note" id="aboutUnityNarrationNote">Click Meet Unity / Start when you want narration. It does not auto-start on page load.</p>
             <audio id="aboutUnityNarrationAudio" preload="none">
                 Your browser does not support audio playback.
             </audio>
@@ -1707,7 +1717,9 @@
         function wireAboutUnityNarration() {
             const audioEl = document.getElementById('aboutUnityNarrationAudio');
             if (!audioEl) return;
-            aboutUnityAutoStartEnabled = true;
+            // Default OFF — autoplay on every About visit was locking/slowing the tab.
+            // Only enable auto-start when explicit handoff query is present.
+            aboutUnityAutoStartEnabled = false;
             aboutUnityAutoStartAttempts = 0;
             aboutUnityAudioCandidateIndex = 0;
             aboutUnityManualNarrationControl = readUnityAutoTourManualOverride();
@@ -1738,10 +1750,8 @@
                     setAboutUnityNarrationNote('unavailable');
                 }
             });
-            const autoStartFromHandoff = autoStartUnityIntroductionFromClerkHandoff();
-            if (!autoStartFromHandoff && aboutUnityAutoStartEnabled && !aboutUnityManualNarrationControl) {
-                scheduleAboutUnityAutoRetry({ forceRestart: true });
-            }
+            // Handoff-only auto-start (autostartUnityIntro / ue_auto_tour / etc.)
+            autoStartUnityIntroductionFromClerkHandoff();
         }
         function openUnityFollowAlong(event) {
             if (event) {
@@ -1763,38 +1773,8 @@
             if (typeof window.isUnityFeatureEnabled === 'function' && !window.isUnityFeatureEnabled('clerk_voice')) {
                 return;
             }
-            const launchOptions = {
-                contextSource: 'about-unity',
-                context: 'technical-follow-up',
-                mode: 'technical-follow-up',
-                conversationMode: 'followup',
-                sourcePage: 'about-unity',
-                entryPoint: 'about-unity-explore-field-button',
-                postConversationRedirectUrl: 'about-unity.html?autostartUnityIntro=1',
-                likelyUserIntent: 'follow-up questions about Unity mission, doctrine, and operating model',
-                uiMode: 'modal'
-            };
-            if (typeof window.openClerkWithPageContext === 'function') {
-                window.openClerkWithPageContext(launchOptions);
-                return;
-            }
-            if (typeof window.openClerkVoiceModal === 'function') {
-                const launchPayload = typeof window.buildClerkPageLaunchPayload === 'function'
-                    ? window.buildClerkPageLaunchPayload(launchOptions)
-                    : {
-                        contextSource: 'about-unity',
-                        contextPayload: {
-                            context: 'technical-follow-up',
-                            source_page: 'about-unity',
-                            entry_point: 'about-unity-explore-field-button',
-                            post_conversation_redirect_url: 'about-unity.html?autostartUnityIntro=1'
-                        },
-                        uiMode: 'modal'
-                    };
-                window.openClerkVoiceModal(launchPayload);
-                return;
-            }
-            window.location.href = 'maxwellian.html';
+            // Gold one-page Clerk (CP pattern) — never mount modal widget on About.
+            window.location.assign('./speak-with-clerk.html?v=20261017-meet-clerk-1&from=about-unity');
         }
 
         function openTeamHeroModal() {

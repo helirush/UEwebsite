@@ -1,0 +1,18 @@
+**ARMI Manufacturing — Site Transformer | Simulated MPTS Outcome**
+
+The MPTS Simulation view — the S view — projects what this field looks like after reactive power correction is applied. The headline result is power factor corrected to 99.5 percent and held essentially flat across the entire operating range. Pre-correction, power factor averaged 91.5 percent with a minimum of 54.9 percent and periodic surges of reactive demand up to 56.3 kVAR MAX. Post-correction, the simulation shows reactive average dropping from 29.9 kVAR to 10.1 kVAR, and reactive MAX reducing from 56.3 kVAR to 30.1 kVAR.
+
+That reduction in reactive burden has several downstream effects that are worth naming specifically.
+
+First, the current drawn from the transformer decreases. Lower reactive current means the transformer's actual ampere loading drops closer to what the productive work demand alone requires. Conductor heating is proportional to current squared — so even a moderate reduction in reactive current produces a disproportionate reduction in thermal burden.
+
+Second, the voltage stability improves. The triangular voltage dip events that cluster at shift starts are partially driven by reactive demand surging simultaneously with active load. When reactive demand is compensated locally, the voltage no longer has to absorb that reactive pull at the same moment active current is peaking. The dip profile becomes shallower and the voltage swing range narrows.
+
+Third, the thermal burden on the transformer itself decreases. The $8 per period thermal consequence in the baseline reflects the combined effect of reactive and harmonic current on transformer core and winding temperature. MPTS correction addresses the reactive component directly. While harmonic distortion is a separate stressor, reducing reactive burden gives the transformer thermal headroom that translates to longer insulation life and reduced risk of premature failure.
+
+**MPTS Equipment Sizing (planning-level estimate):**
+Using the kVAR MAX anchor of 56.3 kVAR from the BT header — 56.3 ÷ 400 = 0.14 — that rounds up to **1 H490 unit** (400 kVAR rated, approximately $200,000 installed at planning-level estimate). The reactive burden on this transformer is well within the capacity of a single H490, with substantial headroom for load growth. Final sizing and investment figures depend on full engineering scope and site conditions — these are planning estimates only.
+
+The simulation confirms that MPTS correction on the Site Transformer would represent a meaningful improvement in field quality — lower reactive draw, more stable voltage, reduced thermal burden, and a power factor held at 99.5 percent regardless of shift-start load surges. The annualized consequence reduction will depend on final engineering scope, but the direction and magnitude of improvement are clearly supported by the simulation data.
+
+---

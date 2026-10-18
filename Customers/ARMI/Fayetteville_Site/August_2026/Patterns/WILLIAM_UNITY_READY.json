@@ -1,0 +1,71 @@
+{
+  "generated_at_utc": "2026-10-13T16:45:06.020146+00:00",
+  "status": "completed",
+  "pattern_dir": "/Users/mdhowell/eestream/eWebmaster/Customers/ARMI/Fayetteville_Site/August_2026/Patterns",
+  "mode": "full",
+  "field_mode": "tuned",
+  "narrative_mode": "tuned_field_optimization",
+  "inventory": {
+    "image_count": 5,
+    "all_images": [
+      "SiteTransformerb_aug26.png",
+      "SiteTransformerbt_aug26.png",
+      "SiteTransformerm_aug26.png",
+      "SiteTransformers_aug26.png",
+      "SiteTransformerv_aug26.png"
+    ],
+    "transformer_count": 1,
+    "raw_coverage_by_transformer": {
+      "SITETRANSFORMER": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "coverage_by_transformer": {
+      "SITETRANSFORMER": [
+        "b",
+        "bt",
+        "m",
+        "s",
+        "v"
+      ]
+    },
+    "files_by_transformer": {
+      "SITETRANSFORMER": [
+        "SiteTransformerb_aug26.png",
+        "SiteTransformerbt_aug26.png",
+        "SiteTransformerm_aug26.png",
+        "SiteTransformers_aug26.png",
+        "SiteTransformerv_aug26.png"
+      ]
+    },
+    "baseline_ready_transformers": [
+      "SITETRANSFORMER"
+    ],
+    "unmatched_files": []
+  },
+  "notes": {
+    "baseline_required": "At least one baseline-style image per transformer is required for William analysis (bt/b for pre-MPTS or tbt/tb for post-MPTS naming).",
+    "narrative_mode_requested": "tuned_field_optimization",
+    "field_mode_requested": "tuned",
+    "field_mode_declaration_required": true,
+    "field_mode_rule": "Before William/Unity processing, user must declare whether images are from a tuned or untuned field.",
+    "program": "/Users/mdhowell/eestream/eBehavior/william_unity_handoff.py"
+  },
+  "william_command": [
+    "/opt/anaconda3/bin/python3",
+    "/Users/mdhowell/eestream/eBehavior/eeWILLIAM.py",
+    "/Users/mdhowell/eestream/eWebmaster/Customers/ARMI/Fayetteville_Site/August_2026/Patterns",
+    "--force",
+    "--verbosity",
+    "standard",
+    "--narrative-mode",
+    "tuned_field_optimization",
+    "--no-review"
+  ],
+  "william_exit_code": 0,
+  "completed_at_utc": "2026-10-13T16:49:00.584914+00:00"
+}

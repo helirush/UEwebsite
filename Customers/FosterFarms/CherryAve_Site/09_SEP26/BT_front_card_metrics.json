@@ -1,0 +1,44 @@
+{
+  "month": "September 2026",
+  "source": "energy_dashboard_data annual_waste_cost / power_factor / consumption_kw",
+  "note": "Draft from automated energy JSON; validate BT Max SUPPLY callouts before executive lock.",
+  "site_totals": {
+    "field_consequence_annual": 1712275.1828305013,
+    "power_factor_percent": 85.17859277771637,
+    "consumption_kw": 3434.72685017646
+  },
+  "transformers": {
+    "T10 Air Chiller": {
+      "power_factor_percent": 89.32294526509205,
+      "field_consequence_annual": 260913.0025086155,
+      "consumption_kw": 621.3039959265275,
+      "supply_kva": 706.4028225764347,
+      "field_voltage": 480.0,
+      "analysis_period": "260901-260930"
+    },
+    "T12 Main": {
+      "power_factor_percent": 83.37475231481483,
+      "field_consequence_annual": 609007.0112884712,
+      "consumption_kw": 1060.043209027778,
+      "supply_kva": 1258.6756328009258,
+      "field_voltage": 480.0,
+      "analysis_period": "260901-260930"
+    },
+    "T15 Fillet": {
+      "power_factor_percent": 80.69994077460177,
+      "field_consequence_annual": 451414.8782100336,
+      "consumption_kw": 750.0893422196825,
+      "supply_kva": 897.321853051396,
+      "field_voltage": 480.0,
+      "analysis_period": "260901-260930"
+    },
+    "T16 Compressor": {
+      "power_factor_percent": 87.31673275635686,
+      "field_consequence_annual": 390940.2908233812,
+      "consumption_kw": 1003.2903030024721,
+      "supply_kva": 1130.798551803314,
+      "field_voltage": 480.0,
+      "analysis_period": "260901-260911"
+    }
+  }
+}

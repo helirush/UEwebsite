@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-10-13 12:48:06",
+  "transformer_id": "SITETRANSFORMER",
+  "transformer_name": "SITETRANSFORMER",
+  "narrative_mode": "tuned_field_optimization",
+  "field_mode": "untuned",
+  "status": "warn",
+  "cross_check_present": true,
+  "required_keys": [
+    "target_kva_image",
+    "bt_target_kva",
+    "target_kva_csv",
+    "power_factor_csv",
+    "kvar_max_csv_est",
+    "outage_gold_streak_detected",
+    "outage_event_count_image",
+    "outage_total_minutes_image",
+    "monthly_savings_validated",
+    "annual_savings_validated"
+  ],
+  "missing_required_keys": [],
+  "missing_recommended_keys": [
+    "power_factor_image",
+    "kvar_max_image",
+    "monthly_waste_image",
+    "voltage_drop_indicator",
+    "voltage_drop_below_nominal"
+  ],
+  "discrepancies": [],
+  "outage_checks": {
+    "outage_gold_streak_detected": null,
+    "outage_event_count_image": null,
+    "outage_total_minutes_image": null,
+    "issues": [
+      {
+        "severity": "warn",
+        "issue": "outage_flag_unresolved"
+      }
+    ]
+  },
+  "csv_profile": {},
+  "failure_reasons": [],
+  "warning_reasons": [
+    "missing_recommended_keys=power_factor_image,kvar_max_image,monthly_waste_image,voltage_drop_indicator,voltage_drop_below_nominal",
+    "outage_warn:outage_flag_unresolved"
+  ],
+  "cross_check_fields": {
+    "target_kva_image": "256 kVA",
+    "bt_target_kva": "256 kVA",
+    "target_kva_csv": "0.0 kVA \u2014 CSV unavailable; image values stand as sole numeric source",
+    "power_factor_csv": "0.0% \u2014 CSV unavailable; image-extracted PF = 91.5% average (BT header)",
+    "kvar_max_csv_est": "0 kVAR \u2014 CSV unavailable; image-extracted kVAR MAX = 56.3 kVAR (BT header); M-view reactive MAX = 36 kVAR",
+    "monthly_residual_waste_csv": "$0.00 \u2014 unavailable; image-extracted total consequence = $352/period",
+    "annual_residual_waste_csv": "$0 \u2014 unavailable; image-extracted annual equivalent = $4,144/year",
+    "residual_heat_burden_kw_csv": "0.0 kW \u2014 unavailable; image-extracted thermal burden = $8/period ($97/year)",
+    "kvar_cross_note": "** BT header reads 56.3 kVAR MAX; M-view header reads 36 kVAR MAX. Delta = 20.3 kVAR \u2014 approximately 36% variance. [\u26a0\ufe0f DISCREPANCY \u2014 exceeds 10% threshold. BT header value of 56.3 kVAR MAX is treated as the anchor for sizing calculations, as BT is the primary numeric extraction view. M-view 36 kVAR is likely a period-average peak, not the dataset maximum. Flag for engineering review.]",
+    "outage_gold_streak_detected": "value unavailable",
+    "outage_event_count_image": "value unavailable",
+    "outage_total_minutes_image": "value unavailable",
+    "post_mpts_reactive_s_view": "** 10.1 kVAR average / 30.1 kVAR MAX \u2014 simulation values extracted from S header. No CSV to cross-check.",
+    "overall_data_confidence": "** Vision-only synthesis. All values are image-extracted estimates. Final engineering decisions require CSV validation and site engineering scope review.",
+    "monthly_savings_validated": "$345.33",
+    "annual_savings_validated": "$4,144.00",
+    "monthly_waste_validated_total": "$345.33",
+    "annual_waste_validated_total": "$4,144.00",
+    "annual_total_wasted_validated": "$4,144.00"
+  },
+  "packet_file": "SITETRANSFORMER_william_validation.json"
+}

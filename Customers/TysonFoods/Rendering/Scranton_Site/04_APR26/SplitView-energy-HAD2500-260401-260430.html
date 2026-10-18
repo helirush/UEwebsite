@@ -537,7 +537,7 @@
     <div class="split-container">
         <div class="pattern-image-container">
             <button class="fullsize-btn" onclick="showFullscreen()" title="View full size">🔍 Full Size</button>
-            <img id="patternImageInline" src="Patterns/HAD2500tbt_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing()">
+            <img id="patternImageInline" src="Patterns/HAD2500tbt_apr26.png" alt="Pattern Analysis" onclick="showFullscreen()" onerror="handlePatternMissing(event)">
             <p>HAD2500 - ENERGY Pattern</p>
         </div>
         <div class="bottom-section">
@@ -549,11 +549,11 @@
 - <strong>Consumption Usage:</strong> 901,049.1 kWh (Usage per period)
 - <strong>Consumption Cost per unit:</strong> $0.110/kWh (Cost per kWh)
 - <strong>Consumption Total Cost:</strong> $99,115.40 (Cost per period)
-- <strong>Consumption Total Cost:</strong> $137.66 (Cost per hour)</p>
+- <strong>Consumption Total Cost:</strong> $137.89 (Cost per hour)</p>
 <hr />
 <h1>TRANSFORMER PERFORMANCE ANALYSIS REPORT</h1>
 <p><strong>Transformer Name:</strong> HAD2500<br />
-<strong>Generated:</strong> 2026-05-25 08:28:17<br />
+<strong>Generated:</strong> 2026-09-12 17:51:38<br />
 <strong>Data Source:</strong> AN21061800-V-1minRES_43200CLP_260401-260430c.csv  </p>
 <h2>Time Period</h2>
 <ul>
@@ -561,7 +561,7 @@
 <li><strong>Number of Days:</strong> 30 Days</li>
 <li><strong>Data Resolution:</strong> 1-minute</li>
 <li>
-<p><strong>Total Data Points:</strong> 43,200</p>
+<p><strong>Total Data Points:</strong> 43,127</p>
 </li>
 <li>
 <p><strong>Dataset Coverage:</strong> Complete month (100.0% of 30-day month)</p>
@@ -580,9 +580,9 @@
 <p><em>Brief overview of key transformer performance metrics and energy consumption.</em></p>
 <ul>
 <li><strong>Transformer:</strong> HAD2500</li>
-<li><strong>Power Factor:</strong> 0.963</li>
-<li><strong>Total Energy (Actual):</strong> 901,049.10 kWh (per period), 1251.46 kW (per hour)</li>
-<li><strong>Total Waste (Actual):</strong> 33,888.11 kWh (per period), 47.07 kW (per hour)</li>
+<li><strong>Power Factor:</strong> 0.965</li>
+<li><strong>Total Energy (Actual):</strong> 901,049.10 kWh (per period), 1253.58 kW (per hour)</li>
+<li><strong>Total Waste (Actual):</strong> 33,888.11 kWh (per period), 47.15 kW (per hour)</li>
 </ul>
 <hr />
 <h2>Additional Analysis</h2>
@@ -593,40 +593,41 @@
 <p><em>(3 Primary Elements - Energy, Cooling, CO2e)</em></p>
 <h3>Element 1: Reactive Energy Offset Savings</h3>
 <ul>
-<li><strong>Total Electrical-Energy Waste (calc_kVA - measured_kW):</strong> 47.07 kW/hr</li>
+<li><strong>Total Non-Active Field Burden (kVA - kW):</strong> 47.15 kW/hr</li>
+<li><strong>Heat-Coupled Burden Used in Thermal Model:</strong> 21.84 kW/hr (modeled_non_active_field_burden)</li>
 <li><strong>Blended Electricity Rate:</strong> $0.1100/kWh (all-inclusive)</li>
-<li><strong>HAD2500 Utility Cost Offset:</strong> $5.18/hour</li>
-<li><strong>Annual Offset Savings:</strong> $45354/year</li>
+<li><strong>HAD2500 Utility Cost Offset:</strong> $5.19/hour</li>
+<li><strong>Annual Offset Savings:</strong> $45430/year</li>
 </ul>
 <h3>Element 2: Cooling Elimination Savings</h3>
 <ul>
-<li><strong>Total Heat No Longer Generated:</strong> 176,393 BTU/hr</li>
-<li><strong>Total Cooling kW No Longer Needed:</strong> 15.46 kW</li>
-<li><strong>Cooling Energy Cost Avoided:</strong> $1.70/hour</li>
-<li><strong>Annual Cooling Savings:</strong> $14895/year</li>
+<li><strong>Total Heat No Longer Generated:</strong> 81,402 BTU/hr</li>
+<li><strong>Total Cooling kW No Longer Needed:</strong> 7.76 kW</li>
+<li><strong>Cooling Energy Cost Avoided:</strong> $0.85/hour</li>
+<li><strong>Annual Cooling Savings:</strong> $7480/year</li>
 </ul>
 <h3>Element 3: CO2e Emissions Reduction Value</h3>
 <ul>
-<li><strong>Total kW Waste Eliminated:</strong> 62.52 kW</li>
-<li><strong>CO2e Emissions Avoided:</strong> 204.47 metric tons/year</li>
-<li><strong>Monthly CO2e Reduction:</strong> 17.04 metric tons/month</li>
-<li><strong>Hourly CO2e Reduction:</strong> 0.0233 metric tons/hour</li>
+<li><strong>Total kW Waste Eliminated:</strong> 54.91 kW</li>
+<li><strong>CO2e Emissions Avoided:</strong> 179.56 metric tons/year</li>
+<li><strong>Monthly CO2e Reduction:</strong> 14.96 metric tons/month</li>
+<li><strong>Hourly CO2e Reduction:</strong> 0.0205 metric tons/hour</li>
 <li><strong>CO2e Value Rate:</strong> $10/metric ton</li>
-<li><strong>Annual CO2e Value:</strong> $2045/year</li>
+<li><strong>Annual CO2e Value:</strong> $1796/year</li>
 </ul>
 <h3>Total HAD2500 Unity Savings</h3>
 <ul>
-<li><strong>Per Hour:</strong> $7.11</li>
-<li><strong>Per Day:</strong> $170.67</li>
-<li><strong>Per Month:</strong> $5119.98</li>
-<li><strong>Per Year:</strong> $62293</li>
+<li><strong>Per Hour:</strong> $6.25</li>
+<li><strong>Per Day:</strong> $149.88</li>
+<li><strong>Per Month:</strong> $4496.41</li>
+<li><strong>Per Year:</strong> $54706</li>
 </ul>
 <h3>HAD2500 Savings Breakdown</h3>
 <h3>Unity System (MPTS) Installation Considerations</h3>
 <ul>
-<li><strong>Max Reactive Energy:</strong> 908.6 kVAR Max (Avg: 346.4 kVAR/hr ; 249,436 kVAR/mo)</li>
-<li><strong>Max Harmonic Distortion:</strong> 36.1% Max (range: 3.0% - 36.1%)</li>
-<li><strong>Max Amperage:</strong> 2,211A Max (range: 0A - 2211A)</li>
+<li><strong>Max Reactive Energy:</strong> 908.6 kVAR Max (Avg: 347.0 kVAR/hr ; 249,858 kVAR/mo)</li>
+<li><strong>Max Harmonic Distortion:</strong> 34.3% Max (range: 3.2% - 34.3%)</li>
+<li><strong>Max Amperage:</strong> 2,211A Max (range: 154A - 2211A)</li>
 </ul>
 <hr />
 <h1>HAD2500 DETAILED PERFORMANCE ANALYSIS</h1>
@@ -654,33 +655,33 @@
 <tbody>
 <tr>
 <td>Line to Neutral Voltage (277v)</td>
-<td>274.64</td>
-<td>0.00</td>
+<td>275.10</td>
+<td>269.88</td>
 <td>284.31</td>
 </tr>
 <tr>
 <td>Line to Line Voltage (480v)</td>
-<td>475.69</td>
-<td>0.00</td>
+<td>476.49</td>
+<td>467.44</td>
 <td>492.45</td>
 </tr>
 <tr>
 <td>Current (AMPS)</td>
-<td>1577.11</td>
-<td>0.00</td>
+<td>1579.78</td>
+<td>154.45</td>
 <td>2211.05</td>
 </tr>
 <tr>
 <td>Phase Angle (degrees)</td>
-<td>14.99</td>
-<td>3.29</td>
-<td>90.00</td>
+<td>14.85</td>
+<td>3.59</td>
+<td>59.63</td>
 </tr>
 <tr>
 <td>Total Harmonic Distortion (PCT)</td>
-<td>16.60</td>
-<td>3.00</td>
-<td>36.07</td>
+<td>16.59</td>
+<td>3.16</td>
+<td>34.29</td>
 </tr>
 </tbody>
 </table>
@@ -750,29 +751,29 @@
 <li><strong>Maximum UtilityDemand:</strong> 1,632.33 kW</li>
 <li><strong>Maximum Load:</strong> 1,793.14 kVA</li>
 <li><strong>Percentage of Capacity (MAX):</strong> 71.7%</li>
-<li><strong>Average Load:</strong> 1,298.52 kVA</li>
-<li><strong>Percentage of Capacity (Avg):</strong> 51.9%</li>
+<li><strong>Average Load:</strong> 1,300.72 kVA</li>
+<li><strong>Percentage of Capacity (Avg):</strong> 52.0%</li>
 </ul>
 <h2>kVA and Power Factor Analysis (Measured vs Calculated)</h2>
 <h3>Measured Values (PRIMARY - Used for All Analysis)</h3>
 <ul>
-<li><strong>Average kVA (Ssum_kVA):</strong> 1,298.52 kVA</li>
-<li><strong>Average Power Factor (PF):</strong> 0.963</li>
+<li><strong>Average kVA (Ssum_kVA):</strong> 1,300.72 kVA</li>
+<li><strong>Average Power Factor (PF):</strong> 0.965</li>
 </ul>
 <p><strong>Source:</strong> Direct meter measurements (instantaneous values averaged over time)</p>
 <h3>Calculated Values (VERIFICATION ONLY)</h3>
 <ul>
-<li><strong>Calculated kVA (V×I×√3/1000):</strong> 1,299.40 kVA</li>
+<li><strong>Calculated kVA (V×I×√3/1000):</strong> 1,303.80 kVA</li>
 </ul>
 <p><strong>Calculation Inputs:</strong>
-- Average Voltage (VIavg_V): 475.69 V
-- Average Current (Iavg_A): 1577.11 A
-- Average kW (Psum_kW): 1251.46 kW</p>
+- Average Voltage (VIavg_V): 476.49 V
+- Average Current (Iavg_A): 1579.78 A
+- Average kW (Psum_kW): 1253.58 kW</p>
 <h3>Differences (Measured vs Calculated)</h3>
 <ul>
-<li><strong>kVA Difference:</strong> 0.88 kVA (0.1%)</li>
-<li><strong>Calculated PF (kW/kVA from averages):</strong> 0.963</li>
-<li><strong>Power Factor Difference:</strong> 0.000 (0.0%)</li>
+<li><strong>kVA Difference:</strong> 3.08 kVA (0.2%)</li>
+<li><strong>Calculated PF (kW/kVA from averages):</strong> 0.961</li>
+<li><strong>Power Factor Difference:</strong> 0.003 (0.4%)</li>
 </ul>
 <h3>Why Measured Values Are More Accurate</h3>
 <p>When voltage and current vary over time (which they always do in real systems):
@@ -781,7 +782,7 @@
 <p>The meter's instantaneous measurements capture these variations correctly, while
 calculations from averaged values systematically underestimate reactive effects.</p>
 <p><strong>Analysis Method:</strong> All heat calculations, thermal burden, and cost analysis use
-the measured kVA (1298.52) and measured PF (0.963) values.
+the measured kVA (1300.72) and measured PF (0.965) values.
 Calculated values are shown above for verification and engineering transparency.</p>
 <h2>Overall Power Metrics (FPC)</h2>
 <table>
@@ -797,39 +798,39 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>kVA</td>
-<td>1,298.52</td>
-<td>51.9%</td>
+<td>1,300.72</td>
+<td>52.0%</td>
 <td>934,937.21 kVA</td>
-<td>4,270,149.27 TOTAL-HEAT</td>
+<td>4,277,377.25 TOTAL-HEAT</td>
 </tr>
 <tr>
 <td>kW</td>
-<td>1,251.46</td>
+<td>1,253.58</td>
 <td>50.1%</td>
 <td>901,049.10 kWh</td>
-<td>154,777.53 Load-Heat</td>
+<td>155,039.52 Load-Heat</td>
 </tr>
 <tr>
 <td>kVAR</td>
-<td>346.44</td>
+<td>347.02</td>
 <td>13.9%</td>
 <td>249,435.56 kVARh</td>
 <td>-</td>
 </tr>
 <tr>
 <td>WASTE</td>
-<td>47.07</td>
+<td>47.15</td>
 <td>1.9%</td>
 <td>33,888.11 WASTE</td>
-<td>5,821.12 Field-Heat</td>
+<td>5,830.98 Field-Heat</td>
 </tr>
 </tbody>
 </table>
 <h3>Heat Unit Notes</h3>
 <ul>
-<li><strong>TOTAL-HEAT (BTU/hr):</strong> 4,270,149.27</li>
-<li><strong>Load-Heat (BTU/hr):</strong> 154,777.53</li>
-<li><strong>Field-Heat (BTU/hr):</strong> 5,821.12</li>
+<li><strong>TOTAL-HEAT (BTU/hr):</strong> 4,277,377.25</li>
+<li><strong>Load-Heat (BTU/hr):</strong> 155,039.52</li>
+<li><strong>Field-Heat (BTU/hr):</strong> 5,830.98</li>
 <li><strong>Load-Heat (BTU, period total):</strong> 111,439,824.12</li>
 <li><strong>Field-Heat (BTU, period total):</strong> 4,191,208.52</li>
 </ul>
@@ -848,11 +849,11 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>4</td>
-<td>1,298.52</td>
-<td>1,251.46</td>
-<td>340.64</td>
+<td>1,300.72</td>
+<td>1,253.58</td>
+<td>341.22</td>
 <td>0.96</td>
-<td>51.9%</td>
+<td>52.0%</td>
 </tr>
 </tbody>
 </table>
@@ -871,9 +872,9 @@ Calculated values are shown above for verification and engineering transparency.
 <tbody>
 <tr>
 <td>00</td>
-<td>1,293.98</td>
-<td>1,246.44</td>
-<td>343.07</td>
+<td>1,294.70</td>
+<td>1,247.14</td>
+<td>343.26</td>
 <td>0.96</td>
 <td>51.8%</td>
 </tr>
@@ -887,9 +888,9 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>02</td>
-<td>1,286.93</td>
-<td>1,240.29</td>
-<td>337.25</td>
+<td>1,287.64</td>
+<td>1,240.97</td>
+<td>337.44</td>
 <td>0.96</td>
 <td>51.5%</td>
 </tr>
@@ -903,35 +904,35 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>04</td>
-<td>1,282.19</td>
-<td>1,235.51</td>
-<td>338.14</td>
+<td>1,282.91</td>
+<td>1,236.20</td>
+<td>338.33</td>
 <td>0.96</td>
 <td>51.3%</td>
 </tr>
 <tr>
 <td>05</td>
-<td>1,288.99</td>
-<td>1,240.63</td>
-<td>346.94</td>
+<td>1,289.71</td>
+<td>1,241.32</td>
+<td>347.14</td>
 <td>0.96</td>
 <td>51.6%</td>
 </tr>
 <tr>
 <td>06</td>
-<td>1,261.81</td>
-<td>1,215.48</td>
-<td>333.33</td>
+<td>1,282.47</td>
+<td>1,235.38</td>
+<td>338.79</td>
 <td>0.96</td>
-<td>50.5%</td>
+<td>51.3%</td>
 </tr>
 <tr>
 <td>07</td>
-<td>1,270.74</td>
-<td>1,225.32</td>
-<td>331.67</td>
+<td>1,293.01</td>
+<td>1,246.79</td>
+<td>337.48</td>
 <td>0.96</td>
-<td>50.8%</td>
+<td>51.7%</td>
 </tr>
 <tr>
 <td>08</td>
@@ -951,11 +952,11 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>10</td>
-<td>1,288.39</td>
-<td>1,242.85</td>
-<td>332.98</td>
+<td>1,289.82</td>
+<td>1,244.23</td>
+<td>333.35</td>
 <td>0.96</td>
-<td>51.5%</td>
+<td>51.6%</td>
 </tr>
 <tr>
 <td>11</td>
@@ -967,25 +968,25 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>12</td>
-<td>1,300.51</td>
-<td>1,255.71</td>
-<td>329.93</td>
+<td>1,302.68</td>
+<td>1,257.80</td>
+<td>330.48</td>
 <td>0.97</td>
-<td>52.0%</td>
+<td>52.1%</td>
 </tr>
 <tr>
 <td>13</td>
-<td>1,317.18</td>
-<td>1,271.20</td>
-<td>335.61</td>
+<td>1,317.91</td>
+<td>1,271.91</td>
+<td>335.80</td>
 <td>0.97</td>
 <td>52.7%</td>
 </tr>
 <tr>
 <td>14</td>
-<td>1,310.24</td>
-<td>1,264.44</td>
-<td>335.47</td>
+<td>1,310.97</td>
+<td>1,265.15</td>
+<td>335.65</td>
 <td>0.97</td>
 <td>52.4%</td>
 </tr>
@@ -1023,9 +1024,9 @@ Calculated values are shown above for verification and engineering transparency.
 </tr>
 <tr>
 <td>19</td>
-<td>1,306.71</td>
-<td>1,257.91</td>
-<td>348.66</td>
+<td>1,308.16</td>
+<td>1,259.31</td>
+<td>349.05</td>
 <td>0.96</td>
 <td>52.3%</td>
 </tr>
@@ -1080,7 +1081,7 @@ Calculated values are shown above for verification and engineering transparency.
     <div class="image-fullscreen-overlay" id="imageFullscreenOverlay">
         <button class="close-fullscreen-btn" onclick="closeFullscreen()">✕ Return to Split View</button>
         <div class="fullscreen-content">
-            <img id="patternImageFullscreen" src="Patterns/HAD2500tbt_apr26.png" alt="Pattern Analysis" onerror="handlePatternMissing()">
+            <img id="patternImageFullscreen" src="Patterns/HAD2500tbt_apr26.png" alt="Pattern Analysis">
             <p>HAD2500 - ENERGY Pattern</p>
         </div>
     </div>    
@@ -1105,12 +1106,42 @@ Calculated values are shown above for verification and engineering transparency.
     
     
     <script>
-        function handlePatternMissing() {
+        function tryPatternImageReload() {
+            const inlineImg = document.getElementById('patternImageInline');
+            const fullscreenImg = document.getElementById('patternImageFullscreen');
+            if (!inlineImg) return false;
+
+            const currentSrcAttr = (inlineImg.getAttribute('src') || '').trim();
+            if (!currentSrcAttr || currentSrcAttr === '#') return false;
+
+            const retryCount = Number(inlineImg.dataset.patternRetryCount || '0');
+            if (retryCount >= 1) return false;
+
+            const separator = currentSrcAttr.includes('?') ? '&' : '?';
+            const refreshedSrc = `${currentSrcAttr}${separator}v=${Date.now()}`;
+            inlineImg.dataset.patternRetryCount = String(retryCount + 1);
+            inlineImg.setAttribute('src', refreshedSrc);
+            if (fullscreenImg) {
+                fullscreenImg.setAttribute('src', refreshedSrc);
+            }
+            return true;
+        }
+
+        function handlePatternMissing(event) {
             const container = document.querySelector('.pattern-image-container');
             const inlineImg = document.getElementById('patternImageInline');
             const fullscreenImg = document.getElementById('patternImageFullscreen');
             const fullsizeBtn = container ? container.querySelector('.fullsize-btn') : null;
             const caption = container ? container.querySelector('p') : null;
+            const trigger = event && event.target;
+
+            if (trigger && trigger.id && trigger.id !== 'patternImageInline') {
+                return;
+            }
+
+            if (inlineImg && tryPatternImageReload()) {
+                return;
+            }
 
             if (inlineImg) {
                 inlineImg.style.display = 'none';

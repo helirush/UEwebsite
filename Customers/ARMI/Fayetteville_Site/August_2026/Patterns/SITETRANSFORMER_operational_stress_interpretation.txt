@@ -1,0 +1,15 @@
+**ARMI Manufacturing — Site Transformer | Operational Stress Interpretation**
+
+Pulling all four views together — Voltage, Baseline Target, Active-Reactive-Harmonic, and MPTS Simulation — what you are seeing at the Site Transformer is a field under compound, recurring, production-synchronized stress. Each individual metric is explainable in isolation. The real concern is their simultaneous occurrence.
+
+Every weekday shift start at this facility generates a cascade: amperage surges toward the 302.1-amp maximum, reactive demand spikes toward 56.3 kVAR, the voltage field compresses in a triangular dip profile, the power factor collapses — occasionally down to 54.9 percent — and harmonic distortion can peak at 27 percent iTHD at the same moment. This is not a transformer that occasionally experiences stress. This is a transformer that experiences a compound stress event at the start of nearly every production shift, approximately 21 to 22 times per month, every month.
+
+The 500 kVA nameplate rating provides headroom — peak demand of 300.4 kilowatts is not overloading the transformer in an absolute sense. But transformer thermal rating is not just about kilowatt load. Reactive current, harmonic current, and the associated core losses all contribute to effective thermal burden. The thermal consequence reading of $8 per period and $97 per year is the estimated financial proxy for that burden — modest in dollar terms, but meaningful as a signal that the transformer is running hotter than its active load alone would justify.
+
+The field operating above its own 256 kVA daily target on 16 to 18 of approximately 22 production days confirms that the facility's electrical appetite regularly exceeds the operating baseline. This is a facility that is genuinely busy — the productive work is real — but the reactive and harmonic overhead it is carrying means the transformer is working harder than the actual production output requires.
+
+The estimated total consequence is $352 per month, or approximately $4,144 per year. In the context of an industrial operation, that annual figure is not an alarm-level number on its own. But it is a continuous drain — and more importantly, it is a proxy for the mechanical and thermal stress that the dollar figures do not fully capture. Motor insulation aging, drive electronics fatigue, and conductor thermal cycling are real costs that accumulate in maintenance budgets and unplanned downtime, not in monthly energy statements.
+
+This field, in its current untuned state, is a candidate for reactive power compensation that would reduce the reactive overhead, stabilize the voltage dip events, and reduce the thermal burden on the transformer. The compound stress pattern is clear. The cost of inaction is not dramatic in any single month — it is a slow, compounding erosion.
+
+---

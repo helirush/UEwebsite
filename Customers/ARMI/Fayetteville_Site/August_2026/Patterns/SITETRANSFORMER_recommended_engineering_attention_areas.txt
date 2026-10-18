@@ -1,0 +1,20 @@
+**ARMI Manufacturing — Site Transformer | Recommended Engineering Attention Areas**
+
+Given the untuned field status confirmed across all four views, the following engineering attention areas are prioritized for this transformer:
+
+**1. Reactive Power Compensation Assignment**
+The 56.3 kVAR MAX reactive burden is the primary correction target. Engineering should confirm the reactive compensation sizing against a full-month CSV dataset to resolve the discrepancy between the BT-header maximum of 56.3 kVAR and the M-view peak of 36 kVAR. Until that reconciliation is complete, the 56.3 kVAR figure should be used as the conservative planning anchor.
+
+**2. Harmonic Assessment and Mitigation Review**
+The 27.0 percent iTHD maximum is elevated and warrants a dedicated harmonic survey. If power factor correction capacitors are installed or planned on this bus, harmonic resonance risk must be evaluated before deployment. A harmonic filter or detuned reactor may be warranted depending on the harmonic spectrum profile.
+
+**3. Voltage Swing Monitoring and Shift-Start Profile**
+The 16.4-volt live swing range and the clustered triangular dip events at shift starts should be characterized in detail. A time-stamped voltage event log correlated with production shift schedules would confirm whether MPTS correction alone resolves the dip pattern or whether additional load-sequencing or soft-start measures are needed for the highest-amperage loads.
+
+**4. Transformer Thermal Health Baseline**
+Given the recurring compound stress events, a thermal imaging inspection of the transformer, main conductors, and terminations is recommended as a baseline health snapshot before any correction equipment is deployed. This establishes a pre-correction benchmark and identifies any existing insulation degradation that should be addressed prior to optimization.
+
+**5. CSV Data Validation**
+All numeric findings in this analysis are vision-extracted from image views. A full Mercury CSV dataset for August 2026 should be loaded to validate the BT header values, confirm the kVAR MAX reconciliation, and provide ground-truth anchors for consequence cost calculations before any engineering commitments are made.
+
+---

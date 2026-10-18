@@ -1,0 +1,15 @@
+**SiteTransformer — MPTS Simulation Results (S View) | September 2026**
+
+The S view delivers the quantified projection of what reactive compensation does to this field — and the results are substantial. With MPTS correction applied, the simulated field achieves a 99.5 percent power factor target, representing a gain of 10.3 percentage points from the untuned baseline of 89.2 percent. That improvement is not cosmetic — it reshapes every aspect of how the transformer operates during production hours.
+
+The reactive burden tells the clearest story. The reactive average drops from 29.2 kVAR down to 9.2 kVAR — a reduction of 20 kVAR, or roughly 68 percent of the average reactive burden disappearing from the field. The reactive maximum compresses from 58.1 kVAR down to 30.3 kVAR — a reduction of 27.8 kVAR at the peak stress level. That peak reduction is particularly meaningful because it directly reduces the worst-case current amplitude the transformer must carry during production demand spikes, which are exactly the moments when thermal stress is most intense.
+
+The heat burden relief follows directly. With reactive current substantially reduced, the I-squared-R losses in the transformer windings and distribution conductors drop proportionally. The thermal consequence line in the S header reflects this — thermal burden contribution moving from $8 per month toward a significantly reduced figure. Cooling overhead similarly compresses. The facility's mechanical cooling systems — whether that's chilled air, HVAC, or process cooling — carry a lighter burden when the heat generation from wasted reactive power is reduced at the source.
+
+Released capacity adds a practical operational benefit: 3.6 kVA of apparent power burden is returned to the transformer's usable capacity. That's headroom the facility can use for future load additions without immediately stressing the transformer beyond its comfort ceiling — relevant for any facility with growth plans or equipment upgrade schedules.
+
+The aggregate financial projection: approximately $285 per month in recovered value, building to an estimated $3,472 per year in recovered consequence costs. The multi-year accumulation is meaningful — approximately $17,372 over five years, roughly $34,786 over ten years, and approaching $69,708 over a twenty-year planning horizon. All figures are planning-level estimates dependent on actual field conditions and site-specific factors.
+
+The sizing implication from the kVAR MAX figure: 58.1 kVAR MAX ÷ 400 = 0.145, rounding up to one H490 unit. At this reactive load level, a single H490 unit — rated at 400 kVAR — provides substantial oversizing relative to the 58.1 kVAR maximum, which suggests that either an H240 unit at 200 kVAR nominal capacity may be sufficient for this specific transformer, or that a shared compensation strategy with other transformers on the site could optimize the investment. Final sizing should be confirmed through full engineering assessment once CSV data is available.
+
+---

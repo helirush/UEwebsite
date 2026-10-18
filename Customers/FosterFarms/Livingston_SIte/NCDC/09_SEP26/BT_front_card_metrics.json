@@ -1,0 +1,277 @@
+{
+  "month": "09_SEP26",
+  "group": "NCDC",
+  "source_policy": "energy_dashboard annual_waste_cost + avg_voltage/PF; aliases for resolver",
+  "transformers": {
+    "NCDC1": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC1 WEST11C": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC1 West11c": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC1-West11c": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC1WEST11C": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC1West11c": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC1_West11c": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "ncdc1 west11c": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "ncdc1west11c": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.6,
+      "field_consequence_annual": 132834,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC1_West11c.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2 SOUTH D": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2 South D": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2-South-D": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2SOUTHD": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2SouthD": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC2_South_D": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "ncdc2 south d": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "ncdc2southd": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 92.9,
+      "field_consequence_annual": 86247,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC2_South_D.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3 NORTH E": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3 North E": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3-North-E": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3NORTHE": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3NorthE": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "NCDC3_North_E": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "ncdc3 north e": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    },
+    "ncdc3northe": {
+      "field_voltage": 480.0,
+      "power_factor_percent": 85.2,
+      "field_consequence_annual": 126036,
+      "voltage_min": 480.0,
+      "voltage_max": 480.0,
+      "source": "rebuilt_from_sep26_energy_dashboard_annual_waste_cost",
+      "energy_file": "energy_dashboard_data_NCDC3_North_E.json",
+      "built_at": "2026-10-13T14:46:16"
+    }
+  }
+}

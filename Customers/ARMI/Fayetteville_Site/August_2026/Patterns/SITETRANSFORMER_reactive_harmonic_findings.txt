@@ -1,0 +1,13 @@
+**ARMI Manufacturing — Site Transformer | Reactive and Harmonic Findings**
+
+The reactive and harmonic picture on this transformer is where the burden profile becomes clearest. The Baseline Target header confirms a reactive average of 29.9 kVAR carrying across the entire month, with a dataset maximum of 56.3 kVAR. That maximum is the sizing anchor — 56.3 kVAR MAX tells you the peak reactive demand this transformer is managing at its worst production moments.
+
+There is a noted discrepancy between the BT header's 56.3 kVAR MAX and the M-view's 36 kVAR MAX reading. That is a 20.3 kVAR variance — approximately 36 percent — which exceeds the flagging threshold. The most probable explanation is that the M-view is capturing a period-average peak within a specific interval, while the BT header is reporting the dataset-wide absolute maximum. The BT value of 56.3 kVAR MAX is the more conservative and correct anchor for equipment sizing purposes, and it is the value I am carrying forward.
+
+The harmonic behavior adds a second layer of stress on top of the reactive burden. The iTHD average across August is 1.6 percent, which on its own is a reasonable baseline for an industrial facility. But the maximum iTHD of 27.0 percent is the number that demands attention. At 27 percent harmonic distortion, the current waveform is significantly non-sinusoidal during those events. Non-linear harmonic currents do not do useful work — they circulate in the transformer and conductors as heat, they can excite resonance in power factor correction capacitors if any are installed, and they add to the transformer's effective thermal loading well beyond what the kilowatt demand curve alone would suggest.
+
+The critical observation is the synchronization of these events. The harmonic concentration spikes in the M-view purple trace cluster during the same shift-start intervals visible in the voltage dip analysis. These are not independent stressors — reactive surge, voltage depression, current peak, and harmonic injection are all occurring simultaneously at shift starts. That is a compound stress event, not a single-variable problem.
+
+The power factor minimum of 54.9 percent is the most striking individual data point in the entire dataset. Even if it is brief — a flash event at a shift-start surge — a power factor of 54.9 percent means the transformer is at that moment delivering approximately 1.8 times the current needed to accomplish the actual work. That excess current is pure thermal burden on conductors, core, and connected equipment.
+
+---

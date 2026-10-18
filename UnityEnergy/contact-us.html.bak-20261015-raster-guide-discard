@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Unity Energy</title>
+    <meta name="description" content="Contact Unity Energy. Meet with Clerk Maxwell or reach the Unity team about your industrial energy field.">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <script src="public_release_flags.js?v=20260901a"></script>
+    <script>
+    /* Contact Us: never mount floating/inline Clerk on this page.
+       Meet with Clerk → gold speak-with-clerk.html only. */
+    (function () {
+      window.__UE_CONTACT_NO_FLOATING_CLERK__ = true;
+      window.MAXWELLIAN_HUME = window.MAXWELLIAN_HUME || {};
+      window.MAXWELLIAN_HUME.floating_launcher_enabled = false;
+      window.MAXWELLIAN_HUME.auto_launch_on_load = false;
+    })();
+    </script>
+    <style>
+        :root {
+            --ue-contact-art-w: 2320;
+            --ue-contact-art-h: 1492;
+            --ue-contact-ratio: calc(1492 / 2320);
+            --ue-green: rgba(57, 74, 35, 1);
+            --ue-green-deep: rgba(39, 58, 24, 0.98);
+            --ue-gold: rgba(196, 150, 48, 0.98);
+            --ue-cream: rgba(250, 246, 232, 0.96);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            min-height: 100%;
+            background: #f4f0e4;
+            color: var(--ue-green);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+        }
+        body.contact-us-page {
+            overflow-x: hidden;
+        }
+
+        /* Kill any residual Clerk chrome if a shared script sneaks in */
+        #clerkFloatingLauncher,
+        .clerk-floating-launcher,
+        #clerkFloatingLauncherWrap,
+        #clerkVoiceModal,
+        .clerk-voice-modal,
+        #clerkVoiceBackdrop,
+        #clerkVoiceSignalPortrait,
+        [class*="floating-launcher"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            z-index: -999 !important;
+        }
+
+        .ue-contact-shell {
+            width: min(1480px, calc(100% - 24px));
+            margin: 12px auto 18px;
+        }
+
+        /* Guide stage: PNG is composition source-of-truth */
+        .ue-contact-stage {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2320 / 1492;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 18px 42px rgba(30, 40, 18, 0.18);
+            background: #e8e2d2;
+        }
+        .ue-contact-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Overlay layer sits on top of painted guide */
+        .ue-contact-overlays {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none; /* children re-enable */
+        }
+        .ue-contact-overlays a,
+        .ue-contact-overlays button {
+            pointer-events: auto;
+            cursor: pointer;
+            border: 0;
+            background: transparent;
+            text-decoration: none;
+            color: transparent;
+            font-size: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Top-left logo → home */
+        .ue-hit-logo {
+            position: absolute;
+            left: 2.4%;
+            top: 2.8%;
+            width: 15.5%;
+            height: 7.2%;
+            border-radius: 10px;
+        }
+        .ue-hit-logo:hover,
+        .ue-hit-logo:focus-visible {
+            outline: 2px solid rgba(196, 150, 48, 0.55);
+            outline-offset: 2px;
+            background: rgba(255, 248, 220, 0.08);
+        }
+
+        /* Top nav row — transparent hits over painted tabs */
+        .ue-hit-nav {
+            position: absolute;
+            top: 3.4%;
+            height: 5.6%;
+            border-radius: 999px;
+        }
+        .ue-hit-nav:hover,
+        .ue-hit-nav:focus-visible {
+            outline: 2px solid rgba(90, 120, 50, 0.45);
+            outline-offset: 1px;
+            background: rgba(255, 255, 255, 0.10);
+        }
+        .ue-hit-nav.is-active:hover,
+        .ue-hit-nav.is-active:focus-visible {
+            outline-color: rgba(40, 70, 30, 0.55);
+            background: rgba(40, 70, 30, 0.08);
+        }
+        /* Tuned to painted labels on contact-us_61014.png (no Unity Home in art; logo = home) */
+        .ue-hit-nav--about     { left: 26.8%; width: 8.2%; }
+        .ue-hit-nav--systems   { left: 35.4%; width: 8.4%; }
+        .ue-hit-nav--products  { left: 44.2%; width: 12.2%; }
+        .ue-hit-nav--story     { left: 56.8%; width: 10.6%; }
+        .ue-hit-nav--portals   { left: 67.8%; width: 10.4%; }
+        .ue-hit-nav--maxwellian{ left: 78.6%; width: 10.6%; }
+        .ue-hit-nav--contact   { left: 89.6%; width: 7.8%; }
+
+        /* Left stack CTAs (over painted cards) — optional active hits */
+        .ue-hit-card {
+            position: absolute;
+            left: 4.6%;
+            width: 36.2%;
+            height: 9.4%;
+            border-radius: 16px;
+        }
+        .ue-hit-card:hover,
+        .ue-hit-card:focus-visible {
+            outline: 2px solid rgba(196, 150, 48, 0.5);
+            outline-offset: 1px;
+            background: rgba(255, 250, 230, 0.10);
+        }
+        .ue-hit-card--email     { top: 40.5%; }
+        .ue-hit-card--facility  { top: 51.0%; }
+        .ue-hit-card--subscribe { top: 61.5%; }
+
+        /* Meet with Clerk — gold button region on right card */
+        .ue-hit-meet-clerk {
+            position: absolute;
+            left: 48.6%;
+            top: 64.8%;
+            width: 21.5%;
+            height: 7.2%;
+            border-radius: 999px;
+            /* Keep mostly transparent so painted gold shows; slight hover feedback */
+            background: transparent;
+            box-shadow: none;
+        }
+        .ue-hit-meet-clerk:hover,
+        .ue-hit-meet-clerk:focus-visible {
+            outline: 2px solid rgba(255, 220, 120, 0.85);
+            outline-offset: 3px;
+            background: rgba(255, 230, 150, 0.12);
+            box-shadow: 0 0 0 6px rgba(196, 150, 48, 0.12);
+        }
+        .ue-hit-meet-clerk:active {
+            transform: translateY(1px);
+        }
+
+        /* Screen-reader labels only */
+        .ue-sr {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0,0,0,0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        /* Bottom chrome outside the art (user will refine bottom art hits later) */
+        .ue-contact-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            padding: 4px 6px 8px;
+            color: rgba(57, 74, 35, 0.82);
+            font-size: clamp(0.72rem, 0.9vw, 0.86rem);
+        }
+        .ue-contact-footer a {
+            color: rgba(57, 74, 35, 0.92);
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+        }
+        .ue-contact-footer a:hover { text-decoration: underline; }
+        .ue-contact-footer-links {
+            display: inline-flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        /* Narrow / short screens: keep stage readable */
+        @media (max-width: 920px) {
+            .ue-contact-shell {
+                width: calc(100% - 12px);
+                margin: 8px auto 14px;
+            }
+            .ue-contact-stage {
+                border-radius: 12px;
+            }
+            .ue-hit-nav {
+                top: 2.8%;
+                height: 6.2%;
+            }
+        }
+        @media (max-width: 700px) {
+            /* On small screens, enlarge hit targets slightly */
+            .ue-hit-nav { height: 7%; top: 2.2%; }
+            .ue-hit-meet-clerk {
+                height: 8.5%;
+                top: 63.5%;
+            }
+            .ue-hit-card { height: 10.2%; }
+        }
+    </style>
+</head>
+<body class="contact-us-page">
+    <main class="ue-contact-shell" aria-label="Unity Energy Contact Us">
+        <section class="ue-contact-stage" aria-label="Contact Us composition">
+            <img
+                class="ue-contact-art"
+                src="./assets/images/contact-us_61014.png?v=20261015-contact-raster-1"
+                width="2320"
+                height="1492"
+                alt="Unity Energy Contact Us — Let's talk about your energy field"
+                draggable="false"
+            >
+
+            <div class="ue-contact-overlays" aria-label="Active contact controls">
+                <!-- Logo / home -->
+                <a class="ue-hit-logo" href="./index.html" aria-label="Unity Energy Home">
+                    <span class="ue-sr">Unity Energy Home</span>
+                </a>
+
+                <!-- Top nav overlays (positions match painted guide; labels stay on art for now) -->
+                <a class="ue-hit-nav ue-hit-nav--about" href="./about-unity.html" aria-label="About Unity">
+                    <span class="ue-sr">About Unity</span>
+                </a>
+                <a class="ue-hit-nav ue-hit-nav--systems" href="./our-systems.html" aria-label="Our Systems">
+                    <span class="ue-sr">Our Systems</span>
+                </a>
+                <a class="ue-hit-nav ue-hit-nav--products" href="./products-services.html" aria-label="Products and Services">
+                    <span class="ue-sr">Products and Services</span>
+                </a>
+                <a class="ue-hit-nav ue-hit-nav--story" href="./electrical-energy-story.html" aria-label="Energy Field Story">
+                    <span class="ue-sr">Energy Field Story</span>
+                </a>
+                <a class="ue-hit-nav ue-hit-nav--portals" href="./customer-portals.html" aria-label="Customer Portals">
+                    <span class="ue-sr">Customer Portals</span>
+                </a>
+                <a class="ue-hit-nav ue-hit-nav--maxwellian" href="./maxwellian.html" aria-label="Maxwellian Library">
+                    <span class="ue-sr">Maxwellian Library</span>
+                </a>
+                <a class="ue-hit-nav ue-hit-nav--contact is-active" href="./contact-us.html" aria-label="Contact Us" aria-current="page">
+                    <span class="ue-sr">Contact Us</span>
+                </a>
+
+                <!-- Left action cards -->
+                <a
+                    class="ue-hit-card ue-hit-card--email"
+                    href="mailto:info@UnityEnergy.com?subject=Unity%20Energy%20Contact"
+                    aria-label="Email Unity Team"
+                >
+                    <span class="ue-sr">Email Unity Team</span>
+                </a>
+                <a
+                    class="ue-hit-card ue-hit-card--facility"
+                    href="mailto:info@UnityEnergy.com?subject=Unity%20Energy%20Facility%20Details&body=Company:%0ALocation:%0ABiggest%20power-quality%20challenge:%0AGoals:%0ATimeline:%0A"
+                    aria-label="Tell us about your facility"
+                >
+                    <span class="ue-sr">Tell us about your facility</span>
+                </a>
+                <a
+                    class="ue-hit-card ue-hit-card--subscribe"
+                    href="mailto:info@UnityEnergy.com?subject=Maxwellian%20News%20Brief%20Signup&body=Please%20add%20me%20to%20the%20Maxwellian%20News%20Brief.%0A%0AName:%0ACompany:%0AEmail:%0A"
+                    aria-label="Subscribe to Maxwellian updates"
+                >
+                    <span class="ue-sr">Subscribe to Maxwellian updates</span>
+                </a>
+
+                <!-- Meet with Clerk → gold full-page Clerk concierge (CP possibility-3 pattern) -->
+                <button
+                    type="button"
+                    class="ue-hit-meet-clerk"
+                    id="ueContactMeetClerk"
+                    aria-label="Meet with Clerk Maxwell"
+                >
+                    <span class="ue-sr">Meet with Clerk</span>
+                </button>
+            </div>
+        </section>
+
+        <footer class="ue-contact-footer">
+            <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+            <p class="ue-contact-footer-note">Transforming how facilities understand their electrical systems.</p>
+            <div class="ue-contact-footer-links">
+                <a href="./index.html">Unity Home</a>
+                <a href="./contact-us.html" aria-current="page">Contact Us</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+    (function () {
+      function goMeetClerk(ev) {
+        try {
+          if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+        } catch (e) {}
+        // Gold-screen Clerk only — never open inline/floating Clerk on Contact Us
+        window.location.assign('./speak-with-clerk.html?v=20261015-meet-clerk-2&from=contact-us');
+        return false;
+      }
+      var btn = document.getElementById('ueContactMeetClerk');
+      if (btn) btn.addEventListener('click', goMeetClerk);
+
+      // Belt-and-suspenders: purge any late Clerk chrome
+      function killFloat() {
+        [
+          '#clerkFloatingLauncher', '.clerk-floating-launcher', '#clerkVoiceModal',
+          '.clerk-voice-modal', '#clerkVoiceBackdrop', '#clerkVoiceSignalPortrait'
+        ].forEach(function (sel) {
+          document.querySelectorAll(sel).forEach(function (el) {
+            try { el.remove(); } catch (e) { try { el.style.display = 'none'; } catch (e2) {} }
+          });
+        });
+      }
+      killFloat();
+      window.addEventListener('load', killFloat);
+    })();
+    </script>
+</body>
+</html>

@@ -1,10 +1,11 @@
 // Unity Energy Customer Portal - Access Configuration
 // =====================================================
-// Passwordless portal access:
-//   - Visitor completes profile (when required)
-//   - Selects company or Guest
-//   - Selects Access Unity Portal
-// No portal passwords are required.
+// Passwordless + domain-locked portal access:
+//   - No portal passwords are required
+//   - Company email domain unlocks ONLY that company's portal
+//   - unityenergy.com / accentzinc.com = all-access (any customer portal)
+//   - Guest remains available for non-company walkthroughs to Unity Home
+// Domain enforcement lives in customer-portals.html (CUSTOMER_EMAIL_DOMAIN_ALLOWLIST).
 
 window.portalConfig = {
     // Kept for older pages that still read this flag.
@@ -81,19 +82,35 @@ window.portalConfig = {
         'investor': {
             name: 'Investor Center (Private and Confidential)',
             path: './customer-portal/investor-center/index.html',
-            allowAnyDomain: true
+            // Founder/all-access emails only (unityenergy.com / accentzinc.com).
+            allowAnyDomain: true,
+            founderOnly: true
         },
         'investorcenter': {
             name: 'Investor Center (Private and Confidential)',
             path: './customer-portal/investor-center/index.html',
-            allowAnyDomain: true
+            allowAnyDomain: true,
+            founderOnly: true
         }
     },
 
     accessPolicy: {
         // Domain-based auto-routing (domain -> customer key).
+        // Runtime also enforces CUSTOMER_EMAIL_DOMAIN_ALLOWLIST in customer-portals.html.
+        allAccessEmailDomains: ['unityenergy.com', 'accentzinc.com'],
         domainCustomerOverrides: {
-            "fosterfarms.com": "fosterfarms"
+            "fosterfarms.com": "fosterfarms",
+            "norfolkiron.com": "norfolkiron",
+            "norfolkironmetal.com": "norfolkiron",
+            "armi.com": "armi",
+            "army.com": "armi",
+            "arkansasmyriad.com": "armi",
+            "avco.com": "avco",
+            "avcocenter.com": "avco",
+            "boa.com": "boa",
+            "bankofamerica.com": "boa",
+            "tyson.com": "tysonfoods",
+            "tysonfoods.com": "tysonfoods"
         }
     }
 };

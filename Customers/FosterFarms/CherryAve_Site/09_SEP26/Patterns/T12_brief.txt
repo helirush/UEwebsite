@@ -1,0 +1,34 @@
+# T12 Main Transformer at Foster Farms Cherry Ave - September 2026 (Untuned Field)
+
+## Field Condition Summary
+- **Power Factor (PF):** 83.4%
+- **Consumption:** 1060.04 kW
+- **Supply:** 1258.68 kVA
+- **Waste:** 198.63 kW
+- **Annual Waste Cost:** $609,007.01
+- **Voltage:** Average 480.0V, Min 480.0V, Max 480.0V
+- **Voltage Dips:** 204 events
+
+### Coverage Note
+Full September 1–30, 2026 (1-minute intervals)
+
+### Key Measured Metrics
+- **Power Factor (PF):** 83.37475231481483
+- **Consumption (kW):** 1060.043209027778
+- **Supply (kVA):** 1258.6756328009258
+- **Waste (kW):** 198.63242377314782
+- **Annual Waste Cost:** $609,007.0112884712
+- **Voltage (Vavg):** 480.0
+- **Voltage (Vmin):** 480.0
+- **Voltage (Vmax):** 480.0
+- **Dip Count:** 204
+
+### Image Findings
+- **BT:** The transformer operates at a power factor of 83.4%, indicating inefficiency due to reactive power. The voltage remains stable with minimal deviation.
+- **B:** The supplied power consistently hovers around 2000 kVA, with a noticeable gap between supplied and consumed power due to reactive losses.
+- **S:** The target power factor of 99.5% in the MPTS simulation suggests potential for improved efficiency with tuning.
+- **V:** Voltage remains stable at 480V, but 204 voltage dips indicate transient events affecting stability.
+- **M:** Significant electrical losses are evident with high reactive power and a low power factor, alongside substantial load demands.
+
+### Closing
+The Full Analysis should emphasize strategies to improve power factor efficiency, reduce reactive power losses, and address the causes of voltage dips to enhance overall transformer performance and reduce waste costs.

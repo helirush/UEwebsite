@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <script src="passwords.js?v=20260922a"></script>
     <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
-    <script src="hume_character_config.js?v=20260727r32"></script>
-    <script src="clerk_voice_widget.js?v=20260727r29"></script>
-    <script src="public_release_flags.js?v=20260731b"></script>
+    <script src="hume_character_config.js?v=20261011-traveler-float-1"></script>
+    <script src="clerk_voice_widget.js?v=20261015-single-clerk-face-6"></script>
+    <script src="public_release_flags.js?v=20260901a"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -27,6 +27,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#4f6d1f">
+    <!-- Portal circle type (Cove): Source Sans 3 Semibold -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@600&display=swap" rel="stylesheet">
     <style>
         /* ===== Base Reset ===== */
         * {
@@ -654,7 +658,7 @@
             margin-top: auto;
             margin-left: auto;
             margin-right: auto;
-            padding: 10px 0 5px;
+            padding: 10px 0 0;
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: clamp(16px, 1.62vw, 28px);
@@ -662,26 +666,10 @@
             z-index: 11;
             transform: translateY(-25px);
         }
-        .hero-bottom-cta-strip::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 13px;
-            width: 100%;
-            height: 3px;
-            transform: none;
-            background: rgba(58, 88, 26, 0.88);
-            pointer-events: none;
-        }
+        /* Divider belongs BETWEEN the 4 CTAs and the 7 nav pills — not through the CTAs */
+        .hero-bottom-cta-strip::before,
         .hero-bottom-cta-strip::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 22px;
-            width: 100%;
-            height: 1px;
-            background: rgba(88, 108, 48, 0.46);
-            pointer-events: none;
+            content: none;
         }
         .hero-bottom-cta-button {
             display: inline-flex;
@@ -713,29 +701,29 @@
         }
         @keyframes unityVisibilityPrincipleFlash {
             0% {
-                background: rgba(236, 224, 188, 0.8);
-                border-color: rgba(31, 75, 37, 0.95);
-                box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+                background: linear-gradient(180deg, #f0c45a 0%, #e0a53a 48%, #d4922a 100%);
+                border-color: rgba(176, 120, 28, 0.55);
+                box-shadow: 0 4px 12px rgba(120, 72, 12, 0.28), inset 0 1px 0 rgba(255, 236, 180, 0.55);
             }
             25% {
-                background: rgba(247, 239, 220, 1);
-                border-color: rgba(46, 96, 54, 0.95);
-                box-shadow: 0 0 0 2px rgba(82, 125, 77, 0.24), 0 0 24px rgba(87, 134, 82, 0.44), 0 9px 22px rgba(43, 56, 35, 0.24);
+                background: linear-gradient(180deg, #f7d27a 0%, #ebb44a 48%, #e09a30 100%);
+                border-color: rgba(196, 140, 36, 0.75);
+                box-shadow: 0 0 0 2px rgba(224, 165, 58, 0.35), 0 0 22px rgba(224, 165, 58, 0.55), 0 6px 16px rgba(120, 72, 12, 0.3);
             }
             50% {
-                background: rgba(247, 239, 220, 1);
-                border-color: rgba(46, 96, 54, 0.95);
-                box-shadow: 0 0 0 2px rgba(82, 125, 77, 0.24), 0 0 24px rgba(87, 134, 82, 0.44), 0 9px 22px rgba(43, 56, 35, 0.24);
+                background: linear-gradient(180deg, #f7d27a 0%, #ebb44a 48%, #e09a30 100%);
+                border-color: rgba(196, 140, 36, 0.75);
+                box-shadow: 0 0 0 2px rgba(224, 165, 58, 0.35), 0 0 22px rgba(224, 165, 58, 0.55), 0 6px 16px rgba(120, 72, 12, 0.3);
             }
             75% {
-                background: rgba(236, 224, 188, 0.8);
-                border-color: rgba(31, 75, 37, 0.95);
-                box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+                background: linear-gradient(180deg, #f0c45a 0%, #e0a53a 48%, #d4922a 100%);
+                border-color: rgba(176, 120, 28, 0.55);
+                box-shadow: 0 4px 12px rgba(120, 72, 12, 0.28), inset 0 1px 0 rgba(255, 236, 180, 0.55);
             }
             100% {
-                background: rgba(236, 224, 188, 0.8);
-                border-color: rgba(31, 75, 37, 0.95);
-                box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
+                background: linear-gradient(180deg, #f0c45a 0%, #e0a53a 48%, #d4922a 100%);
+                border-color: rgba(176, 120, 28, 0.55);
+                box-shadow: 0 4px 12px rgba(120, 72, 12, 0.28), inset 0 1px 0 rgba(255, 236, 180, 0.55);
             }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -818,14 +806,14 @@
             stroke-width: 3.5;
         }
         .hero-bottom-cta-clerk-image-icon {
-            width: 212%;
-            height: 212%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            object-position: center 70%;
-            transform: translate(-8px, 6px);
+            object-position: 66% 12%;
+            transform: none;
             opacity: 1;
-            filter: sepia(0.34) saturate(0.92) contrast(1.72) brightness(0.3);
-            mix-blend-mode: multiply;
+            filter: none;
+            mix-blend-mode: normal;
             position: relative;
             z-index: 1;
         }
@@ -977,7 +965,7 @@
             border-color: rgba(215, 184, 114, 0.84);
             color: rgba(49, 72, 48, 0.98);
             box-shadow: 0 10px 24px rgba(64, 53, 27, 0.16);
-            flex-direction: row-reverse;
+            flex-direction: row;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
@@ -1127,6 +1115,30 @@
             text-align: center;
             transform: translateY(-25px);
         }
+        /* Horizontal rule sits above the seven pills, below the four CTAs */
+        .nav-tabs-container::before {
+            content: '';
+            position: absolute;
+            left: max(2.5%, calc(50% - min(990px, 47.5vw)));
+            right: max(2.5%, calc(50% - min(990px, 47.5vw)));
+            top: 0;
+            height: 3px;
+            background: rgba(58, 88, 26, 0.88);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .nav-tabs-container::after {
+            content: '';
+            position: absolute;
+            left: max(2.5%, calc(50% - min(990px, 47.5vw)));
+            right: max(2.5%, calc(50% - min(990px, 47.5vw)));
+            top: 5px;
+            height: 1px;
+            background: rgba(88, 108, 48, 0.46);
+            pointer-events: none;
+            z-index: 1;
+        }
 
         .nav-tabs-shell {
             width: 100%;
@@ -1199,7 +1211,7 @@
                 align-items: center;
                 gap: 0;
                 width: 100%;
-                margin-top: 13px;
+                margin-top: 18px;
             }
             .nav-tabs > a {
                 width: auto;
@@ -2548,17 +2560,143 @@
             --hero-bg-position: center top;
             position: relative;
             background:
-                linear-gradient(180deg, rgba(247, 244, 235, 0.14) 0%, rgba(247, 244, 235, 0.14) 100%),
-                url('assets/images/uewebsitehero.png') no-repeat var(--hero-bg-position) / var(--hero-bg-scale) auto;
-            border-bottom: 1px solid rgba(171, 158, 124, 0.44);
+                linear-gradient(180deg, rgba(247, 244, 235, 0.08) 0%, rgba(247, 244, 235, 0.04) 100%),
+                url('assets/images/uehero_61011.png?v=20261014-mono-1') no-repeat var(--hero-bg-position) / var(--hero-bg-scale) auto;
+            border-bottom: none;
             padding: 0;
             width: 100%;
             max-width: none;
-            --hero-height: clamp(620px, 45.5vw, 920px);
+            /* Default fluid height; .ue-design-stage overrides to flex-fill under universal fit */
+            --hero-height: clamp(560px, 46.3vw, 980px);
             height: var(--hero-height);
             min-height: var(--hero-height);
             aspect-ratio: auto;
             overflow: visible;
+        }
+        /* Homepage portal entries — sit on painted green portal circle */
+        .hero-portal-entries {
+            position: absolute;
+            right: 2.4%;
+            top: 52%;
+            transform: translateY(-50%);
+            z-index: 6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(8px, 0.9vw, 12px);
+            pointer-events: none;
+        }
+        .hero-portal-entries > * {
+            pointer-events: auto;
+        }
+        /* Reuse classic portal-button press-in language over the painted circle */
+        .hero-portal-circle {
+            background: radial-gradient(circle, rgba(178, 210, 53, 0.20) 0%, rgba(129, 163, 43, 0.35) 55%, rgba(49, 65, 0, 0.65) 95%);
+            color: rgba(250, 240, 160, 1);
+            padding: 0;
+            border-radius: 50%;
+            border: 3px solid rgba(178, 210, 53, 0.95);
+            box-shadow: 0 0 36px rgba(178, 210, 53, 0.55), inset 0 0 24px rgba(0,0,0,0.35);
+            font-size: clamp(0.95rem, 1.15vw, 1.35rem);
+            font-weight: 700;
+            line-height: 1.15;
+            width: clamp(150px, 15.8vw, 248px);
+            height: clamp(150px, 15.8vw, 248px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .hero-portal-circle:hover {
+            box-shadow: 0 0 60px rgba(178, 210, 53, 0.9), inset 0 0 20px rgba(178,210,53,0.35);
+            transform: scale(1.04);
+            border-color: rgba(220, 236, 110, 0.98);
+            filter: brightness(1.08) saturate(1.05);
+        }
+        .hero-portal-circle:active {
+            box-shadow: 0 0 18px rgba(178, 210, 53, 0.4), inset 0 0 42px rgba(0,0,0,0.6);
+            transform: scale(0.98);
+            filter: brightness(0.5) saturate(0.9);
+        }
+        .hero-portal-circle:focus-visible {
+            outline: 3px solid rgba(250, 240, 160, 0.9);
+            outline-offset: 3px;
+        }
+        .hero-portal-circle .subtitle1 {
+            font-size: 0.65em;
+            margin: 0;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .hero-portal-circle .title {
+            font-size: 1.05em;
+            margin: 0;
+            line-height: 1.08;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+        .hero-portal-circle .subtitle {
+            font-size: 0.72em;
+            opacity: 0.95;
+            font-weight: 500;
+            padding: 8px 12px 0;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        .hero-portal-direct {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: clamp(32px, 2.4vw, 40px);
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(178, 210, 53, 0.9);
+            background: linear-gradient(180deg, rgba(58, 82, 22, 0.94) 0%, rgba(32, 48, 10, 0.96) 100%);
+            color: rgba(250, 240, 160, 0.98);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: clamp(0.7rem, 0.8vw, 0.88rem);
+            letter-spacing: 0.04em;
+            box-shadow: 0 8px 18px rgba(24, 36, 12, 0.28);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+            white-space: nowrap;
+        }
+        .hero-portal-direct:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 22px rgba(24, 36, 12, 0.34), 0 0 18px rgba(178, 210, 53, 0.35);
+            filter: brightness(1.08);
+        }
+        .hero-portal-direct:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 10px rgba(24, 36, 12, 0.35), inset 0 0 14px rgba(0,0,0,0.45);
+            filter: brightness(0.72);
+        }
+        .hero-portal-direct:focus-visible {
+            outline: 3px solid rgba(250, 240, 160, 0.9);
+            outline-offset: 2px;
+        }
+        @media (max-width: 1100px) {
+            .hero-portal-entries {
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: clamp(10px, 2.2vw, 18px);
+                transform: translateX(-50%);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: min(94%, 520px);
+            }
+            .hero-portal-circle {
+                width: clamp(128px, 30vw, 168px);
+                height: clamp(128px, 30vw, 168px);
+                font-size: clamp(0.82rem, 2.4vw, 1.05rem);
+            }
         }
         .hero.hero-raster-rebuild::before {
             content: none;
@@ -2570,9 +2708,10 @@
             bottom: clamp(24px, 2.6vw, 40px);
             width: clamp(260px, 29vw, 560px);
             height: clamp(48px, 6vw, 118px);
-            background: url('assets/images/NoisetoMusic.png') no-repeat center / contain;
-            opacity: 0.1;
-            filter: sepia(0.76) saturate(0.54) contrast(0.84) brightness(0.94);
+            /* Was Noise-to-Music watermark; now Tuned Energy (no music metaphor) */
+            background: url('assets/images/TunedEnergy.png?v=20261014b') no-repeat center / contain;
+            opacity: 0.11;
+            filter: sepia(0.55) saturate(0.45) contrast(0.88) brightness(0.96);
             mix-blend-mode: multiply;
             pointer-events: none;
             z-index: 1;
@@ -2810,87 +2949,96 @@
         }
         .hero-visibility-principle-group {
             position: absolute;
-            left: 91%;
-            top: 45%;
-            transform: translate(-50%, 200px);
+            /* +15px down from prior seat */
+            left: 15.6%;
+            top: 72.4%;
+            transform: translate(-50%, calc(-50% + 5px));
             z-index: 5;
         }
         .hero-visibility-principle-cta {
-            min-width: clamp(190px, 18.5vw, 300px);
-            min-height: clamp(82px, 6.4vw, 118px);
-            border-radius: clamp(10px, 1.05vw, 14px);
-            border: clamp(2px, 0.18vw, 1px) solid rgba(207, 173, 0, 0.7);
-            background: rgba(236, 224, 188, 0.80);
-            color: rgba(37, 84, 34, 0.98);
-            box-shadow: 0 6px 18px rgba(43, 56, 35, 0.18);
-            font-weight: 700;
-            padding: clamp(5px, 0.58vw, 8px) clamp(12px, 1.2vw, 18px);
+            /* Mimic painted orange square/rounded hero button */
+            min-width: clamp(220px, 20.5vw, 340px);
+            width: clamp(220px, 20.5vw, 340px);
+            min-height: clamp(42px, 3.55vw, 56px);
+            height: clamp(42px, 3.55vw, 56px);
+            border-radius: clamp(8px, 0.7vw, 12px);
+            border: 1px solid rgba(176, 120, 28, 0.45);
+            background: linear-gradient(180deg, #f2c85e 0%, #e3a93c 45%, #d49228 100%);
+            color: rgba(92, 58, 14, 0.98);
+            box-shadow: 0 4px 14px rgba(120, 72, 12, 0.28), inset 0 1px 0 rgba(255, 240, 190, 0.65), inset 0 -2px 6px rgba(150, 90, 10, 0.22);
+            font-weight: 800;
+            padding: 0 clamp(16px, 1.4vw, 26px);
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 3px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
-        }
-        .hero-visibility-principle-title {
-            display: block;
-            font-size: clamp(1rem, 1.34vw, 1.68rem);
-            letter-spacing: 0.035em;
-            line-height: 1.02;
-            text-transform: uppercase;
-        }
-        .hero-visibility-principle-divider {
-            width: 84%;
-            height: 1px;
-            background: rgba(37, 84, 34, 0.32);
-            display: block;
-            margin: 1px 0 0;
-        }
-        .hero-visibility-principle-inline-controls {
-            width: 100%;
-            display: inline-flex;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-top: 1px;
+            gap: clamp(8px, 0.7vw, 12px);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+        .hero-visibility-principle-title {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(8px, 0.65vw, 12px);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: clamp(0.78rem, 1.05vw, 1.12rem);
+            letter-spacing: 0.04em;
+            line-height: 1;
+            text-transform: uppercase;
+            color: rgba(92, 58, 14, 0.98);
+            text-shadow: none;
+            white-space: nowrap;
+            font-weight: 800;
+        }
+        .hero-visibility-principle-arrow {
+            display: inline-block;
+            font-size: 1.15em;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(92, 58, 14, 0.98);
+            transform: translateY(-0.5px);
+        }
+        .hero-visibility-principle-divider {
+            display: none;
+        }
+        .hero-visibility-principle-inline-controls {
+            /* Keep START node for JS toggle state; hide visually so button matches paint */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            margin: -1px;
+            padding: 0;
+            border: 0;
         }
         .hero-visibility-principle-inline-control {
             display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: clamp(58px, 5.3vw, 92px);
-            min-height: clamp(24px, 1.8vw, 30px);
-            border-radius: 999px;
-            border: 1px solid rgba(37, 84, 34, 0.35);
-            background: rgba(255, 255, 255, 0.18);
-            color: rgba(37, 84, 34, 0.96);
-            font-size: clamp(0.62rem, 0.72vw, 0.88rem);
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            line-height: 1;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            user-select: none;
         }
         .hero-visibility-principle-inline-control.is-active {
-            background: rgba(37, 84, 34, 0.88);
-            color: rgba(245, 247, 235, 0.98);
-            border-color: rgba(215, 228, 194, 0.7);
-            box-shadow: 0 3px 9px rgba(30, 48, 27, 0.24);
+            /* no visual — whole orange button is the control */
         }
         .hero-visibility-principle-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 26px rgba(41, 55, 32, 0.24);
-            background: rgba(255, 245, 230, 1);
+            transform: scale(1.03);
+            border-color: rgba(196, 140, 36, 0.7);
+            box-shadow: 0 6px 18px rgba(120, 72, 12, 0.34), 0 0 18px rgba(224, 165, 58, 0.35), inset 0 1px 0 rgba(255, 244, 200, 0.75);
+            filter: brightness(1.06) saturate(1.05);
+            background: linear-gradient(180deg, #f7d36e 0%, #ebb44a 45%, #e09a30 100%);
+        }
+        .hero-visibility-principle-cta:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 8px rgba(120, 72, 12, 0.35), inset 0 0 16px rgba(90, 50, 8, 0.35);
+            filter: brightness(0.9) saturate(0.95);
         }
         .hero-visibility-principle-cta.is-selected {
-            box-shadow: 0 12px 26px rgba(41, 55, 32, 0.24);
-            background: rgba(255, 245, 230, 1);
+            border-color: rgba(160, 100, 20, 0.7);
+            box-shadow: 0 4px 14px rgba(120, 72, 12, 0.32), inset 0 0 12px rgba(150, 90, 10, 0.2);
+            background: linear-gradient(180deg, #e8b84a 0%, #d49228 50%, #c48220 100%);
         }
         .hero-visibility-principle-cta:focus-visible {
-            outline: 3px solid rgba(194, 145, 47, 0.85);
+            outline: 3px solid rgba(196, 140, 36, 0.85);
             outline-offset: 2px;
         }
         .hero-rebuild-actions {
@@ -3049,25 +3197,20 @@
                 top: auto;
                 transform: none;
                 margin-top: 12px;
-                width: min(100%, 300px);
+                width: min(100%, 320px);
             }
             .hero-visibility-principle-cta {
-                min-width: min(100%, 300px);
-                width: min(100%, 300px);
-                min-height: clamp(74px, 19vw, 104px);
+                min-width: min(100%, 320px);
+                width: min(100%, 320px);
+                min-height: clamp(44px, 12vw, 54px);
+                height: auto;
+                flex-direction: row;
             }
             .hero-visibility-principle-cta:hover {
-                transform: translateY(-1px);
+                transform: scale(1.03);
             }
             .hero-visibility-principle-title {
-                font-size: clamp(0.94rem, 4.15vw, 1.28rem);
-            }
-            .hero-visibility-principle-inline-controls {
-                gap: 8px;
-            }
-            .hero-visibility-principle-inline-control {
-                min-width: clamp(54px, 19vw, 78px);
-                font-size: clamp(0.58rem, 2.6vw, 0.82rem);
+                font-size: clamp(0.72rem, 3.2vw, 0.95rem);
             }
             .hero-rebuild-action {
                 border: 1px solid rgba(147, 131, 84, 0.5);
@@ -3098,7 +3241,829 @@
             }
         }
 
-    </style>
+    
+        
+        
+        /* ===== UE landing stack refine 20261011 ===== */
+        /* Footer ~25% smaller */
+        footer,
+        .ue-design-stage footer,
+        .ue-design-stage .ue-stage-footer {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            margin-top: 4px !important;
+            min-height: 0 !important;
+        }
+        footer p {
+            margin: 2px 0 !important;
+            font-size: clamp(0.68rem, 0.85vw, 0.82rem) !important;
+            line-height: 1.25 !important;
+        }
+        .footer-unity-intro-label {
+            font-size: clamp(0.55rem, 0.68vw, 0.7rem) !important;
+        }
+        .footer-unity-intro-toggle-btn,
+        .ue-design-stage .footer-unity-intro-toggle-btn {
+            font-size: clamp(0.54rem, 0.68vw, 0.68rem) !important; /* ~25% smaller */
+            min-width: clamp(52px, 5.5vw, 66px) !important;
+            padding: 5px 10px !important;
+        }
+        .footer-unity-intro-controls {
+            gap: 6px !important;
+        }
+
+        /* Nav nest down toward footer; ~20px air under CTA strip line */
+        .nav-tabs-container,
+        .ue-design-stage .nav-tabs-container {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding: 0 0 8px !important;
+            transform: translateY(0) !important;
+        }
+        .nav-tabs-shell {
+            margin-top: 0 !important;
+        }
+        .nav-tab-portal,
+        .nav-tab-maxwellian {
+            min-height: 32px !important;
+            padding: 6px 12px !important;
+            font-size: clamp(0.72rem, 0.88vw, 0.86rem) !important;
+        }
+
+        /* CTAs sit ~20px above nav cluster (not dropped into footer) */
+        .hero-bottom-cta-strip,
+        .ue-design-stage .hero-bottom-cta-strip {
+            width: min(1280px, calc(100% - 36px)) !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding: 0 0 0 !important;
+            transform: translateY(8px) !important; /* nest down under hero, not into footer */
+            gap: clamp(8px, 0.85vw, 12px) !important;
+        }
+        .hero-bottom-cta-strip::before,
+        .hero-bottom-cta-strip::after {
+            content: none !important;
+            display: none !important;
+        }
+        .hero-bottom-cta-button,
+        .ue-design-stage .hero-bottom-cta-button {
+            min-height: clamp(86px, 6.4vw, 108px) !important;
+            padding: 7px 11px !important;
+            top: 0 !important;
+        }
+
+        /* ===== CTA logo diameters (matched set) =====
+           First three logos: equal diameter ~ nav-tab height scale.
+           Clerk Meet: large face crop only. */
+        :root {
+            --ue-cta-logo-d: clamp(58px, 4.68vw, 74px);   /* +20% vs prior compact logos 1–3 */
+            --ue-cta-clerk-d: clamp(110px, 9.2vw, 148px);  /* large face, bleeds out */
+        }
+
+        /* Shared icon well for CTAs 1–3; Clerk handled separately (full face) */
+        .hero-bottom-cta-button .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-button .hero-bottom-cta-icon {
+            flex: 0 0 var(--ue-cta-logo-d) !important;
+            width: var(--ue-cta-logo-d) !important;
+            height: var(--ue-cta-logo-d) !important;
+            min-width: var(--ue-cta-logo-d) !important;
+            min-height: var(--ue-cta-logo-d) !important;
+            max-width: var(--ue-cta-logo-d) !important;
+            max-height: var(--ue-cta-logo-d) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            overflow: hidden !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+        }
+        .hero-bottom-cta-button.hero-bottom-cta-clerk .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-button.hero-bottom-cta-clerk .hero-bottom-cta-icon {
+            overflow: visible !important;
+        }
+
+        /* 1–3: Cognition / Market / Energy — identical mark size inside the well */
+        .hero-bottom-cta-cognition .hero-bottom-cta-icon,
+        .hero-bottom-cta-market .hero-bottom-cta-icon,
+        .hero-bottom-cta-energy .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-cognition .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-market .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-energy .hero-bottom-cta-icon {
+            width: var(--ue-cta-logo-d) !important;
+            height: var(--ue-cta-logo-d) !important;
+        }
+
+        .hero-bottom-cta-cognition-image-icon,
+        .ue-design-stage .hero-bottom-cta-cognition-image-icon {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            object-position: 66% 12% !important;
+            display: block !important;
+            transform: none !important;
+            filter: none !important;
+        }
+
+        .hero-bottom-cta-market-icon,
+        .hero-bottom-cta-energy-ue-icon,
+        .ue-design-stage .hero-bottom-cta-market-icon,
+        .ue-design-stage .hero-bottom-cta-energy-ue-icon {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            display: block !important;
+            transform: none !important;
+        }
+        .hero-bottom-cta-market-icon .market-ring,
+        .hero-bottom-cta-market-icon .market-line,
+        .hero-bottom-cta-energy-ue-icon .ue-ring,
+        .hero-bottom-cta-energy-ue-icon .ue-u,
+        .hero-bottom-cta-energy-ue-icon .ue-e {
+            stroke-width: 2.6 !important;
+        }
+
+        .hero-bottom-cta-icon svg,
+        .ue-design-stage .hero-bottom-cta-icon svg {
+            width: 86% !important;
+            height: 86% !important;
+            max-width: 86% !important;
+            max-height: 86% !important;
+        }
+
+        /* Kill prior oversized/conflicting icon clamps on the first three */
+        .hero-bottom-cta-learn .hero-bottom-cta-icon,
+        .hero-bottom-cta-energy .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-learn .hero-bottom-cta-icon,
+        .ue-design-stage .hero-bottom-cta-energy .hero-bottom-cta-icon {
+            width: var(--ue-cta-logo-d) !important;
+            height: var(--ue-cta-logo-d) !important;
+        }
+
+        /* 4: Meet with Clerk — full face visible (no mask/crop) */
+        .hero-bottom-cta-button.hero-bottom-cta-clerk .hero-bottom-cta-icon,
+        .hero-bottom-cta-clerk .hero-bottom-cta-icon.hero-bottom-cta-clerk-icon-wrap,
+        .ue-design-stage .hero-bottom-cta-button.hero-bottom-cta-clerk .hero-bottom-cta-icon {
+            flex: 0 0 var(--ue-cta-clerk-d) !important;
+            width: var(--ue-cta-clerk-d) !important;
+            height: var(--ue-cta-clerk-d) !important;
+            min-width: var(--ue-cta-clerk-d) !important;
+            min-height: var(--ue-cta-clerk-d) !important;
+            max-width: var(--ue-cta-clerk-d) !important;
+            max-height: var(--ue-cta-clerk-d) !important;
+            overflow: visible !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+        }
+        .hero-bottom-cta-clerk-image-icon,
+        .ue-design-stage .hero-bottom-cta-clerk-image-icon {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            object-position: center center !important;
+            transform: none !important;
+            filter: none !important;
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+
+        /* Single portal circle — sized inside painted outer ring */
+        .hero-portal-entries {
+            right: 3.2% !important;
+            top: 54% !important;
+            transform: translateY(calc(-50% + 48px)) !important; /* down 40px total */
+            gap: 0 !important;
+        }
+        .hero-portal-circle {
+            /* Fit inside the large painted diameter on uehero */
+            width: clamp(118px, 11.5vw, 168px) !important;
+            height: clamp(118px, 11.5vw, 168px) !important;
+            font-size: clamp(0.72rem, 0.88vw, 0.98rem) !important;
+            border-width: 2px !important;
+            box-shadow: 0 0 22px rgba(178, 210, 53, 0.45), inset 0 0 16px rgba(0,0,0,0.35) !important;
+        }
+        .hero-portal-circle .subtitle1 {
+            font-size: 0.58em !important;
+            letter-spacing: 0.12em !important;
+        }
+        .hero-portal-circle .title {
+            font-size: 0.92em !important;
+            line-height: 1.05 !important;
+        }
+        .hero-portal-circle .subtitle {
+            font-size: 0.62em !important;
+            padding: 4px 6px 0 !important;
+        }
+        .hero-portal-direct { display: none !important; }
+
+        
+        /* ===== Hero bottom CTAs — compact fit (4 across) ===== */
+        .hero-bottom-cta-strip,
+        .ue-design-stage .hero-bottom-cta-strip {
+            width: min(1320px, calc(100% - 40px)) !important;
+            gap: clamp(8px, 0.9vw, 14px) !important;
+            padding: 6px 0 2px !important;
+            transform: translateY(-12px) !important;
+        }
+        .hero-bottom-cta-button,
+        .ue-design-stage .hero-bottom-cta-button {
+            min-height: clamp(86px, 6.4vw, 108px) !important;
+            height: auto !important;
+            padding: 6px 10px !important;
+            gap: clamp(6px, 0.7vw, 10px) !important;
+            top: 0 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 5px 12px rgba(34, 44, 21, 0.18) !important;
+        }
+        /* compact-fit: icon sizes deferred to CTA LOGOS LAST WORD block */
+        .hero-bottom-cta-title,
+        .ue-design-stage .hero-bottom-cta-title {
+            font-size: clamp(0.98rem, 1.35vw, 1.42rem) !important;
+            line-height: 1.1 !important;
+            letter-spacing: 0.02em !important;
+        }
+        .hero-bottom-cta-subtitle,
+        .ue-design-stage .hero-bottom-cta-subtitle {
+            font-size: clamp(0.78rem, 0.95vw, 1.02rem) !important;
+            line-height: 1.15 !important;
+            opacity: 0.92 !important;
+        }
+        .hero-bottom-cta-copy,
+        .ue-design-stage .hero-bottom-cta-copy {
+            gap: 2px !important;
+            min-width: 0 !important;
+        }
+        .hero-bottom-cta-title .cta-tm,
+        .ue-design-stage .hero-bottom-cta-title .cta-tm {
+            font-size: 0.65em !important;
+        }
+        @media (max-width: 1100px) {
+            .hero-bottom-cta-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 8px !important;
+            }
+            .hero-bottom-cta-button {
+                min-height: 56px !important;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero-bottom-cta-strip {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* ===== Universal viewport fit — MacBook Pro design stage =====
+           One reference composition (MBP full-window). Scale uniformly on every
+           monitor so proportions stay identical: no width-only growth, no chop.
+           Side letterbox stripes: dark frame (match Cognition Partner shell). */
+        html.ue-fit-ready,
+        html.ue-fit-ready body {
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            background: #0f1115 !important; /* dark side stripes (was cream #efebe0) */
+        }
+        .ue-viewport-shell {
+            box-sizing: border-box;
+            width: 100vw;
+            height: 100dvh;
+            max-width: 100vw;
+            max-height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f1115; /* dark L/R letterbox; stage keeps parchment */
+        }
+        .ue-design-stage {
+            /* Reference: MacBook Pro full-window composition that already fits */
+            --ue-design-w: 1512px;
+            --ue-design-h: 982px;
+            box-sizing: border-box;
+            width: var(--ue-design-w);
+            height: var(--ue-design-h);
+            flex: 0 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transform-origin: center center;
+            will-change: transform;
+            background: #f7f4eb;
+            overflow: hidden;
+        }
+        .ue-design-stage .banner-wrapper { flex: 0 0 auto; }
+        .ue-design-stage .hero.hero-raster-rebuild {
+            flex: 1 1 auto !important;
+            width: 100% !important;
+            max-width: none !important;
+            height: auto !important;
+            min-height: 0 !important;
+            --hero-height: auto !important;
+            aspect-ratio: auto !important;
+        }
+        .ue-design-stage .hero-bottom-cta-strip {
+            flex: 0 0 auto;
+            width: min(1420px, calc(100% - 48px)) !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            transform: translateY(-16px);
+            z-index: 12;
+        }
+        .ue-design-stage .site-access-banner { flex: 0 0 auto; }
+        .ue-design-stage .nav-tabs-container { flex: 0 0 auto; }
+        .ue-design-stage .ue-stage-footer {
+            flex: 0 0 auto;
+            margin-top: 0;
+        }
+
+
+        
+        
+        /* ===== UE CTA + PORTAL TUNE 20261011-t3 ===== */
+        /* Portal: diameter -5%, text +5%, down 10px, left 5px */
+        .hero-portal-entries {
+            right: calc(3.2% + 10px) !important; /* +5px X (right) from prior */
+            top: 54% !important;
+            transform: translateY(calc(-50% + 48px)) !important; /* +20px down from prior seat */
+            gap: 0 !important;
+        }
+        .hero-portal-circle {
+            width: clamp(112px, 10.925vw, 160px) !important;  /* was ~118/11.5/168 → -5% */
+            height: clamp(112px, 10.925vw, 160px) !important;
+            font-size: clamp(0.756rem, 0.924vw, 1.029rem) !important; /* +5% text */
+            border-width: 2px !important;
+            box-shadow: 0 0 22px rgba(178, 210, 53, 0.45), inset 0 0 16px rgba(0,0,0,0.35) !important;
+        }
+        .hero-portal-circle .subtitle1 { font-size: 0.61em !important; letter-spacing: 0.12em !important; }
+        .hero-portal-circle .title { font-size: 0.97em !important; line-height: 1.05 !important; }
+        .hero-portal-circle .subtitle { font-size: 0.65em !important; padding: 4px 6px 0 !important; }
+        .hero-portal-direct { display: none !important; }
+
+        /* Remove line running behind CTAs */
+        .hero-bottom-cta-strip::before,
+        .hero-bottom-cta-strip::after,
+        .ue-design-stage .hero-bottom-cta-strip::before,
+        .ue-design-stage .hero-bottom-cta-strip::after {
+            content: none !important;
+            display: none !important;
+            background: none !important;
+            height: 0 !important;
+            opacity: 0 !important;
+        }
+
+        /* Tighten space above CTAs (closer under Tuned Energy watermark / hero) */
+        .hero-bottom-cta-strip,
+        .ue-design-stage .hero-bottom-cta-strip {
+            transform: translateY(-14px) !important;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* ===== CTA REFERENCE MATCH 20261012c — Clerk button like 1087 example ===== */
+        .hero-bottom-cta-strip,
+        .ue-design-stage .hero-bottom-cta-strip {
+            width: min(1520px, calc(100% - 40px)) !important;
+            gap: clamp(10px, 1.05vw, 16px) !important;
+            padding: 4px 0 2px !important;
+            transform: translateY(-10px) !important;
+            overflow: visible !important;
+        }
+        .hero-bottom-cta-button,
+        .ue-design-stage .hero-bottom-cta-button,
+        .hero-bottom-cta-strip .hero-bottom-cta-button {
+            min-height: clamp(72px, 5.2vw, 88px) !important;
+            height: clamp(72px, 5.2vw, 88px) !important;
+            max-height: clamp(72px, 5.2vw, 88px) !important;
+            padding: 8px 14px !important;
+            gap: clamp(8px, 0.9vw, 14px) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 6px 16px rgba(34, 44, 21, 0.2) !important;
+            align-items: center !important;
+            overflow: hidden !important; /* mask artwork to button */
+        }
+
+        /* Logos 1–3 — matched diameter, +20% (Cognition / Market / Energy only) */
+        .hero-bottom-cta-strip > .hero-bottom-cta-cognition > .hero-bottom-cta-icon,
+        .hero-bottom-cta-strip > .hero-bottom-cta-learn > .hero-bottom-cta-icon,
+        .hero-bottom-cta-strip > .hero-bottom-cta-energy > .hero-bottom-cta-icon,
+        .hero-bottom-cta-strip > a.hero-bottom-cta-cognition > .hero-bottom-cta-icon,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-learn > .hero-bottom-cta-icon,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-energy > .hero-bottom-cta-icon {
+            flex: 0 0 clamp(58px, 4.68vw, 74px) !important;
+            width: clamp(58px, 4.68vw, 74px) !important;
+            height: clamp(58px, 4.68vw, 74px) !important;
+            min-width: clamp(58px, 4.68vw, 74px) !important;
+            min-height: clamp(58px, 4.68vw, 74px) !important;
+            max-width: clamp(58px, 4.68vw, 74px) !important;
+            max-height: clamp(58px, 4.68vw, 74px) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            overflow: hidden !important;
+        }
+        .hero-bottom-cta-strip img.hero-bottom-cta-cognition-image-icon {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            transform: none !important;
+            filter: none !important;
+        }
+        .hero-bottom-cta-strip svg.hero-bottom-cta-market-icon,
+        .hero-bottom-cta-strip svg.hero-bottom-cta-energy-ue-icon {
+            width: 100% !important;
+            height: 100% !important;
+            transform: none !important;
+        }
+        .hero-bottom-cta-strip svg.hero-bottom-cta-market-icon .market-ring,
+        .hero-bottom-cta-strip svg.hero-bottom-cta-market-icon .market-line,
+        .hero-bottom-cta-strip svg.hero-bottom-cta-energy-ue-icon .ue-ring,
+        .hero-bottom-cta-strip svg.hero-bottom-cta-energy-ue-icon .ue-u,
+        .hero-bottom-cta-strip svg.hero-bottom-cta-energy-ue-icon .ue-e {
+            stroke-width: 2.8 !important;
+        }
+
+        /* Shared type for CTAs 1–3 */
+        .hero-bottom-cta-copy {
+            gap: 3px !important;
+            min-width: 0 !important;
+            z-index: 2 !important;
+            position: relative !important;
+        }
+        .hero-bottom-cta-title,
+        .ue-design-stage .hero-bottom-cta-title,
+        .hero-bottom-cta-strip .hero-bottom-cta-title {
+            font-size: clamp(0.88rem, 1.12vw, 1.18rem) !important;
+            line-height: 1.08 !important;
+            letter-spacing: 0.05em !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+            white-space: normal !important;
+            overflow-wrap: normal !important;
+            word-break: normal !important;
+            hyphens: none !important;
+        }
+        .hero-bottom-cta-subtitle,
+        .ue-design-stage .hero-bottom-cta-subtitle,
+        .hero-bottom-cta-strip .hero-bottom-cta-subtitle {
+            font-size: clamp(0.72rem, 0.88vw, 0.92rem) !important;
+            line-height: 1.2 !important;
+            font-weight: 600 !important;
+            opacity: 0.96 !important;
+            white-space: nowrap !important;
+        }
+        .hero-bottom-cta-title .cta-tm {
+            font-size: 0.72em !important;
+        }
+
+        /* ===== Clerk CTA — match reference 1087 =====
+           Left text block like other CTAs; large darkened face on right, MASKED to button. */
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk,
+        .hero-bottom-cta-button.hero-bottom-cta-clerk {
+            display: flex !important;
+            flex-direction: row !important; /* text left, face right */
+            justify-content: flex-start !important;
+            align-items: center !important;
+            overflow: hidden !important; /* CRITICAL: mask face outside button */
+            position: relative !important;
+            isolation: isolate !important;
+            padding: 8px 12px 8px 16px !important;
+            text-align: left !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk > .hero-bottom-cta-copy,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk > .hero-bottom-cta-copy {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            max-width: 66% !important;
+            padding: 0 12px 0 4px !important;
+            margin: 0 !important;
+            z-index: 3 !important;
+            position: relative !important;
+            text-align: left !important;
+            align-items: flex-start !important;
+            gap: 4px !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk .clerk-title-line,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk .clerk-title-line {
+            display: block !important;
+            white-space: nowrap !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk .clerk-title-name,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk .clerk-title-name {
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk .hero-bottom-cta-title,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk .hero-bottom-cta-title {
+            display: block !important;
+            text-align: left !important;
+            font-size: clamp(0.88rem, 1.12vw, 1.18rem) !important;
+            line-height: 1.08 !important;
+            letter-spacing: 0.04em !important;
+            font-weight: 800 !important;
+            color: rgba(40, 62, 42, 0.98) !important;
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: normal !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk .hero-bottom-cta-title br {
+            display: none !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk .hero-bottom-cta-subtitle,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk .hero-bottom-cta-subtitle {
+            display: block !important;
+            text-align: left !important;
+            white-space: nowrap !important;
+            font-size: clamp(0.76rem, 0.92vw, 0.96rem) !important;
+            font-weight: 600 !important;
+            color: rgba(45, 68, 46, 0.92) !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        /* Face: fills right side, darkened, clipped by button overflow:hidden */
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk > .hero-bottom-cta-icon,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk > .hero-bottom-cta-icon,
+        .hero-bottom-cta-button.hero-bottom-cta-clerk .hero-bottom-cta-icon.hero-bottom-cta-clerk-icon-wrap,
+        .ue-design-stage .hero-bottom-cta-button.hero-bottom-cta-clerk .hero-bottom-cta-icon {
+            flex: 0 0 auto !important;
+            position: absolute !important;
+            right: calc(-14% + 30px) !important; /* total 30px left from original */
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 46% !important; /* leave more left for text */
+            height: 128% !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            max-width: none !important;
+            max-height: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            z-index: 1 !important;
+            pointer-events: none !important;
+            display: block !important;
+        }
+        .hero-bottom-cta-strip > .hero-bottom-cta-clerk img.hero-bottom-cta-clerk-image-icon,
+        .hero-bottom-cta-strip > button.hero-bottom-cta-clerk img.hero-bottom-cta-clerk-image-icon,
+        .hero-bottom-cta-clerk-image-icon,
+        .ue-design-stage .hero-bottom-cta-clerk-image-icon {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            max-height: none !important;
+            object-fit: cover !important;
+            object-position: 60% 45% !important; /* face-forward crop like 1087 */
+            transform: scale(1.08) !important;
+            transform-origin: center center !important;
+            /* Darken face to match reference engraving look */
+            filter: sepia(0.28) saturate(0.8) contrast(1.6) brightness(0.2) !important;
+            mix-blend-mode: multiply !important;
+            opacity: 0.9 !important;
+        }
+
+
+        /* ===== Portal hover attention 20261013 ===== */
+        .hero-portal-circle {
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                border-color 0.22s ease,
+                filter 0.22s ease,
+                background 0.22s ease !important;
+        }
+        .hero-portal-circle .subtitle {
+            transition: font-size 0.22s ease, letter-spacing 0.22s ease, opacity 0.22s ease, transform 0.22s ease, text-shadow 0.22s ease !important;
+            transform-origin: center bottom;
+        }
+        .hero-portal-circle:hover,
+        .hero-portal-circle:focus-visible {
+            transform: scale(1.06) !important;
+            border-color: rgba(255, 176, 64, 0.98) !important;
+            filter: brightness(1.16) saturate(1.18) !important;
+            background: radial-gradient(
+                circle,
+                rgba(255, 210, 110, 0.38) 0%,
+                rgba(255, 168, 48, 0.40) 28%,
+                rgba(210, 140, 36, 0.48) 52%,
+                rgba(90, 110, 22, 0.70) 86%,
+                rgba(42, 58, 10, 0.84) 100%
+            ) !important;
+            box-shadow:
+                0 0 0 2px rgba(255, 168, 48, 0.7),
+                0 0 18px rgba(255, 150, 40, 0.85),
+                0 0 36px rgba(255, 130, 28, 0.65),
+                0 0 64px rgba(255, 120, 20, 0.4),
+                0 0 22px rgba(255, 190, 70, 0.55),
+                inset 0 0 24px rgba(255, 190, 90, 0.32),
+                inset 0 0 18px rgba(0, 0, 0, 0.26) !important;
+        }
+        .hero-portal-circle:hover .subtitle,
+        .hero-portal-circle:focus-visible .subtitle {
+            font-size: 0.92em !important; /* larger "select to enter" */
+            letter-spacing: 0.08em !important;
+            font-weight: 700 !important;
+            opacity: 1 !important;
+            transform: scale(1.18) translateY(1px) !important;
+            text-shadow:
+                0 0 10px rgba(255, 190, 90, 0.9),
+                0 0 18px rgba(255, 140, 40, 0.65),
+                1px 1px 3px rgba(0, 0, 0, 0.45) !important;
+            color: rgba(255, 236, 190, 1) !important;
+        }
+        .hero-portal-circle:active {
+            transform: scale(0.98) !important;
+            filter: brightness(0.92) saturate(1.08) !important;
+            box-shadow:
+                0 0 0 2px rgba(255, 150, 40, 0.45),
+                0 0 18px rgba(255, 130, 30, 0.4),
+                inset 0 0 28px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* ===== Bottom cluster lift 20261014 — CTAs + rule + 7 nav pills =====
+           Move the whole bottom control band up 10px as one unit (cream bg stays). */
+        .hero-bottom-cta-strip,
+        .ue-design-stage .hero-bottom-cta-strip {
+            transform: translateY(-20px) !important; /* was -10px */
+        }
+        .nav-tabs-container,
+        .ue-design-stage .nav-tabs-container {
+            transform: translateY(-10px) !important; /* was 0; carries ::before/::after rule lines */
+        }
+
+        /* ===== Portal circle type — Cove 20261014 =====
+           Source Sans 3 Semibold (600), uppercase, ~12% larger, warm ivory, 0.5px tracking. */
+        .hero-portal-circle,
+        .ue-design-stage .hero-portal-circle {
+            font-family: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif !important;
+            font-weight: 600 !important;
+            font-style: normal !important;
+            color: #f3ecdc !important; /* warm ivory */
+            /* was clamp(0.756rem, 0.924vw, 1.029rem) → +12.5% */
+            font-size: clamp(0.85rem, 1.04vw, 1.16rem) !important;
+            letter-spacing: 0.5px !important;
+            text-transform: uppercase !important;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: geometricPrecision;
+        }
+        .hero-portal-circle .subtitle1,
+        .hero-portal-circle .title,
+        .hero-portal-circle .subtitle,
+        .ue-design-stage .hero-portal-circle .subtitle1,
+        .ue-design-stage .hero-portal-circle .title,
+        .ue-design-stage .hero-portal-circle .subtitle {
+            font-family: inherit !important;
+            font-weight: 600 !important;
+            color: inherit !important;
+            letter-spacing: 0.5px !important;
+            text-transform: uppercase !important;
+            text-shadow: 0 1px 2px rgba(12, 18, 8, 0.35) !important;
+        }
+        .hero-portal-circle .subtitle1 {
+            font-size: 0.69em !important; /* ~+12% from 0.61em */
+            margin: 0 0 1px !important;
+        }
+        .hero-portal-circle .title {
+            font-size: 1.09em !important; /* ~+12% from 0.97em */
+            line-height: 1.06 !important;
+            margin: 0 !important;
+        }
+        .hero-portal-circle .subtitle {
+            font-size: 0.73em !important; /* ~+12% from 0.65em */
+            font-weight: 600 !important;
+            opacity: 0.96 !important;
+            padding: 5px 6px 0 !important;
+            margin: 0 !important;
+        }
+        /* Keep hover legibility on warm ivory */
+        .hero-portal-circle:hover .subtitle,
+        .hero-portal-circle:focus-visible .subtitle {
+            color: #fff6e4 !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        /* ===== Shared attention orange 20261017 =====
+           One brighter orange for:
+           1) THE VISIBILITY PRINCIPLE button (rest + hover + pulse)
+           2) Energy Field Behavior Portals circle hover
+           Locked together so they never drift. */
+        .hero.hero-raster-rebuild {
+            --ue-attn-orange-top: #ffd978;
+            --ue-attn-orange-mid: #ffb84a;
+            --ue-attn-orange-bot: #ff9a28;
+            --ue-attn-orange-deep: #f08a18;
+            --ue-attn-orange-border: rgba(255, 176, 64, 0.96);
+            --ue-attn-orange-border-strong: rgba(255, 168, 48, 0.98);
+            --ue-attn-orange-glow: rgba(255, 168, 48, 0.78);
+            --ue-attn-orange-glow-soft: rgba(255, 190, 90, 0.55);
+            --ue-attn-orange-text: rgba(92, 52, 8, 0.98);
+            --ue-attn-orange-fill: linear-gradient(180deg, var(--ue-attn-orange-top) 0%, var(--ue-attn-orange-mid) 46%, var(--ue-attn-orange-bot) 100%);
+            --ue-attn-orange-fill-hot: linear-gradient(180deg, #ffe08a 0%, #ffc25a 46%, #ffa030 100%);
+            --ue-attn-orange-fill-press: linear-gradient(180deg, #ffc25a 0%, #ff9a28 52%, #e88818 100%);
+        }
+
+        /* Visibility Principle — brighter shared orange */
+        .hero-visibility-principle-cta,
+        .ue-design-stage .hero-visibility-principle-cta {
+            border-color: var(--ue-attn-orange-border) !important;
+            background: var(--ue-attn-orange-fill) !important;
+            color: var(--ue-attn-orange-text) !important;
+            box-shadow:
+                0 5px 16px rgba(180, 90, 12, 0.28),
+                0 0 14px var(--ue-attn-orange-glow-soft),
+                inset 0 1px 0 rgba(255, 248, 220, 0.78),
+                inset 0 -2px 6px rgba(230, 120, 20, 0.18) !important;
+        }
+        .hero-visibility-principle-title,
+        .hero-visibility-principle-arrow,
+        .ue-design-stage .hero-visibility-principle-title,
+        .ue-design-stage .hero-visibility-principle-arrow {
+            color: var(--ue-attn-orange-text) !important;
+        }
+        .hero-visibility-principle-cta:hover,
+        .ue-design-stage .hero-visibility-principle-cta:hover {
+            border-color: var(--ue-attn-orange-border-strong) !important;
+            background: var(--ue-attn-orange-fill-hot) !important;
+            filter: brightness(1.04) saturate(1.06) !important;
+            box-shadow:
+                0 7px 20px rgba(180, 90, 12, 0.34),
+                0 0 0 2px rgba(255, 176, 64, 0.45),
+                0 0 22px var(--ue-attn-orange-glow),
+                inset 0 1px 0 rgba(255, 250, 230, 0.88) !important;
+        }
+        .hero-visibility-principle-cta:active,
+        .hero-visibility-principle-cta.is-selected,
+        .ue-design-stage .hero-visibility-principle-cta:active,
+        .ue-design-stage .hero-visibility-principle-cta.is-selected {
+            border-color: rgba(232, 136, 24, 0.9) !important;
+            background: var(--ue-attn-orange-fill-press) !important;
+            box-shadow:
+                0 3px 10px rgba(160, 80, 10, 0.34),
+                inset 0 0 14px rgba(140, 70, 8, 0.22) !important;
+        }
+        .hero-visibility-principle-cta:focus-visible,
+        .ue-design-stage .hero-visibility-principle-cta:focus-visible {
+            outline-color: var(--ue-attn-orange-border-strong) !important;
+        }
+
+        /* Pulse uses the same brighter orange family */
+        @keyframes unityVisibilityPrincipleFlash {
+            0%, 75%, 100% {
+                background: linear-gradient(180deg, #ffd978 0%, #ffb84a 48%, #ff9a28 100%);
+                border-color: rgba(255, 176, 64, 0.9);
+                box-shadow: 0 5px 16px rgba(180, 90, 12, 0.28), inset 0 1px 0 rgba(255, 248, 220, 0.75);
+            }
+            25%, 50% {
+                background: linear-gradient(180deg, #ffe08a 0%, #ffc25a 48%, #ffa030 100%);
+                border-color: rgba(255, 168, 48, 0.95);
+                box-shadow:
+                    0 0 0 2px rgba(255, 176, 64, 0.45),
+                    0 0 24px rgba(255, 168, 48, 0.6),
+                    0 6px 16px rgba(180, 90, 12, 0.3);
+            }
+        }
+
+        /* Energy Behavior Portal hover — identical orange family */
+        .hero-portal-circle:hover,
+        .hero-portal-circle:focus-visible,
+        .ue-design-stage .hero-portal-circle:hover,
+        .ue-design-stage .hero-portal-circle:focus-visible {
+            border-color: var(--ue-attn-orange-border-strong) !important;
+            filter: brightness(1.14) saturate(1.16) !important;
+            background: radial-gradient(
+                circle,
+                rgba(255, 217, 120, 0.42) 0%,
+                rgba(255, 184, 74, 0.44) 28%,
+                rgba(255, 154, 40, 0.50) 52%,
+                rgba(90, 110, 22, 0.70) 86%,
+                rgba(42, 58, 10, 0.84) 100%
+            ) !important;
+            box-shadow:
+                0 0 0 2px rgba(255, 168, 48, 0.72),
+                0 0 18px rgba(255, 168, 48, 0.85),
+                0 0 36px rgba(255, 154, 40, 0.65),
+                0 0 64px rgba(255, 154, 40, 0.4),
+                0 0 22px rgba(255, 190, 90, 0.55),
+                inset 0 0 24px rgba(255, 190, 90, 0.32),
+                inset 0 0 18px rgba(0, 0, 0, 0.26) !important;
+        }
+        .hero-portal-circle:active,
+        .ue-design-stage .hero-portal-circle:active {
+            border-color: rgba(255, 154, 40, 0.7) !important;
+            box-shadow:
+                0 0 0 2px rgba(255, 154, 40, 0.45),
+                0 0 18px rgba(255, 154, 40, 0.4),
+                inset 0 0 28px rgba(0, 0, 0, 0.5) !important;
+        }
+
+</style>
 </head>
 <body>
     <div class="banner-wrapper">
@@ -3115,6 +4080,15 @@
 
     <div class="hero hero-raster-rebuild">
         <div class="hero-rebuild-shell">
+            <div class="hero-portal-entries" aria-label="Customer portal entry">
+                <button type="button" class="hero-portal-circle" id="heroPortalEmailEntryBtn" onclick="openCustomerPortalEntry()" aria-label="Industrial Energy Field Behavior Portals — select to enter">
+                    <div class="subtitle1">INDUSTRIAL</div>
+                    <div class="title">ENERGY FIELD</div>
+                    <div class="title">BEHAVIOR</div>
+                    <div class="title">PORTALS</div>
+                    <div class="subtitle">select to enter</div>
+                </button>
+            </div>
             <div class="hero-rebuild-top">
                 <div>
                     <div class="hero-rebuild-brand">
@@ -3192,13 +4166,41 @@
                 <cite>— inspired by the work of James Clerk Maxwell</cite>
             </blockquote>
             <div class="hero-visibility-principle-group">
-                <button type="button" class="hero-visibility-principle-cta" id="heroVisibilityPrincipleBtn" aria-label="Visibility Principle narration controls">
-                    <span class="hero-visibility-principle-title">The Visibility Principle</span>
-                    <span class="hero-visibility-principle-divider" aria-hidden="true"></span>
+                <button type="button" class="hero-visibility-principle-cta" id="heroVisibilityPrincipleBtn" aria-label="Start The Visibility Principle narration" aria-pressed="false">
+                    <span class="hero-visibility-principle-title">
+                        THE VISIBILITY PRINCIPLE
+                        <span class="hero-visibility-principle-arrow" aria-hidden="true">→</span>
+                    </span>
                     <span class="hero-visibility-principle-inline-controls">
                         <span class="hero-visibility-principle-inline-control" id="heroVisibilityAudioToggleBtn" data-visibility-audio-action="toggle">START</span>
                     </span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-modal" id="loginModal" onclick="closeLoginModal()">
+        <div class="login-modal-content" onclick="event.stopPropagation()">
+            <button type="button" class="close-login" onclick="closeLoginModal()" aria-label="Close portal entry card">✕</button>
+            <div class="login-header">
+                <h2>Customer Access Portal</h2>
+                <p>Welcome to Unity’s customer access portal. Enter your email, select a company, and continue. We hope you enjoy the visit.</p>
+            </div>
+            <div class="login-form">
+                <div id="visitorProfileSection">
+                    <div class="login-section-title" style="color: rgba(250, 240, 160, 0.95); font-weight: 700; margin-bottom: 8px;">Visitor Profile</div>
+                    <div class="required-fields-note" style="color: rgba(250, 240, 160, 0.8); font-size: 0.9em; margin-bottom: 10px;"><span class="required-asterisk">*</span> Email address is required</div>
+                    <input type="email" id="visitorEmail" name="visitor_email" placeholder="Business Email Address" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
+                </div>
+                <div class="login-section-title" id="portalCredentialsTitle" style="color: rgba(250, 240, 160, 0.95); font-weight: 700; margin: 8px 0;">Portal Access</div>
+                <div class="login-helper-text" id="portalCredentialsHelperText" style="color: rgba(250, 240, 160, 0.8); font-size: 0.92em; margin-bottom: 10px;">Select your company (or choose Guest) and continue to portal access.</div>
+                <select id="customerName" name="ue_company" autocomplete="off" style="width: 100%; padding: 15px 20px; margin-bottom: 15px; border: 2px solid rgba(129, 163, 43, 0.5); border-radius: 8px; font-size: 1.05em; background: rgba(255,255,255,0.95); color: rgba(49, 65, 0, 1);">
+                    <option value="" disabled selected>Select Company or Guest</option>
+                </select>
+                <input type="password" id="customerPassword" name="customer_password" placeholder="Password" style="display:none;">
+                <div class="login-error" id="loginError" style="display:none; color: #ffb4b4; margin-bottom: 10px;"></div>
+                <button type="button" class="login-btn" id="portalAccessButton" onclick="attemptLogin()">Access Unity Portal →</button>
+                <div class="dev-mode-notice" id="devModeNotice" style="text-align:center; color: rgba(250, 240, 160, 0.75); font-size: 0.9em; margin-top: 12px; font-style: italic;">No password required — select a company and continue.</div>
             </div>
         </div>
     </div>
@@ -3339,7 +4341,7 @@
                 <img class="hero-bottom-cta-clerk-image-icon" src="assets/images/ClerkMaxwell_60423t.png" alt="">
             </span>
             <span class="hero-bottom-cta-copy">
-                <span class="hero-bottom-cta-title">Meet with Clerk Maxwell</span>
+                <span class="hero-bottom-cta-title"><span class="clerk-title-line">Meet with</span><span class="clerk-title-line clerk-title-name">Clerk Maxwell</span></span>
                 <span class="hero-bottom-cta-subtitle">Ask. Explore. Understand.</span>
             </span>
         </button>
@@ -3358,7 +4360,7 @@
                 <a href="electrical-energy-story.html" class="nav-tab-portal">Energy Field Story</a>
                 <a href="customer-portals.html" class="nav-tab-portal">Customer Portals</a>
                 <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian Library</a>
-                <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
+                <a href="contact-us.html" class="nav-tab-portal" data-ue-fast-nav="contact-us" onclick="return window.__ueFastNavToContact && window.__ueFastNavToContact(event)">Contact Us</a>
             </div>
         </div>
 
@@ -3620,7 +4622,8 @@
             '.video-modal',
             '.reference-modal',
             '.reference-viewer-modal',
-            '#loginModal'
+            '#loginModal',
+            '.hero-portal-entries'
         ].join(', ');
         const UNITY_POST_NARRATION_PULSE_SELECTORS = Object.freeze([
             '#heroVisibilityPrincipleBtn'
@@ -3722,13 +4725,18 @@
             const toggleBtn = document.getElementById('heroVisibilityAudioToggleBtn');
             const visibilityBtn = document.getElementById('heroVisibilityPrincipleBtn');
             unityVisibilityPlaybackActive = isActive;
-            if (!toggleBtn) return;
-            toggleBtn.textContent = isActive ? 'STOP' : 'START';
-            toggleBtn.classList.toggle('is-active', isActive);
-            toggleBtn.setAttribute('data-control-state', isActive ? 'stop' : 'start');
+            if (toggleBtn) {
+                toggleBtn.textContent = isActive ? 'STOP' : 'START';
+                toggleBtn.classList.toggle('is-active', isActive);
+                toggleBtn.setAttribute('data-control-state', isActive ? 'stop' : 'start');
+            }
             if (visibilityBtn) {
                 visibilityBtn.classList.toggle('is-selected', isActive);
                 visibilityBtn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                visibilityBtn.setAttribute(
+                    'aria-label',
+                    isActive ? 'Stop The Visibility Principle narration' : 'Start The Visibility Principle narration'
+                );
             }
         }
         function clearVisibilityPlaybackTimer() {
@@ -3974,13 +4982,61 @@
             return { customers: {} };
         }
 
+        function populateHomePortalCustomerSelect() {
+            const selectEl = document.getElementById('customerName');
+            if (!selectEl || selectEl.dataset.populated === '1') return;
+            const cfg = getPortalConfigSafe();
+            const customers = cfg && cfg.customers ? cfg.customers : {};
+            const fragment = document.createDocumentFragment();
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            placeholder.textContent = 'Select Company or Guest';
+            fragment.appendChild(placeholder);
+            const guest = document.createElement('option');
+            guest.value = 'guest';
+            guest.textContent = 'Guest';
+            fragment.appendChild(guest);
+            Object.keys(customers).sort(function (a, b) {
+                const an = String(customers[a]?.name || a).toLowerCase();
+                const bn = String(customers[b]?.name || b).toLowerCase();
+                return an.localeCompare(bn);
+            }).forEach(function (key) {
+                const customer = customers[key] || {};
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = customer.name || key;
+                fragment.appendChild(option);
+            });
+            selectEl.innerHTML = '';
+            selectEl.appendChild(fragment);
+            selectEl.dataset.populated = '1';
+        }
+        
+        function openCustomerPortalEntry() {
+            // Same form/list as Customer Portals nav — one entry system, two doors
+            try {
+                window.location.href = 'customer-portals.html?openPortal=1';
+            } catch (_e) {
+                window.location.href = 'customer-portals.html';
+            }
+        }
+
         function openLoginModal() {
             const modal = document.getElementById('loginModal');
+            if (!modal) return;
             const devNotice = document.getElementById('devModeNotice');
             const pwField = document.getElementById('customerPassword');
 
+            populateHomePortalCustomerSelect();
             modal.classList.add('active');
-            document.getElementById('customerName')?.focus();
+            const emailEl = document.getElementById('visitorEmail');
+            if (emailEl) {
+                emailEl.focus();
+            } else {
+                document.getElementById('customerName')?.focus();
+            }
 
             // Passwordless portal access — company select only.
             if (devNotice) {
@@ -4003,12 +5059,49 @@
 
         function attemptLogin() {
             const cfg = getPortalConfigSafe();
+            const errorEl = document.getElementById('loginError');
+            const emailEl = document.getElementById('visitorEmail');
+            const emailValue = String(emailEl?.value || '').trim();
+
+            if (emailEl && !emailValue) {
+                if (errorEl) {
+                    errorEl.textContent = 'Email address is required.';
+                    errorEl.style.display = 'block';
+                }
+                emailEl.focus();
+                return;
+            }
+            if (emailEl && emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                if (errorEl) {
+                    errorEl.textContent = 'Please enter a valid business email address.';
+                    errorEl.style.display = 'block';
+                }
+                emailEl.focus();
+                return;
+            }
 
             // Normalize user input so entries like "Norfolk Iron & Metal" and "Foster Farms" work.
             // Rule: lowercase + strip all non-alphanumeric characters.
             const customerNameRaw = document.getElementById('customerName')?.value || '';
             const customerName = customerNameRaw.toLowerCase().replace(/[^a-z0-9]/g, '');
-            const errorEl = document.getElementById('loginError');
+
+            if (!customerName) {
+                if (errorEl) {
+                    errorEl.textContent = 'Select a company or Guest to continue.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+
+            if (customerName === 'guest') {
+                try {
+                    if (emailValue) {
+                        window.sessionStorage.setItem('unity_portal_guest_email_v1', emailValue.toLowerCase());
+                    }
+                } catch (_err) {}
+                window.location.href = 'customer-portals.html';
+                return;
+            }
 
             if (!cfg.customers) {
                 if (errorEl) {
@@ -4040,6 +5133,11 @@
                 return;
             }
 
+            try {
+                if (emailValue) {
+                    window.sessionStorage.setItem('unity_portal_guest_email_v1', emailValue.toLowerCase());
+                }
+            } catch (_err) {}
             window.location.href = customer.path;
         }
 
@@ -4178,5 +5276,38 @@
             <button id="unityIntroResetBtn" class="footer-unity-intro-toggle-btn" type="button" aria-label="Reset Unity Intro">RESET</button>
         </div>
     </footer>
+<script src="assets/js/ue_viewport_fit.js?v=20261011-ue-stack-refine-1"></script>
+
+<script id="ue-fast-nav-contact">
+/* Front-hero/nav Contact Us: navigate immediately.
+   Clerk widget beforeunload/pagehide can stall tab transition on home. */
+(function () {
+  function go(href) {
+    try { window.stop(); } catch (e) {}
+    try { window.location.replace(href); } catch (e2) {
+      window.location.href = href;
+    }
+  }
+  window.__ueFastNavToContact = function (event) {
+    try {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+      }
+    } catch (e) {}
+    var href = './contact-us.html?v=20261017-contact-web-1';
+    // Yield one frame so click paint is not blocked by Clerk teardown.
+    try {
+      window.requestAnimationFrame(function () { go(href); });
+      window.setTimeout(function () { go(href); }, 0);
+    } catch (e3) {
+      go(href);
+    }
+    return false;
+  };
+})();
+</script>
+
 </body>
 </html>

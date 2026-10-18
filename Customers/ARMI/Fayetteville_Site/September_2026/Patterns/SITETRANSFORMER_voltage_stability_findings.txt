@@ -1,0 +1,11 @@
+**SiteTransformer Voltage Health — September 2026**
+
+The voltage field on SiteTransformer tells an interesting story — elevated, cycling, and moderately stressed. The average operating voltage for September registers at 493.1 volts against a 480-volt line-to-line nominal reference. That 13-volt chronic elevation above nominal means every motor, drive, and control device connected to this transformer is living in a mild but continuous overvoltage condition for the majority of the production month.
+
+The swing range adds another layer of concern. With a peak voltage of 502 volts and a minimum operating floor of 483.9 volts, the field is cycling across roughly an 18-volt window throughout the month. The minimum of 483.9 volts holds just barely above the 480-volt nominal floor — a margin of less than 4 volts — which means demand-driven sag events are reliably pushing the field toward the lower boundary even as the average rides elevated. That's the compounding stress dynamic: devices are getting chronic overvoltage on the high side, then periodic sag pulses on the low side, and the combination is the most damaging thermal and insulation-aging scenario you can run an industrial electrical system through.
+
+The triangular voltage-drop patterns visible in the V trace are rhythmic and clustered, particularly dense in the first ten days of September, and continuing at regular frequency through the remainder of the month. This is consistent with production shift startups and large motor inrush events pulling voltage down on a repeating cycle. The dips are moderate in depth — not tripping protection systems — but frequent enough that their cumulative stress on motor windings, VFD input stages, and transformer core laminations is real and measurable over time.
+
+Overall voltage health on SiteTransformer: **moderate risk**, trending toward elevated if this pattern persists without field correction. The chronic overvoltage average combined with recurring sag dips is the signature of a field that would benefit significantly from reactive compensation stabilizing the delivery voltage and reducing demand-driven voltage excursions.
+
+---

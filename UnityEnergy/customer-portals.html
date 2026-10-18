@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <script src="passwords.js?v=20260922a"></script>
     <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
-    <script src="hume_character_config.js?v=20260727r32"></script>
-    <script src="clerk_voice_widget.js?v=20260727r29"></script>
+    <script src="hume_character_config.js?v=20261011-traveler-float-1"></script>
+    <script src="clerk_voice_widget.js?v=20261011-traveler-float-1"></script>
     <script src="public_release_flags.js?v=20260901a"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -716,13 +716,13 @@
                     <div class="login-divider"></div>
                 </div>
                 <div class="login-section-title" id="portalCredentialsTitle">Portal Access</div>
-                <div class="login-helper-text" id="portalCredentialsHelperText">Select your company (or choose Guest) and continue to portal access.</div>
+                <div class="login-helper-text" id="portalCredentialsHelperText">Enter your company email. Access opens only the portal matched to that email domain (or Guest).</div>
                 <select id="customerName" name="ue_company" autocomplete="off">
                     <option value="" disabled selected>Select Company or Guest</option>
                 </select>
                 <div class="login-error" id="loginError"></div>
                 <button class="login-btn" id="portalAccessButton" onclick="attemptLogin()">Access Unity Portal →</button>
-                <div class="dev-mode-notice" id="devModeNotice">No password required — select a company and continue.</div>
+                <div class="dev-mode-notice" id="devModeNotice">No password required — company email unlocks only your portal.</div>
             </div>
         </div>
     </div>
@@ -865,7 +865,8 @@
             return candidate;
         }
         function resolveCustomerAllowedDomains(customerKey, customer) {
-            if (customer?.allowAnyDomain === true) {
+            // Private / any-domain portals (e.g. Investor Center) are founder-only — no public domain list.
+            if (customer?.allowAnyDomain === true || customer?.founderOnly === true) {
                 return [];
             }
             const normalizedKey = normalizeDomainToken(customerKey);
@@ -880,17 +881,57 @@
                 const normalized = normalizeDomainCandidate(domain);
                 if (normalized) domains.add(normalized);
             }
-            const pathMatch = String(customer?.path || '').match(/\/Customers\/([^/]+)/i);
-            const pathToken = normalizeDomainToken(pathMatch && pathMatch[1] ? pathMatch[1] : '');
-            const nameToken = normalizeDomainToken(customer?.name || '');
-            for (const token of [normalizedKey, pathToken, nameToken]) {
-                if (!token || token.length < 3) continue;
-                domains.add(`${token}.com`);
-                if (token.endsWith('foods') && token.length > 5) {
-                    domains.add(`${token.slice(0, -5)}.com`);
+            // Explicit allowlist only. Do not invent domains from path/name tokens.
+            return Array.from(domains);
+        }
+        function isFounderOnlyCustomer(customer) {
+            if (!customer || typeof customer !== 'object') return false;
+            if (customer.founderOnly === true) return true;
+            // allowAnyDomain = private selector target for Unity/AccentZinc walkthroughs
+            if (customer.allowAnyDomain === true) return true;
+            const name = String(customer.name || '').toLowerCase();
+            const path = String(customer.path || '').toLowerCase();
+            return name.includes('investor') || path.includes('investor-center');
+        }
+        function emailMayAccessCustomer(email, customerKey, customer) {
+            if (isFounderEmail(email)) return true;
+            if (isFounderOnlyCustomer(customer)) return false;
+            const emailDomain = getEmailDomain(email);
+            if (!emailDomain || !isLikelyValidEmail(email)) return false;
+            const allowedDomains = resolveCustomerAllowedDomains(customerKey, customer);
+            return allowedDomains.includes(emailDomain);
+        }
+        function listAccessibleCustomerOptions(cfg, email) {
+            const customers = cfg?.customers || {};
+            const seen = new Set();
+            const options = [];
+            const allAccess = isFounderEmail(email);
+            const hasValidEmail = isLikelyValidEmail(email);
+            for (const [key, customer] of Object.entries(customers)) {
+                const name = String(customer?.name || '').trim();
+                const path = String(customer?.path || '').trim();
+                if (!name || !path) continue;
+                const dedupeKey = `${name}::${path}`;
+                if (seen.has(dedupeKey)) continue;
+                seen.add(dedupeKey);
+                if (allAccess) {
+                    options.push({ key, name });
+                    continue;
+                }
+                // Until a valid company email is entered, do not expose customer portals.
+                if (!hasValidEmail) continue;
+                if (emailMayAccessCustomer(email, key, customer)) {
+                    options.push({ key, name });
                 }
             }
-            return Array.from(domains);
+            options.sort((a, b) => {
+                const aIsInvestor = String(a.name || '').toLowerCase().includes('investor');
+                const bIsInvestor = String(b.name || '').toLowerCase().includes('investor');
+                if (aIsInvestor && !bIsInvestor) return -1;
+                if (!aIsInvestor && bIsInvestor) return 1;
+                return a.name.localeCompare(b.name);
+            });
+            return options;
         }
         function hasMeaningfulNameDiversity(nameToken) {
             return new Set(nameToken.split('')).size >= 2;
@@ -1020,8 +1061,10 @@
             const autoCustomerKey = resolveAutoCustomerKeyForEmail(cfg, email);
             if (!autoCustomerKey) return '';
             const currentSelection = String(customerSelectEl.value || '');
-            const shouldApply = !!options?.force || !currentSelection || currentSelection === '__guest__';
+            // Never override an explicit Guest selection from domain auto-match.
+            const shouldApply = !!options?.force || !currentSelection;
             if (!shouldApply) return '';
+            if (currentSelection === '__guest__' && !options?.force) return '';
             const optionExists = Array.from(customerSelectEl.options || []).some(function (option) {
                 return option.value === autoCustomerKey;
             });
@@ -1079,41 +1122,27 @@
         function populateCustomerDropdown(cfg, preserveSelection) {
             const selectEl = document.getElementById('customerName');
             if (!selectEl) return;
-            const customers = cfg?.customers || {};
-            const seen = new Set();
-            const options = [];
-            for (const [key, customer] of Object.entries(customers)) {
-                const name = String(customer?.name || '').trim();
-                const path = String(customer?.path || '').trim();
-                if (!name || !path) continue;
-                const dedupeKey = `${name}::${path}`;
-                if (seen.has(dedupeKey)) continue;
-                seen.add(dedupeKey);
-                options.push({ key, name });
-            }
-            options.sort((a, b) => {
-                const aIsInvestor = String(a.name || '').toLowerCase().includes('investor');
-                const bIsInvestor = String(b.name || '').toLowerCase().includes('investor');
-                if (aIsInvestor && !bIsInvestor) return -1;
-                if (!aIsInvestor && bIsInvestor) return 1;
-                return a.name.localeCompare(b.name);
-            });
+            const enteredEmail = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const options = listAccessibleCustomerOptions(cfg, enteredEmail);
+            const allAccess = isFounderEmail(enteredEmail);
             const previousValue = preserveSelection ? selectEl.value : '';
             selectEl.innerHTML = '';
             const placeholder = document.createElement('option');
             placeholder.value = '';
-            placeholder.textContent = 'Select Company or Guest';
+            placeholder.textContent = allAccess ? 'Select Customer Portal' : 'Select Company or Guest';
             placeholder.disabled = true;
             placeholder.selected = true;
             selectEl.appendChild(placeholder);
-            const guestOpt = document.createElement('option');
-            guestOpt.value = '__guest__';
-            guestOpt.textContent = 'Guest';
-            if (previousValue && previousValue === '__guest__') {
-                guestOpt.selected = true;
-                placeholder.selected = false;
+            if (!allAccess) {
+                const guestOpt = document.createElement('option');
+                guestOpt.value = '__guest__';
+                guestOpt.textContent = 'Guest';
+                if (previousValue && previousValue === '__guest__') {
+                    guestOpt.selected = true;
+                    placeholder.selected = false;
+                }
+                selectEl.appendChild(guestOpt);
             }
-            selectEl.appendChild(guestOpt);
             for (const option of options) {
                 const opt = document.createElement('option');
                 opt.value = option.key;
@@ -1124,7 +1153,12 @@
                 }
                 selectEl.appendChild(opt);
             }
-            updatePortalAuthVisibility();
+            // Single company match: auto-select when nothing chosen yet (do not override Guest).
+            if (!allAccess && options.length === 1 && (!previousValue || previousValue === options[0].key)) {
+                selectEl.value = options[0].key;
+                placeholder.selected = false;
+            }
+            updatePortalAuthVisibility({ skipRepopulate: true });
         }
         function resetPortalFormState() {
             const nameEl = document.getElementById('customerName');
@@ -1143,16 +1177,27 @@
             const updatesEl = document.getElementById('visitorUpdates');
             if (updatesEl) updatesEl.checked = false;
             const devNotice = document.getElementById('devModeNotice');
-            if (devNotice) devNotice.textContent = 'No password required — select a company and continue.';
+            if (devNotice) devNotice.textContent = 'No password required — company email unlocks only your portal.';
             clearLoginError();
         }
-        function updatePortalAuthVisibility() {
+        function updatePortalAuthVisibility(options) {
             const cfg = getPortalConfigSafe();
             const customerNameField = document.getElementById('customerName');
             const enteredEmail = String(document.getElementById('visitorEmail')?.value || '').trim();
             const allAccessEmail = isFounderEmail(enteredEmail);
-            if (!allAccessEmail) {
-                maybeAutoSelectCustomerForEmail(cfg, enteredEmail);
+            const hasValidEmail = isLikelyValidEmail(enteredEmail);
+            const accessibleOptions = listAccessibleCustomerOptions(cfg, enteredEmail);
+            if (!options?.skipRepopulate) {
+                // Keep dropdown domain-locked as email changes.
+                populateCustomerDropdown(cfg, true);
+                return;
+            }
+            if (!allAccessEmail && hasValidEmail) {
+                const currentSelection = String(customerNameField?.value || '');
+                // Auto-select only when empty; never override an explicit Guest choice.
+                if (!currentSelection) {
+                    maybeAutoSelectCustomerForEmail(cfg, enteredEmail, { force: false });
+                }
             }
             const selectedCustomerKey = customerNameField?.value || '';
             const isGuestSelection = selectedCustomerKey === '__guest__';
@@ -1169,11 +1214,17 @@
             }
             if (portalCredentialsHelperText) {
                 if (allAccessEmail) {
-                    portalCredentialsHelperText.textContent = 'Founder access — select the customer portal you want to open.';
+                    portalCredentialsHelperText.textContent = 'Unity / AccentZinc access — open any customer portal for walkthroughs.';
+                } else if (!hasValidEmail) {
+                    portalCredentialsHelperText.textContent = 'Enter your company email. Only the matched company portal will appear (Guest always available).';
+                } else if (accessibleOptions.length === 0) {
+                    portalCredentialsHelperText.textContent = 'No company portal is mapped to this email domain. Choose Guest, or use your company email.';
+                } else if (accessibleOptions.length === 1) {
+                    portalCredentialsHelperText.textContent = `Company email matched — access is limited to ${accessibleOptions[0].name}.`;
+                } else if (isGuestSelection) {
+                    portalCredentialsHelperText.textContent = 'Guest access selected — continues to Unity Home.';
                 } else {
-                    portalCredentialsHelperText.textContent = isGuestSelection
-                        ? 'Guest access selected — enter your email and continue.'
-                        : 'Enter your email, select your company (or Guest), and continue.';
+                    portalCredentialsHelperText.textContent = 'Select your matched company portal (or Guest) to continue.';
                 }
             }
             if (portalAccessButton) {
@@ -1198,11 +1249,13 @@
             }
             if (devNotice) {
                 if (allAccessEmail) {
-                    devNotice.textContent = 'Email + company only — no password required.';
+                    devNotice.textContent = 'All-access email — no password. Any customer portal may be opened.';
+                } else if (isGuestSelection) {
+                    devNotice.textContent = 'Guest routes to Unity Home — company portals stay locked to matching email domains.';
+                } else if (accessibleOptions.length === 1) {
+                    devNotice.textContent = 'No password — this email unlocks only your company portal.';
                 } else {
-                    devNotice.textContent = isGuestSelection
-                        ? 'Email only required — Guest routes to Unity Home.'
-                        : 'Email + company only — no password required.';
+                    devNotice.textContent = 'No password — company email unlocks only your portal.';
                 }
                 devNotice.style.display = 'block';
             }
@@ -1242,11 +1295,16 @@
                 return;
             }
             if (!allAccessEmail) {
-                const autoSelectedCustomerKey = maybeAutoSelectCustomerForEmail(cfg, normalizedInputEmail);
-                if (autoSelectedCustomerKey) {
-                    selectedCustomerKey = document.getElementById('customerName')?.value || autoSelectedCustomerKey;
-                    isGuestSelection = selectedCustomerKey === '__guest__';
-                    updatePortalAuthVisibility();
+                populateCustomerDropdown(cfg, true);
+                selectedCustomerKey = document.getElementById('customerName')?.value || selectedCustomerKey;
+                isGuestSelection = selectedCustomerKey === '__guest__';
+                // Do not steal an explicit Guest choice; only fill when still empty.
+                if (!selectedCustomerKey) {
+                    const autoSelectedCustomerKey = maybeAutoSelectCustomerForEmail(cfg, normalizedInputEmail, { force: true });
+                    if (autoSelectedCustomerKey) {
+                        selectedCustomerKey = document.getElementById('customerName')?.value || autoSelectedCustomerKey;
+                        isGuestSelection = selectedCustomerKey === '__guest__';
+                    }
                 }
             }
             const effectiveFirstName = firstNameInput || (hasReturningVisitorForEmail ? String(returningVisitorSession?.firstName || '').trim() : '');
@@ -1264,6 +1322,20 @@
             if (!isGuestSelection && !customer) {
                 showLoginError('Selected company is unavailable. Please refresh and try again.');
                 return;
+            }
+            // Hard domain lock: non-founder emails may only open their matched company portal.
+            if (!isGuestSelection && !allAccessEmail) {
+                if (!emailMayAccessCustomer(effectiveEmail, selectedCustomerKey, customer)) {
+                    const allowed = resolveCustomerAllowedDomains(selectedCustomerKey, customer);
+                    if (isFounderOnlyCustomer(customer)) {
+                        showLoginError('This portal is reserved for Unity Energy access. Use a unityenergy.com or accentzinc.com email.');
+                    } else if (allowed.length) {
+                        showLoginError(`Access to this portal requires a company email ending in @${allowed[0]}.`);
+                    } else {
+                        showLoginError('This email domain is not authorized for the selected company portal.');
+                    }
+                    return;
+                }
             }
             if (allAccessEmail) {
                 writeFounderSessionState({
@@ -1386,7 +1458,19 @@
                 return;
             }
             updatePortalAuthVisibility();
+            // Hero industrial circle (and any deep-link) opens this same form
+            try {
+                const params = new URLSearchParams(window.location.search || '');
+                if (params.get('openPortal') === '1' || params.get('portal') === '1') {
+                    openLoginModal();
+                    params.delete('openPortal');
+                    params.delete('portal');
+                    const nextQuery = params.toString();
+                    const cleanUrl = window.location.pathname + (nextQuery ? ('?' + nextQuery) : '') + (window.location.hash || '');
+                    window.history.replaceState({}, document.title, cleanUrl);
+                }
+            } catch (_e) {}
         });
-    </script>
+</script>
 </body>
 </html>

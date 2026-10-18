@@ -4,9 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Foster Farms | Executive Electrical Intelligence</title>
-  <link rel="preload" as="image" href="foster-farms-logo.png" fetchpriority="high" />
-  <link rel="preload" as="image" href="foster-farms-hero.png?v=20260628a" fetchpriority="high" />
-  <link rel="preload" as="image" href="../../UnityEnergy/assets/images/ChickFamilyKPI_60628.png?v=20260702b" fetchpriority="high" />
+  <link rel="preload" as="image" href="../../UnityEnergy/assets/images/ChickFamilyKPI_61010.webp?v=20261010a" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="foster-farms-hero_61010.webp?v=20261010a" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="foster-farms-logo.png" fetchpriority="low" />
+  <link rel="preload" as="image" href="../../UnityEnergy/assets/images/ChickFamilyKPI_61010.png?v=20261010a" type="image/png" fetchpriority="low" />
+  <link rel="preload" as="image" href="foster-farms-hero_61010.jpg?v=20261010a" type="image/jpeg" fetchpriority="low" />
   <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
   <script src="../../UnityEnergy/hume_character_config.js?v=20260721r31"></script>
   <script src="../../UnityEnergy/clerk_voice_widget.js?v=20260721r31"></script>
@@ -190,7 +192,7 @@
       position:relative;
       isolation:isolate;
       overflow:hidden;
-      background:none;
+      background:linear-gradient(180deg,#fff4d8 0%,#f7e7c2 45%,#efe0b5 100%);
       min-height:550px;
       padding:30px 28px 40px;
       border-bottom:none;
@@ -199,9 +201,25 @@
       content:"";
       position:absolute;
       inset:0;
-      background:url("foster-farms-hero.png?v=20260628a") center calc(15% - 110px) / cover no-repeat;
+      background:
+        image-set(
+          url("foster-farms-hero_61010.webp?v=20261010a") type("image/webp"),
+          url("foster-farms-hero_61010.jpg?v=20261010a") type("image/jpeg")
+        ) center calc(15% - 110px) / cover no-repeat;
+      background:url("foster-farms-hero_61010.jpg?v=20261010a") center calc(15% - 110px) / cover no-repeat;
       z-index:0;
       pointer-events:none;
+    }
+    @supports (background-image: image-set(url("x.webp") type("image/webp"))) {
+      .hero::after{
+        background-image: image-set(
+          url("foster-farms-hero_61010.webp?v=20261010a") type("image/webp"),
+          url("foster-farms-hero_61010.jpg?v=20261010a") type("image/jpeg")
+        );
+        background-position: center calc(15% - 110px);
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
     }
     .hero::before{
       content:"";
@@ -236,23 +254,61 @@
     .kpis{
       width:calc(100% + 420px);
       margin-left:-210px;
-      background-color:transparent;
-      background-image:url("../../UnityEnergy/assets/images/ChickFamilyKPI_60628.png?v=20260702b");
+      position:relative;
+      /* Strip charcoal (matches ChickFamilyKPI plate) — never cream/white under transparent PNG edges */
+      --kpi-strip-charcoal:#47453d;
+      background-color:var(--kpi-strip-charcoal);
+      background-image:url("../../UnityEnergy/assets/images/ChickFamilyKPI_61010.png?v=20261010b");
       background-position:center center;
-      background-size:90% auto;
+      background-size:100% 100%;
       background-repeat:no-repeat;
       border:none;
       box-shadow:none;
-      border-radius:0;
+      border-radius:14px;
       display:grid;
       grid-template-columns:repeat(6,1fr);
       gap:8px;
-      padding:8px;
+      padding:6px 10px;
       margin-bottom:24px;
-      overflow:visible;
+      overflow:hidden;
       backdrop-filter:none;
       isolation:isolate;
+      min-height:118px;
     }
+    @supports (background-image: image-set(url("x.webp") type("image/webp"))) {
+      .kpis{
+        background-image: image-set(
+          url("../../UnityEnergy/assets/images/ChickFamilyKPI_61010.webp?v=20261010b") type("image/webp"),
+          url("../../UnityEnergy/assets/images/ChickFamilyKPI_61010.png?v=20261010b") type("image/png")
+        );
+      }
+    }
+    /* Early-paint <picture> must NOT consume a grid track or KPI tiles shift off the chickens. */
+    .kpis > picture{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      margin:0;
+      pointer-events:none;
+      z-index:0;
+      display:block;
+      background-color:var(--kpi-strip-charcoal);
+    }
+    .kpis-strip{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      margin:0;
+      left:0;
+      right:0;
+      object-fit:fill;
+      object-position:center center;
+      pointer-events:none;
+      z-index:0;
+    }
+    .kpis > .kpi{position:relative;z-index:1}
     .kpi{
       padding:16px 14px;
       display:flex;
@@ -263,23 +319,30 @@
       border-radius:0;
       box-shadow:none;
     }
-    .kpis .kpi:nth-child(1) > div {
-      transform: translateX(190px);
+    /* KPI text seats in the dark gaps beside each chicken (left→right). */
+    /* 1 Untuned Consequence: pull left off yellow hardhat */
+    .kpis > .kpi:nth-of-type(1) > div {
+      transform: translateX(100px);
     }
-    .kpis .kpi:nth-child(2) > div {
-      transform: translateX(150px);
+    /* 2 Facilities: hold gap between yellow hardhat and nurse */
+    .kpis > .kpi:nth-of-type(2) > div {
+      transform: translateX(148px);
     }
-    .kpis .kpi:nth-child(3) > div {
-      transform: translateX(130px);
+    /* 3 Energy Fields: gap after nurse */
+    .kpis > .kpi:nth-of-type(3) > div {
+      transform: translateX(118px);
     }
-    .kpis .kpi:nth-child(4) > div {
+    /* 4 Critical Alerts: off glasses chicken face */
+    .kpis > .kpi:nth-of-type(4) > div {
+      transform: translateX(118px);
+    }
+    /* 5 Overall Efficiency: off worried chicken face */
+    .kpis > .kpi:nth-of-type(5) > div {
+      transform: translateX(110px);
+    }
+    /* 6 Monthly Change: push right off blue hardhat */
+    .kpis > .kpi:nth-of-type(6) > div {
       transform: translateX(90px);
-    }
-    .kpis .kpi:nth-child(5) > div {
-      transform: translateX(60px);
-    }
-    .kpis .kpi:nth-child(6) > div {
-      transform: translateX(10px);
     }
     .icon{
       width:auto;
@@ -960,7 +1023,20 @@
     </div>
   </section>
   <main class="wrap">
-    <section class="kpis" id="kpiGrid"></section>
+    <section class="kpis" id="kpiGrid" aria-label="Executive KPI strip">
+      <picture>
+        <source srcset="../../UnityEnergy/assets/images/ChickFamilyKPI_61010.webp?v=20261010b" type="image/webp" />
+        <img
+          class="kpis-strip"
+          src="../../UnityEnergy/assets/images/ChickFamilyKPI_61010.png?v=20261010b"
+          alt=""
+          width="1800"
+          height="161"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </picture>
+    </section>
     <section class="board">
       <div class="board-head">
         <div>
@@ -1037,7 +1113,7 @@
     const boardData = {
       company: {
         name: "Foster Farms",
-        brief_month: "August 2026",
+        brief_month: "September 2026",
         hero_title: "Welcome to the Foster Farms Executive Electrical Intelligence Center",
         hero_intro_primary: "This Executive Intelligence Center provides immediate visibility into the electrical behavior of Foster Farms’ monitored 480V energy fields. By organizing electrical activity into meaningful operational groups, leadership can compare facilities, understand utilization, identify consequence, and explore opportunities to improve efficiency, reliability, and stewardship.",
         hero_intro_secondary: "Unlike a traditional utility bill, this view reveals how electricity behaves throughout the operation, translating continuous field measurement into executive intelligence that supports better operational and financial decisions.",
@@ -1056,7 +1132,7 @@
             {
               name: "Rendering Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/Rendering/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/Rendering/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "REND 2", consequence_annual: 552140, status: "calculated" },
                 { name: "REND 1", consequence_annual: 408974, status: "calculated" },
@@ -1066,7 +1142,7 @@
             {
               name: "Plant 2 Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/Plant2/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/Plant2/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "PL2-SOUTH", consequence_annual: 223374, status: "calculated" },
                 { name: "PL2-CENTER", consequence_annual: 70702, status: "calculated" },
@@ -1076,7 +1152,7 @@
             {
               name: "NCDC Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/NCDC/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/NCDC/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "NCDC1 WEST", consequence_annual: 133829, status: "calculated" },
                 { name: "NCDC2 SOUTH", consequence_annual: 99540, status: "calculated" },
@@ -1086,7 +1162,7 @@
             {
               name: "Deli Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/Deli/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/Deli/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "DELI F", consequence_annual: 137963, status: "calculated" },
                 { name: "DELI G", consequence_annual: 134731, status: "calculated" }
@@ -1095,7 +1171,7 @@
             {
               name: "Plant 1 Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/Plant1/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/Plant1/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "PL1-MSHOP", consequence_annual: 105262, status: "calculated" },
                 { name: "PL1-PROC1", consequence_annual: 50239, status: "calculated" },
@@ -1105,7 +1181,7 @@
             {
               name: "BNR Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/BNR/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/BNR/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-2_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "BNR 1", consequence_annual: 286301, status: "calculated" },
                 { name: "BNR 2", consequence_annual: 1158, status: "calculated" }
@@ -1114,7 +1190,7 @@
             {
               name: "FSO Group",
               status: "calculated",
-              summary_url: "./Livingston_SIte/FSO/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260801-260831_31d.html",
+              summary_url: "./Livingston_SIte/FSO/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-3_1minRES_260901-260930_30d.html",
               fields: [
                 { name: "FSO1 (Q)", consequence_annual: 109787, status: "calculated" },
                 { name: "FSO2 (R)", consequence_annual: 33093, status: "calculated" },
@@ -1133,7 +1209,7 @@
             {
               name: "Cherry Main Group",
               status: "calculated",
-              summary_url: "./CherryAve_Site/08_AUG26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260801-260831_31d.html",
+              summary_url: "./CherryAve_Site/09_SEP26/SITE-FosterFarms-Summaryboard_FosterFarms-4_1minRES_260901-260911_11d.html",
               fields: [
                 { name: "T10 Air Chiller", consequence_annual: 330929, status: "calculated" },
                 { name: "T12 Main", consequence_annual: 609609, status: "calculated" },
@@ -2420,16 +2496,22 @@
       const criticalActionSub = livingstonActionCount > 0
         ? `<span class="alert-line">Located in:</span><span class="alert-line"><span class="alert-focus-chip">Livingston HQ • ${livingstonActionCount}</span></span>`
         : "Active Conditions";
+      // Order matches ChickFamily left→right: primary metric first, then portfolio KPIs.
       const kpis = [
+        { iconClass: metricTile.iconClass, icon: metricTile.icon, label: metricTile.label, value: metricDisplayValue, sub: metricTile.sub, valueClass: metricTile.valueClass },
         { iconClass: "i-blue",label: "Facilities", value: `${totalFacilities}`, sub: "Total Facilities" },
         { iconClass: "i-green",label: "Energy Fields", value: `${totalFields}`, sub: "Monitored Fields" },
         { iconClass: "i-alert",label: "Critical Alerts", value: `${CRITICAL_ALERTS.length}`, sub: criticalActionSub, subClass: "alert-stack" },
         { iconClass: "i-green",label: "Overall Efficiency", value: `${data.company.site_efficiency_pf.toFixed(1)}%`, sub: "Portfolio PF Average" },
-        { iconClass: "",label: "Monthly Change", value: `${changeArrow} ${Math.abs(data.company.monthly_change_percent).toFixed(1)}%`, sub: "vs Prior Month" },
-        { iconClass: metricTile.iconClass, icon: metricTile.icon, label: metricTile.label, value: metricDisplayValue, sub: metricTile.sub, valueClass: metricTile.valueClass }
+        { iconClass: "",label: "Monthly Change", value: `${changeArrow} ${Math.abs(data.company.monthly_change_percent).toFixed(1)}%`, sub: "vs Prior Month" }
       ];
       const kpiGrid = document.getElementById("kpiGrid");
-      kpiGrid.innerHTML = kpis.map((kpi) => `
+      // Preserve early-paint chicken strip; only refresh numeric KPI tiles.
+      if (!kpiGrid.querySelector("picture")) {
+        kpiGrid.insertAdjacentHTML("afterbegin", `<picture><source srcset="../../UnityEnergy/assets/images/ChickFamilyKPI_61010.webp?v=20261010b" type="image/webp" /><img class="kpis-strip" src="../../UnityEnergy/assets/images/ChickFamilyKPI_61010.png?v=20261010b" alt="" width="1800" height="161" decoding="async" fetchpriority="high" /></picture>`);
+      }
+      kpiGrid.querySelectorAll(".kpi").forEach((node) => node.remove());
+      kpiGrid.insertAdjacentHTML("beforeend", kpis.map((kpi) => `
         <div class="kpi ${kpi.icon ? "" : "no-icon"}">
           ${kpi.icon ? `<div class="icon ${kpi.iconClass}">${kpi.icon}</div>` : ""}
           <div>
@@ -2438,7 +2520,7 @@
             <div class="sub ${kpi.subClass || ""}">${kpi.sub}</div>
           </div>
         </div>
-      `).join("");
+      `).join(""));
     }
     function renderFacilityBoard(data, activeMetric){
       const facilityBoard = document.getElementById("facilityBoard");

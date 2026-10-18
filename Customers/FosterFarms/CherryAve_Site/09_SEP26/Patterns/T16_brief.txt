@@ -1,0 +1,33 @@
+# T16 Compressor at Foster Farms Cherry Ave - September 2026 (Untuned)
+
+## Field Condition Summary
+- **Power Factor (PF):** 87.32%
+- **Consumption (kW):** 1003.29 kW
+- **Supply (kVA):** 1130.80 kVA
+- **Waste (kW):** 127.51 kW
+- **Annual Waste Cost:** $390,940.29
+- **Voltage (V):** Average 480.0V, Min 480.0V, Max 480.0V
+- **Voltage Dips:** 24 occurrences
+
+**Coverage Note:** PARTIAL coverage through ~Sep 11
+
+## Key Measured Values
+- **PF:** 87.31673275635686
+- **Consumption_kW:** 1003.2903030024721
+- **Supply_kVA:** 1130.798551803314
+- **Waste_kW:** 127.5082488008419
+- **Annual Waste Cost:** $390,940.2908233812
+- **Vavg:** 480.0
+- **Vmin:** 480.0
+- **Vmax:** 480.0
+- **Dip Count:** 24
+
+## Image Findings
+- **BT:** Moderate electrical waste with PF at 87.3%, indicating inefficiency. Stable voltage at 480V.
+- **B:** Consistent energy supply and consumption with notable unconsumed kVAR, highlighting energy waste.
+- **S:** Operation under MPTS-tuned mode with a target PF of 99.5%, showing improved efficiency and reduced waste.
+- **V:** Stable voltage with fluctuations in amperage, indicating load demand variability.
+- **M:** Moderate electrical waste with PF at 87.3%, stable voltage conditions, and no significant voltage dips.
+
+## Closing
+The Full Analysis should emphasize strategies to improve the power factor to reduce energy waste and associated costs. Additionally, addressing the variability in amperage and understanding the causes of voltage dips could further enhance operational efficiency.

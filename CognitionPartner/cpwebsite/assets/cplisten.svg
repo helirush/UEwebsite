@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Bold speaker + sound waves (no outer ring; CSS supplies the circle) -->
+  <g stroke="#c48c30" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- speaker body -->
+    <path d="M34 46h16v28H34a8 8 0 0 1-8-8V54a8 8 0 0 1 8-8z"/>
+    <!-- cone -->
+    <path d="M50 46l28-16v60l-28-16V46z"/>
+    <!-- sound waves -->
+    <path d="M88 48c8 6 8 18 0 24"/>
+    <path d="M98 38c14 10 14 34 0 44"/>
+  </g>
+</svg>

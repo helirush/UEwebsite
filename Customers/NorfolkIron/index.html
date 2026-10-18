@@ -3,59 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norfolk Iron & Metal - Energy Field Analysis Portal</title>
+    <title>Unity Energy - Norfolk Iron &amp; Metal</title>
     <script src="../../UnityEnergy/hume_auth_bootstrap.js"></script>
-    <script src="../../UnityEnergy/hume_character_config.js"></script>
-    <script src="../../UnityEnergy/clerk_voice_widget.js"></script>
+    <script src="../../UnityEnergy/hume_character_config.js?v=20261008r1"></script>
+    <script src="../../UnityEnergy/clerk_voice_widget.js?v=20261008r1"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --nim-navy: rgba(0, 51, 102, 1);
+            --nim-navy-mid: rgba(0, 82, 147, 1);
+            --nim-navy-deep: rgba(0, 40, 80, 1);
+            --nim-silver: rgba(200, 200, 200, 1);
+            --nim-ink: rgba(44, 62, 80, 1);
+            --nim-cream: linear-gradient(180deg, rgba(246, 249, 252, 1) 0%, rgba(232, 238, 244, 1) 100%);
+            --nim-header-max: 1140px;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: rgba(44, 62, 80, 1);
-            background: rgba(248, 249, 250, 1);
+            color: var(--nim-ink);
+            background: var(--nim-cream);
         }
 
         header {
-            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 82, 147, 1) 100%);
+            background: linear-gradient(135deg, var(--nim-navy) 0%, var(--nim-navy-mid) 100%);
             color: white;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 4px solid rgba(200, 200, 200, 1);
+            border-bottom: 4px solid var(--nim-silver);
         }
 
-        .logo {
-            font-size: 1.8em;
-            font-weight: 700;
-            letter-spacing: 1px;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .logo span {
-            color: rgba(200, 200, 200, 1);
+        .header-logo {
+            height: 72px;
+            width: auto;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .site-title {
+            font-size: 1.7em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--nim-silver);
+            text-transform: uppercase;
+        }
+
+        .site-subtitle {
+            font-size: 0.92em;
+            color: white;
+            opacity: 0.92;
         }
 
         nav {
             display: flex;
-            gap: 30px;
+            gap: 16px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .back-btn {
             display: inline-block;
             padding: 10px 20px;
-            background: rgba(200, 200, 200, 1);
-            color: rgba(0, 51, 102, 1);
+            background: var(--nim-silver);
+            color: var(--nim-navy);
             text-decoration: none;
             font-weight: 700;
             border-radius: 6px;
-            border: 2px solid rgba(0, 51, 102, 1);
+            border: 2px solid rgba(0, 30, 60, 1);
             transition: all 0.3s;
             text-transform: uppercase;
             font-size: 0.9em;
@@ -64,403 +89,786 @@
         .back-btn:hover {
             background: white;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 82, 147, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 82, 147, 0.35);
         }
 
         .hero {
-            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 82, 147, 1) 100%);
             position: relative;
             color: white;
             padding: 0;
-            min-height: 400px;
+            min-height: 540px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 8px solid rgba(200, 200, 200, 1);
+            border-bottom: 8px solid var(--nim-silver);
+            background: url('norfolk-hero.jpg') center center / cover no-repeat;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+            inset: 0;
+            background-image: url('norfolk-hero.jpg');
+            background-size: cover;
+            background-position: center 28%;
+            background-repeat: no-repeat;
+            opacity: 0.88;
+            z-index: 0;
         }
 
-        .hero-logo {
+        .hero::after {
+            content: '';
             position: absolute;
-            top: 30px;
-            left: 40px;
-            z-index: 2;
-            max-width: 200px;
-            height: auto;
-            background: white;
-            padding: 10px 15px;
-            border-radius: 8px;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 28, 58, 0.42) 20%,
+                rgba(0, 34, 68, 0.78) 100%
+            );
+            z-index: 0;
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
             text-align: center;
-            font-family: 'Times New Roman', Times, serif;
-            max-width: 900px;
-            padding: 60px 40px;
+            max-width: 1500px;
+            padding: 34px 40px 28px;
+        }
+
+        .hero-status-chip {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            z-index: 2;
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 2px solid rgba(210, 220, 230, 0.95);
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.94) 0%, rgba(0, 34, 68, 0.94) 100%);
+            color: rgba(236, 244, 252, 1);
+            font-size: 0.88em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.55);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+            max-width: min(74vw, 560px);
+            text-align: right;
+        }
+
+        .hero-kicker {
+            font-size: 1.35em;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: rgba(210, 222, 236, 1);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65);
+            margin-bottom: 8px;
         }
 
         .hero h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            color: rgba(200, 200, 200, 1);
-            letter-spacing: 2px;
-        }
-        .hero h2 {
-            font-size: 4em;
-            margin-bottom: 20px;
+            font-size: 3.6em;
+            margin-bottom: 0;
             font-weight: 900;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            color: white;
+            color: rgb(255, 255, 255);
             letter-spacing: 2px;
-            white-space: nowrap;
-        }
-        
-        .hero p {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            font-weight: 400;
+            text-shadow:
+                3px 3px 0px rgba(0, 30, 60, 1),
+                -1px -1px 0px rgba(0, 30, 60, 1),
+                1px -1px 0px rgba(0, 30, 60, 1),
+                -1px 1px 0px rgba(0, 30, 60, 1),
+                1px 1px 0px rgba(0, 30, 60, 1),
+                4px 4px 8px rgba(0, 0, 0, 0.9);
         }
 
-        .subtitle {
+        .hero .capacity-subtitle {
+            font-size: 2.1em;
+            font-weight: 700;
+            color: rgba(210, 222, 236, 1);
+            margin: 12px 0 0;
+            letter-spacing: 1px;
+            text-shadow:
+                2px 2px 0px rgba(0, 30, 60, 1),
+                3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero .capacity-subtitle2 {
+            font-size: 1.35em;
+            font-weight: 500;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.96);
+            margin: 10px 0 18px;
+            letter-spacing: 0.6px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.75);
+        }
+
+        .hero-key-metrics {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 56px;
+            margin: 8px 0 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-key-metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 240px;
+        }
+
+        .hero-key-metric-label {
+            font-size: 1.05em;
+            font-weight: 700;
+            color: rgba(196, 214, 232, 1);
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75);
+        }
+
+        .hero-key-metric-value {
+            font-size: 1.7em;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 1);
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-secondary-metrics {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 42px;
+            flex-wrap: wrap;
             font-size: 1.2em;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-weight: 700;
+            color: rgba(210, 222, 236, 1);
+            letter-spacing: 0.35px;
+            margin: 10px 0 8px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.75);
+        }
+
+        .hero-secondary-metrics strong {
+            color: white;
+            font-size: 1.35em;
+            margin-left: 8px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 40px 20px;
         }
 
-        section {
-            margin: 60px 0;
-        }
+        section { margin: 42px 0; }
 
         .section-title {
-            font-size: 2.2em;
-            color: rgba(0, 51, 102, 1);
-            margin-bottom: 0px;
+            font-size: 2.1em;
+            color: var(--nim-navy);
+            margin-bottom: 8px;
             text-align: center;
-            font-weight: 700;
+            font-weight: 800;
         }
+
         .section-subtitle {
-            font-size: 1.7em;
-            color: rgba(0, 82, 147, 1);
-            letter-spacing: 2px;
-            margin-bottom: 0px;
+            font-size: 1.15em;
+            color: var(--nim-navy-mid);
             text-align: center;
+            margin-bottom: 28px;
             font-weight: 500;
         }
-        .sites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin: 50px 0;
-        }
 
-        .site-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-            border-top: 5px solid rgba(200, 200, 200, 1);
-        }
-
-        .site-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0, 82, 147, 0.2);
-        }
-
-        .site-header {
-            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 40, 80, 1) 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .site-name {
-            font-size: 1.9em;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .site-location {
-            font-size: 1.4em;
-            color: rgba(200, 200, 200, 1);
-            opacity: 0.95;
-        }
-
-        .site-content {
-            padding: 30px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(233, 236, 239, 1) 50%, rgba(222, 226, 230, 1) 100%);
-        }
-
-        .site-description {
-            color: rgba(102, 102, 102, 1);
+        .welcome-text {
             font-size: 1.05em;
+            color: rgba(85, 95, 110, 1);
             line-height: 1.8;
-            margin-bottom: 25px;
-            flex: 1;
-        }
-
-        .site-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 20px 0;
-            border-top: 1px solid rgba(238, 238, 238, 1);
-            border-bottom: 1px solid rgba(238, 238, 238, 1);
-        }
-
-        .stat {
             text-align: center;
+            max-width: var(--nim-header-max);
+            margin: 0 auto 28px;
         }
 
-        .stat-number {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: rgba(0, 51, 102, 1);
+        .library-master-section {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 12px 36px rgba(0, 40, 80, 0.1);
+            border-top: 8px solid var(--nim-navy-mid);
+            overflow: hidden;
+            margin-bottom: 22px;
         }
 
-        .stat-label {
-            font-size: 0.9em;
-            color: rgba(153, 153, 153, 1);
-        }
-
-        .site-btn {
-            display: inline-block;
-            padding: 14px 28px;
-            background: linear-gradient(135deg, rgba(0, 51, 102, 1) 0%, rgba(0, 82, 147, 1) 100%);
+        .library-master-section > summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 22px 26px;
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.97) 0%, rgba(0, 82, 147, 0.95) 100%);
             color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2em;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid rgba(200, 200, 200, 1);
         }
 
-        /* Disable navigation for not-yet-live sites */
-        .site-card.coming-soon {
-            opacity: 0.6;
-            cursor: default;
-            pointer-events: none;
-        }
+        .library-master-section > summary::-webkit-details-marker { display: none; }
 
-        .site-card.coming-soon:hover {
-            transform: none;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .site-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 82, 147, 0.4);
-        }
-        
-        /* Latest Report Section */
-        .latest-report {
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .latest-report h3 {
-            font-size: 1.5em;
-            color: rgba(0, 51, 102, 1);
-            font-weight: 700;
-            margin-bottom: 15px;
+        .library-master-title {
+            font-size: 1.55em;
+            font-weight: 900;
+            letter-spacing: 0.6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        
-        .latest-report .report-name {
-            font-size: 1.3em;
-            color: rgba(0, 82, 147, 1);
-            font-weight: 600;
+
+        .library-master-meta {
+            font-size: 0.92em;
+            font-weight: 700;
+            color: rgba(220, 230, 240, 0.95);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .library-master-insights {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        .library-master-insight {
+            min-width: 140px;
+            text-align: right;
+        }
+
+        .library-master-insight-label {
+            font-size: 0.68em;
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            color: rgba(196, 214, 232, 0.95);
+        }
+
+        .library-master-insight-value {
+            font-size: 1.35em;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+        }
+
+        .library-master-body {
+            padding: 18px 18px 22px;
+            background: linear-gradient(180deg, rgba(252, 253, 255, 1) 0%, rgba(241, 245, 249, 1) 100%);
+        }
+
+        .group-section,
+        .pending-group-section {
+            border: 1px solid rgba(0, 51, 102, 0.18);
+            border-radius: 12px;
+            background: white;
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 40, 80, 0.06);
+        }
+
+        .group-section > summary,
+        .pending-group-section > summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 16px 20px 16px 42px;
+            background: linear-gradient(90deg, rgba(210, 222, 236, 0.55) 0%, rgba(248, 250, 252, 1) 28%, rgba(248, 250, 252, 1) 100%);
+            border-left: 5px solid var(--nim-navy-mid);
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+                'summary-name'
+                'summary-metrics';
+            row-gap: 12px;
+        }
+
+        .group-section > summary::-webkit-details-marker,
+        .pending-group-section > summary::-webkit-details-marker { display: none; }
+
+        .group-section > summary::before,
+        .pending-group-section > summary::before {
+            content: '▸';
+            position: absolute;
+            left: 16px;
+            top: 18px;
+            color: var(--nim-navy);
+            font-weight: 900;
+            font-size: 1.1em;
+        }
+
+        .group-section[open] > summary::before,
+        .pending-group-section[open] > summary::before {
+            content: '▾';
+        }
+
+        .group-summary-name {
+            grid-area: summary-name;
+            font-size: 1.18em;
+            font-weight: 900;
+            color: rgba(28, 42, 58, 1);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .group-summary-meta {
+            margin-left: 10px;
+            font-size: 0.86em;
+            font-weight: 700;
+            color: rgba(70, 90, 110, 1);
+            text-transform: uppercase;
+        }
+
+        .group-summary-metrics {
+            grid-area: summary-metrics;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .group-pill-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 150px;
+        }
+
+        .group-pill-label {
+            font-size: 0.68em;
+            font-weight: 900;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            color: rgba(55, 75, 95, 0.9);
+        }
+
+        .group-pill {
+            min-width: 150px;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 51, 102, 0.28);
+            background: linear-gradient(135deg, rgba(0, 82, 147, 0.95) 0%, rgba(0, 51, 102, 0.95) 100%);
+            color: rgba(240, 246, 252, 1);
+            font-size: 1.02em;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .group-pill.pill-soft {
+            background: linear-gradient(135deg, rgba(120, 140, 160, 1) 0%, rgba(90, 110, 130, 1) 100%);
+            border-color: rgba(70, 90, 110, 0.7);
+        }
+
+        .group-body {
+            padding: 16px 18px 18px;
+            border-top: 1px solid rgba(0, 51, 102, 0.1);
+            background: white;
+        }
+
+        .transformer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .transformer-card {
+            border: 1px solid rgba(0, 51, 102, 0.16);
+            border-radius: 10px;
+            padding: 14px 14px 12px;
+            background: linear-gradient(180deg, rgba(252, 253, 255, 1) 0%, rgba(239, 244, 249, 1) 100%);
+        }
+
+        .transformer-name {
+            font-size: 1.08em;
+            font-weight: 900;
+            color: var(--nim-navy);
+            letter-spacing: 0.4px;
+            margin-bottom: 4px;
+        }
+
+        .transformer-meta {
+            font-size: 0.86em;
+            color: rgba(80, 95, 110, 1);
             margin-bottom: 8px;
         }
-        
-        .latest-report .report-desc {
-            font-size: 1em;
-            color: rgba(102, 102, 102, 1);
-            margin-bottom: 20px;
+
+        .transformer-tag {
+            display: inline-block;
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(0, 82, 147, 0.1);
+            color: var(--nim-navy-mid);
+            border: 1px solid rgba(0, 82, 147, 0.22);
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .group-link {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.9em;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 11px 16px;
+            border-radius: 8px;
+            border: 2px solid var(--nim-navy);
+            background: linear-gradient(135deg, var(--nim-navy-mid) 0%, var(--nim-navy) 100%);
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .group-link:hover {
+            background: white;
+            color: var(--nim-navy);
+            transform: translateY(-1px);
+        }
+
+        .group-link.secondary {
+            background: white;
+            color: var(--nim-navy);
+        }
+
+        .group-link.secondary:hover {
+            background: rgba(0, 82, 147, 0.08);
+        }
+
+        .pending-note {
+            color: rgba(90, 105, 120, 1);
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+
+        .pending-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 51, 102, 0.28);
+            background: rgba(0, 82, 147, 0.08);
+            color: var(--nim-navy);
+            font-size: 0.78em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .info-section {
             background: white;
-            padding: 40px;
+            padding: 34px;
             border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin: 40px 0;
-            border-left: 5px solid rgba(0, 82, 147, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            border-left: 5px solid var(--nim-navy-mid);
         }
 
         .info-section h3 {
-            color: rgba(0, 51, 102, 1);
-            font-size: 1.5em;
-            margin-bottom: 15px;
+            color: var(--nim-navy);
+            font-size: 1.4em;
+            margin-bottom: 12px;
         }
 
         .info-section p {
-            color: rgba(102, 102, 102, 1);
-            font-size: 1.05em;
+            color: rgba(90, 105, 120, 1);
+            font-size: 1.02em;
             line-height: 1.8;
         }
 
         footer {
-            background: rgba(0, 51, 102, 1);
+            background: var(--nim-navy);
             color: white;
             text-align: center;
-            padding: 30px;
-            margin-top: 60px;
-            border-top: 3px solid rgba(200, 200, 200, 1);
+            padding: 28px 20px;
+            margin-top: 40px;
+            border-top: 3px solid var(--nim-silver);
+        }
+
+        footer p + p {
+            margin-top: 6px;
+            color: rgba(220, 230, 240, 0.92);
+            font-size: 0.95em;
         }
 
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 20px;
+                gap: 16px;
+                align-items: flex-start;
             }
 
-            nav {
+            .hero { min-height: 420px; }
+
+            .hero-status-chip {
+                top: 12px;
+                right: 12px;
+                left: 12px;
+                max-width: none;
+                text-align: center;
+                font-size: 0.78em;
+            }
+
+            .hero h1 { font-size: 2.2em; }
+            .hero .capacity-subtitle { font-size: 1.4em; }
+            .hero-key-metrics { gap: 20px; }
+            .hero-secondary-metrics { gap: 18px; font-size: 0.95em; }
+            .container { padding: 0 16px 12px; }
+
+            .library-master-section > summary {
                 flex-direction: column;
-                gap: 10px;
+                align-items: flex-start;
             }
 
-            .hero h1 {
-                font-size: 2em;
+            .library-master-insights {
+                margin-left: 0;
+                width: 100%;
             }
 
-            .hero p {
-                font-size: 1.1em;
-            }
-
-            section {
-                margin: 40px 0;
-            }
-
-            .sites-grid {
-                grid-template-columns: 1fr;
-            }
+            .library-master-insight { text-align: left; }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">⚡ <span>NORFOLK</span> IRON & METAL</div>
+        <div class="header-left">
+            <img src="norfolk-iron-logo.png" alt="Norfolk Iron &amp; Metal" class="header-logo">
+            <div>
+                <div class="site-title">Norfolk Iron &amp; Metal</div>
+                <div class="site-subtitle">Steel Service Center · Electrical Field Intelligence</div>
+            </div>
+        </div>
         <nav>
             <a href="../../UnityEnergy/customer-portals.html" class="back-btn">Customer Portals</a>
             <a href="../../UnityEnergy/index.html" class="back-btn">Unity Home</a>
         </nav>
     </header>
 
-    <div class="hero">
-        <img src="norfolk-iron-logo.png" alt="Norfolk Iron & Metal Logo" class="hero-logo">
+    <section class="hero">
+        <span class="hero-status-chip">September 2026 Build Lane · Group libraries staged for Catoosa + Greeley</span>
         <div class="hero-content">
-            <p>Steel Service Center Facilities</p>
-            <h1>Electrical Energy Field Behavior</h1>
-            <h2>SITE ENERGY DATA LIBRARIES</h2>
+            <p class="hero-kicker">Industrial 480V Electrical Behavior</p>
+            <h1>Unity Energy Field Intelligence</h1>
+            <p class="capacity-subtitle">Norfolk Iron &amp; Metal Facility Groups</p>
+            <p class="capacity-subtitle2">Group-first ownership model · Catoosa · Greeley · Headquarters</p>
+
+            <div class="hero-key-metrics">
+                <div class="hero-key-metric">
+                    <div class="hero-key-metric-label">Connected Capacity</div>
+                    <div class="hero-key-metric-value">5 Fields · 480V</div>
+                </div>
+                <div class="hero-key-metric">
+                    <div class="hero-key-metric-label">Active Groups</div>
+                    <div class="hero-key-metric-value">Catoosa · Greeley</div>
+                </div>
+            </div>
+
+            <div class="hero-secondary-metrics">
+                <span>Untuned Consequence<strong>$--</strong></span>
+                <span>Portfolio Efficiency<strong>--% PF</strong></span>
+            </div>
         </div>
-    </div>
+    </section>
 
     <div class="container">
         <section>
             <h2 class="section-title">Understanding True Electrical Energy Ownership</h2>
-            <h2 class="section-subtitle">select the site to enter</h2>
+            <p class="section-subtitle">select a facility group to enter</p>
+            <p class="welcome-text">
+                Norfolk is organized like Livingston: facility <strong>groups</strong> first, then energy fields inside each group.
+                Catoosa carries three drive fields (DRV1–DRV3). Greeley carries two meter fields (MTR1–MTR2).
+                Headquarters remains staged pending instrumentation.
+            </p>
 
-            <div class="sites-grid">
-
-                <!-- Catoosa Site - LIVE -->
-                <a href="./Catoosa_Site/index.html" class="site-card">
-                    <div class="site-header">
-                        <div class="site-name">Catoosa Facility</div>
-                        <div class="site-location">Catoosa, Oklahoma</div>
+            <details class="library-master-section" open>
+                <summary>
+                    <div>
+                        <div class="library-master-title">Catoosa Facility Group</div>
+                        <div class="library-master-meta">Catoosa, Oklahoma · 3 Energy Fields</div>
                     </div>
-                    <div class="site-content">
-                        <div class="latest-report">
-                            <h3>Latest Report</h3>
-                            <div class="report-name">April 2026</div>
-                            <div class="report-desc">30-day Full Site Analysis</div>
+                    <div class="library-master-insights">
+                        <div class="library-master-insight">
+                            <div class="library-master-insight-label">Fields</div>
+                            <div class="library-master-insight-value">DRV1–3</div>
                         </div>
-                        <div class="site-btn">Explore →</div>
-                    </div>
-                </a>
-
-                <!-- Greeley Site - Available -->
-                <a href="./Greeley_Site/index.html" class="site-card">
-                    <div class="site-header">
-                        <div class="site-name">Greeley Facility</div>
-                        <div class="site-location">Greeley, Colorado</div>
-                    </div>
-                    <div class="site-content">
-                        <div class="latest-report">
-                            <h3>Latest Report</h3>
-                            <div class="report-name">February 2026</div>
-                            <div class="report-desc">30-day Full Site Analysis</div>
+                        <div class="library-master-insight">
+                            <div class="library-master-insight-label">Latest Build</div>
+                            <div class="library-master-insight-value">Sep 2026</div>
                         </div>
-                        <div class="site-btn">Explore →</div>
                     </div>
-                </a>
-
-                <!-- Norfolk HQ Site - Coming Soon -->
-                <a href="./Norfolk_Site/" class="site-card coming-soon">
-                    <div class="site-header">
-                        <div class="site-name">Norfolk Headquarters</div>
-                        <div class="site-location">Norfolk, Nebraska</div>
-                    </div>
-                    <div class="site-content">
-                        <div class="latest-report">
-                            <h3>Latest Report</h3>
-                            <div class="report-name">March 2026</div>
-                            <div class="report-desc">30-day Full Site Analysis</div>
+                </summary>
+                <div class="library-master-body">
+                    <details class="group-section" open data-group-code="CATOOSA">
+                        <summary data-group-name="Catoosa Yard" data-transformer-spec="3 × 2500 kVA">
+                            <div class="group-summary-name">
+                                Catoosa Yard
+                                <span class="group-summary-meta">PSO · America/Chicago</span>
+                            </div>
+                            <div class="group-summary-metrics">
+                                <div class="group-pill-stack">
+                                    <div class="group-pill-label">Untuned Consequence</div>
+                                    <div class="group-pill">$-- / yr</div>
+                                </div>
+                                <div class="group-pill-stack">
+                                    <div class="group-pill-label">Group Efficiency</div>
+                                    <div class="group-pill pill-soft">--% PF</div>
+                                </div>
+                            </div>
+                        </summary>
+                        <div class="group-body">
+                            <div class="transformer-grid">
+                                <div class="transformer-card">
+                                    <div class="transformer-name">DRV1</div>
+                                    <div class="transformer-meta">AN55061202 · MAC 307a5701dc26</div>
+                                    <span class="transformer-tag">2500 kVA · 480V</span>
+                                </div>
+                                <div class="transformer-card">
+                                    <div class="transformer-name">DRV2</div>
+                                    <div class="transformer-meta">AN55090619 · MAC 307a57021d98</div>
+                                    <span class="transformer-tag">2500 kVA · 480V</span>
+                                </div>
+                                <div class="transformer-card">
+                                    <div class="transformer-name">DRV3</div>
+                                    <div class="transformer-meta">AN55090623 · MAC 307a57021dca</div>
+                                    <span class="transformer-tag">2500 kVA · 480V</span>
+                                </div>
+                            </div>
+                            <div class="group-actions">
+                                <a class="group-link" href="./Catoosa_Site/index.html">Open Catoosa Site Library</a>
+                                <a class="group-link secondary" href="./Catoosa_Site/04_APR26/">April 2026 Archive</a>
+                            </div>
                         </div>
-                        <button class="site-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
+                    </details>
+                </div>
+            </details>
+
+            <details class="library-master-section" open>
+                <summary>
+                    <div>
+                        <div class="library-master-title">Greeley Facility Group</div>
+                        <div class="library-master-meta">Greeley, Colorado · 2 Energy Fields</div>
                     </div>
-                </a>
-            </div>
+                    <div class="library-master-insights">
+                        <div class="library-master-insight">
+                            <div class="library-master-insight-label">Fields</div>
+                            <div class="library-master-insight-value">MTR1–2</div>
+                        </div>
+                        <div class="library-master-insight">
+                            <div class="library-master-insight-label">Latest Build</div>
+                            <div class="library-master-insight-value">Sep 2026</div>
+                        </div>
+                    </div>
+                </summary>
+                <div class="library-master-body">
+                    <details class="group-section" open data-group-code="GREELEY">
+                        <summary data-group-name="Greeley Yard" data-transformer-spec="2 × 2500 kVA">
+                            <div class="group-summary-name">
+                                Greeley Yard
+                                <span class="group-summary-meta">Xcel · America/Denver</span>
+                            </div>
+                            <div class="group-summary-metrics">
+                                <div class="group-pill-stack">
+                                    <div class="group-pill-label">Untuned Consequence</div>
+                                    <div class="group-pill">$-- / yr</div>
+                                </div>
+                                <div class="group-pill-stack">
+                                    <div class="group-pill-label">Group Efficiency</div>
+                                    <div class="group-pill pill-soft">--% PF</div>
+                                </div>
+                            </div>
+                        </summary>
+                        <div class="group-body">
+                            <div class="transformer-grid">
+                                <div class="transformer-card">
+                                    <div class="transformer-name">MTR1</div>
+                                    <div class="transformer-meta">AN55072563 · MAC 307a57020dce</div>
+                                    <span class="transformer-tag">2500 kVA · 480V</span>
+                                </div>
+                                <div class="transformer-card">
+                                    <div class="transformer-name">MTR2</div>
+                                    <div class="transformer-meta">AN55072580 · MAC 307a57020df0</div>
+                                    <span class="transformer-tag">2500 kVA · 480V</span>
+                                </div>
+                            </div>
+                            <div class="group-actions">
+                                <a class="group-link" href="./Greeley_Site/index.html">Open Greeley Site Library</a>
+                                <a class="group-link secondary" href="./Greeley_Site/04_APR26/">April 2026 Archive</a>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="library-master-section">
+                <summary>
+                    <div>
+                        <div class="library-master-title">Norfolk Headquarters</div>
+                        <div class="library-master-meta">Norfolk, Nebraska · Pending</div>
+                    </div>
+                    <div class="library-master-insights">
+                        <div class="library-master-insight">
+                            <div class="library-master-insight-label">Status</div>
+                            <div class="library-master-insight-value">Queued</div>
+                        </div>
+                    </div>
+                </summary>
+                <div class="library-master-body">
+                    <details class="pending-group-section" data-group-code="HQ">
+                        <summary data-group-name="Norfolk Headquarters">
+                            <div class="group-summary-name">
+                                Headquarters Group
+                                <span class="group-summary-meta">Instrumentation pending</span>
+                            </div>
+                            <div class="group-summary-metrics">
+                                <div class="group-pill-stack">
+                                    <div class="group-pill-label">Release</div>
+                                    <div class="group-pill pill-soft">Coming Soon</div>
+                                </div>
+                            </div>
+                        </summary>
+                        <div class="group-body">
+                            <p class="pending-note">
+                                Headquarters remains outside the active September build lane. Group card is reserved so the
+                                Norfolk portal matches the multi-group Livingston pattern as additional yards come online.
+                            </p>
+                            <span class="pending-badge">Pending Release</span>
+                        </div>
+                    </details>
+                </div>
+            </details>
         </section>
 
         <section>
             <div class="info-section">
-                <h3>About Norfolk Iron & Metal Energy Analysis</h3>
+                <h3>About This Norfolk Layout</h3>
                 <p>
-                    Unity Energy provides comprehensive electrical field analysis across Norfolk Iron & Metal's operations. 
-                    Each site is monitored with dedicated study teams analyzing energy consumption, thermal patterns, 
-                    and voltage stability. Our multi-site approach enables facility managers to understand their electrical 
-                    systems and identify optimization opportunities across all steel service center locations.
+                    This customer portal now follows the Foster Farms <strong>Livingston group layout</strong>: hero with
+                    ownership metrics, then expandable facility groups with energy-field cards inside. Norfolk colors and
+                    branding are preserved. Consequence and efficiency values stay as placeholders until the September
+                    1-minute libraries are processed into site studies.
                 </p>
             </div>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
+        <p>&copy; 2026 Unity Energy · Norfolk Iron &amp; Metal Portal</p>
         <p>Transforming how facilities understand their electrical systems.</p>
     </footer>
+
     <script>
         (function () {
             try {
@@ -472,10 +880,9 @@
                 };
                 window.localStorage.setItem("maxwellian_clerk_customer_context_v1", JSON.stringify(context));
                 window.maxwellianClerkCustomerContext = context;
-            } catch (_err) {
-                // ignore storage failures
-            }
+            } catch (_err) {}
         })();
     </script>
+    <script src="../../UnityEnergy/founder_share_panel.js?v=20261008a" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20261008a';"></script>
 </body>
 </html>
