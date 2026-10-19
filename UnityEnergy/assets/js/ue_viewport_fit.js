@@ -1,8 +1,10 @@
 /**
  * Unity Energy — universal viewport fit
- * Locks the landing composition to a MacBook Pro reference stage (1512×982)
- * and scales it uniformly to any monitor. Same proportions everywhere;
- * no width-only hero growth, no bottom chop, no CTA drift.
+ * ONE 1512×982 stage, uniform scale → header/body/footer same width as Home Hero.
+ *
+ * Home:    banner + hero + CTAs + access + nav + footer
+ * Contact: nav + contact board + footer  (all inside stage)
+ * Speak:   .cp-clerk-page one-pager (no footer) inside stage
  */
 (function () {
   var DESIGN_W = 1512;
@@ -22,34 +24,67 @@
     var cta = document.querySelector('.hero-bottom-cta-strip');
     var access = document.querySelector('.site-access-banner');
     var nav = document.querySelector('.nav-tabs-container');
-    // Prefer the green site footer if present
+    var contactShell = document.querySelector('.ue-contact-shell');
+    var contactStage = document.querySelector('.ue-contact-stage');
+    var speakPage = document.querySelector('body.cp-clerk-onepage .cp-clerk-page');
+    var speakWrap = document.querySelector('body.cp-clerk-onepage .site-wrap');
     var footer = document.querySelector('footer') || document.querySelector('.site-footer');
 
-    if (!banner || !hero) return null;
+    var isHome = !!(banner && hero);
+    var isContact = !!(contactShell || contactStage);
+    var isSpeak = !!(speakPage && document.body.classList.contains('cp-clerk-onepage'));
+    if (!isHome && !isContact && !isSpeak) return null;
+
+    var anchor = isHome
+      ? banner
+      : (isSpeak ? (speakWrap || speakPage) : (nav || contactShell || contactStage));
+    if (!anchor || !anchor.parentNode) return null;
 
     var shell = document.createElement('div');
     shell.className = 'ue-viewport-shell';
     shell.id = 'ueViewportShell';
 
     var stage = document.createElement('div');
-    stage.className = 'ue-design-stage';
+    stage.className = 'ue-design-stage' +
+      (isContact ? ' ue-design-stage--contact' : '') +
+      (isSpeak ? ' ue-design-stage--speak' : '');
     stage.id = 'ueDesignStage';
     stage.setAttribute('data-ue-design-w', String(DESIGN_W));
     stage.setAttribute('data-ue-design-h', String(DESIGN_H));
 
-    // Insert shell where banner currently is
-    banner.parentNode.insertBefore(shell, banner);
+    anchor.parentNode.insertBefore(shell, anchor);
     shell.appendChild(stage);
 
-    // Move landing pieces into the stage (modals stay outside — fixed overlays)
-    stage.appendChild(banner);
-    stage.appendChild(hero);
-    if (cta) stage.appendChild(cta);
-    if (access) stage.appendChild(access);
-    if (nav) stage.appendChild(nav);
-    if (footer) {
-      footer.classList.add('ue-stage-footer');
-      stage.appendChild(footer);
+    if (isHome) {
+      stage.appendChild(banner);
+      stage.appendChild(hero);
+      if (cta) stage.appendChild(cta);
+      if (access) stage.appendChild(access);
+      if (nav) stage.appendChild(nav);
+      if (footer) {
+        footer.classList.add('ue-stage-footer');
+        stage.appendChild(footer);
+      }
+    } else if (isSpeak) {
+      // Speak-with-Clerk: one fixed Hero-width stage, no footer
+      stage.appendChild(speakPage);
+      if (speakWrap && speakWrap.parentNode && !speakWrap.childNodes.length) {
+        // leave empty wrap out of flow; shell owns layout
+        speakWrap.style.display = 'none';
+      }
+      if (footer) {
+        footer.classList.add('ue-stage-footer');
+        footer.style.display = 'none';
+      }
+    } else {
+      // Contact: header + body + footer share ONE Hero width
+      if (nav) stage.appendChild(nav);
+      if (contactShell) stage.appendChild(contactShell);
+      else if (contactStage) stage.appendChild(contactStage);
+      if (footer) {
+        footer.classList.add('ue-stage-footer');
+        stage.appendChild(footer);
+      }
     }
 
     return { shell: shell, stage: stage };
@@ -62,13 +97,15 @@
     var shell = parts.shell;
     var stage = parts.stage;
 
+    // Always full-viewport letterbox shell (Home behavior)
+    shell.style.cssText = '';
+    shell.className = 'ue-viewport-shell';
+
     var sw = shell.clientWidth || window.innerWidth;
     var sh = shell.clientHeight || window.innerHeight;
     if (sw < 2 || sh < 2) return;
 
-    // Uniform scale to FIT (never crop). Same composition on every display.
     var scale = Math.min(sw / DESIGN_W, sh / DESIGN_H);
-
     stage.style.width = DESIGN_W + 'px';
     stage.style.height = DESIGN_H + 'px';
     stage.style.transform = 'scale(' + scale + ')';
@@ -77,6 +114,10 @@
     document.documentElement.style.setProperty('--ue-design-w', DESIGN_W + 'px');
     document.documentElement.style.setProperty('--ue-design-h', DESIGN_H + 'px');
     document.documentElement.classList.add('ue-fit-ready');
+    document.documentElement.classList.remove('ue-fit-contact');
+    if (document.body.classList.contains('cp-clerk-onepage')) {
+      document.documentElement.classList.add('ue-fit-speak');
+    }
   }
 
   function schedule() {

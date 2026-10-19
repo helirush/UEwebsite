@@ -168,8 +168,8 @@
   var GLOBAL_HOTSPOT = Object.freeze({
     top: "6px",
     right: "6px",
-    sizeDesktopPx: 50,
-    sizeMobilePx: 50
+    sizeDesktopPx: 30,
+    sizeMobilePx: 30
   });
 
   function nowMs() {
@@ -1028,34 +1028,114 @@
     hero.appendChild(hotspot);
     return hotspot;
   }
+  function isCognitionPartnerSurface() {
+    try {
+      var path = String((window.location && window.location.pathname) || "").toLowerCase();
+      if (path.indexOf("cognition") !== -1 || path.indexOf("cpwebsite") !== -1) return true;
+    } catch (_err) {}
+    try {
+      var b = document.body;
+      if (!b) return false;
+      var cls = String(b.className || "");
+      if (/(^|\s)cp-page\d+/i.test(cls) || /(^|\s)home-page(\s|$)/i.test(cls)) return true;
+      if (document.querySelector(".cp-r2-utility-nav, .cp-r2-possibilities, .cp-r1-card, .page-card.cp-r1-card")) return true;
+    } catch (_err2) {}
+    return false;
+  }
+
+  function getCpHotspotAnchorRect() {
+    // Prefer the full cream top header card (outer top-right past ABOUT).
+    var selectors = [
+      ".cp-r2-top-card",
+      ".cp-r1-top-card",
+      ".cp-r2-top-main",
+      ".cp-r2-utility-nav",
+      ".cp-r1-top-nav",
+      ".cp-r1-header-card",
+      ".cp-design-stage",
+      ".page-card",
+      ".cp-r1-card",
+      ".site-wrap"
+    ];
+    for (var i = 0; i < selectors.length; i += 1) {
+      var el = document.querySelector(selectors[i]);
+      if (!el) continue;
+      var rect = el.getBoundingClientRect();
+      if (rect && rect.width > 40 && rect.height > 20) return rect;
+    }
+    return null;
+  }
+
+  function layoutGlobalFounderHotspot(hotspot) {
+    if (!hotspot) return;
+    var size = GLOBAL_HOTSPOT.sizeDesktopPx;
+    if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
+      size = GLOBAL_HOTSPOT.sizeMobilePx;
+    }
+    hotspot.style.width = size + "px";
+    hotspot.style.height = size + "px";
+    hotspot.style.position = "fixed";
+    hotspot.style.margin = "0";
+    hotspot.style.border = "0";
+    hotspot.style.padding = "0";
+    hotspot.style.background = "transparent";
+    hotspot.style.opacity = "0";
+    hotspot.style.cursor = "pointer";
+    hotspot.style.zIndex = "2147483000";
+    hotspot.style.pointerEvents = "auto";
+    hotspot.style.outline = "none";
+
+    // Cognition Partner: pin to cream chrome top-right (the corner Mike is clicking).
+    if (isCognitionPartnerSurface()) {
+      var rect = getCpHotspotAnchorRect();
+      if (rect) {
+        var left = Math.round(rect.right - size - 10);
+        var top = Math.round(rect.top + 8);
+        // Keep on-screen
+        left = Math.max(4, Math.min(left, window.innerWidth - size - 4));
+        top = Math.max(4, Math.min(top, window.innerHeight - size - 4));
+        hotspot.style.left = left + "px";
+        hotspot.style.top = top + "px";
+        hotspot.style.right = "auto";
+        hotspot.style.bottom = "auto";
+        return;
+      }
+    }
+
+    // Default Unity / other pages: fixed viewport top-right 50x50
+    hotspot.style.left = "auto";
+    hotspot.style.bottom = "auto";
+    hotspot.style.right = GLOBAL_HOTSPOT.right;
+    hotspot.style.top = GLOBAL_HOTSPOT.top;
+  }
+
   function createGlobalFounderHotspot() {
     var existing = document.getElementById(GLOBAL_HOTSPOT_ID);
-    if (existing) return existing;
+    if (existing) {
+      layoutGlobalFounderHotspot(existing);
+      return existing;
+    }
     var hotspot = document.createElement("button");
     hotspot.type = "button";
     hotspot.id = GLOBAL_HOTSPOT_ID;
     hotspot.setAttribute("aria-label", "Founder access hotspot");
-    hotspot.style.position = "fixed";
-    hotspot.style.right = GLOBAL_HOTSPOT.right;
-    hotspot.style.top = GLOBAL_HOTSPOT.top;
-    hotspot.style.width = GLOBAL_HOTSPOT.sizeDesktopPx + "px";
-    hotspot.style.height = GLOBAL_HOTSPOT.sizeDesktopPx + "px";
     hotspot.style.borderRadius = "8px";
-    hotspot.style.border = "0";
-    hotspot.style.padding = "0";
-    hotspot.style.margin = "0";
-    hotspot.style.background = "transparent";
-    hotspot.style.opacity = "0";
-    hotspot.style.cursor = "pointer";
-    hotspot.style.zIndex = "99997";
-    hotspot.style.outline = "none";
     hotspot.style.webkitTapHighlightColor = "transparent";
     hotspot.tabIndex = -1;
-    if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
-      hotspot.style.width = GLOBAL_HOTSPOT.sizeMobilePx + "px";
-      hotspot.style.height = GLOBAL_HOTSPOT.sizeMobilePx + "px";
-    }
+    layoutGlobalFounderHotspot(hotspot);
     document.body.appendChild(hotspot);
+    if (!window.__ueFounderShareHotspotLayoutBound) {
+      window.__ueFounderShareHotspotLayoutBound = true;
+      var relayout = function () { layoutGlobalFounderHotspot(document.getElementById(GLOBAL_HOTSPOT_ID)); };
+      window.addEventListener("resize", relayout);
+      window.addEventListener("orientationchange", relayout);
+      window.addEventListener("scroll", relayout, true);
+      // CP viewport fit mutates card geometry after load
+      window.setTimeout(relayout, 50);
+      window.setTimeout(relayout, 250);
+      window.setTimeout(relayout, 1000);
+    }
+    try { document.documentElement.setAttribute("data-ue-founder-hotspot", "ready"); } catch (_err) {}
     return hotspot;
   }
 

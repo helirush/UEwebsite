@@ -697,6 +697,12 @@
             transform: translateY(0);
         }
         .hero-visibility-principle-cta.unity-post-narration-pulse {
+            background: linear-gradient(180deg, #f3e2b8 0%, #e6c57a 38%, #d4a84e 72%, #c7923a 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
             animation: unityVisibilityPrincipleFlash 4s ease-in-out infinite;
         }
         @keyframes unityVisibilityPrincipleFlash {
@@ -728,6 +734,12 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .hero-visibility-principle-cta.unity-post-narration-pulse {
+            background: linear-gradient(180deg, #f3e2b8 0%, #e6c57a 38%, #d4a84e 72%, #c7923a 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
                 animation: none;
             }
         }
@@ -1567,7 +1579,7 @@
             margin-top: 0px;
             position: relative;
         }
-        .footer-unity-intro-controls {
+        .footer-unity-audio-controls {
             position: absolute;
             right: clamp(12px, 2vw, 22px);
             top: 50%;
@@ -1576,7 +1588,7 @@
             align-items: center;
             gap: 8px;
         }
-        .footer-unity-intro-label {
+        .footer-unity-audio-label {
             font-size: clamp(0.68rem, 0.82vw, 0.84rem);
             font-weight: 700;
             letter-spacing: 0.08em;
@@ -1584,7 +1596,7 @@
             color: rgba(228, 238, 210, 0.92);
             line-height: 1;
         }
-        .footer-unity-intro-toggle-btn {
+        .footer-unity-audio-toggle-btn {
             border: 1px solid rgba(206, 219, 181, 0.5);
             border-radius: 999px;
             background: rgba(236, 241, 224, 0.16);
@@ -1598,16 +1610,16 @@
             cursor: pointer;
             transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
         }
-        .footer-unity-intro-toggle-btn:hover {
+        .footer-unity-audio-toggle-btn:hover {
             transform: translateY(-1px);
             background: rgba(236, 241, 224, 0.28);
             box-shadow: 0 6px 14px rgba(21, 35, 11, 0.24);
         }
-        .footer-unity-intro-toggle-btn:focus-visible {
+        .footer-unity-audio-toggle-btn:focus-visible {
             outline: 2px solid rgba(226, 236, 210, 0.92);
             outline-offset: 2px;
         }
-        .footer-unity-intro-toggle-btn.is-active {
+        .footer-unity-audio-toggle-btn.is-active {
             background: rgba(84, 53, 42, 0.9);
             border-color: rgba(232, 206, 165, 0.76);
             color: rgba(255, 239, 212, 0.98);
@@ -2952,20 +2964,24 @@
             /* +15px down from prior seat */
             left: 15.6%;
             top: 72.4%;
-            transform: translate(-50%, calc(-50% + 5px));
+            transform: translate(-50%, calc(-50% - 8px)); /* was -13px; +5px down 20261019 */ /* down 5 from prior */
             z-index: 5;
         }
         .hero-visibility-principle-cta {
+            background: linear-gradient(180deg, #f3e2b8 0%, #e6c57a 38%, #d4a84e 72%, #c7923a 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
+
+
             /* Mimic painted orange square/rounded hero button */
             min-width: clamp(220px, 20.5vw, 340px);
             width: clamp(220px, 20.5vw, 340px);
             min-height: clamp(42px, 3.55vw, 56px);
             height: clamp(42px, 3.55vw, 56px);
             border-radius: clamp(8px, 0.7vw, 12px);
-            border: 1px solid rgba(176, 120, 28, 0.45);
-            background: linear-gradient(180deg, #f2c85e 0%, #e3a93c 45%, #d49228 100%);
-            color: rgba(92, 58, 14, 0.98);
-            box-shadow: 0 4px 14px rgba(120, 72, 12, 0.28), inset 0 1px 0 rgba(255, 240, 190, 0.65), inset 0 -2px 6px rgba(150, 90, 10, 0.22);
             font-weight: 800;
             padding: 0 clamp(16px, 1.4vw, 26px);
             display: flex;
@@ -3021,26 +3037,50 @@
             /* no visual — whole orange button is the control */
         }
         .hero-visibility-principle-cta:hover {
+            background: linear-gradient(180deg, #f7eac8 0%, #ecc878 40%, #d9b050 100%);
+            border: 1.5px solid rgba(210, 150, 55, 0.95);
+            box-shadow: 0 0 0 2px rgba(230, 180, 90, 0.30), 0 0 16px rgba(220, 160, 60, 0.38), 0 8px 18px rgba(120, 70, 20, 0.20), inset 0 1px 0 rgba(255, 250, 235, 0.95), inset 0 -2px 0 rgba(170, 110, 40, 0.28);
+
+
+
             transform: scale(1.03);
             border-color: rgba(196, 140, 36, 0.7);
-            box-shadow: 0 6px 18px rgba(120, 72, 12, 0.34), 0 0 18px rgba(224, 165, 58, 0.35), inset 0 1px 0 rgba(255, 244, 200, 0.75);
             filter: brightness(1.06) saturate(1.05);
-            background: linear-gradient(180deg, #f7d36e 0%, #ebb44a 45%, #e09a30 100%);
         }
         .hero-visibility-principle-cta:active {
+            background: linear-gradient(180deg, #e6c57a 0%, #d4a84e 55%, #b88230 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
+
             transform: scale(0.97);
-            box-shadow: 0 2px 8px rgba(120, 72, 12, 0.35), inset 0 0 16px rgba(90, 50, 8, 0.35);
             filter: brightness(0.9) saturate(0.95);
         }
         .hero-visibility-principle-cta.is-selected {
+            background: linear-gradient(180deg, #e6c57a 0%, #d4a84e 55%, #b88230 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
+
             border-color: rgba(160, 100, 20, 0.7);
-            box-shadow: 0 4px 14px rgba(120, 72, 12, 0.32), inset 0 0 12px rgba(150, 90, 10, 0.2);
-            background: linear-gradient(180deg, #e8b84a 0%, #d49228 50%, #c48220 100%);
         }
         .hero-visibility-principle-cta:focus-visible {
+            background: linear-gradient(180deg, #f7eac8 0%, #ecc878 40%, #d9b050 100%);
+            border: 1.5px solid rgba(210, 150, 55, 0.95);
+            box-shadow: 0 0 0 2px rgba(230, 180, 90, 0.30), 0 0 16px rgba(220, 160, 60, 0.38), 0 8px 18px rgba(120, 70, 20, 0.20), inset 0 1px 0 rgba(255, 250, 235, 0.95), inset 0 -2px 0 rgba(170, 110, 40, 0.28);
+
+
+
             outline: 3px solid rgba(196, 140, 36, 0.85);
             outline-offset: 2px;
-        }
+        
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+}
         .hero-rebuild-actions {
             position: absolute;
             left: 50%;
@@ -3200,6 +3240,12 @@
                 width: min(100%, 320px);
             }
             .hero-visibility-principle-cta {
+            background: linear-gradient(180deg, #f3e2b8 0%, #e6c57a 38%, #d4a84e 72%, #c7923a 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
                 min-width: min(100%, 320px);
                 width: min(100%, 320px);
                 min-height: clamp(44px, 12vw, 54px);
@@ -3207,8 +3253,16 @@
                 flex-direction: row;
             }
             .hero-visibility-principle-cta:hover {
+            background: linear-gradient(180deg, #f7eac8 0%, #ecc878 40%, #d9b050 100%);
+            border: 1.5px solid rgba(210, 150, 55, 0.95);
+            box-shadow: 0 0 0 2px rgba(230, 180, 90, 0.30), 0 0 16px rgba(220, 160, 60, 0.38), 0 8px 18px rgba(120, 70, 20, 0.20), inset 0 1px 0 rgba(255, 250, 235, 0.95), inset 0 -2px 0 rgba(170, 110, 40, 0.28);
+
+
+
                 transform: scale(1.03);
-            }
+            
+            filter: brightness(1.04);
+}
             .hero-visibility-principle-title {
                 font-size: clamp(0.72rem, 3.2vw, 0.95rem);
             }
@@ -3229,14 +3283,14 @@
             .hero-rebuild-action-primary {
                 color: rgba(33, 77, 44, 0.98);
             }
-            .footer-unity-intro-controls {
+            .footer-unity-audio-controls {
                 position: static;
                 transform: none;
                 margin: 10px auto 0;
                 display: inline-flex;
                 justify-content: center;
             }
-            .footer-unity-intro-toggle-btn:hover {
+            .footer-unity-audio-toggle-btn:hover {
                 transform: none;
             }
         }
@@ -3259,16 +3313,16 @@
             font-size: clamp(0.68rem, 0.85vw, 0.82rem) !important;
             line-height: 1.25 !important;
         }
-        .footer-unity-intro-label {
+        .footer-unity-audio-label {
             font-size: clamp(0.55rem, 0.68vw, 0.7rem) !important;
         }
-        .footer-unity-intro-toggle-btn,
-        .ue-design-stage .footer-unity-intro-toggle-btn {
+        .footer-unity-audio-toggle-btn,
+        .ue-design-stage .footer-unity-audio-toggle-btn {
             font-size: clamp(0.54rem, 0.68vw, 0.68rem) !important; /* ~25% smaller */
             min-width: clamp(52px, 5.5vw, 66px) !important;
             padding: 5px 10px !important;
         }
-        .footer-unity-intro-controls {
+        .footer-unity-audio-controls {
             gap: 6px !important;
         }
 
@@ -3435,7 +3489,7 @@
         .hero-portal-entries {
             right: 3.2% !important;
             top: 54% !important;
-            transform: translateY(calc(-50% + 48px)) !important; /* down 40px total */
+            transform: translateY(calc(-50% + 38px)) !important; /* up 10 */ /* down 40px total */
             gap: 0 !important;
         }
         .hero-portal-circle {
@@ -3589,7 +3643,7 @@
         .hero-portal-entries {
             right: calc(3.2% + 10px) !important; /* +5px X (right) from prior */
             top: 54% !important;
-            transform: translateY(calc(-50% + 48px)) !important; /* +20px down from prior seat */
+            transform: translateY(calc(-50% + 38px)) !important; /* up 10 */ /* +20px down from prior seat */
             gap: 0 !important;
         }
         .hero-portal-circle {
@@ -3972,46 +4026,70 @@
         /* Visibility Principle — brighter shared orange */
         .hero-visibility-principle-cta,
         .ue-design-stage .hero-visibility-principle-cta {
-            border-color: var(--ue-attn-orange-border) !important;
-            background: var(--ue-attn-orange-fill) !important;
-            color: var(--ue-attn-orange-text) !important;
-            box-shadow:
-                0 5px 16px rgba(180, 90, 12, 0.28),
-                0 0 14px var(--ue-attn-orange-glow-soft),
-                inset 0 1px 0 rgba(255, 248, 220, 0.78),
-                inset 0 -2px 6px rgba(230, 120, 20, 0.18) !important;
+            background: linear-gradient(180deg, #f3e2b8 0%, #e6c57a 38%, #d4a84e 72%, #c7923a 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
+
+
         }
         .hero-visibility-principle-title,
         .hero-visibility-principle-arrow,
         .ue-design-stage .hero-visibility-principle-title,
         .ue-design-stage .hero-visibility-principle-arrow {
-            color: var(--ue-attn-orange-text) !important;
+            color: rgba(92, 58, 14, 0.98) !important; /* match Understanding begins here / arrow */
         }
         .hero-visibility-principle-cta:hover,
         .ue-design-stage .hero-visibility-principle-cta:hover {
+            background: linear-gradient(180deg, #f7eac8 0%, #ecc878 40%, #d9b050 100%);
+            border: 1.5px solid rgba(210, 150, 55, 0.95);
+            box-shadow: 0 0 0 2px rgba(230, 180, 90, 0.30), 0 0 16px rgba(220, 160, 60, 0.38), 0 8px 18px rgba(120, 70, 20, 0.20), inset 0 1px 0 rgba(255, 250, 235, 0.95), inset 0 -2px 0 rgba(170, 110, 40, 0.28);
+
+
+
+
             border-color: var(--ue-attn-orange-border-strong) !important;
-            background: var(--ue-attn-orange-fill-hot) !important;
             filter: brightness(1.04) saturate(1.06) !important;
-            box-shadow:
                 0 7px 20px rgba(180, 90, 12, 0.34),
                 0 0 0 2px rgba(255, 176, 64, 0.45),
                 0 0 22px var(--ue-attn-orange-glow),
                 inset 0 1px 0 rgba(255, 250, 230, 0.88) !important;
-        }
+        
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+}
         .hero-visibility-principle-cta:active,
         .hero-visibility-principle-cta.is-selected,
         .ue-design-stage .hero-visibility-principle-cta:active,
         .ue-design-stage .hero-visibility-principle-cta.is-selected {
+            background: linear-gradient(180deg, #e6c57a 0%, #d4a84e 55%, #b88230 100%);
+            border: 1.5px solid rgba(184, 120, 40, 0.88);
+            box-shadow: 0 6px 14px rgba(120, 70, 20, 0.18), inset 0 1px 0 rgba(255, 248, 230, 0.9), inset 0 -2px 0 rgba(160, 100, 35, 0.28);
+            color: rgba(92, 58, 14, 0.98);
+
+
+
+
             border-color: rgba(232, 136, 24, 0.9) !important;
-            background: var(--ue-attn-orange-fill-press) !important;
-            box-shadow:
                 0 3px 10px rgba(160, 80, 10, 0.34),
                 inset 0 0 14px rgba(140, 70, 8, 0.22) !important;
         }
         .hero-visibility-principle-cta:focus-visible,
         .ue-design-stage .hero-visibility-principle-cta:focus-visible {
+            background: linear-gradient(180deg, #f7eac8 0%, #ecc878 40%, #d9b050 100%);
+            border: 1.5px solid rgba(210, 150, 55, 0.95);
+            box-shadow: 0 0 0 2px rgba(230, 180, 90, 0.30), 0 0 16px rgba(220, 160, 60, 0.38), 0 8px 18px rgba(120, 70, 20, 0.20), inset 0 1px 0 rgba(255, 250, 235, 0.95), inset 0 -2px 0 rgba(170, 110, 40, 0.28);
+
+
+
+
             outline-color: var(--ue-attn-orange-border-strong) !important;
-        }
+        
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+}
 
         /* Pulse uses the same brighter orange family */
         @keyframes unityVisibilityPrincipleFlash {
@@ -4063,7 +4141,464 @@
                 inset 0 0 28px rgba(0, 0, 0, 0.5) !important;
         }
 
-</style>
+
+        /* ===== UE HOME FOOTER + CTA PLATFORM 20261018 =====
+           Public hero geometry kept. CTA platform thinner + slightly lower so art shows. */
+        footer.ue-site-footer-home, footer {
+            position: relative !important; display: block !important; text-align: left !important; padding: 10px 18px !important;
+        }
+        footer .footer-rail {
+            width: min(1600px, calc(100% - 16px)); margin: 0 auto; display: grid;
+            grid-template-columns: minmax(220px, 1fr) minmax(480px, 2fr) minmax(220px, 1fr);
+            align-items: center; gap: 8px 16px;
+        }
+        footer .footer-copy {
+            margin: 0 !important; text-align: left !important; justify-self: start;
+            white-space: nowrap !important; font-size: clamp(0.7rem, 0.9vw, 0.86rem) !important; line-height: 1.3 !important;
+        }
+        footer .footer-tagline {
+            margin: 0 !important; text-align: center !important; justify-self: center;
+            white-space: nowrap !important; max-width: none !important; width: max-content !important;
+            font-size: clamp(0.7rem, 0.9vw, 0.86rem) !important; line-height: 1.3 !important;
+        }
+        footer .footer-unity-audio-controls {
+            position: static !important; right: auto !important; top: auto !important; left: auto !important;
+            transform: none !important; justify-self: end; display: inline-flex !important; align-items: center; gap: 8px; margin: 0 !important;
+        }
+
+        /* CTA platform: reduce height (was covering background icons) */
+        .hero-bottom-cta-strip {
+            transform: translateY(-28px) !important; /* up to balance gap above nav rule */
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .hero-bottom-cta-button,
+        .ue-design-stage .hero-bottom-cta-button {
+            height: clamp(68px, 4.8vw, 85px) !important;
+            min-height: clamp(68px, 4.8vw, 85px) !important;
+            max-height: clamp(68px, 4.8vw, 85px) !important;
+        }
+        .ue-design-stage .hero-bottom-cta-strip {
+            transform: translateY(-28px) !important; /* up to balance gap above nav rule */
+        }
+
+        @media (max-width: 980px) {
+            footer .footer-rail { grid-template-columns: 1fr; justify-items: center; }
+            footer .footer-copy, footer .footer-tagline {
+                text-align: center !important; white-space: normal !important; width: auto !important;
+            }
+            .hero-bottom-cta-strip { transform: none !important; }
+        }
+        
+        .hero-bottom-cta-button,
+        .ue-design-stage .hero-bottom-cta-button {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .hero-bottom-cta-button .hero-bottom-cta-copy,
+        .ue-design-stage .hero-bottom-cta-button .hero-bottom-cta-copy {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+        }
+
+        /* CTA TALLER 10% + center text */
+        
+        /* CTA row +2% longer overall — match nav rule line; equal widths; no wrap */
+        .hero-bottom-cta-strip,
+        .ue-design-stage .hero-bottom-cta-strip {
+            width: min(2060px, calc(98.8% - clamp(28px, 4vw, 96px))) !important; /* ~2% longer than prior 93.1% seat */
+            max-width: min(2060px, calc(98.8% - clamp(28px, 4vw, 96px))) !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: clamp(8px, 0.85vw, 14px) !important;
+            box-sizing: border-box !important;
+        }
+        .hero-bottom-cta-button,
+        .ue-design-stage .hero-bottom-cta-button {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            flex: 1 1 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* ===== /UE HOME FOOTER + CTA PLATFORM 20261018 ===== */
+
+    
+        /* ===== UE CTA WIDTH FORCE 20261018-final — last word on strip width ===== */
+        html body .hero.hero-raster-rebuild .hero-bottom-cta-strip,
+        html body .ue-design-stage .hero.hero-raster-rebuild .hero-bottom-cta-strip,
+        html body .hero-bottom-cta-strip {
+            width: min(2060px, calc(98.8% - clamp(28px, 4vw, 96px))) !important;
+            max-width: min(2060px, calc(98.8% - clamp(28px, 4vw, 96px))) !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: clamp(8px, 0.85vw, 14px) !important;
+            box-sizing: border-box !important;
+            transform: translateY(-28px) !important; /* keep vertical seat */
+            transform-origin: center bottom !important;
+            scale: none !important;
+        }
+        html body .hero-bottom-cta-strip > .hero-bottom-cta-button,
+        html body .hero-bottom-cta-strip > a.hero-bottom-cta-button,
+        html body .ue-design-stage .hero-bottom-cta-strip > .hero-bottom-cta-button {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            box-sizing: border-box !important;
+        }
+        @media (min-width: 1101px) {
+            html body .hero-bottom-cta-strip {
+                /* kill legacy scale(0.9)/scale(0.82) shrink that masked width tweaks */
+                transform: translateY(-28px) scale(1) !important;
+            }
+        }
+        /* ===== /UE CTA WIDTH FORCE 20261018-final ===== */
+
+
+    
+        /* ===== UE SHARED HOVER GLOW 20261018 — portal + visibility + CTAs =====
+           Warm gold accent glow + slight lift on hover/focus for consistent activation. */
+        :root {
+            --ue-hover-gold: rgba(215, 184, 114, 0.95);
+            --ue-hover-gold-soft: rgba(232, 205, 140, 0.55);
+            --ue-hover-gold-core: rgba(199, 154, 53, 0.50);
+            --ue-hover-gold-warm: rgba(230, 175, 90, 0.42);
+        }
+
+        /* --- Portal circle --- */
+        html body .hero-portal-circle:hover,
+        html body .hero-portal-circle:focus-visible,
+        html body .ue-design-stage .hero-portal-circle:hover,
+        html body .ue-design-stage .hero-portal-circle:focus-visible {
+            border-color: var(--ue-hover-gold) !important;
+            background:
+                radial-gradient(circle at 35% 28%,
+                    rgba(255, 248, 220, 0.58) 0%,
+                    rgba(236, 200, 120, 0.32) 34%,
+                    rgba(199, 154, 53, 0.26) 58%,
+                    rgba(49, 65, 0, 0.52) 100%) !important;
+            box-shadow:
+                0 0 0 2px rgba(215, 184, 114, 0.40),
+                0 0 20px var(--ue-hover-gold-core),
+                0 0 36px var(--ue-hover-gold-warm),
+                inset 0 0 16px rgba(255, 245, 210, 0.28) !important;
+            transform: scale(1.06) !important;
+            filter: saturate(1.06) brightness(1.05) !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, filter 0.18s ease, background 0.18s ease !important;
+        }
+
+        /* --- Visibility Principle --- */
+        html body .hero-visibility-principle-cta:hover,
+        html body .hero-visibility-principle-cta:focus-visible,
+        html body .ue-design-stage .hero-visibility-principle-cta:hover,
+        html body .ue-design-stage .hero-visibility-principle-cta:focus-visible {
+            border-color: var(--ue-hover-gold) !important;
+            background: linear-gradient(180deg, #f6e8c4 0%, #e8c878 40%, #d4a84e 78%, #c7923a 100%) !important;
+            box-shadow:
+                0 0 0 2px rgba(215, 184, 114, 0.38),
+                0 0 18px var(--ue-hover-gold-core),
+                0 0 28px var(--ue-hover-gold-warm),
+                0 8px 18px rgba(120, 70, 20, 0.20),
+                inset 0 1px 0 rgba(255, 250, 235, 0.92),
+                inset 0 -2px 0 rgba(160, 110, 40, 0.28) !important;
+            transform: translateY(-3px) scale(1.03) !important;
+            filter: brightness(1.05) saturate(1.05) !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, filter 0.18s ease, background 0.18s ease !important;
+        }
+        html body .hero-visibility-principle-cta:active,
+        html body .ue-design-stage .hero-visibility-principle-cta:active {
+            transform: translateY(-1px) scale(1.01) !important;
+            box-shadow:
+                0 0 0 2px rgba(215, 184, 114, 0.28),
+                0 0 12px var(--ue-hover-gold-core),
+                inset 0 1px 0 rgba(255, 250, 235, 0.85) !important;
+        }
+
+        /* --- Bottom four CTAs --- */
+        html body .hero-bottom-cta-button,
+        html body .ue-design-stage .hero-bottom-cta-button {
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, filter 0.18s ease !important;
+        }
+        html body .hero-bottom-cta-button:hover,
+        html body .hero-bottom-cta-button:focus-visible,
+        html body a.hero-bottom-cta-button:hover,
+        html body a.hero-bottom-cta-button:focus-visible,
+        html body .ue-design-stage .hero-bottom-cta-button:hover,
+        html body .ue-design-stage .hero-bottom-cta-button:focus-visible {
+            transform: translateY(-4px) scale(1.02) !important;
+            border-color: rgba(215, 184, 114, 0.88) !important;
+            box-shadow:
+                0 0 0 2px rgba(215, 184, 114, 0.32),
+                0 0 16px var(--ue-hover-gold-core),
+                0 0 28px var(--ue-hover-gold-warm),
+                0 10px 22px rgba(30, 40, 18, 0.22),
+                inset 0 1px 0 rgba(255, 248, 220, 0.28) !important;
+            filter: brightness(1.06) saturate(1.04) !important;
+            z-index: 3 !important;
+        }
+        html body .hero-bottom-cta-button:active,
+        html body a.hero-bottom-cta-button:active,
+        html body .ue-design-stage .hero-bottom-cta-button:active {
+            transform: translateY(-1px) scale(1.01) !important;
+            box-shadow:
+                0 0 0 2px rgba(215, 184, 114, 0.25),
+                0 0 10px var(--ue-hover-gold-core),
+                0 4px 12px rgba(30, 40, 18, 0.18) !important;
+        }
+        /* Clerk CTA already gold — keep glow, slightly warmer on hover */
+        html body .hero-bottom-cta-button.hero-bottom-cta-clerk:hover,
+        html body .hero-bottom-cta-button.hero-bottom-cta-clerk:focus-visible {
+            box-shadow:
+                0 0 0 2px rgba(215, 184, 114, 0.42),
+                0 0 18px rgba(199, 154, 53, 0.48),
+                0 0 30px rgba(230, 175, 90, 0.30),
+                0 10px 22px rgba(30, 40, 18, 0.20),
+                inset 0 1px 0 rgba(255, 252, 240, 0.75) !important;
+        }
+        /* ===== /UE SHARED HOVER GLOW 20261018 ===== */
+
+    
+        /* ===== UE STANDARD FOOTER 20261018 — sitewide parity with Home ===== */
+        footer.ue-site-footer-home,
+        footer.ue-standard-footer,
+        footer {
+            position: relative !important;
+            display: block !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%) !important;
+            color: rgba(250, 240, 160, 1) !important;
+            text-align: left !important;
+            padding: 10px 18px !important;
+            margin: 0 !important;
+            border: 0 !important;
+        }
+        footer .footer-rail {
+            width: min(1600px, calc(100% - 16px));
+            margin: 0 auto;
+            display: grid !important;
+            grid-template-columns: minmax(220px, 1fr) minmax(420px, 2fr) minmax(240px, 1fr);
+            align-items: center;
+            gap: 8px 16px;
+        }
+        footer .footer-copy,
+        footer .footer-tagline {
+            margin: 0 !important;
+            font-size: clamp(0.7rem, 0.9vw, 0.86rem) !important;
+            line-height: 1.3 !important;
+            color: rgba(250, 240, 160, 1) !important;
+        }
+        footer .footer-copy {
+            text-align: left !important;
+            justify-self: start;
+            white-space: nowrap !important;
+        }
+        footer .footer-tagline {
+            text-align: center !important;
+            justify-self: center;
+            white-space: nowrap !important;
+            max-width: none !important;
+            width: max-content !important;
+            color: rgba(250, 240, 160, 0.95) !important;
+        }
+        footer .footer-unity-audio-controls,
+        footer .footer-unity-audio-controls {
+            justify-self: end;
+            display: inline-flex !important;
+            align-items: center;
+            gap: 8px;
+            margin: 0 !important;
+            position: static !important;
+            right: auto !important;
+            top: auto !important;
+            left: auto !important;
+            transform: none !important;
+        }
+        footer .footer-unity-audio-label,
+        footer .footer-unity-audio-label {
+            font-size: 0.72rem !important;
+            letter-spacing: 0.06em !important;
+            text-transform: uppercase !important;
+            color: rgba(250, 240, 160, 0.95) !important; /* same gold as copyright */
+            font-weight: 700 !important;
+        }
+        footer .footer-unity-audio-toggle-btn,
+        footer .footer-unity-audio-toggle-btn {
+            appearance: none !important;
+            border: 1px solid rgba(250, 240, 160, 0.62) !important;
+            background: rgba(40, 55, 20, 0.35) !important;
+            color: rgba(250, 240, 160, 0.98) !important; /* gold text, not white */
+            border-radius: 999px !important;
+            padding: 4px 12px !important;
+            font-size: 0.72rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.04em !important;
+            cursor: pointer !important;
+        }
+        footer .footer-unity-audio-toggle-btn:hover,
+        footer .footer-unity-audio-toggle-btn[aria-pressed="true"],
+        footer .footer-unity-audio-toggle-btn:hover,
+        footer .footer-unity-audio-toggle-btn[aria-pressed="true"] {
+            background: rgba(70, 95, 25, 0.85) !important;
+            border-color: rgba(250, 240, 160, 0.9) !important;
+            color: rgba(255, 248, 210, 1) !important;
+        }
+        @media (max-width: 980px) {
+            footer .footer-rail {
+                grid-template-columns: 1fr !important;
+                justify-items: center !important;
+                gap: 8px !important;
+            }
+            footer .footer-copy,
+            footer .footer-tagline {
+                text-align: center !important;
+                white-space: normal !important;
+                width: auto !important;
+                justify-self: center !important;
+            }
+            footer .footer-unity-audio-controls,
+            footer .footer-unity-audio-controls {
+                justify-self: center !important;
+            }
+        }
+        /* ===== /UE STANDARD FOOTER 20261018 ===== */
+
+    
+        /* ===== UE FOOTER GUIDE WIDTH 20261018v3 — fit under page guide line (Home perfect) ===== */
+        html body footer.ue-standard-footer,
+        html body footer.ue-site-footer-home,
+        html body footer {
+            position: relative !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            left: auto !important;
+            right: auto !important;
+            box-sizing: border-box !important;
+            padding: 14px 0 !important; /* vertical only; horizontal from rail */
+            min-height: 0 !important;
+            background: linear-gradient(135deg, rgba(49, 65, 0, 1) 0%, rgba(70, 95, 20, 1) 100%) !important;
+            color: rgba(250, 240, 160, 1) !important;
+            text-align: left !important;
+            border: 0 !important;
+            overflow: visible !important;
+            z-index: 40 !important;
+        }
+        /* Rail matches Home guide line / CTA width family */
+        html body footer .footer-rail {
+            width: min(1980px, calc(95% - clamp(28px, 4vw, 96px))) !important;
+            max-width: min(1980px, calc(95% - clamp(28px, 4vw, 96px))) !important;
+            margin: 0 auto !important;
+            padding: 0 4px !important;
+            display: grid !important;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.8fr) minmax(0, 1.1fr) !important;
+            align-items: center !important;
+            column-gap: clamp(12px, 1.5vw, 28px) !important;
+            box-sizing: border-box !important;
+        }
+        html body footer .footer-copy,
+        html body footer .footer-tagline,
+        html body footer p.footer-copy,
+        html body footer p.footer-tagline,
+        html body footer p {
+            margin: 0 !important;
+            padding: 0 !important;
+            font-size: clamp(0.78rem, 0.95vw, 0.9rem) !important;
+            line-height: 1.3 !important;
+            font-weight: 500 !important;
+            color: rgba(250, 240, 160, 1) !important;
+        }
+        html body footer .footer-copy {
+            text-align: left !important;
+            justify-self: start !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 100% !important;
+        }
+        html body footer .footer-tagline {
+            text-align: center !important;
+            justify-self: center !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 100% !important;
+            width: auto !important;
+        }
+        html body footer .footer-unity-audio-controls,
+        html body footer .footer-unity-intro-controls {
+            justify-self: end !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin: 0 !important;
+            position: static !important;
+            transform: none !important;
+            flex-wrap: nowrap !important;
+            max-width: 100% !important;
+        }
+        html body footer .footer-unity-audio-label,
+        html body footer .footer-unity-intro-label {
+            font-size: clamp(0.72rem, 0.88vw, 0.84rem) !important;
+            letter-spacing: 0.06em !important;
+            text-transform: uppercase !important;
+            font-weight: 700 !important;
+            color: rgba(250, 240, 160, 1) !important;
+            white-space: nowrap !important;
+        }
+        html body footer .footer-unity-audio-toggle-btn,
+        html body footer .footer-unity-intro-toggle-btn,
+        html body footer #unityIntroToggleBtn,
+        html body footer #unityIntroResetBtn {
+            appearance: none !important;
+            border: 1px solid rgba(250, 240, 160, 0.7) !important;
+            background: rgba(35, 50, 18, 0.4) !important;
+            color: rgba(250, 240, 160, 1) !important;
+            border-radius: 999px !important;
+            padding: 5px 12px !important;
+            font-size: clamp(0.72rem, 0.88vw, 0.84rem) !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.04em !important;
+            min-height: 30px !important;
+            line-height: 1.15 !important;
+            white-space: nowrap !important;
+            cursor: pointer !important;
+        }
+        html body footer .footer-unity-audio-toggle-btn:hover,
+        html body footer .footer-unity-audio-toggle-btn[aria-pressed="true"],
+        html body footer .footer-unity-intro-toggle-btn:hover,
+        html body footer .footer-unity-intro-toggle-btn[aria-pressed="true"],
+        html body footer #unityIntroToggleBtn:hover,
+        html body footer #unityIntroResetBtn:hover {
+            background: rgba(70, 95, 25, 0.9) !important;
+            border-color: rgba(255, 248, 210, 0.95) !important;
+            color: rgba(255, 248, 210, 1) !important;
+        }
+        @media (max-width: 1100px) {
+            html body footer { padding: 12px 14px !important; }
+            html body footer .footer-rail {
+                width: calc(100% - 16px) !important;
+                max-width: calc(100% - 16px) !important;
+                grid-template-columns: 1fr !important;
+                justify-items: center !important;
+            }
+            html body footer .footer-copy,
+            html body footer .footer-tagline {
+                text-align: center !important;
+                white-space: normal !important;
+            }
+            html body footer .footer-unity-audio-controls { justify-self: center !important; }
+        }
+        /* ===== /UE FOOTER GUIDE WIDTH 20261018v3 ===== */
+
+    </style>
 </head>
 <body>
     <div class="banner-wrapper">
@@ -4305,7 +4840,7 @@
             </span>
             <span class="hero-bottom-cta-copy">
                 <span class="hero-bottom-cta-title">Cognition Partner<span class="cta-tm">™</span></span>
-                <span class="hero-bottom-cta-subtitle">Explore with your reasoning partner</span>
+                <span class="hero-bottom-cta-subtitle">Unity's Reasoning Team</span>
             </span>
         </a>
         <button class="hero-bottom-cta-button hero-bottom-cta-learn" onclick="openReferenceModal()">
@@ -4616,7 +5151,7 @@
             '[role=\"button\"]',
             '.hero-bottom-cta-strip',
             '.nav-tabs-container',
-            '.footer-unity-intro-controls',
+            '.footer-unity-audio-controls',
             'footer',
             '.site-access-banner',
             '.video-modal',
@@ -4816,7 +5351,7 @@
             if (!introToggleBtn) return;
             introToggleBtn.textContent = isPlaying ? 'STOP' : 'START';
             introToggleBtn.classList.toggle('is-active', isPlaying);
-            introToggleBtn.setAttribute('aria-label', isPlaying ? 'Stop Unity Intro' : 'Start Unity Intro');
+            introToggleBtn.setAttribute('aria-label', isPlaying ? 'Stop Unity Audio' : 'Start Unity Audio');
         }
         function toggleUnityHomeIntroPlayback() {
             const introAudio = document.getElementById('unityHomeIntroAudio');
@@ -5267,13 +5802,15 @@
         });
     </script>
 
-    <footer>
-        <p>&copy; 2026 Unity Energy. All rights reserved.</p>
-        <p>Transforming how facilities understand their electrical systems.</p>
-        <div class="footer-unity-intro-controls" role="group" aria-label="Unity Intro controls">
-            <span class="footer-unity-intro-label">Unity Intro</span>
-            <button id="unityIntroToggleBtn" class="footer-unity-intro-toggle-btn" type="button" aria-label="Start Unity Intro">START</button>
-            <button id="unityIntroResetBtn" class="footer-unity-intro-toggle-btn" type="button" aria-label="Reset Unity Intro">RESET</button>
+            <footer class="ue-standard-footer">
+        <div class="footer-rail">
+            <p class="footer-copy">&copy; 2026 Unity Energy. All rights reserved.</p>
+            <p class="footer-tagline">Transforming how facilities understand their electrical systems.</p>
+            <div class="footer-unity-audio-controls" aria-label="Unity Audio narration controls">
+                <span class="footer-unity-audio-label">Unity Audio</span>
+                <button type="button" id="unityIntroToggleBtn" class="footer-unity-audio-toggle-btn ue-audio-start" aria-pressed="false">Start</button>
+                <button type="button" id="unityIntroResetBtn" class="footer-unity-audio-toggle-btn ue-audio-reset" aria-label="Reset Unity Audio">Reset</button>
+            </div>
         </div>
     </footer>
 <script src="assets/js/ue_viewport_fit.js?v=20261011-ue-stack-refine-1"></script>
