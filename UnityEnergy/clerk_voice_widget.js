@@ -2636,11 +2636,20 @@
       return "I see you're in the Maxwellian library. Which brief or eInsights story would you like to discuss?";
     }
     if (profileId.startsWith("customer-")) {
+      const pathContext = parseCustomerPathContext(getCurrentPagePathname());
       const customerName =
         coerceText(payload && payload.customer_name) ||
+        coerceText(pathContext && pathContext.customerName) ||
         humanizeSlugToken(profileId.replace(/^customer-/, ""));
+      const siteSlugRaw =
+        coerceText(payload && payload.site_slug) ||
+        coerceText(pathContext && pathContext.siteSlug);
+      const siteName = siteSlugRaw ? humanizeSlugToken(siteSlugRaw) : "";
+      if (customerName && siteName) {
+        return `I see you're on the ${customerName} ${siteName} customer page — not the Unity home page. What on this board would you like help interpreting?`;
+      }
       if (customerName) {
-        return `I see you're on the ${customerName} customer page. What would you like help interpreting here?`;
+        return `I see you're on the ${customerName} customer page — not the Unity home page. What would you like help interpreting here?`;
       }
     }
     return `I see you're on the ${pageLabel}. What would you like to understand from this page?`;
@@ -2895,10 +2904,35 @@
 
   function getCurrentPageSlug() {
     try {
-      const pathname = window.location && typeof window.location.pathname === "string" ? window.location.pathname : "";
-      const filename = pathname.split("/").filter(Boolean).pop() || "index";
-      const slug = filename.replace(/\.[^/.]+$/, "").toLowerCase();
-      return slug || "index";
+      const pathname =
+        window.location && typeof window.location.pathname === "string" ? window.location.pathname : "";
+      const pathContext = parseCustomerPathContext(pathname);
+      if (pathContext && pathContext.isCustomerPath && pathContext.customerSlug) {
+        // Never collapse /Customers/FosterFarms/.../index.html to bare "index" (Unity Home).
+        return `customer-${pathContext.customerSlug}`;
+      }
+      const segments = coerceText(pathname).split("/").filter(Boolean);
+      if (segments.length === 0) return "index";
+      let leaf = segments[segments.length - 1];
+      // Directory URLs end without .html — treat as index under that folder name.
+      if (!/\.[a-z0-9]+$/i.test(leaf)) {
+        // e.g. /UnityEnergy/ or /UnityEnergy/customer-portal/foster-farms/
+        if (leaf.toLowerCase() === "unityenergy" || leaf.toLowerCase() === "") return "index";
+        return normalizePageSlugToken(leaf) || "index";
+      }
+      const base = leaf.replace(/\.[^/.]+$/, "").toLowerCase();
+      if (base && base !== "index" && base !== "home") {
+        return normalizePageSlugToken(base) || base;
+      }
+      // index.html under a meaningful parent folder (not site root)
+      if (segments.length >= 2) {
+        const parent = segments[segments.length - 2];
+        const parentNorm = normalizePageSlugToken(parent);
+        if (parentNorm && parentNorm !== "unityenergy" && parentNorm !== "customers") {
+          return parentNorm;
+        }
+      }
+      return "index";
     } catch (_err) {
       return "index";
     }
@@ -5529,9 +5563,57 @@
   function resolvePageContextProfile(launchSession, cfg) {
     const profiles = normalizePageContextProfiles(cfg);
     const values = Object.values(profiles);
+    const liveSlug = normalizePageSlugToken(getCurrentPageSlug());
+    const pathContext = parseCustomerPathContext(getCurrentPagePathname());
+
+    // Live URL wins over stale launch payload (fixes traveler saying Unity Home on customer pages).
+    if (pathContext && pathContext.isCustomerPath && pathContext.customerSlug) {
+      const customerKey = normalizePageSlugToken(`customer-${pathContext.customerSlug}`);
+      if (customerKey && profiles[customerKey]) {
+        return profiles[customerKey];
+      }
+      // Synthesize a customer profile when config lacks a dedicated entry (e.g. Tyson).
+      return {
+        id: customerKey || `customer-${pathContext.customerSlug}`,
+        title: `${pathContext.customerName || humanizeSlugToken(pathContext.customerSlug) || "Customer"} Customer Guide`,
+        summary:
+          `Visitor is on the ${pathContext.customerName || pathContext.customerSlug} customer portal` +
+          (pathContext.siteSlug ? ` (${humanizeSlugToken(pathContext.siteSlug)} site)` : "") +
+          ". Provide chart-aware, page-specific guidance.",
+        sessionContext:
+          `PAGE LOCK: customer guide for ${pathContext.customerName || pathContext.customerSlug}. ` +
+          `Active path: ${getCurrentPagePathname()}. ` +
+          (pathContext.siteSlug ? `Active site folder: ${pathContext.siteSlug}. ` : "") +
+          "Acknowledge this customer page first. Do not describe this as the Unity Energy home page. " +
+          "Interpret boards, efficiency, consequences, and site metrics visible here. Never invent customer outcomes.",
+        keyPoints: [
+          "Name the active customer and site before technical depth.",
+          "Ground answers in visible board metrics and approved customer materials.",
+          "Offer to interpret the chart or consequence the visitor is looking at.",
+        ],
+        sourceFiles: [],
+        contextSources: [customerKey, pathContext.customerSlug].filter(Boolean),
+        skillPackIds: ["customer-guide-memory", "william-chart-interpretation", "unity-core-doctrine"],
+      };
+    }
+
+    if (liveSlug && profiles[liveSlug]) return profiles[liveSlug];
+
     if (values.length === 0) return null;
     const directKey = resolveLaunchPageKey(launchSession);
-    if (directKey && profiles[directKey]) return profiles[directKey];
+    // Ignore a bare index/home launch key when the live URL is a different Unity page.
+    if (
+      directKey &&
+      profiles[directKey] &&
+      !(
+        (directKey === "index" || directKey === "home") &&
+        liveSlug &&
+        liveSlug !== "index" &&
+        liveSlug !== "home"
+      )
+    ) {
+      return profiles[directKey];
+    }
 
     const contextSources = collectLaunchContextSources(launchSession);
     for (let i = 0; i < values.length; i += 1) {
@@ -5620,7 +5702,31 @@
     let pageAwareFollowupPrompt = "";
     let pageAwareNameRequestLine = "";
     if (profile) {
-      assignContextValueIfMissing(payload, "source_page", profile.id);
+      // Force live page identity — traveler must not keep a stale home-page source_page.
+      payload.source_page = profile.id || getCurrentPageSlug();
+      payload.page_slug = payload.source_page;
+      payload.active_page_slug = payload.source_page;
+      payload.active_page_path = getCurrentPagePathname();
+      payload.active_page_href = getCurrentPageHref();
+      try {
+        const liveSnap = collectActivePageContextSnapshot();
+        if (liveSnap) {
+          if (liveSnap.title) payload.active_page_title = liveSnap.title;
+          if (liveSnap.metaDescription) payload.active_page_meta_description = liveSnap.metaDescription;
+          if (Array.isArray(liveSnap.headings) && liveSnap.headings.length) {
+            payload.active_page_headings = liveSnap.headings.slice(0, 6);
+          }
+          if (liveSnap.excerpt) payload.active_page_excerpt = liveSnap.excerpt;
+        }
+      } catch (_snapErr) {}
+      const pathContextLive = parseCustomerPathContext(getCurrentPagePathname());
+      if (pathContextLive && pathContextLive.isCustomerPath) {
+        payload.guide_mode = "customer";
+        payload.customer_mode = true;
+        if (pathContextLive.customerSlug) payload.customer_slug = pathContextLive.customerSlug;
+        if (pathContextLive.customerName) payload.customer_name = pathContextLive.customerName;
+        if (pathContextLive.siteSlug) payload.site_slug = pathContextLive.siteSlug;
+      }
       assignContextValueIfMissing(payload, "page_context_title", profile.title);
       assignContextValueIfMissing(payload, "page_context_summary", profile.summary);
       if (Array.isArray(profile.keyPoints) && profile.keyPoints.length > 0) {

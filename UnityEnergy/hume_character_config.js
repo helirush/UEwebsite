@@ -36,13 +36,13 @@ window.MAXWELLIAN_HUME = {
   ],
   unity_footer_rotate_seconds: 15,
   floating_launcher_enabled: true,
-  floating_launcher_blocked_pages: [],
+  floating_launcher_blocked_pages: ["index", "home", "contact-us"],
   floating_launcher_tooltip: "Meet with Clerk",
   floating_launcher_icon_url: "assets/images/ClerkMaxwell_60423t.png",
   floating_launcher_context_mode: "technical-follow-up",
   floating_launcher_response_style_hint:
     "Warm, curious, and inviting; answer first in plain language, then add concise technical clarity.",
-  clerk_page_access_control_enabled: true,
+  clerk_page_access_control_enabled: false, // traveler: allow all pages except explicit blocks
   clerk_voice_allowed_pages: [
     "about-unity",
     "unity-story",
@@ -54,7 +54,7 @@ window.MAXWELLIAN_HUME = {
   clerk_voice_blocked_pages: [
     "index",
     "home",
-    "customer-portals",
+    "contact-us",
   ],
   lead_capture_enabled: true,
   lead_capture_collect_company: true,
@@ -374,7 +374,7 @@ window.MAXWELLIAN_HUME = {
         "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
       ],
       session_context:
-        "Customer guide mode is active for Foster Farms. Acknowledge the current page first, continue from saved customer memory, and provide William-style chart interpretation when board data or transformer patterns are referenced.",
+        "PAGE LOCK: Foster Farms customer portal (not Unity Energy home). Acknowledge the active Foster Farms board/site first. Continue from saved customer memory. Provide William-style chart interpretation for efficiency, consequences, tuned/untuned status, and transformer patterns visible on this page. Never claim the visitor is on the Unity home page.",
     },
     "customer-norfolkiron": {
       title: "Norfolk Iron Customer Guide",
