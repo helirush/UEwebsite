@@ -1486,7 +1486,7 @@
       const applyClerkConfig = () => {
         if (!window.MAXWELLIAN_HUME || typeof window.MAXWELLIAN_HUME !== 'object') return false;
         const portrait = resolveCpAssetUrl('assets/images/ClerkMaxwell_60423t.png');
-        const embedUrl = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261012-clerk-openai-fix-1');
+        const embedUrl = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261020-ue-clerk-worker-1');
         const onboardUrl = resolveCpClerkRuntimeUrl('./assets/clerk/knowledge/SpeakWithClerkOnBoard.md?v=20261019-office-visit-1');
 
         // Contact Us Speak-with-Clerk: Unity Contact welcome lane (not CP page 8).
@@ -1505,9 +1505,9 @@
         window.MAXWELLIAN_HUME.openai_voice = 'vesper';
         window.MAXWELLIAN_HUME.openai_realtime_model = 'gpt-live-1';
         window.MAXWELLIAN_HUME.openai_live_api = true;
-        window.MAXWELLIAN_HUME.openai_session_endpoint = 'http://127.0.0.1:8600/api/openai/realtime/session';
-        window.MAXWELLIAN_HUME.openai_live_session_endpoint = 'http://127.0.0.1:8600/api/openai/live/session';
-        window.MAXWELLIAN_HUME.openai_renderer_url = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261012-clerk-openai-fix-1');
+        window.MAXWELLIAN_HUME.openai_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
+        window.MAXWELLIAN_HUME.openai_live_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
+        window.MAXWELLIAN_HUME.openai_renderer_url = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261020-ue-clerk-worker-1');
         window.MAXWELLIAN_HUME.renderer_url = window.MAXWELLIAN_HUME.openai_renderer_url;
         window.MAXWELLIAN_HUME.hume_embed_url = window.MAXWELLIAN_HUME.openai_renderer_url;
         // GPT Live only — do not require Hume runtime-auth for Clerk demo
@@ -1524,7 +1524,7 @@
         try { delete window.MAXWELLIAN_HUME.config_version; } catch (_e) { window.MAXWELLIAN_HUME.config_version = undefined; }
         // Critical: do not pass config UUID as voice_id (breaks EVI audio).
         window.MAXWELLIAN_HUME.hume_voice_id = CLERK_VOICE_ID;
-        window.MAXWELLIAN_HUME.voice_id = CLERK_VOICE_ID;
+        window.MAXWELLIAN_HUME.voice_id = 'vesper';
         window.MAXWELLIAN_HUME.openai_voice = 'vesper'; // never overwrite with Hume UUID
         window.MAXWELLIAN_HUME.experimental_force_voice_id_as_config_id = false;
         window.MAXWELLIAN_HUME.voice_engine = 'openai';
@@ -1587,7 +1587,8 @@
             hume_config_id: CLERK_CONFIG_ID,
             hume_voice_id: CLERK_VOICE_ID,
             config_id: CLERK_CONFIG_ID,
-            voice_id: CLERK_VOICE_ID,
+            voice_id: 'vesper',
+            openai_voice: 'vesper',
             session_variables: Object.assign({}, existingClerk.session_variables || {}, {
               character_name: 'Clerk Maxwell',
               character_role: 'Chief Scientist at Unity Energy',
@@ -2647,10 +2648,10 @@
         c.openai_voice = 'vesper';
         c.openai_realtime_model = 'gpt-live-1';
         c.openai_live_api = true;
-        c.openai_live_session_endpoint = c.openai_live_session_endpoint || '/api/openai/live/session';
-        c.openai_session_endpoint = c.openai_session_endpoint || '/api/openai/live/session';
+        c.openai_live_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
+        c.openai_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
         c.allow_openai_fallback = false;
-        c.openai_renderer_url = './openai_renderer/index.html?v=20261012-clerk-openai-fix-1';
+        c.openai_renderer_url = './openai_renderer/index.html?v=20261020-ue-clerk-worker-1';
         // Keep intro + Maxwellian library access instructions
         if (!c.knowledge_packs) c.knowledge_packs = [];
       } catch (e) {}
@@ -2680,9 +2681,9 @@
     c.openai_voice = 'vesper';
     c.openai_realtime_model = 'gpt-live-1';
     c.openai_live_api = true;
-    c.openai_session_endpoint = 'http://127.0.0.1:8600/api/openai/realtime/session';
-    c.openai_live_session_endpoint = 'http://127.0.0.1:8600/api/openai/live/session';
-    c.openai_renderer_url = './openai_renderer/index.html?v=20261012-clerk-openai-fix-1';
+    c.openai_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
+    c.openai_live_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
+    c.openai_renderer_url = './openai_renderer/index.html?v=20261020-ue-clerk-worker-1';
     c.embed_url = c.openai_renderer_url;
     c.renderer_url = c.openai_renderer_url;
     c.hume_embed_url = c.openai_renderer_url;
@@ -2745,9 +2746,9 @@
     c.voice_id = 'vesper';
     c.openai_realtime_model = c.openai_realtime_model || 'gpt-live-1';
     c.openai_live_api = true;
-    c.openai_session_endpoint = c.openai_session_endpoint || 'http://127.0.0.1:8600/api/openai/realtime/session';
-    c.openai_live_session_endpoint = c.openai_live_session_endpoint || 'http://127.0.0.1:8600/api/openai/live/session';
-    c.openai_renderer_url = './openai_renderer/index.html?v=20261015-meet-clerk-1';
+    c.openai_session_endpoint = c.openai_session_endpoint || 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
+    c.openai_live_session_endpoint = c.openai_live_session_endpoint || 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
+    c.openai_renderer_url = './openai_renderer/index.html?v=20261020-ue-clerk-worker-1';
     c.embed_url = c.openai_renderer_url;
     c.renderer_url = c.openai_renderer_url;
     c.hume_embed_url = c.openai_renderer_url;

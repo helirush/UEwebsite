@@ -1072,8 +1072,11 @@ window.MAXWELLIAN_HUME = {
   hume_runtime_auth_endpoint: "https://unityenergy.com/api/hume/runtime-auth",
   allow_hume_authless_connect: true,
   allow_openai_fallback: false,
-  openai_session_endpoint: "/api/openai/realtime/session",
-  openai_embed_url: "./openai_renderer/index.html?v=20261011-vesper-live-15",
+  openai_session_endpoint: "https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session",
+  openai_live_session_endpoint: "https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session",
+  openai_live_api: true,
+  voice_engine: "openai",
+  openai_embed_url: "./openai_renderer/index.html?v=20261020-ue-clerk-worker-1",
   openai_realtime_model: "gpt-live-1",
   // Phase 1 native OpenAI live voice: ash = credible mature male (not final Clerk acoustic lock).
   openai_voice: "vesper",
@@ -1104,7 +1107,7 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "./hume_renderer/index.html?v=20260727r13",
+  embed_url: "./openai_renderer/index.html?v=20261020-ue-clerk-worker-1",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
   // Signal-stage portrait (must stay transparent Clerk asset).
@@ -1117,7 +1120,7 @@ window.MAXWELLIAN_HUME = {
   // Optional config version lock.
   config_version: 0,
   // Voice target used by OpenAI realtime.
-  voice_id: "8ddb922e-c2c4-4462-b3c9-b944625a8349",
+  voice_id: "vesper",
   // Phase 2 character registry (routing + metadata). Existing global fields remain fallback defaults.
   characters: {
     "clerk-maxwell": {
