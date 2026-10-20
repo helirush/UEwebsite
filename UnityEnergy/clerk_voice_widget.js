@@ -1432,7 +1432,7 @@
       ],
       character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "",
-      embed_url: "./openai_renderer/index.html?v=20261011-vesper-live-15",
+      embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1",
       openai_session_endpoint: "/api/openai/realtime/session",
       openai_realtime_model: "gpt-live-1",
       openai_voice: "vesper",
@@ -1644,7 +1644,7 @@
   }
 
   function getVoiceEngineLabel(cfg) {
-    return detectVoiceEngine(cfg) === "hume" ? "Hume voice engine" : "OpenAI realtime voice";
+    return detectVoiceEngine(cfg) === "hume" ? "Hume voice engine" : "OpenAI Live voice";
   }
   function allowsHumeAuthlessConnect(cfg) {
     const explicitlyEnabled = Boolean(
@@ -1663,9 +1663,9 @@
 
   function getVoiceEngineMissingConfigMessage(cfg) {
     if (detectVoiceEngine(cfg) === "hume") {
-      return "Voice session config is missing. Set Hume auth (accessToken/apiKey) in runtime auth and confirm embed_url points to hume_renderer.";
+      return "Clerk voice config is incomplete. GPT-Live path should be active — please reload and try the Clerk bubble again.";
     }
-    return "Voice session config is missing. Set openai_session_endpoint and openai_realtime_model in hume_character_config.js.";
+    return "Clerk Live voice config is incomplete. Please reload the page and try again.";
   }
 
   function validateVoiceEngineConfig(cfg) {
@@ -1676,7 +1676,7 @@
         return {
           ok: false,
           message:
-            "Hume auth is missing. Provide runtime auth (accessToken or apiKey) before launching Meet with Clerk.",
+            "Clerk could not start the voice session. Close and tap the Clerk bubble to retry.",
         };
       }
       return { ok: true, engine: engine };
@@ -1687,7 +1687,7 @@
       return {
         ok: false,
         message:
-          "OpenAI realtime config is incomplete. Set openai_session_endpoint and openai_realtime_model in hume_character_config.js.",
+          "Clerk Live voice is not fully configured on this page. Please reload and try again.",
       };
     }
     return { ok: true, engine: engine };
@@ -1707,7 +1707,7 @@
     if (embedUrl && /\/hume_renderer\//i.test(embedUrl)) {
       return embedUrl.replace(/\/hume_renderer\//i, "/openai_renderer/");
     }
-    return "./openai_renderer/index.html?v=20261011-vesper-live-15";
+    return "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1";
   }
 
   function buildOpenAiFallbackConfig(cfg) {
@@ -4965,28 +4965,38 @@
   }
 
   function maybeResumeCrossPageRoamingOnLoad() {
-    const cfg = getVoiceConfig();
-    if (!shouldAutoResumeCrossPageRoaming(cfg)) {
-      // fall through to traveler-float path below
-    } else if (!isClerkVoiceFeatureEnabled()) {
-      return false;
-    } else if (isHomePageClerkDisabled()) {
-      return false;
-    } else {
+    // READY STATE RULE: never auto-open Clerk modal on page load/refresh.
+    // Traveler stays as the bottom bubble until the visitor taps it.
+    // Cross-page resume only continues an intentional navigation hop (different page).
+    try {
+      const cfg = getVoiceConfig();
       const scope = resolveGuideScopeReference({}, cfg);
       const state = readCrossPageRoamingState(scope, cfg);
-      if (state && state.active && state.resumeAfterNavigation) {
-        const currentPage = getCurrentPageSlug();
+      if (state && state.active) {
+        const currentPage = coerceText(getCurrentPageSlug());
+        const lastPage = coerceText(state.lastPage);
         const targetPage = coerceText(state.nextPage);
-        if (!targetPage || targetPage === currentPage) {
+        const isSamePageRefresh =
+          !lastPage ||
+          lastPage === currentPage ||
+          (!targetPage && lastPage === currentPage);
+        const navigatedToNewPage =
+          Boolean(lastPage) &&
+          Boolean(currentPage) &&
+          lastPage !== currentPage &&
+          currentPage !== "index" &&
+          currentPage !== "home" &&
+          currentPage !== "contact-us";
+
+        if (state.resumeAfterNavigation && navigatedToNewPage && shouldAutoResumeCrossPageRoaming(cfg, scope)) {
+          // Intentional page hop while conversation was active: continue session once.
           const launchOptions = buildCrossPageRoamingLaunchOptions(cfg, state);
-          if (launchOptions) {
-            state.resumeAfterNavigation = false;
-            state.nextPage = "";
-            state.lastPage = currentPage;
-            state.updatedAt = new Date().toISOString();
-            writeCrossPageRoamingState(state, scope, cfg);
-            try { markClerkTravelerActive({ reason: "roaming_resume", page: currentPage }); } catch (_e) {}
+          state.resumeAfterNavigation = false;
+          state.nextPage = "";
+          state.lastPage = currentPage;
+          state.updatedAt = new Date().toISOString();
+          writeCrossPageRoamingState(state, scope, cfg);
+          if (launchOptions && isClerkVoiceFeatureEnabled() && !isHomePageClerkDisabled()) {
             window.setTimeout(function () {
               const modal = document.getElementById("clerkVoiceModal");
               if (modal && modal.classList.contains("active")) return;
@@ -4994,36 +5004,21 @@
             }, CROSS_PAGE_ROAMING_RESUME_DELAY_MS);
             return true;
           }
+        } else if (isSamePageRefresh || !navigatedToNewPage) {
+          // Refresh / first paint: clear resume latch; keep traveler bubble only.
+          state.resumeAfterNavigation = false;
+          state.nextPage = "";
+          state.updatedAt = new Date().toISOString();
+          writeCrossPageRoamingState(state, scope, cfg);
         }
       }
-    }
-
-    // CLERK_TRAVELER_FLOAT_V1_RESUME — keep Clerk traveling with customer across pages
-    try {
-      if (typeof readClerkTravelerActive !== "function") return false;
-      const traveler = readClerkTravelerActive();
-      if (!traveler || !traveler.active) return false;
-      if (!isClerkVoiceFeatureEnabled()) return false;
-      if (isHomePageClerkDisabled()) return false;
-      window.setTimeout(function () {
-        try {
-          const modal = document.getElementById("clerkVoiceModal");
-          if (modal && modal.classList.contains("active")) return;
-          openClerkWithPageContext({
-            source: "traveler_float_resume",
-            preserveRoaming: true,
-            closeExistingSession: false,
-            contextNote:
-              "Traveler float resume. Customer moved with you to this page. Continue the same conversation; acknowledge the new page briefly, then answer without making them restart.",
-          });
-          markClerkTravelerActive({
-            reason: "float_resumed",
-            page: String((window.location && window.location.pathname) || ""),
-          });
-        } catch (_e) {}
-      }, Math.max(220, Number(CROSS_PAGE_ROAMING_RESUME_DELAY_MS) || 180));
-      return true;
     } catch (_err) {}
+
+    // Never auto-open from traveler-float flag. Bubble remains ready until tap.
+    try {
+      ensureFloatingLauncher();
+      setFloatingLauncherVisible(true);
+    } catch (_e) {}
     return false;
   }
 
@@ -8924,7 +8919,7 @@
       const liveEmbed =
         coerceText(cfg.openai_embed_url) ||
         coerceText(merged.openai_embed_url) ||
-        "./openai_renderer/index.html?v=20261011-vesper-live-15";
+        "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1";
       merged.openai_embed_url = liveEmbed;
       // Prefer openai renderer embed when Live engine selected.
       if (!/openai_renderer/i.test(coerceText(merged.embed_url))) {
@@ -10317,13 +10312,20 @@
   }
 
   function composeEmbedUrl(cfg, launchSession) {
-    const rawUrl = (cfg.embed_url || "").trim();
-    if (!rawUrl) return "";
+    let rawUrl = (cfg.embed_url || "").trim();
+    if (!rawUrl) rawUrl = "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1";
+    // Customer pages must never resolve openai_renderer relative to /Customers/...
+    if (/openai_renderer/i.test(rawUrl) && rawUrl.charAt(0) !== "/" && !/^https?:/i.test(rawUrl)) {
+      rawUrl = "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1";
+    }
+    if (/hume_renderer/i.test(rawUrl)) {
+      rawUrl = "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1";
+    }
     let url;
     try {
       const baseHref =
         getUnityEnergyAssetBaseHref() ||
-        window.location.href;
+        (window.location.origin ? window.location.origin + "/UnityEnergy/" : window.location.href);
       url = new URL(rawUrl, baseHref);
     } catch (_err) {
       return "";
@@ -12129,7 +12131,7 @@
       frame.removeAttribute("src");
       setLaunchEmblemVisible(false);
       setStatus(
-        "Voice session URL is not configured. Set embed_url in hume_character_config.js to activate Meet with Clerk.",
+        "Clerk voice panel URL is not configured. Please reload the page.",
         true
       );
       return;
@@ -12146,8 +12148,8 @@
       if (!modalEl || !modalEl.classList.contains("active")) return;
       const timeoutStatus =
         detectVoiceEngine(cfg) === "hume"
-          ? "Voice widget loaded but Hume session did not initialize. Check Hume auth/runtime token and renderer connectivity, then retry."
-          : "Voice widget loaded but session did not initialize. Check realtime session endpoint and server API key, then retry.";
+          ? "Clerk voice did not finish connecting. Please close and tap the Clerk bubble to try again."
+          : "Clerk Live voice did not finish connecting. Close this panel, then tap the Clerk bubble at the bottom to retry.";
       setStatus(
         timeoutStatus,
         true
@@ -12193,6 +12195,7 @@
       }
     } else {
       clearCrossPageRoamingState(pendingLaunchSession, cfg);
+      try { clearClerkTravelerActive(); } catch (_travelerClear) {}
     }
     clearFrameLoadTimer();
     clearUnityStartGateLaunchTimers();

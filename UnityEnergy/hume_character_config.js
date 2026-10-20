@@ -67,7 +67,7 @@ window.MAXWELLIAN_HUME = {
   lead_capture_workflow:
     "Start with intent-first discovery: ask what the visitor wants to solve or learn on this page. Do not ask for name or company in the first question. After providing initial technical value, gather identity naturally one field at a time (name or company, then the other if needed). Do not repeat equivalent company questions. Capture email when offered or when follow-up value is clear. Ask explicit permission before any outbound confirmation email. Ask explicit permission for a Unity sales executive to reach out. Ask whether they want to join the Maxwellian News Brief (weekly newsletter). For now, capture text-notification interest only as a preference signal; do not require phone collection or SMS enrollment in this phase.",
   cross_page_roaming_enabled: true,
-  cross_page_roaming_auto_resume: true,
+  cross_page_roaming_auto_resume: false, // ready bubble only; no auto-open on load/refresh
   cross_page_roaming_followup_prompt:
     "Ask whether the visitor has any additional questions on this page, then offer to continue guidance on the next page they open.",
   customer_guide_enabled: true,
@@ -1076,7 +1076,7 @@ window.MAXWELLIAN_HUME = {
   openai_live_session_endpoint: "https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session",
   openai_live_api: true,
   voice_engine: "openai",
-  openai_embed_url: "./openai_renderer/index.html?v=20261020-ue-clerk-worker-1",
+  openai_embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1",
   openai_realtime_model: "gpt-live-1",
   // Phase 1 native OpenAI live voice: ash = credible mature male (not final Clerk acoustic lock).
   openai_voice: "vesper",
@@ -1107,7 +1107,7 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "./openai_renderer/index.html?v=20261020-ue-clerk-worker-1",
+  embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
   // Signal-stage portrait (must stay transparent Clerk asset).
