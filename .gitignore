@@ -12,3 +12,6 @@ zARCHIVE/
 **/*.log
 **/*.tmp
 **/*.swp
+
+# Local SEO promote backups (never publish)
+.seo_promote_bak_*/

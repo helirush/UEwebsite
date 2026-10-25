@@ -1,0 +1,13 @@
+# Unity Energy — public crawl policy (SEO foundation 2026-10-25)
+# Staging prepared in eWebmaster. robots.txt is guidance, not a privacy boundary.
+User-agent: *
+Allow: /
+Allow: /UnityEnergy/
+Disallow: /Customers/
+Disallow: /customers/
+Disallow: /UnityEnergy/Customers/
+# Local/dev/vendor noise if ever published at root:
+Disallow: /node_modules/
+Disallow: /.git/
+
+Sitemap: https://unityenergy.com/sitemap.xml
