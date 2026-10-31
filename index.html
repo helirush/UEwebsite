@@ -4970,7 +4970,7 @@
         }
         function handleClerkIntroVideoEnded() {
             closeVideoModal();
-            window.location.href = 'about-unity.html?autostartUnityIntro=1';
+            window.location.href = './UnityEnergy/about-unity.html?autostartUnityIntro=1';
         }
         function openEnergyBehaviorWindow(options = {}) {
             const opts = options && typeof options === 'object' ? options : {};
@@ -5045,7 +5045,7 @@
                     mode: hasPlaybackContext ? 'home-video-follow-up' : 'technical-follow-up',
                     conversationMode: 'followup',
                     sourcePage: 'index',
-                    postConversationRedirectUrl: 'about-unity.html?autostartUnityIntro=1',
+                    postConversationRedirectUrl: './UnityEnergy/about-unity.html?autostartUnityIntro=1',
                     sourceMedia: 'home-video',
                     sourceMediaSeconds: videoSeconds,
                     entryPoint: 'home-video-speak-button',
@@ -5167,10 +5167,10 @@
         }
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
         const LOCKED_HOME_NAV_PATHS = new Set([
-            'our-systems.html',
-            'products-services.html',
-            'electrical-energy-story.html',
-            'maxwellian.html'
+            './UnityEnergy/our-systems.html',
+            './UnityEnergy/products-services.html',
+            './UnityEnergy/electrical-energy-story.html',
+            './UnityEnergy/maxwellian.html'
         ]);
         const SITE_UNLOCK_CONFIRMATION_MESSAGE = 'Access to the Maxwellian Library and Energy Field Story has been unlocked.';
         const SITE_LOCKED_GUIDANCE_MESSAGE = 'Please complete the Customer Access Portal profile to unlock this area.';
@@ -5602,9 +5602,9 @@
         function openCustomerPortalEntry() {
             // Same form/list as Customer Portals nav — one entry system, two doors
             try {
-                window.location.href = 'customer-portals.html?openPortal=1';
+                window.location.href = './UnityEnergy/customer-portals.html?openPortal=1';
             } catch (_e) {
-                window.location.href = 'customer-portals.html';
+                window.location.href = './UnityEnergy/customer-portals.html';
             }
         }
 
@@ -5684,7 +5684,7 @@
                         window.sessionStorage.setItem('unity_portal_guest_email_v1', emailValue.toLowerCase());
                     }
                 } catch (_err) {}
-                window.location.href = 'customer-portals.html';
+                window.location.href = './UnityEnergy/customer-portals.html';
                 return;
             }
 
@@ -5883,7 +5883,7 @@
         if (event.stopImmediatePropagation) event.stopImmediatePropagation();
       }
     } catch (e) {}
-    var href = './contact-us.html?v=20261017-contact-web-1';
+    var href = './UnityEnergy/contact-us.html?v=20261031-contact-fix-1';
     // Yield one frame so click paint is not blocked by Clerk teardown.
     try {
       window.requestAnimationFrame(function () { go(href); });
