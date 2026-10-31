@@ -91,6 +91,18 @@ window.MAXWELLIAN_HUME = {
   knowledge_reference_spine:
     "Canonical MPTS definition: M P T S (Maximum Power Transfer Solution) is Unity Energy’s AC field harmonization method that lives in the Manage layer of Measure-Manage-Exchange. M P T S uses dynamic tuner architecture ('copper-computer' tuners) distributed in the energy field to reduce reactive burden and harmonic distortion at the load, stabilize power factor, recover usable capacity, and lower thermal burden without disruptive infrastructure replacement.",
   content_awareness_mode: true,
+
+    // 2026-10-31: Fast-path grounding — prefer CLERK_FAST_FAQ_AND_BIO.md before Drive/library search
+    content_awareness_fast_path: {
+      prefer_files: [
+        'maxwellian/briefs/CLERK_FAST_FAQ_AND_BIO.md',
+        'maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md',
+        'maxwellian/briefs/UNITY_COMPANY_KNOWLEDGE_260324.md',
+        'maxwellian/briefs/LIVING_Unity_What_We_Do.md'
+      ],
+      rule: 'Answer identity/founder/history/how-Unity-works from prefer_files first. Use page context second. Call Maxwellian Library search only for deeper archive needs.'
+    },
+
   clerk_onboard_enabled: true,
   clerk_onboard_refresh_on_launch: true,
   clerk_onboard_primer_url:
@@ -109,8 +121,21 @@ window.MAXWELLIAN_HUME = {
     "eestream/eWebmaster/UnityEnergy/clerk_voice_widget.js",
     "eestream/eWebmaster/UnityEnergy/hume_character_config.js",
     "eestream/eWebmaster/UnityEnergy/maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md",
-  ],
+      'maxwellian/briefs/CLERK_FAST_FAQ_AND_BIO.md',
+      'maxwellian/briefs/UNITY_COMPANY_KNOWLEDGE_260324.md',
+      'maxwellian/briefs/LIVING_Unity_What_We_Do.md',
+      'maxwellian_library.json',
+    ],
   content_awareness_page_source_files: {
+      'speak-with-clerk.html': [
+        'speak-with-clerk.html',
+        'maxwellian/briefs/CLERK_FAST_FAQ_AND_BIO.md',
+        'maxwellian/briefs/SPEAK_WITH_CLERK_ONBOARD.md',
+        'maxwellian/briefs/UNITY_COMPANY_KNOWLEDGE_260324.md',
+        'maxwellian/briefs/LIVING_Unity_What_We_Do.md',
+        'maxwellian_library.json',
+        'hume_character_config.js'
+      ],
     index: [
       "eestream/eWebmaster/UnityEnergy/index.html",
       "eestream/eWebmaster/UnityEnergy/unity-story.html",

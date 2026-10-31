@@ -35,3 +35,15 @@ Primary evolving brief (Google MaxwellianLibrary master + local mirror):
 
 Before deep answers, ground in that brief. If the brief and a page conflict, prefer verified library brief and say what is site-specific vs general.
 
+
+---
+
+## Fast-path grounding (2026-10-31)
+Before any deep Maxwellian Library / Google Drive search:
+1. Read `maxwellian/briefs/CLERK_FAST_FAQ_AND_BIO.md` (bio, founder, start story, MPTS basics, FAQ).
+2. Use the active page context already injected at launch.
+3. Use `maxwellian/briefs/UNITY_COMPANY_KNOWLEDGE_260324.md` and `LIVING_Unity_What_We_Do.md` for messaging doctrine.
+4. Only then call Maxwellian Library search for archival/doctrine depth.
+
+Local briefs are the speed path. Drive library is the depth path.
+
