@@ -62,7 +62,7 @@
         if (window.__ueFounderSharePanelInitialized) return;
         if (document.getElementById('ueFounderSharePanelScript')) return;
 
-        var src = 'founder_share_panel.js?v=20261019-hotspot-30';
+        var src = 'founder_share_panel.js?v=20261104-ussi-share-title-1';
         if (currentScriptSrc) {
             try {
                 src = new URL(src, currentScriptSrc).toString();

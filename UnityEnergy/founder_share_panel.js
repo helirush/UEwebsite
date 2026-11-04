@@ -140,8 +140,9 @@
     "Foster Farms June 2026 Electrical Data": "monthly-report"
   });
   var PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
+    "USSI Communication": "private-ussi-communication",
     "Foster Farms Electrical Intelligence": "private",
-    "2025 Cherry Energy Regulatory": "private"
+    "2025 Cherry Energy Regulatory": "private-2025-cherry-energy-regulatory"
   });
   // Maps runtime kind keys to master base-card assets in:
   // UnityEnergy/assets/images/share-card-bases/
@@ -758,21 +759,30 @@
     var normalizedTitleKey = buildTemplateRoutingTitleKey(normalizedTitle);
     var titleKeys = Object.keys(PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE);
     for (var i = 0; i < titleKeys.length; i += 1) {
-      var titleKey = normalizeTitlePreset(titleKeys[i]);
+      var originalKey = titleKeys[i];
+      var titleKey = normalizeTitlePreset(originalKey);
       if (!titleKey) continue;
       if (
         normalizedTitle === titleKey.toLowerCase() ||
         normalizedTitleKey === buildTemplateRoutingTitleKey(titleKey)
       ) {
-        return PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE[titleKey] || "private";
+        // IMPORTANT: look up by original map key (not normalized), else Custom titles
+        // like "USSI Communication" fall through to generic private.html with wrong OG title.
+        return PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE[originalKey] || "private";
       }
+    }
+    if (
+      normalizedTitleKey.indexOf("ussi") !== -1 &&
+      normalizedTitleKey.indexOf("communication") !== -1
+    ) {
+      return "private-ussi-communication";
     }
     if (
       normalizedTitleKey.indexOf("2025") !== -1 &&
       normalizedTitleKey.indexOf("cherry") !== -1 &&
       normalizedTitleKey.indexOf("regulatory") !== -1
     ) {
-      return "private";
+      return "private-2025-cherry-energy-regulatory";
     }
     return "private";
   }
