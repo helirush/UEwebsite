@@ -11,9 +11,9 @@
 (function () {
   window.__CURL_HOST_CONTROLLER__ = true;
   const CURL_PKG = './assets/cognition/curl';
-  const CURL_V = '20261012-curl-marin-textmod-1';
+  const CURL_V = '20261103-p1-unblock-index-1';
   const CARRY_KEY = 'cp_curl_page_carry_v1';
-  const CARRY_TTL_MS = 90000; // resume window after journey navigation
+  const CARRY_TTL_MS = 120000; // resume window after journey navigation (page3→page1)
   const CURL_VOICE_ID = '23982fd1-d6a5-4acc-b396-2454b5715d43';
   const CURL_CONFIG_ID = '242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf';
   const CURL_CHARACTER_ID = 'curl-maxwell';
@@ -88,14 +88,14 @@
     const setPurposeState = (state) => {
       purposeBtn.dataset.purposeState = state;
       purposeBtn.classList.toggle('is-idle', state === 'idle');
-      purposeBtn.classList.toggle('is-selected', state === 'selected' || state === 'connecting' || state === 'speaking');
-      purposeBtn.classList.toggle('is-armed', state === 'selected' || state === 'connecting' || state === 'speaking');
+      purposeBtn.classList.toggle('is-selected', state === 'selected' || state === 'connecting');
+      purposeBtn.classList.toggle('is-armed', state === 'selected' || state === 'connecting');
       purposeBtn.classList.toggle('is-connecting', state === 'connecting');
       purposeBtn.classList.toggle('is-speaking', state === 'speaking');
       purposeBtn.classList.toggle('is-breathing', state === 'idle');
       purposeBtn.classList.toggle('is-ready-pulse', state === 'selected' || state === 'connecting');
       document.body.classList.toggle('curl-host-active', state !== 'idle');
-      document.body.classList.toggle('curl-is-selected', state === 'selected' || state === 'connecting' || state === 'speaking');
+      document.body.classList.toggle('curl-is-selected', state === 'selected' || state === 'connecting');
       document.body.classList.toggle('curl-is-connecting', state === 'connecting');
       document.body.classList.toggle('curl-is-speaking', state === 'speaking');
       // curl-rgb-state-bridge
@@ -371,24 +371,34 @@
       window.MAXWELLIAN_HUME.voice_engine = 'openai';
       window.MAXWELLIAN_HUME.openai_live_api = true;
       window.MAXWELLIAN_HUME.openai_voice = 'marin';
+      window.MAXWELLIAN_HUME.openai_auto_greeting_enabled = true;
       window.MAXWELLIAN_HUME.openai_realtime_model = 'gpt-live-1';
-      window.MAXWELLIAN_HUME.openai_session_endpoint = 'http://127.0.0.1:8600/api/openai/realtime/session';
-      window.MAXWELLIAN_HUME.openai_live_session_endpoint = 'http://127.0.0.1:8600/api/openai/live/session';
-      window.MAXWELLIAN_HUME.openai_renderer_url = './assets/cognition/curl/openai_renderer/index.html?v=20261012-no-hume-curl-clerk-i1';
-      window.MAXWELLIAN_HUME.embed_url = './assets/cognition/curl/openai_renderer/index.html?v=20261012-no-hume-curl-clerk-i1';
-      window.MAXWELLIAN_HUME.renderer_url = './assets/cognition/curl/openai_renderer/index.html?v=20261012-no-hume-curl-clerk-i1';
-      window.MAXWELLIAN_HUME.hume_embed_url = './assets/cognition/curl/openai_renderer/index.html?v=20261012-no-hume-curl-clerk-i1';
+      window.MAXWELLIAN_HUME.openai_session_endpoint = '/api/openai/realtime/session';
+      window.MAXWELLIAN_HUME.openai_live_session_endpoint = '/api/openai/live/session';
+      window.MAXWELLIAN_HUME.openai_renderer_url = './assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-p3-working-1';
+      window.MAXWELLIAN_HUME.embed_url = './assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-p3-working-1';
+      window.MAXWELLIAN_HUME.renderer_url = './assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-p3-working-1';
+      window.MAXWELLIAN_HUME.hume_embed_url = './assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-p3-working-1';
       window.MAXWELLIAN_HUME.allow_openai_fallback = true;
 
       // Claire-like start gate + mic path
       window.MAXWELLIAN_HUME.use_unity_start_gate = true;
-      window.MAXWELLIAN_HUME.preflight_microphone_on_launch = false; // mic only on SELECT
+      window.MAXWELLIAN_HUME.preflight_microphone_on_launch = true; // mic only on SELECT
+      // Page1 is index.html — never inherit Unity widget default that blocks index/home.
+      window.MAXWELLIAN_HUME.clerk_voice_blocked_pages = [];
+      window.MAXWELLIAN_HUME.clerk_page_access_control_enabled = false;
+      window.MAXWELLIAN_HUME.clerk_voice_allowed_pages = [
+        'index', 'home', 'page1', 'page2', 'page3', 'page4', 'page5', 'page6',
+        'page7', 'page8', 'page9', 'page10', 'page11', 'page12', 'page13', 'about',
+        'cognition-curl', 'cognition'
+      ];
       window.MAXWELLIAN_HUME.character_name = 'Curl Maxwell';
       window.MAXWELLIAN_HUME.character_id = CURL_CHARACTER_ID;
       window.MAXWELLIAN_HUME.default_character_id = CURL_CHARACTER_ID;
       window.MAXWELLIAN_HUME.lock_character_to_default = true;
       window.MAXWELLIAN_HUME.voice_id = 'marin';
       window.MAXWELLIAN_HUME.openai_voice = 'marin';
+      window.MAXWELLIAN_HUME.openai_auto_greeting_enabled = true;
       window.MAXWELLIAN_HUME.config_id = CURL_CONFIG_ID;
       window.MAXWELLIAN_HUME.hume_voice_id = '';
       window.MAXWELLIAN_HUME.hume_config_id = CURL_CONFIG_ID;
@@ -396,7 +406,15 @@
       window.MAXWELLIAN_HUME.auto_launch_on_load = false;
       window.MAXWELLIAN_HUME.default_context_source = 'cognition-curl';
       window.MAXWELLIAN_HUME.content_awareness_mode = true;
-      window.MAXWELLIAN_HUME.content_awareness_scope_lock = true;
+      window.MAXWELLIAN_HUME.content_awareness_scope_lock = false;
+      window.MAXWELLIAN_HUME.library_research_enabled = false;
+      window.MAXWELLIAN_HUME.library_research_hold_line = '';
+      window.MAXWELLIAN_HUME.research_handoff_enabled = true;
+      window.MAXWELLIAN_HUME.research_handoff_url = './about.html';
+      window.MAXWELLIAN_HUME.unknown_answer_fallback =
+        "I don't have that locked in the packs for this live visit, and I won't invent it. " +
+        "I also don't want to keep you waiting. Please use the About page form with your name, email, and question so the team can research it and follow up. " +
+        "We can keep exploring the journey meanwhile.";
       window.MAXWELLIAN_HUME.clerk_page_access_control_enabled = false;
       window.MAXWELLIAN_HUME.disable_page_context = false;
       window.MAXWELLIAN_HUME.page_context_enabled = true;
@@ -433,6 +451,8 @@
         );
       } catch (e) {}
 
+      let curlQuickRef = '';
+      let curlFaq = '';
       let curlBoot = '';
       let curlOperatingCanon = '';
       let curlOnboard = '';
@@ -460,7 +480,10 @@
           return '';
         }
       };
+      // HOST_QUICK_REFERENCE first (COM 261020) — identity/org answers without library hop.
       [
+        curlQuickRef,
+        curlFaq,
         curlBoot,
         curlOperatingCanon,
         curlOnboard,
@@ -469,6 +492,8 @@
         curlJourneyPages,
         curlKnowledgePack
       ] = await Promise.all([
+        fetchKnowledgeTimed('HOST_QUICK_REFERENCE.md'),
+        fetchKnowledgeTimed('HOST_FAQ.md'),
         fetchKnowledgeTimed('CURL_BOOT_SEQUENCE.md'),
         fetchKnowledgeTimed('CURL_OPERATING_CANON.md'),
         fetchKnowledgeTimed('SpeakWithCurlOnBoard.md'),
@@ -483,6 +508,7 @@
         "Hello — I'm Curl Maxwell, your Cognition Host. I can travel these pages with you. What would you like to understand?";
       const authorityLine =
         'SEMANTIC AUTHORITY (highest wins on conflict): ' +
+        '0 HOST QUICK REFERENCE (identity/org) | 0b HOST FAQ (instant Q&A) | ' +
         '1 BOOT SEQUENCE | 2 CURL IDENTITY AND ROLE | 3 CURL OPERATING CANON | ' +
         '4 COGNITION PARTNER CANON/ARCHITECTURE | 5 JOURNEY PAGES 1-13 | ' +
         '6 DEMONSTRATIONS (Kuranda/Claire, Unity/Clerk as examples only) | 7 CURRENT PAGE/SESSION. ';
@@ -490,6 +516,7 @@
         'You are Curl Maxwell, public Cognition Host for Cognition Partner. ' +
         authorityLine +
         'Complete boot silently before first reply. Absorb Operating Canon before interpreting Journey. ' +
+        'Answer Who are you / What is Cognition Partner from HOST QUICK REFERENCE without library search. NO-STALL: never go silent searching a library. If unknown within a few seconds, say so and send traveler to About page form (about.html) for team research, then keep conversing. ' +
         'PAGE-AWARE when context is provided. Human is the traveler. ' +
         'Active page: ' +
         pagePath +
@@ -510,6 +537,10 @@
 
       window.MAXWELLIAN_HUME.session_context =
         operatingLine +
+        '\n\n=== RANK0 HOST QUICK REFERENCE (identity/org; no library hop) ===\n' +
+        (curlQuickRef || '[quick reference unavailable — use onboard identity lock]') +
+        '\n\n=== RANK0b HOST FAQ (instant Q&A) ===\n' +
+        (curlFaq || '[faq unavailable]') +
         '\n\n=== RANK1 BOOT SEQUENCE ===\n' +
         curlBoot +
         '\n\n=== RANK2-3 IDENTITY + CURL OPERATING CANON (governs behavior) ===\n' +
@@ -594,6 +625,7 @@
           window.MAXWELLIAN_HUME.openai_voice_instruction_set = curlVoiceTextMod;
           window.MAXWELLIAN_HUME.openai_voice_style_hint = "Speak as Curl Maxwell (Marin): warm youthful mezzo-soprano Scottish elegance; subtle Edinburgh accent; spontaneous, intimate, intellectually alive; never robotic, promotional, childish, overly breathy, or artificially cheerful.";
           window.MAXWELLIAN_HUME.openai_voice = 'marin';
+      window.MAXWELLIAN_HUME.openai_auto_greeting_enabled = true;
           window.MAXWELLIAN_HUME.voice_id = 'marin';
         }
       } catch (e) {}
@@ -817,8 +849,8 @@ if (!launcher) {
             includePageContext: true,
             contextPayload: {
               voice_engine_preference: 'openai',
-              openai_live_session_endpoint: 'http://127.0.0.1:8600/api/openai/live/session',
-              openai_session_endpoint: 'http://127.0.0.1:8600/api/openai/realtime/session',
+              openai_live_session_endpoint: '/api/openai/live/session',
+              openai_session_endpoint: '/api/openai/realtime/session',
               openai_voice: 'marin',
               openai_realtime_model: 'gpt-live-1',
               organization: 'Cognition Partner',
@@ -965,7 +997,12 @@ purposeBtn.addEventListener('click', async () => {
             ) {
               return;
             }
-            console.info('[Curl] outside-page dismiss');
+            const _stOut = purposeBtn.dataset.purposeState || 'idle';
+            if (_stOut !== 'speaking') {
+              // Keep SELECT ready; do not kill host before speech (page1 break).
+              return;
+            }
+            console.info('[Curl] outside-page dismiss while speaking');
             endCurl();
           }
         },
@@ -997,6 +1034,13 @@ purposeBtn.addEventListener('click', async () => {
           endCurl();
         });
         document.body.appendChild(chip);
+        try {
+          chip.style.left = '12px';
+          chip.style.right = 'auto';
+          chip.style.top = '12px';
+          chip.style.bottom = 'auto';
+          chip.style.transform = 'none';
+        } catch (e) {}
       }
     };
     window.setInterval(ensureCloseChip, 800);
@@ -1108,7 +1152,13 @@ purposeBtn.addEventListener('click', async () => {
     const tryResumeCarry = async () => {
       const carry = readCarry();
       if (!carry) return;
+      // Clear immediately to prevent double-resume loops (page3→page1 lockup class).
+      clearCarry();
       console.info('[Curl] resuming after page change from', carry.fromPage, '→', pageFileName());
+      // Disconnect observer before heavy relaunch — MO feedback can freeze the tab on resume.
+      try {
+        if (curlMo) curlMo.disconnect();
+      } catch (e) {}
       try {
         if (window.MaxwellianHostEnvironment && typeof window.MaxwellianHostEnvironment.refreshPage === 'function') {
           window.MaxwellianHostEnvironment.refreshPage();
@@ -1124,6 +1174,7 @@ purposeBtn.addEventListener('click', async () => {
           '\n\n[JOURNEY CONTINUITY] The visitor is traveling with you across Cognition Partner pages. ' +
           'They just moved from ' + String(carry.fromPage || 'a prior page') + ' to ' + pageFileName() + '. ' +
           'Keep the conversation continuous. Do not restart your full opening monologue. ' +
+          'Update page awareness only; preserve identity from HOST QUICK REFERENCE. ' +
           'Briefly register the new page only if useful, then continue as their Cognition Host.';
         if (typeof window.MAXWELLIAN_HUME.session_context === 'string') {
           window.MAXWELLIAN_HUME.session_context += continuityNote;
@@ -1133,6 +1184,8 @@ purposeBtn.addEventListener('click', async () => {
         // Soften opening on carry-resume so she does not re-introduce from zero
         window.MAXWELLIAN_HUME.opening_line =
           'I am still with you on this next page. What would you like to take up here?';
+        window.MAXWELLIAN_HUME.openai_auto_greeting_text =
+          window.MAXWELLIAN_HUME.opening_line;
       } catch (e) {}
 
       try {
@@ -1143,12 +1196,14 @@ purposeBtn.addEventListener('click', async () => {
           return;
         }
         // Auto-SELECT to restore live voice (mic was already granted this session)
-        await new Promise((r) => setTimeout(r, 280));
+        await new Promise((r) => setTimeout(r, 400));
         await activateSelect();
-        clearCarry();
         console.info('[Curl] page-carry resume complete on', pageFileName());
       } catch (e) {
         console.warn('[Curl] page-carry resume failed', e);
+        // Fail safe: leave UI idle rather than locked connecting state
+        try { setPurposeState('idle'); } catch (_e) {}
+        try { hardClearBlockingUi(); } catch (_e) {}
       }
     };
 
@@ -1158,6 +1213,14 @@ purposeBtn.addEventListener('click', async () => {
     window.setTimeout(() => {
       tryResumeCarry();
     }, 450);
+    // bfcache / back-forward navigation
+    window.addEventListener('pageshow', (ev) => {
+      try {
+        if (ev && ev.persisted) {
+          window.setTimeout(() => { tryResumeCarry(); }, 200);
+        }
+      } catch (e) {}
+    });
   };
 
   if (document.readyState === 'loading') {

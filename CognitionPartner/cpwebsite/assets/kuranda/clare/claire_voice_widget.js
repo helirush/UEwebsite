@@ -1159,7 +1159,7 @@
       floating_launcher_response_style_hint: "",
       clerk_page_access_control_enabled: false,
       clerk_voice_allowed_pages: [],
-      clerk_voice_blocked_pages: ["index", "home"],
+      clerk_voice_blocked_pages: [], // Claire/Curl parity: never default-block index/home
       lead_capture_enabled: true,
       lead_capture_collect_company: true,
       lead_capture_prompt_intent: true,
@@ -4194,7 +4194,8 @@
     const enabled = Boolean(source.clerk_page_access_control_enabled);
     const allowedPages = normalizeClerkPageSlugList(source.clerk_voice_allowed_pages);
     const configuredBlockedPages = normalizeClerkPageSlugList(source.clerk_voice_blocked_pages);
-    const blockedPages = configuredBlockedPages.length > 0 ? configuredBlockedPages : ["index", "home"];
+    // Curl lesson: empty blocked list means block nothing (do not invent index/home).
+    const blockedPages = configuredBlockedPages;
     return {
       enabled: enabled,
       allowedPages: allowedPages,
@@ -9664,18 +9665,18 @@
   function getMicrophoneRecoveryMessage(payloadOrMessage) {
     const signature = getMicrophoneErrorSignature(payloadOrMessage);
     if (/secure context|insecure|https|localhost/.test(signature)) {
-      return "Microphone requires a secure page. Open this site with https:// or localhost, then tap Waiting on Clerk again.";
+      return "Microphone requires a secure page. Open this site with https:// or localhost, then tap Claire is ready again.";
     }
     if (/notfounderror|no microphone|device not found|audio input/.test(signature)) {
-      return "No microphone was found. Connect a microphone, allow access for this site, then tap Waiting on Clerk again.";
+      return "No microphone was found. Connect a microphone, allow access for this site, then tap Claire is ready again.";
     }
     if (/notreadableerror|could not start audio source|hardware|busy/.test(signature)) {
-      return "Microphone is busy or unavailable. Close other apps using the microphone, then tap Waiting on Clerk again.";
+      return "Microphone is busy or unavailable. Close other apps using the microphone, then tap Claire is ready again.";
     }
     if (isLikelyMicrophonePermissionError(signature)) {
-      return "Microphone access is blocked. Tap Waiting on Clerk, allow access for this site in browser settings, and try again.";
+      return "Microphone access is blocked. Tap Claire is ready, allow access for this site in browser settings, and try again.";
     }
-    return "Microphone is unavailable. Tap Waiting on Clerk, verify browser microphone access, and try again.";
+    return "Microphone is unavailable. Tap Claire is ready, verify browser microphone access, and try again.";
   }
   function getWidgetIframeLaunchDiagnostic() {
     const frame = document.getElementById("clerkVoiceFrame");
@@ -9806,7 +9807,7 @@
     if (unityStartGatePending) {
       const gateMessage =
         coerceText(unityStartGatePreflightStatusMessage) ||
-        "Tap Waiting on Clerk to begin speaking with Clerk.";
+        "Tap Claire is ready to begin speaking with Claire.";
       const startBtn = document.getElementById("clerkVoiceStartBtn");
       if (startBtn) startBtn.textContent = START_BUTTON_WAITING_LABEL;
       setStatus(gateMessage, unityStartGatePendingRequiresRecovery, true);
@@ -9850,12 +9851,12 @@
       if (hasConversationStarted) return;
       unityStartGatePending = true;
       unityStartGatePendingRequiresRecovery = false;
-      unityStartGatePreflightStatusMessage = "Tap Waiting on Clerk to begin speaking with Clerk.";
+      unityStartGatePreflightStatusMessage = "Tap Claire is ready to begin speaking with Claire.";
       const retryBtn = document.getElementById("clerkVoiceStartBtn");
       if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
       setStartButtonVisible(true);
       setLaunchEmblemVisible(true);
-      setStatus("Tap Waiting on Clerk to begin speaking with Clerk.", false, true);
+      setStatus("Tap Claire is ready to begin speaking with Claire.", false, true);
     }, getUnityStartGatePostReadyPromptDelayMs(cfg));
     setSessionDiagnostics(
       buildSessionDiagnostics(
@@ -11662,7 +11663,7 @@
     unityStartGateStallSequence += 1;
     const stallSequence = unityStartGateStallSequence;
     const frameSrc = document.getElementById("clerkVoiceFrame")?.src || "";
-    const waitingMessage = "Still waiting on Clerk. Tap Waiting on Clerk again if needed.";
+    const waitingMessage = "Still waiting on Clerk. Tap Claire is ready again if needed.";
     const retryLimit = getUnityStartGateStallRetryLimit(cfg);
     const authlessHumeMode =
       detectVoiceEngine(cfg) === "hume" && allowsHumeAuthlessConnect(cfg);
@@ -11684,7 +11685,7 @@
       }
       const retryMessage =
         exceededRetryLimit && authlessHumeMode
-          ? "Clerk is still connecting on this device. Tap Waiting on Clerk again in a moment."
+          ? "Clerk is still connecting on this device. Tap Claire is ready again in a moment."
           : waitingMessage;
       const retryBtn = document.getElementById("clerkVoiceStartBtn");
       if (retryBtn) retryBtn.textContent = START_BUTTON_WAITING_LABEL;
@@ -11821,7 +11822,7 @@
       setStartButtonVisible(false);
       setLaunchEmblemVisible(false);
       setSessionDiagnostics("", false);
-      setStatus("Meet with Clerk is currently unavailable in this release.", false, true);
+      setStatus("Meet with Claire is currently unavailable in this release.", false, true);
       return;
     }
     clearUnityStartGateLaunchTimers();
@@ -11887,8 +11888,8 @@
     unityStartGatePendingRequiresRecovery = preflightFailed;
     if (unityStartGatePending) {
       unityStartGatePreflightStatusMessage = preflightFailed
-        ? preflightStatusMessage || "Microphone access is blocked. Tap Waiting on Clerk and allow access for this site."
-        : "Tap Waiting on Clerk to begin speaking with Clerk.";
+        ? preflightStatusMessage || "Microphone access is blocked. Tap Claire is ready and allow access for this site."
+        : "Tap Claire is ready to begin speaking with Claire.";
     }
     setWidgetFrameVisible(false);
     const policyDecision =

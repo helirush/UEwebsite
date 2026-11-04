@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USSI Partner Deck · Page 1 | Unity Energy</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="Unity Energy Private Access — USSI partner presentation deck." />
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="../../../unity-icon-circle-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+  <style>
+    :root {
+      --ue-bg: #0b120a;
+      --ue-forest: #2f4a1f;
+      --ue-gold: #c9a648;
+      --ue-ivory: #f6f2e8;
+      --ue-muted: #c8d0bc;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ue-ivory);
+      background:
+        radial-gradient(ellipse 70% 40% at 15% 0%, rgba(201,166,72,.16), transparent 55%),
+        radial-gradient(ellipse 60% 35% at 90% 8%, rgba(79,109,31,.22), transparent 50%),
+        linear-gradient(180deg, #0b120a 0%, #121a10 100%);
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: min(1520px, calc(100vw - 28px));
+      margin: 0 auto;
+      padding: 10px 14px 4px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-size: .74rem;
+      color: rgba(250, 240, 160, .95);
+    }
+    .brand img { width: 32px; height: 32px; border-radius: 50%; }
+    .top-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+    .top-nav a {
+      text-decoration: none;
+      color: rgba(245,242,233,.92);
+      font-weight: 700;
+      font-size: .86rem;
+      border: 1px solid rgba(201,166,72,.35);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: rgba(255,255,255,.06);
+    }
+    .top-nav a:hover { background: rgba(201,166,72,.18); }
+    .shell { max-width: min(1520px, calc(100vw - 28px)); margin: 0 auto; padding: 2px 14px 8px; }
+    .deck-stage {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(201,166,72,.34);
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+      background: #050805;
+    }
+    .slide {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: top;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 8px 4px 0;
+    }
+    .page-label {
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ue-muted);
+      font-weight: 700;
+    }
+    .arrows { display: flex; gap: 8px; }
+    .arrows a {
+      text-decoration: none;
+      color: #1c2414;
+      background: linear-gradient(180deg, #d8c07a, #b8943a);
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: .82rem;
+      padding: 8px 14px;
+      letter-spacing: .04em;
+    }
+    .arrows a[aria-disabled="true"] {
+      opacity: .35;
+      pointer-events: none;
+    }
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 8px auto 0;
+      /* slightly smaller than primary stage so thumbs don't dominate / force scroll */
+      width: min(100%, 1040px);
+      max-width: 72%;
+    }
+    .thumb {
+      display: block;
+      text-decoration: none;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(201,166,72,.28);
+      background: rgba(255,255,255,.04);
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .thumb img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 96px;
+      aspect-ratio: 2388 / 1656;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .thumb span {
+      display: block;
+      padding: 5px 8px;
+      font-size: .7rem;
+      font-weight: 750;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ue-muted);
+      text-align: center;
+    }
+    .thumb:hover {
+      border-color: rgba(201,166,72,.7);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.28);
+    }
+    .thumb.is-active {
+      border-color: rgba(250, 220, 120, .95);
+      box-shadow: 0 0 0 1px rgba(250,220,120,.35), 0 12px 24px rgba(0,0,0,.3);
+    }
+    .thumb.is-active span { color: rgba(250, 240, 160, .96); }
+    @media (max-width: 900px) {
+      .thumbs { max-width: 100%; width: 100%; }
+      .thumb img { max-height: 88px; }
+    }
+    @media (max-width: 720px) {
+      .thumbs { grid-template-columns: 1fr; max-width: 100%; }
+      .thumb img { max-height: 120px; }
+    }
+  
+    /* Listen to Unity — full gold pill button (color-matched to deck CTA) */
+    .deck-stage {
+      position: relative;
+    }
+    .ussi-listen-hit {
+      position: absolute;
+      /* +70px total from original paint anchor (50 + 20) */
+      left: 8.2%;
+      top: calc(78.6% + 70px);
+      z-index: 6;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55em;
+      min-width: min(280px, 24%);
+      width: auto;
+      height: auto;
+      min-height: 48px;
+      margin: 0;
+      padding: 0.72em 1.35em 0.72em 1.15em;
+      border: 1.5px solid rgba(250, 230, 160, 0.55);
+      border-radius: 999px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      color: rgba(28, 36, 14, 0.98);
+      font-family: inherit;
+      font-size: clamp(0.78rem, 1.15vw, 0.98rem);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      white-space: nowrap;
+      background:
+        linear-gradient(180deg,
+          #f3e2a8 0%,
+          #e4c46a 38%,
+          #c9a648 72%,
+          #b08a32 100%);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 2px 0 rgba(255, 248, 220, 0.55) inset,
+        0 -3px 0 rgba(140, 100, 28, 0.22) inset,
+        0 0 0 1px rgba(90, 70, 20, 0.18);
+      transition:
+        transform 0.16s ease,
+        box-shadow 0.18s ease,
+        filter 0.16s ease,
+        background 0.18s ease,
+        border-color 0.16s ease;
+    }
+    .ussi-listen-hit .ussi-listen-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.15em;
+      height: 1.15em;
+      flex: 0 0 auto;
+      font-size: 1.05em;
+      line-height: 1;
+      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.25));
+    }
+    .ussi-listen-hit .ussi-listen-icon svg {
+      width: 1em;
+      height: 1em;
+      display: block;
+    }
+    .ussi-listen-label {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+      clip: auto;
+      white-space: nowrap;
+      border: 0;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+    }
+    .ussi-listen-hit:hover,
+    .ussi-listen-hit:focus-visible {
+      outline: none;
+      border-color: rgba(255, 245, 200, 0.85);
+      background:
+        linear-gradient(180deg,
+          #faf0c4 0%,
+          #efd27a 40%,
+          #d4b04e 74%,
+          #c49a38 100%);
+      box-shadow:
+        0 0 0 2px rgba(250, 220, 120, 0.55),
+        0 0 22px rgba(201, 166, 72, 0.55),
+        0 10px 22px rgba(0, 0, 0, 0.32),
+        0 2px 0 rgba(255, 252, 230, 0.7) inset;
+      transform: translateY(-2px) scale(1.02);
+      filter: brightness(1.05) saturate(1.04);
+    }
+    .ussi-listen-hit:active {
+      transform: translateY(0) scale(0.99);
+      filter: brightness(0.98);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.28),
+        0 1px 0 rgba(255, 248, 220, 0.35) inset;
+    }
+    .ussi-listen-hit.is-playing {
+      border-color: rgba(250, 240, 160, 0.95);
+      background:
+        linear-gradient(180deg,
+          #ffe9a0 0%,
+          #f0d060 42%,
+          #d4a838 78%,
+          #b89028 100%);
+      box-shadow:
+        0 0 0 2px rgba(250, 240, 160, 0.85),
+        0 0 28px rgba(201, 166, 72, 0.65),
+        0 10px 22px rgba(0, 0, 0, 0.3),
+        0 2px 0 rgba(255, 252, 230, 0.65) inset;
+    }
+    .ussi-listen-hit.is-playing .ussi-listen-label-play { display: none; }
+    .ussi-listen-hit.is-playing .ussi-listen-label-pause { display: inline; }
+    .ussi-listen-hit:not(.is-playing) .ussi-listen-label-pause { display: none; }
+    .ussi-listen-hit:not(.is-playing) .ussi-listen-label-play { display: inline; }
+    .ussi-listen-hit.is-playing .ussi-listen-icon-play { display: none; }
+    .ussi-listen-hit.is-playing .ussi-listen-icon-pause { display: inline-flex; }
+    .ussi-listen-hit:not(.is-playing) .ussi-listen-icon-pause { display: none; }
+    .ussi-listen-hit:not(.is-playing) .ussi-listen-icon-play { display: inline-flex; }
+
+    .ussi-listen-state {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 8px);
+      transform: translateX(-50%);
+      min-width: max-content;
+      max-width: 240px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(250, 240, 160, 0.95);
+      background: rgba(12, 18, 10, 0.78);
+      border: 1px solid rgba(201, 166, 72, 0.4);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .ussi-listen-hit.is-playing .ussi-listen-state,
+    .ussi-listen-hit.is-missing .ussi-listen-state {
+      opacity: 1;
+    }
+    .ussi-listen-hit.is-missing {
+      /* still fully styled gold; status chip explains pending if needed */
+    }
+    @media (max-width: 900px) {
+      .ussi-listen-hit {
+        left: 7.5%;
+        min-width: 0;
+        width: auto;
+        font-size: clamp(0.72rem, 2.4vw, 0.9rem);
+        min-height: 44px;
+        padding: 0.65em 1.15em;
+      }
+    }
+    @media (max-width: 720px) {
+      .ussi-listen-hit {
+        left: 6%;
+        top: calc(77.5% + 70px);
+        width: auto;
+        max-width: 70%;
+        font-size: 0.78rem;
+      }
+    }
+
+  
+    /* Page 1 only — 20% larger, +20px down, +50px right */
+    .ussi-listen-hit--p1 {
+      left: calc(8.2% + 50px);
+      top: calc(78.6% + 90px);
+      min-width: min(336px, 28.8%);
+      min-height: 58px;
+      padding: 0.86em 1.62em 0.86em 1.38em;
+      font-size: clamp(0.94rem, 1.38vw, 1.18rem);
+      gap: 0.66em;
+    }
+    .ussi-listen-hit--p1 .ussi-listen-icon {
+      width: 1.38em;
+      height: 1.38em;
+      font-size: 1.26em;
+    }
+    @media (max-width: 900px) {
+      .ussi-listen-hit--p1 {
+        min-height: 53px;
+        font-size: clamp(0.86rem, 2.9vw, 1.08rem);
+        padding: 0.78em 1.38em;
+      }
+    }
+    @media (max-width: 720px) {
+      .ussi-listen-hit--p1 {
+        left: calc(6% + 50px);
+        top: calc(77.5% + 90px);
+        font-size: 0.94rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand">
+      <img src="../../../unity-icon-circle-192.png" alt="" />
+      <span>Private Access · Partnerships · USSI</span>
+    </div>
+    <div class="top-nav">
+      <a href="../../../customer-portals.html?audience=partner">← Private Access Center</a>
+      <a href="../../../index.html">Unity Home</a>
+    </div>
+  </div>
+
+  <main class="shell">
+    <section class="deck-stage" aria-label="USSI Partner Deck page 1">
+      <img
+        class="slide"
+        src="../../../assets/images/partnerships/ussi/USSIPartnerDeck_p1.png?v=20261103-deck-art-refresh-6"
+        width="2388"
+        height="1656"
+        alt="USSI Partner Deck — page 1"
+      />
+                <button
+        type="button"
+        class="ussi-listen-hit ussi-listen-hit--p1"
+        id="ussiListenBtn"
+        data-page="1"
+        data-audio="assets/audio/ussi-deck-page-1.mp3"
+        aria-label="Listen to Unity — page 1 introduction, about 90 seconds"
+        aria-pressed="false"
+        title="Listen to Unity"
+      >
+        <span class="ussi-listen-icon ussi-listen-icon-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5L8 5.5z"/></svg>
+        </span>
+        <span class="ussi-listen-icon ussi-listen-icon-pause" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7V5zm6 0h4v14h-4V5z"/></svg>
+        </span>
+        <span class="ussi-listen-label">
+          <span class="ussi-listen-label-play">Listen to Unity</span>
+          <span class="ussi-listen-label-pause">Pause Unity</span>
+        </span>
+        <span class="ussi-listen-state" aria-live="polite"></span>
+      </button>
+      <audio id="ussiListenAudio" preload="none" playsinline></audio>
+</section>
+
+    <div class="controls">
+      <div class="page-label">Page 1 of 3</div>
+      <div class="arrows">
+        <a href="index.html" aria-disabled="true">← Prev</a>
+        <a href="page-2.html">Next →</a>
+      </div>
+    </div>
+
+    <nav class="thumbs" aria-label="Deck thumbnails">
+      <a class="thumb is-active" href="index.html" aria-current="page">
+        <img src="../../../assets/images/partnerships/ussi/USSIPartnerDeck_p1.png?v=20261103-deck-art-refresh-6" alt="" />
+        <span>Page 1</span>
+      </a>
+      <a class="thumb" href="page-2.html">
+        <img src="../../../assets/images/partnerships/ussi/USSIPartnerDeck_p2.png?v=20261103-deck-art-refresh-6" alt="" />
+        <span>Page 2</span>
+      </a>
+      <a class="thumb" href="page-3.html">
+        <img src="../../../assets/images/partnerships/ussi/USSIPartnerDeck_p3.png?v=20261103-deck-art-refresh-6" alt="" />
+        <span>Page 3</span>
+      </a>
+    </nav>
+</main>
+
+  <script src="assets/js/ussi-listen.js?v=20261103-deck-art-refresh-6"></script>
+</body>
+</html>

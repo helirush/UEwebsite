@@ -20,7 +20,7 @@ window.MAXWELLIAN_HUME = {
   // COVE_INSTRUCT_261004r0 — Phase 1 eWebmaster only: GPT Live default.
   // Hume path retained for A/B/rollback (set voice_engine: "openai" or launch preference).
   // DO NOT PROMOTE to uewebsite without Mike command.
-  voice_engine: "openai",
+  voice_engine: "openai", // CANON Host Voice Standard (Clerk baseline) 20261103
   // Diagnostics can be re-enabled for troubleshooting, but default is off in normal operation.
   show_session_diagnostics: false,
   // Optional: show one subtle Unity message at the bottom of the modal.
@@ -368,7 +368,7 @@ window.MAXWELLIAN_HUME = {
       ],
     },
     "customer-portals": {
-      title: "Customer Portals",
+      title: "Private Access",
       summary:
         "Customer portal navigation and interpretation context for existing Unity clients reviewing dashboards and analytics.",
       context_sources: ["customer-portals"],
@@ -540,7 +540,7 @@ window.MAXWELLIAN_HUME = {
     },
     {
       id: "customer-portals",
-      title: "Customer Portals",
+      title: "Private Access",
       path: "/UnityEnergy/customer-portals.html",
       context_source: "customer-portals",
       summary:
@@ -1094,14 +1094,14 @@ window.MAXWELLIAN_HUME = {
   // Keep false unless a production OpenAI realtime session backend is available.
   // Emergency public fallback: allow direct Hume connect attempts when runtime auth bootstrap is unavailable.
   // Absolute production endpoint first so Cognition Partner pathing cannot resolve relative /api to a 404.
-  hume_runtime_auth_endpoint: "https://unityenergy.com/api/hume/runtime-auth",
-  allow_hume_authless_connect: true,
+  hume_runtime_auth_endpoint: ""  // Host Voice Standard: Hume EVI retired; OpenAI relay only,
+  allow_hume_authless_connect: false,
   allow_openai_fallback: false,
   openai_session_endpoint: "https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session",
   openai_live_session_endpoint: "https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session",
   openai_live_api: true,
   voice_engine: "openai",
-  openai_embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1",
+  openai_embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261103-voice-fix-1",
   openai_realtime_model: "gpt-live-1",
   // Phase 1 native OpenAI live voice: ash = credible mature male (not final Clerk acoustic lock).
   openai_voice: "vesper",
@@ -1132,7 +1132,7 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261020-traveler-ready-1",
+  embed_url: "/UnityEnergy/openai_renderer/index.html?v=20261103-voice-fix-1",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
   // Signal-stage portrait (must stay transparent Clerk asset).

@@ -4,6 +4,7 @@ import csv
 import hmac
 import json
 import os
+import re
 import smtplib
 from datetime import datetime, timezone
 from email.message import EmailMessage
@@ -15,8 +16,8 @@ from urllib import error as urllib_error
 from urllib import parse as urllib_parse
 from urllib import request as urllib_request
 
-DEFAULT_MODEL = "gpt-4o-realtime-preview"
-DEFAULT_VOICE = "ash"
+DEFAULT_MODEL = "gpt-live-1"
+DEFAULT_VOICE = "vesper"
 DEFAULT_TRANSCRIPTION_MODEL = "gpt-4o-mini-transcribe"
 HUME_RUNTIME_AUTH_ENDPOINT = "/api/hume/runtime-auth"
 LEAD_CAPTURE_ENDPOINT = "/api/maxwellian/lead-capture"
@@ -24,6 +25,9 @@ LEAD_EXPORT_STATUS_ENDPOINT = "/api/maxwellian/leads/status"
 LEAD_EXPORT_ENDPOINT = "/api/maxwellian/leads/export"
 BUILDER_LEAD_EXPORT_STATUS_ENDPOINT = "/api/builder/leads/status"
 BUILDER_LEAD_EXPORT_ENDPOINT = "/api/builder/leads/export"
+FAQ_LOG_ENDPOINT = "/api/clerk/faq-log"
+FAQ_LEARNED_ENDPOINT = "/api/clerk/faq-learned"
+FAQ_LEARNED_MD_ENDPOINT = "/api/clerk/faq-learned.md"
 LEAD_CAPTURE_JSONL_FILENAME = "maxwellian_leads.jsonl"
 LEAD_CAPTURE_CSV_FILENAME = "maxwellian_leads.csv"
 LEAD_CAPTURE_CSV_HEADERS = [
@@ -84,16 +88,60 @@ def _find_env_candidates(root_dir: Path) -> Iterable[Path]:
     ]
 
 
+def _looks_like_openai_api_key(value: str) -> bool:
+    """Reject polluted env values (e.g. checkmark log lines captured by shell export)."""
+    text = _coerce_text(value)
+    if not text or not text.isascii():
+        return False
+    # Real keys are long ASCII tokens; never accept log banners.
+    if "Configuration loaded" in text or text.startswith("✓") or "\u2713" in text:
+        return False
+    if len(text) < 20:
+        return False
+    # Common OpenAI secret prefixes (project/user keys).
+    return bool(re.match(r"^(sk-|org-|proj-)", text)) or (text.startswith("sk") and len(text) >= 32)
+
+
 def resolve_openai_api_key(root_dir: Path) -> str:
     existing = _coerce_text(os.environ.get("OPENAI_API_KEY"))
-    if existing:
+    if existing and _looks_like_openai_api_key(existing):
         return existing
+    if existing and not _looks_like_openai_api_key(existing):
+        # Drop contaminated value so dotenv/eConfig can recover.
+        try:
+            del os.environ["OPENAI_API_KEY"]
+        except Exception:
+            os.environ["OPENAI_API_KEY"] = ""
+
     for candidate in _find_env_candidates(root_dir):
         values = _read_dotenv_file(candidate)
         key = _coerce_text(values.get("OPENAI_API_KEY"))
-        if key:
+        if key and _looks_like_openai_api_key(key):
             os.environ["OPENAI_API_KEY"] = key
             return key
+
+    # eConfig loader (may print status to stdout — never capture that into the key).
+    try:
+        import sys
+        from io import StringIO
+        from contextlib import redirect_stdout, redirect_stderr
+        estream_root = root_dir
+        # UnityEnergy -> eWebmaster -> eestream
+        for _ in range(4):
+            if (estream_root / "eConfig").is_dir():
+                break
+            estream_root = estream_root.parent
+        if str(estream_root) not in sys.path:
+            sys.path.insert(0, str(estream_root))
+        buf_out, buf_err = StringIO(), StringIO()
+        with redirect_stdout(buf_out), redirect_stderr(buf_err):
+            from eConfig.config_loader import get_openai_api_key
+            key = _coerce_text(get_openai_api_key())
+        if key and _looks_like_openai_api_key(key):
+            os.environ["OPENAI_API_KEY"] = key
+            return key
+    except Exception:
+        pass
     return ""
 
 
@@ -128,55 +176,131 @@ def resolve_hume_runtime_auth(root_dir: Path) -> Dict[str, str]:
 
 
 def build_session_payload(raw_payload: Dict[str, Any]) -> Dict[str, Any]:
-    payload: Dict[str, Any] = {}
-    passthrough_keys = {
-        "model",
-        "voice",
-        "instructions",
-        "modalities",
-        "temperature",
-        "turn_detection",
-        "input_audio_format",
-        "output_audio_format",
-        "input_audio_transcription",
-        "tools",
-        "tool_choice",
-        "max_response_output_tokens",
+    """Build GA Realtime client_secrets request body.
+
+    Accepts legacy beta fields (model/voice/modalities/instructions) from the
+    eWebmaster widget/renderer and maps them into the GA session shape.
+    """
+    raw = raw_payload if isinstance(raw_payload, dict) else {}
+
+    model = _coerce_text(raw.get("model") or raw.get("openai_realtime_model")) or DEFAULT_MODEL
+    # Migrate retired beta model names to GA default.
+    if "gpt-4o-realtime" in model or model in {"gpt-realtime-preview", "realtime-preview"}:
+        model = DEFAULT_MODEL
+
+    voice = _coerce_text(raw.get("voice") or raw.get("openai_voice")) or DEFAULT_VOICE
+    instructions = _coerce_text(raw.get("instructions"))
+
+    modalities = raw.get("modalities") or raw.get("output_modalities") or ["audio"]
+    if not isinstance(modalities, list):
+        modalities = ["audio"]
+    # GA Realtime currently accepts only ["audio"] or ["text"] (not combined).
+    # Speak-with-Clerk requires spoken output → default audio-only.
+    tokens = []
+    for item in modalities:
+        token = _coerce_text(item).lower()
+        if token in {"audio", "text"} and token not in tokens:
+            tokens.append(token)
+    if "audio" in tokens:
+        output_modalities = ["audio"]
+    elif "text" in tokens:
+        output_modalities = ["text"]
+    else:
+        output_modalities = ["audio"]
+
+    session: Dict[str, Any] = {
+        "type": "realtime",
+        "model": model,
+        "output_modalities": output_modalities,
+        "audio": {
+            "output": {
+                "voice": voice,
+            }
+        },
     }
-    for key in passthrough_keys:
-        if key in raw_payload:
-            payload[key] = raw_payload[key]
-
-    payload["model"] = _coerce_text(payload.get("model")) or DEFAULT_MODEL
-    payload["voice"] = _coerce_text(payload.get("voice")) or DEFAULT_VOICE
-    payload["modalities"] = payload.get("modalities") or ["text", "audio"]
-    if not isinstance(payload["modalities"], list):
-        payload["modalities"] = ["text", "audio"]
-
-    instructions = _coerce_text(payload.get("instructions"))
     if instructions:
-        payload["instructions"] = instructions
-    elif "instructions" in payload:
-        del payload["instructions"]
+        session["instructions"] = instructions
 
-    turn_detection = payload.get("turn_detection")
-    if not isinstance(turn_detection, dict):
-        turn_detection = {
+    # Optional turn detection from legacy payload.
+    turn_detection = raw.get("turn_detection")
+    if isinstance(turn_detection, dict):
+        session.setdefault("audio", {}).setdefault("input", {})["turn_detection"] = turn_detection
+    else:
+        session.setdefault("audio", {}).setdefault("input", {})["turn_detection"] = {
             "type": "server_vad",
             "create_response": True,
             "interrupt_response": True,
         }
-    payload["turn_detection"] = turn_detection
 
-    input_audio_transcription = payload.get("input_audio_transcription")
-    if not isinstance(input_audio_transcription, dict):
-        input_audio_transcription = {"model": DEFAULT_TRANSCRIPTION_MODEL}
-    input_audio_transcription["model"] = _coerce_text(
-        input_audio_transcription.get("model")
-    ) or DEFAULT_TRANSCRIPTION_MODEL
-    payload["input_audio_transcription"] = input_audio_transcription
+    transcription = raw.get("input_audio_transcription")
+    if isinstance(transcription, dict):
+        session.setdefault("audio", {}).setdefault("input", {})["transcription"] = transcription
 
+    tools = raw.get("tools")
+    if isinstance(tools, list):
+        session["tools"] = tools
+    tool_choice = _coerce_text(raw.get("tool_choice"))
+    if tool_choice:
+        session["tool_choice"] = tool_choice
+
+    payload: Dict[str, Any] = {
+        "session": session,
+        "expires_after": {"anchor": "created_at", "seconds": 600},
+    }
     return payload
+
+
+def normalize_client_secret_response(upstream: Dict[str, Any]) -> Dict[str, Any]:
+    """Normalize GA client_secrets response for legacy renderer expectations.
+
+    Renderer expects client_secret.value (and optional model/voice echoes).
+    GA returns top-level value/expires_at/session.
+    """
+    if not isinstance(upstream, dict):
+        return {"error": {"message": "Invalid upstream client_secrets response."}}
+
+    if "error" in upstream:
+        return upstream
+
+    value = _coerce_text(upstream.get("value"))
+    expires_at = upstream.get("expires_at")
+    session = upstream.get("session") if isinstance(upstream.get("session"), dict) else {}
+
+    if not value and isinstance(upstream.get("client_secret"), dict):
+        value = _coerce_text(upstream["client_secret"].get("value"))
+        expires_at = upstream["client_secret"].get("expires_at", expires_at)
+
+    if not value:
+        return {
+            "error": {
+                "message": "OpenAI client_secrets response missing ephemeral value."
+            }
+        }
+
+    voice = ""
+    try:
+        voice = _coerce_text(
+            ((session.get("audio") or {}).get("output") or {}).get("voice")
+        )
+    except Exception:
+        voice = ""
+
+    normalized = {
+        "id": _coerce_text(session.get("id")) or _coerce_text(upstream.get("id")),
+        "object": "realtime.session",
+        "model": _coerce_text(session.get("model")) or DEFAULT_MODEL,
+        "voice": voice or DEFAULT_VOICE,
+        "instructions": _coerce_text(session.get("instructions")),
+        "client_secret": {
+            "value": value,
+            "expires_at": expires_at,
+        },
+        # Also expose GA fields for newer clients.
+        "value": value,
+        "expires_at": expires_at,
+        "session": session,
+    }
+    return normalized
 
 
 def _coerce_bool(value: Any) -> bool:
@@ -755,6 +879,294 @@ def send_qualified_lead_telegram_alert(root_dir: Path, record: Dict[str, Any]) -
     }
 
 
+
+def normalize_webrtc_sdp(sdp: str) -> str:
+    """OpenAI Live WebRTC requires CRLF SDP; browsers may supply LF-only."""
+    text = _coerce_text(sdp)
+    if not text:
+        return ""
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    text = "\r\n".join(text.split("\n"))
+    if not text.endswith("\r\n"):
+        text += "\r\n"
+    return text
+
+
+def build_live_session_config(raw_payload: Dict[str, Any]) -> Dict[str, Any]:
+    """Build GPT-Live session config (model gpt-live-1 + Vesper voice)."""
+    raw = raw_payload if isinstance(raw_payload, dict) else {}
+    model = _coerce_text(raw.get("model") or raw.get("openai_realtime_model")) or DEFAULT_MODEL
+    if "gpt-4o-realtime" in model or model.startswith("gpt-realtime"):
+        model = "gpt-live-1"
+    voice = _coerce_text(raw.get("voice") or raw.get("openai_voice")) or DEFAULT_VOICE
+    instructions = _coerce_text(raw.get("instructions"))
+    session: Dict[str, Any] = {
+        "model": model,
+        "audio": {"output": {"voice": voice}},
+    }
+    if instructions:
+        session["instructions"] = instructions
+    if isinstance(raw.get("delegation"), dict):
+        session["delegation"] = raw["delegation"]
+    return session
+
+
+
+def resolve_maxwellian_library_root() -> Path:
+    configured = _coerce_text(os.environ.get("MAXWELLIAN_LIBRARY_ROOT"))
+    if configured:
+        return Path(configured).expanduser().resolve()
+    # Living Google master via local symlink
+    home_link = Path.home() / "MaxwellianLibrary"
+    if home_link.exists():
+        return home_link.resolve()
+    drive = Path.home() / "Library/CloudStorage/GoogleDrive-partliquid@gmail.com/My Drive/00CognitionTraveler/MaxwellianLibrary"
+    return drive.resolve()
+
+
+def resolve_unity_master_brief_path() -> Path:
+    configured = _coerce_text(os.environ.get("MAXWELLIAN_UNITY_MASTER_BRIEF"))
+    if configured:
+        return Path(configured).expanduser().resolve()
+    root = resolve_maxwellian_library_root()
+    return (root / "Working" / "Active" / "LIVING_Unity_What_We_Do_Master_Brief.md").resolve()
+
+
+def load_unity_master_brief(max_chars: int = 12000) -> dict:
+    path = resolve_unity_master_brief_path()
+    mirror = Path(__file__).resolve().parent / "maxwellian" / "briefs" / "LIVING_Unity_What_We_Do.md"
+    chosen = path if path.is_file() else mirror
+    if not chosen.is_file():
+        return {
+            "ok": False,
+            "error": "master_brief_missing",
+            "tried": [str(path), str(mirror)],
+            "library_root": str(resolve_maxwellian_library_root()),
+        }
+    raw = chosen.read_text(encoding="utf-8", errors="replace")
+    text_body = raw.strip()
+    if max_chars > 0 and len(text_body) > max_chars:
+        text_body = text_body[: max_chars - 1].rstrip() + "…"
+    return {
+        "ok": True,
+        "source": str(chosen),
+        "library_root": str(resolve_maxwellian_library_root()),
+        "authority": "MaxwellianLibrary_master",
+        "chars": len(text_body),
+        "text": text_body,
+    }
+
+
+def search_maxwellian_library(query: str, limit: int = 6) -> dict:
+    q = _coerce_text(query).lower()
+    root = resolve_maxwellian_library_root()
+    if not q:
+        return {"ok": False, "error": "empty_query", "library_root": str(root), "matches": []}
+    if not root.is_dir():
+        return {"ok": False, "error": "library_root_missing", "library_root": str(root), "matches": []}
+    tokens = [t for t in re.split(r"[^a-z0-9]+", q) if len(t) > 2]
+    if not tokens:
+        tokens = [q]
+    preferred = ["Working/Active", "Canon/Doctrine", "Operations/Protocols", "Working/Context", "Technical"]
+    candidates: list[Path] = []
+    for pref in preferred:
+        d = root / pref
+        if d.is_dir():
+            candidates.extend([p for p in d.rglob("*.md") if p.is_file()])
+    # light additional scan
+    for p in root.glob("*.md"):
+        candidates.append(p)
+    scored = []
+    seen = set()
+    for path in candidates:
+        try:
+            rp = str(path.resolve())
+        except Exception:
+            continue
+        if rp in seen:
+            continue
+        seen.add(rp)
+        try:
+            if path.stat().st_size > 400_000:
+                continue
+            body = path.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        low = body.lower()
+        name_low = path.name.lower()
+        score = 0
+        for t in tokens:
+            if t in name_low:
+                score += 8
+            score += low.count(t)
+        if score <= 0:
+            continue
+        # excerpt around first token hit
+        excerpt = ""
+        for t in tokens:
+            j = low.find(t)
+            if j >= 0:
+                a = max(0, j - 120)
+                b = min(len(body), j + 220)
+                excerpt = re.sub(r"\s+", " ", body[a:b]).strip()
+                break
+        rel = str(path)
+        try:
+            rel = str(path.relative_to(root))
+        except Exception:
+            pass
+        scored.append({"score": score, "path": rel, "name": path.name, "excerpt": excerpt[:400]})
+    scored.sort(key=lambda x: (-x["score"], x["name"]))
+    return {
+        "ok": True,
+        "library_root": str(root),
+        "query": query,
+        "matches": scored[: max(1, min(limit, 12))],
+    }
+
+
+
+# ---------------------------------------------------------------------------
+# Clerk self-building FAQ (visitor questions → append-only log + learned MD)
+# ---------------------------------------------------------------------------
+FAQ_LOG_JSONL_NAME = "clerk_faq_questions.jsonl"
+FAQ_LEARNED_MD_REL = Path("assets/clerk/knowledge/CLERK_FAQ_LEARNED.md")
+FAQ_MIN_QUESTION_CHARS = 8
+FAQ_MAX_QUESTION_CHARS = 280
+FAQ_PROMOTE_HIT_THRESHOLD = 2  # same normalized question seen N times → learned file
+
+
+def _faq_data_dir() -> Path:
+    base = Path(__file__).resolve().parent
+    d = base / "maxwellian" / "logs"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def _faq_normalize_question(text: str) -> str:
+    s = re.sub(r"\s+", " ", (text or "").strip().lower())
+    s = re.sub(r"[^\w\s\?\.\-']", "", s)
+    return s[:FAQ_MAX_QUESTION_CHARS]
+
+
+def _faq_scrub_pii(text: str) -> str:
+    s = text or ""
+    s = re.sub(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", "[email]", s, flags=re.I)
+    s = re.sub(r"\b\+?\d[\d\-\s().]{8,}\d\b", "[phone]", s)
+    s = re.sub(r"\b\d{3}-\d{2}-\d{4}\b", "[id]", s)
+    return s.strip()[:FAQ_MAX_QUESTION_CHARS]
+
+
+def _faq_is_worth_logging(question: str) -> bool:
+    q = (question or "").strip()
+    if len(q) < FAQ_MIN_QUESTION_CHARS:
+        return False
+    # skip pure noise / very short acks
+    if re.fullmatch(r"(yes|no|ok|okay|thanks|thank you|hi|hello|hey)[\.\!\?]*", q, flags=re.I):
+        return False
+    return True
+
+
+def persist_faq_question(record: dict) -> dict:
+    """Append visitor question to JSONL; promote frequent questions into LEARNED md."""
+    path = _faq_data_dir() / FAQ_LOG_JSONL_NAME
+    try:
+        with path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+    promoted = False
+    learned_path = None
+    try:
+        promoted, learned_path = _faq_maybe_promote(record)
+    except Exception as exc:
+        return {"ok": True, "path": str(path), "promote_error": str(exc)}
+
+    return {
+        "ok": True,
+        "path": str(path),
+        "promoted": promoted,
+        "learned_path": str(learned_path) if learned_path else None,
+    }
+
+
+def _faq_count_hits(norm: str) -> int:
+    path = _faq_data_dir() / FAQ_LOG_JSONL_NAME
+    if not path.exists():
+        return 0
+    hits = 0
+    try:
+        with path.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                except Exception:
+                    continue
+                if str(rec.get("norm") or "") == norm:
+                    hits += 1
+    except Exception:
+        return hits
+    return hits
+
+
+def _faq_maybe_promote(record: dict):
+    """If question seen enough times, ensure it appears in CLERK_FAQ_LEARNED.md."""
+    norm = str(record.get("norm") or "")
+    question = str(record.get("question") or "").strip()
+    answer = str(record.get("answer") or "").strip()
+    if not norm or not question:
+        return False, None
+    hits = _faq_count_hits(norm)
+    if hits < FAQ_PROMOTE_HIT_THRESHOLD and not record.get("force_promote"):
+        return False, None
+
+    base = Path(__file__).resolve().parent
+    learned = base / FAQ_LEARNED_MD_REL
+    learned.parent.mkdir(parents=True, exist_ok=True)
+    existing = learned.read_text(encoding="utf-8") if learned.exists() else ""
+    if norm in existing.lower() or question.lower() in existing.lower():
+        # already present
+        return False, learned
+
+    block = f"\n## Q: {question}\n"
+    if answer:
+        block += f"{answer}\n"
+    else:
+        block += (
+            "_Candidate question logged from live visitors. "
+            "Clerk: answer from CLERK_FAST_FAQ_AND_BIO first; refine this entry when a verified short answer is known._\n"
+        )
+    block += f"<!-- norm:{norm} hits:{hits} -->\n"
+
+    if not existing.strip():
+        header = (
+            "# CLERK FAQ LEARNED (auto-built from visitor questions)\n\n"
+            "Append-only candidate FAQ grown from Speak-with-Clerk visits.\n"
+            "Prefer CLERK_FAST_FAQ_AND_BIO.md for verified answers; use this file for recurring visitor wording.\n"
+        )
+        learned.write_text(header + block, encoding="utf-8")
+    else:
+        with learned.open("a", encoding="utf-8") as fh:
+            fh.write(block)
+    return True, learned
+
+
+def read_faq_learned_markdown() -> str:
+    base = Path(__file__).resolve().parent
+    fast = base / "assets/clerk/knowledge/CLERK_FAST_FAQ_AND_BIO.md"
+    learned = base / FAQ_LEARNED_MD_REL
+    parts = []
+    if fast.exists():
+        parts.append(fast.read_text(encoding="utf-8"))
+    if learned.exists():
+        parts.append(learned.read_text(encoding="utf-8"))
+    return "\n\n".join(parts).strip()
+
+
 class RealtimeHandler(SimpleHTTPRequestHandler):
     root_dir = Path("/")
 
@@ -931,6 +1343,53 @@ class RealtimeHandler(SimpleHTTPRequestHandler):
             )
             self._send_file_download(export_path, content_type, download_name)
             return
+        
+        if path == "/api/maxwellian/library/master-brief":
+            try:
+                payload = load_unity_master_brief()
+                self._send_json(HTTPStatus.OK if payload.get("ok") else HTTPStatus.NOT_FOUND, payload)
+            except Exception as exc:
+                self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"ok": False, "error": str(exc)})
+            return
+        if path == "/api/maxwellian/library/search":
+            try:
+                from urllib.parse import urlparse, parse_qs
+                qs = parse_qs(urlparse(self.path).query or "")
+                q = (qs.get("q") or qs.get("query") or [""])[0]
+                limit_raw = (qs.get("limit") or ["6"])[0]
+                try:
+                    limit = int(limit_raw)
+                except Exception:
+                    limit = 6
+                payload = search_maxwellian_library(q, limit=limit)
+                self._send_json(HTTPStatus.OK if payload.get("ok") else HTTPStatus.BAD_REQUEST, payload)
+            except Exception as exc:
+                self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"ok": False, "error": str(exc)})
+            return
+        
+        if path == FAQ_LEARNED_ENDPOINT or path == FAQ_LEARNED_MD_ENDPOINT:
+            try:
+                body = read_faq_learned_markdown()
+                payload = body.encode("utf-8") if path.endswith(".md") else json.dumps({
+                    "ok": True,
+                    "markdown": body,
+                    "bytes": len(body.encode("utf-8")),
+                }).encode("utf-8")
+                self.send_response(HTTPStatus.OK)
+                self.send_header("Content-Type", "text/markdown; charset=utf-8" if path.endswith(".md") else "application/json")
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers()
+                self.wfile.write(payload)
+            except Exception as exc:
+                err = json.dumps({"ok": False, "error": str(exc)}).encode("utf-8")
+                self.send_response(HTTPStatus.INTERNAL_SERVER_ERROR)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(err)))
+                self.end_headers()
+                self.wfile.write(err)
+            return
+
         if path == "/api/openai/realtime/health":
             api_key_present = bool(resolve_openai_api_key(self.root_dir))
             hume_auth_present = bool(resolve_hume_runtime_auth(self.root_dir).get("value"))
@@ -942,7 +1401,7 @@ class RealtimeHandler(SimpleHTTPRequestHandler):
                     "ok": True,
                     "api_key_loaded": api_key_present,
                     "hume_runtime_auth_loaded": hume_auth_present,
-                    "session_endpoint": "/api/openai/realtime/session",
+                    "session_endpoint": "/api/openai/realtime/session", "live_session_endpoint": "/api/openai/live/session", "default_model": "gpt-live-1", "default_voice": "vesper",
                     "hume_runtime_auth_endpoint": HUME_RUNTIME_AUTH_ENDPOINT,
                     "lead_capture_endpoint": LEAD_CAPTURE_ENDPOINT,
                     "lead_confirmation_email_configured": bool(
@@ -1016,6 +1475,124 @@ class RealtimeHandler(SimpleHTTPRequestHandler):
             )
             return
 
+        # GPT-Live WebRTC session (Vesper / gpt-live-1)
+        
+        if path == FAQ_LOG_ENDPOINT:
+            try:
+                length = int(self.headers.get("Content-Length") or 0)
+            except Exception:
+                length = 0
+            raw = self.rfile.read(length) if length > 0 else b"{}"
+            try:
+                data = json.loads(raw.decode("utf-8") or "{}")
+            except Exception:
+                data = {}
+            question = _faq_scrub_pii(str(data.get("question") or data.get("text") or ""))
+            answer = _faq_scrub_pii(str(data.get("answer") or ""))
+            if not _faq_is_worth_logging(question):
+                payload = json.dumps({"ok": True, "skipped": True, "reason": "not_worth_logging"}).encode("utf-8")
+                self.send_response(HTTPStatus.OK)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers()
+                self.wfile.write(payload)
+                return
+            from datetime import datetime, timezone
+            rec = {
+                "ts": datetime.now(timezone.utc).isoformat(),
+                "question": question,
+                "answer": answer,
+                "norm": _faq_normalize_question(question),
+                "page": str(data.get("page") or "speak-with-clerk")[:120],
+                "source": str(data.get("source") or "speak-with-clerk")[:80],
+                "force_promote": bool(data.get("force_promote")),
+                "ua": (self.headers.get("User-Agent") or "")[:160],
+            }
+            result = persist_faq_question(rec)
+            payload = json.dumps(result).encode("utf-8")
+            self.send_response(HTTPStatus.OK if result.get("ok") else HTTPStatus.INTERNAL_SERVER_ERROR)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+            return
+
+        if path == "/api/openai/live/session":
+            api_key = resolve_openai_api_key(self.root_dir)
+            if not api_key:
+                self._send_json(
+                    HTTPStatus.INTERNAL_SERVER_ERROR,
+                    {
+                        "error": {
+                            "message": "OPENAI_API_KEY is not set. Add it to your environment or .env file."
+                        }
+                    },
+                )
+                return
+            raw = self._read_json_body()
+            sdp = normalize_webrtc_sdp(raw.get("sdp") or (raw.get("transport") or {}).get("sdp") or "")
+            try:
+                print(
+                    f"[live/session] keys={list(raw.keys()) if isinstance(raw, dict) else type(raw)} "
+                    f"sdp_len={len(sdp)} model={_coerce_text(raw.get('model'))} voice={_coerce_text(raw.get('voice'))} "
+                    f"sdp_tail={sdp[-80:]!r}",
+                    flush=True,
+                )
+                try:
+                    Path("/tmp/last_live_session_req.json").write_text(
+                        json.dumps({"sdp_len": len(sdp), "model": raw.get("model"), "voice": raw.get("voice"), "sdp": sdp})
+                    )
+                except Exception:
+                    pass
+            except Exception:
+                pass
+            if not sdp:
+                self._send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"error": {"message": "An SDP offer is required in body.sdp"}},
+                )
+                return
+            session_cfg = build_live_session_config(raw)
+            upstream_body = json.dumps(
+                {
+                    "session": session_cfg,
+                    "transport": {"type": "webrtc", "sdp": sdp},
+                }
+            ).encode("utf-8")
+            upstream_request = urllib_request.Request(
+                "https://api.openai.com/v1/live/sessions",
+                data=upstream_body,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            try:
+                with urllib_request.urlopen(upstream_request, timeout=45) as response:
+                    status_code = response.getcode()
+                    response_body = response.read()
+                    content_type = response.headers.get("Content-Type", "application/json")
+                    self.send_response(status_code)
+                    self.send_header("Content-Type", content_type)
+                    self.send_header("Content-Length", str(len(response_body)))
+                    self.end_headers()
+                    self.wfile.write(response_body)
+            except urllib_error.HTTPError as exc:
+                body = exc.read() or b"{}"
+                self.send_response(exc.code)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+            except Exception as exc:
+                self._send_json(
+                    HTTPStatus.BAD_GATEWAY,
+                    {"error": {"message": f"Failed to create Live session: {exc}"}},
+                )
+            return
+
         if path != "/api/openai/realtime/session":
             self._send_json(HTTPStatus.NOT_FOUND, {"error": {"message": "Unknown endpoint."}})
             return
@@ -1034,8 +1611,9 @@ class RealtimeHandler(SimpleHTTPRequestHandler):
 
         request_payload = build_session_payload(self._read_json_body())
         upstream_body = json.dumps(request_payload).encode("utf-8")
+        # GA Realtime: mint ephemeral client secret (beta /realtime/sessions retired).
         upstream_request = urllib_request.Request(
-            "https://api.openai.com/v1/realtime/sessions",
+            "https://api.openai.com/v1/realtime/client_secrets",
             data=upstream_body,
             headers={
                 "Authorization": f"Bearer {api_key}",
@@ -1048,12 +1626,25 @@ class RealtimeHandler(SimpleHTTPRequestHandler):
             with urllib_request.urlopen(upstream_request, timeout=30) as response:
                 status_code = response.getcode()
                 response_body = response.read()
-                content_type = response.headers.get("Content-Type", "application/json")
-                self.send_response(status_code)
-                self.send_header("Content-Type", content_type)
-                self.send_header("Content-Length", str(len(response_body)))
-                self.end_headers()
-                self.wfile.write(response_body)
+                try:
+                    upstream_json = json.loads(response_body.decode("utf-8"))
+                except Exception:
+                    upstream_json = None
+                if isinstance(upstream_json, dict):
+                    normalized = normalize_client_secret_response(upstream_json)
+                    out = json.dumps(normalized).encode("utf-8")
+                    self.send_response(status_code)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(out)))
+                    self.end_headers()
+                    self.wfile.write(out)
+                else:
+                    content_type = response.headers.get("Content-Type", "application/json")
+                    self.send_response(status_code)
+                    self.send_header("Content-Type", content_type)
+                    self.send_header("Content-Length", str(len(response_body)))
+                    self.end_headers()
+                    self.wfile.write(response_body)
         except urllib_error.HTTPError as exc:
             body = exc.read() or b"{}"
             self.send_response(exc.code)
@@ -1091,7 +1682,9 @@ def main() -> None:
     ensure_lead_capture_storage_paths(root_dir)
     server = ThreadingHTTPServer((args.host, args.port), RealtimeHandler)
     print(f"Serving {root_dir} on http://{args.host}:{args.port}")
-    print("Realtime session endpoint: /api/openai/realtime/session")
+    print("Realtime session endpoint: /api/openai/realtime/session -> OpenAI /v1/realtime/client_secrets (legacy GA realtime)")
+    print("Clerk FAQ log: /api/clerk/faq-log  | learned: /api/clerk/faq-learned")
+    print("Live session endpoint: /api/openai/live/session -> OpenAI /v1/live/sessions (gpt-live-1 + Vesper)")
     print(f"Hume runtime auth endpoint: {HUME_RUNTIME_AUTH_ENDPOINT}")
     print(f"Lead capture endpoint: {LEAD_CAPTURE_ENDPOINT}")
     print(f"Lead export status endpoint: {LEAD_EXPORT_STATUS_ENDPOINT}")

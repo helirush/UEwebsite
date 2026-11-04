@@ -418,20 +418,30 @@
       candidates.push(normalized);
     };
     pushCandidate(primary);
-    if (!primary.startsWith("/")) {
-      return candidates;
-    }
     const locationHost = coerceText(window.location && window.location.hostname).toLowerCase();
     const locationPort = coerceText(window.location && window.location.port);
     const locationProtocol = coerceText(window.location && window.location.protocol) || "http:";
-    if (locationHost && locationPort && locationPort !== "8600") {
-      pushCandidate(`${locationProtocol}//${locationHost}:8600${primary}`);
-      if (locationProtocol !== "http:") {
-        pushCandidate(`http://${locationHost}:8600${primary}`);
+    const isLocalHost = locationHost === "127.0.0.1" || locationHost === "localhost";
+    // Relative /api/... on plain http.server (8500) must hit openai_realtime_server :8600.
+    if (primary.startsWith("/")) {
+      if (locationHost && locationPort && locationPort !== "8600") {
+        pushCandidate(`${locationProtocol}//${locationHost}:8600${primary}`);
+        if (locationProtocol !== "http:") {
+          pushCandidate(`http://${locationHost}:8600${primary}`);
+        }
       }
+      pushCandidate(`http://127.0.0.1:8600${primary}`);
+      pushCandidate(`http://localhost:8600${primary}`);
+      return candidates;
     }
-    pushCandidate(`http://127.0.0.1:8600${primary}`);
-    pushCandidate(`http://localhost:8600${primary}`);
+    // Absolute public relay URLs: on localhost also try local :8600 live/realtime
+    // so operator preview on :8500 keeps low-latency path when local server is up.
+    if (isLocalHost) {
+      pushCandidate("http://127.0.0.1:8600/api/openai/live/session");
+      pushCandidate("http://localhost:8600/api/openai/live/session");
+      pushCandidate("http://127.0.0.1:8600/api/openai/realtime/session");
+      pushCandidate("http://localhost:8600/api/openai/realtime/session");
+    }
     return candidates;
   }
   function appendInstructionBlock(blocks, value) {

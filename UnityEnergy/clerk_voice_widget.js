@@ -2621,7 +2621,7 @@
       return "I see you're on the Products and Services page. Which offering or workflow would you like to clarify?";
     }
     if (profileId === "customer-portals") {
-      return "I see you're on the Customer Portals page. Which portal section would you like help interpreting?";
+      return "I see you're on the Private Access page. Which portal section would you like help interpreting?";
     }
     if (profileId === "electrical-energy-story") {
       return "I see you're on the Electrical Energy Story page. Which part of the field story should we break down first?";

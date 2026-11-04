@@ -49,7 +49,7 @@ window.MAXWELLIAN_HUME = {
   floating_launcher_response_style_hint: "Warm, curious, intelligent, concise; plain language; Operating Canon discipline; no unsupported claims.",
   clerk_page_access_control_enabled: false,
   clerk_voice_allowed_pages: ["index","home","page1","page2","page3","page4","page5","page6","page7","page8","page9","page10","page11","page12","page13","about","cognition-curl","cognition"],
-  clerk_voice_blocked_pages: [
+  clerk_voice_blocked_pages: [ // must stay empty — empty no longer means default index/home block
   ],
   lead_capture_enabled: true,
   lead_capture_collect_company: false,
@@ -751,7 +751,7 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "./assets/cognition/curl/openai_renderer/index.html?v=20261012-no-hume-curl-clerk-i1",
+  embed_url: "./assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-clerk-parity-1",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "",
   // Signal-stage portrait (must stay transparent Clerk asset).

@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="passwords.js?v=20260922a"></script>
+    <script src="passwords.js?v=20261102-dual-path-customer-1"></script>
+    <script src="energy_behavior_explorer_config.js?v=20261103-direct-site-r1"></script>
     <script src="hume_auth_bootstrap.js?v=20260701r2"></script>
-    <script src="hume_character_config.js?v=20261020-traveler-ready-1"></script>
-    <script src="clerk_voice_widget.js?v=20261020-traveler-ready-1"></script>
+    <script src="hume_character_config.js?v=20261103-voice-fix-1"></script>
+    <script src="clerk_voice_widget.js?v=20261103-voice-fix-1"></script>
     <script src="public_release_flags.js?v=20260901a"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Portals | Unity Energy</title>
+    <title>Private Access Center | Unity Energy</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="192x192" href="unity-icon-circle-192.png">
@@ -94,15 +95,16 @@
             background: rgba(60, 79, 46, 0.84);
             pointer-events: none;
         }
-        @media (min-width: 1101px) {
+            @media (min-width: 1101px) {
             .nav-tabs {
                 display: flex;
                 flex-wrap: nowrap;
                 justify-content: space-between;
                 align-items: center;
                 gap: 0;
-                width: min(95%, 1760px);
-                max-width: calc(100% - 24px);
+                /* same inner band as Contact Us / Home hero nav */
+                width: min(1420px, calc(100% - 48px));
+                max-width: min(1420px, calc(100% - 48px));
             }
             .nav-tabs > a {
                 width: auto;
@@ -124,7 +126,7 @@
                 width: auto;
                 min-width: 0;
                 padding: 7px 10px 7px 12px;
-                font-size: clamp(0.73rem, 0.88vw, 0.95rem);
+                font-size: 0.82rem;
                 letter-spacing: 0.1em;
                 white-space: nowrap;
             }
@@ -354,13 +356,116 @@
         .login-modal-content {
             background: linear-gradient(150deg, rgba(250, 247, 239, 0.99) 0%, rgba(236, 229, 209, 0.99) 38%, rgba(218, 207, 178, 0.99) 100%);
             border-radius: 24px;
-            padding: 34px 36px 28px;
-            width: min(96vw, 760px);
-            max-height: min(94vh, 900px);
+            padding: 24px 22px 20px;
+            width: min(98vw, 1480px);
+            max-height: min(94vh, 960px);
             overflow-y: auto;
             position: relative;
             box-shadow: 0 30px 80px rgba(8, 12, 6, 0.68), 0 14px 32px rgba(50, 72, 33, 0.24);
             border: 2px solid rgba(90, 122, 50, 0.52);
+        }
+        .login-modal-intro {
+            margin: 0 0 16px;
+            padding-right: 42px;
+            text-align: center;
+        }
+        .login-modal-intro h2 {
+            color: rgba(48, 70, 32, 0.98);
+            font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.1;
+        }
+        .login-modal-intro p {
+            color: rgba(76, 95, 57, 0.98);
+            font-size: clamp(0.9rem, 1.2vw, 1.02rem);
+            font-weight: 600;
+            line-height: 1.4;
+            max-width: 46rem;
+            margin: 0 auto;
+        }
+        .portal-access-grid {
+            display: grid;
+            /* Partner | Customer (wider) | Investor — equal outer lanes, roomy center */
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr) minmax(0, 0.9fr);
+            gap: 14px;
+            align-items: stretch;
+        }
+        .portal-access-panel {
+            position: relative;
+            background: linear-gradient(165deg, rgba(252, 250, 243, 0.98) 0%, rgba(236, 229, 209, 0.96) 100%);
+            border: 1.5px solid rgba(104, 132, 68, 0.42);
+            border-radius: 18px;
+            padding: 16px 14px 14px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 18px rgba(40, 56, 24, 0.08);
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .portal-access-panel.customer-panel {
+            padding: 18px 16px 16px;
+            border-color: rgba(88, 120, 55, 0.55);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62), 0 10px 22px rgba(40, 56, 24, 0.12);
+        }
+        .portal-access-panel.partner-panel {
+            border-color: rgba(70, 110, 130, 0.46);
+            background: linear-gradient(165deg, rgba(244, 249, 248, 0.98) 0%, rgba(220, 232, 228, 0.94) 100%);
+        }
+        .portal-access-panel.investor-panel {
+            border-color: rgba(150, 122, 48, 0.48);
+            background: linear-gradient(165deg, rgba(252, 247, 232, 0.98) 0%, rgba(236, 223, 186, 0.94) 100%);
+        }
+        .portal-access-panel .login-header {
+            margin-bottom: 10px;
+            padding-right: 0;
+            text-align: left;
+        }
+        .portal-access-panel .login-header h2 {
+            font-size: clamp(1.12rem, 1.55vw, 1.42rem);
+            margin-bottom: 6px;
+        }
+        .portal-access-panel.customer-panel .login-header h2 {
+            font-size: clamp(1.28rem, 1.9vw, 1.62rem);
+        }
+        .portal-access-panel .login-header p {
+            font-size: clamp(0.8rem, 1vw, 0.92rem);
+            font-weight: 560;
+        }
+        .portal-access-panel.customer-panel .login-header p {
+            font-size: clamp(0.86rem, 1.1vw, 0.96rem);
+        }
+        .portal-access-panel .login-brand-row {
+            justify-content: flex-start;
+            margin-bottom: 8px;
+        }
+        .portal-access-panel .login-section-title {
+            margin-top: 8px;
+            font-size: 0.78rem;
+        }
+        .portal-access-panel .login-btn {
+            font-size: clamp(0.82rem, 1vw, 0.96rem);
+            letter-spacing: 0.06em;
+            padding: 12px 10px;
+            margin-top: auto;
+        }
+        .portal-access-panel.customer-panel .login-btn {
+            font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+            letter-spacing: 0.08em;
+            padding: 14px 12px;
+        }
+        .portal-access-panel .dev-mode-notice {
+            font-size: 0.78rem;
+            margin-top: 10px;
+        }
+        .portal-access-panel .login-form {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+        .code-access-input {
+            letter-spacing: 0.08em;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
         }
         .login-modal-content::before {
             content: '';
@@ -596,9 +701,17 @@
             margin-top: 12px;
             font-style: italic;
         }
+        @media (max-width: 1180px) {
+            .portal-access-grid {
+                grid-template-columns: 1fr;
+            }
+            .login-modal-content {
+                width: min(96vw, 720px);
+            }
+        }
         @media (max-width: 780px) {
             .login-modal-content {
-                padding: 28px 20px 22px;
+                padding: 24px 16px 18px;
                 border-radius: 18px;
             }
             .login-modal-content::before {
@@ -608,7 +721,8 @@
                 grid-template-columns: 1fr;
                 gap: 0;
             }
-            .login-header {
+            .login-header,
+            .login-modal-intro {
                 padding-right: 34px;
             }
         }
@@ -851,25 +965,1382 @@
             }
             html body footer .footer-unity-audio-controls { justify-self: center !important; }
         }
-        /* ===== /UE FOOTER GUIDE WIDTH 20261018v3 ===== */
+/* ===== /UE FOOTER GUIDE WIDTH 20261018v3 ===== */
+
+
+        /* ===== PRIVATE ACCESS CENTER — Contact Us master parity 20261102 ===== */
+        /* Cream page letterbox; real geometry lives in 1512×982 design stage */
+        body.pac-body {
+            margin: 0;
+            background: #f7f4eb;
+            color: rgba(58, 66, 48, 1);
+            overflow: hidden;
+        }
+        html.ue-fit-ready,
+        html.ue-fit-ready body.pac-body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .ue-viewport-shell {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f7f4eb;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .ue-design-stage,
+        .ue-design-stage--pac {
+            box-sizing: border-box !important;
+            width: 1512px !important;
+            height: 982px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            transform-origin: center center !important;
+            background: #f7f4eb !important;
+            overflow: hidden !important;
+        }
+        /* --- HEADER platform: full STAGE width only — Contact Us master parity --- */
+        .ue-design-stage .nav-tabs-container,
+        body.pac-body .nav-tabs-container {
+            flex: 0 0 auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 14px 0 24px !important; /* Contact Us / About container */
+            background: rgba(246, 246, 241, 0.96) !important;
+            border-bottom: 1px solid rgba(216, 209, 190, 0.74) !important;
+            box-sizing: border-box !important;
+            transform: none !important;
+            position: relative !important;
+            z-index: 5 !important;
+        }
+        .ue-design-stage .nav-tabs,
+        body.pac-body .nav-tabs {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            gap: 0 !important;
+            /* same inner band as Contact Us / Home hero nav row inside stage */
+            width: min(1420px, calc(100% - 48px)) !important;
+            max-width: min(1420px, calc(100% - 48px)) !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+        .ue-design-stage .nav-tabs > a,
+        body.pac-body .nav-tabs > a {
+            position: relative !important;
+            width: auto !important;
+            flex: 0 0 auto !important;
+        }
+        .ue-design-stage .nav-tabs > a:first-child,
+        .ue-design-stage .nav-tabs > a + a,
+        body.pac-body .nav-tabs > a:first-child,
+        body.pac-body .nav-tabs > a + a {
+            border-left: 2px solid rgba(60, 79, 46, 0.84) !important;
+            padding-left: 14px !important;
+            margin-left: 0 !important;
+        }
+        .ue-design-stage .nav-tabs > a:first-child::before,
+        .ue-design-stage .nav-tabs > a + a::before,
+        body.pac-body .nav-tabs > a:first-child::before,
+        body.pac-body .nav-tabs > a + a::before {
+            content: none !important;
+        }
+        /* Sibling-page button style locked to Contact Us design-space */
+        .ue-design-stage .nav-tab-portal,
+        .ue-design-stage .nav-tab-maxwellian,
+        body.pac-body .nav-tab-portal,
+        body.pac-body .nav-tab-maxwellian {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 40px !important;
+            height: auto !important;
+            max-height: none !important;
+            min-width: 0 !important;
+            padding: 7px 10px 7px 12px !important;
+            border-radius: 16px !important;
+            border: 1px solid transparent !important;
+            font-size: 0.82rem !important; /* Contact Us master */
+            font-weight: 700 !important;
+            letter-spacing: 0.1em !important;
+            line-height: 1.15 !important;
+            text-transform: uppercase !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            box-sizing: border-box !important;
+            color: rgba(46, 74, 31, 0.94) !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            transform: none !important;
+            cursor: pointer !important;
+        }
+        .ue-design-stage .nav-tab-maxwellian,
+        body.pac-body .nav-tab-maxwellian {
+            font-weight: 800 !important;
+            color: rgba(118, 88, 24, 0.98) !important;
+            border-color: rgba(201, 166, 72, 0.52) !important;
+            background-image: linear-gradient(180deg, rgba(248, 238, 208, 0.78) 0%, rgba(236, 219, 176, 0.78) 100%) !important;
+        }
+        .ue-design-stage .nav-tab-portal:hover,
+        .ue-design-stage .nav-tab-maxwellian:hover,
+        body.pac-body .nav-tab-portal:hover,
+        body.pac-body .nav-tab-maxwellian:hover {
+            border-color: rgba(98, 123, 69, 0.72) !important;
+            background-color: rgba(216, 227, 199, 0.92) !important;
+            background-image: linear-gradient(180deg, rgba(236, 242, 226, 0.96) 0%, rgba(196, 214, 174, 0.92) 100%) !important;
+            color: rgba(48, 71, 35, 0.98) !important;
+            box-shadow: 0 6px 14px rgba(50, 67, 32, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.62) !important;
+            transform: translateY(-1px) !important;
+        }
+        .ue-design-stage .nav-tab-portal.active,
+        body.pac-body .nav-tab-portal.active {
+            border-color: rgba(63, 94, 39, 0.98) !important;
+            background-color: rgba(37, 63, 25, 0.99) !important;
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%) !important;
+            color: rgba(250, 240, 160, 0.98) !important;
+            box-shadow: 0 10px 18px rgba(34, 49, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(18, 33, 12, 0.42) !important;
+            transform: translateY(-1px) !important;
+        }
+        .ue-design-stage .nav-tab-portal.active:hover,
+        body.pac-body .nav-tab-portal.active:hover {
+            color: rgba(250, 240, 160, 0.98) !important;
+            background-image: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(39, 65, 27, 0.99) 58%, rgba(57, 85, 39, 0.99) 100%) !important;
+        }
+        /* BODY board fills remaining stage height — straight edges like Contact Us */
+        .pac-stage {
+            position: relative;
+            box-sizing: border-box;
+            flex: 1 1 auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            min-height: 0 !important;
+            overflow: hidden !important;
+        }
+        .pac-art-wrap {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 0 !important; /* Contact Us master: straight corners */
+            overflow: hidden !important;
+            border: none !important;
+            box-shadow: none !important;
+            background: #f7f4eb !important;
+        }
+        .pac-art {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center top !important;
+            vertical-align: top;
+            filter: none;
+        }
+        .ue-design-stage .ue-stage-footer,
+        body.pac-body footer.ue-standard-footer {
+            flex: 0 0 auto !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+        .pac-art {
+            display: block;
+            width: 100%;
+            height: auto;
+            vertical-align: top;
+            filter: saturate(1.02) contrast(1.02);
+        }
+        /* Interactive layer — blank cream panel art (ueprivateaccess_61102 checkpoint)
+           Art provides hero + Clerk + empty card; live tabs/forms render inside card. */
+        .pac-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .pac-overlay > * {
+            pointer-events: auto;
+        }
+        /* Content frame pinned to painted cream panel on art.
+           20261102: stack raised 25px net (was -50, now -25); bottom still ~20px above green footer. */
+        .pac-card-frame {
+            position: absolute;
+            /* 20261102: chips + main card nudged up 30px / right 30px together */
+            left: calc(17.8% + 30px);
+            top: calc(38.6% - 55px);
+            width: 75.8%;
+            right: auto;
+            bottom: 20px;
+            height: auto;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 6px 12px 10px;
+            box-sizing: border-box;
+            min-height: 0;
+            /* keep chips + form locked to art coordinates, not viewport float */
+            transform: none;
+        }
+        /* Visible CTA tabs — sit on cream lip under hero copy */
+        .pac-tabs {
+            position: relative;
+            left: auto;
+            top: auto;
+            width: 100%;
+            height: auto;
+            min-height: 52px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            z-index: 5;
+            flex: 0 0 auto;
+            margin: 0;
+        }
+        .pac-tab {
+            appearance: none;
+            border: 1px solid rgba(120, 140, 90, 0.45);
+            background: linear-gradient(180deg, rgba(248, 244, 232, 0.96) 0%, rgba(232, 224, 200, 0.94) 100%);
+            color: rgba(42, 64, 30, 0.96);
+            cursor: pointer;
+            border-radius: 14px;
+            position: relative;
+            flex: none;
+            width: auto;
+            max-width: none;
+            min-height: 58px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 4px 10px rgba(30, 40, 18, 0.08);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+        }
+        .pac-tab .pac-tab-title {
+            font-size: clamp(0.72rem, 1.05vw, 0.9rem);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+        .pac-tab .pac-tab-sub {
+            font-size: clamp(0.62rem, 0.85vw, 0.74rem);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            opacity: 0.78;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .pac-tab:hover {
+            transform: translateY(-1px);
+            border-color: rgba(90, 122, 50, 0.7);
+            box-shadow: 0 8px 16px rgba(30, 40, 18, 0.14);
+        }
+        .pac-tab:focus-visible {
+            outline: 3px solid rgba(250, 220, 120, 0.9);
+            outline-offset: 2px;
+        }
+        .pac-tab.is-active {
+            color: rgba(250, 240, 160, 0.98);
+            border-color: rgba(48, 72, 28, 0.95);
+            background: linear-gradient(180deg, rgba(76, 110, 52, 0.99) 0%, rgba(35, 58, 24, 0.99) 100%);
+            box-shadow: 0 10px 18px rgba(24, 36, 14, 0.28), inset 0 1px 0 rgba(255,255,255,0.18);
+        }
+        .pac-tab.is-active .pac-tab-sub { opacity: 0.9; color: rgba(250, 240, 160, 0.88); }
+        .pac-tab.is-active::after,
+        .pac-tab:hover::before { content: none; }
+
+        /* Form stack: Customer base always live; Partner/Investor accordion over it */
+        .pac-form-layer {
+            position: relative;
+            left: auto;
+            top: auto;
+            width: 100%;
+            height: auto;
+            flex: 1 1 auto;
+            min-height: 0;
+            z-index: 4;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+            overflow: hidden;
+        }
+        .pac-base-layer {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.34s ease, filter 0.34s ease;
+            z-index: 1;
+        }
+        .pac-base-layer.is-dimmed {
+            opacity: 0.36;
+            filter: brightness(0.72) saturate(0.82);
+            pointer-events: none;
+            user-select: none;
+        }
+        .pac-drawer {
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-22px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition:
+                transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+        }
+        .pac-drawer.is-open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .pac-form-card {
+            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            height: 100%;
+            background: rgba(252, 249, 240, 0.88);
+            border: 1px solid rgba(150, 132, 78, 0.28);
+            border-radius: 16px;
+            box-shadow: none;
+            color: rgba(48, 62, 36, 0.98);
+            padding: 10px 12px 8px;
+            overflow: hidden; /* no side scrollbar — frame sized to fit */
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(1.5px);
+            box-sizing: border-box;
+        }
+        .pac-drawer-card {
+            background: linear-gradient(165deg, rgba(252, 249, 240, 0.98) 0%, rgba(240, 232, 210, 0.97) 100%);
+            border: 1.5px solid rgba(104, 132, 68, 0.42);
+            box-shadow: 0 16px 34px rgba(20, 28, 12, 0.18), inset 0 1px 0 rgba(255,255,255,0.55);
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pac-drawer-card .pac-panel {
+            width: min(100%, 440px);
+            max-width: 440px;
+            margin: 0 auto;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            padding: 8px 4px;
+        }
+        .pac-drawer-card .pac-panel:not([hidden]) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+        /* Single-panel stack (not 3-col legacy grid) inside live PAC */
+        .pac-form-card.portal-access-grid {
+            display: flex;
+            flex-direction: column;
+            grid-template-columns: none;
+            gap: 0;
+        }
+        .pac-form-card .portal-access-panel,
+        .pac-form-card .pac-panel {
+            width: 100%;
+            min-height: 0;
+            flex: 1 1 auto;
+        }
+        /* Fit customer dual-path in extended frame — no side/body scrollbar */
+        .pac-base-layer .pac-form-card {
+            overflow: hidden;
+            padding-top: 8px;
+        }
+        .pac-base-layer .customer-panel > .login-form {
+            flex: 1 1 auto;
+            min-height: 0;
+            gap: 0;
+        }
+        .pac-base-layer .cust-dual {
+            gap: 8px;
+            margin-top: 0;
+            /* dual path cards ride the top of the form card */
+            align-self: stretch;
+        }
+        .pac-base-layer .cust-path {
+            padding: 8px 8px 6px;
+        }
+        .pac-base-layer .cust-path-copy {
+            font-size: 0.7rem;
+            line-height: 1.3;
+        }
+        .pac-base-layer .login-form input,
+        .pac-base-layer .login-form select {
+            margin-bottom: 6px;
+            padding: 8px 10px;
+            font-size: 0.84rem;
+        }
+        .pac-base-layer .cust-actions {
+            margin-top: 4px;
+            gap: 2px;
+        }
+        .pac-base-layer .login-btn {
+            margin-top: 4px;
+            padding: 10px 12px;
+        }
+        .pac-base-layer .dev-mode-notice {
+            margin-top: 4px;
+            font-size: 0.68rem;
+        }
+        .pac-form-card .login-header {
+            margin-bottom: 6px;
+            padding-right: 0;
+        }
+        .pac-form-card .login-header h2 {
+            color: rgba(42, 64, 30, 0.98);
+            font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+            margin-bottom: 2px;
+            line-height: 1.15;
+        }
+        .pac-form-card .login-header p {
+            color: rgba(76, 95, 57, 0.95);
+            font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+            font-weight: 560;
+            line-height: 1.35;
+            margin: 0;
+        }
+        .pac-form-card .login-section-title {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            color: rgba(58, 84, 36, 0.95);
+            font-size: 0.72rem;
+        }
+        .pac-form-card .login-helper-text {
+            color: rgba(82, 100, 60, 0.9);
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+        }
+        .pac-form-card .login-form {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+        .pac-form-card .login-form input,
+        .pac-form-card .login-form select {
+            background: rgba(255,255,255,0.96);
+            color: rgba(50, 62, 45, 0.98);
+            border: 1.5px solid rgba(140, 157, 112, 0.75);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            padding: 9px 11px;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+        .pac-form-card .login-btn {
+            margin-top: 6px;
+            padding: 11px 12px;
+            font-size: clamp(0.82rem, 1.05vw, 0.98rem);
+            letter-spacing: 0.08em;
+            border-radius: 999px;
+        }
+        .pac-form-card .dev-mode-notice {
+            color: rgba(96, 112, 70, 0.88);
+            font-size: 0.72rem;
+            margin-top: 6px;
+        }
+        .pac-form-card .login-error {
+            font-size: 0.82rem;
+            margin-bottom: 8px;
+            padding: 8px 10px;
+        }
+        /* Error banner matches right portal-access column only (not full dual width) */
+        #ebaFormActions {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: start;
+        }
+        #ebaFormActions #loginError {
+            grid-column: 3;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin-left: 0;
+            margin-right: 0;
+            justify-self: stretch;
+        }
+        #ebaFormActions #portalAccessButton {
+            grid-column: 1 / -1;
+            width: min(100%, 420px);
+            max-width: 420px;
+            justify-self: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #ebaFormActions #devModeNotice {
+            grid-column: 1 / -1;
+            justify-self: center;
+            text-align: center;
+        }
+        @media (max-width: 900px) {
+            #ebaFormActions {
+                grid-template-columns: 1fr;
+            }
+            #ebaFormActions #loginError {
+                grid-column: 1;
+            }
+        }
+        .pac-form-card .login-field-label {
+            font-size: 0.72rem;
+            margin-bottom: 4px;
+        }
+        .pac-form-card .required-fields-note {
+            font-size: 0.72rem;
+            margin: 0 0 6px;
+        }
+        .pac-form-card .visitor-grid {
+            gap: 8px;
+        }
+        .pac-form-card .visitor-optin {
+            font-size: 0.8rem;
+            margin: 2px 0 8px;
+        }
+
+        /* Dual-path customer layout
+           Left: Visitor profile  |  OR  |  Right stack: compact Quick Access + portal dropdown */
+        .cust-dual {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: start;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+        .cust-right-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+            align-self: start;
+        }
+        .cust-path {
+            position: relative;
+            border: 1.5px solid rgba(140, 157, 112, 0.45);
+            border-radius: 14px;
+            padding: 10px 10px 8px;
+            background: rgba(255,255,255,0.55);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            min-width: 0;
+        }
+        /* Quick Access: short card — title + email only */
+        .cust-path--quick,
+        .cust-path[data-path="quick"] {
+            height: auto;
+            flex: 0 0 auto;
+            align-self: start;
+            padding-bottom: 10px;
+        }
+        .cust-path--quick .cust-path-copy,
+        .cust-path[data-path="quick"] .cust-path-copy {
+            font-size: 0.68rem;
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+        .cust-path--quick .cust-path-body,
+        .cust-path[data-path="quick"] .cust-path-body {
+            margin-top: 2px;
+        }
+        .cust-path--quick .login-form input,
+        .cust-path[data-path="quick"] input[type="email"] {
+            margin-bottom: 0;
+        }
+        /* Portal dropdown sits under Quick Access on the right */
+        .cust-right-stack .cust-company-wrap {
+            margin-top: 0;
+            padding: 10px 12px 12px;
+            border: 1.5px solid rgba(140, 157, 112, 0.45);
+            border-radius: 14px;
+            background: rgba(250, 247, 236, 0.96);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 6px 14px rgba(40, 56, 24, 0.06);
+        }
+        .cust-right-stack .cust-company-wrap .login-section-title {
+            margin-top: 0;
+            margin-bottom: 4px;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: rgba(47, 74, 31, 0.96);
+        }
+        .cust-right-stack .cust-company-wrap .login-helper-text {
+            margin-bottom: 8px;
+            font-size: 0.72rem;
+            line-height: 1.35;
+        }
+        .cust-right-stack .cust-company-wrap select {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .cust-path[data-path="visitor"] {
+            /* visitor can use remaining vertical room on the left */
+            min-height: 0;
+        }
+        .cust-path.is-selected {
+            border-color: rgba(90, 122, 50, 0.75);
+            background: rgba(250, 247, 236, 0.96);
+            box-shadow: 0 0 0 1px rgba(201, 166, 72, 0.28), 0 8px 16px rgba(40, 56, 24, 0.08);
+        }
+        .cust-path-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .cust-path-radio {
+            width: 16px !important;
+            min-width: 16px;
+            height: 16px !important;
+            margin: 2px 0 0 !important;
+            padding: 0 !important;
+            accent-color: rgba(60, 95, 41, 0.98);
+            flex: 0 0 16px;
+        }
+        .cust-path-title {
+            margin: 0;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(47, 74, 31, 0.96);
+            line-height: 1.25;
+        }
+        .cust-path-copy {
+            margin: 2px 0 0;
+            font-size: 0.74rem;
+            line-height: 1.35;
+            color: rgba(82, 100, 60, 0.92);
+            font-weight: 500;
+        }
+        .cust-or {
+            align-self: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: rgba(250, 240, 160, 0.98);
+            background: linear-gradient(180deg, rgba(176, 140, 48, 0.98), rgba(120, 92, 28, 0.98));
+            border: 1px solid rgba(250, 220, 120, 0.55);
+            box-shadow: 0 4px 10px rgba(60, 48, 12, 0.2);
+            flex: 0 0 34px;
+        }
+        .cust-path-body { min-width: 0; }
+        .cust-path:not(.is-selected) .cust-path-body {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        .cust-path.is-selected .cust-path-body {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .cust-actions {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 0 0 auto;
+        }
+        .cust-company-wrap { margin-top: 2px; }
+        /* Keep portal menu visible under Quick Access (do not collapse the slot) */
+        .cust-right-stack .cust-company-wrap[hidden] {
+            display: block !important;
+            visibility: visible !important;
+        }
+        .cust-company-wrap[hidden] { display: none !important; }
+        #portalAccessButton {
+            width: 100%;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .code-panel-note {
+            font-size: 0.74rem;
+            color: rgba(82, 100, 60, 0.9);
+            margin: 0 0 8px;
+            line-height: 1.35;
+        }
+
+        @media (max-width: 1100px) {
+            .cust-dual { grid-template-columns: 1fr; }
+            .cust-right-stack { width: 100%; }
+            .cust-or { margin: 2px auto; }
+            .pac-card-frame {
+                left: calc(4% + 30px);
+                top: calc(36% - 55px);
+                width: 92%;
+                bottom: 16px;
+                height: auto;
+                padding: 8px 10px 10px;
+            }
+            .pac-tab .pac-tab-sub { display: none; }
+            .pac-form-card { overflow: auto; } /* allow scroll only on tight widths */
+        }
+
+        .pac-panel[hidden] { display: none !important; }
+        .pac-drawer .pac-panel[hidden] { display: none !important; }
+        .sr-only {
+            position: absolute !important;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0);
+            white-space: nowrap; border: 0;
+        }
+        .pac-sr-only {
+            position: absolute !important;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0);
+            white-space: nowrap; border: 0;
+        }
+        /* Hide legacy modal chrome — access is in-page now */
+        .login-modal { display: none !important; }
+        body.pac-body footer.ue-standard-footer {
+            margin-top: 8px;
+        }
+        @media (max-width: 980px) {
+            .pac-art-wrap { border-radius: 0 !important; }
+            .pac-art { min-height: 200px; object-fit: cover; object-position: top center; max-height: 36vh; }
+            .pac-overlay {
+                position: relative;
+                inset: auto;
+                display: block;
+            }
+            .pac-card-frame {
+                position: relative;
+                left: auto;
+                top: auto;
+                width: auto;
+                height: auto;
+                margin: 0;
+                padding: 12px 10px 14px;
+                background: linear-gradient(180deg, rgba(246,242,232,0.98), rgba(236,228,208,0.96));
+            }
+            .pac-tabs { gap: 8px; min-height: 0; }
+            .pac-tab { min-height: 48px; }
+            .pac-tab .pac-tab-sub { display: none; }
+            .pac-form-layer { position: relative; }
+            .pac-form-card[data-active-audience="partner"],
+            .pac-form-card[data-active-audience="investor"] {
+                width: 100%;
+                max-width: none;
+            }
+        }
+        
+
+        /* ===== INVESTOR ACCESS ART PANEL 20261103 =====
+           Art fills drawer panel edge-to-edge (override 440px drawer panel cap). */
+        .pac-drawer[data-active-audience="investor"],
+        .pac-drawer:has(#panelInvestor:not([hidden])) {
+            /* keep full inset coverage */
+        }
+        .pac-drawer-card[data-active-audience="investor"] {
+            width: 100% !important;
+            max-width: none !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 18px !important;
+            box-shadow: none !important;
+            overflow: hidden !important;
+            justify-content: stretch !important;
+            align-items: stretch !important;
+        }
+        /* Only the active (non-hidden) art panel may display — never both */
+        .pac-drawer-card[data-active-audience="investor"] .pac-panel.investor-panel--art:not([hidden]),
+        .pac-drawer-card .pac-panel.investor-panel--art:not([hidden]) {
+            width: 100% !important;
+            max-width: none !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .pac-drawer-card .pac-panel.investor-panel--art[hidden],
+        .pac-panel.investor-panel--art[hidden] {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            height: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .investor-panel--art {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .investor-art-stage {
+            position: relative;
+            flex: 1 1 auto;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            border: none;
+            box-shadow: none;
+            background: #f4efe3;
+        }
+        .investor-art {
+            display: block;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            border-radius: 18px;
+            pointer-events: none;
+            user-select: none;
+        }
+        /* Live controls sit on the painted form zone (center of art) */
+        .investor-art-form {
+            position: absolute;
+            left: 50%;
+            top: calc(54% - 42px);
+            transform: translate(-50%, -50%);
+            /* Shared PAC code stack geometry (investor = partner) */
+            width: min(46%, 380px);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            z-index: 2;
+        }
+        .investor-art-label { display: none; }
+        .investor-code-wrap {
+            position: relative;
+            width: 100%;
+            display: block;
+        }
+        .investor-art-code {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 !important;
+            padding: 8px 44px 8px 16px !important;
+            min-height: 42px !important;
+            height: 42px !important;
+            border-radius: 8px !important;
+            border: 1.5px solid rgba(210, 210, 205, 0.95) !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            color: #1a2a14 !important;
+            -webkit-text-fill-color: #1a2a14 !important;
+            caret-color: #1a2a14 !important;
+            font-size: 1.35rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.55em !important;
+            text-align: left !important;
+            box-shadow: 0 6px 16px rgba(30, 40, 18, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+        .investor-art-code::placeholder {
+            color: #1a2a14 !important;
+            -webkit-text-fill-color: #1a2a14 !important;
+            opacity: 1 !important;
+            letter-spacing: 0.55em !important;
+            font-size: 1.35rem !important;
+            font-weight: 800 !important;
+            text-align: left !important;
+        }
+        .investor-art-code[type="password"] {
+            -webkit-text-security: disc;
+        }
+        .investor-code-key {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(245, 245, 240, 0.95);
+            color: #3a4a32;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            padding: 0;
+            z-index: 3;
+        }
+        .investor-code-key:hover {
+            background: #fff;
+            color: #1f3314;
+        }
+        .investor-code-key:focus-visible {
+            outline: 2px solid rgba(201, 166, 72, 0.85);
+            outline-offset: 2px;
+        }
+        .investor-art-btn {
+            width: 100%;
+            max-width: none;
+            margin: 4px 0 0 !important;
+            align-self: stretch;
+            border-radius: 999px !important;
+            padding: 10px 28px !important;
+            min-height: 44px !important;
+            font-size: clamp(0.78rem, 1vw, 0.92rem) !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.14em !important;
+            text-transform: uppercase !important;
+            box-shadow: 0 10px 20px rgba(24, 36, 14, 0.22);
+        }
+        .investor-art-notice {
+            text-align: center;
+            margin: 0 !important;
+            color: rgba(70, 82, 52, 0.88) !important;
+            font-size: 0.7rem !important;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.55);
+        }
+        .investor-panel--art #investorLoginError {
+            margin: 0 !important;
+            text-align: center;
+            background: rgba(170, 70, 62, 0.14);
+        }
+        @media (max-width: 900px) {
+            .investor-art-form {
+                width: min(84%, 380px);
+                top: calc(50% - 42px);
+            }
+            .investor-art-btn {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+        /* ===== /INVESTOR ACCESS ART PANEL ===== */
+
+        /* ===== PARTNER ACCESS ART PANEL 20261103 =====
+           Mirrors investor full-bleed art stage with live code controls. */
+        .pac-drawer-card[data-active-audience="partner"] {
+            width: 100% !important;
+            max-width: none !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 18px !important;
+            box-shadow: none !important;
+            overflow: hidden !important;
+            justify-content: stretch !important;
+            align-items: stretch !important;
+        }
+        .pac-drawer-card[data-active-audience="partner"] .pac-panel.partner-panel--art:not([hidden]),
+        .pac-drawer-card .pac-panel.partner-panel--art:not([hidden]) {
+            width: 100% !important;
+            max-width: none !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .pac-drawer-card .pac-panel.partner-panel--art[hidden],
+        .pac-panel.partner-panel--art[hidden] {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            height: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .partner-panel--art {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .partner-art-stage {
+            position: relative;
+            flex: 1 1 auto;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            border: none;
+            box-shadow: none;
+            background: #f4efe3;
+        }
+        .partner-art {
+            display: block;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            border-radius: 18px;
+            pointer-events: none;
+            user-select: none;
+        }
+        /* Live controls centered slightly lower on painted form zone */
+        .partner-art-form {
+            position: absolute;
+            left: 50%;
+            top: calc(54% - 42px);
+            transform: translate(-50%, -50%);
+            /* Shared PAC code stack geometry (partner = investor) */
+            width: min(46%, 380px);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            z-index: 2;
+        }
+        .partner-art-label { display: none; }
+        .partner-code-wrap {
+            position: relative;
+            width: 100%;
+            display: block;
+        }
+        .partner-art-code {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 !important;
+            padding: 8px 44px 8px 16px !important;
+            min-height: 42px !important;
+            height: 42px !important;
+            /* Flat ends like painted reference (not oval/pill) */
+            border-radius: 8px !important;
+            border: 1.5px solid rgba(210, 210, 205, 0.95) !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            /* Dark dots, left-justified */
+            color: #1a2a14 !important;
+            -webkit-text-fill-color: #1a2a14 !important;
+            caret-color: #1a2a14 !important;
+            font-size: 1.35rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.55em !important;
+            text-align: left !important;
+            box-shadow: 0 6px 16px rgba(30, 40, 18, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+        .partner-art-code::placeholder {
+            color: #1a2a14 !important;
+            -webkit-text-fill-color: #1a2a14 !important;
+            opacity: 1 !important;
+            letter-spacing: 0.55em !important;
+            font-size: 1.35rem !important;
+            font-weight: 800 !important;
+            text-align: left !important;
+        }
+        /* Force dark password discs in WebKit/Blink */
+        .partner-art-code[type="password"] {
+            -webkit-text-security: disc;
+        }
+        .partner-code-key {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(245, 245, 240, 0.95);
+            color: #3a4a32;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            padding: 0;
+            z-index: 3;
+        }
+        .partner-code-key:hover {
+            background: #fff;
+            color: #1f3314;
+        }
+        .partner-code-key:focus-visible {
+            outline: 2px solid rgba(201, 166, 72, 0.85);
+            outline-offset: 2px;
+        }
+        .partner-code-key-icon { display: block; }
+        .partner-art-btn {
+            width: 100%;
+            max-width: none;
+            margin: 4px 0 0 !important;
+            align-self: stretch;
+            border-radius: 999px !important;
+            /* Match access-code field length exactly */
+            padding: 10px 28px !important;
+            min-height: 44px !important;
+            font-size: clamp(0.78rem, 1vw, 0.92rem) !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.14em !important;
+            text-transform: uppercase !important;
+            box-shadow: 0 10px 20px rgba(24, 36, 14, 0.22);
+        }
+        .partner-art-notice {
+            text-align: center;
+            margin: 0 !important;
+            color: rgba(70, 82, 52, 0.88) !important;
+            font-size: 0.7rem !important;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.55);
+        }
+        .partner-art-notice[hidden] { display: none !important; }
+        .partner-panel--art #partnerLoginError {
+            margin: 0 !important;
+            text-align: center;
+            background: rgba(170, 70, 62, 0.14);
+        }
+        @media (max-width: 900px) {
+            .partner-art-form {
+                width: min(84%, 380px);
+                top: calc(56% - 42px);
+            }
+            .partner-art-btn {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+        /* ===== /PARTNER ACCESS ART PANEL ===== */
+
+        /* PAC art panel mutex — never show partner + investor art together */
+        .pac-drawer-card:not([data-active-audience="partner"]) .partner-panel--art,
+        .pac-drawer:not([data-active-audience="partner"]) .partner-panel--art {
+            display: none !important;
+        }
+        .pac-drawer-card:not([data-active-audience="investor"]) .investor-panel--art,
+        .pac-drawer:not([data-active-audience="investor"]) .investor-panel--art {
+            display: none !important;
+        }
+        .pac-drawer-card[data-active-audience="partner"] .investor-panel--art,
+        .pac-drawer[data-active-audience="partner"] .investor-panel--art {
+            display: none !important;
+        }
+        .pac-drawer-card[data-active-audience="investor"] .partner-panel--art,
+        .pac-drawer[data-active-audience="investor"] .partner-panel--art {
+            display: none !important;
+        }
+
+
+
+        /* ===== ENERGY BEHAVIOR ACCESS EXPLORER 20261102 ===== */
+        .eba-explorer {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 0;
+            flex: 1 1 auto;
+            overflow: auto;
+            padding: 2px 2px 6px;
+        }
+        .eba-explorer[hidden] { display: none !important; }
+        .eba-explorer-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px; }
+        .eba-return-btn {
+            align-self: flex-start;
+            appearance: none;
+            border-radius: 999px;
+            border: 1px solid rgba(47, 74, 31, 0.35);
+            background: rgba(255,255,255,0.82);
+            color: rgba(47, 74, 31, 0.95);
+            font-weight: 750;
+            font-size: 0.82rem;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .eba-explorer-title {
+            margin: 0;
+            color: rgba(47, 74, 31, 0.98);
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+        .eba-explorer-sub {
+            margin: 0;
+            color: rgba(90, 98, 82, 0.95);
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+        .eba-legend { display: none !important; }
+        .eba-title-rule {
+            height: 1px;
+            width: 100%;
+            margin: 4px 0 8px;
+            border: none;
+            background: linear-gradient(90deg, rgba(101, 129, 67, 0.08) 0%, rgba(101, 129, 67, 0.55) 50%, rgba(101, 129, 67, 0.08) 100%);
+        }
+        #ebaExplorer .eba-explorer-title,
+        #ebaExplorer h3 {
+            margin: 0;
+        }
+        #ebaExplorer .eba-columns {
+            margin-top: 0;
+        }
+        .eba-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            min-height: 0;
+        }
+        @media (max-width: 900px) {
+            .eba-columns { grid-template-columns: 1fr; }
+        }
+        .eba-col-title {
+            margin: 0 0 8px;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #7a6428;
+            font-weight: 800;
+        }
+        .eba-card-list { display: flex; flex-direction: column; gap: 8px; }
+        .eba-card {
+            appearance: none;
+            width: 100%;
+            text-align: left;
+            border-radius: 14px;
+            border: 1px solid rgba(63, 94, 39, 0.28);
+            background: linear-gradient(180deg, rgba(255,252,245,0.96), rgba(236,242,226,0.92));
+            padding: 12px 12px 11px;
+            cursor: pointer;
+            color: rgba(47, 74, 31, 0.96);
+            box-shadow: 0 4px 12px rgba(30, 40, 18, 0.08);
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .eba-card:hover {
+            transform: translateY(-1px);
+            border-color: rgba(63, 94, 39, 0.55);
+            box-shadow: 0 8px 16px rgba(30, 40, 18, 0.12);
+        }
+        .eba-card:focus-visible {
+            outline: 3px solid rgba(201, 166, 72, 0.75);
+            outline-offset: 2px;
+        }
+        .eba-card-industry {
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #7a6428;
+            margin: 0 0 4px;
+        }
+        .eba-card-title {
+            margin: 0 0 6px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            line-height: 1.25;
+            color: rgba(31, 51, 20, 0.98);
+        }
+        .eba-card-status {
+            display: inline-flex;
+            margin: 0 0 6px;
+            border-radius: 999px;
+            border: 1px solid rgba(47, 74, 31, 0.22);
+            padding: 3px 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.75);
+        }
+        .eba-card-integrity {
+            margin: 0;
+            font-size: 0.78rem;
+            line-height: 1.35;
+            color: rgba(90, 98, 82, 0.95);
+        }
+        .eba-card-cta {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: rgba(47, 74, 31, 0.95);
+        }
+        #panelCustomer.is-explorer .cust-split,
+        #panelCustomer.is-explorer #ebaFormActions,
+        #panelCustomer.is-explorer .cust-path-grid,
+        #panelCustomer.is-explorer .login-form > .cust-split {
+            display: none !important;
+        }
+        /* when explorer on, hide the whole login-form body except explorer */
+        #panelCustomer.is-explorer .login-form > .cust-dual,
+        #panelCustomer.is-explorer .login-form > .cust-actions,
+        #panelCustomer.is-explorer #ebaCustomerFormRoot {
+            display: none !important;
+        }
+        .customerCompanyWrap-visitor-disabled,
+        #customerCompanyWrap.is-visitor-disabled {
+            opacity: 0.45;
+            pointer-events: none;
+            filter: grayscale(0.25);
+        }
+        /* ===== /ENERGY BEHAVIOR ACCESS EXPLORER 20261102 ===== */
+
+        /* ===== /PRIVATE ACCESS CENTER ART 20261101 ===== */
 
     </style>
 <!-- UE-SEO-FOUNDATION-START -->
-    <meta name="description" content="Access Unity Energy customer portals for facility energy intelligence. Authorized access only.">
+    <meta name="description" content="Unity Energy Private Access Center — Partner, Customer, and Investor gateways. Authorized access only.">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <link rel="canonical" href="https://unityenergy.com/UnityEnergy/customer-portals.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Unity Energy">
-    <meta property="og:title" content="Customer Portals | Unity Energy">
-    <meta property="og:description" content="Access Unity Energy customer portals for facility energy intelligence. Authorized access only.">
+    <meta property="og:title" content="Private Access Center | Unity Energy">
+    <meta property="og:description" content="Unity Energy Private Access Center — Partner, Customer, and Investor gateways. Authorized access only.">
     <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portals.html">
     <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/unity-icon-circle-512.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Customer Portals | Unity Energy">
-    <meta name="twitter:description" content="Access Unity Energy customer portals for facility energy intelligence. Authorized access only.">
+    <meta name="twitter:title" content="Private Access Center | Unity Energy">
+    <meta name="twitter:description" content="Unity Energy Private Access Center — Partner, Customer, and Investor gateways. Authorized access only.">
     <!-- UE-SEO-FOUNDATION-END -->
 </head>
-<body>
+<body class="pac-body">
     <div class="nav-tabs-container">
         <div class="nav-tabs">
             <a href="index.html" class="nav-tab-portal">Unity Home</a>
@@ -877,95 +2348,215 @@
             <a href="our-systems.html" class="nav-tab-portal">Our Systems</a>
             <a href="products-services.html" class="nav-tab-portal">Products and Services</a>
             <a href="electrical-energy-story.html" class="nav-tab-portal">Energy Field Story</a>
-            <a href="customer-portals.html" class="nav-tab-portal active">Customer Portals</a>
+            <a href="customer-portals.html" class="nav-tab-portal active">Private Access</a>
             <a href="maxwellian.html" class="nav-tab-maxwellian">Maxwellian Library</a>
             <a href="contact-us.html" class="nav-tab-portal">Contact Us</a>
         </div>
     </div>
-    <main class="portal-shell">
-        <h1 class="portal-heading">Customer Electrical-Energy Portals</h1>
-        <p class="welcome-text">
-            Enter the Unity Customer Portal environments for detailed information on the 480v Industrial Energy Field, 
-            Unity Energy Systems are used to reveal behavior truths and educate about next level harmonizing Energy Field tuning technology. 
-        </p>
-        <div class="portal-container" onclick="openLoginModal(event)">
-            <img src="UnityPortalButton.png" alt="Unity Energy Portal" class="portal-image">
-            <div class="portal-overlay">
-                <div class="portal-button">
-                    <div class="subtitle1">INDUSTRIAL</div>
-                    <div class="title">480V-3ph</div>
-                    <div class="title">ENERGY FIELD</div>
-                    <div class="title">BEHAVIOR</div>
-                    <div class="subtitle">select to enter</div>
+    <main class="pac-stage" aria-label="Private Access Center">
+        <div class="pac-art-wrap">
+            <img
+                class="pac-art"
+                src="assets/images/ueprivateaccess_61102.png?v=20261102-art-refresh-4"
+                width="2388"
+                height="1656"
+                alt="Unity Energy Private Access Center — gateway for Partners, Customers, and Investors"
+            >
+            <div class="pac-overlay">
+                <div class="pac-card-frame">
+                <div class="pac-tabs" role="tablist" aria-label="Access path">
+                    <button type="button" class="pac-tab" role="tab" id="audienceChipPartner" data-audience="partner" aria-selected="false" aria-controls="panelPartner" title="Partner Access">
+                        <span class="pac-tab-title">Partner Access</span>
+                        <span class="pac-tab-sub">Strategic Partners and Collaborators</span>
+                    </button>
+                    <button type="button" class="pac-tab is-active" role="tab" id="audienceChipCustomer" data-audience="customer" aria-selected="true" aria-controls="panelEnergy Behavior" title="Energy Behavior Access">
+                        <span class="pac-tab-title">Energy Behavior Access</span>
+                        <span class="pac-tab-sub">Facility Operators and Industrial Customers</span>
+                    </button>
+                    <button type="button" class="pac-tab" role="tab" id="audienceChipInvestor" data-audience="investor" aria-selected="false" aria-controls="panelInvestor" title="Investor Access">
+                        <span class="pac-tab-title">Investor Access</span>
+                        <span class="pac-tab-sub">Investors and Strategic Capital Partners</span>
+                    </button>
+                </div>
+                                <div class="pac-form-layer">
+                    <div class="pac-base-layer" id="pacBaseLayer">
+                        <div class="pac-form-card portal-access-grid" data-active-audience="customer">
+                            <section class="pac-panel portal-access-panel customer-panel is-audience-active" id="panelCustomer" data-audience="customer" aria-label="Energy Behavior Access" data-eba-mode="form">
+                            <!-- Title removed: Customer Access chip already names the path -->
+                            <div class="login-form">
+                                <div class="cust-dual" role="radiogroup" aria-label="Customer access path">
+                                    <div class="cust-path is-selected" id="custPathVisitor" data-path="visitor">
+                                        <div class="cust-path-head">
+                                            <input class="cust-path-radio" type="radio" name="customerAccessPath" id="customerPathVisitor" value="visitor" checked aria-label="Visitor Profile Explore Unity">
+                                            <div>
+                                                <p class="cust-path-title">Visitor — Study Explorer</p>
+                                                <p class="cust-path-copy">New visitor path. Complete your profile to open the curated Study Explorer (untuned and tuned field examples). Not a customer directory.</p>
+                                            </div>
+                                        </div>
+                                        <div class="cust-path-body" id="visitorProfileSection">
+                                            <div class="visitor-grid">
+                                                <div>
+                                                    <label class="login-field-label" for="visitorFirstName">First Name<span class="required-asterisk">*</span></label>
+                                                    <input type="text" id="visitorFirstName" name="visitor_first_name" placeholder="Enter first name" autocomplete="given-name">
+                                                </div>
+                                                <div>
+                                                    <label class="login-field-label" for="visitorLastName">Last Name<span class="required-asterisk">*</span></label>
+                                                    <input type="text" id="visitorLastName" name="visitor_last_name" placeholder="Enter last name" autocomplete="family-name">
+                                                </div>
+                                            </div>
+                                            <label class="login-field-label" for="visitorEmail">Business Email<span class="required-asterisk">*</span></label>
+                                            <input type="email" id="visitorEmail" name="visitor_email" placeholder="name@company.com" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
+                                            <div class="visitor-grid">
+                                                <div>
+                                                    <label class="login-field-label" for="visitorRole">Your Role<span class="required-asterisk">*</span></label>
+                                                    <select id="visitorRole" name="visitor_role" autocomplete="off">
+                                                        <option value="" disabled selected>Select your role</option>
+                                                        <option value="facility-executive">Facility Executive</option>
+                                                        <option value="plant-manager">Plant Manager</option>
+                                                        <option value="maintenance-manager">Maintenance Manager</option>
+                                                        <option value="electrical-engineer">Electrical Engineer</option>
+                                                        <option value="energy-manager">Energy Manager</option>
+                                                        <option value="operations-lead">Operations Lead</option>
+                                                        <option value="procurement-finance">Procurement / Finance</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label class="login-field-label" for="visitorObjective">Primary Objective<span class="required-asterisk">*</span></label>
+                                                    <select id="visitorObjective" name="visitor_objective" autocomplete="off">
+                                                        <option value="" disabled selected>Select your objective</option>
+                                                        <option value="energy-cost-reduction">Reduce Energy Cost</option>
+                                                        <option value="power-quality-reliability">Improve Power Quality</option>
+                                                        <option value="co2e-emissions-visibility">Track CO2e & Emissions</option>
+                                                        <option value="thermal-cooling-optimization">Optimize Thermal/Cooling Burden</option>
+                                                        <option value="transformer-health-risk">Monitor Transformer Health & Risk</option>
+                                                        <option value="executive-briefing">Executive Performance Review</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label class="visitor-optin">
+                                                <input type="checkbox" id="visitorUpdates" name="visitor_updates">
+                                                <span class="visitor-optin-copy">Yes, send Unity Energy updates and relevant technical materials. (Optional — not required for explorer access.)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="cust-or" aria-hidden="true">OR</div>
+                                    <div class="cust-right-stack">
+                                        <div class="cust-path cust-path--quick" id="custPathQuick" data-path="quick">
+                                            <div class="cust-path-head">
+                                                <input class="cust-path-radio" type="radio" name="customerAccessPath" id="customerPathQuick" value="quick" aria-label="Quick Access Business Email">
+                                                <div>
+                                                    <p class="cust-path-title">Quick Access — Returning Customer</p>
+                                                    <p class="cust-path-copy">Registered business email opens your assigned facility portal. Email identifies your route; private data still expects authorized use.</p>
+                                                </div>
+                                            </div>
+                                            <div class="cust-path-body">
+                                                <label class="login-field-label" for="quickEmail">Business Email Address<span class="required-asterisk">*</span></label>
+                                                <input type="email" id="quickEmail" name="quick_email" placeholder="name@company.com" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
+                                            </div>
+                                        </div>
+                                        <div class="cust-company-wrap" id="customerCompanyWrap">
+                                            <div class="login-section-title" id="portalCredentialsTitle">Energy Portals</div>
+                                            <div class="login-helper-text" id="portalCredentialsHelperText">Matched company portals appear after a valid business email.</div>
+                                            <select id="customerName" name="ue_company" autocomplete="off">
+                                                <option value="" disabled selected>Select Company or Guest</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cust-actions" id="ebaFormActions">
+                                    <div class="login-error" id="loginError"></div>
+                                    <button class="login-btn" id="portalAccessButton" onclick="attemptLogin()">Enter Study Explorer →</button>
+                                    <div class="dev-mode-notice" id="devModeNotice">Visitor path opens Study Explorer. Quick Access uses company email for your assigned facility only.</div>
+                                </div>
+                            </div>
+                            <!-- Energy Behavior Access · Study Explorer (S3) -->
+                            <div class="eba-explorer" id="ebaExplorer" hidden aria-hidden="true">
+                                <div class="eba-explorer-head">
+                                    <button type="button" class="eba-return-btn" id="ebaReturnBtn">← Return to Energy Behavior Access</button>
+                                    <h3 class="eba-explorer-title">Industrial 480 V Energy Field Fingerprints</h3>
+                                    <div class="eba-title-rule" aria-hidden="true"></div>
+                                </div>
+                                <div class="eba-columns" id="ebaColumns">
+                                    <div class="eba-col" data-col="untuned">
+                                        <h4 class="eba-col-title">Untuned Energy Fields</h4>
+                                        <div class="eba-card-list" id="ebaUntunedCards"></div>
+                                    </div>
+                                    <div class="eba-col" data-col="tuned">
+                                        <h4 class="eba-col-title">Tuned Energy Fields</h4>
+                                        <div class="eba-card-list" id="ebaTunedCards"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        </div>
+                    </div>
+                    <div class="pac-drawer" id="pacDrawer" aria-hidden="true">
+                        <div class="pac-form-card pac-drawer-card portal-access-grid" data-active-audience="">
+                            <section class="pac-panel portal-access-panel partner-panel partner-panel--art" id="panelPartner" data-audience="partner" hidden aria-label="Partner Access Portal">
+                            <div class="partner-art-stage">
+                                <img
+                                    class="partner-art"
+                                    src="assets/images/uepartnerhero.png?v=20261103-partner-hero-54eef6e432c2"
+                                    width="2388"
+                                    height="1668"
+                                    alt="Partner Access Portal background art"
+                                >
+                                <div class="partner-art-form" role="form" aria-label="Partner access code entry">
+                                    <label class="login-field-label partner-art-label" for="partnerAccessCode">
+                                        <span class="sr-only">6-Digit Access Code</span>
+                                    </label>
+                                    <div class="partner-code-wrap">
+                                        <input type="password" id="partnerAccessCode" class="code-access-input partner-art-code" name="partner_access_code" placeholder="••••••" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="6-Digit Access Code" data-lpignore="true" data-1p-ignore="true">
+                                        <button type="button" class="partner-code-key" id="partnerCodeReveal" aria-label="Show access code" title="Show access code">
+                                            <svg class="partner-code-key-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                                                <path fill="currentColor" d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5A2.5 2.5 0 1 0 12 9a2.5 2.5 0 0 0 0 5z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="login-error" id="partnerLoginError"></div>
+                                    <button class="login-btn partner-art-btn" id="partnerAccessButton" onclick="attemptPartnerAccess()">OPEN PARTNER PORTAL →</button>
+                                    <div class="dev-mode-notice partner-art-notice" id="partnerModeNotice" hidden>Access code required — destinations stay private.</div>
+                                </div>
+                            </div>
+                        </section>
+                            <section class="pac-panel portal-access-panel investor-panel investor-panel--art" id="panelInvestor" data-audience="investor" hidden aria-label="Investor Access Portal">
+                            <div class="investor-art-stage">
+                                <img
+                                    class="investor-art"
+src="assets/images/ueinvestorhero.png?v=20261103-investor-hero-c6e439786424"
+                                    width="2388"
+                                    height=" 1668"
+                                    alt="Investor Access Portal background art"
+                                >
+                                <div class="investor-art-form" role="form" aria-label="Investor access code entry">
+                                    <label class="login-field-label investor-art-label" for="investorAccessCode">
+                                        <span class="sr-only">6-Digit Access Code</span>
+                                    </label>
+                                    <div class="investor-code-wrap">
+                                        <input type="password" id="investorAccessCode" class="code-access-input investor-art-code" name="investor_access_code" placeholder="••••••" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="6-Digit Access Code" data-lpignore="true" data-1p-ignore="true">
+                                        <button type="button" class="investor-code-key" id="investorCodeReveal" aria-label="Show access code" title="Show access code">
+                                            <svg class="investor-code-key-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                                                <path fill="currentColor" d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5A2.5 2.5 0 1 0 12 9a2.5 2.5 0 0 0 0 5z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="login-error" id="investorLoginError"></div>
+                                    <button class="login-btn investor-art-btn" id="investorAccessButton" onclick="attemptInvestorAccess()">OPEN INVESTOR PORTAL →</button>
+                                    <div class="dev-mode-notice investor-art-notice" id="investorModeNotice" hidden>Access code required — destinations stay private.</div>
+                                </div>
+                            </div>
+                        </section>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
+        <p class="pac-sr-only">Private Access Center for Partners, Energy Behavior Access, and Investors. Use the three access path buttons, then complete the selected form.</p>
     </main>
-    <div class="login-modal" id="loginModal" onclick="closeLoginModal()">
-        <div class="login-modal-content" onclick="event.stopPropagation()">
-            <button class="close-login" onclick="closeLoginModal()">✕</button>
-            <div class="login-header">
-                <div class="login-brand-row">
-                    <svg class="login-brand-logo" viewBox="0 0 72 72" focusable="false" aria-hidden="true">
-                        <circle class="ue-ring" cx="36" cy="36" r="30"></circle>
-                        <path class="ue-u" d="M16.8 27.8v9.4c0 4.2 3.4 7.6 7.6 7.6h2c4.2 0 7.6-3.4 7.6-7.6v-9.4"></path>
-                        <path class="ue-e" d="M41.2 27.8h13.8"></path>
-                        <path class="ue-e" d="M41.2 36.3h13.8"></path>
-                        <path class="ue-e" d="M41.2 44.8h13.8"></path>
-                    </svg>
-                    <span class="login-brand-kicker">Unity Energy</span>
-                </div>
-                <h2>Customer Access Portal</h2>
-                <p>Welcome to Unity’s customer access portal. Enter your email, select a company, and continue. We hope you enjoy the visit.</p>
-            </div>
-            <div class="login-form">
-                <div id="visitorProfileSection">
-                    <div class="login-section-title">Visitor Profile</div>
-                    <div class="required-fields-note"><span class="required-asterisk">*</span> Email address is required</div>
-                    <div class="visitor-grid">
-                        <input type="text" id="visitorFirstName" name="visitor_first_name" placeholder="First Name (optional)" autocomplete="given-name">
-                        <input type="text" id="visitorLastName" name="visitor_last_name" placeholder="Last Name (optional)" autocomplete="family-name">
-                    </div>
-                    <label class="login-field-label" for="visitorEmail">Email Address<span class="required-asterisk">*</span></label>
-                    <input type="email" id="visitorEmail" name="visitor_email" placeholder="Business Email Address" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="email">
-                    <div class="visitor-grid">
-                        <select id="visitorRole" name="visitor_role" autocomplete="off">
-                            <option value="" disabled selected>Select Role</option>
-                            <option value="facility-executive">Facility Executive</option>
-                            <option value="plant-manager">Plant Manager</option>
-                            <option value="maintenance-manager">Maintenance Manager</option>
-                            <option value="electrical-engineer">Electrical Engineer</option>
-                            <option value="energy-manager">Energy Manager</option>
-                            <option value="operations-lead">Operations Lead</option>
-                            <option value="procurement-finance">Procurement / Finance</option>
-                        </select>
-                        <select id="visitorObjective" name="visitor_objective" autocomplete="off">
-                            <option value="" disabled selected>Primary Objective</option>
-                            <option value="energy-cost-reduction">Reduce Energy Cost</option>
-                            <option value="power-quality-reliability">Improve Power Quality</option>
-                            <option value="co2e-emissions-visibility">Track CO2e & Emissions</option>
-                            <option value="thermal-cooling-optimization">Optimize Thermal/Cooling Burden</option>
-                            <option value="transformer-health-risk">Monitor Transformer Health & Risk</option>
-                            <option value="executive-briefing">Executive Performance Review</option>
-                        </select>
-                    </div>
-                    <label class="visitor-optin">
-                        <input type="checkbox" id="visitorUpdates" name="visitor_updates">
-                        <span class="visitor-optin-copy">Yes, send Unity Energy updates and relevant technical portal enhancements.</span>
-                    </label>
-                    <div class="login-divider"></div>
-                </div>
-                <div class="login-section-title" id="portalCredentialsTitle">Portal Access</div>
-                <div class="login-helper-text" id="portalCredentialsHelperText">Enter your company email. Access opens only the portal matched to that email domain (or Guest).</div>
-                <select id="customerName" name="ue_company" autocomplete="off">
-                    <option value="" disabled selected>Select Company or Guest</option>
-                </select>
-                <div class="login-error" id="loginError"></div>
-                <button class="login-btn" id="portalAccessButton" onclick="attemptLogin()">Access Unity Portal →</button>
-                <div class="dev-mode-notice" id="devModeNotice">No password required — company email unlocks only your portal.</div>
-            </div>
-        </div>
-    </div>
+    <!-- legacy modal removed: access is in-page on Private Access Center art -->
+    <div id="loginModal" class="login-modal" hidden aria-hidden="true"></div>
+
         <footer class="ue-standard-footer">
         <div class="footer-rail">
             <p class="footer-copy">&copy; 2026 Unity Energy. All rights reserved.</p>
@@ -978,10 +2569,344 @@
         </div>
     </footer>
     <script>
+
+
+        const UNITY_EBA_MODE_KEY = 'unity_eba_mode_v1';
+        const UNITY_EBA_RETURN_KEY = 'unity_eba_return_path_v1';
+        function getEbaConfig() {
+            return window.energyBehaviorExplorerConfig || null;
+        }
+        function writeEbaMode(mode) {
+            try { window.sessionStorage.setItem(UNITY_EBA_MODE_KEY, String(mode || 'form')); } catch (_e) {}
+        }
+        function readEbaMode() {
+            try { return String(window.sessionStorage.getItem(UNITY_EBA_MODE_KEY) || 'form'); } catch (_e) { return 'form'; }
+        }
+        function writeEbaReturnPath(path) {
+            try { window.sessionStorage.setItem(UNITY_EBA_RETURN_KEY, String(path || 'visitor')); } catch (_e) {}
+        }
+        function readEbaReturnPath() {
+            try { return String(window.sessionStorage.getItem(UNITY_EBA_RETURN_KEY) || 'visitor'); } catch (_e) { return 'visitor'; }
+        }
+function renderEnergyBehaviorExplorer() {
+            const cfg = getEbaConfig();
+            const untunedEl = document.getElementById('ebaUntunedCards');
+            const tunedEl = document.getElementById('ebaTunedCards');
+            if (!cfg || !untunedEl || !tunedEl) return;
+            function cardButton(card) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'eba-card';
+                btn.setAttribute('data-card-id', card.id);
+                btn.innerHTML =
+                    '<p class="eba-card-industry"></p>' +
+                    '<p class="eba-card-title"></p>' +
+                    '<span class="eba-card-status"></span>' +
+                    '<p class="eba-card-integrity"></p>' +
+                    '<div class="eba-card-cta">Open study →</div>';
+                btn.querySelector('.eba-card-industry').textContent = card.industry || '';
+                btn.querySelector('.eba-card-title').textContent = card.title || '';
+                btn.querySelector('.eba-card-status').textContent = card.status || '';
+                btn.querySelector('.eba-card-integrity').textContent = card.integrity || '';
+                btn.addEventListener('click', function () {
+                    // Direct to site hero / customer portal (no interim intro step)
+                    const path = card.portalPath || card.introPath;
+                    if (!path) return;
+                    window.location.href = path;
+                });
+                return btn;
+            }
+            untunedEl.innerHTML = '';
+            tunedEl.innerHTML = '';
+            (cfg.columns?.untuned?.cards || []).forEach(function (c) { untunedEl.appendChild(cardButton(c)); });
+            (cfg.columns?.tuned?.cards || []).forEach(function (c) { tunedEl.appendChild(cardButton(c)); });
+        }
+        function setEnergyBehaviorExplorerVisible(show) {
+            const panel = document.getElementById('panelCustomer');
+            const explorer = document.getElementById('ebaExplorer');
+            const formActions = document.getElementById('ebaFormActions');
+            const on = !!show;
+            if (panel) {
+                panel.classList.toggle('is-explorer', on);
+                panel.setAttribute('data-eba-mode', on ? 'explorer' : 'form');
+            }
+            if (explorer) {
+                if (on) {
+                    explorer.removeAttribute('hidden');
+                    explorer.setAttribute('aria-hidden', 'false');
+                    renderEnergyBehaviorExplorer();
+                } else {
+                    explorer.setAttribute('hidden', '');
+                    explorer.setAttribute('aria-hidden', 'true');
+                }
+            }
+            const loginForm = panel ? panel.querySelector('.login-form') : null;
+            if (loginForm) {
+                Array.from(loginForm.children).forEach(function (child) {
+                    if (child.id === 'ebaExplorer') return;
+                    if (on) child.setAttribute('hidden', '');
+                    else child.removeAttribute('hidden');
+                });
+            }
+            if (formActions) {
+                if (on) formActions.setAttribute('hidden', '');
+                else formActions.removeAttribute('hidden');
+            }
+            if (typeof syncVisitorCompanySelectorState === 'function') syncVisitorCompanySelectorState();
+            writeEbaMode(on ? 'explorer' : 'form');
+            if (on) {
+                window.setTimeout(function () { document.getElementById('ebaReturnBtn')?.focus(); }, 30);
+            }
+        }
+        function syncVisitorCompanySelectorState() {
+            const wrap = document.getElementById('customerCompanyWrap');
+            const selectEl = document.getElementById('customerName');
+            if (!wrap) return;
+            const path = (typeof getCustomerAccessPath === 'function') ? getCustomerAccessPath() : 'visitor';
+            const explorerOn = document.getElementById('panelCustomer')?.classList.contains('is-explorer');
+            if (explorerOn) {
+                wrap.setAttribute('hidden', '');
+                return;
+            }
+            if (path === 'visitor') {
+                wrap.classList.add('is-visitor-disabled');
+                wrap.setAttribute('hidden', '');
+                if (selectEl) {
+                    selectEl.disabled = true;
+                    selectEl.value = '';
+                }
+            } else {
+                wrap.classList.remove('is-visitor-disabled');
+                wrap.removeAttribute('hidden');
+                if (selectEl) selectEl.disabled = false;
+            }
+            // button label
+            const btn = document.getElementById('portalAccessButton');
+            const notice = document.getElementById('devModeNotice');
+            if (btn) {
+                btn.textContent = path === 'quick' ? 'Open My Facility Portal →' : 'Enter Study Explorer →';
+            }
+            if (notice) {
+                notice.textContent = path === 'quick'
+                    ? 'Quick Access — business email routes to your assigned facility portal only. (Provisional domain gate; verified session preferred.)'
+                    : 'Visitor path — Study Explorer only. Opt-in is optional and separate from access.';
+            }
+        }
+        function initEnergyBehaviorExplorerUi() {
+            const ret = document.getElementById('ebaReturnBtn');
+            if (ret) {
+                ret.addEventListener('click', function () {
+                    setEnergyBehaviorExplorerVisible(false);
+                    const back = readEbaReturnPath();
+                    if (typeof setCustomerAccessPath === 'function') setCustomerAccessPath(back === 'quick' ? 'quick' : 'visitor');
+                    syncVisitorCompanySelectorState();
+                });
+            }
+            // wrap form content root if present
+            const params = new URLSearchParams(window.location.search || '');
+            const eba = String(params.get('eba') || '').toLowerCase();
+            if (eba === 'explorer') {
+                setPrivateAccessAudience('customer');
+                setEnergyBehaviorExplorerVisible(true);
+            } else {
+                setEnergyBehaviorExplorerVisible(false);
+            }
+            syncVisitorCompanySelectorState();
+        }
+
+
+
+        function initInvestorCodeReveal() {
+            const btn = document.getElementById('investorCodeReveal');
+            const input = document.getElementById('investorAccessCode');
+            if (!btn || !input || btn.dataset.bound === '1') return;
+            btn.dataset.bound = '1';
+            btn.addEventListener('click', function () {
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                btn.setAttribute('aria-label', show ? 'Hide access code' : 'Show access code');
+                btn.title = show ? 'Hide access code' : 'Show access code';
+                btn.classList.toggle('is-revealed', show);
+                if (show) input.style.letterSpacing = '0.45em';
+                else input.style.letterSpacing = '';
+                input.focus();
+            });
+        }
+
+        function initPartnerCodeReveal() {
+            const btn = document.getElementById('partnerCodeReveal');
+            const input = document.getElementById('partnerAccessCode');
+            if (!btn || !input || btn.dataset.bound === '1') return;
+            btn.dataset.bound = '1';
+            btn.addEventListener('click', function () {
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                btn.setAttribute('aria-label', show ? 'Hide access code' : 'Show access code');
+                btn.title = show ? 'Hide access code' : 'Show access code';
+                btn.classList.toggle('is-revealed', show);
+                // keep numeric feel when revealed
+                if (show) input.style.letterSpacing = '0.45em';
+                else input.style.letterSpacing = '';
+                input.focus();
+            });
+        }
+
+        function setPrivateAccessAudience(audience) {
+            const allowed = new Set(['partner', 'customer', 'investor']);
+            const next = allowed.has(audience) ? audience : 'customer';
+            const isOverlay = (next === 'partner' || next === 'investor');
+            const base = document.getElementById('pacBaseLayer');
+            const drawer = document.getElementById('pacDrawer');
+            const baseCard = base ? base.querySelector('.pac-form-card') : null;
+            const drawerCard = drawer ? drawer.querySelector('.pac-form-card') : null;
+
+            if (baseCard) baseCard.setAttribute('data-active-audience', isOverlay ? 'customer' : 'customer');
+            if (drawerCard) drawerCard.setAttribute('data-active-audience', isOverlay ? next : '');
+
+            document.querySelectorAll('.pac-tab, .audience-chip').forEach((chip) => {
+                const on = chip.getAttribute('data-audience') === next;
+                chip.classList.toggle('is-active', on);
+                chip.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+
+            // Customer base stays mounted always
+            const customerPanel = document.getElementById('panelCustomer');
+            if (customerPanel) {
+                customerPanel.classList.toggle('is-audience-active', next === 'customer');
+                customerPanel.removeAttribute('hidden');
+            }
+
+            const partnerPanel = document.getElementById('panelPartner');
+            const investorPanel = document.getElementById('panelInvestor');
+            // Hard separation: only one art panel visible at a time
+            if (partnerPanel) {
+                const on = next === 'partner';
+                partnerPanel.classList.toggle('is-audience-active', on);
+                if (on) {
+                    partnerPanel.removeAttribute('hidden');
+                    partnerPanel.setAttribute('aria-hidden', 'false');
+                } else {
+                    partnerPanel.setAttribute('hidden', '');
+                    partnerPanel.setAttribute('aria-hidden', 'true');
+                }
+            }
+            if (investorPanel) {
+                const on = next === 'investor';
+                investorPanel.classList.toggle('is-audience-active', on);
+                if (on) {
+                    investorPanel.removeAttribute('hidden');
+                    investorPanel.setAttribute('aria-hidden', 'false');
+                } else {
+                    investorPanel.setAttribute('hidden', '');
+                    investorPanel.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            if (base) base.classList.toggle('is-dimmed', isOverlay);
+            if (drawer) {
+                drawer.classList.toggle('is-open', isOverlay);
+                drawer.setAttribute('aria-hidden', isOverlay ? 'false' : 'true');
+                drawer.setAttribute('data-active-audience', isOverlay ? next : '');
+            }
+
+            window.setTimeout(function () {
+                if (next === 'partner') document.getElementById('partnerAccessCode')?.focus();
+                else if (next === 'investor') { if (typeof initInvestorCodeReveal === 'function') initInvestorCodeReveal(); document.getElementById('investorAccessCode')?.focus(); }
+                else if (typeof getCustomerAccessPath === 'function' && getCustomerAccessPath() === 'quick') document.getElementById('quickEmail')?.focus();
+                else document.getElementById('visitorFirstName')?.focus();
+            }, 30);
+        }
+        function initPrivateAccessAudienceSelector() {
+            document.querySelectorAll('.pac-tab, .audience-chip').forEach((chip) => {
+                chip.addEventListener('click', () => {
+                    setPrivateAccessAudience(chip.getAttribute('data-audience'));
+                });
+            });
+            const params = new URLSearchParams(window.location.search || '');
+            const fromQuery = String(params.get('audience') || params.get('openPortalAudience') || '').toLowerCase();
+            if (fromQuery === 'partner' || fromQuery === 'customer' || fromQuery === 'investor') {
+                setPrivateAccessAudience(fromQuery);
+            } else if (params.get('openPortal') === '1' || params.get('portal') === '1') {
+                setPrivateAccessAudience('customer');
+            } else {
+                setPrivateAccessAudience('customer');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            initPrivateAccessAudienceSelector();
+            if (typeof initEnergyBehaviorExplorerUi === 'function') initEnergyBehaviorExplorerUi();
+        });
+
+        function getCustomerAccessPath() {
+            const checked = document.querySelector('input[name="customerAccessPath"]:checked');
+            return checked && checked.value === 'quick' ? 'quick' : 'visitor';
+        }
+        function setCustomerAccessPath(path) {
+            const next = path === 'quick' ? 'quick' : 'visitor';
+            const quickRadio = document.getElementById('customerPathQuick');
+            const visitorRadio = document.getElementById('customerPathVisitor');
+            if (quickRadio) quickRadio.checked = next === 'quick';
+            if (visitorRadio) visitorRadio.checked = next === 'visitor';
+            document.getElementById('custPathQuick')?.classList.toggle('is-selected', next === 'quick');
+            document.getElementById('custPathVisitor')?.classList.toggle('is-selected', next === 'visitor');
+            // Keep visitorEmail in sync when switching paths
+            const quickEmail = document.getElementById('quickEmail');
+            const visitorEmail = document.getElementById('visitorEmail');
+            if (next === 'quick' && quickEmail && visitorEmail && visitorEmail.value && !quickEmail.value) {
+                quickEmail.value = visitorEmail.value;
+            }
+            if (next === 'visitor' && quickEmail && visitorEmail && quickEmail.value && !visitorEmail.value) {
+                visitorEmail.value = quickEmail.value;
+            }
+            updatePortalAuthVisibility();
+            window.setTimeout(function () {
+                if (next === 'quick') document.getElementById('quickEmail')?.focus();
+                else document.getElementById('visitorFirstName')?.focus();
+            }, 20);
+                    if (typeof syncVisitorCompanySelectorState === 'function') syncVisitorCompanySelectorState();
+            if (typeof setEnergyBehaviorExplorerVisible === 'function') setEnergyBehaviorExplorerVisible(false);
+        }
+        function initCustomerAccessPathControls() {
+            document.querySelectorAll('.cust-path').forEach(function (card) {
+                card.addEventListener('click', function (e) {
+                    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'OPTION')) return;
+                    const path = card.getAttribute('data-path');
+                    setCustomerAccessPath(path);
+                });
+            });
+            document.querySelectorAll('input[name="customerAccessPath"]').forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    setCustomerAccessPath(radio.value);
+                });
+            });
+            const quickEmail = document.getElementById('quickEmail');
+            if (quickEmail) {
+                quickEmail.addEventListener('input', function () {
+                    visitorEmailManuallyEdited = true;
+                    const visitorEmail = document.getElementById('visitorEmail');
+                    if (visitorEmail) visitorEmail.value = quickEmail.value;
+                    updatePortalAuthVisibility();
+                });
+                quickEmail.addEventListener('change', function () {
+                    visitorEmailManuallyEdited = true;
+                    const visitorEmail = document.getElementById('visitorEmail');
+                    if (visitorEmail) visitorEmail.value = quickEmail.value;
+                    updatePortalAuthVisibility();
+                });
+            }
+            setCustomerAccessPath(getCustomerAccessPath());
+        }
+        document.addEventListener('DOMContentLoaded', initCustomerAccessPathControls);
+
+
         const UNITY_SITE_ACCESS_STATE_KEY = 'unity_site_access_state_v1';
         const UNITY_FOUNDER_SESSION_KEY = 'unity_founder_session_v1';
         const UNITY_VISITOR_PROFILE_SESSION_KEY = 'unity_portal_returning_visitor_v1';
+        const UNITY_INVESTOR_SESSION_KEY = 'unity_investor_session_v1';
+        const UNITY_PARTNER_SESSION_KEY = 'unity_partner_session_v1';
         const ALL_ACCESS_EMAIL_DOMAINS = new Set(['unityenergy.com', 'accentzinc.com']);
+        const DEFAULT_INVESTOR_PORTAL_PATH = './customer-portal/investor-center/index.html';
+        const DEFAULT_PARTNER_PORTAL_PATH = './customer-portal/partner-center/ussi/index.html';
         const CUSTOMER_EMAIL_DOMAIN_ALLOWLIST = {
             fosterfarms: ['fosterfarms.com'],
             norfolkiron: ['norfolkiron.com', 'norfolkironmetal.com'],
@@ -1140,7 +3065,15 @@
             const path = String(customer.path || '').toLowerCase();
             return name.includes('investor') || path.includes('investor-center');
         }
+        function isInvestorCustomerEntry(customerKey, customer) {
+            if (isFounderOnlyCustomer(customer)) return true;
+            const key = normalizeDomainToken(customerKey);
+            const name = String(customer?.name || '').toLowerCase();
+            const path = String(customer?.path || '').toLowerCase();
+            return key.includes('investor') || name.includes('investor') || path.includes('investor-center');
+        }
         function emailMayAccessCustomer(email, customerKey, customer) {
+            if (isInvestorCustomerEntry(customerKey, customer)) return false;
             if (isFounderEmail(email)) return true;
             if (isFounderOnlyCustomer(customer)) return false;
             const emailDomain = getEmailDomain(email);
@@ -1158,6 +3091,8 @@
                 const name = String(customer?.name || '').trim();
                 const path = String(customer?.path || '').trim();
                 if (!name || !path) continue;
+                // Investor destinations never appear in Customer Access Portal.
+                if (isInvestorCustomerEntry(key, customer)) continue;
                 const dedupeKey = `${name}::${path}`;
                 if (seen.has(dedupeKey)) continue;
                 seen.add(dedupeKey);
@@ -1171,15 +3106,121 @@
                     options.push({ key, name });
                 }
             }
-            options.sort((a, b) => {
-                const aIsInvestor = String(a.name || '').toLowerCase().includes('investor');
-                const bIsInvestor = String(b.name || '').toLowerCase().includes('investor');
-                if (aIsInvestor && !bIsInvestor) return -1;
-                if (!aIsInvestor && bIsInvestor) return 1;
-                return a.name.localeCompare(b.name);
-            });
+            options.sort((a, b) => a.name.localeCompare(b.name));
             return options;
         }
+        function normalizeAccessCode(value) {
+            // Partner/Investor codes are private 6-digit numbers.
+            return String(value || '').replace(/\D/g, '');
+        }
+        function isValidSixDigitAccessCode(value) {
+            return /^\d{6}$/.test(String(value || ''));
+        }
+        function getCodeAccessMap(cfg, lane) {
+            const root = lane === 'partner' ? cfg?.partnerAccess : cfg?.investorAccess;
+            const codes = root?.codes;
+            if (!codes || typeof codes !== 'object') return {};
+            return codes;
+        }
+        function resolveCodeAccess(cfg, lane, rawCode) {
+            const entered = normalizeAccessCode(rawCode);
+            if (!isValidSixDigitAccessCode(entered)) return null;
+            const defaultPath = lane === 'partner' ? DEFAULT_PARTNER_PORTAL_PATH : DEFAULT_INVESTOR_PORTAL_PATH;
+            const defaultName = lane === 'partner' ? 'Partner Portal' : 'Investor Portal';
+            const defaultSlug = lane === 'partner' ? 'partner-portal' : 'investor-portal';
+            const codes = getCodeAccessMap(cfg, lane);
+            for (const [configuredCode, destination] of Object.entries(codes)) {
+                const configured = normalizeAccessCode(configuredCode);
+                if (!isValidSixDigitAccessCode(configured) || configured !== entered) continue;
+                if (!destination || typeof destination !== 'object') continue;
+                const path = String(destination.path || '').trim() || defaultPath;
+                // Keep display names generic so partner/investor identities stay private.
+                const name = defaultName;
+                const slug = String(destination.slug || defaultSlug)
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '') || defaultSlug;
+                return {
+                    code: configured,
+                    name,
+                    path,
+                    slug,
+                    lane,
+                };
+            }
+            return null;
+        }
+        function showCodeLaneError(lane, message) {
+            const errorEl = document.getElementById(lane === 'partner' ? 'partnerLoginError' : 'investorLoginError');
+            if (!errorEl) return;
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+        function clearCodeLaneError(lane) {
+            const errorEl = document.getElementById(lane === 'partner' ? 'partnerLoginError' : 'investorLoginError');
+            if (!errorEl) return;
+            errorEl.textContent = '';
+            errorEl.style.display = 'none';
+        }
+        function clearInvestorLoginError() { clearCodeLaneError('investor'); }
+        function clearPartnerLoginError() { clearCodeLaneError('partner'); }
+        function writeCodeLaneSessionState(params) {
+            try {
+                const lane = params?.lane === 'partner' ? 'partner' : 'investor';
+                const sessionKey = lane === 'partner' ? UNITY_PARTNER_SESSION_KEY : UNITY_INVESTOR_SESSION_KEY;
+                const payload = {
+                    unlocked: true,
+                    portal_name: String(params?.name || (lane === 'partner' ? 'Partner Portal' : 'Investor Portal')),
+                    portal_slug: String(params?.slug || (lane === 'partner' ? 'partner-portal' : 'investor-portal')),
+                    source_path: window.location.pathname,
+                    unlocked_at: new Date().toISOString(),
+                    portal_type: lane,
+                };
+                window.sessionStorage.setItem(sessionKey, JSON.stringify(payload));
+                window.localStorage.setItem('maxwellian_clerk_customer_context_v1', JSON.stringify({
+                    customer_slug: payload.portal_slug,
+                    customer_name: payload.portal_name,
+                    source_path: window.location.pathname,
+                    selected_at: payload.unlocked_at,
+                    portal_type: lane,
+                }));
+            } catch (_err) {}
+        }
+        function attemptCodeLaneAccess(lane) {
+            const cfg = getPortalConfigSafe();
+            const codeEl = document.getElementById(lane === 'partner' ? 'partnerAccessCode' : 'investorAccessCode');
+            const rawCode = normalizeAccessCode(codeEl?.value);
+            clearCodeLaneError(lane);
+            clearLoginError();
+            const label = lane === 'partner' ? 'partner' : 'investor';
+            if (!rawCode) {
+                showCodeLaneError(lane, `Please enter your 6-digit ${label} access code.`);
+                codeEl?.focus();
+                return;
+            }
+            if (!isValidSixDigitAccessCode(rawCode)) {
+                showCodeLaneError(lane, 'Access code must be exactly 6 digits.');
+                codeEl?.focus();
+                codeEl?.select?.();
+                return;
+            }
+            const matched = resolveCodeAccess(cfg, lane, rawCode);
+            if (!matched) {
+                showCodeLaneError(lane, 'Access code not recognized. Check the code and try again.');
+                codeEl?.focus();
+                codeEl?.select?.();
+                return;
+            }
+            writeCodeLaneSessionState(matched);
+            setUnitySiteAccessUnlocked({
+                visitorType: lane,
+                customerName: matched.name,
+                customerSlug: matched.slug,
+            });
+            window.location.href = matched.path;
+        }
+        function attemptInvestorAccess() { attemptCodeLaneAccess('investor'); }
+        function attemptPartnerAccess() { attemptCodeLaneAccess('partner'); }
         function hasMeaningfulNameDiversity(nameToken) {
             return new Set(nameToken.split('')).size >= 2;
         }
@@ -1227,25 +3268,49 @@
             } catch (_err) {}
         }
         function getPortalConfigSafe() {
-            const investorEntry = {
-                name: 'Investor Center',
-                path: './customer-portal/investor-center/index.html',
-                allowAnyDomain: true
-            };
-            function ensureInvestorCustomer(cfg) {
-                if (!cfg || typeof cfg !== 'object') return { customers: { investor: investorEntry, investorcenter: investorEntry } };
-                if (!cfg.customers || typeof cfg.customers !== 'object') cfg.customers = {};
-                if (!cfg.customers.investor) cfg.customers.investor = { ...investorEntry };
-                if (!cfg.customers.investorcenter) cfg.customers.investorcenter = { ...investorEntry };
-                cfg.customers.investor.allowAnyDomain = true;
-                cfg.customers.investorcenter.allowAnyDomain = true;
-                return cfg;
+            function ensureCodeAccessConfig(cfg) {
+                const base = (cfg && typeof cfg === 'object') ? cfg : { customers: {} };
+                if (!base.customers || typeof base.customers !== 'object') base.customers = {};
+                // Strip legacy investor/partner entries from the customer map so they never
+                // reappear in Customer Access Portal (those lanes are code-only).
+                Object.keys(base.customers).forEach(function (key) {
+                    if (isInvestorCustomerEntry(key, base.customers[key])) {
+                        delete base.customers[key];
+                    }
+                });
+                if (!base.investorAccess || typeof base.investorAccess !== 'object') {
+                    base.investorAccess = { codes: {} };
+                }
+                if (!base.investorAccess.codes || typeof base.investorAccess.codes !== 'object') {
+                    base.investorAccess.codes = {};
+                }
+                if (!Object.keys(base.investorAccess.codes).length) {
+                    base.investorAccess.codes['121212'] = {
+                        name: 'Investor Portal',
+                        path: DEFAULT_INVESTOR_PORTAL_PATH,
+                        slug: 'investor-center',
+                    };
+                }
+                if (!base.partnerAccess || typeof base.partnerAccess !== 'object') {
+                    base.partnerAccess = { codes: {} };
+                }
+                if (!base.partnerAccess.codes || typeof base.partnerAccess.codes !== 'object') {
+                    base.partnerAccess.codes = {};
+                }
+                if (!Object.keys(base.partnerAccess.codes).length) {
+                    base.partnerAccess.codes['000000'] = {
+                        name: 'Partner Portal',
+                        path: DEFAULT_PARTNER_PORTAL_PATH,
+                        slug: 'ussi-partnership',
+                    };
+                }
+                return base;
             }
             try {
-                if (typeof portalConfig !== 'undefined' && portalConfig) return ensureInvestorCustomer(portalConfig);
+                if (typeof portalConfig !== 'undefined' && portalConfig) return ensureCodeAccessConfig(portalConfig);
             } catch (e) {}
-            if (window.portalConfig) return ensureInvestorCustomer(window.portalConfig);
-            return ensureInvestorCustomer({ customers: {} });
+            if (window.portalConfig) return ensureCodeAccessConfig(window.portalConfig);
+            return ensureCodeAccessConfig({ customers: {} });
         }
         function resolvePortalAccessPolicy(cfg) {
             const policy = cfg?.accessPolicy && typeof cfg.accessPolicy === 'object' ? cfg.accessPolicy : {};
@@ -1332,11 +3397,10 @@
             }
         }
         function openLoginModal(event) {
-            const modal = document.getElementById('loginModal');
+            // Private Access Center is in-page (no modal). Keep helper for deep-links/home doors.
+            if (event && typeof event.preventDefault === 'function') event.preventDefault();
             const cfg = getPortalConfigSafe();
             const founderSession = readFounderSessionState();
-            modal.classList.add('active');
-            resetPortalFormState();
             populateCustomerDropdown(cfg, false);
             if (founderSession && founderSession.email) {
                 const emailEl = document.getElementById('visitorEmail');
@@ -1346,11 +3410,7 @@
                 }
             }
             updatePortalAuthVisibility();
-            if (founderSession && founderSession.email) {
-                document.getElementById('customerName')?.focus();
-            } else {
-                document.getElementById('visitorFirstName')?.focus();
-            }
+            setPrivateAccessAudience('customer');
             window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 50);
             window.setTimeout(clearAutoFilledVisitorEmailIfNeeded, 220);
         }
@@ -1416,16 +3476,25 @@
             if (lastNameEl) lastNameEl.value = '';
             const emailEl = document.getElementById('visitorEmail');
             if (emailEl) emailEl.value = '';
+            const quickEmailEl = document.getElementById('quickEmail');
+            if (quickEmailEl) quickEmailEl.value = '';
             visitorEmailManuallyEdited = false;
+            if (typeof setCustomerAccessPath === 'function') setCustomerAccessPath('visitor');
             const roleEl = document.getElementById('visitorRole');
             if (roleEl) roleEl.selectedIndex = 0;
             const objectiveEl = document.getElementById('visitorObjective');
             if (objectiveEl) objectiveEl.selectedIndex = 0;
             const updatesEl = document.getElementById('visitorUpdates');
             if (updatesEl) updatesEl.checked = false;
+            const investorCodeEl = document.getElementById('investorAccessCode');
+            if (investorCodeEl) investorCodeEl.value = '';
+            const partnerCodeEl = document.getElementById('partnerAccessCode');
+            if (partnerCodeEl) partnerCodeEl.value = '';
             const devNotice = document.getElementById('devModeNotice');
-            if (devNotice) devNotice.textContent = 'No password required — company email unlocks only your portal.';
+            if (devNotice) devNotice.textContent = 'Visitor path opens Study Explorer. Quick Access uses company email for your assigned facility only.';
             clearLoginError();
+            clearInvestorLoginError();
+            clearPartnerLoginError();
         }
         function updatePortalAuthVisibility(options) {
             const cfg = getPortalConfigSafe();
@@ -1449,13 +3518,18 @@
             const selectedCustomerKey = customerNameField?.value || '';
             const isGuestSelection = selectedCustomerKey === '__guest__';
             const devNotice = document.getElementById('devModeNotice');
-            const visitorProfileSection = document.getElementById('visitorProfileSection');
             const portalCredentialsTitle = document.getElementById('portalCredentialsTitle');
             const portalCredentialsHelperText = document.getElementById('portalCredentialsHelperText');
             const portalAccessButton = document.getElementById('portalAccessButton');
             const guestOption = customerNameField ? customerNameField.querySelector('option[value="__guest__"]') : null;
             const placeholderOption = customerNameField ? customerNameField.querySelector('option[value=""]') : null;
-            if (visitorProfileSection) visitorProfileSection.style.display = allAccessEmail ? 'none' : '';
+            const companyWrap = document.getElementById('customerCompanyWrap');
+            // Show company selector when founder all-access or multiple/no auto match options.
+            if (companyWrap) {
+                const showCompany = allAccessEmail || accessibleOptions.length !== 1 || !hasValidEmail;
+                if (showCompany) companyWrap.removeAttribute('hidden');
+                else companyWrap.setAttribute('hidden', '');
+            }
             if (portalCredentialsTitle) {
                 portalCredentialsTitle.textContent = allAccessEmail ? 'Customer Selector' : 'Portal Access';
             }
@@ -1475,9 +3549,7 @@
                 }
             }
             if (portalAccessButton) {
-                portalAccessButton.textContent = allAccessEmail
-                    ? 'Open Selected Customer Portal →'
-                    : 'Access Unity Portal →';
+                portalAccessButton.textContent = 'Enter Study Explorer →';
             }
             if (placeholderOption) {
                 placeholderOption.textContent = allAccessEmail ? 'Select Customer Portal' : 'Select Company or Guest';
@@ -1518,9 +3590,17 @@
             const cfg = getPortalConfigSafe();
             let selectedCustomerKey = document.getElementById('customerName')?.value || '';
             let isGuestSelection = selectedCustomerKey === '__guest__';
+            const accessPath = getCustomerAccessPath();
             const firstNameInput = String(document.getElementById('visitorFirstName')?.value || '').trim();
             const lastNameInput = String(document.getElementById('visitorLastName')?.value || '').trim();
-            const emailInput = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const quickEmailInput = String(document.getElementById('quickEmail')?.value || '').trim();
+            const visitorEmailInput = String(document.getElementById('visitorEmail')?.value || '').trim();
+            const emailInput = accessPath === 'quick' ? quickEmailInput : visitorEmailInput;
+            // Keep both email fields aligned for dropdown/domain logic.
+            const quickEmailEl = document.getElementById('quickEmail');
+            const visitorEmailEl = document.getElementById('visitorEmail');
+            if (quickEmailEl) quickEmailEl.value = emailInput;
+            if (visitorEmailEl) visitorEmailEl.value = emailInput;
             const normalizedInputEmail = normalizeEmailAddress(emailInput);
             const allAccessEmail = isFounderEmail(normalizedInputEmail);
             const returningVisitorSession = readReturningVisitorSessionState();
@@ -1534,11 +3614,55 @@
             const wantsUpdates = !!document.getElementById('visitorUpdates')?.checked;
             clearLoginError();
             if (!emailInput) {
-                showLoginError('Please enter a valid email address.');
+                showLoginError('Please enter a valid business email address.');
+                (accessPath === 'quick' ? document.getElementById('quickEmail') : document.getElementById('visitorEmail'))?.focus();
                 return;
             }
             if (!isLikelyValidEmail(emailInput)) {
-                showLoginError('Please enter a valid email address.');
+                showLoginError('Please enter a valid business email address.');
+                (accessPath === 'quick' ? document.getElementById('quickEmail') : document.getElementById('visitorEmail'))?.focus();
+                return;
+            }
+            if (accessPath === 'visitor') {
+                if (!isLikelyValidName(firstNameInput)) {
+                    showLoginError('Please enter your first name.');
+                    document.getElementById('visitorFirstName')?.focus();
+                    return;
+                }
+                if (!isLikelyValidName(lastNameInput)) {
+                    showLoginError('Please enter your last name.');
+                    document.getElementById('visitorLastName')?.focus();
+                    return;
+                }
+                if (!role) {
+                    showLoginError('Please select your role.');
+                    document.getElementById('visitorRole')?.focus();
+                    return;
+                }
+                if (!objective) {
+                    showLoginError('Please select your primary objective.');
+                    document.getElementById('visitorObjective')?.focus();
+                    return;
+                }
+                // Visitor lane → Study Explorer (no customer directory, no facility portal).
+                writeReturningVisitorSessionState({
+                    email: normalizeEmailAddress(emailInput),
+                    firstName: firstNameInput,
+                    lastName: lastNameInput,
+                });
+                try {
+                    window.sessionStorage.setItem('unity_eba_visitor_v1', JSON.stringify({
+                        email: normalizeEmailAddress(emailInput),
+                        first_name: firstNameInput,
+                        last_name: lastNameInput,
+                        role: role,
+                        objective: objective,
+                        updates_opt_in: wantsUpdates,
+                        entered_at: new Date().toISOString()
+                    }));
+                } catch (_e) {}
+                writeEbaReturnPath('visitor');
+                setEnergyBehaviorExplorerVisible(true);
                 return;
             }
             if (!allAccessEmail) {
@@ -1669,12 +3793,15 @@
             window.location.href = destinationPath;
         }
         document.addEventListener('keydown', function(e) {
-            const modal = document.getElementById('loginModal');
-            if (modal && modal.classList.contains('active')) {
-                if (e.key === 'Enter') {
+            if (e.key === 'Enter') {
+                const activeEl = document.activeElement;
+                const id = activeEl && activeEl.id;
+                if (id === 'investorAccessCode') {
+                    attemptInvestorAccess();
+                } else if (id === 'partnerAccessCode') {
+                    attemptPartnerAccess();
+                } else if (id && ['visitorEmail','quickEmail','visitorFirstName','visitorLastName','visitorRole','visitorObjective','customerName'].includes(id)) {
                     attemptLogin();
-                } else if (e.key === 'Escape') {
-                    closeLoginModal();
                 }
             }
         });
@@ -1687,6 +3814,16 @@
                 el.addEventListener('input', clearLoginError);
                 el.addEventListener('change', clearLoginError);
             });
+            const investorCodeEl = document.getElementById('investorAccessCode');
+            if (investorCodeEl) {
+                investorCodeEl.addEventListener('input', clearInvestorLoginError);
+                investorCodeEl.addEventListener('change', clearInvestorLoginError);
+            }
+            const partnerCodeEl = document.getElementById('partnerAccessCode');
+            if (partnerCodeEl) {
+                partnerCodeEl.addEventListener('input', clearPartnerLoginError);
+                partnerCodeEl.addEventListener('change', clearPartnerLoginError);
+            }
             const emailEl = document.getElementById('visitorEmail');
             if (emailEl) {
                 emailEl.addEventListener('input', function () {
@@ -1750,5 +3887,6 @@
     })();
     </script>
 
+    <script src="assets/js/ue_viewport_fit.js?v=20261102-pac-accordion-1"></script>
 </body>
 </html>

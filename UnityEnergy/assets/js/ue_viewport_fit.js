@@ -4,6 +4,7 @@
  *
  * Home:    banner + hero + CTAs + access + nav + footer
  * Contact: nav + contact board + footer  (all inside stage)
+ * PAC:     nav + private access board + footer (all inside stage)
  * Speak:   .cp-clerk-page one-pager (no footer) inside stage
  */
 (function () {
@@ -26,18 +27,20 @@
     var nav = document.querySelector('.nav-tabs-container');
     var contactShell = document.querySelector('.ue-contact-shell');
     var contactStage = document.querySelector('.ue-contact-stage');
+    var pacMain = document.querySelector('main.pac-stage');
     var speakPage = document.querySelector('body.cp-clerk-onepage .cp-clerk-page');
     var speakWrap = document.querySelector('body.cp-clerk-onepage .site-wrap');
     var footer = document.querySelector('footer') || document.querySelector('.site-footer');
 
     var isHome = !!(banner && hero);
     var isContact = !!(contactShell || contactStage);
+    var isPac = !!(document.body.classList.contains('pac-body') && pacMain);
     var isSpeak = !!(speakPage && document.body.classList.contains('cp-clerk-onepage'));
-    if (!isHome && !isContact && !isSpeak) return null;
+    if (!isHome && !isContact && !isPac && !isSpeak) return null;
 
     var anchor = isHome
       ? banner
-      : (isSpeak ? (speakWrap || speakPage) : (nav || contactShell || contactStage));
+      : (isSpeak ? (speakWrap || speakPage) : (nav || contactShell || contactStage || pacMain));
     if (!anchor || !anchor.parentNode) return null;
 
     var shell = document.createElement('div');
@@ -47,6 +50,7 @@
     var stage = document.createElement('div');
     stage.className = 'ue-design-stage' +
       (isContact ? ' ue-design-stage--contact' : '') +
+      (isPac ? ' ue-design-stage--pac' : '') +
       (isSpeak ? ' ue-design-stage--speak' : '');
     stage.id = 'ueDesignStage';
     stage.setAttribute('data-ue-design-w', String(DESIGN_W));
@@ -75,6 +79,14 @@
       if (footer) {
         footer.classList.add('ue-stage-footer');
         footer.style.display = 'none';
+      }
+    } else if (isPac) {
+      // Private Access Center: header + body + footer share ONE Hero width (Contact parity)
+      if (nav) stage.appendChild(nav);
+      if (pacMain) stage.appendChild(pacMain);
+      if (footer) {
+        footer.classList.add('ue-stage-footer');
+        stage.appendChild(footer);
       }
     } else {
       // Contact: header + body + footer share ONE Hero width

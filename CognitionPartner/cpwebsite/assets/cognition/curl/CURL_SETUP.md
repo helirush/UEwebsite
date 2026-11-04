@@ -83,3 +83,13 @@ Unity endpoint verified live earlier.
 - Principle doc: `assets/cognition/HOST_ENVIRONMENT_CONTINUITY_PRINCIPLE.md`
 - Curl launch injects environment block; SELECT deferred while Diva playing
 - Operating Canon untouched
+
+## HOST VOICE STANDARD 20261103 (Clerk baseline)
+- Curl session mint retargeted from `127.0.0.1:8600` → Workers relay (same as Clerk)
+- Relay realtime: `https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session`
+- Relay live: `https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session`
+- Voice remains **marin**; model **gpt-live-1**
+- Renderer stamp: `20261103-host-voice-standard-1`
+- Optional local override only: add `?openaiLocal=1` and run `openai_realtime_server.py --port 8600`
+- Canon: `Maxwellian/Unity/Library/Systems/CANON_Host_Voice_Standard_OpenAI_Live_Clerk_Baseline.md`
+

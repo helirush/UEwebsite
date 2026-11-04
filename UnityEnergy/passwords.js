@@ -1,10 +1,15 @@
 // Unity Energy Customer Portal - Access Configuration
 // =====================================================
 // Passwordless + domain-locked portal access:
-//   - No portal passwords are required
+//   - No portal passwords are required for Customer Access Portal
 //   - Company email domain unlocks ONLY that company's portal
 //   - unityenergy.com / accentzinc.com = all-access (any customer portal)
 //   - Guest remains available for non-company walkthroughs to Unity Home
+// Code-gated portals are SEPARATE from Customer Access:
+//   - Investor / Partner are never listed in the customer dropdown
+//   - Access is by private 6-digit access code only (no name lists)
+//   - Each code opens only its assigned destination front page
+//   - Multiple partner/investor codes are supported without exposing identities
 // Domain enforcement lives in customer-portals.html (CUSTOMER_EMAIL_DOMAIN_ALLOWLIST).
 
 window.portalConfig = {
@@ -13,6 +18,7 @@ window.portalConfig = {
     devMode: true,
 
     // Customer accounts - add new customers here
+    // NOTE: Investor destinations do NOT belong here for the customer selector.
     customers: {
         // NOTE: keys should match the normalization rule in UnityEnergy/index.html
         // (lowercase + strip all non-alphanumeric characters).
@@ -78,19 +84,44 @@ window.portalConfig = {
         'tysonfoodsinc': {
             name: 'Tyson Foods (2500kVA : 2xH240, 3xH490)',
             path: '../Customers/TysonFoods/index.html'
-        },
-        'investor': {
-            name: 'Investor Center (Private and Confidential)',
-            path: './customer-portal/investor-center/index.html',
-            // Founder/all-access emails only (unityenergy.com / accentzinc.com).
-            allowAnyDomain: true,
-            founderOnly: true
-        },
-        'investorcenter': {
-            name: 'Investor Center (Private and Confidential)',
-            path: './customer-portal/investor-center/index.html',
-            allowAnyDomain: true,
-            founderOnly: true
+        }
+    },
+
+    // Investor Access Portal — private 6-digit codes only (never shown in a dropdown).
+    // Add one entry per investor assignment. Codes are exact 6-digit matches.
+    investorAccess: {
+        codes: {
+            // Default investor code.
+            '121212': {
+                name: 'Investor Portal',
+                path: './customer-portal/investor-center/index.html',
+                slug: 'investor-center'
+            }
+            // Additional investor venues (identity stays private — only the code is shared):
+            // '343434': {
+            //     name: 'Investor Portal',
+            //     path: './customer-portal/investor-center/index.html',
+            //     slug: 'investor-venue-b'
+            // }
+        }
+    },
+
+    // Partner Access Portal — private 6-digit codes only (never shown in a dropdown).
+    // Multiple codes => multiple partner front pages without exposing partner names.
+    partnerAccess: {
+        codes: {
+            // USSI partner venue — private 6-digit code (not listed in UI).
+            '000000': {
+                name: 'Partner Portal',
+                path: './customer-portal/partner-center/ussi/index.html',
+                slug: 'ussi-partnership'
+            }
+            // Add more 6-digit codes for additional partner venues:
+            // '454545': {
+            //     name: 'Partner Portal',
+            //     path: './customer-portal/partner-center/venues/partner-b/index.html',
+            //     slug: 'partner-venue-b'
+            // }
         }
     },
 

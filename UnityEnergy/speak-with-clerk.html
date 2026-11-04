@@ -1135,8 +1135,8 @@
     })();
   </script>
   <script src="./hume_auth_bootstrap.js?v=20261015-meet-clerk-1"></script>
-  <script src="./hume_character_config.js?v=20261020-traveler-ready-1"></script>
-  <script src="./clerk_voice_widget.js?v=20261020-traveler-ready-1"></script>
+  <script src="./hume_character_config.js?v=20261103-voice-fix-1"></script>
+  <script src="./clerk_voice_widget.js?v=20261103-voice-fix-1"></script>
 <!-- UE-SEO-FOUNDATION-START -->
     <meta name="description" content="Speak with Clerk at Unity Energy—guided conversation about industrial electricity, energy fields, and Unity’s approach.">
     <meta name="robots" content="index,follow,max-image-preview:large">
@@ -1151,6 +1151,56 @@
     <meta name="twitter:title" content="Speak with Clerk | Unity Energy">
     <meta name="twitter:description" content="Speak with Clerk at Unity Energy—guided conversation about industrial electricity, energy fields, and Unity’s approach.">
     <!-- UE-SEO-FOUNDATION-END -->
+<style id="cp-clerk-hide-corner-fab">
+    /* CP_CLERK_HIDE_CORNER_FAB 20261104-clerk-ready-hide-fab-1
+       Gold Meet-with-Clerk page: never show lower-right floating Clerk icon.
+       User path is center "Clerk is Ready / SELECT" only (also after Pause). */
+    html body.cp-clerk-onepage #clerkFloatingLauncher,
+    html body.cp-clerk-onepage #clerkFloatingLauncherWrap,
+    html body.cp-clerk-onepage .clerk-floating-launcher,
+    html body.cp-clerk-onepage .clerk-floating-launcher-wrap,
+    html body.cp-clerk-onepage [id*="FloatingLauncher"],
+    html body.cp-clerk-onepage [class*="floating-launcher"],
+    html body.cp-clerk-onepage .clerk-float-btn,
+    html body.cp-clerk-onepage button.clerk-floating-launcher,
+    html body.cp-clerk-onepage img.clerk-floating-launcher-icon {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      max-width: 0 !important;
+      max-height: 0 !important;
+      z-index: -1 !important;
+      transform: none !important;
+    }
+    /* Ready/SELECT must stay above any residual chrome after Pause */
+    html body.cp-clerk-onepage #cpClerkBottomBtn,
+    html body.cp-clerk-onepage .cp-clerk-bottom-btn {
+      pointer-events: auto !important;
+      z-index: 12050 !important;
+      position: relative !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      cursor: pointer !important;
+    }
+    html body.cp-clerk-onepage #cpClerkBottomBtn[disabled],
+    html body.cp-clerk-onepage .cp-clerk-bottom-btn[disabled] {
+      pointer-events: auto !important;
+      opacity: 1 !important;
+    }
+
+    /* Extra: kill residual widget FAB nodes (green-ring portrait) */
+    html body.cp-clerk-onepage #clerkFloatingLauncherWrap img,
+    html body.cp-clerk-onepage .clerk-floating-launcher img,
+    html body.cp-clerk-onepage button[id*="Floating"],
+    html body.cp-clerk-onepage div[id*="Floating"] {
+      display: none !important;
+      pointer-events: none !important;
+      opacity: 0 !important;
+    }
+</style>
 </head>
 <body class="home-page cp-clerk-onepage">
   <main class="site-wrap">
@@ -1388,12 +1438,32 @@
 
       const setBottomWaiting = () => {
         isLive = false;
+        try { pausedHard = false; } catch (e) {}
+        try {
+          bottomBtn.disabled = false;
+          bottomBtn.removeAttribute('disabled');
+          bottomBtn.style.pointerEvents = 'auto';
+          bottomBtn.style.zIndex = '12050';
+          bottomBtn.style.opacity = '1';
+          bottomBtn.style.visibility = 'visible';
+        } catch (e) {}
         bottomBtn.classList.remove('is-live');
         bottomBtn.innerHTML = '<span class="cp-clerk-bottom-btn-primary">Clerk is Ready</span><small>Select</small>';
         bottomBtn.setAttribute('aria-label', 'Clerk is Ready. Select.');
         bottomBtn.setAttribute('data-clerk-state', 'ready');
         setTalkWaveSpeaking(false);
         if (active) setTalkWaveVisible(true);
+        // Corner floating Clerk icon must stay hidden — Ready/SELECT is the only control.
+        try {
+          document.querySelectorAll(
+            '#clerkFloatingLauncher, #clerkFloatingLauncherWrap, .clerk-floating-launcher, .clerk-floating-launcher-wrap, [id*="FloatingLauncher"], [class*="floating-launcher"]'
+          ).forEach((el) => {
+            el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('pointer-events', 'none', 'important');
+            el.style.setProperty('opacity', '0', 'important');
+            el.setAttribute('aria-hidden', 'true');
+          });
+        } catch (e2) {}
       };
       const setBottomCapacity = () => {
         isLive = false;
@@ -1447,6 +1517,9 @@
         clerkLibraryContextLoading = (async () => {
           const parts = [];
           const files = [
+            // FAST path first — cuts latency on common questions (What does Unity do?)
+            './assets/clerk/knowledge/CLERK_FAST_FAQ_AND_BIO.md?v=20261104-clerk-fast-faq-1',
+            './assets/clerk/knowledge/CLERK_FAQ_LEARNED.md?v=20261104-clerk-fast-faq-1',
             './assets/clerk/knowledge/CLERK_IDENTITY_PACK.md?v=20260811-clerk-intro-spirit1',
             './assets/clerk/knowledge/CLERK_DEMO_KNOWLEDGE_PACK.md?v=20260811-clerk-intro-spirit1',
             './assets/clerk/knowledge/SpeakWithClerkOnBoard.md?v=20261019-office-visit-1'
@@ -2105,6 +2178,21 @@
       };
 
       const openClerkSession = async ({ autoStart = true } = {}) => {
+        try {
+          if (window.__CLERK_FAST_FAQ_MD__ && window.MAXWELLIAN_HUME) {
+            const banner = "
+
+[CLERK QUICK REFERENCE — ANSWER FAST]
+" + window.__CLERK_FAST_FAQ_MD__ + "
+[END QUICK REFERENCE]
+";
+            const sc = String(window.MAXWELLIAN_HUME.session_context || '');
+            if (sc.indexOf('[CLERK QUICK REFERENCE') === -1) {
+              window.MAXWELLIAN_HUME.session_context = banner + sc;
+            }
+          }
+        } catch (eFaqMerge) {}
+
         applyClerkConfig();
         const clerkLibraryContext = await getClerkLibraryContext();
         try {
@@ -2380,12 +2468,24 @@
         try {
           const state = String(bottomBtn.getAttribute('data-clerk-state') || '').toLowerCase();
           const label = String(bottomBtn.textContent || '').trim().toLowerCase();
-          if (toggleOnly || isLive) {
-            if (isLive || state === 'pause-ready' || label === 'pause clerk') {
-              await pauseClerkLikeClaire();
-              return true;
-            }
+          // Pause only when live / Pause Clerk. Ready+SELECT always starts a fresh session
+          // (including after Pause). Never depend on the lower-right floating icon.
+          const wantsPause =
+            isLive ||
+            state === 'pause-ready' ||
+            label === 'pause clerk' ||
+            /\bpause clerk\b/.test(label);
+          if (toggleOnly && wantsPause) {
+            await pauseClerkLikeClaire();
+            return true;
           }
+          if (!toggleOnly && wantsPause) {
+            await pauseClerkLikeClaire();
+            return true;
+          }
+          // Ready path: clear hard-pause latch so auto-start click is allowed
+          try { pausedHard = false; } catch (eClr) {}
+          try { autoStartArmed = true; } catch (eArm) {}
           bottomBtn.disabled = true;
           bottomBtn.innerHTML = '<span class="cp-clerk-bottom-btn-primary">Connecting...</span><small>Please wait</small>';
           bottomBtn.setAttribute('aria-label', 'Connecting Clerk voice.');
@@ -2429,6 +2529,157 @@
       });
 
       // 2) Claire-style control: Pause Clerk <-> Waiting on Clerk
+      
+      /* CP_CLERK_READY_AFTER_PAUSE_FAB_KILL 20261104-clerk-ready-hide-fab-1 */
+      (function killCornerFabForever() {
+        const hideSel = [
+          '#clerkFloatingLauncher',
+          '#clerkFloatingLauncherWrap',
+          '.clerk-floating-launcher',
+          '.clerk-floating-launcher-wrap',
+          '[id*="FloatingLauncher"]',
+          '[class*="floating-launcher"]'
+        ].join(',');
+        const nuke = () => {
+          try {
+            window.MAXWELLIAN_HUME = window.MAXWELLIAN_HUME || {};
+            window.MAXWELLIAN_HUME.floating_launcher_enabled = false;
+            window.MAXWELLIAN_HUME.floating_launcher_blocked_pages = window.MAXWELLIAN_HUME.floating_launcher_blocked_pages || [];
+            if (!window.MAXWELLIAN_HUME.floating_launcher_blocked_pages.includes('speak-with-clerk')) {
+              window.MAXWELLIAN_HUME.floating_launcher_blocked_pages.push('speak-with-clerk');
+            }
+          } catch (e) {}
+          try {
+            document.querySelectorAll(hideSel).forEach((el) => {
+              try {
+                el.style.setProperty('display', 'none', 'important');
+                el.style.setProperty('visibility', 'hidden', 'important');
+                el.style.setProperty('opacity', '0', 'important');
+                el.style.setProperty('pointer-events', 'none', 'important');
+                el.setAttribute('aria-hidden', 'true');
+                if (el.parentNode && /floating-launcher/i.test(el.id + el.className)) {
+                  // keep in DOM but inert
+                }
+              } catch (e2) {}
+            });
+          } catch (e3) {}
+          try {
+            if (typeof window.setFloatingLauncherVisible === 'function') {
+              window.setFloatingLauncherVisible(false);
+            }
+          } catch (e4) {}
+        };
+        nuke();
+        window.setInterval(nuke, 600);
+        document.addEventListener('DOMContentLoaded', nuke);
+        window.addEventListener('load', nuke);
+      })();
+
+      
+      
+      /* CP_CLERK_SELF_BUILDING_FAQ 20261104-clerk-fast-faq-1
+         Prefetch FAST FAQ + learned candidates; log visitor questions to /api/clerk/faq-log */
+      (function clerkSelfBuildingFaq() {
+        const FAST_URLS = [
+          './assets/clerk/knowledge/CLERK_FAST_FAQ_AND_BIO.md?v=20261104-clerk-fast-faq-1',
+          './assets/clerk/knowledge/CLERK_FAQ_LEARNED.md?v=20261104-clerk-fast-faq-1',
+          '/api/clerk/faq-learned'
+        ];
+        const seen = new Set();
+        let lastUserQ = '';
+
+        const resolveUrl = (u) => {
+          try {
+            if (typeof resolveCpClerkRuntimeUrl === 'function') return resolveCpClerkRuntimeUrl(u);
+          } catch (e) {}
+          return u;
+        };
+
+        const applyBanner = (md) => {
+          if (!md) return;
+          window.__CLERK_FAST_FAQ_MD__ = md;
+          try {
+            window.MAXWELLIAN_HUME = window.MAXWELLIAN_HUME || {};
+            const banner =
+              '\n\n[CLERK QUICK REFERENCE — ANSWER FAST]\n' +
+              'For common questions (what Unity does, MPTS, who Clerk is, founder, savings claims), ' +
+              'answer in 2–5 short sentences FROM THIS PACK FIRST. Do not stall on deep retrieval.\n\n' +
+              md +
+              '\n\n[END QUICK REFERENCE]\n';
+            const sc = String(window.MAXWELLIAN_HUME.session_context || '');
+            if (sc.indexOf('[CLERK QUICK REFERENCE') === -1) {
+              window.MAXWELLIAN_HUME.session_context = banner + (sc ? ('\n' + sc) : '');
+            }
+            window.MAXWELLIAN_HUME.openai_instructions_prefix =
+              String(window.MAXWELLIAN_HUME.openai_instructions_prefix || '') +
+              '\nUse CLERK QUICK REFERENCE for common FAQ answers immediately.\n';
+          } catch (e2) {}
+        };
+
+        const prefetchFast = async () => {
+          const chunks = [];
+          for (let i = 0; i < FAST_URLS.length; i += 1) {
+            try {
+              const r = await fetch(resolveUrl(FAST_URLS[i]), { cache: 'no-store' });
+              if (!r || !r.ok) continue;
+              const ct = String(r.headers.get('content-type') || '').toLowerCase();
+              if (ct.indexOf('application/json') !== -1) {
+                const j = await r.json();
+                if (j && j.markdown) chunks.push(String(j.markdown));
+              } else {
+                chunks.push(await r.text());
+              }
+            } catch (e) {}
+          }
+          const md = chunks.filter(Boolean).join('\n\n').trim();
+          applyBanner(md);
+          return md;
+        };
+
+        const logQuestion = (question) => {
+          const q = String(question || '').trim();
+          if (q.length < 8) return;
+          const key = q.toLowerCase().replace(/\s+/g, ' ').slice(0, 200);
+          if (seen.has(key)) return;
+          seen.add(key);
+          try {
+            fetch('/api/clerk/faq-log', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({
+                question: q,
+                page: 'speak-with-clerk',
+                source: 'speak-with-clerk-live'
+              }),
+              cache: 'no-store',
+              keepalive: true
+            }).catch(function () {});
+          } catch (e) {}
+        };
+
+        window.addEventListener('message', function (event) {
+          try {
+            const data = event && event.data;
+            if (!data || typeof data !== 'object') return;
+            const typ = String(data.type || data.event || '').toLowerCase();
+            const payload = data.payload || data;
+            const role = String((payload && (payload.role || payload.speaker)) || '').toLowerCase();
+            const text = String(
+              (payload && (payload.text || payload.transcript || payload.content || payload.message)) || ''
+            ).trim();
+            if (!text) return;
+            if (role === 'user' || typ.indexOf('user_transcript') !== -1 || (typ === 'transcript_message' && role === 'user')) {
+              lastUserQ = text;
+              logQuestion(text);
+            }
+          } catch (e) {}
+        });
+
+        prefetchFast();
+        document.addEventListener('DOMContentLoaded', function () { prefetchFast(); });
+        window.setTimeout(function () { prefetchFast(); }, 1000);
+      })();
+
       bottomBtn.addEventListener('click', () => {
         void launchClerkVoice({ toggleOnly: true });
       });

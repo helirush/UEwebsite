@@ -20,6 +20,7 @@
  * character_id: curl-maxwell | host UI label: PURPOSE
  */
 (function () {
+  // CURL_WIDGET_AUDIO_FIX 20261103-curl-page2-parity-1
   let frameLoadTimer = null;
   let frameMessagingBound = false;
   let activeFrameOrigin = "";
@@ -1187,7 +1188,7 @@
       floating_launcher_response_style_hint: "",
       clerk_page_access_control_enabled: false,
       clerk_voice_allowed_pages: [],
-      clerk_voice_blocked_pages: ["index", "home"],
+      clerk_voice_blocked_pages: [], // CP Curl: page1 is index.html — never default-block index/home
       lead_capture_enabled: true,
       lead_capture_collect_company: true,
       lead_capture_prompt_intent: true,
@@ -1316,7 +1317,7 @@
       ],
       character_avatar_url: "assets/images/ClerkMaxwell_60423t.png",
       character_background_url: "",
-      embed_url: "/UnityEnergy/openai_renderer/index.html?v=20260423r5",
+      embed_url: "./assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-restore-1",
       openai_session_endpoint: "/api/openai/realtime/session",
       openai_realtime_model: "gpt-4o-realtime-preview",
       openai_voice: "ash",
@@ -1591,7 +1592,7 @@
     if (embedUrl && /\/hume_renderer\//i.test(embedUrl)) {
       return embedUrl.replace(/\/hume_renderer\//i, "/openai_renderer/");
     }
-    return "/UnityEnergy/openai_renderer/index.html?v=20260423r5";
+    return "./assets/cognition/curl/openai_renderer/index.html?v=20261103-curl-restore-1";
   }
 
   function buildOpenAiFallbackConfig(cfg) {
@@ -4222,7 +4223,9 @@
     const enabled = Boolean(source.clerk_page_access_control_enabled);
     const allowedPages = normalizeClerkPageSlugList(source.clerk_voice_allowed_pages);
     const configuredBlockedPages = normalizeClerkPageSlugList(source.clerk_voice_blocked_pages);
-    const blockedPages = configuredBlockedPages.length > 0 ? configuredBlockedPages : ["index", "home"];
+    // Explicit empty array means "block nothing". Do NOT fall back to index/home —
+    // that silently killed Curl on CP page1 (index.html) while page2+ worked.
+    const blockedPages = configuredBlockedPages;
     return {
       enabled: enabled,
       allowedPages: allowedPages,
@@ -10209,13 +10212,28 @@
   }
 
   function composeEmbedUrl(cfg, launchSession) {
-    const rawUrl = (cfg.embed_url || "").trim();
-    if (!rawUrl) return "";
+    // Curl OpenAI Live: accept any of the renderer URL keys (page1 had empty embed_url only).
+    let rawUrl = (
+      (cfg && (cfg.embed_url || cfg.openai_embed_url || cfg.openai_renderer_url || cfg.renderer_url || cfg.hume_embed_url)) ||
+      ""
+    ).toString().trim();
+    if (!rawUrl) {
+      rawUrl = "./assets/cognition/curl/openai_renderer/index.html";
+    }
+    // Fix common mangled concatenations from older page stamps
+    rawUrl = rawUrl.replace(/parity-1index\.html/g, "parity-1&_=");
+    if (rawUrl.indexOf("openai_renderer") === -1 && /curl/i.test(String((cfg && cfg.character_id) || (cfg && cfg.character_name) || ""))) {
+      rawUrl = "./assets/cognition/curl/openai_renderer/index.html";
+    }
     let url;
     try {
       url = new URL(rawUrl, window.location.href);
     } catch (_err) {
-      return "";
+      try {
+        url = new URL("./assets/cognition/curl/openai_renderer/index.html", window.location.href);
+      } catch (_err2) {
+        return "";
+      }
     }
 
     const params = url.searchParams;
@@ -11204,6 +11222,34 @@
       } catch (_e) {}
 
       let cfg = getRuntimeVoiceConfig();
+      // CURL HARD LOCK: never take Hume path on Cognition Partner host.
+      try {
+        cfg = cfg && typeof cfg === "object" ? cfg : {};
+        cfg.voice_engine = "openai";
+        cfg.openai_live_api = true;
+        cfg.openai_voice = cfg.openai_voice || "marin";
+        cfg.voice_id = "marin";
+        cfg.openai_realtime_model = cfg.openai_realtime_model || "gpt-live-1";
+        cfg.openai_session_endpoint = cfg.openai_session_endpoint || "/api/openai/realtime/session";
+        cfg.openai_live_session_endpoint = cfg.openai_live_session_endpoint || "/api/openai/live/session";
+        const rurl = "./assets/cognition/curl/openai_renderer/index.html";
+        cfg.embed_url = cfg.embed_url || cfg.openai_embed_url || cfg.openai_renderer_url || rurl;
+        cfg.openai_embed_url = cfg.openai_embed_url || cfg.embed_url;
+        cfg.openai_renderer_url = cfg.openai_renderer_url || cfg.embed_url;
+        cfg.renderer_url = cfg.renderer_url || cfg.embed_url;
+        cfg.hume_embed_url = cfg.embed_url;
+        cfg.hume_runtime_auth_endpoint = "";
+        cfg.allow_hume_authless_connect = false;
+        cfg.allow_openai_fallback = true;
+        cfg.openai_auto_greeting_enabled = true;
+        if (window.MAXWELLIAN_HUME && window.MAXWELLIAN_HUME.opening_line) {
+          cfg.openai_auto_greeting_text = window.MAXWELLIAN_HUME.opening_line;
+          cfg.opening_line = window.MAXWELLIAN_HUME.opening_line;
+          cfg.session_context = window.MAXWELLIAN_HUME.session_context || cfg.session_context;
+          cfg.system_prompt_text = window.MAXWELLIAN_HUME.system_prompt_text || cfg.system_prompt_text;
+        }
+        window.MAXWELLIAN_HUME = Object.assign({}, window.MAXWELLIAN_HUME || {}, cfg);
+      } catch (_lockErr) {}
       clearUnityStartGateLaunchTimers();
       noteUnityStartGateProgress("start-button-tap");
       setLaunchEmblemVisible(true);

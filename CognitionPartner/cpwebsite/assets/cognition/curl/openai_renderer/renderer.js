@@ -636,15 +636,26 @@
       const instructions = buildDelayedFollowupInstructions(state.config, state.launchSession);
       if (!instructions) return;
       try {
-        state.dataChannel.send(
-          JSON.stringify({
-            type: "response.create",
-            response: {
-              modalities: ["text", "audio"],
-              instructions: instructions,
-            },
-          })
-        );
+        if (isLiveApi(state.config)) {
+          state.dataChannel.send(
+            JSON.stringify({
+              type: "session.instructions.append",
+              event_id: "live_followup_1",
+              delegation_id: null,
+              content: instructions,
+            })
+          );
+        } else {
+          state.dataChannel.send(
+            JSON.stringify({
+              type: "response.create",
+              response: {
+                modalities: ["text", "audio"],
+                instructions: instructions,
+              },
+            })
+          );
+        }
         state.hasSentDelayedFollowup = true;
       } catch (_err) {}
     }, delayMs);
@@ -657,16 +668,19 @@
     const instructions = buildAutoGreetingInstructions(state.config, state.launchSession);
     if (!instructions) return;
     try {
+      const forceSpeak =
+        "Speak first NOW. The visitor already activated you. " +
+        "Ignore any prior rule to remain silent after Diva or wait for engagement — activation already happened. " +
+        "Deliver your short opening introduction in character, then listen. ";
       if (isLiveApi(state.config)) {
-        // GPT-Live: ask the model to speak first via instructions append.
+        // GPT-Live (Clerk gold path): instructions.append only.
+        // Nested response.create { response: ... } yields: Unknown parameter: 'response'.
         state.dataChannel.send(
           JSON.stringify({
             type: "session.instructions.append",
-            event_id: "clerk_greeting_1",
+            event_id: "curl_greeting_1",
             delegation_id: null,
-            content:
-              "Speak first now. Greet the visitor briefly in character, then listen. " +
-              instructions,
+            content: forceSpeak + instructions,
           })
         );
       } else {
@@ -674,8 +688,8 @@
           JSON.stringify({
             type: "response.create",
             response: {
-              modalities: ["audio"],
-              instructions: instructions,
+              modalities: ["audio", "text"],
+              instructions: forceSpeak + instructions,
             },
           })
         );

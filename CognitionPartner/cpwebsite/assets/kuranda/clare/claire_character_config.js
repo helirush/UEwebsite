@@ -20,6 +20,10 @@ window.MAXWELLIAN_HUME = {
   default_ui_mode: "modal",
   // Voice stack selector for widget routing.
   voice_engine: "openai",
+  openai_live_api: true,
+  openai_voice: "willow",
+  voice_id: "willow",
+  openai_realtime_model: "gpt-live-1",
   // Diagnostics can be re-enabled for troubleshooting, but default is off in normal operation.
   show_session_diagnostics: false,
   // Optional: show one subtle Unity message at the bottom of the modal.
@@ -491,7 +495,7 @@ window.MAXWELLIAN_HUME = {
       // Optional: set a dedicated lower-cost model profile id here.
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
       // Optional: set a dedicated voice profile id for this intelligence tier.
-      voice_id: "6b530c02-5a80-4e60-bb68-f2c171c5029f",
+      voice_id: "willow",
       session_context_char_limit: 24000,
       skill_pack_excerpt_char_limit: 900,
       skill_packs_max_selected: 2,
@@ -508,7 +512,7 @@ window.MAXWELLIAN_HUME = {
       description:
         "Balanced cost/performance for normal customer guidance and services discussions.",
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "6b530c02-5a80-4e60-bb68-f2c171c5029f",
+      voice_id: "willow",
       session_context_char_limit: 24000,
       skill_pack_excerpt_char_limit: 1800,
       skill_packs_max_selected: 2,
@@ -525,7 +529,7 @@ window.MAXWELLIAN_HUME = {
       description:
         "Customer-scoped operating mode with memory continuity and clear transformer/chart interpretation guidance.",
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "6b530c02-5a80-4e60-bb68-f2c171c5029f",
+      voice_id: "willow",
       session_context_char_limit: 24000,
       skill_pack_excerpt_char_limit: 2400,
       skill_packs_max_selected: 3,
@@ -543,7 +547,7 @@ window.MAXWELLIAN_HUME = {
       description:
         "Higher-depth mode for reinterpretation, anomaly triage, and contextual board analysis.",
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "6b530c02-5a80-4e60-bb68-f2c171c5029f",
+      voice_id: "willow",
       session_context_char_limit: 24000,
       skill_pack_excerpt_char_limit: 3000,
       skill_packs_max_selected: 3,
@@ -988,21 +992,20 @@ window.MAXWELLIAN_HUME = {
   experimental_force_voice_id_as_config_id: false,
   unity_launch_ring_image_url: "assets/images/kuranda_p2.png",
   // Keep desktop launch simple: let the realtime renderer request mic directly.
-  preflight_microphone_on_launch: true,
+  preflight_microphone_on_launch: false,
   // OpenAI cognition defaults (used as text-generation guidance).
   // Keep false unless a production OpenAI realtime session backend is available.
   // Emergency public fallback: allow direct Hume connect attempts when runtime auth bootstrap is unavailable.
-  hume_runtime_auth_endpoint: "https://unityenergy.com/api/hume/runtime-auth",
-  allow_hume_authless_connect: true,
-  allow_openai_fallback: true,
+  hume_runtime_auth_endpoint: "",
+  allow_hume_authless_connect: false,
+  allow_openai_fallback: false,
   openai_session_endpoint: "/api/openai/realtime/session",
   openai_realtime_model: "gpt-live-1",
   openai_voice: "willow",
   openai_voice_profile_id: "claire-willow-gpt-live-1",
   openai_live_api: true,
   openai_live_session_endpoint: "/api/openai/live/session",
-  openai_session_endpoint: "/api/openai/realtime/session",
-  openai_embed_url: "./openai_renderer/index.html?v=20261011-willow-live-1",
+  openai_embed_url: "./assets/kuranda/clare/openai_renderer/index.html?v=20261103-claire-start-fix-1",
   openai_voice_instruction_set:
     "You are Claire, public guide and Cognition Host for Kuranda Mind & Body Institute. Professional adult female voice: warm, composed, intelligent, and welcoming. " +
     "Clear enough to guide a first-time visitor without sounding like a commercial announcer or generic customer-service bot. Calm confidence, natural conversational" +
@@ -1029,7 +1032,9 @@ window.MAXWELLIAN_HUME = {
   },
   // Self-hosted renderer for full UI control.
   // Hume handles voice rendering/cadence while cognition remains OpenAI-guided via launch context and config.
-  embed_url: "./assets/kuranda/clare/hume_renderer/index.html?v=20260804-0140",
+  embed_url: "./assets/kuranda/clare/openai_renderer/index.html?v=20261103-claire-start-fix-1",
+  openai_renderer_url: "./assets/kuranda/clare/openai_renderer/index.html?v=20261103-claire-start-fix-1",
+  renderer_url: "./assets/kuranda/clare/openai_renderer/index.html?v=20261103-claire-start-fix-1",
   // Small avatar image used for header/presence chip.
   character_avatar_url: "",
   // Signal-stage portrait (must stay transparent Clerk asset).
@@ -1042,7 +1047,7 @@ window.MAXWELLIAN_HUME = {
   // Optional config version lock.
   config_version: 0,
   // Voice target used by OpenAI realtime.
-  voice_id: "6b530c02-5a80-4e60-bb68-f2c171c5029f",
+  voice_id: "willow",
   // Phase 2 character registry (routing + metadata). Existing global fields remain fallback defaults.
   characters: {
     "claire-charcot": {
@@ -1051,7 +1056,7 @@ window.MAXWELLIAN_HUME = {
       character_avatar_url: "",
       character_background_url: "assets/images/kuranda_p2.png",
       config_id: "242d8c4f-bb9c-49e2-9e3e-2a4bc59061cf",
-      voice_id: "6b530c02-5a80-4e60-bb68-f2c171c5029f",
+      voice_id: "willow",
       session_variables: {
         character_name: "Claire",
         character_role: "Public conversational guide for Kuranda Mind & Body",

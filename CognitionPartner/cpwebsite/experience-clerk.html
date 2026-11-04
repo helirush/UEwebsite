@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cognition Partner — Speak with Clerk</title>
-  <meta name="description" content="Cognition Partner experience">
+  <title>Experience Clerk | Cognition Partner</title>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Cognition Partner">
   <meta property="og:title" content="The Future of Human Thinking">
@@ -649,7 +648,21 @@
   </script>
   <script src="./assets/unity/clerk/hume_auth_bootstrap.js?v=20260811-clerk-intro-spirit1"></script>
   <script src="./assets/unity/clerk/clerk_character_config.js?v=20261013-vesper-willow-1"></script>
-  <script src="./assets/unity/clerk/clerk_voice_widget.js?v=20261012-no-hume-curl-clerk-i1"></script>
+  <script src="./assets/unity/clerk/clerk_voice_widget.js?v=20261020-page-aware-traveler-1"></script>
+<!-- CP-SEO-FOUNDATION-START -->
+    <meta name="description" content="Experience Clerk — part of Cognition Partner, human-machine partnership for the future of human thinking.">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://cognitionpartner.ai/experience-clerk.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cognition Partner">
+    <meta property="og:title" content="Experience Clerk | Cognition Partner">
+    <meta property="og:description" content="Experience Clerk — part of Cognition Partner, human-machine partnership for the future of human thinking.">
+    <meta property="og:url" content="https://cognitionpartner.ai/experience-clerk.html">
+    <meta property="og:image" content="https://cognitionpartner.ai/apple-touch-icon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Experience Clerk | Cognition Partner">
+    <meta name="twitter:description" content="Experience Clerk — part of Cognition Partner, human-machine partnership for the future of human thinking.">
+    <!-- CP-SEO-FOUNDATION-END -->
 </head>
 <body class="home-page cp-clerk-onepage">
   <main class="site-wrap">
@@ -998,7 +1011,7 @@
       const applyClerkConfig = () => {
         if (!window.MAXWELLIAN_HUME || typeof window.MAXWELLIAN_HUME !== 'object') return false;
         const portrait = resolveCpAssetUrl('ClerkMaxwell_60423t.png');
-        const embedUrl = resolveCpClerkRuntimeUrl('openai_renderer/index.html?v=20261012-clerk-openai-fix-1');
+        const embedUrl = resolveCpClerkRuntimeUrl('openai_renderer/?v=20261103-curl-clerk-parity-1index.html?v=20261012-clerk-openai-fix-1');
         const onboardUrl = resolveCpClerkRuntimeUrl('knowledge/SpeakWithClerkOnBoard.md?v=20260811-clerk-intro-spirit1');
 
         // Critical: page8 is outside Unity allowlist. Disable page lock for CP demo.
@@ -1019,7 +1032,7 @@
         window.MAXWELLIAN_HUME.openai_live_api = true;
         window.MAXWELLIAN_HUME.openai_session_endpoint = '/api/openai/realtime/session';
         window.MAXWELLIAN_HUME.openai_live_session_endpoint = '/api/openai/live/session';
-        window.MAXWELLIAN_HUME.openai_renderer_url = resolveCpClerkRuntimeUrl('openai_renderer/index.html?v=20261012-clerk-openai-fix-1');
+        window.MAXWELLIAN_HUME.openai_renderer_url = resolveCpClerkRuntimeUrl('openai_renderer/?v=20261103-curl-clerk-parity-1index.html?v=20261012-clerk-openai-fix-1');
         window.MAXWELLIAN_HUME.renderer_url = window.MAXWELLIAN_HUME.openai_renderer_url;
         window.MAXWELLIAN_HUME.hume_embed_url = window.MAXWELLIAN_HUME.openai_renderer_url;
         // GPT Live only — do not require Hume runtime-auth for Clerk demo
@@ -2121,7 +2134,7 @@
       setBottomWaiting();
     })();
   </script>
-<script src="../../UnityEnergy/founder_share_panel.js?v=20260901a" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20260901a';"></script>
+<script src="assets/js/founder_share_panel.js?v=20261019-hotspot-30" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20261019-hotspot-30';"></script>
 
 <script>
 // CP Clerk demo: OpenAI Live + Vesper only (no Hume). Maxwellian knowledge packs remain authoritative.
@@ -2145,7 +2158,7 @@
         c.openai_live_session_endpoint = c.openai_live_session_endpoint || '/api/openai/live/session';
         c.openai_session_endpoint = c.openai_session_endpoint || '/api/openai/live/session';
         c.allow_openai_fallback = false;
-        c.openai_renderer_url = './assets/unity/clerk/openai_renderer/index.html?v=20261012-clerk-openai-fix-1';
+        c.openai_renderer_url = './assets/unity/clerk/openai_renderer/?v=20261103-curl-clerk-parity-1index.html?v=20261012-clerk-openai-fix-1';
         // Keep intro + Maxwellian library access instructions
         if (!c.knowledge_packs) c.knowledge_packs = [];
       } catch (e) {}
@@ -2177,7 +2190,7 @@
     c.openai_live_api = true;
     c.openai_session_endpoint = '/api/openai/realtime/session';
     c.openai_live_session_endpoint = '/api/openai/live/session';
-    c.openai_renderer_url = './assets/unity/clerk/openai_renderer/index.html?v=20261012-clerk-openai-fix-1';
+    c.openai_renderer_url = './assets/unity/clerk/openai_renderer/?v=20261103-curl-clerk-parity-1index.html?v=20261012-clerk-openai-fix-1';
     c.embed_url = c.openai_renderer_url;
     c.renderer_url = c.openai_renderer_url;
     c.hume_embed_url = c.openai_renderer_url;
