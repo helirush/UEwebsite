@@ -1,16 +1,31 @@
 
-  function resolveLiveSessionEndpoint(preferred) {
+  
+  function isLocalDevHost() {
+    try {
+      var h = String((window.location && window.location.hostname) || "").toLowerCase();
+      return h === "localhost" || h === "127.0.0.1" || h === "";
+    } catch (e) { return false; }
+  }
+function resolveLiveSessionEndpoint(preferred) {
+    /* PROD_NO_LOCAL_REWRITE: never rewrite absolute relay URLs to :8600 on public hosts */
     var preferredText = (preferred && String(preferred).trim()) || "";
+    var PROD_LIVE = "https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session";
+    // Absolute relay/production URLs must never be rewritten.
+    if (/^https?:\/\//i.test(preferredText)) return preferredText;
     var path = preferredText || "/api/openai/live/session";
     try {
-      var host = (window.location && window.location.hostname) || "127.0.0.1";
+      var host = String((window.location && window.location.hostname) || "").toLowerCase();
       var port = (window.location && window.location.port) || "";
       var protocol = (window.location && window.location.protocol) || "http:";
-      // file:// or plain static ports should hit the realtime server on 8600
-      if (protocol === "file:" || (port && port !== "8600" && (host === "127.0.0.1" || host === "localhost"))) {
-        if (path.charAt(0) === "/") {
-          return "http://127.0.0.1:8600" + path;
-        }
+      var isLocal = host === "localhost" || host === "127.0.0.1" || protocol === "file:";
+      if (!isLocal) {
+        // Public site: relative /api cannot mint sessions on GitHub Pages.
+        if (path.charAt(0) === "/") return PROD_LIVE;
+        return path || PROD_LIVE;
+      }
+      // Local dev: map relative paths onto the :8600 voice server when not already on it.
+      if (protocol === "file:" || (port && port !== "8600")) {
+        if (path.charAt(0) === "/") return "http://127.0.0.1:8600" + path;
       }
     } catch (_e) {}
     return path;
@@ -104,7 +119,7 @@
     const primaryBase = resolveMaxwellianLibraryApiBase();
     if (primaryBase) bases.push(primaryBase);
     bases.push("");
-    bases.push("http://127.0.0.1:8600");
+    if (isLocalDevHost()) bases.push("http://127.0.0.1:8600");
     const paths = [];
     bases.forEach(function (b) {
       const p = (b || "") + "/api/maxwellian/library/master-brief";

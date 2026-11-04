@@ -15,7 +15,7 @@
   <meta property="og:title" content="The Future of Human Thinking">
   <meta property="og:description" content="Unity Energy Speak with Clerk">
   <meta property="og:url" content="https://unityenergy.com/speak-with-clerk.html">
-  <meta property="og:image" content="https://unityenergy.com/assets/images/unity-icon-circle-512.png">
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/ue-og-share-1200.png?v=20261104-monogram-dg-1">
   <meta property="og:image:alt" content="Cognition Partner">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="512">
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="The Future of Human Thinking">
   <meta name="twitter:description" content="Unity Energy Speak with Clerk">
-  <meta name="twitter:image" content="https://unityenergy.com/assets/images/unity-icon-circle-512.png">
+  <meta name="twitter:image" content="https://unityenergy.com/UnityEnergy/assets/images/ue-og-share-1200.png?v=20261104-monogram-dg-1">
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/images/unity-icon-circle-192.png">
@@ -1146,7 +1146,7 @@
     <meta property="og:title" content="Speak with Clerk | Unity Energy">
     <meta property="og:description" content="Speak with Clerk at Unity Energy—guided conversation about industrial electricity, energy fields, and Unity’s approach.">
     <meta property="og:url" content="https://unityenergy.com/UnityEnergy/speak-with-clerk.html">
-    <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/unity-icon-circle-512.png">
+    <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/ue-og-share-1200.png?v=20261104-monogram-dg-1">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Speak with Clerk | Unity Energy">
     <meta name="twitter:description" content="Speak with Clerk at Unity Energy—guided conversation about industrial electricity, energy fields, and Unity’s approach.">
@@ -1572,7 +1572,7 @@
       const applyClerkConfig = () => {
         if (!window.MAXWELLIAN_HUME || typeof window.MAXWELLIAN_HUME !== 'object') return false;
         const portrait = resolveCpAssetUrl('assets/images/ClerkMaxwell_60423t.png');
-        const embedUrl = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261020-ue-clerk-worker-1');
+        const embedUrl = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261104-prod-live-relay-1');
         const onboardUrl = resolveCpClerkRuntimeUrl('./assets/clerk/knowledge/SpeakWithClerkOnBoard.md?v=20261019-office-visit-1');
 
         // Contact Us Speak-with-Clerk: Unity Contact welcome lane (not CP page 8).
@@ -1593,7 +1593,7 @@
         window.MAXWELLIAN_HUME.openai_live_api = true;
         window.MAXWELLIAN_HUME.openai_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
         window.MAXWELLIAN_HUME.openai_live_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
-        window.MAXWELLIAN_HUME.openai_renderer_url = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261020-ue-clerk-worker-1');
+        window.MAXWELLIAN_HUME.openai_renderer_url = resolveCpClerkRuntimeUrl('./openai_renderer/index.html?v=20261104-prod-live-relay-1');
         window.MAXWELLIAN_HUME.renderer_url = window.MAXWELLIAN_HUME.openai_renderer_url;
         window.MAXWELLIAN_HUME.hume_embed_url = window.MAXWELLIAN_HUME.openai_renderer_url;
         // GPT Live only — do not require Hume runtime-auth for Clerk demo
@@ -2891,7 +2891,7 @@
       setBottomWaiting();
     })();
   </script>
-<script src="./founder_share_panel.js?v=20260901a" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20260901a';"></script>
+<script src="./founder_share_panel.js?v=20261104-ussi-share-title-1" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20261104-ussi-share-title-1';"></script>
 
 <script>
 // CP Clerk demo: OpenAI Live + Vesper only (no Hume). Maxwellian knowledge packs remain authoritative.
@@ -2915,7 +2915,7 @@
         c.openai_live_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
         c.openai_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
         c.allow_openai_fallback = false;
-        c.openai_renderer_url = './openai_renderer/index.html?v=20261020-ue-clerk-worker-1';
+        c.openai_renderer_url = './openai_renderer/index.html?v=20261104-prod-live-relay-1';
         // Keep intro + Maxwellian library access instructions
         if (!c.knowledge_packs) c.knowledge_packs = [];
       } catch (e) {}
@@ -2947,7 +2947,7 @@
     c.openai_live_api = true;
     c.openai_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
     c.openai_live_session_endpoint = 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
-    c.openai_renderer_url = './openai_renderer/index.html?v=20261020-ue-clerk-worker-1';
+    c.openai_renderer_url = './openai_renderer/index.html?v=20261104-prod-live-relay-1';
     c.embed_url = c.openai_renderer_url;
     c.renderer_url = c.openai_renderer_url;
     c.hume_embed_url = c.openai_renderer_url;
@@ -3012,7 +3012,7 @@
     c.openai_live_api = true;
     c.openai_session_endpoint = c.openai_session_endpoint || 'https://openai-live-session.relay-3b0.workers.dev/api/openai/realtime/session';
     c.openai_live_session_endpoint = c.openai_live_session_endpoint || 'https://openai-live-session.relay-3b0.workers.dev/api/openai/live/session';
-    c.openai_renderer_url = './openai_renderer/index.html?v=20261020-ue-clerk-worker-1';
+    c.openai_renderer_url = './openai_renderer/index.html?v=20261104-prod-live-relay-1';
     c.embed_url = c.openai_renderer_url;
     c.renderer_url = c.openai_renderer_url;
     c.hume_embed_url = c.openai_renderer_url;
