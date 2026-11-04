@@ -26,7 +26,8 @@
   var DEFAULT_PROVIDER_NAME = "Unity Energy";
   var DEFAULT_TITLE_PRESETS = Object.freeze([
     "Unity Energy Electrical Intelligence",
-    "Maxwellian Intelligence"
+    "Maxwellian Intelligence",
+    "USSI Communication"
   ]);
   var ELECTRICAL_TITLE_VARIANTS = [
     "Electrical Intelligence",
@@ -898,6 +899,21 @@
     } else if (selected.key === "maxwellian-news") {
       templateSlug = resolveMaxwellianTemplateSlugForTitle(selectedTitle);
     }
+    // Title-owned private shells win over the selected card type.
+    // iMessage/OG crawlers only read static meta tags — a WelcomeWebsite shell
+    // hard-coded to Foster Farms will ignore ue_title=USSI Communication.
+    var privateTitleSlug = resolvePrivateTemplateSlugForTitle(selectedTitle);
+    if (
+      privateTitleSlug &&
+      privateTitleSlug !== "private" &&
+      (
+        selectedTitle.toLowerCase().indexOf("ussi") !== -1 ||
+        selectedTitle.toLowerCase().indexOf("cherry") !== -1
+      )
+    ) {
+      templateSlug = privateTitleSlug;
+      selected = SHARE_TYPES.find(function (entry) { return entry.key === "private-confidential"; }) || selected;
+    }
     var shareOrigin = getShareOrigin();
     if (
       selected.key === "maxwellian-news" &&
@@ -1530,6 +1546,11 @@
       } else {
         titlePresetSelect.value = matched;
       }
+      // Auto-bind Private Confidential when title owns a private shell (USSI / Cherry).
+      var privateSlug = resolvePrivateTemplateSlugForTitle(rawTitle);
+      if (privateSlug && privateSlug !== "private") {
+        typeSelect.value = "private-confidential";
+      }
     });
 
     copyLinkBtn.addEventListener("click", async function () {
@@ -1542,7 +1563,9 @@
       if (ok) {
         saveTitlePresetAndRefresh(payload.title);
       }
-      setStatus(ok ? (payload.type.label + " link copied · " + payload.stampCode + " · " + payload.title) : "Copy failed.");
+      var shellName = "";
+      try { shellName = new URL(payload.url).pathname.split("/").pop(); } catch (_e) {}
+      setStatus(ok ? (payload.type.label + " link copied · " + payload.stampCode + " · " + payload.title + (shellName ? (" · " + shellName) : "")) : "Copy failed.");
     });
 
     function bindStealthHotspotTrigger(hotspot) {

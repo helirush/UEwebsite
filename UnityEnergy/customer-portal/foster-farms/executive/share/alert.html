@@ -1,18 +1,42 @@
 <!doctype html>
 <html lang="en">
 <head>
+
+  <script>
+    /* Apply founder-panel MESSAGE TITLE to link-preview fields before paint when possible */
+    (function () {
+      try {
+        var q = new URLSearchParams(window.location.search || '');
+        var title = String(q.get('ue_title') || q.get('title') || '').trim();
+        if (!title) return;
+        document.title = title;
+        var pairs = [
+          ['property', 'og:title'],
+          ['name', 'twitter:title'],
+          ['property', 'og:description'],
+          ['name', 'twitter:description'],
+          ['name', 'description']
+        ];
+        pairs.forEach(function (pair) {
+          var el = document.head.querySelector('meta[' + pair[0] + '="' + pair[1] + '"]');
+          if (el) el.setAttribute('content', title);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foster Farms Electrical Intelligence</title>
+  <title>Unity Energy Electrical Intelligence</title>
   <meta name="description" content="Foster Farms electrical intelligence from Unity Energy." />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Foster Farms Electrical Intelligence" />
+  <meta property="og:title" content="Unity Energy Electrical Intelligence" />
   <meta property="og:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
   <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/alert.html?ue_doc=UE.0614.01" />
-  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/share-card-bases/WelcomeWebsite.png?ue_doc=UE.0601.01&ue_img=UEWELCOMEWEBSITE" />
-  <meta property="og:image:alt" content="Foster Farms Electrical Intelligence share card" />
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/ue-og-share-1200.png?v=20261104-monogram-dg-1" />
+  <meta property="og:image:alt" content="Unity Energy Electrical Intelligence share card" />
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Foster Farms Electrical Intelligence" />
+  <meta property="twitter:title" content="Unity Energy Electrical Intelligence" />
   <meta property="twitter:description" content="Foster Farms · Electrical Visibility &amp; Intelligence Progress Report" />
   <meta property="twitter:image" content="https://unityenergy.com/UnityEnergy/assets/images/share-card-bases/WelcomeWebsite.png?ue_doc=UE.0601.01&ue_img=UEWELCOMEWEBSITE" />
   <script>
