@@ -1222,6 +1222,52 @@
             }
         }
 
+
+
+    /* MEET CLERK / ENTER CLERK'S OFFICE — large reliable hit over right-center art */
+    #ueContactMeetClerk.ue-hit-meet-clerk,
+    a#ueContactMeetClerk,
+    .ue-hit-meet-clerk {
+      position: absolute !important;
+      left: 48% !important;
+      top: calc(52% - 20px) !important;
+      width: 46% !important;
+      height: 36% !important;
+      min-width: 220px !important;
+      min-height: 160px !important;
+      z-index: 12000 !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      color: transparent !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+      text-indent: -9999px !important;
+      overflow: hidden !important;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none !important;
+    }
+    #ueContactMeetClerk.ue-hit-meet-clerk:focus-visible {
+      outline: 2px solid rgba(212, 175, 55, 0.85);
+      outline-offset: 2px;
+      color: transparent !important;
+    }
+    @media (max-width: 900px) {
+      #ueContactMeetClerk.ue-hit-meet-clerk,
+      a#ueContactMeetClerk,
+      .ue-hit-meet-clerk {
+        left: 42% !important;
+        top: calc(50% - 10px) !important;
+        width: 54% !important;
+        height: 38% !important;
+      }
+    }
+
 </style>
 <!-- UE-SEO-FOUNDATION-START -->
     <meta name="description" content="Contact Unity Energy to discuss industrial energy-field monitoring, analysis, and next steps for your facility.">
@@ -1347,9 +1393,7 @@
                 </a>
 
                 <!-- Meet with Clerk hit over painted CTA -->
-                <button type="button" class="ue-hit-meet-clerk" id="ueContactMeetClerk" data-ue-enter-clerk="1" aria-label="Meet with Clerk Maxwell">
-                    <span class="ue-meet-label">Enter Clerk's Office <span class="ue-meet-arrow" aria-hidden="true">→</span></span>
-                </button>
+                <a class="ue-hit-meet-clerk" id="ueContactMeetClerk" data-ue-enter-clerk="1" aria-label="Meet with Clerk Maxwell" href="./speak-with-clerk.html?v=20261105-contact-meet-clerk-2&from=contact-us" role="link"><span class="ue-meet-label">Enter Clerk's Office <span class="ue-meet-arrow" aria-hidden="true">→</span></span></a>
 </div>
         </section>
 
@@ -1379,7 +1423,8 @@
           }
         } catch (e2) {}
         // Gold-screen Clerk only — never open inline/floating Clerk on Contact Us
-        var target = './speak-with-clerk.html?v=20261105-clerk-office-select-1&from=contact-us';
+        var el = document.getElementById('ueContactMeetClerk');
+        var target = (el && el.getAttribute('href')) || './speak-with-clerk.html?v=20261105-contact-meet-clerk-2&from=contact-us';
         try { target = new URL(target, window.location.href).toString(); } catch (e3) {}
         try { window.location.assign(target); } catch (e4) { window.location.href = target; }
         return false;
