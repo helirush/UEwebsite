@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+  <script>
+    /* Apply founder-panel MESSAGE TITLE to link-preview fields before paint when possible */
+    (function () {
+      try {
+        var q = new URLSearchParams(window.location.search || '');
+        var title = String(q.get('ue_title') || q.get('title') || '').trim();
+        if (!title) return;
+        document.title = title;
+        var pairs = [
+          ['property', 'og:title'],
+          ['name', 'twitter:title'],
+          ['property', 'og:description'],
+          ['name', 'twitter:description'],
+          ['name', 'description']
+        ];
+        pairs.forEach(function (pair) {
+          var el = document.head.querySelector('meta[' + pair[0] + '="' + pair[1] + '"]');
+          if (el) el.setAttribute('content', title);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Partner Access</title>
+  <meta name="description" content="Partner Access" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Partner Access" />
+  <meta property="og:description" content="Partner Access" />
+  <meta property="og:url" content="https://unityenergy.com/UnityEnergy/customer-portal/foster-farms/executive/share/private-partner-access.html" />
+  <meta property="og:image" content="https://unityenergy.com/UnityEnergy/assets/images/ue-master-monogram.png?v=20261105-private-msg-title-1" />
+  <meta property="og:image:secure_url" content="https://unityenergy.com/UnityEnergy/assets/images/ue-master-monogram.png?v=20261105-private-msg-title-1" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="180" />
+  <meta property="og:image:height" content="180" />
+  <meta property="og:image:alt" content="Partner Access" />
+  <!-- summary = compact iMessage row: title + small logo on the end (not giant card art) -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Partner Access" />
+  <meta name="twitter:description" content="Partner Access" />
+  <meta name="twitter:image" content="https://unityenergy.com/UnityEnergy/assets/images/ue-master-monogram.png?v=20261105-private-msg-title-1" />
+  <meta name="twitter:image:alt" content="Partner Access" />
+  <link rel="apple-touch-icon" href="https://unityenergy.com/UnityEnergy/assets/images/ue-master-monogram.png?v=20261105-private-msg-title-1" />
+  <link rel="icon" type="image/png" href="https://unityenergy.com/UnityEnergy/assets/images/ue-master-monogram.png?v=20261105-private-msg-title-1" />
+  <script>
+    (function () {
+      const SHARE_KIND = "private";
+      const RETIRED_TEST_STAMPS = Object.freeze(["UE.26.0528"]);
+      const RETIRED_TEST_MESSAGE = "This was used for testing purposes. Please contact Unity for the updated link.";
+      function pad2(value) {
+        return String(value).padStart(2, "0");
+      }
+      function formatStamp(dateObj, revisionCounter) {
+        const mm = pad2(dateObj.getMonth() + 1);
+        const dd = pad2(dateObj.getDate());
+        const parsedRevision = Number.parseInt(revisionCounter, 10);
+        const normalizedRevision = Number.isFinite(parsedRevision) && parsedRevision > 0 ? parsedRevision : 1;
+        const rr = pad2(normalizedRevision);
+        return `UE.${mm}${dd}.${rr}`;
+      }
+      function parseStamp(rawValue) {
+        const value = String(rawValue || "").trim().toUpperCase();
+        if (/^UE\.\d{2}\.\d{4}$/.test(value)) return value;
+        if (/^UE\.\d{4}\.\d{2}$/.test(value)) return value;
+        return null;
+      }
+      function normalizeStatus(rawValue) {
+        const value = String(rawValue || "").trim().toLowerCase();
+        if (value === "published") return "published";
+        if (value === "test") return "test";
+        return "review";
+      }
+      function normalizeRecipientKey(rawValue) {
+        return String(rawValue || "").trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+      }
+      function normalizeRouteAddress(rawValue) {
+        return String(rawValue || "").trim().toLowerCase().replace(/[^a-z0-9@._+-]/g, "");
+      }
+      function renderUnavailable(message) {
+        document.addEventListener("DOMContentLoaded", function () {
+          if (!document.body) return;
+          document.body.textContent = message;
+        });
+      }
+      const pageUrl = new URL(window.location.href);
+      const incomingStamp = parseStamp(pageUrl.searchParams.get("ue_doc"));
+      if (incomingStamp && RETIRED_TEST_STAMPS.indexOf(incomingStamp) !== -1) {
+        renderUnavailable(RETIRED_TEST_MESSAGE);
+        return;
+      }
+      const incomingStatus = normalizeStatus(pageUrl.searchParams.get("ue_status"));
+      if (incomingStatus !== "published") {
+        renderUnavailable("This share link is unavailable while the document is in review/test mode.");
+        return;
+      }
+      const stampCode = parseStamp(pageUrl.searchParams.get("ue_doc")) || formatStamp(new Date());
+      const targetPath = String(pageUrl.searchParams.get("ue_target") || "../executive-update/");
+      const target = new URL(targetPath, window.location.href);
+      target.searchParams.set("ue_doc", stampCode);
+      target.searchParams.set("ue_kind", SHARE_KIND);
+      target.searchParams.set("ue_share", pageUrl.searchParams.get("ue_share") || String(Date.now()));
+      target.searchParams.set("ue_status", "published");
+      const incomingRevision = String(pageUrl.searchParams.get("ue_rev") || "").trim();
+      if (incomingRevision) {
+        target.searchParams.set("ue_rev", incomingRevision);
+      }
+      const incomingTitle = String(pageUrl.searchParams.get("ue_title") || "").trim();
+      if (incomingTitle) {
+        target.searchParams.set("ue_title", incomingTitle);
+      }
+      const recipientKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_recipient"));
+      if (recipientKey) {
+        target.searchParams.set("ue_recipient", recipientKey);
+      }
+      const customerKey = normalizeRecipientKey(pageUrl.searchParams.get("ue_customer"));
+      if (customerKey) {
+        target.searchParams.set("ue_customer", customerKey);
+      }
+      const senderAddress = normalizeRouteAddress(pageUrl.searchParams.get("ue_from"));
+      if (senderAddress) {
+        target.searchParams.set("ue_from", senderAddress);
+      }
+      const recipientAddress = normalizeRouteAddress(pageUrl.searchParams.get("ue_to"));
+      if (recipientAddress) {
+        target.searchParams.set("ue_to", recipientAddress);
+      }
+      target.searchParams.set("ue_target", targetPath);
+      window.location.replace(target.toString());
+    })();
+  </script>
+<script src="../../../../public_release_flags.js?v=20260901a"></script>
+</head>
+<body>
+  Redirecting to the private executive link…
+</body>
+</html>

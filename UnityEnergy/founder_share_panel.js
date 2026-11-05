@@ -27,7 +27,8 @@
   var DEFAULT_TITLE_PRESETS = Object.freeze([
     "Unity Energy Electrical Intelligence",
     "Maxwellian Intelligence",
-    "USSI Communication"
+    "USSI Communication",
+    "Partner Access"
   ]);
   var ELECTRICAL_TITLE_VARIANTS = [
     "Electrical Intelligence",
@@ -142,6 +143,7 @@
   });
   var PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE = Object.freeze({
     "USSI Communication": "private-ussi-communication",
+    "Partner Access": "private-partner-access",
     "Foster Farms Electrical Intelligence": "private",
     "2025 Cherry Energy Regulatory": "private-2025-cherry-energy-regulatory"
   });
@@ -767,8 +769,7 @@
         normalizedTitle === titleKey.toLowerCase() ||
         normalizedTitleKey === buildTemplateRoutingTitleKey(titleKey)
       ) {
-        // IMPORTANT: look up by original map key (not normalized), else Custom titles
-        // like "USSI Communication" fall through to generic private.html with wrong OG title.
+        // IMPORTANT: look up by original map key (not normalized).
         return PRIVATE_PRESET_TEMPLATE_SLUG_BY_TITLE[originalKey] || "private";
       }
     }
@@ -779,11 +780,24 @@
       return "private-ussi-communication";
     }
     if (
+      normalizedTitleKey.indexOf("partner") !== -1 &&
+      normalizedTitleKey.indexOf("access") !== -1
+    ) {
+      return "private-partner-access";
+    }
+    if (
       normalizedTitleKey.indexOf("2025") !== -1 &&
       normalizedTitleKey.indexOf("cherry") !== -1 &&
       normalizedTitleKey.indexOf("regulatory") !== -1
     ) {
       return "private-2025-cherry-energy-regulatory";
+    }
+    // Custom private MESSAGE TITLE → dedicated shell slug.
+    // iMessage only reads static og:title; generic private.html says "Private Confidential".
+    // Shell file must exist as private-{slug}.html (message title baked into OG).
+    var slug = normalizedTitleKey.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    if (slug && slug !== "privateconfidential" && slug !== "private") {
+      return "private-" + slug;
     }
     return "private";
   }
@@ -899,20 +913,28 @@
     } else if (selected.key === "maxwellian-news") {
       templateSlug = resolveMaxwellianTemplateSlugForTitle(selectedTitle);
     }
-    // Title-owned private shells win over the selected card type.
-    // iMessage/OG crawlers only read static meta tags — a WelcomeWebsite shell
-    // hard-coded to Foster Farms will ignore ue_title=USSI Communication.
-    var privateTitleSlug = resolvePrivateTemplateSlugForTitle(selectedTitle);
-    if (
-      privateTitleSlug &&
-      privateTitleSlug !== "private" &&
-      (
-        selectedTitle.toLowerCase().indexOf("ussi") !== -1 ||
-        selectedTitle.toLowerCase().indexOf("cherry") !== -1
-      )
-    ) {
-      templateSlug = privateTitleSlug;
-      selected = SHARE_TYPES.find(function (entry) { return entry.key === "private-confidential"; }) || selected;
+    // Private message-title shells win over card-type defaults.
+    // iMessage only reads static og:title — generic private.html shows "Private Confidential"
+    // instead of the Message Title (e.g. Partner Access, USSI Communication).
+    if (selected.key === "private-confidential") {
+      var privateTitleSlug = resolvePrivateTemplateSlugForTitle(selectedTitle);
+      if (privateTitleSlug) {
+        templateSlug = privateTitleSlug;
+      }
+    } else {
+      var crossPrivateSlug = resolvePrivateTemplateSlugForTitle(selectedTitle);
+      if (
+        crossPrivateSlug &&
+        crossPrivateSlug !== "private" &&
+        (
+          selectedTitle.toLowerCase().indexOf("ussi") !== -1 ||
+          selectedTitle.toLowerCase().indexOf("partner access") !== -1 ||
+          selectedTitle.toLowerCase().indexOf("cherry") !== -1
+        )
+      ) {
+        templateSlug = crossPrivateSlug;
+        selected = SHARE_TYPES.find(function (entry) { return entry.key === "private-confidential"; }) || selected;
+      }
     }
     var shareOrigin = getShareOrigin();
     if (
