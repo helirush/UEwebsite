@@ -1135,8 +1135,8 @@
     })();
   </script>
   <script src="./hume_auth_bootstrap.js?v=20261015-meet-clerk-1"></script>
-  <script src="./hume_character_config.js?v=20261103-voice-fix-1"></script>
-  <script src="./clerk_voice_widget.js?v=20261103-voice-fix-1"></script>
+  <script src="./hume_character_config.js?v=20261105-clerk-office-select-1"></script>
+  <script src="./clerk_voice_widget.js?v=20261105-clerk-office-select-1"></script>
 <!-- UE-SEO-FOUNDATION-START -->
     <meta name="description" content="Speak with Clerk at Unity Energy—guided conversation about industrial electricity, energy fields, and Unity’s approach.">
     <meta name="robots" content="index,follow,max-image-preview:large">
@@ -2281,16 +2281,32 @@
         setBottomWaiting();
         if (epoch !== sessionEpoch) return false;
 
-        if (!hasRuntimeAuth()) {
-          // One more hard fetch attempt
-          try { await ensureClerkRuntimeAuth(); } catch (_e) {}
-        }
-        if (!hasRuntimeAuth()) {
-          console.error('[ue-contact-clerk] Aborting Clerk launch: no Hume runtime auth.');
-          bottomBtn.innerHTML = '<span class="cp-clerk-bottom-btn-primary">Auth unavailable</span><small>Retry</small>';
-          window.alert('Clerk voice auth is not available. Confirm https://unityenergy.com/api/hume/runtime-auth is reachable, then try Clerk is Ready again.');
-          setBottomWaiting();
-          return false;
+        // OpenAI Live / GPT Live does not need Hume runtime-auth.
+        // Prior bug: ensureClerkRuntimeAuth() correctly skipped Hume, then this
+        // second hasRuntimeAuth() gate still aborted SELECT with "Auth unavailable".
+        const isOpenAiLivePath = (() => {
+          try {
+            applyClerkConfig();
+            const h = window.MAXWELLIAN_HUME || {};
+            const eng = String(h.voice_engine || h.engine || '').toLowerCase();
+            return eng === 'openai' || h.openai_live_api === true || !!h.openai_live_session_endpoint;
+          } catch (_e) {
+            return true; // default this page to OpenAI live
+          }
+        })();
+        if (!isOpenAiLivePath) {
+          if (!hasRuntimeAuth()) {
+            try { await ensureClerkRuntimeAuth(); } catch (_e) {}
+          }
+          if (!hasRuntimeAuth()) {
+            console.error('[ue-contact-clerk] Aborting Clerk launch: no Hume runtime auth.');
+            bottomBtn.innerHTML = '<span class="cp-clerk-bottom-btn-primary">Auth unavailable</span><small>Retry</small>';
+            window.alert('Clerk voice auth is not available. Confirm runtime auth is reachable, then try SELECT again.');
+            setBottomWaiting();
+            return false;
+          }
+        } else {
+          console.info('[ue-contact-clerk] OpenAI Live path — proceeding without Hume runtime-auth.');
         }
         // Ensure widget-visible auth bag is populated right before launch.
         try {
@@ -2517,15 +2533,18 @@
         }
       };
 
-      // 1) Speak with Clerk -> reveal presence only (session starts from Waiting button)
+      // 1) MEET CLERK / SELECT — reveal office presence and start voice (OpenAI Live).
+      //    Do not no-op when already active; user expects SELECT to enter the office.
       speakBtn.addEventListener('click', () => {
-        if (active) return;
-        setActive(true);
-        setTalkWaveVisible(true);
-        startTalkWaveLoop();
-        setBottomWaiting();
-        // Kick auth fetch immediately so credentials are warm before modal open.
-        void ensureClerkRuntimeAuth();
+        if (!active) {
+          setActive(true);
+          setTalkWaveVisible(true);
+          startTalkWaveLoop();
+          setBottomWaiting();
+          void ensureClerkRuntimeAuth();
+        }
+        // Always attempt launch from center SELECT (same as bottom Ready/SELECT).
+        void launchClerkVoice({ toggleOnly: true });
       });
 
       // 2) Claire-style control: Pause Clerk <-> Waiting on Clerk
@@ -2891,7 +2910,7 @@
       setBottomWaiting();
     })();
   </script>
-<script src="./founder_share_panel.js?v=20261104-ussi-share-fix-3" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20261104-ussi-share-fix-3';"></script>
+<script src="./founder_share_panel.js?v=20261105-private-msg-title-1" onerror="this.onerror=null;this.src='https://unityenergy.com/UnityEnergy/founder_share_panel.js?v=20261105-private-msg-title-1';"></script>
 
 <script>
 // CP Clerk demo: OpenAI Live + Vesper only (no Hume). Maxwellian knowledge packs remain authoritative.

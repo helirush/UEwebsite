@@ -10742,29 +10742,104 @@ function resolveLiveSessionEndpoint(preferred) {
 
       /* SINGLE_CLERK_PORTRAIT_FINAL_20261015
          One face only. Later cascade must NOT reintroduce multiply/dark double-ghost. */
+      /* Cream glow plate behind Clerk line-art so silhouette reads on gold/busy art. */
+      .clerk-voice-signal-stage::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 44%;
+        z-index: 1;
+        width: min(128%, 318px);
+        aspect-ratio: 1 / 1.08;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            circle at 50% 46%,
+            rgba(255, 250, 236, 0.92) 0%,
+            rgba(255, 244, 220, 0.62) 34%,
+            rgba(250, 236, 205, 0.28) 58%,
+            rgba(250, 236, 205, 0.00) 76%
+          );
+        box-shadow:
+          0 0 28px 8px rgba(255, 246, 228, 0.42),
+          0 0 54px 18px rgba(255, 240, 210, 0.22);
+        opacity: 0.94;
+      }
+      .clerk-voice-signal-stage[hidden]::before {
+        display: none;
+      }
       .clerk-voice-signal-portrait {
         position: absolute;
         left: 50%;
         top: 44%;
+        z-index: 2;
         width: min(122%, 284px);
         max-height: 100%;
         transform: translate(-50%, -50%);
         object-fit: contain;
         object-position: center;
-        opacity: 0.92 !important;
+        opacity: 0.96 !important;
         mix-blend-mode: normal !important;
-        filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
-        -webkit-filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
+        filter:
+          contrast(1.2)
+          brightness(0.98)
+          drop-shadow(0 0 8px rgba(255, 250, 236, 0.9))
+          drop-shadow(0 0 18px rgba(255, 242, 214, 0.72))
+          drop-shadow(0 0 34px rgba(255, 236, 200, 0.42))
+          drop-shadow(0 10px 18px rgba(40, 28, 12, 0.18)) !important;
+        -webkit-filter:
+          contrast(1.2)
+          brightness(0.98)
+          drop-shadow(0 0 8px rgba(255, 250, 236, 0.9))
+          drop-shadow(0 0 18px rgba(255, 242, 214, 0.72))
+          drop-shadow(0 0 34px rgba(255, 236, 200, 0.42))
+          drop-shadow(0 10px 18px rgba(40, 28, 12, 0.18)) !important;
         animation: none !important;
       }
       .clerk-voice-signal-stage.contrast-light-bg .clerk-voice-signal-portrait,
       .clerk-voice-signal-stage.contrast-dark-bg .clerk-voice-signal-portrait,
       .clerk-voice-signal-stage.is-forming .clerk-voice-signal-portrait {
-        opacity: 0.92 !important;
+        opacity: 0.96 !important;
         mix-blend-mode: normal !important;
         animation: none !important;
-        filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
-        -webkit-filter: contrast(1.12) brightness(0.88) drop-shadow(0 10px 18px rgba(12, 24, 10, 0.22)) !important;
+        filter:
+          contrast(1.2)
+          brightness(0.98)
+          drop-shadow(0 0 8px rgba(255, 250, 236, 0.9))
+          drop-shadow(0 0 18px rgba(255, 242, 214, 0.72))
+          drop-shadow(0 0 34px rgba(255, 236, 200, 0.42))
+          drop-shadow(0 10px 18px rgba(40, 28, 12, 0.18)) !important;
+        -webkit-filter:
+          contrast(1.2)
+          brightness(0.98)
+          drop-shadow(0 0 8px rgba(255, 250, 236, 0.9))
+          drop-shadow(0 0 18px rgba(255, 242, 214, 0.72))
+          drop-shadow(0 0 34px rgba(255, 236, 200, 0.42))
+          drop-shadow(0 10px 18px rgba(40, 28, 12, 0.18)) !important;
+      }
+      .clerk-voice-signal-stage.contrast-dark-bg::before {
+        opacity: 1;
+        background:
+          radial-gradient(
+            circle at 50% 46%,
+            rgba(255, 252, 240, 0.96) 0%,
+            rgba(255, 246, 224, 0.7) 36%,
+            rgba(250, 236, 205, 0.32) 60%,
+            rgba(250, 236, 205, 0.00) 78%
+          );
+      }
+      .clerk-voice-signal-stage.contrast-light-bg::before {
+        opacity: 0.8;
+        background:
+          radial-gradient(
+            circle at 50% 46%,
+            rgba(255, 250, 236, 0.78) 0%,
+            rgba(255, 244, 220, 0.42) 40%,
+            rgba(250, 236, 205, 0.14) 62%,
+            rgba(250, 236, 205, 0.00) 76%
+          );
       }
       .clerk-voice-signal-stage.is-forming .clerk-voice-signal-wave {
         animation: clerkSignalWaveFormIn ${SIGNAL_FORMATION_DURATION_MS}ms ease-out forwards;

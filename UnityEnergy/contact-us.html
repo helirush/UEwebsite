@@ -1347,7 +1347,7 @@
                 </a>
 
                 <!-- Meet with Clerk hit over painted CTA -->
-                <button type="button" class="ue-hit-meet-clerk" id="ueContactMeetClerk" aria-label="Meet with Clerk Maxwell">
+                <button type="button" class="ue-hit-meet-clerk" id="ueContactMeetClerk" data-ue-enter-clerk="1" aria-label="Meet with Clerk Maxwell">
                     <span class="ue-meet-label">Enter Clerk's Office <span class="ue-meet-arrow" aria-hidden="true">→</span></span>
                 </button>
 </div>
@@ -1379,7 +1379,9 @@
           }
         } catch (e2) {}
         // Gold-screen Clerk only — never open inline/floating Clerk on Contact Us
-        window.location.assign('./speak-with-clerk.html?v=20261104-clerk-fast-faq-1&from=contact-us');
+        var target = './speak-with-clerk.html?v=20261105-clerk-office-select-1&from=contact-us';
+        try { target = new URL(target, window.location.href).toString(); } catch (e3) {}
+        try { window.location.assign(target); } catch (e4) { window.location.href = target; }
         return false;
       }
       function bindMeet(el) {
@@ -1387,6 +1389,15 @@
         el.addEventListener('click', goMeetClerk);
       }
       bindMeet(document.getElementById('ueContactMeetClerk'));
+      document.querySelectorAll('[data-ue-enter-clerk], .ue-hit-meet-clerk, a[href*="speak-with-clerk"]').forEach(bindMeet);
+      // Capture-phase safety: clicks on the gold ENTER CLERK'S OFFICE art still navigate
+      document.addEventListener('click', function (ev) {
+        var t = ev.target;
+        if (!t || !t.closest) return;
+        var hit = t.closest('#ueContactMeetClerk, .ue-hit-meet-clerk, [data-ue-enter-clerk]');
+        if (!hit) return;
+        goMeetClerk(ev);
+      }, true);
       
 
       // Unity Home hard path (preview + file:// safe)
